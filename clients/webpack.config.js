@@ -98,5 +98,6 @@ module.exports = {
         new ExtractTextPlugin('../css/[name].css', {
             allChunks: true
         })
+
     ]
 }
