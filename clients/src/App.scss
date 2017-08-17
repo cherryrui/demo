@@ -1,0 +1,47 @@
+@import "./themes";
+.index{
+  height: 100%;
+}
+.head{
+  display: flex;
+  justify-content: flex-end;
+  padding: 30px 10%;
+  background: $theme-color;
+ .item{
+   margin: auto 10px;
+   color: #ffffff;
+ }
+  .language{
+    margin: auto 10px;
+  }
+}
+.body{
+  min-height: 600px;
+  overflow: auto;
+}
+.footer{
+}
+.foot{
+  padding: 30px 10%;
+  background: $theme-color;
+  display: flex;
+  .item{
+    flex-grow: 1;
+  }
+  .title{
+    font-size: 16px;
+    color: #ffffff;
+  }
+  .info{
+    font-size: 14px;
+    color: #e6e6e6;
+  }
+}
+.bottom{
+  text-align: center;
+  color: #ffffff;
+  background: #0D3349;
+  font-size: 14px;
+  padding: 10px;
+}
+
