@@ -15,11 +15,40 @@
     margin: auto 10px;
   }
 }
+.header{
+  display: flex;
+  padding: 10px 10% 5px 10%;
+  .left{
+    display: flex;
+    flex-grow: 1;
+  }
+  .title{
+    margin: 10px 20px;
+    font-size: 16px;
+  }
+  .right{
+    margin: auto 0;
+    button{
+      margin-left: 10px;
+    }
+  }
+}
 .body{
   min-height: 600px;
   overflow: auto;
 }
-.footer{
+
+.foot_first{
+  display: flex;
+  padding: 20px 10%;
+  .item{
+    flex-grow: 1;
+    text-align: center;
+    img{
+      width: 80px;
+      height: 80px;
+    }
+  }
 }
 .foot{
   padding: 30px 10%;

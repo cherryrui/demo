@@ -31,23 +31,7 @@ class Main extends React.Component{
     }
     render(){
         return <div className={css.main}>
-            <div className={css.header}>
-                <div className={css.left}>
-                    <p className={css.title}>LOGO</p>
-                    <p className={css.title}>Home</p>
-                    <p className={css.title}>Brand</p>
-                    <p className={css.title}>News</p>
-                    <p className={css.title}>About Us</p>
-                </div>
-                <div className={css.right}>
-                    <Search
-                        placeholder="input search text"
-                        style={{ width: 200 }}
-                        onSearch={value => console.log(value)}
-                    />
-                    <Button type="primary" icon="shopping-cart">My Cart</Button>
-                </div>
-            </div>
+
             <Slider
                 dots={true}
                 autoplay
@@ -89,25 +73,7 @@ class Main extends React.Component{
                 </Slider>
             </div>
             <Category/>
-            <div className={css.footer}>
-                <div className={css.item}>
-                    <img src='../img/1.jpg'/>
-                    <p>AUTHORITY</p>
-                </div>
-                <div className={css.item}>
-                    <img src='../img/1.jpg'/>
-                    <p>AUTHORITY</p>
-                </div>
-                <div className={css.item}>
-                    <img src='../img/1.jpg'/>
-                    <p>AUTHORITY</p>
-                </div>
-                <div className={css.item}>
-                    <img src='../img/1.jpg'/>
-                    <p>AUTHORITY</p>
-                </div>
 
-            </div>
 
         </div>
     }

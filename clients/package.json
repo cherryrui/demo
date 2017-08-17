@@ -5,7 +5,9 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack --watch",
-    "build": "./node_modules/.bin/webpack"
+    "build": "atool-build -o ./dist/${npm_package_name}/${npm_package_version}/",
+    "trans": "./node_modules/.bin/atool-l10n",
+    "dev": "dora -p 8001 --plugins webpack,proxy?port=3000,hmr,livereload"
   },
   "author": "i@caisong.com",
   "license": "ISC",
@@ -28,9 +30,6 @@
     "node-sass": "^4.5.3",
     "normalize.css": "^4.2.0",
     "postcss-loader": "^0.11.1",
-    "rc-banner-anim": "^0.5.16",
-    "rc-queue-anim": "^1.2.2",
-    "rc-tween-one": "^1.4.4",
     "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.3.1",
     "react-cookie": "1.0.4",
@@ -40,6 +39,7 @@
     "react-router": "^2.6.1",
     "react-slick": "^0.14.11",
     "react-tap-event-plugin": "^1.0.0",
+    "atool-build": "0.7.x",
     "typescript": "^2.1.4"
   },
   "devDependencies": {
@@ -48,6 +48,12 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "sass-loader": "^4.0.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "atool-l10n": "^0.1.0",
+    "webpack": "^1.13.2",
+    "dora": "0.3.x",
+    "dora-plugin-hmr": "0.5.x",
+    "dora-plugin-livereload": "0.3.x",
+    "dora-plugin-proxy": "0.6.x",
+    "dora-plugin-webpack": "0.6.x"
   }
 }
