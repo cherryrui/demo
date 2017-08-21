@@ -1,0 +1,16 @@
+@import "../../../themes";
+.sort{
+  display: inline-flex;
+  i{
+    display: block;
+    margin-bottom: -5px;
+    color: $color-deep-grey;
+    font-size: 12px;
+  }
+  .icon{
+    margin: 3px;
+  }
+  .active{
+    color: $color-orange;
+  }
+}

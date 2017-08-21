@@ -1,0 +1,18 @@
+@import "../../themes";
+.navigate{
+  span{
+    color: $theme-color;
+    font-size: 18px;
+  }
+}
+.category{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  .category_item{
+    width: 32%;
+    background: $back-ground-grey;
+    margin-bottom: 20px;
+  }
+}

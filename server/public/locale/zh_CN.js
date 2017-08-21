@@ -1,4 +1,4 @@
-import message from './zh_message.js.js';
+import message from './zh_message.js';
 import appLocaleData from '../lib/zh.js';
 window.appLocale = {
     messages: Object.assign({}, messages),

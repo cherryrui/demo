@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^2.8.0",
+    "atool-build": "0.7.x",
     "autoprefixer": "^6.4.1",
     "axios": "^0.13.1",
     "babel-core": "^6.17.0",
@@ -27,6 +28,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "immutability-helper": "^2.0.0",
     "intl": "^1.2.5",
+    "less-vars-to-js": "^1.2.0",
     "node-sass": "^4.5.3",
     "normalize.css": "^4.2.0",
     "postcss-loader": "^0.11.1",
@@ -39,7 +41,6 @@
     "react-router": "^2.6.1",
     "react-slick": "^0.14.11",
     "react-tap-event-plugin": "^1.0.0",
-    "atool-build": "0.7.x",
     "typescript": "^2.1.4"
   },
   "devDependencies": {

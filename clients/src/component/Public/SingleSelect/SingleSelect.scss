@@ -1,0 +1,52 @@
+@import "../../../themes";
+.body{
+  display: flex;
+  border: 1px solid $back-ground-grey;
+  margin-bottom: 20px;
+  .left{
+    background: $theme-color;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px;
+    width: 100px;
+    flex-shrink: 0;
+    text-align: center;
+    display: flex;
+    p{
+      margin: auto;
+    }
+  }
+  .middle{
+    flex-grow: 1;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+  }
+  .single{
+    flex-shrink: 0;
+  }
+  .item{
+    margin: 6px 10px;
+    text-align: center;
+    cursor: context-menu;
+  }
+  .active{
+    @extend .item;
+    text-decoration:underline;
+    color: $theme-color
+  }
+  .item_img{
+    margin: 10px;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    padding: 2px;
+  }
+  .active_img{
+    @extend .item_img;
+    border: 1px solid $color-grey;
+  }
+  .right{
+    margin: auto 10px;
+  }
+}

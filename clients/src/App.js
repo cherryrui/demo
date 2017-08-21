@@ -13,7 +13,13 @@ import enUS from 'antd/lib/locale-provider/en_US.js';
 
 import Main from './component/Main/Main.js';
 import Login from './component/Login/Login.js';
-import {FormattedMessage,addLocaleData,IntlProvider} from 'react-intl';
+import CategoryList from './component/CategoryList/CategoryList.js';
+import BranchProduct from './component/BranchProduct/BranchProduct.js';
+import ProductList from './component/ProductList/ProductList.js';
+
+
+
+import {injectIntl,FormattedMessage,addLocaleData,IntlProvider} from 'react-intl';
 import intl from 'intl';
 addLocaleData(zh);
 import{Select,Menu,Dropdown,Icon,Badge,LocaleProvider,Pagination,Input,Button} from 'antd';
@@ -94,15 +100,20 @@ class App extends React.Component {
                             <FormattedMessage id="app.message" defaultMessage="消息"/>
                         </p>
                         <Select defaultValue="中文" className={css.language} onChange={this.handleChange}>
-                    <Option value="zn"><FormattedMessage id="app.language.zh" defaultMessage="中文"/></Option>
-                    <Option value="en"><FormattedMessage id="app.language.en" defaultMessage="英语"/></Option>
-                </Select>
+                            <Option value="zn"><FormattedMessage id="app.language.zh" defaultMessage="中文"/></Option>
+                            <Option value="en"><FormattedMessage id="app.language.en" defaultMessage="英语"/></Option>
+                        </Select>
                     </div>
                     <div className={css.header}>
                         <div className={css.left}>
                             <p className={css.title}>LOGO</p>
-                            <p className={css.title}>Home</p>
-                            <p className={css.title}>Brand</p>
+                            <p className={css.title}>
+                                <Link to="/login"><FormattedMessage id="app.home" defaultMessage="首页"/></Link>
+                            </p>
+                            <p className={css.title}>
+                                <Link to="/category-list"><FormattedMessage id="app.allcategroy" defaultMessage="分类"/></Link>
+
+                            </p>
                             <p className={css.title}>News</p>
                             <p className={css.title}>About Us</p>
                         </div>
@@ -116,10 +127,10 @@ class App extends React.Component {
                         </div>
                     </div>
                     <div className={css.body}>
-            {this.props.children && React.cloneElement(this.props.children)}
-            </div>
+                        {this.props.children && React.cloneElement(this.props.children)}
+                    </div>
                     <div className={css.footer}>
-                <div className={css.foot_first}>
+                        <div className={css.foot_first}>
                     <div className={css.item}>
                         <img src='../img/1.jpg'/>
                         <p>AUTHORITY</p>
@@ -138,35 +149,53 @@ class App extends React.Component {
                     </div>
 
                 </div>
-                <div className={css.foot}>
-                <div className={css.item}>
-                    <p className={css.title}>About Us</p>
-                    <p className={css.info}>Company Profile</p>
-                    <p className={css.info}>Partners And Suppliers</p>
-                    <p className={css.info}>News</p>
-                </div>
-                <div className={css.item}>
-                    <p className={css.title}>About Us</p>
-                    <p className={css.info}>Company Profile</p>
-                    <p className={css.info}>Partners And Suppliers</p>
-                    <p className={css.info}>News</p>
-                </div>
-                <div className={css.item}>
-                    <p className={css.title}>About Us</p>
-                    <p className={css.info}>Company Profile</p>
-                    <p className={css.info}>Partners And Suppliers</p>
-                    <p className={css.info}>News</p>
-                </div>
-                <div className={css.item}>
-                    <p className={css.title}>About Us</p>
-                    <p className={css.info}>Company Profile</p>
-                    <p className={css.info}>Partners And Suppliers</p>
-                    <p className={css.info}>News</p>
-                </div>
+                        <div className={css.foot}>
+                    <div className={css.item}>
+                        <p className={css.title}>
+                            <FormattedMessage id="app.about" defaultMessage="关于我们"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.profile" defaultMessage="公司简介"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.partners" defaultMessage="合作伙伴"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.news" defaultMessage="公司新闻"/></p>
+                    </div>
+                    <div className={css.item}>
+                        <p className={css.title}>
+                            <FormattedMessage id="app.guide" defaultMessage="用户指引"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.terms" defaultMessage="支付团队"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.shopping" defaultMessage="购物方式"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.question" defaultMessage="疑难解答"/></p>
+                    </div>
+                    <div className={css.item}>
+                        <p className={css.title}>
+                            <FormattedMessage id="app.customer" defaultMessage="客户服务"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.orders" defaultMessage="物流跟踪"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.rating" defaultMessage="供应商评分"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.protection" defaultMessage="法律声明"/></p>
+                    </div>
+                    <div className={css.item}>
+                        <p className={css.title}>
+                            <FormattedMessage id="app.contact" defaultMessage="联系客服"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.feedback" defaultMessage="问题反馈"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.supplier" defaultMessage="诚征英才"/></p>
+                        <p className={css.info}>
+                            <FormattedMessage id="app.program" defaultMessage="联盟计划"/></p>
+                    </div>
             </div>
-            <div className={css.bottom}>Dbuy360dsadasd</div>
-            </div>
-        </div>
+                        <div className={css.bottom}>
+                            <FormattedMessage id="app.rights" defaultMessage="Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000"/>
+                        </div>
+                    </div>
+                </div>
             </IntlProvider>
         </LocaleProvider>;
     }
@@ -179,7 +208,10 @@ ReactDOM.render(
     (<Router history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Main}/>
-            <Route path="/login" component={Login}/>
+            <Route path="category-list" component={CategoryList}/>
+            <Route path="branch-product" component={BranchProduct}/>
+            <Route path="product-list" component={ProductList}/>
         </Route>
+        <Route path="/login" component={Login}/>
     </Router>), document.body.appendChild(div)
 );

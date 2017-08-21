@@ -23,7 +23,7 @@
     flex-grow: 1;
   }
   .title{
-    margin: 10px 20px;
+    margin: 10px 20px 10px 0;;
     font-size: 16px;
   }
   .right{
@@ -35,7 +35,7 @@
 }
 .body{
   min-height: 600px;
-  overflow: auto;
+  margin: 0 10%;
 }
 
 .foot_first{
@@ -73,4 +73,12 @@
   font-size: 14px;
   padding: 10px;
 }
-
+.navigate{
+  padding: 10px 0;
+  color: $theme-color;
+}
+.logo{
+  padding: 20px;
+  color: $theme-color;
+  font-weight: 400;
+}
