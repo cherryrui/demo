@@ -11,8 +11,31 @@
   margin-top: 20px;
   flex-wrap: wrap;
   .category_item{
-    width: 32%;
-    background: $back-ground-grey;
+    width: 27%;
+    background: $color-grey;
     margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+  .title{
+    height: 150px;
+    color: white;
+    text-align: center;
+    padding: 60px;
+    font-size: 30px;
+    font-weight: bolder;
+    background-repeat: round !important;
+  }
+  .item{
+    padding: 10px 20px;
+    a{
+      color: $font-color;
+      font-size: 14px;
+    }
+    a:hover{
+      color: $theme-color;
+      text-decoration: underline;
+    }
   }
 }
+    
+ 

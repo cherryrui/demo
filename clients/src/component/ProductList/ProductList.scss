@@ -11,4 +11,18 @@
   .item{
     padding: 0 20px;
   }
+  .right{
+    display: flex;
+  }
+}
+.product_list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.product{
+   width: 22%;
+   margin: 10px 3% 10px 0;  
+}
+.footer{
+  text-align: right;
 }

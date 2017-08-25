@@ -7,9 +7,14 @@
     <link rel='stylesheet' href='/css/store.css' />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+    <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
-    <script src="/js/common.js"></script>
-    <script src="/js/store.js"></script>
   </body>
+  <script src="/locale/zh_message.js"></script>
+  <script src="/lib/zh.js"></script>
+  <script src="/locale/zh_CN.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/store.js"></script>
+ 
 </html>

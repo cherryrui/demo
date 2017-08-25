@@ -3,29 +3,33 @@
  */
 import React from 'react';
 import css from './Sort.scss';
-import {Icon  } from 'antd';
-class Sort extends React.Component{
+import {
+    Icon
+} from 'antd';
+class Sort extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            sort: this.props.sort?this.props.sort:0,
+            sort: this.props.sort ? this.props.sort : 0,
         }
     }
-    handleClick(sort){
-        this.setState({sort: sort});
-        this.props.handleSort?this.props.handleSort(sort):"";
+    handleClick(sort) {
+        this.setState({
+            sort: sort
+        });
+        this.props.handleSort ? this.props.handleSort(sort) : "";
     }
 
-    render(){
+    render() {
         return <div
             className={`${css.sort} ${this.props.className}`}
             style={this.props.style}
         >
             <div className={css.title}>{this.props.value}</div>
             <div className={css.icon}>
-                <Icon className={this.state.sort==1?`${css.active}`:""} onClick={this.handleClick.bind(this,1)} type="caret-up" />
-                <Icon className={this.state.sort==-1?`${css.active}`:""} onClick={this.handleClick.bind(this,-1)} type="caret-down" />
+                <Icon className={this.state.sort==="asc"?`${css.active}`:""} onClick={this.handleClick.bind(this,"asc")} type="caret-up" />
+                <Icon className={this.state.sort==="desc"?`${css.active}`:""} onClick={this.handleClick.bind(this,"desc")} type="caret-down" />
             </div>
 
         </div>

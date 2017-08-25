@@ -1,10 +1,36 @@
+@import "../../themes.scss";
+.body{
+	padding-top: 40px;
+  height: 600px;
+}
+.logo{
+	color: $theme-color;
+    height: 80px;
+    padding: 10px 10%;
+    font-size: 40px;
+    font-weight: bold;
+}
 .form{
+	background-color: #e1f1ff !important;
+	height: 520px;
+	display: flex;
+}
+.login_form{
   width: 350px;
   margin: auto 10% auto auto;
+  background: white;
+  padding: 28px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #8a96ad;
+  .title{
+  	text-align: center;
+    border-bottom: 1px solid $border-color;
+  }
   .forgot {
     float: right;
   }
   .button {
     width: 100%;
+    margin-top: 10px;
   }
 }
