@@ -1,0 +1,76 @@
+@import "../../themes";
+.branch_info{
+	display: flex;
+	background: $color-grey;
+	margin-bottom: 10px;
+    padding: 10px 60px;
+	margin-bottom: 10px;
+	.img{
+		flex-shrink: 0;
+		padding-right: 30px;
+		img{
+			width: 100%;
+		}
+	}
+	.star{
+		padding-top: 10px;
+	    text-align: center;
+	    .rating{
+	      font-size: 12px;
+	      li{
+	        cursor: default;
+	        margin-bottom: 5px;
+	      }
+	    }
+	}
+	.info{
+   		flex-grow: 1;
+	}
+	.title{
+		text-align: center;
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.collect{
+		display: inline;
+    	position: relative;
+    	left: 42%;
+    	font-weight: normal;
+    	font-size: 14px;
+    	.icon{
+			font-size: 16px;
+			color: white;
+    	}
+    	.active{
+    		@extend .icon;
+    		color: $color-orange;
+    	}
+	}
+}
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 14px;
+  background: $color-grey;
+  .left{
+    display: flex;
+  }
+  .item{
+    padding: 0 20px;
+  }
+  .right{
+    display: flex;
+  }
+}
+.product_list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.product{
+   width: 22%;
+   margin: 10px 3% 10px 0;  
+}
+.footer{
+  text-align: right;
+}

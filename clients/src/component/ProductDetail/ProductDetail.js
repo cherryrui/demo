@@ -42,17 +42,17 @@ class ProductDetail extends React.Component {
             id: 1,
             name: "Tools",
             price: 90,
-            img: "../img/product.jpg",
+            img: "../img/product.jpg"
         }, {
             id: 2,
             name: "Tools",
             price: 90,
-            img: "../img/product.jpg",
+            img: "../img/product.jpg"
         }, {
             id: 3,
             name: "Tools",
             price: 90,
-            img: "../img/product.jpg",
+            img: "../img/product.jpg"
         }, {
             id: 4,
             name: "Tools",
@@ -102,8 +102,8 @@ class ProductDetail extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.refs.product_detail);
-        this.refs.product_detail.scrollIntoView();
+        //console.log(this.refs.product_detail);
+        //this.refs.product_detail.scrollIntoView();
     }
 
     handleChange = (key) => {
@@ -124,10 +124,10 @@ class ProductDetail extends React.Component {
                 break;
         }
 
-    }
+    };
     handleNum = (value) => {
         console.log('changed', value);
-    }
+    };
 
     /**
      * [changeImg description] 切换显示商品图片
@@ -136,12 +136,12 @@ class ProductDetail extends React.Component {
     changeImg = (index) => {
         this.setState({
             curImg: this.state.product.imgs[index],
-            index_img: index,
+            index_img: index
         })
-    }
+    };
     callback = (key) => {
         console.log(key);
-    }
+    };
 
     render() {
         return <div ref="product_detail" className={appcss.body}>
@@ -298,7 +298,7 @@ class ProductDetail extends React.Component {
 class Review extends React.Component {
 
     render() {
-        return <div className={css.review}>
+        return <div key={this.props.data.id} className={css.review}>
 		{
             this.props.data.length > 0 ? this.props.data.map(item => {
                 return <div className={css.one}>

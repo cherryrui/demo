@@ -1,0 +1,65 @@
+@import "../../themes";
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 14px;
+  background: $color-grey;
+  .left{
+    display: flex;
+  }
+  .item{
+    padding: 0 20px;
+  }
+  .right{
+    display: flex;
+  }
+}
+.branch{
+  display: flex;
+  flex-wrap: wrap;
+  .item{
+    width: 16%;
+    margin: 20px 0 20px 0.66%;
+  }
+  .name{
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: $font-color;
+  }
+  .custom_image{
+    padding: 0 15%;
+  }
+  .foot{
+    padding: 10px;
+    text-align: center;
+    color: $font-color;
+    .rating{
+      font-size: 14px;
+      li{
+        cursor: default;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  .icon_rz:before{
+    content: "\e900";
+    color: $color-grey;
+}
+.icon_rz_active:before{
+  content: "\e900";
+  color: $color-orange;
+}
+.icon_hz:before{
+    content: "\e902";
+    color: $color-grey;
+}
+.icon_hz_active:before{
+  content: "\e902";
+  color: $color-green;
+}
+}
+.footer{
+  text-align: right;
+}

@@ -203,21 +203,15 @@ class App extends React.Component {
     }
     componentDidMount() {}
     getIndex() {
-            let index = 0;
-            this.tabs.map(item => {
-                if (item.url.indexOf(this.props.location.pathname) > -1) {
-                    index = item.key;
-                }
-            })
-            return index;
+        let index = 0;
+        this.tabs.map(item => {
+            if (item.url.indexOf(this.props.location.pathname) > -1) {
+                index = item.key;
+            }
+        })
+        return index;
 
-        }
-        /**
-         * wdy 返回上一级
-         */
-    back = () => {
-        this.props.history.goBack()
-    };
+    }
     handleChange = (key) => {
         switch (key) {
             case 'en':

@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^2.8.0",
-    "atool-build": "0.7.x",
     "autoprefixer": "^6.4.1",
     "axios": "^0.13.1",
     "babel-core": "^6.17.0",
@@ -49,12 +48,6 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "sass-loader": "^4.0.1",
     "style-loader": "^0.13.1",
-    "atool-l10n": "^0.1.0",
-    "webpack": "^1.13.2",
-    "dora": "0.3.x",
-    "dora-plugin-hmr": "0.5.x",
-    "dora-plugin-livereload": "0.3.x",
-    "dora-plugin-proxy": "0.6.x",
-    "dora-plugin-webpack": "0.6.x"
+    "webpack": "^1.13.2"
   }
 }

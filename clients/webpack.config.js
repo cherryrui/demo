@@ -8,7 +8,7 @@ module.exports = {
     context: __dirname + "/",
     devtool: debug ? 'source-map' : null,
     entry: {
-        store: path.join(__dirname,"./src/App.js"),
+        store: path.join(__dirname, "./src/App.js"),
         common: [
             'react', 'react-dom', 'react-router', 'axios'
         ]
@@ -26,35 +26,30 @@ module.exports = {
             'react', 'react-dom', 'react-router', 'axios'
         ],
         loaders: [{
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0'],
-                    plugins: [
-                        'react-html-attrs',
-                        'transform-decorators-legacy',
-                        'transform-class-properties',
-                        ["import", {
-                            "libraryName": "antd",
-                            "style": 'css'
-                        }],
-                    ]
-                }
-            },
-            {
-                test: /\.scss/,
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
-            },
-            {
-                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-                loader: 'url-loader?limit=50000&name=[path][name].[ext]'
-            },
-            {
-                test: /\.css$/,
-                loader: "style!css!"
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loader: 'babel-loader',
+            query: {
+                presets: ['react', 'es2015', 'stage-0'],
+                plugins: [
+                    'react-html-attrs',
+                    'transform-decorators-legacy',
+                    'transform-class-properties', ["import", {
+                        "libraryName": "antd",
+                        "style": 'css'
+                    }]
+                ]
             }
-        ]
+        }, {
+            test: /\.scss/,
+            loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
+        }, {
+            test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+            loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+        }, {
+            test: /\.css$/,
+            loader: "style!css!"
+        }]
     },
     postcss: [autoprefixer],
     output: {
