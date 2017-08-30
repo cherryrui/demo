@@ -77,7 +77,7 @@ class BranchList extends React.Component {
         }
     }
     componentDidMount() {
-        this.refs.branch_list.scrollIntoView();
+        this.branch_list.scrollIntoView();
     }
 
     onShowSizeChange = (current, pageSize) => {
@@ -88,11 +88,11 @@ class BranchList extends React.Component {
     }
 
     render() {
-        return <div ref="branch_list" className={appcss.body}>
+        return <div ref={(branch_list)=>this.branch_list=branch_list} className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="/">
+                        <Link to="/main">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -140,7 +140,7 @@ class Branch extends React.Component {
 
     render() {
         return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{ padding: 0 }}>
-            <Link to={"branch-detail/"+this.props.branch.id}>
+            <Link to={"mian/branch-detail/"+this.props.branch.id}>
                 <div>
                     <span className={`${appcss.custom_icon} ${this.props.branch.rz?css.icon_rz_active:css.icon_rz}`}/>
                     <span className={`${appcss.custom_icon} ${this.props.branch.hz?css.icon_hz_active:css.icon_hz}`}/>

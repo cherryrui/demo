@@ -80,6 +80,7 @@ class Main extends React.Component {
         }
     }
     render() {
+        console.log("main");
         return <div className={appcss.body}>
 
             <Slider
@@ -103,7 +104,7 @@ class Main extends React.Component {
             萨达阿萨德阿萨德阿斯顿撒大大大大萨达萨达啊实打实大阿萨德啊实打实范德萨发答
             复安抚第三方安抚按时发达时</div>
             <div className={css.brand_button}>
-                <Link  to="/about">
+                <Link  to="main/about">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
@@ -137,7 +138,7 @@ class Main extends React.Component {
 
                 >
                    {this.state.supply.map(item => {
-                       return <Link className={css.slider_item} to={"/branch-detail/"+item.id}>
+                       return <Link className={css.slider_item} to={"main/branch-detail/"+item.id}>
                        <Card className={css.slider_card} >
                            <div className={css.custom_image}>
                                <img alt="example" width="30%" src={item.img} />
@@ -152,7 +153,7 @@ class Main extends React.Component {
                 </Slider>
             </div>
             <div className={css.brand_button}>
-                <Link  to="/branch-list">
+                <Link  to="main/branch-list">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
@@ -464,12 +465,12 @@ class Category extends React.Component {
                         </div>
                     </div>
                     {item.cate.map(cate=>{
-                        return <Link to={"/product-list/"+cate.id}>
+                        return <Link to={"main/product-list/"+cate.id}>
                             <p className={css.cate}>{cate.name}</p>
                         </Link>
                     })}
                     <div className={css.brand_button}>
-                        <Link  to={"/category-list/"+item.id}>
+                        <Link  to={"main/category-list/"+item.id}>
                             <FormattedMessage id="app.more" defaultMessage="更多"/>
                         </Link>
                     </div>
@@ -477,7 +478,7 @@ class Category extends React.Component {
                 <div className={css.middle}>
                     <Card bordered={false} noHovering>
                         {item.goods.map((goods,index)=>{
-                            return (index<6?<Link to={"/product-detail/"+goods.id}><Card.Grid className={css.card}>
+                            return (index<6?<Link to={"main/product-detail/"+goods.id}><Card.Grid className={css.card}>
                                 <img src={goods.img}/>
                                 <p className={css.name}>{goods.name}</p>
                                 <p className={css.price}>
@@ -490,14 +491,14 @@ class Category extends React.Component {
                     </Card>
                 </div>
                 <div className={css.right}>
-                    <Link to={"/branch-detail/"+this.state.branch[0].id}>
+                    <Link to={"main/branch-detail/"+this.state.branch[0].id}>
                         <img style={{width: "60%",margin: "0 20%"}} src={this.state.branch[0].img}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{this.state.branch[0].name}</p>
                         <p className={css.content} style={{padding: "10px"}}>{this.state.branch[0].descrip}</p>
                     </Link>
                     <Card bordered={false} noHovering>
                         {this.state.branch.map((branch,index)=>{
-                            return (index>0&&index<7?<Link to={"/branch-detail/"+branch.id}>
+                            return (index>0&&index<7?<Link to={"main/branch-detail/"+branch.id}>
                                 <Card.Grid className={css.card} style={{padding:"5px"}}>
                                     <img style={{width:"100%"}} src={branch.img}/>
                             </Card.Grid>

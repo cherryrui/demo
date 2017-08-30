@@ -79,7 +79,7 @@ class Login extends React.Component {
                         initialValue: true,
                     })(
                         <Checkbox>
-                            <FormattedMessage id="login.remember" defaultMessage="用户登录"/>
+                            <FormattedMessage id="login.remember" defaultMessage="记住密码"/>
                         </Checkbox>
                     )}
                         <a className={css.forgot} href="">

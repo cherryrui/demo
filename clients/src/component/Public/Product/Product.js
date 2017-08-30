@@ -31,10 +31,11 @@ class Product extends React.Component {
 
     render() {
         return <Card className={`${css.product} ${this.props.className}`}bodyStyle={{ padding: 0 }}>
-            <Link to={"/product-detail/"+this.props.product.id}>
-            <div className={css.custom_image}>
-                <img alt="example" width="100%" src={this.props.product.img}/>
-            </div>
+            <Link to={"main/product-detail/"+this.props.product.id}>
+                <div className={css.custom_image}>
+                    <img alt="example" width="100%" src={this.props.product.img}/>
+                </div>
+            </Link>
             <p className={css.name}>{this.props.product.name}</p>
             <p className={css.item}>
                 <span>
@@ -49,7 +50,6 @@ class Product extends React.Component {
                     <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
                 </p>
             </div>:""}
-            </Link>
         </Card>
     }
 }

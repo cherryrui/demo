@@ -112,7 +112,7 @@ class BranchDetail extends React.Component {
 		})
 	}
 	componentDidMount() {
-		this.refs.branch_detail.scrollIntoView(true);
+		this.branch_detail.scrollIntoView(true);
 	}
 	handleSort = (name, key) => {
 		console.log(name, key)
@@ -132,11 +132,11 @@ class BranchDetail extends React.Component {
 
 	render() {
 
-		return <div className={appcss.body} ref="branch_detail">
+		return <div className={appcss.body} ref={(branch_detail)=>this.branch_detail=branch_detail} >
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="/">
+		<Link to="/main">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>

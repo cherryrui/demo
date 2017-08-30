@@ -42,7 +42,6 @@ class ProductList extends React.Component {
         }
     }
     componentWillMount() {
-        console.log("ComponentWillMonut", this.props.params.info);
         let products = [{
             id: 1,
             name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
@@ -119,8 +118,7 @@ class ProductList extends React.Component {
         })
     }
     componentDidMount() {
-            console.log(this.refs.product_list.style)
-            this.refs.product_list.scrollIntoView();
+            this.product_list.scrollIntoView();
         }
         /**
          * 根据排序条件查询商品
@@ -148,11 +146,11 @@ class ProductList extends React.Component {
     }
     render() {
         console.log(this.state.products);
-        return <div ref="product_list" className={appcss.body}>
+        return <div ref={(product_list)=>this.product_list=product_list} className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="/">
+                        <Link to="main/">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -166,7 +164,7 @@ class ProductList extends React.Component {
             <SingleSelect
                 more
                 showImg
-                title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
+                title={<FormattedMessage id="app.brand" defaultMessage="供应商"/>}
             />
             <SingleSelect more title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
             />

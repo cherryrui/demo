@@ -14,6 +14,8 @@ import css from './App.scss';
 import en from 'react-intl/locale-data/en.js';
 import zh from 'react-intl/locale-data/zh.js';
 import enUS from 'antd/lib/locale-provider/en_US.js';
+import zh_message from '../locale/zh_message';
+import en_message from '../locale/en_message';
 
 import Main from './component/Main/Main.js';
 import Login from './component/Login/Login.js';
@@ -24,6 +26,7 @@ import ShoppingCart from './component/ShoppingCart/ShoppingCart.js';
 import ProductDetail from './component/ProductDetail/ProductDetail.js';
 import BranchDetail from './component/BranchDetail/BranchDetail.js';
 import PostWant from './component/PostWant/PostWant.js';
+import Home from './component/Home/Home.js';
 
 import {
     FormattedMessage,
@@ -47,8 +50,11 @@ import {
 } from 'antd';
 const Search = Input.Search;
 const Option = Select.Option;
+const appLocale = window.appLocale ? window.appLocale : {};
+appLocale.antd = "";
+appLocale.locale = "zh";
+appLocale.messages = zh_message;
 
-const appLocale = window.appLocale;
 console.log(appLocale);
 
 class App extends React.Component {
@@ -58,9 +64,6 @@ class App extends React.Component {
             antd_loacl: null,
             locale: 'zh',
             message: zh_message,
-            category_menu: "",
-            cart_menu: "",
-            index: 1,
         };
         this.order_status = [{
             key: 0,
@@ -93,125 +96,12 @@ class App extends React.Component {
             icon: "eitd",
             num: 0
         }, ];
-        this.tabs = [{
-            key: 1,
-            message_id: "app.home",
-            default_message: "首页",
-            url: "/#/"
-        }, {
-            key: 2,
-            message_id: "app.brand",
-            default_message: "供应商",
-            url: "/#/branch-list"
-        }, {
-            key: 3,
-            message_id: "app.news",
-            default_message: "公司近况",
-            url: "/#/news"
-        }, {
-            key: 4,
-            message_id: "app.about",
-            default_message: "关于我们",
-            url: "/#/about"
-        }, ]
-
-        //this.language = 'zh_CN';
     }
-    componentWillMount() {
-        console.log(97, get_message());
-        let index = this.getIndex();
-        this.state.products = [{
-            id: 1,
-            name: "Product name",
-            img: "../img/product.jpg",
-            num: 3
-        }, {
-            id: 2,
-            name: "Product name",
-            img: "../img/product.jpg",
-            num: 3
-        }, {
-            id: 3,
-            name: "Product name",
-            img: "../img/product.jpg",
-            num: 3
-        }, {
-            id: 4,
-            name: "Product name",
-            img: "../img/product.jpg",
-            num: 3
-        }, {
-            id: 5,
-            name: "Product name",
-            img: "../img/product.jpg",
-            num: 3
-        }, ]
-        this.state.categorys = [{
-            id: 1,
-            name: "Category nameCategory nameCategory nameCategory name"
-        }, {
-            id: 2,
-            name: "Category name"
-        }, {
-            id: 3,
-            name: "Category name"
-        }, {
-            id: 4,
-            name: "Category name"
-        }, {
-            id: 5,
-            name: "Category name"
-        }, {
-            id: 6,
-            name: "Category name"
-        }, {
-            id: 7,
-            name: "Category name"
-        }, {
-            id: 8,
-            name: "Category name"
-        }, ]
-        const category_menu = (
-            <Menu  onClick={this.handleMenuClick}>
-                {this.state.categorys.map(item => {
-                    return <Menu.Item key={item.id}>{item.name}</Menu.Item>
-                })}
-            </Menu>
-        );
-        const cart_menu = (
-            <Menu>
-                {this.state.products.map(item => {
-                    return <Menu.Item>
-                        <Link  to={"/product-detail/"+item.id}>
-                            <div className={css.cart_product}>
-                                <img src={item.img}/>
-                                <p className={css.name}>{item.name}</p>
-                                <p>{item.num}</p>
-                            </div>
-
-                        </Link>
-                    </Menu.Item>
-                })}
-            </Menu>
-        );
-
-        this.setState({
-            category_menu: category_menu,
-            cart_menu: cart_menu,
-            index: index,
-        });
-    }
-    componentDidMount() {}
-    getIndex() {
-        let index = 0;
-        this.tabs.map(item => {
-            if (item.url.indexOf(this.props.location.pathname) > -1) {
-                index = item.key;
-            }
-        })
-        return index;
+    componentWillMount() {}
+    componentDidMount() {
 
     }
+
     handleChange = (key) => {
         switch (key) {
             case 'en':
@@ -237,20 +127,7 @@ class App extends React.Component {
                 break;
         }
     }
-    handleTabs = (key, url) => {
-        if (key != this.state.index) {
-            this.setState({
-                index: key
-            })
-            window.location.href = url;
-        }
-    }
-    handleMenuClick = (key) => {
-        this.setState({
-            index: 0
-        })
-        window.location.href = "/#/category-list/" + key;
-    }
+
     render() {
         let order_menu = (<Menu>
         {this.order_status.map(item=>{
@@ -264,9 +141,7 @@ class App extends React.Component {
             </Menu.Item>
         })}
         </Menu>)
-        return <LocaleProvider locale={this.state.antd_loacl}>
-            <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-                <div className={css.main} >
+        return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
                             <Link className={css.item}><FormattedMessage id="app.login" defaultMessage="登录/注册"/></Link>
@@ -281,63 +156,11 @@ class App extends React.Component {
                                 <Option value="en"><FormattedMessage id="app.language.en" defaultMessage="英语"/></Option>
                             </Select>
                         </div>
-                        {this.props.location.pathname==="/login"?"":<div className={css.header}>
-                            <div className={css.left}>
-                                <p className={css.title}>LOGO</p>
-                                <p className={this.state.index==0?css.active:css.title}>
-                                    <Dropdown overlay={this.state.category_menu}>
-                                        <p>
-                                            <FormattedMessage id="app.category" defaultMessage="分类"/>
-                                            &nbsp;&nbsp;
-                                            <Icon type="caret-down" />
-                                        </p>
-                                    </Dropdown>
-                                </p>
-                                {this.tabs.map(item=>{
-                                    return <p className={this.state.index==item.key?css.active:css.title} onClick={this.handleTabs.bind(this,item.key,item.url)}>
-                                    <FormattedMessage id={item.message_id} defaultMessage={item.default_message}/>
-                                </p>
-                                })}
-                            </div>
-                            <div className={css.right}>
-                                <Search
-                                    placeholder="请输入商品信息"
-                                    style={{ width: 300,height: "36px" }}
-                                    onSearch={value => value?window.location.href='/#/product-list/'+value:message.warning(<FormattedMessage id="app.search" defaultMessage="请输入商品名称或者供应商"/>)}
-                                />
-                                <Dropdown overlay={this.state.cart_menu} placement="bottomRight">
-                                    <Badge count={5}>
-                                        <Button type="primary" size="large" icon="shopping-cart">
-                                            <FormattedMessage id="shopping.cart" defaultMessage="购物车"/>
-                                        </Button>
-                                    </Badge>
-                                </Dropdown>
-                            </div>
-                        </div>}
                     </div>
-                
-                    {this.props.children && React.cloneElement(this.props.children)}
-                
+                    {
+                        this.props.children && React.cloneElement(this.props.children)
+                    }               
                     <div className={css.footer}>
-                        {this.props.location.pathname==="/login"?"":<div className={css.foot_first}>
-                            <div className={css.item}>
-                                <p className={css.icon}><Icon type="like-o" /></p>
-                                <p className={css.text}><FormattedMessage id="app.authority" defaultMessage="权威"/></p>
-                            </div>
-                            <div className={css.item}>
-                                <p className={css.icon}><Icon type="trophy" /></p>
-                                <p className={css.text}><FormattedMessage id="app.integrity" defaultMessage="完善"/></p>
-                            </div>
-                            <div className={css.item}>
-                                <p className={css.icon}><Icon type="safety" /></p>
-                                <p className={css.text}><FormattedMessage id="app.safety" defaultMessage="安全"/></p>
-                            </div>
-                            <div className={css.item}>
-                                <p className={css.icon}><Icon type="customer-service" /></p>
-                                <p className={css.text}><FormattedMessage id="app.24.service" defaultMessage="24小时服务"/></p>
-                            </div>
-
-                        </div>}
                         <div className={css.foot}>
                                 <div className={css.item}>
                                     <p className={css.title}>
@@ -384,9 +207,7 @@ class App extends React.Component {
                             <FormattedMessage id="app.rights" defaultMessage="Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000"/>
                         </div>
                     </div>
-                </div>
-            </IntlProvider>
-        </LocaleProvider>;
+                </div>;
     }
 }
 
@@ -394,18 +215,23 @@ let div = document.createElement('div');
 div.className = css.index;
 
 ReactDOM.render(
-    (<Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Main}/>
-            <Route path="category-list/:id" component={CategoryList}/>
-            <Route path="branch-list" component={BranchList}/>
-            <Route path="product-list/:info" component={ProductList}/>
-            <Route path="shopping-cart" component={ShoppingCart}/>
-            <Route path="product-detail/:id" component={ProductDetail}/>
-            <Route path="branch-detail/:id" component={BranchDetail}/>
-            <Route path="post-want" component={PostWant}/>
-            <Route path="/login" component={Login}/>
-        </Route>
-        
-    </Router>), document.body.appendChild(div)
+    (<LocaleProvider locale={appLocale.antd}>
+        <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
+            <Router history={hashHistory}>
+                <Route path="/" component={App}>
+                    <IndexRoute component={Login}/>
+                    <Route path="main" component={Home}>
+                        <IndexRoute component={Main}/>
+                        <Route path="category-list/:id" component={CategoryList}/>
+                        <Route path="branch-list" component={BranchList}/>
+                        <Route path="product-list/:info" component={ProductList}/>
+                        <Route path="shopping-cart" component={ShoppingCart}/>
+                        <Route path="product-detail/:id" component={ProductDetail}/>
+                        <Route path="branch-detail/:id" component={BranchDetail}/>
+                        <Route path="post-want" component={PostWant}/>
+                    </Route> 
+                </Route>
+            </Router>
+        </IntlProvider>
+    </LocaleProvider>), document.body.appendChild(div)
 );

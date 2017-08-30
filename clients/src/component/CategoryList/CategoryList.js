@@ -218,7 +218,7 @@ class CategoryList extends React.Component {
         this.getCategory();
     }
     componentDidMount() {
-            this.refs.category_list.scrollIntoView(true);
+            this.category_list.scrollIntoView(true);
         }
         /**
          * 根据一级分类id，查找其所有的子分类
@@ -231,11 +231,11 @@ class CategoryList extends React.Component {
     }
 
     render() {
-        return <div ref="category_list" className={appcss.body}>
+        return <div ref={(category_list)=>this.category_list=category_list} className={appcss.body}>
             <div className={css.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="/">
+                        <Link to="main/">
                             <FormattedMessage id="app.home" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -252,7 +252,7 @@ class CategoryList extends React.Component {
                 return <div className={css.category_item}>
                     <div className={css.title} style={{background:`url(${item.img})`}}>{item.name}</div>
                     {item.items.map(cate=>{
-                        return <p className={css.item}><Link to={"/product-list/"+item.id}>{cate.name}</Link></p>
+                        return <p className={css.item}><Link to={"main/product-list/"+item.id}>{cate.name}</Link></p>
                     })}
                 </div>
             })}

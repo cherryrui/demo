@@ -7,6 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const index = require('./routes/index')
+const index_en = require('./routes/index-en')
 const users = require('./routes/users')
 
 // error handler
@@ -35,6 +36,7 @@ app.use(async(ctx, next) => {
 		console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 	})
 	// routes
+app.use(index_en.routes(), index_en.allowedMethods())
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 

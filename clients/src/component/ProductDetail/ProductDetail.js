@@ -3,10 +3,10 @@ import appcss from '../../App.scss';
 import moment from 'moment';
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage
-    } from 'react-intl';
+} from 'react-intl';
 import css from './ProductDetail.scss';
 import Product from '../Public/Product/Product.js';
 import {
@@ -15,7 +15,7 @@ import {
     Icon,
     Rate,
     Tabs
-    } from 'antd';
+} from 'antd';
 
 const TabPane = Tabs.TabPane;
 
@@ -58,7 +58,7 @@ class ProductDetail extends React.Component {
             name: "Tools",
             price: 90,
             img: "../img/product.jpg"
-        },];
+        }, ];
         let reviews = [{
             id: 1,
             create_time: "2017-09-12 12:12:14",
@@ -79,7 +79,7 @@ class ProductDetail extends React.Component {
             create_time: "2017-09-12 12:12:14",
             question: "asdasdasdasdasdasdasda",
             answer: "dsdsadas da ProductDetail.js"
-        },];
+        }, ];
         let product = {
             id: 1,
             price: 200,
@@ -102,8 +102,9 @@ class ProductDetail extends React.Component {
     }
 
     componentDidMount() {
-        //console.log(this.refs.product_detail);
+        console.log(this.product_detail);
         //this.refs.product_detail.scrollIntoView();
+        this.product_detail.scrollIntoView();
     }
 
     handleChange = (key) => {
@@ -144,11 +145,11 @@ class ProductDetail extends React.Component {
     };
 
     render() {
-        return <div ref="product_detail" className={appcss.body}>
+        return <div ref={(product_detail)=>this.product_detail=product_detail} className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="/">
+                        <Link to="main/">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
