@@ -1,0 +1,49 @@
+@import "../../themes.scss";
+.header{
+  display: flex;
+  padding: 70px 10% 20px 10%;
+    position: fixed;
+    width: 100%;
+    z-index: 80;
+    background: white;
+  .left{
+    display: flex;
+    flex-grow: 1;
+  }
+  .title{
+    margin: 10px 30px 10px 0;;
+    font-size: 16px;
+    a{
+      color: $font-color;
+    }
+  }
+  .active{
+    @extend .title;
+    color: $theme-color;
+  }
+  .right{
+    margin: auto 0;
+    button{
+      margin-left: 10px;
+      background-color: $theme-color ;
+      border-color: $theme-color;
+      height: 36px;
+      margin-top: -2px;
+    }
+  }
+}
+.foot_first{
+  display: flex;
+  padding: 50px 10%;
+  .item{
+    flex-grow: 1;
+    text-align: center;
+    .icon{
+      font-size: 40px;
+      color: $theme-color;
+    }
+    .text{
+      font-size: 16px
+    }
+  }
+}
