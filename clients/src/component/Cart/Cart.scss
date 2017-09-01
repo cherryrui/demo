@@ -1,0 +1,215 @@
+@import "../../themes";
+.title{
+	color: $theme-color;
+	border-bottom: 1px solid $border-color;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+.steps{
+	padding: 30px 10%;
+	div[class="ant-steps-head-inner"]{
+		border-color: $color-grey !important;
+		background-color: $color-grey !important;
+		height: 30px;
+		width: 30px;
+		color: white;
+	}
+	div[class="ant-steps-title"]{
+		font-size: 20px;
+	}
+	div[class="ant-steps-item ant-steps-status-process"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		div[class="ant-steps-title"]{
+			color: $color-green !important;
+			font-size: 20px;
+		}
+	}
+	div[class="ant-steps-item ant-steps-status-finish"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		span[class="ant-steps-icon anticon anticon-check"]{
+			color: white !important;
+			font-size: 20px;
+		}
+	}
+}
+.table_product{
+	display: flex;
+	padding: 10px 0;
+	img{
+		border: 1px solid $border-color;
+		width: 100px;
+		height: 100px;
+		flex-shrink: 0;
+		margin: auto 0;
+	}
+	.info{
+		padding: 10px;
+    	text-align: left;
+    	flex-grow: 1;
+	}
+
+}
+.table_num{
+	margin: 20%;
+}
+.table_price{
+	color: $color-orange;
+}
+.table_col{
+	text-align: center !important;
+	font-size: 14px;
+}
+.table_operator{
+	font-size: 18px;
+}
+.footer{
+	display: flex;
+	font-size: 16px;
+	margin-top: 20px;
+	background: $color-grey;
+}
+.left{
+	margin: auto 0 auto 20px;
+	flex-grow: 1;
+	i{
+		padding: 0 20px;
+	}
+}
+.right{
+	display: flex;
+
+}
+.total{
+	padding: 20px;
+	background: $color-grey;
+}
+.quotation{
+	padding: 20px;
+    background: $color-green;
+    color: white;
+}
+.calculate{
+	padding: 20px;
+    background: $theme-color;
+    color: white;
+}
+.confirm_title{
+	font-size: 16px;
+    font-weight: bold;
+    padding: 20px 0 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+%confirm_body{
+	border: 1px solid #eee;
+    padding: 20px;
+}
+.confirm_address{
+	@extend %confirm_body;
+	display: flex;
+	.item{
+		padding: 5px 20px;
+		span{
+			font-weight: bold;
+		}
+	}
+	.item_default{
+		padding: 5px 10px;
+		background: $color-green;
+		color: white;
+	}
+}
+.confirm_pay{
+	@extend %confirm_body;
+}
+.confirm_mode{
+	display: flex;
+	.item{
+		padding: 10px 30px;
+    	background: #eee;
+    	border-radius: 3px;
+    	margin-right: 30px;
+    	margin-bottom: 20px;
+	}
+	.active{
+		@extend .item;
+		border: 2px solid $theme-color;
+	}
+}
+.radio{
+	padding: 10px 0;
+}
+.advance_pay{
+	display: flex;
+	flex-wrap: wrap;
+	.item{
+		padding: 10px 5px;
+    	width: 40%;
+    	border: 1px solid $color-grey;
+    	margin: 10px;
+	}
+	.active{
+		@extend .item;
+		border: 2px solid $theme-color;
+	}
+}
+.order_sum{
+	background: $color-grey;
+    padding: 10px;
+    text-align: right;
+    margin: 20px 0;
+    p{
+    	padding: 5px 0;
+    }
+}
+.order_footer{
+	display: flex;
+}
+
+.pay_mode{
+	padding: 40px 10%;
+	.pay_title{
+		color: $color-orange;
+		font-size: 20px;
+		font-weight: bold;
+		text-align: center;
+	}
+	.pay_info{
+		text-align: center;
+		font-size: 14px;
+		padding: 10px 20px;
+
+	}
+	.payments{
+		border: 1px solid $color-grey;
+		padding: 10px 20px;
+		display: flex;
+		.item{
+			margin-bottom: 10px;
+			margin: 10px;
+			img{
+				width: 80px;
+		    	height: 80px;
+		    	margin-right: 20px; 
+		    	border: 1px solid #eee;
+			}
+		}
+	}
+}
+.pay_footer{
+	text-align: center;
+	margin-top: 20px;
+	button{
+		margin: 10px;
+		padding: 0px 30px;
+		
+	}
+}

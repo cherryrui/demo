@@ -7,6 +7,7 @@ import {
     Router,
     Route,
     IndexRoute,
+    IndexRedirect,
     hashHistory,
     Link
 } from 'react-router';
@@ -27,6 +28,8 @@ import ProductDetail from './component/ProductDetail/ProductDetail.js';
 import BranchDetail from './component/BranchDetail/BranchDetail.js';
 import PostWant from './component/PostWant/PostWant.js';
 import Home from './component/Home/Home.js';
+import Cart from './component/Cart/Cart.js';
+import Quotation from './component/Quotation/Quotation.js';
 
 import {
     FormattedMessage,
@@ -61,6 +64,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: null,
             antd_loacl: null,
             locale: 'zh',
             message: zh_message,
@@ -97,7 +101,18 @@ class App extends React.Component {
             num: 0
         }, ];
     }
-    componentWillMount() {}
+    componentWillMount() {
+        localStorage.setItem('uid', 1);
+        console.log(localStorage.uid);
+        if (localStorage.uid) {
+            axios.get(`/user/get-user.json?id=${localStorage.uid}`).then(res => {
+                this.setState({
+                    user: res.data.user
+                })
+            })
+        }
+
+    }
     componentDidMount() {
 
     }
@@ -144,7 +159,10 @@ class App extends React.Component {
         return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
-                            <Link className={css.item}><FormattedMessage id="app.login" defaultMessage="登录/注册"/></Link>
+                            {this.state.user?<p className={css.item}>{this.state.user.name}</p>:
+                            <Link className={css.item}>
+                                <FormattedMessage id="app.login" defaultMessage="登录/注册"/>
+                            </Link>}
                             <Dropdown overlay={order_menu}>
                                 <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
                             </Dropdown>
@@ -219,7 +237,7 @@ ReactDOM.render(
         <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
             <Router history={hashHistory}>
                 <Route path="/" component={App}>
-                    <IndexRoute component={Login}/>
+                    <IndexRedirect to="/main" />
                     <Route path="main" component={Home}>
                         <IndexRoute component={Main}/>
                         <Route path="category-list/:id" component={CategoryList}/>
@@ -229,7 +247,10 @@ ReactDOM.render(
                         <Route path="product-detail/:id" component={ProductDetail}/>
                         <Route path="branch-detail/:id" component={BranchDetail}/>
                         <Route path="post-want" component={PostWant}/>
-                    </Route> 
+                        <Route path="cart" component={Cart}/>
+                        <Route path="quotation" component={Quotation}/>
+                    </Route>
+                    <Route path="login" component={Login}/>
                 </Route>
             </Router>
         </IntlProvider>

@@ -11,8 +11,8 @@
   </head>
   <body>
   </body>
-  <script src="/locale/zh_message"></script>
-  <script src="/locale/zh_CN"></script>
+  <script src="/locale/zh_message.js"></script>
+  <script src="/locale/zh_CN.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/store.js"></script>
 </html>

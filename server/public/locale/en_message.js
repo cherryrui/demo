@@ -1,7 +1,7 @@
 /**
  * Created by WF on 2017/8/16.
  */
-let zh_message = {
+module.exports = {
 	"app.login": "登录/注册",
 	"app.message": "消息",
 	"app.order": "我的订单",
@@ -75,8 +75,4 @@ let zh_message = {
 	"post.upload": "上传表格",
 	"post.click": "点击这里",
 
-}
-
-function get_message() {
-	return zh_message;
 }

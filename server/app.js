@@ -1,14 +1,20 @@
-const Koa = require('koa')
-const app = new Koa()
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
+const Koa = require('koa');
+const app = new Koa();
+const router = require('koa-router')();
+const views = require('koa-views');
+const co = require('co');
+const json = require('koa-json');
+const onerror = require('koa-onerror');
+const bodyparser = require('koa-bodyparser');
+const logger = require('koa-logger');
+const index = require('./routes/index');
+const index_en = require('./routes/index-en');
+const cookieOptions = require('./config/index');
 
-const index = require('./routes/index')
-const index_en = require('./routes/index-en')
-const users = require('./routes/users')
+const users = require('./routes/users');
+const user = require('./routes/user.js');
+const category = require('./routes/category.js');
+const api = require('./routes/api.js');
 
 // error handler
 onerror(app)
@@ -30,14 +36,26 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async(ctx, next) => {
+		ctx.cookie = {
+			set: (k, v, opt) => {
+				opt = Object.assign({}, cookieOptions, opt);
+				return ctx.cookies.set(k, v, opt);
+			},
+			get: (k, opt) => {
+				opt = Object.assign({}, cookieOptions, opt);
+				return ctx.cookies.get(k, opt);
+			}
+		};
 		const start = new Date()
 		await next()
 		const ms = new Date() - start
 		console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 	})
 	// routes
-app.use(index_en.routes(), index_en.allowedMethods())
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+router.use('/api', api.routes(), api.allowedMethods());
+router.use('/user', user.routes(), user.allowedMethods());
+router.use('/category', category.routes(), category.allowedMethods());
+router.use('/', index.routes(), index.allowedMethods());
+app.use(router.routes(), router.allowedMethods());
 
 module.exports = app

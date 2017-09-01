@@ -82,15 +82,34 @@
     -webkit-font-smoothing: antialiased;
     font-size: 22px;
 }
-.cart_product{
-  display: flex;
-  align-items: center;
-  padding: 10px;
-}
 .fixed_title{
     position: fixed;
     width: 100%;
     z-index: 99;
     top: 0;
     background: white;
+}
+.button_theme{
+    background-color: $button-blue !important;
+    border-color: $button-blue !important;
+}
+.button_theme:hover{
+    background-color: $button-blue-active !important;
+    border-color: $button-blue-active !important;
+}
+.button_green{
+    background-color: $button-green !important;
+    border-color: $button-green !important;
+}
+.button_green:hover{
+    background-color: $button-green-active !important;
+    border-color: $button-green-active !important;
+}
+.button_orange{
+    background-color: $button-orange !important;
+    border-color: $button-orange !important;
+}
+.button_orange:hover{
+    background-color: $button-orange-active !important;
+    border-color: $button-orange-active !important;
 }

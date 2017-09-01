@@ -136,7 +136,7 @@ class BranchDetail extends React.Component {
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-		<Link to="/main">
+						<Link to="/main">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>

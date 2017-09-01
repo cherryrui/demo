@@ -79,6 +79,7 @@ class Main extends React.Component {
 
         }
     }
+
     render() {
         console.log("main");
         return <div className={appcss.body}>

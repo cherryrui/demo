@@ -16,7 +16,8 @@ import {
     Icon,
     Input,
     Button,
-    Checkbox
+    Checkbox,
+    message
 } from 'antd';
 const FormItem = Form.Item;
 
@@ -27,14 +28,34 @@ class Login extends React.Component {
     }
     constructor(props) {
         super(props);
-
     }
 
     handleSubmit = (e) => {
+        let {
+            intl: {
+                formatMessage
+            }
+        } = this.props;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                axios.post('/user/login.json', values).then(res => {
+                    if (res.data.status) {
+                        localStorage.setItem('user', res.data.result);
+                        message.success(formatMessage({
+                            id: 'login.login.success'
+                        }))
+                        window.location.href = "/#/main/"
+                    } else {
+                        console.log("51", res.data.result)
+                        message.error(formatMessage({
+                            id: 'login.login.fail'
+                        }, {
+                            reason: res.data.result
+                        }))
+                    }
+                })
             }
         });
     }
