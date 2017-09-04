@@ -1,0 +1,112 @@
+@import "../../themes";
+.table_product{
+	display: flex;
+	padding: 10px 0;
+	img{
+		border: 1px solid $border-color;
+		width: 100px;
+		height: 100px;
+		flex-shrink: 0;
+		margin: auto 0;
+	}
+	.info{
+		padding: 10px;
+    	text-align: left;
+    	flex-grow: 1;
+	}
+
+}
+.table_col{
+	text-align: center !important;
+	font-size: 14px;
+}
+.table_num{
+	margin: 20%;
+}
+.order_sum{
+	padding: 20px 10px;
+	background: $color-grey;
+	.sum_item{
+		text-align: right;
+		display: flex;
+		justify-content: flex-end;
+		padding: 10px 0;
+	}
+	.sum_right{
+		width: 150px;
+		margin-left: 10px;
+	}
+	input{
+		margin-top: -5px;
+	}
+}
+.infomation{
+	display: flex;
+    margin-top: 20px;
+    background: $color-grey;
+    font-size: 16px;
+    font-weight: bold;
+    
+}
+.right{
+	padding: 20px;
+	width: 50%;
+}
+.left{
+	padding: 20px;
+	width: 50%;
+	border-right: 1px solid $border-color;
+}
+.info_write{
+	display: flex;
+	border: 1px solid $border-color;
+	margin-bottom: 10px;
+}
+.item{
+	display: flex;
+	padding: 10px 0;
+	.title{
+		width: 100px;
+		text-align: right;
+		margin: auto 10px auto 0px;
+		flex-shrink: 0;
+	}
+	input{
+		width: 60%;
+	}
+}
+.padd_20{
+	padding: 10px 20px;
+}
+.padd_20_w{
+	padding: 10px 20px;
+	width: 50%;
+}
+.remark{
+	padding: 10px 0px;
+	.title{
+		margin: 0px 10px 0px 20px;
+	}
+}
+.valid_date{
+	display: flex;
+	padding: 10px 20px;
+	.title{
+		width: 100px;
+    	text-align: right;
+    	margin: auto 10px auto 0px;
+    	flex-shrink: 0;
+	}
+}
+.export{
+	border: 1px solid $border-color;
+	padding: 20px;
+}
+.footer{
+	text-align: right;
+	margin-top: 20px;
+	button{
+		margin-left: 20px;
+	}
+
+}
