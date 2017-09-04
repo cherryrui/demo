@@ -19,200 +19,10 @@ class CategoryList extends React.Component {
         super(props);
         this.state = {
             search: "Tools",
-            category: [{
-                id: 1,
-                name: "dasTool",
-                img: "../img/cate_1.jpg",
-                items: [{
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, ]
-            }, {
-                id: 1,
-                name: "dasTool",
-                img: "../img/cate_2.jpg",
-                items: [{
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, ]
-            }, {
-                id: 1,
-                name: "dasTool",
-                img: "../img/cate_3.jpg",
-                items: [{
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, ]
-            }, {
-                id: 1,
-                name: "dasTool",
-                img: "../img/cate_4.jpg",
-                items: [{
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, ]
-            }, {
-                id: 1,
-                name: "dasTool",
-                img: "../img/cate_5.jpg",
-                items: [{
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, ]
-            }, {
-                id: 1,
-                name: "dasTool",
-                img: "../img/cate_6.jpg",
-                items: [{
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, {
-                    id: 1,
-                    name: "dasdasdas"
-                }, ]
-            }]
+            category: [],
+
         }
+        this.cid = this.props.params.id;
     }
     componentWillMount() {
         this.getCategory();
@@ -225,8 +35,11 @@ class CategoryList extends React.Component {
          * @return {[type]} [description]
          */
     getCategory = () => {
-        axios.get("").then(res => {
-
+        axios.get(`/category/get-category.json?type=2&cid=${this.cid}`).then(res => {
+            this.setState({
+                search: res.data.category_name,
+                category: res.data.categorys
+            })
         })
     }
 

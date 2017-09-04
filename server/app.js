@@ -15,6 +15,8 @@ const users = require('./routes/users');
 const user = require('./routes/user.js');
 const category = require('./routes/category.js');
 const api = require('./routes/api.js');
+const product = require('./routes/product.js');
+const brand = require('./routes/brand.js');
 
 // error handler
 onerror(app)
@@ -53,8 +55,10 @@ app.use(async(ctx, next) => {
 	})
 	// routes
 router.use('/api', api.routes(), api.allowedMethods());
+router.use('/product', product.routes(), product.allowedMethods());
 router.use('/user', user.routes(), user.allowedMethods());
 router.use('/category', category.routes(), category.allowedMethods());
+router.use('/brand', brand.routes(), brand.allowedMethods());
 router.use('/', index.routes(), index.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 

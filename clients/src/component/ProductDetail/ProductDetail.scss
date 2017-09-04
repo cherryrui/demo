@@ -22,7 +22,7 @@
 	.product_price{
 		background: $color-grey;
 		padding: 20px 10px;
-		margin-bottom: 15px;
+		margin: 8px 0;
 		.price_info{
 			font-size: 18px;
 			display: flex;
@@ -62,7 +62,7 @@
 	}
 	.bottom{
 		display: flex;
-
+		margin-top: 10px;
 	}
 	.num{
 		flex-grow: 1;
@@ -76,7 +76,7 @@
    		padding: 0 10px;
    		color: white;
    		margin-left: 10px;
-   
+   		cursor: default;
 	}
 	.left{
 		width: 20%;
@@ -203,4 +203,21 @@
 		}
 
 	}
+}
+.login_form{
+  margin: auto;
+  background: white;
+  padding: 28px;
+  border-radius: 5px;
+  .title{
+  	text-align: center;
+    border-bottom: 1px solid $border-color;
+  }
+  .forgot {
+    float: right;
+  }
+  .button {
+    width: 100%;
+    margin-top: 10px;
+  }
 }

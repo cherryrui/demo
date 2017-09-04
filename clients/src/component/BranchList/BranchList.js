@@ -4,6 +4,7 @@
 import React from 'react';
 import appcss from '../../App.scss';
 import css from './BranchList.scss';
+import axios from 'axios';
 import {
     Link
 } from 'react-router';
@@ -29,62 +30,94 @@ class BranchList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: [{
-                id: 1,
-                name: "Tools",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 2,
-                name: "Building Materials",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 3,
-                name: "Machinery",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 4,
-                name: "Mechanical components",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 5,
-                name: "Labor protection",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 6,
-                name: "Torque tools",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 7,
-                name: "dsadasdsa",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, {
-                id: 8,
-                name: "dsadasdsa",
-                rating: 4.5,
-                img: '../img/br_bg_1.jpg'
-            }, ],
-            search: "Branch",
-            category_id: 1,
-            subcategory_id: 2,
-            total: 50
+            category: [], //一级分类列表
+            brand: [], //供应商列表
+            cid: 0, //分类id
+            pageSize: 10, //每页商品数
+            current: 1, //当前页码
+            total: 50 //供应商总数
+        }
+        this.orderBy = {
+
         }
     }
+    componentWillMount() {
+        axios.get('/category/get-category.json?type=1').then(res => {
+            this.setState({
+                category: res.data.categorys,
+            })
+        })
+        this.getBrand();
+    }
+
+    /**
+     * 根据分类，排序分页查询供应商数据
+     * @return {[type]} [description]
+     */
+    getBrand = () => {
+        let param = {
+            cid: this.state.cid,
+            orderBy: this.orderBy,
+            page: this.state.current,
+            pageSize: this.state.pageSize,
+        }
+        axios.post('/brand/get-brand.json', param).then(res => {
+            this.setState({
+                brand: res.data.brand,
+                total: res.data.sum
+            })
+        })
+    }
     componentDidMount() {
+        //回到顶点
         this.branch_list.scrollIntoView();
     }
 
+    /**
+     * 更改每页显示的产品数量
+     * @param  {[type]} current  当前页码
+     * @param  {[type]} pageSize 每页显示数量
+     * @return {[type]}          [description]
+     */
     onShowSizeChange = (current, pageSize) => {
-        console.log(current, pageSize);
+        this.state.current = current;
+        this.state.pageSize = pageSize;
+        this.getBrand();
     }
+
+    /**
+     * 根据选择排序获取供应商列表
+     * @param  {[type]} name 关键字名称
+     * @param  {[type]} key  升、降
+     * @return {[type]}      [description]
+     */
     handleSort(name, key) {
+        this.orderBy[name] = key;
+        this.getBrand();
         console.log(name, key);
+    }
+
+    /**
+     * 翻页获取供应商列表
+     * @param  {[type]} page     [description]
+     * @param  {[type]} pageSize [description]
+     * @return {[type]}          [description]
+     */
+    handleChange = (page, pageSize) => {
+        console.log(page, pageSize);
+        this.state.current = page;
+        this.state.pageSize = pageSize;
+        this.getBrand();
+    }
+
+    /**
+     * 根据分类查询供应商
+     * @param  {[type]} item [description]
+     * @return {[type]}      [description]
+     */
+    onSelect = (item) => {
+        this.state.cid = item.id;
+        this.getBrand();
     }
 
     render() {
@@ -97,20 +130,16 @@ class BranchList extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <FormattedMessage id="category.list.search" defaultMessage={this.state.search}
-                            values={{search:this.state.search}}
-                        />
+                        <FormattedMessage id="app.brand" defaultMessage="供应商"/>
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
-            <SingleSelect
-                more
+            {this.state.category.length>0?<SingleSelect
+                all
+                data={this.state.category}
+                onSelect={this.onSelect.bind(this)}
                 title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
-            />
-            <SingleSelect
-                title={<FormattedMessage id="app.category" defaultMessage="子分类"/> }
-            />
-
+            />:""}
             <div className={css.header}>
                 <div className={css.left}>
                     <p className={css.item}>Comprehensive</p>
@@ -121,16 +150,22 @@ class BranchList extends React.Component {
                     <FormattedMessage id="branch.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" simple total={50} showTotal={this.showTotal} />
+                    <Pagination size="small" simple total={50} onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.branch}>
-            {this.state.category.map(item=>{
+            {this.state.brand.map(item=>{
                 return <Branch branch={item} className={css.item}/>
             })}
             </div>
             <div className={css.footer}>
-                <Pagination showSizeChanger onShowSizeChange={this.onShowSizeChange} defaultCurrent={3} total={500} />
+                <Pagination 
+                showSizeChanger 
+                onShowSizeChange={this.onShowSizeChange} 
+                defaultCurrent={1} 
+                total={this.state.total}
+                onChange={this.handleChange}
+                />
             </div>
         </div>
     }
@@ -140,7 +175,7 @@ class Branch extends React.Component {
 
     render() {
         return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{ padding: 0 }}>
-            <Link to={"mian/branch-detail/"+this.props.branch.id}>
+            <Link to={"main/branch-detail/"+this.props.branch.id}>
                 <div>
                     <span className={`${appcss.custom_icon} ${this.props.branch.rz?css.icon_rz_active:css.icon_rz}`}/>
                     <span className={`${appcss.custom_icon} ${this.props.branch.hz?css.icon_hz_active:css.icon_hz}`}/>

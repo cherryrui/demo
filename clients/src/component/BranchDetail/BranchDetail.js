@@ -1,7 +1,7 @@
 import React from 'react';
 import appcss from '../../App.scss';
 import css from './BranchDetail.scss';
-
+import axios from 'axios';
 import {
 	Breadcrumb,
 	Pagination,
@@ -25,94 +25,50 @@ class BranchDetail extends React.Component {
 		super(props);
 		this.state = {
 			search: "avi",
-			branch: {
-				id: 1,
-				name: "Branch Name",
-				img: "../img/br_main.jpg",
-				descrip: "你好年好阿打算打手大大大大大打手大",
-				rating: 4.5,
-			},
+			brand: {},
+			category: [],
 			products: [],
+			pageSize: 10,
+			current: 0,
+			total: 0,
 		}
 	}
 	componentWillMount() {
-		let products = [{
-			id: 1,
-			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 2,
-			name: "dsds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 4,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 5,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 6,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "dsNSK deep groove ball bearing 6204 zzc3 BH NS7S6ds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 1,
-			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 2,
-			name: "dsds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 4,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 5,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 6,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "dsNSK deep groove ball bearing 6204 zzc3 BH NS7S6ds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, ]
-		this.setState({
-			products: products
+		axios.get(`/category/get-brand-category.json?bid=${this.bid}`).then(res => {
+			axios.get(`/brand/get-brand-byid.json?id=${this.bid}`).then(re => {
+				this.setState({
+					category: res.data.category,
+					brand: re.data.brand,
+				})
+			})
 		})
+		this.getProduct();
 	}
 	componentDidMount() {
 		this.branch_detail.scrollIntoView(true);
+	}
+
+	/**
+	 * 根据分类查询该供应商的产品
+	 * @return {[type]} [description]
+	 */
+	getProduct = () => {
+		let params = {
+			condition: {
+				cid: this.state.cid,
+				bid: this.bid,
+			},
+			page: this.state.current,
+			pageSize: this.state.pageSize,
+			orderBy: this.orderBy,
+		}
+		axios.post('/product/search-product.json', params).then(res => {
+			this.setState({
+				products: res.data.products,
+				total: res.data.sum,
+			})
+		})
+
 	}
 	handleSort = (name, key) => {
 		console.log(name, key)
@@ -127,6 +83,16 @@ class BranchDetail extends React.Component {
 		this.setState({
 			products: products
 		});
+	}
+	onSelect = (item) => {
+		this.state.cid = item.id;
+		this.getProduct();
+	}
+	handleChange = (page, pageSize) => {
+		console.log(page, pageSize);
+		this.state.current = page;
+		this.state.pageSize = pageSize;
+		this.getProduct();
 	}
 
 
@@ -149,26 +115,30 @@ class BranchDetail extends React.Component {
             </div>
             <div className={css.branch_info}>
                 <div className={css.img}>
-            		<img src={this.state.branch.img}/>
+            		<img src={this.state.brand.img}/>
             		<p className={css.star}>
                 		<FormattedMessage id="branch.product.rate" defaultMessage="评分"/>
-                		<Rate className={css.rating} allowHalf defaultValue={this.state.branch.rating} disabled />
-                		<span>{this.state.branch.rating}</span>
+                		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.rating} disabled />
+                		<span>{this.state.brand.rating}</span>
            			</p>
             	</div>
             	<div className={css.info}>
             		<div className={css.title}>
-            			{this.state.branch.name}
+            			{this.state.brand.name}
             			<p className={css.collect}>
             				<Icon className={true?css.active:css.icon} type="star" />
             				<FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
             			</p>
             		</div>
-            		<p>{this.state.branch.descrip}</p>
+            		<p>{this.state.brand.descrip}</p>
             	</div>
             </div>
-            <SingleSelect more title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
-            />
+            {this.state.category.length>0?<SingleSelect 
+            	all 
+            	data={this.state.category}
+            	onSelect={this.onSelect.bind(this)}
+            	title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
+            />:""}
             <div className={css.header}>
                 <div className={css.left}>
                     <p className={css.item}>Comprehensive</p>
@@ -179,7 +149,7 @@ class BranchDetail extends React.Component {
                     <FormattedMessage id="branch.product.sum" defaultMessage="总计"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" total={50} simple showTotal={this.showTotal} />
+                    <Pagination size="small" total={this.state.total} simple onChange={this.handleChange}  />
                 </div>
             </div>
             <div className={css.product_list}>
@@ -188,7 +158,12 @@ class BranchDetail extends React.Component {
                 })}
             </div>
             <div className={css.footer}>
-                <Pagination showSizeChanger size="small" onShowSizeChange={this.onShowSizeChange} defaultCurrent={3} total={500} />
+                <Pagination 
+                showSizeChanger 
+                size="small" 
+                onChange={this.handleChange} 
+                onShowSizeChange={this.onShowSizeChange} 
+                defaultCurrent={1} total={this.state.total} />
             </div>
 		</div>
 	}

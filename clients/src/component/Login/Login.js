@@ -42,7 +42,7 @@ class Login extends React.Component {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
                     if (res.data.status) {
-                        localStorage.setItem('user', res.data.result);
+                        localStorage.setItem('user', JSON.stringify(res.data.result));
                         message.success(formatMessage({
                             id: 'login.login.success'
                         }))

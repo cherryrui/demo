@@ -7,8 +7,8 @@ import {
 } from 'react-router';
 import {
 	FormattedMessage,
-    injectIntl,
-    intlShape
+	injectIntl,
+	intlShape
 } from 'react-intl';
 import {
 	Select,
@@ -28,15 +28,15 @@ const Search = Input.Search;
 const Option = Select.Option;
 
 class Main extends React.Component {
-    static propTypes = {
-        intl: intlShape.isRequired,
-    }
+	static propTypes = {
+		intl: intlShape.isRequired,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
 			index: 1,
-            categorys: [],
-            carts:[],
+			categorys: [],
+			carts: [],
 
 		};
 		this.tabs = [{
@@ -48,31 +48,34 @@ class Main extends React.Component {
 			key: 2,
 			message_id: "app.brand",
 			default_message: "供应商",
-			url: "/#/branch-list"
+			url: "/#/main/branch-list"
 		}, {
 			key: 3,
 			message_id: "app.news",
 			default_message: "公司近况",
-			url: "/#/news"
+			url: "/#/main/news"
 		}, {
 			key: 4,
 			message_id: "app.about",
 			default_message: "关于我们",
-			url: "/#/about"
+			url: "/#/main/about"
 		}, ];
 		//this.language = 'zh_CN';
 	}
 	componentWillMount() {
 		let index = this.getIndex();
-        axios.get('/api/get-title-data.json').then(res => {
-            console.log(res.data);
-            this.setState({
-                categorys: res.data.categorys,
-                carts: res.data.carts,
-                cart_num: res.data.cart_num,
-                index: index,
-            });
-        });
+		/**
+		 * 获取一级分类和最近购物车商品
+		 */
+		axios.get('/api/get-title-data.json').then(res => {
+			console.log(res.data);
+			this.setState({
+				categorys: res.data.categorys,
+				carts: res.data.carts,
+				cart_num: res.data.cart_num,
+				index: index,
+			});
+		});
 	}
 	componentDidMount() {}
 	getIndex() {
@@ -118,23 +121,23 @@ class Main extends React.Component {
 			window.location.href = url;
 		}
 	}
-	handleMenuClick = (key) => {
+	handleMenuClick = (value) => {
 		this.setState({
 			index: 0
 		})
-		window.location.href = "/#/category-list/" + key;
+		window.location.href = "/#/main/category-list/" + value.key;
 	}
 
 	render() {
-        let category_menu = (
-            <Menu  onClick={this.handleMenuClick}>
+		let category_menu = (
+			<Menu  onClick={this.handleMenuClick}>
                 {this.state.categorys.map(item => {
                     return <Menu.Item key={item.id}>{item.name}</Menu.Item>
                 })}
             </Menu>
-        );
-        let cart_menu = (
-            <Menu>
+		);
+		let cart_menu = (
+			<Menu>
                 {this.state.carts.map(item => {
                     return <Menu.Item>
                         <Link  to={"/product-detail/"+item.id}>
@@ -148,12 +151,12 @@ class Main extends React.Component {
                     </Menu.Item>
                 })}
             </Menu>
-        );
-        const {
-            intl: {
-                formatMessage
-                }
-            } = this.props;
+		);
+		const {
+			intl: {
+				formatMessage
+			}
+		} = this.props;
 		return <div>
 		<div className={css.header}>
             <div className={css.left}>
@@ -181,7 +184,7 @@ class Main extends React.Component {
                         :message.warning(formatMessage({id: 'app.search'}))}
                 />
                 <Dropdown overlay={cart_menu} placement="bottomRight">
-                    <Badge count={5}>
+                    <Badge count={this.state.cart_num}>
                         <Button type="primary" size="large" icon="shopping-cart">
                             <FormattedMessage id="shopping.cart" defaultMessage="购物车"/>
                         </Button>

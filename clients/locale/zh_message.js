@@ -141,6 +141,7 @@ const zh_CN = {
     "special.vat.invoice": "增值锐专用发票",
     "vat.invoice": "增值锐发票",
     "ordinary.invoice": "普通发票",
+    "product.login.info": "你还未登录账号，请先登录",
 
 
 }
