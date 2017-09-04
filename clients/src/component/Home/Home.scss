@@ -1,54 +1,57 @@
 @import "../../themes.scss";
-.header{
+
+.header {
   display: flex;
   padding: 70px 10% 20px 10%;
-    position: fixed;
-    width: 100%;
-    z-index: 80;
-    background: white;
-  .left{
+  position: fixed;
+  width: 100%;
+  z-index: 80;
+  background: white;
+  min-width: 1150px;
+  .left {
     display: flex;
     flex-grow: 1;
   }
-  .title{
+  .title {
     margin: 10px 30px 10px 0;;
     font-size: 16px;
     cursor: default;
-    a{
+    a {
       color: $font-color;
     }
   }
-  .active{
+  .active {
     @extend .title;
     color: $theme-color;
   }
-  .right{
+  .right {
     margin: auto 0;
-    button{
+    button {
       margin-left: 10px;
-      background-color: $theme-color ;
+      background-color: $theme-color;
       border-color: $theme-color;
       height: 36px;
       margin-top: -2px;
     }
   }
 }
-.cart_product{
+.cart_product {
   display: flex;
   align-items: center;
   padding: 10px;
 }
-.foot_first{
+
+.foot_first {
   display: flex;
   padding: 50px 10%;
-  .item{
+  .item {
     flex-grow: 1;
     text-align: center;
-    .icon{
+    .icon {
       font-size: 40px;
       color: $theme-color;
     }
-    .text{
+    .text {
       font-size: 16px
     }
   }

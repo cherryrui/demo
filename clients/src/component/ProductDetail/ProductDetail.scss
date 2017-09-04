@@ -49,16 +49,17 @@
 
 	}
 	.bold{
-    		font-weight: bold;
+    	font-weight: bold;
     }
 	.item{
 		display: flex;
-		padding-bottom: 15px;
+		padding: 8px 0;
 	}
 	.title{
 		width: 120px;
 		font-size: 14px;
 		font-weight: bold;
+        margin: auto 0;
 	}
 	.bottom{
 		display: flex;

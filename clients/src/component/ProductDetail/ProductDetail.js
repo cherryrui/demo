@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import appcss from '../../App.scss';
 import axios from 'axios';
 import moment from 'moment';
@@ -107,7 +107,7 @@ class ProductDetail extends React.Component {
         console.log(key);
     };
     handleAddCart = () => {
-        console.log(109, "handleAddCart", localStorage.uid)
+        //console.log(109, "handleAddCart", localStorage.uid)
         if (localStorage.uid) {
             let flag = true;
             this.state.product.attr.map(item => {
@@ -162,6 +162,9 @@ class ProductDetail extends React.Component {
             }
         });
     }
+    handleAttr=(index,e)=>{
+        this.state.product.attr[index].select_value = e.target.value;
+    }
 
 
     render() {
@@ -211,12 +214,12 @@ class ProductDetail extends React.Component {
                                 <FormattedMessage id="product.detail.sales" defaultMessage="销量"/>
                                 :
                             </span>
-                        &nbsp;&nbsp;{this.state.product.sales}&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;{this.state.product.sales}&nbsp;&nbsp;&nbsp;&nbsp;
                             <span className={css.bold}>
                                 <FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
                                 :
                             </span>
-                        &nbsp;&nbsp;
+                            &nbsp;&nbsp;
                             <Icon type="star" />
                         </p>
                     </div>
@@ -242,11 +245,11 @@ class ProductDetail extends React.Component {
                         <p>3232</p>
                     </div>
                     <div ref={(specify)=>this.specify=specify}>
-                        {this.state.product.attr?this.state.product.attr.map(item=>{
+                        {this.state.product.attr?this.state.product.attr.map((item,index)=>{
                             return <div key={item.id} className={css.item}>
                             <p className={css.title}>{item.name}</p>
                             <p>
-                                <RadioGroup>
+                                <RadioGroup onChange={this.handleAttr.bind(this,index)}>
                                     {item.value.map(attr=>{
                                         return <RadioButton key={attr.id} value={attr.id}>{attr.value}</RadioButton>
                                     })}

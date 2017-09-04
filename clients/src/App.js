@@ -30,6 +30,7 @@ import PostWant from './component/PostWant/PostWant.js';
 import Home from './component/Home/Home.js';
 import Cart from './component/Cart/Cart.js';
 import Quotation from './component/Quotation/Quotation.js';
+import Mine from './component/Mine/Mine.js';
 
 import {
     FormattedMessage,
@@ -249,6 +250,7 @@ ReactDOM.render(
                         <Route path="post-want" component={PostWant}/>
                         <Route path="cart" component={Cart}/>
                         <Route path="quotation" component={Quotation}/>
+                        <Route path="mine" component={Mine}/>
                     </Route>
                     <Route path="login" component={Login}/>
                 </Route>
