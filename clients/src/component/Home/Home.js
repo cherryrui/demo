@@ -5,6 +5,7 @@ import appcss from '../../App.scss';
 import {
 	Link
 } from 'react-router';
+import { connect } from 'react-redux';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -26,10 +27,15 @@ import {
 
 const Search = Input.Search;
 const Option = Select.Option;
+import cartAction from '../../action/cartAction.js';
+
+@connect(state=>({cart: state.cart}),cartAction)
 
 class Main extends React.Component {
 	static propTypes = {
 		intl: intlShape.isRequired,
+        getShoppingCart: React.PropTypes.func.isRequired
+
 	}
 	constructor(props) {
 		super(props);
@@ -63,6 +69,8 @@ class Main extends React.Component {
 		//this.language = 'zh_CN';
 	}
 	componentWillMount() {
+        console.log("componentWillMount");
+        this.props.getShoppingCart();
 		let index = this.getIndex();
 		/**
 		 * 获取一级分类和最近购物车商品
@@ -129,6 +137,7 @@ class Main extends React.Component {
 	}
 
 	render() {
+        console.log(this.props.cart);
 		let category_menu = (
 			<Menu  onClick={this.handleMenuClick}>
                 {this.state.categorys.map(item => {
@@ -138,7 +147,7 @@ class Main extends React.Component {
 		);
 		let cart_menu = (
 			<Menu>
-                {this.state.carts.map(item => {
+                {this.props.cart.carts.map(item => {
                     return <Menu.Item>
                         <Link  to={"/product-detail/"+item.id}>
                             <div className={css.cart_product}>
@@ -184,7 +193,7 @@ class Main extends React.Component {
                         :message.warning(formatMessage({id: 'app.search'}))}
                 />
                 <Dropdown overlay={cart_menu} placement="bottomRight">
-                    <Badge count={this.state.cart_num}>
+                    <Badge count={this.props.cart.sum}>
                         <Button type="primary" size="large" icon="shopping-cart">
                             <FormattedMessage id="shopping.cart" defaultMessage="购物车"/>
                         </Button>

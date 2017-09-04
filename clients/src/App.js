@@ -31,13 +31,17 @@ import Home from './component/Home/Home.js';
 import Cart from './component/Cart/Cart.js';
 import Quotation from './component/Quotation/Quotation.js';
 import Mine from './component/Mine/Mine.js';
-
+import PersonCenter from './component/PersonCenter/PersonCenter.js';
+import {
+    Provider
+    } from 'react-redux';
 import {
     FormattedMessage,
     addLocaleData,
     IntlProvider
 } from 'react-intl';
 import intl from 'intl';
+import store from './store';
 addLocaleData(zh);
 import {
     Select,
@@ -60,6 +64,8 @@ appLocale.locale = "zh";
 appLocale.messages = zh_message;
 
 console.log(appLocale);
+
+
 
 class App extends React.Component {
     constructor(props) {
@@ -232,10 +238,11 @@ class App extends React.Component {
 
 let div = document.createElement('div');
 div.className = css.index;
-
+console.log(239,store);
 ReactDOM.render(
-    (<LocaleProvider locale={appLocale.antd}>
+    (<LocaleProvider locale={appLocale.antd} >
         <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
+            <Provider store={store}>
             <Router history={hashHistory}>
                 <Route path="/" component={App}>
                     <IndexRedirect to="/main" />
@@ -250,11 +257,14 @@ ReactDOM.render(
                         <Route path="post-want" component={PostWant}/>
                         <Route path="cart" component={Cart}/>
                         <Route path="quotation" component={Quotation}/>
-                        <Route path="mine" component={Mine}/>
+                        <Route path="mine" component={Mine}>
+                            <IndexRoute component={PersonCenter}/>
+                        </Route>
                     </Route>
                     <Route path="login" component={Login}/>
                 </Route>
             </Router>
+            </Provider>
         </IntlProvider>
     </LocaleProvider>), document.body.appendChild(div)
 );

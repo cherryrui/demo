@@ -1,7 +1,7 @@
 @import "./themes";
 .index{
   height: 100%;
-
+  font-size: 14px;
 }
 .head{
   display: flex;
@@ -10,11 +10,13 @@
   background: #122337;
   height: 40px;
  .item{
-   margin: auto 35px auto 0;
+   line-height: 40px;
+   margin-right: 35px;
    color: #ffffff;
  }
   .language{
-    margin: auto 0px;
+    margin: 7px 0px;
+    font-size: 14px;
     div[class="ant-select-selection
             ant-select-selection--single"]{
         border: none !important;

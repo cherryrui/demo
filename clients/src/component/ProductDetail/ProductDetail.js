@@ -31,14 +31,16 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
-
+import cartAction from '../../action/cartAction.js';
+import { connect } from 'react-redux';
 /**
  * 商品详情页面，根据传递参数（id）查询商品信息并显示
  */
-
+@connect(state=>({cart: state.cart}),cartAction)
 class ProductDetail extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
+        addCart: React.PropTypes.func.isRequired
     }
     constructor(props) {
         super(props);
@@ -117,8 +119,13 @@ class ProductDetail extends React.Component {
                 }
             })
             if (flag) {
+                console.log("加入购物车")
                 this.specify.style.border = "none";
                 this.specify.style.padding = "0";
+                this.props.addCart(this.state.product);
+                //axios.post('/cart/add-cart.json',this.state.product).then(res=>{
+                //    console.log("添加成功！")
+                //})
             } else {
                 console.log("dada", this.specify.style)
                 this.specify.style.border = "2px solid #2f5ea2";

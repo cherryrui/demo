@@ -21,8 +21,9 @@ const SubMenu = Menu.SubMenu;
 class Mine extends React.Component {
     constructor(props) {
         super(props);
+        console.log(localStorage.user);
         this.state = {
-            user: JSON.parse(localStorage.user),
+            user: {},
             select: 0,
         }
     }
@@ -30,9 +31,13 @@ class Mine extends React.Component {
     handleClick = (e) => {
         console.log('click ', e);
     }
+    handleMenu=(key)=>{
+        console.log(key);
+        this.setState({select:key})
+    }
 
     render() {
-        console.log(operator.menu);
+        console.log(operator.menu,this.props.children);
         return <div className={`${appcss.body} ${css.body}`}>
             <div className={css.menu}>
             {operator.menu.map(menu=> {
@@ -41,7 +46,9 @@ class Mine extends React.Component {
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                     </p>
                     {menu.list.map(item=> {
-                        return <p className={this.state.select==item.key?css.active:css.item}>
+                        return <p className={this.state.select == item.key ? css.active : css.item}
+                            onClick={this.handleMenu.bind(this,item.key)}
+                        >
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
 
                         </p>
@@ -49,7 +56,9 @@ class Mine extends React.Component {
                 </div>
             })}
             </div>
-            <div className={css.content}>Main</div>
+            <div className={css.content}>
+            {this.state.user ? this.props.children : ''}
+            </div>
         </div>
     }
 }
