@@ -1,9 +1,26 @@
 var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var modules_path = __dirname + '/node_modules';
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var path = require('path')
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path');
 var autoprefixer = require('autoprefixer');
+
+const pkgPath = path.join(__dirname, "./package.json");
+const pkg = require(pkgPath);
+let theme = {};
+if (pkg.theme && typeof(pkg.theme) === 'string') {
+    let cfgPath = pkg.theme;
+    // relative path
+    if (cfgPath.charAt(0) === '.') {
+        cfgPath = path.resolve(__dirname, cfgPath);
+    }
+    const getThemeConfig = require(cfgPath);
+    theme = getThemeConfig();
+} else if (pkg.theme && typeof(pkg.theme) === 'object') {
+    theme = pkg.theme;
+}
+console.log(theme);
+
 module.exports = {
     context: __dirname + "/",
     devtool: debug ? 'source-map' : null,
@@ -23,7 +40,7 @@ module.exports = {
     },
     module: {
         noParse: [
-            'react', 'react-dom', 'react-router', 'axios'
+            'react-dom', 'react-router', 'axios'
         ],
         loaders: [{
             test: /\.jsx?$/,
@@ -36,11 +53,28 @@ module.exports = {
                     'transform-decorators-legacy',
                     'transform-class-properties', ["import", {
                         "libraryName": "antd",
-                        "style": 'css'
+                        "style": true
                     }]
                 ]
             }
-        }, {
+        },{
+            test(filePath) {
+                return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
+            },
+            loader: ExtractTextPlugin.extract(
+                'css?sourceMap!' +
+                'postcss!' +
+                `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
+            )
+        },
+            {
+                test: /\.module\.less$/,
+                loader: ExtractTextPlugin.extract(
+                    'css?sourceMap&modules&localIdentName=[local]___[hash:base64:5]!!' +
+                    'postcss!' +
+                    `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
+                )
+            }, {
             test: /\.scss/,
             loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
         }, {
