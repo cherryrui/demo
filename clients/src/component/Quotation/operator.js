@@ -1,24 +1,24 @@
 export default {
 	quot_title: [{
 		id: 1,
-		key: "quotation.commod",
-		value: "commod"
+		key: "quotation.logo",
+		value: "logo"
 	}, {
 		id: 2,
-		key: "quotation.brand",
-		value: "commod"
+		key: "app.brand",
+		value: "brand"
 	}, {
 		id: 3,
-		key: "quotation.specification",
-		value: "commod"
+		key: "cart.pay.mode",
+		value: "specification"
 	}, {
 		id: 4,
-		key: "quotation.art",
-		value: "commod"
+		key: "quotation.platform.price",
+		value: "price"
 	}, {
 		id: 5,
-		key: "quotation.quantity",
-		value: "commod"
+		key: "quotation.agency.price",
+		value: "agent_price"
 	}, {
 		id: 6,
 		key: "quotation.agency.price",
@@ -26,18 +26,6 @@ export default {
 	}, {
 		id: 7,
 		key: "quotation.platform.price",
-		value: "commod"
-	}, {
-		id: 8,
-		key: "quotation.shipping.charges",
-		value: "commod"
-	}, {
-		id: 9,
-		key: "quotation.profits",
-		value: "commod"
-	}, {
-		id: 10,
-		key: "quotation.offical",
 		value: "commod"
 	}, ],
 	pay_mode: [{
@@ -62,11 +50,11 @@ export default {
 		key: "special.vat.invoice",
 		value: "增值锐专用发票"
 	}, {
-		id: 0,
+		id: 1,
 		key: "vat.invoice",
 		value: "增值锐发票"
 	}, {
-		id: 0,
+		id: 2,
 		key: "ordinary.invoice",
 		value: "普通发票"
 	}, ]

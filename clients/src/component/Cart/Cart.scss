@@ -72,12 +72,13 @@
 }
 .footer{
 	display: flex;
+	align-items: center;
 	font-size: 16px;
 	margin-top: 20px;
 	background: $color-grey;
 }
 .left{
-	margin: auto 0 auto 20px;
+	margin-left: 20px;
 	flex-grow: 1;
 	i{
 		padding: 0 20px;
@@ -172,6 +173,15 @@
 }
 .order_footer{
 	display: flex;
+	align-items: center;
+    justify-content: space-between;
+    .footer_right{
+    	display: flex;
+    	align-items: center;
+    	p{
+    		margin-left: 10px;
+    	}
+    }
 }
 
 .pay_mode{

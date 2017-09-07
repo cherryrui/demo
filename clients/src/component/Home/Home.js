@@ -4,13 +4,15 @@ import css from './Home.scss';
 import appcss from '../../App.scss';
 import {
     Link
-    } from 'react-router';
-import { connect } from 'react-redux';
+} from 'react-router';
+import {
+    connect
+} from 'react-redux';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Select,
     Menu,
@@ -23,21 +25,21 @@ import {
     Button,
     Popover,
     message
-    } from 'antd';
+} from 'antd';
 
 const Search = Input.Search;
 const Option = Select.Option;
 import cartAction from '../../action/cartAction.js';
 
-@connect(state=>({cart: state.cart}), cartAction)
+@connect(state => ({
+    cart: state.cart
+}), cartAction)
 
 class Main extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
         getShoppingCart: React.PropTypes.func.isRequired
-
     }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -66,7 +68,7 @@ class Main extends React.Component {
             message_id: "app.about",
             default_message: "关于我们",
             url: "/#/main/about"
-        },];
+        }, ];
         //this.language = 'zh_CN';
     }
 
@@ -88,18 +90,16 @@ class Main extends React.Component {
         });
     }
 
-    componentDidMount() {
-    }
+    componentDidMount() {}
 
     getIndex() {
-        let index = 0;
+        let index = 1;
         this.tabs.map(item => {
-            if (item.url.indexOf(this.props.location.pathname) > -1) {
+            if (this.props.location.pathname.indexOf(item.url) > -1) {
                 index = item.key;
             }
         })
         return index;
-
     }
 
     handleChange = (key) => {
@@ -132,8 +132,8 @@ class Main extends React.Component {
             this.setState({
                 index: key
             })
-            window.location.href = url;
         }
+        window.location.href = url;
     }
     handleMenuClick = (value) => {
         this.setState({
@@ -170,8 +170,8 @@ class Main extends React.Component {
         const {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         return <div>
             <div className={css.header}>
                 <div className={css.left}>

@@ -122,10 +122,9 @@ class ProductDetail extends React.Component {
                 console.log("加入购物车")
                 this.specify.style.border = "none";
                 this.specify.style.padding = "0";
-                this.props.addCart(this.state.product);
-                //axios.post('/cart/add-cart.json',this.state.product).then(res=>{
-                //    console.log("添加成功！")
-                //})
+                this.props.addCart(this.state.product).then(res=>{
+                    message.success("成功加入购物车")
+                });
             } else {
                 console.log("dada", this.specify.style)
                 this.specify.style.border = "2px solid #2f5ea2";

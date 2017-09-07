@@ -4,5 +4,6 @@
 module.exports = () => {
     return {
         'primary-color': '#2f5ea2',
+        'link-color': '#636363',
     };
 };

@@ -6,16 +6,15 @@
 .head{
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding: 0px 10%;
   background: #122337;
   height: 40px;
  .item{
-   line-height: 40px;
    margin-right: 35px;
    color: #ffffff;
  }
   .language{
-    margin: 7px 0px;
     font-size: 14px;
     div[class="ant-select-selection
             ant-select-selection--single"]{
@@ -23,7 +22,6 @@
         color: white;
         border-radius: 0;
         background: transparent;
-
     }
   }
 }
@@ -36,6 +34,7 @@
   margin: 0 10%;
   padding-top: 134px;
   min-width: 1150px;
+  background: white;
 }
 .foot{
   padding: 38px 10%;
@@ -92,7 +91,15 @@
     top: 0;
     background: white;
 }
+%button{
+    padding: 10px 20px;
+    color: white;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: default;
+}
 .button_theme{
+    @extend %button;
     background-color: $button-blue !important;
     border-color: $button-blue !important;
 }
@@ -101,6 +108,7 @@
     border-color: $button-blue-active !important;
 }
 .button_green{
+    @extend %button;
     background-color: $button-green !important;
     border-color: $button-green !important;
 }
@@ -109,6 +117,7 @@
     border-color: $button-green-active !important;
 }
 .button_orange{
+    @extend %button;
     background-color: $button-orange !important;
     border-color: $button-orange !important;
 }
