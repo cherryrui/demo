@@ -33,6 +33,10 @@ import Quotation from './component/Quotation/Quotation.js';
 import Mine from './component/Mine/Mine.js';
 import PersonCenter from './component/PersonCenter/PersonCenter.js';
 import About from './component/About/About.js';
+import Register from './component/Register/Register.js';
+import Authentication from './component/Authentication/Authentication.js';
+import RePassword from './component/RePassword/RePassword.js';
+import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
 import {
     Provider
     } from 'react-redux';
@@ -265,6 +269,10 @@ ReactDOM.render(
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
+                    <Route path="register" component={Register}/>
+                    <Route path="authentication" component={Authentication}/>
+                    <Route path="rePassword" component={RePassword}/>
+                    <Route path="registerComplete" component={RegisterComplete}/>
                 </Route>
             </Router>
             </Provider>

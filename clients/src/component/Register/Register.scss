@@ -1,0 +1,79 @@
+@import "../../themes.scss";
+.body{
+  padding-top: 40px;
+  height:100%;
+}
+.ant-btn-primary {
+  color: #fff;
+  background-color: #108ee9;
+  border-color: #108ee9;
+}
+.ant-btn, .ant-btn:active, .ant-btn:focus {
+  outline: 0;
+}
+.ant-btn {
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.15;
+  padding: 0 15px;
+  font-size: 12px;
+  border-radius: 4px;
+  height: 28px;
+  user-select: none;
+  transition: all .3s cubic-bezier(.645,.045,.355,1);
+  position: relative;
+  color: rgba(0,0,0,.65);
+  background-color: #fff;
+  border-color: #d9d9d9;
+}
+.tabs{
+  text-align: center;
+}
+.input{
+  width:80%;
+  text-align: center;
+  height: 40%;
+  border: solid 1px #aaaaaa;
+  margin-left: 10%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.input1{
+  width:100%;
+}
+.button1{
+  width:100%;
+}
+.button2{
+  width:20%;
+}
+.desc{
+  padding-bottom: 20px;
+}
+.form1{
+  margin-bottom: 10px;
+}
+.lbl{
+  color:blue;
+}
+.posit{
+  float: right;
+}
+
+.d{ width:100%; margin-left: 10%; overflow:hidden;}
+.d1{
+  float:left;
+  width:8%;
+}
+.d2{
+  float:left;
+  width:92%;
+  color:blue;
+  margin-top: 15px;
+}

@@ -86,4 +86,43 @@ router.get('/get-user.json', async(ctx, next) => {
 			address: address
 		}
 	})
+.post('/repassword.json',async (ctx) =>{
+    let result = null;
+    const data = ctx.request.body;
+    console.log('1111: ',JSON.stringify(data));
+    const newPwd = data.newpwd;
+    console.log(newPwd);
+    if(newPwd){
+        result = {rc:200,Data:newPwd};
+    }else{
+        result = {rc:202,Data:'resetpassword failed!'}
+    }
+    ctx.body = result;
+})
+.post('/register.json',async (ctx) =>{
+    let result = null;
+    const data = ctx.request.body;
+    console.log('1111: ',JSON.stringify(data));
+    const name = data.name;
+    console.log(name);
+    if(name){
+        result = {rc:200,Data:name};
+    }else{
+        result = {rc:202,Data:'register failed!'}
+    }
+    ctx.body = result;
+})
+.post('/authentication.json',async (ctx) =>{
+    let result = null;
+    const data = ctx.request.body;
+    console.log('1111: ',JSON.stringify(data));
+    const verification = data.verification;
+    console.log(verification);
+    if(verification){
+        result = {rc:200,Data:verification};
+    }else{
+        result = {rc:202,Data:'register failed!'}
+    }
+    ctx.body = result;
+})
 module.exports = router;
