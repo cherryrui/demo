@@ -167,8 +167,8 @@ class App extends React.Component {
         return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
-                            {this.state.user?<p className={css.item}>{this.state.user.name}</p>:
-                            <Link className={css.item}>
+                            {this.state.user?<Link to="main/mine" className={css.item}>{this.state.user.name}</Link>:
+                            <Link className={css.item} to="login">
                                 <FormattedMessage id="app.login" defaultMessage="登录/注册"/>
                             </Link>}
                             <Dropdown overlay={order_menu}>

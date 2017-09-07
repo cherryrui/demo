@@ -43,13 +43,13 @@ class Mine extends React.Component {
             {operator.menu.map(menu=> {
                 return <div>
                     <p className={css.menu_title}>
-                        <FormattedMessage id="mine.person" defaultMessage="分类"/>
+                        <FormattedMessage id={menu.name} defaultMessage="分类"/>
                     </p>
                     {menu.list.map(item=> {
                         return <p className={this.state.select == item.key ? css.active : css.item}
                             onClick={this.handleMenu.bind(this,item.key)}
                         >
-                            <FormattedMessage id="app.category" defaultMessage="分类"/>
+                            <FormattedMessage id={item.title} defaultMessage="分类"/>
 
                         </p>
                     })}

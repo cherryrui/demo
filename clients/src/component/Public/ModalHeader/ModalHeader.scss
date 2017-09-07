@@ -1,0 +1,17 @@
+@import "../../../themes";
+.title{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: #666;
+    margin-right: 30px;
+  .icon{
+    margin-left: 20px;
+    color: $theme-color;
+    cursor: pointer;
+    transition: color .3s ease;
+  }
+  .icon:hover{
+    color: #444;
+  }
+}

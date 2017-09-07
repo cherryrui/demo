@@ -115,7 +115,11 @@
 }
 .confirm_address{
 	@extend %confirm_body;
-	display: flex;
+	.radio_content{
+		display: flex;
+    	justify-content: space-between;
+    	margin-bottom: 10px;
+	}
 	.item{
 		padding: 5px 20px;
 		span{
@@ -123,9 +127,10 @@
 		}
 	}
 	.item_default{
-		padding: 5px 10px;
+		padding: 4px 10px;
 		background: $color-green;
 		color: white;
+		border-radius: 4px;
 	}
 }
 .confirm_pay{

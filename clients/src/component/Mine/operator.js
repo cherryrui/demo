@@ -4,26 +4,35 @@
 export default {
     menu: [
         {
-            name: "mine.me",
+            name: "mine.person",
             list: [
-                {key: 1000, title: "mine.xx", url: "/main/"},
-                {key: 1001, title: "mine.xx", url: "/main/"},
-                {key: 1002, title: "mine.xx", url: "/main/"},
+                {key: 1000, title: "mine.person.data", url: "/main/"},
+                {key: 1001, title: "mine.person.address", url: "/main/"},
+                {key: 1002, title: "mine.person.account", url: "/main/"},
             ]
         }, {
-            name: "mine.me",
+            name: "mine.order",
             list: [
-                {key: 2000, title: "mine.xx", url: "/main/"},
-                {key: 2001, title: "mine.xx", url: "/main/"},
-                {key: 2002, title: "mine.xx", url: "/main/"},
+                {key: 2000, title: "mine.order.all", url: "/main/"},
             ]
         }, {
-            name: "mine.me",
+            name: "mine.message",
             list: [
-                {key: 3000, title: "mine.xx", url: "/main/"},
-                {key: 3001, title: "mine.xx", url: "/main/"},
-                {key: 3002, title: "mine.xx", url: "/main/"},
+                {key: 3000, title: "mine.message.system", url: "/main/"},
+                {key: 3001, title: "mine.message.consult", url: "/main/"},
             ]
+        }, {
+            name: "mine.favorite",
+            list: [
+                {key: 4000, title: "mine.favorite.goods", url: "/main/"},
+                {key: 4001, title: "mine.favorite.brand", url: "/main/"},
+            ]
+        }, {
+            name: "mine.agent",
+            list: []
+        }, {
+            name: "mine.supplier",
+            list: []
         },
     ]
 }

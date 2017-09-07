@@ -20,11 +20,11 @@ router.get('/get-user.json', async(ctx, next) => {
 			result;
 
 		result = {
-			id: 1,
-			name: "张三"
-		}
-	/*status = false;
-	result = "账号密码错误";*/
+				id: 1,
+				name: "张三"
+			}
+			/*status = false;
+			result = "账号密码错误";*/
 		if (status) {
 			ctx.cookie.set('uid', result.id);
 		}
@@ -33,5 +33,39 @@ router.get('/get-user.json', async(ctx, next) => {
 			result: result,
 		}
 
+	})
+	.get('/get-address-list.json', async(ctx, next) => {
+		let uid = ctx.query.uid;
+		ctx.body = {
+			address: [{
+				id: 1,
+				name: "张三",
+				tel: "2321321",
+				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
+				city: "dsa",
+				default: 1,
+			}, {
+				id: 2,
+				name: "张三",
+				tel: "2321321",
+				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
+				city: "dsa",
+				default: 0,
+			}, {
+				id: 3,
+				name: "张三",
+				tel: "2321321",
+				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
+				city: "dsa",
+				default: 0,
+			}, {
+				id: 4,
+				name: "张三",
+				tel: "2321321",
+				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
+				city: "dsa",
+				default: 0,
+			}, ]
+		}
 	})
 module.exports = router;
