@@ -68,4 +68,22 @@ router.get('/get-user.json', async(ctx, next) => {
 			}, ]
 		}
 	})
+	.get('/get-city-by-parent.json', async(ctx, nexy) => {
+		let cid = ctx.query.cid ? ctx.query.cid : 0; //父级城市id
+
+		let address = [{
+			id: cid + 1,
+			value: 'zhejiang',
+			label: 'Zhejiang',
+			isLeaf: cid > 3 ? true : false,
+		}, {
+			id: cid + 2,
+			value: 'jiangsu',
+			label: 'Jiangsu',
+			isLeaf: cid > 3 ? true : false,
+		}];
+		ctx.body = {
+			address: address
+		}
+	})
 module.exports = router;

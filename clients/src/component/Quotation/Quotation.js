@@ -315,7 +315,8 @@ class Quotation extends React.Component {
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
-            		<Input size="large" type="number" className={css.sum_right} onChange={this.handleInfo.bind(this,0,"postage")} />
+            		<Input size="large" type="number" className={css.sum_right} 
+            		onChange={this.handleInfo.bind(this,0,"postage")} />
             	</p>
             </div>
             <div className={css.infomation}>
