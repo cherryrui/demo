@@ -143,7 +143,21 @@ const zh_CN = {
     "ordinary.invoice": "普通发票",
     "product.login.info": "你还未登录账号，请先登录",
     "mine.person": "个人中心",
-
+    "app.about": "关于我们",
+    "about.company.profile": "公司简介",
+    "about.Partners.And.Suppliers": "合作伙伴和供应商",
+    "about.News": "新闻",
+    "about.The.User.Guide": "用户指南",
+    "about.Tems.Of.Payment":"支付条款",
+    "about.Shipping.Method":"送货方式",
+    "about.Customer.Service":"客户服务",
+    "about.Customer.Protection":"用户防护",
+    "about.Track.Orders":"跟踪订单",
+    "about.Supplier.Rating":"供应商评估",
+    "about.Contact.Us":"联系我们",
+    "about.Feed.Back":"反馈",
+    "about.How.To.Be.Our.Supplier":"如何成为我们的供应商",
+    "about.Affiliate.Program":"加盟",
 
 }
 export default zh_CN;

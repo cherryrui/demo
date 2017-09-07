@@ -32,6 +32,7 @@ import Cart from './component/Cart/Cart.js';
 import Quotation from './component/Quotation/Quotation.js';
 import Mine from './component/Mine/Mine.js';
 import PersonCenter from './component/PersonCenter/PersonCenter.js';
+import About from './component/About/About.js';
 import {
     Provider
     } from 'react-redux';
@@ -257,6 +258,8 @@ ReactDOM.render(
                         <Route path="post-want" component={PostWant}/>
                         <Route path="cart" component={Cart}/>
                         <Route path="quotation" component={Quotation}/>
+                        <Route path="about" component={About}>
+                        </Route>
                         <Route path="mine" component={Mine}>
                             <IndexRoute component={PersonCenter}/>
                         </Route>
