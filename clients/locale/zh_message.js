@@ -172,6 +172,8 @@ const zh_CN = {
     "mine.favorite.brand": "收藏店铺",
     "mine.agent": "注册代理商",
     "mine.supplier": "注册供应商",
+    "mine.my.message": "我的消息",
+    "order.status.all": "所有",
 
     "app.about": "关于我们",
     "about.company.profile": "公司简介",

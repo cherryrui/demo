@@ -5,24 +5,31 @@
 .menu{
   flex-shrink: 0;
   background: $color-grey;
-  padding: 20px;
+  padding: 30px 50px;
+  font-size: 16px;
   min-width: 150px;
+  margin-right: 20px;
   ul{
     background: $color-grey;
   }
+  i{
+    color: $color-red;
+  }
   .menu_title{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     padding: 10px 0;
   }
   .item{
     color: $font-color;
-  }
-  .item:hover{
-    color: $theme-color;
-    text-decoration: underline;
+    padding: 10px 0;
+    span:hover{
+      color: $theme-color;
+      text-decoration: underline;
+    }
   }
   .active{
+    padding: 10px 0;
     color: $theme-color;
   }
 }

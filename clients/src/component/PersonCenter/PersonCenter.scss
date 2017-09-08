@@ -1,0 +1,98 @@
+@import "../../themes.scss";
+.title{
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.user{
+	display: flex;
+	margin-bottom: 20px;
+	.user_info{
+		width: 60%;
+		background: $color-light-blue;
+		display: flex;
+    	align-items: center;
+    	padding: 0px 20px;
+	}
+	.user_name{
+		margin-left: 20px;
+	}
+	.user_message{
+		width: 38%;
+    	margin-left: 2%;
+    	border: 1px solid $border-color;
+    	padding: 10px;
+	}
+	.user_message_title{
+		display: flex;
+    	justify-content: space-between;
+    	border-bottom: 1px solid #eee;
+    	font-size: 16px;
+    	font-weight: bold;
+    	padding-bottom: 3px;
+	}
+	.user_message_item{
+		overflow: hidden;
+	    display: -webkit-box;
+	    -webkit-line-clamp: 1;
+	    -webkit-box-orient: vertical;
+	    word-break: break-all;
+	    height: 35px;
+	    text-align: left;
+	    padding: 10px 0;
+	    i{
+	    	color: $color-red
+	    }
+	}
+}
+.title_item{
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+%item{
+	background: $color-grey;
+	padding: 20px;
+}
+%content{
+	background: white;
+	padding: 20px;
+	display: flex;
+}
+.order{
+	@extend %item;
+	margin-bottom: 20px;
+}
+.order_content{
+	@extend %content;
+	.order_item{
+	    flex-grow: 1;
+    	flex-shrink: 0;
+    	padding: 50px 0;
+    	display: flex;
+    	align-items: center;
+	}
+	.icon{
+		margin: 0 50px;
+	}
+	.order_num{
+		color: $color-orange;
+    	font-weight: bolder;
+    	font-size: 30px;
+	}
+}
+.demand{
+	width: 60%;
+	@extend %item;
+}
+.demand_content{
+	@extend %content;
+}
+.favorite{
+	@extend %item;
+	width: 38%;
+	margin-left: 2%
+}
+.favorite_content{
+	@extend %content;
+}

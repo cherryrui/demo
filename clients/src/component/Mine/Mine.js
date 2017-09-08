@@ -49,6 +49,7 @@ class Mine extends React.Component {
                         return <p className={this.state.select == item.key ? css.active : css.item}
                             onClick={this.handleMenu.bind(this,item.key)}
                         >
+                            <i>●</i>&nbsp;&nbsp;
                             <FormattedMessage id={item.title} defaultMessage="分类"/>
 
                         </p>
