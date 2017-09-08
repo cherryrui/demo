@@ -1,0 +1,111 @@
+@import '../../themes.scss';
+
+.my_consulting{
+  padding-left: 20px;
+
+  .title{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+
+    .title_left{
+      font-size: 24px;
+      font-weight: 700;
+      color:$color-deep-grey ;
+
+    }
+    .title_right{
+      font-size: 14px;
+
+      color:$theme-color ;
+
+    }
+  }
+  .consulting_content{
+    border-top:1px solid #ddd;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+
+
+    .consulting_list{
+      width: 100%;
+      border-bottom:1px solid #ddd;
+      padding-left: 10px;
+      padding-right: 5px;
+      .item_question{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+
+        align-items:baseline;
+        align-items:flex-start;
+
+        .icon{
+          color:$color-red ;
+          font-size: 14px;
+        }
+        .text{
+          width: 80%;
+          padding-right: 10px;
+          word-break: normal;
+          font-size: 16px;
+          font-weight:400;
+          color:$font-color;
+        }
+
+        .spacing{
+          width: 15%;
+
+        }
+        .date{
+          width: 13%;
+          font-size: 12px;
+          color: $font-color;
+          padding-righgt:10px;
+          display: flex;
+
+          .year{
+            padding-right: 5px;
+          }
+
+        }
+
+      }
+      .item_answer{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        padding-bottom: 20px;
+        align-items:center;
+
+        .text{
+          width: 70%;
+          padding-right: 10px;
+          word-break: normal;
+          font-size: 16px;
+          font-weight:400;
+          color:$font-color;
+          padding-left: 15px;
+        }
+
+
+
+      }
+    }
+  }
+  .message_Pagination{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+
+    .empty_message{
+      color: $theme-color;
+      font-weight: 500;
+
+    }
+  }
+}
