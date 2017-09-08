@@ -33,7 +33,7 @@ class FavoriteProduct extends React.Component {
 		this.getProducts();
 	}
 	getProducts = () => {
-		axios.get(`/product/get-favorite-product.json?cid=${this.stat.category_id}`).then(res => {
+		axios.get(`/product/get-favorite-product.json?cid=${this.state.category_id}`).then(res => {
 			this.setState({
 				products: res.data.products
 			})
@@ -53,9 +53,11 @@ class FavoriteProduct extends React.Component {
                 onSelect={this.onSelect.bind(this)}
                 title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
             />:""}
-            {this.state.products.map(item=>{
-            	return <Product product={item} className={css.like_item} check/>
-            })}
+            <div className={css.product_list}>
+	            {this.state.products.map(item=>{
+	            	return <Product product={item} className={css.product_item} check/>
+	            })}
+            </div>
 		</div>
 
 	}

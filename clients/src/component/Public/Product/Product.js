@@ -11,7 +11,8 @@ import {
 } from 'react-router';
 import {
     Card,
-    Icon
+    Icon,
+    Checkbox
 } from 'antd';
 
 class Product extends React.Component {
@@ -34,7 +35,7 @@ class Product extends React.Component {
 
     render() {
         return <Card className={`${css.product} ${this.props.className}`}bodyStyle={{ padding: 0 }}>
-            {this.props.check?<Checkbox onChange={onChange}></Checkbox>:""}
+            {this.props.check?<Checkbox onChange={this.onChange}></Checkbox>:""}
             <Link to={"main/product-detail/"+this.props.product.id}>
                 <div className={css.custom_image}>
                     <img alt="example" width="100%" src={this.props.product.img}/>

@@ -168,7 +168,7 @@ const zh_CN = {
     "mine.message.system": "系统信息",
     "mine.message.consult": "疑难解答",
     "mine.favorite": "我的收藏",
-    "mine.favorite.goods": "收藏产品",
+    "mine.favorite.product": "收藏产品",
     "mine.favorite.brand": "收藏店铺",
     "mine.agent": "注册代理商",
     "mine.supplier": "注册供应商",

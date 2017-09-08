@@ -31,9 +31,10 @@ class Mine extends React.Component {
     handleClick = (e) => {
         console.log('click ', e);
     }
-    handleMenu=(key)=>{
+    handleMenu=(key,url)=>{
         console.log(key);
-        this.setState({select:key})
+        this.setState({select:key});
+        window.location.href = "/#"+url;
     }
 
     render() {
@@ -47,7 +48,7 @@ class Mine extends React.Component {
                     </p>
                     {menu.list.map(item=> {
                         return <p className={this.state.select == item.key ? css.active : css.item}
-                            onClick={this.handleMenu.bind(this,item.key)}
+                            onClick={this.handleMenu.bind(this,item.key,item.url)}
                         >
                             <i>●</i>&nbsp;&nbsp;
                             <FormattedMessage id={item.title} defaultMessage="分类"/>

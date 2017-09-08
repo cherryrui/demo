@@ -24,7 +24,7 @@ export default {
         }, {
             name: "mine.favorite",
             list: [
-                {key: 4000, title: "mine.favorite.goods", url: "/main/"},
+                {key: 4000, title: "mine.favorite.product", url: "/main/mine/favorite-product"},
                 {key: 4001, title: "mine.favorite.brand", url: "/main/"},
             ]
         }, {
