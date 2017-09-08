@@ -53,6 +53,7 @@
 %item{
 	background: $color-grey;
 	padding: 20px;
+	margin-bottom: 20px;
 }
 %content{
 	background: white;
@@ -61,14 +62,13 @@
 }
 .order{
 	@extend %item;
-	margin-bottom: 20px;
 }
 .order_content{
 	@extend %content;
 	.order_item{
 	    flex-grow: 1;
     	flex-shrink: 0;
-    	padding: 50px 0;
+    	padding: 30px 0;
     	display: flex;
     	align-items: center;
 	}
@@ -86,7 +86,10 @@
 	@extend %item;
 }
 .demand_content{
-	@extend %content;
+	@extend .order_content;
+	.order_num{
+		color: $font-color;
+	}
 }
 .favorite{
 	@extend %item;
@@ -94,5 +97,35 @@
 	margin-left: 2%
 }
 .favorite_content{
-	@extend %content;
+	@extend .order_content;
+	.order_num{
+		color: $font-color;
+	}
+}
+.like{
+	@extend %item;
+}
+.like_title{
+	display: flex;
+	justify-content: space-between;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+.like_content{
+	.like_product{
+		display: flex;
+    	background: white;
+    	border-bottom: $border-color 1px dashed;
+	}
+	.like_brand{
+		display: flex;
+    	background: white;
+	}
+	.like_item{
+		width: 19%;
+    	margin: 10px 0.5%;
+    	padding: 10px;
+	}
+
 }

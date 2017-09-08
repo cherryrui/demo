@@ -21,6 +21,7 @@ import {
     Rate
 } from 'antd';
 
+import Brand from '../Public/Brand/Brand.js';
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 const TabPane = Tabs.TabPane;
@@ -155,7 +156,7 @@ class BranchList extends React.Component {
             </div>
             <div className={css.branch}>
             {this.state.brand.map(item=>{
-                return <Branch branch={item} className={css.item}/>
+                return <Brand branch={item} showStar className={css.item}/>
             })}
             </div>
             <div className={css.footer}>
@@ -170,27 +171,5 @@ class BranchList extends React.Component {
         </div>
     }
 }
-class Branch extends React.Component {
 
-
-    render() {
-        return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{ padding: 0 }}>
-            <Link to={"main/branch-detail/"+this.props.branch.id}>
-                <div>
-                    <span className={`${appcss.custom_icon} ${this.props.branch.rz?css.icon_rz_active:css.icon_rz}`}/>
-                    <span className={`${appcss.custom_icon} ${this.props.branch.hz?css.icon_hz_active:css.icon_hz}`}/>
-                </div>
-                <div className={css.custom_image}>
-                    <img alt="example" width="100%" src={this.props.branch.img} />
-                </div>
-                <p className={css.name}>{this.props.branch.name}</p>
-                <p className={css.foot}>
-                    <FormattedMessage id="branch.product.rate" defaultMessage="评分"/>
-                    <Rate className={css.rating} allowHalf defaultValue={this.props.branch.rating} disabled />
-                    <span>{this.props.branch.rating}</span>
-                </p>
-            </Link>
-        </Card>
-    }
-}
 export default BranchList;

@@ -6,6 +6,8 @@ import appcss from '../../App.scss';
 import css from './PersonCenter.scss';
 import axios from 'axios';
 import operator from './operator.js';
+import Brand from '../Public/Brand/Brand.js';
+import Product from '../Public/Product/Product.js';
 import {
     FormattedMessage,
     injectIntl,
@@ -16,21 +18,31 @@ import {
     Avatar
 } from 'antd';
 
+
+
 class PersonCenter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             user: {},
             message_list: [],
+            products: [],
+            brands: [],
 
         }
 
     }
     componentWillMount() {
         this.state.user = JSON.parse(localStorage.user);
-        axios.get("/user/get-recent-message.json").then(res => {
-            this.setState({
-                message_list: res.data.message
+        axios.get("/user/get-recent-message.json").then(res_m => {
+            axios.get('/product/get-like-product.json').then(res_P => {
+                axios.get('/brand/get-like-brand.json').then(res_b => {
+                    this.setState({
+                        message_list: res_m.data.message,
+                        products: res_P.data.products,
+                        brands: res_b.data.brands
+                    })
+                })
             })
         })
     }
@@ -101,8 +113,7 @@ class PersonCenter extends React.Component {
                                 </div>
                             </div>
                     })}
-                    </div>
-                    
+                    </div>                    
                 </div>
                 <div className={css.favorite}>
                     <p className={css.title_item}>
@@ -121,8 +132,27 @@ class PersonCenter extends React.Component {
                             </div>
                         })}
                     </div>
-
+                </div>               
+            </div>
+            <div className={css.like}>
+                <div className={css.like_title}>
+                    <FormattedMessage id="mine.my.message" defaultMessage="分类"/>
+                    <Button type="primary" size="small">
+                        <FormattedMessage id="app.more" defaultMessage="分类"/>
+                    </Button>    
                 </div>
+                <div className={css.like_content}>
+                    <div className={css.like_product}>
+                        {this.state.products.map(item=>{
+                            return <Product no_price product={item} className={css.like_item}/>
+                        })}
+                    </div>
+                    <div className={css.like_brand}>
+                        {this.state.brands.map(item=>{
+                            return <Brand branch={item} className={css.like_item}/>
+                        })}
+                    </div>  
+                </div>                 
             </div>
         </div>
     }

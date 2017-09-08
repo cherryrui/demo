@@ -296,5 +296,42 @@ router.get('/get-conditions.json', async(ctx, next) => {
 		}
 
 	})
+    .get('/get-like-product.json',async(ctx,next)=>{
+    let products = [];
+    products = [{
+        id: 1,
+        name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
+        price: 2132,
+        img: '../img/product.jpg'
+    }, {
+        id: 2,
+        name: "dsds",
+        price: 2132,
+        img: '../img/product.jpg'
+    }, {
+        id: 3,
+        name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
+        price: 2132,
+        img: '../img/product.jpg'
+    }, {
+        id: 4,
+        name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
+        price: 2132,
+        img: '../img/product.jpg'
+    }, {
+        id: 5,
+        name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
+        price: 2132,
+        img: '../img/product.jpg'
+    }, {
+        id: 6,
+        name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
+        price: 2132,
+        img: '../img/product.jpg'
+    },];
+    ctx.body={
+        products: products
+    }
+})
 
 module.exports = router;

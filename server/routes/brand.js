@@ -63,4 +63,37 @@ router.get('/get-recommend-brand.json', async(ctx, next) => {
 			brand: brand
 		}
 	})
+    .get('/get-like-brand.json',async(ctx,next)=>{
+        let brands = [];
+        brands= [{
+            id: 1,
+            name: "Tools",
+            rating: 4.5,
+            img: '../img/br_bg_1.jpg'
+        }, {
+            id: 2,
+            name: "Building Materials",
+            rating: 4.5,
+            img: '../img/br_bg_1.jpg'
+        }, {
+            id: 3,
+            name: "Machinery",
+            rating: 4.5,
+            img: '../img/br_bg_1.jpg'
+        }, {
+            id: 4,
+            name: "Mechanical components",
+            rating: 4.5,
+            img: '../img/br_bg_1.jpg'
+        }, {
+            id: 5,
+            name: "Labor protection",
+            rating: 4.5,
+            img: '../img/br_bg_1.jpg'
+        },]
+        ctx.body={
+            brands: brands
+        }
+
+    })
 module.exports = router;

@@ -1,0 +1,39 @@
+@import "../../../themes";
+
+.custom_image{
+    padding: 0 15%;
+}
+.name{
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: $font-color;
+}
+.foot{
+    padding: 10px;
+    text-align: center;
+    color: $font-color;
+    .rating{
+      font-size: 14px;
+      li{
+        cursor: default;
+        margin-bottom: 5px;
+      }
+    }
+}
+.icon_rz:before{
+    content: "\e900";
+    color: $color-grey;
+}
+.icon_rz_active:before{
+  content: "\e900";
+  color: $color-orange;
+}
+.icon_hz:before{
+    content: "\e902";
+    color: $color-grey;
+}
+.icon_hz_active:before{
+  content: "\e902";
+  color: $color-green;
+}
