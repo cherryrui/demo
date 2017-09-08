@@ -150,7 +150,7 @@ class PersonCenter extends React.Component {
                     </div>
                     <div className={css.like_brand}>
                         {this.state.brands.map(item=>{
-                            return <Brand branch={item} className={css.like_item}/>
+                            return <Brand brand={item} className={css.like_item}/>
                         })}
                     </div>  
                 </div>                 
