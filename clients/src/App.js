@@ -40,6 +40,7 @@ import Authentication from './component/Authentication/Authentication.js';
 import RePassword from './component/RePassword/RePassword.js';
 import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
 import OrderList from './component/OrderList/OrderList.js';
+import FavoriteProduct from './component/FavoriteProduct/FavoriteProduct.js';
 import {
     Provider
     } from 'react-redux';
@@ -270,8 +271,9 @@ ReactDOM.render(
                         <Route path="mine" component={Mine}>
                             <IndexRoute component={PersonCenter}/>
                             <Route path="message" component={Message}/>
-                            <Route path="SystemMessage" component={SystemMessage}/>
-                            <Route path="OrderList" component={OrderList}/>
+                            <Route path="system-message" component={SystemMessage}/>
+                            <Route path="order-list" component={OrderList}/>
+                            <Route path="favorite-product" component={FavoriteProduct}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>

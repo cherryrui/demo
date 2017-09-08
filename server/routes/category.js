@@ -276,5 +276,36 @@ router.get('/get-category.json', async(ctx, next) => {
 			category: category
 		}
 	})
+	.get('/get-favorite-category.json', async(ctx, next) => {
+		let category = [];
+		categorys = [{
+			id: 1,
+			name: "Category name"
+		}, {
+			id: 2,
+			name: "Category name"
+		}, {
+			id: 3,
+			name: "Category name"
+		}, {
+			id: 4,
+			name: "Category name"
+		}, {
+			id: 5,
+			name: "Category name"
+		}, {
+			id: 6,
+			name: "Category name"
+		}, {
+			id: 7,
+			name: "Category name"
+		}, {
+			id: 8,
+			name: "Category name"
+		}, ]
+		ctx.body = {
+			category: category
+		}
+	})
 
 module.exports = router;

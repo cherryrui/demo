@@ -4,6 +4,7 @@
 import React from 'react';
 import appcss from '../../App.scss';
 import css from './PersonCenter.scss';
+import basecss from '../Mine/Mine.scss';
 import axios from 'axios';
 import operator from './operator.js';
 import Brand from '../Public/Brand/Brand.js';
@@ -50,7 +51,7 @@ class PersonCenter extends React.Component {
     render() {
 
         return <div class={css.center}>
-            <div className={css.title}>
+            <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person" defaultMessage="分类"/>
             </div>
             <div className={css.user}>

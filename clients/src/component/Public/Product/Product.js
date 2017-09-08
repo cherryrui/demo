@@ -28,9 +28,13 @@ class Product extends React.Component {
     handleStar = () => {
         this.props.handleStar ? this.props.handleStar() : "";
     }
+    onChange = () => {
+
+    }
 
     render() {
         return <Card className={`${css.product} ${this.props.className}`}bodyStyle={{ padding: 0 }}>
+            {this.props.check?<Checkbox onChange={onChange}></Checkbox>:""}
             <Link to={"main/product-detail/"+this.props.product.id}>
                 <div className={css.custom_image}>
                     <img alt="example" width="100%" src={this.props.product.img}/>
