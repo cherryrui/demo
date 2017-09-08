@@ -21,11 +21,11 @@ import en_message from '../locale/en_message';
 import Main from './component/Main/Main.js';
 import Login from './component/Login/Login.js';
 import CategoryList from './component/CategoryList/CategoryList.js';
-import BranchList from './component/BranchList/BranchList.js';
+import BrandList from './component/BrandList/BrandList.js';
 import ProductList from './component/ProductList/ProductList.js';
 import ShoppingCart from './component/ShoppingCart/ShoppingCart.js';
 import ProductDetail from './component/ProductDetail/ProductDetail.js';
-import BranchDetail from './component/BranchDetail/BranchDetail.js';
+import BrandDetail from './component/BrandDetail/BrandDetail.js';
 import PostWant from './component/PostWant/PostWant.js';
 import Home from './component/Home/Home.js';
 import Cart from './component/Cart/Cart.js';
@@ -40,10 +40,10 @@ import Authentication from './component/Authentication/Authentication.js';
 import RePassword from './component/RePassword/RePassword.js';
 import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
 import OrderList from './component/OrderList/OrderList.js';
-import FavoriteProduct from './component/FavoriteProduct/FavoriteProduct.js';
+import Favorite from './component/Favorite/Favorite.js';
 import {
     Provider
-    } from 'react-redux';
+} from 'react-redux';
 import {
     FormattedMessage,
     addLocaleData,
@@ -247,7 +247,7 @@ class App extends React.Component {
 
 let div = document.createElement('div');
 div.className = css.index;
-console.log(239,store);
+console.log(239, store);
 ReactDOM.render(
     (<LocaleProvider locale={appLocale.antd} >
         <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
@@ -258,11 +258,11 @@ ReactDOM.render(
                     <Route path="main" component={Home}>
                         <IndexRoute component={Main}/>
                         <Route path="category-list/:id" component={CategoryList}/>
-                        <Route path="branch-list" component={BranchList}/>
+                        <Route path="brand-list" component={BrandList}/>
                         <Route path="product-list/:info" component={ProductList}/>
                         <Route path="shopping-cart" component={ShoppingCart}/>
                         <Route path="product-detail/:id" component={ProductDetail}/>
-                        <Route path="branch-detail/:id" component={BranchDetail}/>
+                        <Route path="brand-detail/:id" component={BrandDetail}/>
                         <Route path="post-want" component={PostWant}/>
                         <Route path="cart" component={Cart}/>
                         <Route path="quotation" component={Quotation}/>
@@ -273,7 +273,7 @@ ReactDOM.render(
                             <Route path="message" component={Message}/>
                             <Route path="system-message" component={SystemMessage}/>
                             <Route path="order-list" component={OrderList}/>
-                            <Route path="favorite-product" component={FavoriteProduct}/>
+                            <Route path="favorite/:type" component={Favorite}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>

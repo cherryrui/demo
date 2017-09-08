@@ -21,19 +21,19 @@ class Brand extends React.Component {
 
     render() {
         return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{ padding: 0 }}>
-            <Link to={"main/branch-detail/"+this.props.branch.id}>
+            <Link to={"main/brand-detail/"+this.props.brand.id}>
                 <div>
-                    <span className={`${appcss.custom_icon} ${this.props.branch.rz?css.icon_rz_active:css.icon_rz}`}/>
-                    <span className={`${appcss.custom_icon} ${this.props.branch.hz?css.icon_hz_active:css.icon_hz}`}/>
+                    <span className={`${appcss.custom_icon} ${this.props.brand.rz?css.icon_rz_active:css.icon_rz}`}/>
+                    <span className={`${appcss.custom_icon} ${this.props.brand.hz?css.icon_hz_active:css.icon_hz}`}/>
                 </div>
                 <div className={css.custom_image}>
-                    <img alt="example" width="100%" src={this.props.branch.img} />
+                    <img alt="example" width="100%" src={this.props.brand.img} />
                 </div>
-                <p className={css.name}>{this.props.branch.name}</p>
+                <p className={css.name}>{this.props.brand.name}</p>
                 {this.props.showStar?<p className={css.foot}>
-                    <FormattedMessage id="branch.product.rate" defaultMessage="评分"/>
-                    <Rate className={css.rating} allowHalf defaultValue={this.props.branch.rating} disabled />
-                    <span>{this.props.branch.rating}</span>
+                    <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>
+                    <Rate className={css.rating} allowHalf defaultValue={this.props.brand.rating} disabled />
+                    <span>{this.props.brand.rating}</span>
                 </p>:""}
             </Link>
         </Card>

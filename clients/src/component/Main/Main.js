@@ -100,7 +100,7 @@ class Main extends React.Component {
 
                 >
                    {this.state.brand.map(item => {
-                       return <Link className={css.slider_item} to={"main/branch-detail/"+item.id}>
+                       return <Link className={css.slider_item} to={"main/brand-detail/"+item.id}>
                        <Card className={css.slider_card} >
                            <div className={css.custom_image}>
                                <img alt="example" width="30%" src={item.img} />
@@ -115,7 +115,7 @@ class Main extends React.Component {
                 </Slider>:""}
             </div>
             <div className={css.brand_button}>
-                <Link  to="main/branch-list">
+                <Link  to="main/brand-list">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
@@ -187,16 +187,16 @@ class Category extends React.Component {
                     </Card>
                 </div>
                 <div className={css.right}>
-                    <Link to={"main/branch-detail/"+item.branch[0].id}>
-                        <img style={{width: "60%",margin: "0 20%"}} src={item.branch[0].img}/>
-                        <p className={css.title} style={{paddingBottom: 0}}>{item.branch[0].name}</p>
-                        <p className={css.content} style={{padding: "10px"}}>{item.branch[0].descrip}</p>
+                    <Link to={"main/brand-detail/"+item.brand[0].id}>
+                        <img style={{width: "60%",margin: "0 20%"}} src={item.brand[0].img}/>
+                        <p className={css.title} style={{paddingBottom: 0}}>{item.brand[0].name}</p>
+                        <p className={css.content} style={{padding: "10px"}}>{item.brand[0].descrip}</p>
                     </Link>
                     <Card bordered={false} noHovering>
-                        {item.branch.map((branch,index)=>{
-                            return (index>0&&index<7?<Link to={"main/branch-detail/"+branch.id}>
+                        {item.brand.map((brand,index)=>{
+                            return (index>0&&index<7?<Link to={"main/brand-detail/"+brand.id}>
                                 <Card.Grid className={css.card} style={{padding:"5px"}}>
-                                    <img style={{width:"100%"}} src={branch.img}/>
+                                    <img style={{width:"100%"}} src={brand.img}/>
                             </Card.Grid>
                         </Link>:"")
                         })}

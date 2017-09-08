@@ -73,7 +73,7 @@ class Cart extends React.Component {
                         <p >{record.name}</p>
                         <p>
                             <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
-                            {record.branch}
+                            {record.brand}
                         </p>
                         <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/></p>
                         <p>{record.name}</p>
@@ -435,7 +435,7 @@ class Cart extends React.Component {
                     </div>
                     <div className={css.right}>
                         <p className={css.total}>
-                            <FormattedMessage id="branch.product.sum" 
+                            <FormattedMessage id="brand.product.sum"
                                 defaultMessage="总计"
                                 values={{total:this.state.selectedRowKeys.length}}
                             />
@@ -490,7 +490,7 @@ class OrderDetail extends React.Component {
                         <p >{record.name}</p>
                         <p>
                             <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
-                            {record.branch}
+                            {record.brand}
                         </p>
                         <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>{record.moq}</p>
                         <p>{record.name}</p>

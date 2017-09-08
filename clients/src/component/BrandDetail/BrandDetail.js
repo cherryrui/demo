@@ -1,6 +1,6 @@
 import React from 'react';
 import appcss from '../../App.scss';
-import css from './BranchDetail.scss';
+import css from './BrandDetail.scss';
 import axios from 'axios';
 import {
 	Breadcrumb,
@@ -19,7 +19,7 @@ import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 import Product from '../Public/Product/Product.js';
 
-class BranchDetail extends React.Component {
+class BrandDetail extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -45,7 +45,7 @@ class BranchDetail extends React.Component {
 		this.getProduct();
 	}
 	componentDidMount() {
-		this.branch_detail.scrollIntoView(true);
+		this.brand_detail.scrollIntoView(true);
 	}
 
 	/**
@@ -98,7 +98,7 @@ class BranchDetail extends React.Component {
 
 	render() {
 
-		return <div className={appcss.body} ref={(branch_detail)=>this.branch_detail=branch_detail} >
+		return <div className={appcss.body} ref={(brand_detail)=>this.brand_detail=brand_detail} >
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
@@ -113,11 +113,11 @@ class BranchDetail extends React.Component {
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
-            <div className={css.branch_info}>
+            <div className={css.brand_info}>
                 <div className={css.img}>
             		<img src={this.state.brand.img}/>
             		<p className={css.star}>
-                		<FormattedMessage id="branch.product.rate" defaultMessage="评分"/>
+                		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>
                 		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.rating} disabled />
                 		<span>{this.state.brand.rating}</span>
            			</p>
@@ -146,7 +146,7 @@ class BranchDetail extends React.Component {
                     <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Sale"/>
                 </div>
                 <div className={css.right}>
-                    <FormattedMessage id="branch.product.sum" defaultMessage="总计"
+                    <FormattedMessage id="brand.product.sum" defaultMessage="总计"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
                     <Pagination size="small" total={this.state.total} simple onChange={this.handleChange}  />
@@ -160,7 +160,6 @@ class BranchDetail extends React.Component {
             <div className={css.footer}>
                 <Pagination 
                 showSizeChanger 
-                size="small" 
                 onChange={this.handleChange} 
                 onShowSizeChange={this.onShowSizeChange} 
                 defaultCurrent={1} total={this.state.total} />
@@ -168,4 +167,4 @@ class BranchDetail extends React.Component {
 		</div>
 	}
 }
-export default BranchDetail;
+export default BrandDetail;

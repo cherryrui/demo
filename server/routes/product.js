@@ -334,7 +334,8 @@ router.get('/get-conditions.json', async(ctx, next) => {
 		}
 	})
 	.get('/get-favorite-product.json', async(ctx, next) => {
-		let products = [];
+		let products = [],
+			total = 99;
 		products = [{
 			id: 1,
 			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
@@ -367,7 +368,8 @@ router.get('/get-conditions.json', async(ctx, next) => {
 			img: '../img/product.jpg'
 		}, ];
 		ctx.body = {
-			products: products
+			products: products,
+			total: total
 		}
 	})
 

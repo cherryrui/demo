@@ -278,7 +278,7 @@ router.get('/get-category.json', async(ctx, next) => {
 	})
 	.get('/get-favorite-category.json', async(ctx, next) => {
 		let category = [];
-		categorys = [{
+		category = [{
 			id: 1,
 			name: "Category name"
 		}, {

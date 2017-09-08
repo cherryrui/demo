@@ -57,7 +57,7 @@ class Main extends React.Component {
             key: 2,
             message_id: "app.brand",
             default_message: "供应商",
-            url: "/#/main/branch-list"
+            url: "/#/main/brand-list"
         }, {
             key: 3,
             message_id: "app.news",

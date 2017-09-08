@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import appcss from '../../App.scss';
-import css from './BranchList.scss';
+import css from './BrandList.scss';
 import axios from 'axios';
 import {
     Link
@@ -26,7 +26,7 @@ import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 const TabPane = Tabs.TabPane;
 
-class BranchList extends React.Component {
+class BrandList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -71,7 +71,7 @@ class BranchList extends React.Component {
     }
     componentDidMount() {
         //回到顶点
-        this.branch_list.scrollIntoView();
+        this.brand_list.scrollIntoView();
     }
 
     /**
@@ -122,7 +122,7 @@ class BranchList extends React.Component {
     }
 
     render() {
-        return <div ref={(branch_list)=>this.branch_list=branch_list} className={appcss.body}>
+        return <div ref={(brand_list)=>this.brand_list=brand_list} className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
@@ -148,15 +148,15 @@ class BranchList extends React.Component {
                     <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Sale"/>
                 </div>
                 <div className={css.right}>
-                    <FormattedMessage id="branch.product.sum" defaultMessage="共{total}商品"
+                    <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
                     <Pagination size="small" simple total={50} onChange={this.handleChange} />
                 </div>
             </div>
-            <div className={css.branch}>
+            <div className={css.brand}>
             {this.state.brand.map(item=>{
-                return <Brand branch={item} showStar className={css.item}/>
+                return <Brand brand={item} showStar className={css.item}/>
             })}
             </div>
             <div className={css.footer}>
@@ -172,4 +172,4 @@ class BranchList extends React.Component {
     }
 }
 
-export default BranchList;
+export default BrandList;

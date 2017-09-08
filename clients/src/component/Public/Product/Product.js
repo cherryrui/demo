@@ -30,12 +30,12 @@ class Product extends React.Component {
         this.props.handleStar ? this.props.handleStar() : "";
     }
     onChange = () => {
-
+        this.props.onCheck ? this.props.onCheck(this.props.product.id) : "";
     }
 
     render() {
         return <Card className={`${css.product} ${this.props.className}`}bodyStyle={{ padding: 0 }}>
-            {this.props.check?<Checkbox onChange={this.onChange}></Checkbox>:""}
+            {this.props.check?<Checkbox checked={this.props.product.checked?true:false}onChange={this.onChange}></Checkbox>:""}
             <Link to={"main/product-detail/"+this.props.product.id}>
                 <div className={css.custom_image}>
                     <img alt="example" width="100%" src={this.props.product.img}/>

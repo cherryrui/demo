@@ -152,7 +152,7 @@ router.get('/get-title-data.json', async(ctx, next) => {
 					price: 2132,
 					img: '../img/product.jpg'
 				}, ],
-				branch: [{
+				brand: [{
 					id: 0,
 					name: "SUPPLIER NAME",
 					descrip: "cc crowm in windows and doors cd..LTD is a independent research and development,production and sales of doors",
@@ -241,7 +241,7 @@ router.get('/get-title-data.json', async(ctx, next) => {
 					price: 2132,
 					img: '../img/product.jpg'
 				}, ],
-				branch: [{
+				brand: [{
 					id: 0,
 					name: "SUPPLIER NAME",
 					descrip: "cc crowm in windows and doors cd..LTD is a independent research and development,production and sales of doors",
@@ -330,7 +330,7 @@ router.get('/get-title-data.json', async(ctx, next) => {
 					price: 2132,
 					img: '../img/product.jpg'
 				}, ],
-				branch: [{
+				brand: [{
 					id: 0,
 					name: "SUPPLIER NAME",
 					descrip: "cc crowm in windows and doors cd..LTD is a independent research and development,production and sales of doors",
@@ -419,7 +419,7 @@ router.get('/get-title-data.json', async(ctx, next) => {
 					price: 2132,
 					img: '../img/product.jpg'
 				}, ],
-				branch: [{
+				brand: [{
 					id: 0,
 					name: "SUPPLIER NAME",
 					descrip: "cc crowm in windows and doors cd..LTD is a independent research and development,production and sales of doors",
