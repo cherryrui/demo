@@ -33,10 +33,13 @@ import Quotation from './component/Quotation/Quotation.js';
 import Mine from './component/Mine/Mine.js';
 import PersonCenter from './component/PersonCenter/PersonCenter.js';
 import About from './component/About/About.js';
+import Message from './component/Message/Message.js';
+import SystemMessage from './component/SystemMessage/SystemMessage.js';
 import Register from './component/Register/Register.js';
 import Authentication from './component/Authentication/Authentication.js';
 import RePassword from './component/RePassword/RePassword.js';
 import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
+import OrderList from './component/OrderList/OrderList.js';
 import {
     Provider
     } from 'react-redux';
@@ -266,6 +269,9 @@ ReactDOM.render(
                         </Route>
                         <Route path="mine" component={Mine}>
                             <IndexRoute component={PersonCenter}/>
+                            <Route path="message" component={Message}/>
+                            <Route path="SystemMessage" component={SystemMessage}/>
+                            <Route path="OrderList" component={OrderList}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
