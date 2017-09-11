@@ -108,7 +108,7 @@ class QuotationPdf extends React.Component {
 				</p>
 				<p>
 					<FormattedMessage id="quotation.create_time" defaultMessage="报价单"/>
-					：{this.props.quotation.create_time?this.props.quotation.create_time:moment().format('YYYY-MM-DD')}
+					：{this.props.quotation.create_time?moment(this.props.quotation.create_time).format('YYYY-MM-DD'):moment().format('YYYY-MM-DD')}
 				</p>
 			</p>
 			<div className={css.infomation}>

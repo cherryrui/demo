@@ -41,6 +41,8 @@ import RePassword from './component/RePassword/RePassword.js';
 import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
 import OrderList from './component/OrderList/OrderList.js';
 import Favorite from './component/Favorite/Favorite.js';
+import QuotationList from './component/QuotationList/QuotationList.js';
+import ProductEditor from './component/ProductEditor/ProductEditor.js';
 import {
     Provider
 } from 'react-redux';
@@ -265,7 +267,7 @@ ReactDOM.render(
                         <Route path="brand-detail/:id" component={BrandDetail}/>
                         <Route path="post-want" component={PostWant}/>
                         <Route path="cart" component={Cart}/>
-                        <Route path="quotation" component={Quotation}/>
+                        <Route path="quotation(/:id)" component={Quotation}/>
                         <Route path="about" component={About}>
                         </Route>
                         <Route path="mine" component={Mine}>
@@ -274,6 +276,8 @@ ReactDOM.render(
                             <Route path="system-message" component={SystemMessage}/>
                             <Route path="order-list" component={OrderList}/>
                             <Route path="favorite/:type" component={Favorite}/>
+                            <Route path="quotation-list" component={QuotationList}/>
+                            <Route path="product-editor" component={ProductEditor}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
@@ -281,6 +285,7 @@ ReactDOM.render(
                     <Route path="authentication" component={Authentication}/>
                     <Route path="rePassword" component={RePassword}/>
                     <Route path="registerComplete" component={RegisterComplete}/>
+                    
                 </Route>
             </Router>
             </Provider>

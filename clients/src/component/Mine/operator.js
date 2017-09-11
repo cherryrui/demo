@@ -36,13 +36,20 @@ export default {
             url: "/main/"
         }, ]
     }, {
-        name: "mine.favorite",
+        name: "mine.agent.center",
         list: [{
             key: 4000,
+            title: "mine.quotation.list",
+            url: "/main/mine/quotation-list"
+        }]
+    }, {
+        name: "mine.favorite",
+        list: [{
+            key: 5000,
             title: "mine.favorite.product",
             url: "/main/mine/favorite/1"
         }, {
-            key: 4001,
+            key: 5001,
             title: "mine.favorite.brand",
             url: "/main/mine/favorite/2"
         }, ]

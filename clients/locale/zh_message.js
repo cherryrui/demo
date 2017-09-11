@@ -135,7 +135,7 @@ const zh_CN = {
     "cart.address.address": "请输入送达详细地址",
     "cart.address.tel": "请输入收货人联系电话",
     "cart.address.default": "设置为默认地址",
-    "cart.see.order": "查看订单",
+    "cart.see.order": "查看",
     "cart.select.product": "请先选择产品",
     "quotation.sale.price": "销售价",
     "quotation.platform.price": "平台销售价",
@@ -147,6 +147,7 @@ const zh_CN = {
     "quotation.contact.name": "联系人",
     "quotation.contact.tel": "电话",
     "quotation.contact.email": "邮箱",
+    "quotation.contact.fox": "传真",
     "quotation.subject": "报价单主题",
     "quotation.valid.date": "截止有效期",
     "quotation.invoice": "发票类型",
@@ -154,6 +155,7 @@ const zh_CN = {
     "quotation.online": "在线预览",
     "quotation.export": "导出报价单",
     "quotation.generate": "生成报价单",
+    "quotation.save": "保存报价单",
     "special.vat.invoice": "增值锐专用发票",
     "vat.invoice": "增值锐发票",
     "ordinary.invoice": "普通发票",
@@ -172,7 +174,23 @@ const zh_CN = {
     "mine.favorite.brand": "收藏店铺",
     "mine.agent": "注册代理商",
     "mine.supplier": "注册供应商",
+    "mine.agent.center": "代理中心",
+    "mine.quotation.list": "报价单列表",
     "mine.my.message": "我的消息",
+    "mine.quotation.placeholder": "请输入报价单编号或者主题",
+    "mine.quotation.information": "报价单信息",
+    "mine.quotation.total": "总数量",
+    "mine.quotation.agent_total": "总代理价",
+    "mine.quotation.create_order": "生成订单",
+    "mine.quotation.order_success": "订单创建成功",
+
+    "mine.product.basic": "基础信息",
+    "mine.product.attributes": "产品规格",
+    "mine.product.param": "规格参数",
+    "mine.product.introduction": "产品介绍",
+    "mine.product.packaging": "套餐详情",
+
+
     "order.status.all": "所有",
 
     "app.about": "关于我们",
@@ -197,6 +215,8 @@ const zh_CN = {
     "quotation.no": "报价单编号",
     "quotation.create_time": "创建时间",
     "quotation.ps": "若想了解更多信息请访问我们的网站：www.chuanchuan.com",
+
+
 
 }
 export default zh_CN;

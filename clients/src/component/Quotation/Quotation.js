@@ -3,6 +3,7 @@ import React from 'react';
 import css from './Quotation.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
+import moment from 'moment';
 import QuotationPdf from '../QuotationPdf/QuotationPdf.js';
 import ModalHeader from '../Public/ModalHeader/ModalHeader.js';
 import {
@@ -124,14 +125,23 @@ class Quotation extends React.Component {
 		}, ]
 	}
 	componentWillMount() {
-		let quotation = JSON.parse(localStorage.quotation);
-		let data = this.state.quotation;
-		data.products = quotation.products;
-		data.sale_price = quotation.sale_price;
-		data.profit = quotation.profit;
-		this.setState({
-			quotation: data
-		})
+		if (this.props.params.id) {
+			axios.get(`/quotation/get-quotation-byid.json?id=${this.props.params.id}`).then(res => {
+				this.setState({
+					quotation: res.data.quotation,
+				})
+			})
+
+		} else {
+			let quotation = JSON.parse(localStorage.quotation);
+			let data = this.state.quotation;
+			data.products = quotation.products;
+			data.sale_price = quotation.sale_price;
+			data.profit = quotation.profit;
+			this.setState({
+				quotation: data
+			})
+		}
 	}
 	getProfile(products) {
 		let profits = 0,
@@ -180,22 +190,26 @@ class Quotation extends React.Component {
 	}
 	handleInfo = (type, name, e) => {
 		console.log(type, name, e);
+		let quotation = this.state.quotation;
 		switch (type) {
 			case 0:
-				this.state.quotation[name] = e.target.value;
+				quotation[name] = e.target.value;
 				break;
 			case 1: //保存客户信息
-				this.state.quotation.clients[name] = e.target.value;
+				quotation.clients[name] = e.target.value;
 				break;
 			case 2: //保存代理商信息
-				this.state.quotation.agent_price[name] = e.target.value;
+				quotation.agent_price[name] = e.target.value;
 				break;
 			case 3:
-				this.state.quotation[name] = e;
+				quotation[name] = e;
 				break;
 			default:
 				break;
 		}
+		this.setState({
+			quotation: quotation
+		})
 
 	}
 	onChange = (field, value) => {
@@ -283,7 +297,22 @@ class Quotation extends React.Component {
 		console.log(this.state.width);
 		return <div className={appcss.body} ref={(quotation)=>this.quotation=quotation}>
             <div className={appcss.navigate}>
-                <Breadcrumb separator=">>">
+            	{this.state.quotation.id?<Breadcrumb separator=">>">
+                    <Breadcrumb.Item >
+                        <Link to="main/mine">
+                            <FormattedMessage id="mine.person" defaultMessage="个人中心"/>
+                        </Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item >
+                        <Link to="main/mine/quotation-list">
+                            <FormattedMessage id="mine.quotation.list" defaultMessage="报价单列表"/>
+                        </Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        {this.state.quotation.subject}
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+                :<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="main/cart">
                             <FormattedMessage id="cart.cart" defaultMessage="分类"/>
@@ -292,7 +321,7 @@ class Quotation extends React.Component {
                     <Breadcrumb.Item>
                         <FormattedMessage id="quotation.generate" defaultMessage={this.state.search}/>
                     </Breadcrumb.Item>
-                </Breadcrumb>
+                </Breadcrumb>}
             </div>
             <Table 
                 pagination={false}
@@ -315,7 +344,7 @@ class Quotation extends React.Component {
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
-            		<Input size="large" type="number" className={css.sum_right} 
+            		<Input size="large" type="number" value={this.state.quotation.postage} className={css.sum_right} 
             		onChange={this.handleInfo.bind(this,0,"postage")} />
             	</p>
             </div>
@@ -333,37 +362,37 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
-	            		<Input size='large' onChange={this.handleInfo.bind(this,1,"company")} />
+	            		<Input size='large' value={this.state.quotation.clients.company} onChange={this.handleInfo.bind(this,1,"company")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.department" defaultMessage="部门"/>:
 	            		</p>
-	            		<Input size='large' onChange={this.handleInfo.bind(this,1,"department")} />
+	            		<Input size='large' value={this.state.quotation.clients.department} onChange={this.handleInfo.bind(this,1,"department")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.name" defaultMessage="联系人"/>:
 	            		</p>
-	            		<Input size='large' onChange={this.handleInfo.bind(this,1,"name")} />
+	            		<Input size='large' value={this.state.quotation.clients.name} onChange={this.handleInfo.bind(this,1,"name")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.tel" defaultMessage="电话"/>:
 	            		</p>
-	            		<Input size='large' onChange={this.handleInfo.bind(this,1,"tel")} />
+	            		<Input size='large' value={this.state.quotation.clients.tel} onChange={this.handleInfo.bind(this,1,"tel")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.email" defaultMessage="邮箱"/>:
 	            		</p>
-	            		<Input size='large' onChange={this.handleInfo.bind(this,1,"email")} />
+	            		<Input size='large' value={this.state.quotation.clients.email} onChange={this.handleInfo.bind(this,1,"email")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
-	            			<FormattedMessage id="app.home" defaultMessage="分类"/>:
+	            			<FormattedMessage id="quotation.contact.fox" defaultMessage="传真"/>:
 	            		</p>
-	            		<Input size='large' onChange={this.handleInfo.bind(this,1,"fox")} />
+	            		<Input size='large' value={this.state.quotation.clients.fox} onChange={this.handleInfo.bind(this,1,"fox")} />
 	            	</p>
             	</div>
             	<div className={css.right}>
@@ -371,37 +400,37 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
-	            		<Input size='large' defaultValue={this.state.quotation.agent.company} onChange={this.handleInfo.bind(this,2,"company")} />
+	            		<Input size='large' value={this.state.quotation.agent.company} onChange={this.handleInfo.bind(this,2,"company")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.department" defaultMessage="部门"/>:
 	            		</p>
-	            		<Input size='large' defaultValue={this.state.quotation.agent.department} onChange={this.handleInfo.bind(this,2,"department")} />
+	            		<Input size='large' value={this.state.quotation.agent.department} onChange={this.handleInfo.bind(this,2,"department")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.name" defaultMessage="联系人"/>:
 	            		</p>
-	            		<Input size='large' defaultValue={this.state.quotation.agent.name} onChange={this.handleInfo.bind(this,2,"name")} />
+	            		<Input size='large' value={this.state.quotation.agent.name} onChange={this.handleInfo.bind(this,2,"name")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.tel" defaultMessage="电话"/>:
 	            		</p>
-	            		<Input size='large' defaultValue={this.state.quotation.agent.tel} onChange={this.handleInfo.bind(this,2,"tel")} />
+	            		<Input size='large' value={this.state.quotation.agent.tel} onChange={this.handleInfo.bind(this,2,"tel")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.email" defaultMessage="邮箱"/>:
 	            		</p>
-	            		<Input size='large' defaultValue={this.state.quotation.agent.email} onChange={this.handleInfo.bind(this,2,"email")} />
+	            		<Input size='large' value={this.state.quotation.agent.email} onChange={this.handleInfo.bind(this,2,"email")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
-	            			<FormattedMessage id="app.home" defaultMessage="分类"/>:
+	            			<FormattedMessage id="quotation.contact.fox" defaultMessage="传真"/>:
 	            		</p>
-	            		<Input size='large' defaultValue={this.state.quotation.agent.fox} onChange={this.handleInfo.bind(this,2,"fox")} />
+	            		<Input size='large' value={this.state.quotation.agent.fox} onChange={this.handleInfo.bind(this,2,"fox")} />
 	            	</p>
             	</div>
             </div>
@@ -409,7 +438,7 @@ class Quotation extends React.Component {
             	<p className={css.title}>
 	            	<FormattedMessage id="quotation.subject" defaultMessage="报价单主题"/>:
 	            </p>
-	            <Input size='large' onChange={this.handleInfo.bind(this,0,"subject")} />
+	            <Input size='large' value={this.state.quotation.subject} onChange={this.handleInfo.bind(this,0,"subject")} />
 	        </p>
 	        <p className={css.valid_date}>
             	<p className={css.title}>
@@ -418,6 +447,7 @@ class Quotation extends React.Component {
 	            <DatePicker
 	            	size="large"
 		          	showTime
+		          	value={this.state.quotation.valid_date?moment(this.state.quotation.valid_date, "YYYY-MM-DD HH:mm:ss"):moment()} 
 		          	format="YYYY-MM-DD HH:mm:ss"
 		          	onChange={this.handleInfo.bind(this,3,"valid_date")}
 		        />
@@ -426,7 +456,7 @@ class Quotation extends React.Component {
 	        	<p className={css.title}>
 	            	<FormattedMessage id="cart.pay.mode" defaultMessage="支付方式"/>:
 	            </p>
-	            <RadioGroup onChange={this.handleInfo.bind(this,0,"pay_mode")}>
+	            <RadioGroup onChange={this.handleInfo.bind(this,0,"pay_mode")} value={this.state.quotation.pay_mode}>
 	            	{operator.pay_mode.map(item=>{
 	            		return <Radio value={item.id}>
 	            			<FormattedMessage id={item.key} defaultMessage={item.value}/>
@@ -439,7 +469,7 @@ class Quotation extends React.Component {
 	            <p className={css.title}>
 	            	<FormattedMessage id="app.home" defaultMessage="分类"/>:
 	            </p>
-	            <RadioGroup onChange={this.handleInfo.bind(this,0,"invoice_type")} >
+		<RadioGroup onChange={this.handleInfo.bind(this,0,"invoice_type")} value={this.state.quotation.invoice_type}>
 			        {operator.invoice_type.map(item=>{
 	            		return <Radio value={item.id}>
 	            			<FormattedMessage id={item.key} defaultMessage={item.value}/>
@@ -451,7 +481,7 @@ class Quotation extends React.Component {
 	            <p className={css.title}>
 	            	<FormattedMessage id="cart.remark" defaultMessage="备注"/>:
 	            </p>
-	            <TextArea onChange={this.handleInfo.bind(this,0,"note")} rows={2} />
+	            <TextArea value={this.state.quotation.note} onChange={this.handleInfo.bind(this,0,"note")} rows={2} />
 	        </p>
 	        <p className={`${css.item} ${css.export}`}>
 	            <p className={css.title}>
@@ -468,13 +498,14 @@ class Quotation extends React.Component {
 	        </p>
 	        <div className={css.footer}>
 	        	<p className={appcss.button_orange} onClick={this.onlineShow}>
-                    <FormattedMessage id="quotation.online" defaultMessage="支付"/>
+                    <FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
                 </p>
                 <p className={appcss.button_green} onClick={this.export}>
-                    <FormattedMessage id="quotation.export" defaultMessage="支付"/>
+                    <FormattedMessage id="quotation.export" defaultMessage="导出报价单"/>
                 </p>
                 <p className={appcss.button_theme}>
-                    <FormattedMessage id="quotation.generate" defaultMessage="支付"/>
+                	{this.state.quotation.id?<FormattedMessage id="quotation.save" defaultMessage="保存报价单"/>
+                	:<FormattedMessage id="quotation.generate" defaultMessage="生成报价单"/>}
                 </p>
 	        </div>
 	        <Modal

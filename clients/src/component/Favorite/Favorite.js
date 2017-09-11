@@ -31,7 +31,7 @@ class Favorite extends React.Component {
 		this.state = {
 			category: [],
 			category_id: 0,
-			select_product: [],
+			select_data: [],
 			data: [],
 			total: 50,
 			current: 1,
@@ -46,12 +46,14 @@ class Favorite extends React.Component {
 				category: res.data.category
 			})
 		})
+		this.getData();
+	}
+	getData() {
 		if (this.state.type == 1) {
 			this.getProducts();
 		} else {
 			this.getBrands();
 		}
-
 	}
 	getProducts = () => {
 		axios.get(`/product/get-favorite-product.json?cid=
@@ -72,14 +74,12 @@ class Favorite extends React.Component {
 		})
 	}
 	onSelect = (key) => {
-		console.log(key);
-		this.setState({
-			category_id: key
-		})
+		this.state.category_id = key.id;
+		this.getData();
 	}
 	handleCheck = (key) => {
 		let data = this.state.data;
-		let select_product = [];
+		let select_data = [];
 		data.map(item => {
 			if (item.id == key) {
 				if (item.checked) {
@@ -89,23 +89,24 @@ class Favorite extends React.Component {
 				}
 			}
 			if (item.checked) {
-				select_product.push(item.id);
+				select_data.push(item.id);
 			}
 		})
 		let indeterminate = false;
-		if (select_product.length > 0 && select_product.length < this.state.products.length) {
+		if (select_data.length > 0 && select_data.length < this.state.data.length) {
 			indeterminate = true;
 		}
 		this.setState({
 			data: data,
-			select_product: select_product,
+			select_data: select_data,
 			indeterminate: indeterminate
 		})
 	}
-	deleteProduct = () => {
-		if (this.state.select_product.length > 0) {
-			axios.post('/product/delete-favorite-products.json', this.state.select_product).then(res => {
-
+	deleteData = () => {
+		if (this.state.select_data.length > 0) {
+			let url = this.state.type == 1 ? "/product/delete-favorite-products.json" : "/product/delete-favorite-products.json";
+			axios.post(url, this.state.select_data).then(res => {
+				this.getData();
 			})
 		} else {
 			const {
@@ -120,20 +121,24 @@ class Favorite extends React.Component {
 	}
 	handleChange = (e) => {
 		let data = this.state.data;
-		let select_product = [];
+		let select_data = [];
 		data.map(item => {
 			if (e.target.checked) {
 				item.checked = true;
-				select_product.push(item.id);
+				select_data.push(item.id);
 			} else {
 				item.checked = false;
 			}
 		})
 		this.setState({
 			data: data,
-			select_product: select_product,
+			select_data: select_data,
 			indeterminate: false
 		})
+	}
+	handlePage = (page, pageSize) => {
+		this.state.current = page;
+		this.getData();
 	}
 
 
@@ -146,7 +151,8 @@ class Favorite extends React.Component {
 
 		return <div>
 			 <div className={basecss.child_title}>
-                <FormattedMessage id="mine.favorite.product" defaultMessage="分类"/>
+                <FormattedMessage id={this.state.type==1?"mine.favorite.product":"mine.favorite.brand"} 
+                defaultMessage="分类"/>
             </div>
             {this.state.category.length>0?<SingleSelect
                 all
@@ -154,16 +160,16 @@ class Favorite extends React.Component {
                 onSelect={this.onSelect.bind(this)}
                 title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
             />:""}
-            <div className={css.product_list}>
+            <div className={css.data_list}>
 	            {this.state.data.map(item=>{
 	            	return this.state.type==1?<Product 
 	            		product={item} 
-	            		className={css.product_item} 
+	            		className={css.data_item} 
 	            		check
 	            		onCheck={this.handleCheck}
 	            		/>
 	            		:<Brand brand={item} 
-	            			className={css.product_item} 
+	            			className={css.data_item} 
 	            			check
 	            			onCheck={this.handleCheck}
 	            		/>
@@ -171,14 +177,14 @@ class Favorite extends React.Component {
             </div>
             <div className={css.footer}>
                 <p className={css.left}>
-                    <Checkbox onChange={this.handleChange} checked={this.state.select_product.length==this.state.data.length?true:false} indeterminate={this.state.indeterminate}>
+                    <Checkbox onChange={this.handleChange} checked={this.state.select_data.length==this.state.data.length?true:false} indeterminate={this.state.indeterminate}>
                         <FormattedMessage id="order.status.all" defaultMessage="all"/>
                     </Checkbox>
 					<Tooltip title={formatMessage({id: 'cart.delete.all'})}>
-                        <Icon type="delete" onClick={this.deleteProduct} />
+                        <Icon type="delete" onClick={this.deleteData} />
                     </Tooltip> 
                 </p>
-                <Pagination defaultCurrent={1} total={this.state.total} />
+                <Pagination defaultCurrent={1} total={this.state.total} onChange={this.handlePage} />
             </div>
 		</div>
 

@@ -1,0 +1,48 @@
+@import "../../../themes.scss";
+.body{
+	display: flex;
+}
+.steps_item{
+	flex-grow: 1;
+}
+.icon{
+	display: flex;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    .normal{
+    	border-bottom: 0.5px solid $border-color;
+    	flex-grow: 1;
+    }
+    .no_show{
+    	border-bottom: none;
+    	flex-grow: 1;
+    }
+    .active{
+    	border-bottom: 1px solid $color-step;
+    	flex-grow: 1;
+    }
+    span{
+    	color: white;
+    	border-radius: 50%;
+    	width: 30px;
+    	height: 30px;
+    	line-height: 30px;
+    	text-align: center;
+    }
+    .step{
+		background: $color-grey;
+    }
+    .step_active{
+    	background: $color-step;
+    }
+}
+.title{
+	text-align: center;
+	color: $font-color;
+}
+.title_active{
+	text-align: center;
+	color: $color-step;
+}
