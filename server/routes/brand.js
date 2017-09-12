@@ -144,4 +144,52 @@ router.get('/get-recommend-brand.json', async(ctx, next) => {
 			total: total
 		}
 	})
+	.get('/get-agent-brand.json', async(ctx, next) => {
+		let uid = ctx.cookie.get('uid');
+		let brand = [];
+		brand = [{
+			id: 1,
+			name: "Tools",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 2,
+			name: "Building Materials",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 3,
+			name: "Machinery",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 4,
+			name: "Mechanical components",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 5,
+			name: "Labor protection",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 6,
+			name: "Torque tools",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 7,
+			name: "dsadasdsa",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, {
+			id: 8,
+			name: "dsadasdsa",
+			rating: 4.5,
+			img: '../img/br_bg_1.jpg'
+		}, ]
+		ctx.body = {
+			brand: brand
+		}
+	})
 module.exports = router;

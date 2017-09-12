@@ -19,6 +19,7 @@ const product = require('./routes/product.js');
 const brand = require('./routes/brand.js');
 const cart = require('./routes/cart.js');
 const quotation = require('./routes/quotation.js');
+const img = require('./routes/img.js');
 
 // error handler
 onerror(app)
@@ -63,6 +64,7 @@ router.use('/category', category.routes(), category.allowedMethods());
 router.use('/brand', brand.routes(), brand.allowedMethods());
 router.use('/cart', cart.routes(), cart.allowedMethods());
 router.use('/quotation', quotation.routes(), quotation.allowedMethods());
+router.use('/img', img.routes(), img.allowedMethods());
 router.use('/', index.routes(), index.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 

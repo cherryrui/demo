@@ -55,7 +55,7 @@ const zh_CN = {
     "category.list.search": "{search}",
     "brand.product.sum": "总计 {total} 类商品",
     "brand.product.rate": "评分",
-    "login.login.title": "用户登录",
+    "login.login.title": "用户登录dsasdas",
     "shopping.cart": "购物车",
     "product.detail.add": "加入购物车",
     "product.detail.information": "详情",
@@ -183,12 +183,41 @@ const zh_CN = {
     "mine.quotation.agent_total": "总代理价",
     "mine.quotation.create_order": "生成订单",
     "mine.quotation.order_success": "订单创建成功",
+    "mine.product.upload": "上传产品",
+    "mine.product.list": "产品列表",
+    "mine.product.management": "产品管理",
 
     "mine.product.basic": "基础信息",
     "mine.product.attributes": "产品规格",
     "mine.product.param": "规格参数",
     "mine.product.introduction": "产品介绍",
     "mine.product.packaging": "套餐详情",
+
+    "mine.product.name": "产品名称",
+    "mine.product.No": "产品编号",
+    "mine.product.unit": "产品单位",
+    "mine.product.factory_price": "出厂价",
+    "mine.product.picture": "产品图片",
+    "mine.product.upload_img": "上传图片",
+    "mine.product.set_default": "设为主图",
+
+    "mine.product.name_warn": "请输入产品名称",
+    "mine.product.brand_warn": "请选择供应商",
+    "mine.product.category_warn": "请选择产品分类",
+    "mine.product.unit_warn": "请选择产品单位",
+    "mine.product.moq_warn": "请输入产品起购量",
+    "mine.product.price_warn": "请输入产品出厂价",
+    "mine.product.inventory_warn": "请输入产品库存",
+    "mine.product.picture_warn": "请上传商品图片",
+
+
+    "mine.product.unit_tai": "台",
+    "mine.product.unit_jian": "件",
+    "mine.product.unit_xiang": "箱",
+
+    "mine.product.no_specificationg": "无规格",
+    "mine.product.have_specificationg": "具有多规格",
+
 
 
     "order.status.all": "所有",

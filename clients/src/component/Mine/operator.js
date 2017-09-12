@@ -54,6 +54,17 @@ export default {
             url: "/main/mine/favorite/2"
         }, ]
     }, {
+        name: "mine.product.management",
+        list: [{
+            key: 6000,
+            title: "mine.product.list",
+            url: "/main/mine/agent-product"
+        }, {
+            key: 6001,
+            title: "mine.product.upload",
+            url: "/main/mine/product-editor"
+        }]
+    }, {
         name: "mine.agent",
         list: []
     }, {

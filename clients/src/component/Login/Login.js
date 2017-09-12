@@ -75,8 +75,8 @@ class Login extends React.Component {
                 <Form onSubmit={this.handleSubmit} className={css.login_form}>
                     <FormItem>
                         <p className={css.title}>
-                        <FormattedMessage id="login.login.title" defaultMessage="用户登录"/>
-                    </p>
+                            <FormattedMessage id="login.login.title" defaultMessage="用户登录"/>
+                        </p>
                     </FormItem>
                     <FormItem>
                     {getFieldDecorator('userName', {

@@ -43,6 +43,9 @@ import OrderList from './component/OrderList/OrderList.js';
 import Favorite from './component/Favorite/Favorite.js';
 import QuotationList from './component/QuotationList/QuotationList.js';
 import ProductEditor from './component/ProductEditor/ProductEditor.js';
+import AgentProduct from './component/AgentProduct/AgentProduct.js';
+
+
 import {
     Provider
 } from 'react-redux';
@@ -278,6 +281,7 @@ ReactDOM.render(
                             <Route path="favorite/:type" component={Favorite}/>
                             <Route path="quotation-list" component={QuotationList}/>
                             <Route path="product-editor" component={ProductEditor}/>
+                            <Route path="agent-product" component={AgentProduct}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>

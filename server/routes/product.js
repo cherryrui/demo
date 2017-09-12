@@ -372,5 +372,150 @@ router.get('/get-conditions.json', async(ctx, next) => {
 			total: total
 		}
 	})
+	.post('/add-product-info.json', async(ctx, next) => {
+		ctx.body = {
+			id: 1,
+		}
+	})
+	.get('/get-product-specif.json', async(ctx, next) => {
+		let specif = [];
+		specif = [{
+			id: 1,
+			name: "颜色"
+		}]
+		ctx.body = {
+			specif: specif
+		}
+	})
+    .get('/get-agent-products.json',async(ctx,next)=>{
+
+        let products = [],total=300;
+    products=[{
+        id: 1,
+        price: 200,
+        name: "年底萨达撒大萨达撒",
+        sales: 2000,
+        category: [{id:1,name:"tools"},{id:3,name:"dev tools"},{id:3,name:"dsadas"}],
+        imgs: ["../img/product.jpg", "../img/product.jpg", "../img/product.jpg", "../img/product.jpg"],
+        brand: {
+            id: 1,
+            name: "SUPPLY NAME",
+            img: '../img/br_main.jpg',
+            rating: 4.5
+        },
+        attr: [{
+            id: 1,
+            name: "颜色",
+            value: [{
+                id: 1,
+                value: "红色"
+            }, {
+                id: 2,
+                value: "蓝色"
+            }, {
+                id: 3,
+                value: "绿色"
+            }]
+        }, {
+            id: 2,
+            name: "尺寸",
+            value: [{
+                id: 1,
+                value: "23"
+            }, {
+                id: 2,
+                value: "24"
+            }, {
+                id: 3,
+                value: "25"
+            }]
+        }, ]
+    },{
+        id: 2,
+        price: 200,
+        name: "年底萨达撒大萨达撒",
+        sales: 2000,
+        category: [{id:1,name:"tools"},{id:3,name:"dev tools"},{id:3,name:"dsadas"}],
+        imgs: ["../img/product.jpg", "../img/product.jpg", "../img/product.jpg", "../img/product.jpg"],
+        brand: {
+            id: 1,
+            name: "SUPPLY NAME",
+            img: '../img/br_main.jpg',
+            rating: 4.5
+        },
+        attr: [{
+            id: 1,
+            name: "颜色",
+            value: [{
+                id: 1,
+                value: "红色"
+            }, {
+                id: 2,
+                value: "25"
+            }, {
+                id: 3,
+                value: "高帮"
+            }]
+        }, {
+            id: 2,
+            name: "尺寸",
+            value: [{
+                id: 1,
+                value: "23"
+            }, {
+                id: 2,
+                value: "24"
+            }, {
+                id: 3,
+                value: "25"
+            }]
+        }, ]
+    },{
+        id: 3,
+        price: 200,
+        name: "年底萨达撒大萨达撒",
+        sales: 2000,
+        category: [{id:1,name:"tools"},{id:3,name:"dev tools"},{id:3,name:"dsadas"}],
+        imgs: ["../img/product.jpg", "../img/product.jpg", "../img/product.jpg", "../img/product.jpg"],
+        brand: {
+            id: 1,
+            name: "SUPPLY NAME",
+            img: '../img/br_main.jpg',
+            rating: 4.5
+        },
+        attr: [{
+            id: 1,
+            name: "颜色",
+            value: [{
+                id: 1,
+                value: "红色"
+            }, {
+                id: 2,
+                value: "蓝色"
+            }, {
+                id: 3,
+                value: "绿色"
+            }]
+        }, {
+            id: 2,
+            name: "尺寸",
+            value: [{
+                id: 1,
+                value: "23"
+            }, {
+                id: 2,
+                value: "24"
+            }, {
+                id: 3,
+                value: "25"
+            }]
+        }, ]
+    }]
+        ctx.body = {
+            products: products,
+            total: total,
+        }
+
+    })
 
 module.exports = router;

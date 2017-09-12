@@ -19,5 +19,15 @@ export default {
 		title: "mine.product.packaging",
 		default_message: "套餐详情",
 		icon: ""
-	}]
+	}],
+	unit_list: [{
+		key: "mine.product.unit_tai",
+		value: "台"
+	}, {
+		key: "mine.product.unit_jian",
+		value: "件"
+	}, {
+		key: "mine.product.unit_xiang",
+		value: "箱"
+	}, ]
 }

@@ -1,0 +1,26 @@
+@import "../../themes";
+.table_col{
+  text-align: center !important;
+  font-size: 14px;
+}
+.table_product{
+  display: flex;
+  padding: 10px 0;
+  img{
+    border: 1px solid $border-color;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    margin: auto 0;
+  }
+  .info{
+    padding: 10px;
+    text-align: left;
+    flex-grow: 1;
+  }
+
+}
+.footer{
+  padding: 20px 0;
+  text-align: right;
+}
