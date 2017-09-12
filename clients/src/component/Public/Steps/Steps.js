@@ -6,14 +6,14 @@ import {
 
 class Steps extends React.Component {
 	constructor(props) {
-		super(props);
-		this.state = {
-			current: this.props.current ? this.props.current : 0,
-		}
-	}
-	com
+        super(props);
+        this.state = {
+            current: this.props.current ? this.props.current : 0,
+        }
+    }
 	render() {
-		let current = this.props.current ? this.props.current : 0
+		let current = this.props.current ? this.props.current : 0;
+        let length
 
 		return <div className={css.body}>
 			{this.props.steps.map((item,index)=>{
