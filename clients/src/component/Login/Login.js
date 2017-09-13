@@ -48,7 +48,6 @@ class Login extends React.Component {
                         }))
                         window.location.href = "/#/main/"
                     } else {
-                        console.log("51", res.data.result)
                         message.error(formatMessage({
                             id: 'login.login.fail'
                         }, {

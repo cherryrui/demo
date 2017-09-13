@@ -13,7 +13,8 @@ import {
 	Tooltip,
 	Checkbox,
 	Icon,
-    Table
+	Table,
+	Input
 } from 'antd';
 const Search = Input.Search;
 
@@ -26,9 +27,9 @@ class AgentProduct extends React.Component {
 		super(props);
 		this.state = {
 			products: [],
-            current: 1,
-            info: '',
-            total:50
+			current: 1,
+			info: '',
+			total: 50
 		}
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
@@ -42,8 +43,10 @@ class AgentProduct extends React.Component {
                             <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
                             {record.brand.name}
                         </p>
-                        <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/></p>
-                        <p>{record.name}</p>
+                        <p>
+                        	<FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
+                        </p>
+                        
                     </div>
                 </div>
 		}, {
@@ -61,7 +64,19 @@ class AgentProduct extends React.Component {
 			title: <FormattedMessage id="product.detail.specification" defaultMessage="我的购物车"/>,
 			width: "8%",
 			className: css.table_col,
-			render: (text) => <div>dasdas</div>
+			dataIndex: 'attr',
+			key: 'attr',
+			render: (text) => <div>
+				{text.map(item=>{
+					return <p>
+						{item.value.map(att=>{
+							return <span>
+								{att.value}
+							</span>
+						})}
+					</p>
+				})}
+			</div>
 		}, {
 			title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
 			width: "8%",
@@ -75,36 +90,40 @@ class AgentProduct extends React.Component {
 
 	}
 
-    componentWillMount(){
-        console.log("componentWillMount");
-        this.getProducts();
-    }
-    getProducts=()=>{
-        axios.get(`/product/get-agent-products.json?page=${this.state.current}&info=${this.state.info}`).then(res=>{
-            this.setState({
-                products: res.data.products,
-                total: res.data.total
-            })
-        })
-    }
+	componentWillMount() {
+		console.log("componentWillMount");
+		this.getProducts();
+	}
+	getProducts = () => {
+		axios.get(`/product/get-agent-products.json?page=${this.state.current}&info=${this.state.info}`).then(res => {
+			this.setState({
+				products: res.data.products,
+				total: res.data.total
+			})
+		})
+	}
 
-    handleView=()=>{
+	handleView = () => {
 
-    }
-    handlePage=()=>{
+	}
+	handlePage = () => {
 
-    }
+	}
 	render() {
-
+		let {
+			intl: {
+				formatMessage
+			}
+		} = this.props;
 		return <div>
 			<div className={basecss.child_title}>
                 <FormattedMessage id={this.state.type==1?"mine.favorite.product":"mine.favorite.brand"} 
                 defaultMessage="分类"/>
                 <Search
                     placeholder={formatMessage({
-                        id: 'mine.quotation.placeholder'
+                        id: 'mine.product.name_warn'
                     })}
-                    style={{ width: 200 }}
+                    style={{ width: 300 }}
                     onSearch={value => console.log(value)}
                 />
             </div>
@@ -122,4 +141,4 @@ class AgentProduct extends React.Component {
 
 }
 
-export default AgentProduct;
+export default injectIntl(AgentProduct);

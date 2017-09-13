@@ -1,5 +1,5 @@
 .body{
-	margin-top: 40px;
+	margin: 40px 0;
 }
 .product_info{
 	.upload{
@@ -8,5 +8,81 @@
 	.set_default{
 		width: 96px;
 		margin: 0 8px 8px 0;
+	}
+}
+%item{
+	display: flex;
+	margin: 15px 0;
+    font-size: 16px;
+}
+%left{
+	width: 33%;
+	text-align: right;
+	margin-right: 2%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+	input{
+		width: 60%;
+	}
+}
+.product_attr{
+	margin: 10px 20%;
+}
+
+.product_category{
+	@extend %item;
+}
+.category_left{
+	@extend %left;
+}
+.category_right{
+	display: flex;
+}
+.product_attr_item{
+	@extend %item;
+	.attr_item_left{
+		@extend %left;
+	}
+	.attr_item_right{
+		display: flex;
+	}
+	button{
+		margin-left: 10px;
+	}
+	input{
+		width: 60%;
+	}
+}
+.product_add_title{
+	@extend %item;
+	.add_left{
+		@extend %left;
+	}
+}
+
+.product_footer{
+	margin-left: 35%;
+	button{
+		margin-right: 20px;
+	}
+}
+.product_spec{
+	margin: 10px 10%;
+	.product_apec_item{
+		display: flex;
+		margin-bottom: 10px;
+	}
+	.apec_item_left{
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		margin-right: 20px;
+	}
+	.spec_item_right{
+		display: flex;
+	}
+	.right_item{
+		margin-right: 10px;
 	}
 }

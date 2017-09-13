@@ -6,16 +6,16 @@ import {
 
 class Steps extends React.Component {
 	constructor(props) {
-        super(props);
-        this.state = {
-            current: this.props.current ? this.props.current : 0,
-        }
-    }
+		super(props);
+		this.state = {
+			current: this.props.current ? this.props.current : 0,
+		}
+	}
 	render() {
 		let current = this.props.current ? this.props.current : 0;
-        let length
+		let length
 
-		return <div className={css.body}>
+		return <div className={`${this.props.className} ${css.body}`} style={this.props.style}>
 			{this.props.steps.map((item,index)=>{
 				return <p className={css.steps_item}>
 					<p className={css.icon}>

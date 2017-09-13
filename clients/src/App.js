@@ -72,14 +72,6 @@ import {
 } from 'antd';
 const Search = Input.Search;
 const Option = Select.Option;
-const appLocale = window.appLocale ? window.appLocale : {};
-appLocale.antd = "";
-appLocale.locale = "zh";
-appLocale.messages = zh_message;
-
-console.log(appLocale);
-
-
 
 class App extends React.Component {
     constructor(props) {
@@ -165,6 +157,7 @@ class App extends React.Component {
     }
 
     render() {
+        console.log(this.state.message);
         let order_menu = (<Menu>
         {this.order_status.map(item=>{
             return <Menu.Item>
@@ -177,7 +170,9 @@ class App extends React.Component {
             </Menu.Item>
         })}
         </Menu>)
-        return <div className={css.main} >
+        return <LocaleProvider locale={this.state.antd}>
+            <IntlProvider locale={this.state.locale} messages={this.state.message}>
+            <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
                             {this.state.user?<Link to="main/mine" className={css.item}>{this.state.user.name}</Link>:
@@ -246,17 +241,15 @@ class App extends React.Component {
                             <FormattedMessage id="app.rights" defaultMessage="Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000"/>
                         </div>
                     </div>
-                </div>;
+                </div></IntlProvider>
+    </LocaleProvider>;
     }
 }
 
 let div = document.createElement('div');
 div.className = css.index;
-console.log(239, store);
 ReactDOM.render(
-    (<LocaleProvider locale={appLocale.antd} >
-        <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-            <Provider store={store}>
+    (<Provider store={store}>
             <Router history={hashHistory}>
                 <Route path="/" component={App}>
                     <IndexRedirect to="/main" />
@@ -288,11 +281,8 @@ ReactDOM.render(
                     <Route path="register" component={Register}/>
                     <Route path="authentication" component={Authentication}/>
                     <Route path="rePassword" component={RePassword}/>
-                    <Route path="registerComplete" component={RegisterComplete}/>
-                    
+                    <Route path="registerComplete" component={RegisterComplete}/>                  
                 </Route>
             </Router>
-            </Provider>
-        </IntlProvider>
-    </LocaleProvider>), document.body.appendChild(div)
+            </Provider>), document.body.appendChild(div)
 );

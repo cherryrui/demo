@@ -41,6 +41,7 @@ const zh_CN = {
     "app.ok": "确定",
     "app.cancel": "取消",
     "app.before": "上一步",
+    "app.save": "保存",
     "login.remember": "记住密码",
     "login.forget": "忘记密码？",
     "login.login": "登录",
@@ -55,7 +56,7 @@ const zh_CN = {
     "category.list.search": "{search}",
     "brand.product.sum": "总计 {total} 类商品",
     "brand.product.rate": "评分",
-    "login.login.title": "用户登录dsasdas",
+    "login.login.title": "用户登录",
     "shopping.cart": "购物车",
     "product.detail.add": "加入购物车",
     "product.detail.information": "详情",
@@ -85,7 +86,7 @@ const zh_CN = {
     "cart.calu": "结算",
     "cart.payment": "支付成功",
     "cart.product.info": "产品信息",
-    "cart.specifucation": "产品规格",
+    "cart.specifucation": "产品属性",
     "cart.price": "单价",
     "cart.num": "数量",
     "cart.sum": "总价",
@@ -215,8 +216,14 @@ const zh_CN = {
     "mine.product.unit_jian": "件",
     "mine.product.unit_xiang": "箱",
 
-    "mine.product.no_specificationg": "无规格",
-    "mine.product.have_specificationg": "具有多规格",
+    "mine.product.custom_attr": "自定义属性",
+    "mine.product.attr_name": "属性名称",
+    "mine.product.attr_value": "属性值",
+
+    "mine.product.attr_name_warn": "请输入产品属性名称",
+    "mine.product.attr_value_warn": "请输入产品属性值",
+    "mine.product.attr_add": "新增自定义属性",
+    "mine.product.attr_delete": "删除此条自定义属性",
 
 
 

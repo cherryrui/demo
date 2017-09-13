@@ -11,8 +11,7 @@ let initialState = {
 };
 
 export default (state = initialState, action) => {
-    console.log(33, state, action);
-        switch (action.type) {
+    switch (action.type) {
         case 'GET_SHOPPING_CART_FULFILLED':
             //console.log(33, state, action);
             return {
@@ -22,10 +21,9 @@ export default (state = initialState, action) => {
         case 'ADD_CART_FULFILLED':
             let carts = state.carts;
             carts.push(action.payload.data.cart);
-            console.log(25,carts);
             return {
                 carts: carts,
-                sum: state.sum+1,
+                sum: state.sum + 1,
             }
         default:
             return state;
