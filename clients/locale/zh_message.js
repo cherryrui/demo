@@ -251,7 +251,27 @@ const zh_CN = {
     "quotation.no": "报价单编号",
     "quotation.create_time": "创建时间",
     "quotation.ps": "若想了解更多信息请访问我们的网站：www.chuanchuan.com",
-
+    "orderlist.Order.No.and.payment.method": "订单号和付款方式",
+    "orderlist.Order.Total.amount.payable": "应付总金额",
+    "orderlist.Order.Order.time": "订单时间",
+    "orderlist.Order.Status": "状态",
+    "orderlist.Order.Operation": "操作",
+    "orderlist.Order.View": "查看",
+    "orderlist.all.order": "所有订单",
+    "orderlist.No.payment.unprocessed": "未付款订单",
+    "orderlist.Partial.payment.unprocessed": "分期未付款订单",
+    "orderlist.Paid.unprocessed": "未付款",
+    "orderlist.Settled.Order": "已完成订单",
+    "orderdetails.Delivery.address": "交货地址",
+    "orderdetails.preview.trade.contract":"预览贸易合同",
+    "orderdetails.return":"返回",
+    "orderdetails.Order.No":"订单号",
+    "orderdetails.Brand":"品牌",
+    "orderdetails.Art.No":"货号",
+    "orderdetails.principal":"本金",
+    "orderdetails.interest":"利息",
+    "mine.person":"用户中心",
+    "orderdetails.Order.details":"订单详情",
 
 
 }
