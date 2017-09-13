@@ -44,7 +44,7 @@ import Favorite from './component/Favorite/Favorite.js';
 import QuotationList from './component/QuotationList/QuotationList.js';
 import ProductEditor from './component/ProductEditor/ProductEditor.js';
 import AgentProduct from './component/AgentProduct/AgentProduct.js';
-
+import OrderDetails from './component/OrderDetails/OrderDetails.js';
 
 import {
     Provider
@@ -265,7 +265,9 @@ ReactDOM.render(
                         <Route path="cart" component={Cart}/>
                         <Route path="quotation(/:id)" component={Quotation}/>
                         <Route path="about" component={About}>
+
                         </Route>
+                        < Route path="order-details" component={OrderDetails}/>
                         <Route path="mine" component={Mine}>
                             <IndexRoute component={PersonCenter}/>
                             <Route path="message" component={Message}/>
