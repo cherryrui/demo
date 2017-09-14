@@ -7,7 +7,7 @@ export default {
         list: [{
             key: 1000,
             title: "mine.person.data",
-            url: "/main/"
+            url: "/main/mine/person-data"
         }, {
             key: 1001,
             title: "mine.person.address",
@@ -15,7 +15,7 @@ export default {
         }, {
             key: 1002,
             title: "mine.person.account",
-            url: "/main/"
+            url: "/main/mine/person-data"
         }, ]
     }, {
         name: "mine.order",

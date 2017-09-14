@@ -277,7 +277,16 @@ const zh_CN = {
     "orderdetails.interest": "利息",
     "mine.person": "用户中心",
     "orderdetails.Order.details": "订单详情",
-
-
+    "persondata.User.style":"用户类型",
+    "persondata.Account.number":"账号",
+    "persondata.Real.name":"真实姓名",
+    "persondata.Department.position":"职位",
+        "persondata.Certification":"认证",
+    "persondata.Go.certification":"去认证",
+    "persondata.Modify":"修改",
+    "persondata.Under.review":"正在审查",
+    "persondata.Indivdual.User":"个人用户",
+    "persondata.Enterprise.User":"企业用户",
+    "persondata.contact.address":"联系地址",
 }
 export default zh_CN;
