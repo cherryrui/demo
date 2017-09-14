@@ -220,8 +220,8 @@ const zh_CN = {
     "mine.product.attr_name": "属性名称",
     "mine.product.attr_value": "属性值",
 
-    "mine.product.attr_name_warn": "请输入产品属性名称",
-    "mine.product.attr_value_warn": "请输入产品属性值",
+    "mine.product.attr_name_warn": "请输入属性名称",
+    "mine.product.attr_value_warn": "请输入属性值",
     "mine.product.attr_add": "新增自定义属性",
     "mine.product.attr_delete": "删除此条自定义属性",
 
@@ -231,6 +231,18 @@ const zh_CN = {
     "mine.product.add_category": "添加分类",
     "mine.product.del_category": "删除分类",
 
+    "mine.product.instruct_length": "长",
+    "mine.product.instruct_width": "宽",
+    "mine.product.instruct_height": "高",
+    "mine.product.instruct_pack": "打包",
+    "mine.product.instruct_special": "特性",
+    "mine.product.instruct_other": "其他",
+
+    "mine.product.special_fragile": "易碎",
+    "mine.product.special_dust": "防尘",
+    "mine.product.special_liquid": "液体",
+    "mine.product.special_corrosion": "腐蚀性",
+    "mine.product.instr_custom": "自定义包装属性",
 
     "order.status.all": "所有",
 

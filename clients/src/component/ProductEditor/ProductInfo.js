@@ -123,7 +123,7 @@ class ProductInfo extends React.Component {
 			id: this.props.pid,
 			modal: []
 		}
-		modal.map(item => {
+		this.state.modal.map(item => {
 			if (item.text && item.text.length > 0 || item.fileList && item.fileList.length > 0) {
 				param.modal.push(item);
 			}

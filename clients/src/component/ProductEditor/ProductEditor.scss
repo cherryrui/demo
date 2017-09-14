@@ -122,3 +122,28 @@
 	align-items: baseline;
 	margin-bottom: 20px;
 }
+.product_instruct{
+	margin: 0px 20%;
+}
+.instuct_item{
+	display: flex;
+    margin: 10px 0;
+    align-items: center;
+    .instuctitem_left{
+    	width: 15%;
+		margin-right: 2%;
+		text-align: right;
+		flex-shrink: 0;
+    }
+    .instuctitem_right{
+    	display: flex;
+    	input{
+    		margin-right: 20px;
+    	}
+    	.left_item{
+    		display: flex;
+    		align-items: center;
+    	}
+    	
+    }
+}

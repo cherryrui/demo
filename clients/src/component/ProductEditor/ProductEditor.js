@@ -8,6 +8,7 @@ import ProductBasic from './ProductBasic.js';
 import ProductAttr from './ProductAttr.js';
 import ProductSpec from './ProductSpec.js';
 import ProductInfo from './ProductInfo.js';
+import ProductInstruct from './ProductInstruct.js';
 import axios from 'axios';
 import lrz from 'lrz';
 import {
@@ -23,7 +24,7 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 1,
+			current: 4,
 			product: {}
 		}
 	}
@@ -46,11 +47,16 @@ class ProductEditor extends React.Component {
 				})
 			})
 		} else {
+			let next = this.state.current + step;
 			if (this.state.current == 0) {
 				this.state.product = product
 			}
+			if (next > operator.steps.length - 1) {
+				next = 0;
+				this.state.product = {};
+			}
 			this.setState({
-				current: this.state.current + step,
+				current: next,
 			}, () => {
 				document.body.scrollTop = 0
 			})
@@ -70,6 +76,7 @@ class ProductEditor extends React.Component {
 				:this.state.current==1?<ProductAttr product={this.state.product} handleSteps={this.handleSteps}/>
 				:this.state.current==2?<ProductSpec product={this.state.product} handleSteps={this.handleSteps}/>
 				:this.state.current==3?<ProductInfo product={this.state.product} handleSteps={this.handleSteps}/>
+				:this.state.current==4?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps}/>
 				:""
 			}	
 			</div>

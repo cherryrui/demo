@@ -34,5 +34,54 @@ export default {
 	}, {
 		key: "mine.product.unit_xiang",
 		value: "箱"
-	}, ]
+	}, ],
+	product_ins: [{
+		key: "length",
+		name: "mine.product.instruct_length",
+		type: 0,
+		unit: ["mm", "cm", "m"]
+	}, {
+		key: "width",
+		name: "mine.product.instruct_width",
+		type: 0,
+		unit: ["mm", "cm", "m"]
+	}, {
+		key: "height",
+		name: "mine.product.instruct_height",
+		type: 0,
+		unit: ["mm", "cm", "m"]
+	}, {
+		key: "pack",
+		name: "mine.product.instruct_pack",
+		type: 1,
+		unit: [{
+			id: 1,
+			value: ["mm", "cm", "m"]
+		}, {
+			id: 2,
+			value: ["mm", "cm", "m"]
+		}]
+	}, {
+		key: "special",
+		name: "mine.product.instruct_special",
+		type: 2,
+		unit: [{
+			key: 1,
+			name: "mine.product.special_fragile"
+		}, {
+			key: 2,
+			name: "mine.product.special_dust"
+		}, {
+			key: 3,
+			name: "mine.product.special_liquid"
+		}, {
+			key: 4,
+			name: "mine.product.special_corrosion"
+		}]
+	}, {
+		key: "other",
+		name: "mine.product.instruct_other",
+		type: 3,
+	}]
+
 }

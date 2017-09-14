@@ -157,7 +157,7 @@ class ProductSpec extends React.Component {
 					</p>
 					<div className={css.spec_item_right}>
 						{this.state.select_speci.map(speci=>{
-							return <p className={css.right_item}>{speci.name}&nbsp;&nbsp;
+							return <p className={css.right_item}>{speci.name}:&nbsp;&nbsp;
 							<Select style={{ width: 120 }} onChange={this.handleChange.bind(this,index,"attr",speci.id)}>
 								{speci.value.map(val=>{
 									return <Option value={val.id}>{val.value}</Option>
@@ -166,7 +166,7 @@ class ProductSpec extends React.Component {
 						</p>
 						})}
 						<p className={css.right_item}>
-							<FormattedMessage id="mine.product.factory_price" defaultMessage="出厂价"/>:
+							<FormattedMessage id="mine.product.factory_price" defaultMessage="出厂价"/>:&nbsp;&nbsp;
 							<InputNumber
 								style={{width:100}}
 	      						defaultValue={0}
@@ -176,7 +176,7 @@ class ProductSpec extends React.Component {
 	    					/>
 						</p>
 						<p className={css.right_item}>
-							<FormattedMessage id="product.detail.inventory" defaultMessage="上传产品"/>:
+							<FormattedMessage id="product.detail.inventory" defaultMessage="上传产品"/>:&nbsp;&nbsp;
 							<InputNumber
 								style={{width:100}}
 		      					defaultValue={0}

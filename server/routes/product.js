@@ -699,5 +699,9 @@ router.get('/get-conditions.json', async(ctx, next) => {
 			modal: modal
 		}
 	})
+	.post('/save-product-instrct.json', async(ctx, next) => {
+		let param = ctx.request.body;
+		ctx.body = true;
+	})
 
 module.exports = router;
