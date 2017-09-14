@@ -296,6 +296,57 @@ router.get('/get-conditions.json', async(ctx, next) => {
 		}
 
 	})
+	.get('/get-product-info-byid.json', async(ctx, next) => {
+		let product = {},
+			id = ctx.query.id;
+		product = {
+			id: 1,
+			price: 200,
+			name: "年底萨达撒大萨达撒",
+			moq: 1,
+			unit: "台",
+			sales: 2000,
+			imgs: ["../img/product.jpg", "../img/product.jpg", "../img/product.jpg", "../img/product.jpg"],
+			brand_id: 1,
+			attr: [{
+				id: 1,
+				name: "颜色",
+				value: [{
+					id: 1,
+					value: "红色"
+				}, {
+					id: 2,
+					value: "蓝色"
+				}, {
+					id: 3,
+					value: "绿色"
+				}]
+			}, {
+				id: 2,
+				name: "尺寸",
+				value: [{
+					id: 1,
+					value: "23"
+				}, {
+					id: 2,
+					value: "24"
+				}, {
+					id: 3,
+					value: "25"
+				}]
+			}, ],
+			category: [{
+				id: 1,
+				category_id: [1, 1]
+			}, {
+				id: 2,
+				category_id: [1, 1]
+			}],
+		}
+		ctx.body = {
+			product: product
+		}
+	})
 	.get('/get-like-product.json', async(ctx, next) => {
 		let products = [];
 		products = [{
@@ -372,7 +423,7 @@ router.get('/get-conditions.json', async(ctx, next) => {
 			total: total
 		}
 	})
-	.post('/add-product-info.json', async(ctx, next) => {
+	.post('/save-product-basic.json', async(ctx, next) => {
 		ctx.body = {
 			id: 1,
 		}
@@ -580,17 +631,42 @@ router.get('/get-conditions.json', async(ctx, next) => {
 
 //或者产品属性
 .get('/get-product-attr.json', async(ctx, next) => {
-		let category_id = ctx.query.category_id;
-		let attr = [];
-		attr = [{
+		let pid = ctx.query.pid;
+		let category = [];
+		category = [{
 			id: 1,
-			name: "属性1"
+			name: ["分类1", "分类2", "分类3"],
+			attr: [{
+				id: 1,
+				name: "属性1"
+			}, {
+				id: 2,
+				name: "属性2"
+			}, ]
 		}, {
 			id: 2,
-			name: "属性2"
-		}, ]
+			name: ["分类1", "分类2", "分类3"],
+			attr: [{
+				id: 1,
+				name: "属性1"
+			}, {
+				id: 2,
+				name: "属性2"
+			}, ]
+		}, {
+			id: 3,
+			name: ["分类1", "分类2", "分类3"],
+			attr: [{
+				id: 1,
+				name: "属性1"
+			}, {
+				id: 2,
+				name: "属性2"
+			}, ]
+		}]
+
 		ctx.body = {
-			attr: attr
+			category: category
 		}
 	})
 	/**
@@ -598,10 +674,7 @@ router.get('/get-conditions.json', async(ctx, next) => {
 	 */
 	.post('/save-product-attr.json', async(ctx, next) => {
 		let param = ctx.request.body;
-		let attr = param.attr.concat(param.new_attr);
-		ctx.body = {
-			attr: attr
-		}
+		ctx.body = true;
 	})
 	.post('/save-product-spec.json', async(ctx, next) => {
 		let param = ctx.request.body;

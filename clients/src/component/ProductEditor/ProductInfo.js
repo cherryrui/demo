@@ -15,7 +15,8 @@ import {
 	Button,
 	Upload,
 	Icon,
-	Modal
+	Modal,
+	message
 } from 'antd';
 const Option = Select.Option;
 
@@ -29,7 +30,9 @@ class ProductInfo extends React.Component {
 			fileList: [],
 			previewVisible: false,
 			select_modal: {},
+			loading: false, //保存按钮的加载中
 		}
+		this.deleteImgList = []
 	}
 
 	componentWillMount() {
@@ -39,28 +42,48 @@ class ProductInfo extends React.Component {
 			})
 		})
 	}
+
+	/**
+	 * 保存富文本信息
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
 	handleChange = (value) => {
-		let modal = this.state.select_modal;
-		modal.text = value;
-		this.setState({
-            select_modal: modal
-		})
+		this.state.select_modal.text = value;
 	}
 
-
+	/**
+	 * 本地保存上传图片
+	 * @param  {[type]} info [description]
+	 * @return {[type]}      [description]
+	 */
 	normFile = (info) => {
-		info.file.thumb = URL.createObjectURL(info.file);
-		info.file.url = URL.createObjectURL(info.file);
-		info.file.status = 'done';
-		this.state.addFlag = true;
+			info.file.thumb = URL.createObjectURL(info.file);
+			info.file.url = URL.createObjectURL(info.file);
+			info.file.status = 'done';
+			this.state.addFlag = true;
+			let select_modal = this.state.select_modal;
+			select_modal.fileList.push(info.file);
+			this.setState({
+				select_modal: select_modal
+			});
+		}
+		/**
+		 * 删除图片，若该图片是本地未上传图片，则直接删除，若是已上传图片，需要删除服务器存储的图片
+		 * @param  {[type]} file [description]
+		 * @return {[type]}      [description]
+		 */
+	removePic = (file) => {
 		let select_modal = this.state.select_modal;
-		select_modal.fileList.push(info.file);
+		// console.log(file);
+		select_modal.files.splice(select_modal.files.indexOf(file), 1);
+
+		if (file.url.indexOf('blob:http:') == -1) {
+			this.deleteImgList.push(file.url);
+		}
 		this.setState({
 			select_modal: select_modal
 		});
-	}
-	removePic = (file) => {
-		console.log(file)
 	}
 	previewImg = (file) => {
 		// console.log(file);
@@ -84,13 +107,45 @@ class ProductInfo extends React.Component {
 		})
 	}
 
-	render() {
-        console.log(this.state.select_modal)
+	backStep = () => {
+		this.props.handleSteps ? this.props.handleSteps(-1) : "";
+	}
+	handleSave = () => {
+		this.setState({
+			loading: true
+		})
 		const {
 			intl: {
 				formatMessage
 			}
 		} = this.props;
+		let param = {
+			id: this.props.pid,
+			modal: []
+		}
+		modal.map(item => {
+			if (item.text && item.text.length > 0 || item.fileList && item.fileList.length > 0) {
+				param.modal.push(item);
+			}
+		})
+		axios.post('/product/save-product-info.json', param).then(res => {
+			this.setState({
+				loading: false
+			})
+			if (res.data) {
+				this.props.handleSteps ? this.props.handleSteps(1) : "";
+			} else {
+				message.error(formatMessage({
+					id: "mine.product.save_fail"
+				}))
+			}
+
+		})
+	}
+
+	render() {
+		console.log(this.state.select_modal)
+
 		return <div className={css.product_attr}>
 			<div className={css.product_info_item}>
 				<p className={css.info_item_left}>

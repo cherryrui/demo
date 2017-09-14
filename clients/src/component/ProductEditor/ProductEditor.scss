@@ -1,3 +1,4 @@
+@import '../../themes.scss';
 .body{
 	margin: 40px 0;
 }
@@ -27,9 +28,29 @@
 	}
 }
 .product_attr{
-	margin: 10px 20%;
+	margin: 10px 10%;
 }
-
+.product_attr_list{
+	border: 1px solid $border-color;
+	margin-bottom: 20px;
+}
+.basic_category{
+	span[class="ant-cascader-picker"]{
+		width: 60%;
+		margin-right: 20px;
+	}
+}
+.category_icon{
+	text-align: center;
+    background: $color-light-blue;
+    color: $font-color;
+    .icon_show{
+    	transform: rotate(-90deg);
+    }
+    .icon_show_no{
+    	transform: rotate(90deg);
+    }
+}
 .product_category{
 	@extend %item;
 }
@@ -51,7 +72,7 @@
 		margin-left: 10px;
 	}
 	input{
-		width: 60%;
+		width: 40%;
 	}
 }
 .product_add_title{

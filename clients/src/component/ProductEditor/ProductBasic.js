@@ -1,6 +1,7 @@
 import React from 'react';
 import css from './ProductEditor.scss';
 import axios from 'axios';
+import operator from './operator.js';
 import lrz from 'lrz';
 import {
 	FormattedMessage,
@@ -30,7 +31,12 @@ class ProductBasic extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			product: {},
+			product: {
+				category: [{
+					id: 1,
+					category_id: []
+				}]
+			},
 			brands: [],
 			category: [],
 			fileList: [],
@@ -46,11 +52,13 @@ class ProductBasic extends React.Component {
 				let category = resp.data.category;
 				category.map(item => {
 					item.value = item.id;
-					item.label = item.name
+					item.label = item.name;
+					item.isLeaf = false;
 				})
 				this.setState({
 					brands: res.data.brand,
 					category: resp.data.category,
+					product: this.props.product.id ? this.props.product : this.state.product
 				})
 			})
 
@@ -132,11 +140,15 @@ class ProductBasic extends React.Component {
 	}
 
 	submitProduct = (product) => {
-		axios.post('/product/add-product-info.json', product).then(res => {
+		product.category = this.state.product.category;
+		axios.post('/product/save-product-basic.json', product).then(res => {
 			this.setState({
 				loading: false
 			})
-			product.id = 1;
+			let product = {
+				id: res.data.id,
+				category: this.state.product.category
+			}
 			this.props.handleSteps ? this.props.handleSteps(1, product) : ""
 		})
 	}
@@ -158,9 +170,60 @@ class ProductBasic extends React.Component {
 		});
 	}
 
+	/**
+	 * 保存所选择的分类id
+	 * @param  {[type]} value           [description]
+	 * @param  {[type]} selectedOptions [description]
+	 * @return {[type]}                 [description]
+	 */
+	onChange = (index, value, options) => {
+		this.state.product.category[index].category_id = value;
+		this.state.product.category[index].category_name = options
+	}
 
+	/**
+	 * 删除或者添加产品分类
+	 */
+	handleCategory = (index) => {
+		let product = this.state.product;
+		if (index == -1) {
+			product.category.push({
+				id: product.category[product.category.length - 1].id + 1,
+			});
+		} else {
+			product.category.splice(index, 1);
+		}
+		this.setState({
+			product: product
+		})
+	}
+
+	/**
+	 * 加载分类信息
+	 * @param  {[type]} selectedOptions [description]
+	 * @return {[type]}                 [description]
+	 */
+	loadData = (selectedOptions) => {
+		console.log(selectedOptions);
+		const targetOption = selectedOptions[selectedOptions.length - 1];
+		axios.get(`/category/get-category.json?type=${3}&id=${targetOption.id}`).then(res => {
+			let category = res.data.categorys;
+			category.map(item => {
+				item.value = item.id;
+				item.label = item.name;
+				item.isLeaf = true;
+			})
+			targetOption.loading = false;
+			targetOption.children = category;
+			console.log(this.state.product)
+			this.setState({
+				product: this.state.product,
+			});
+		})
+	}
 
 	render() {
+		console.log(this.state.product)
 		const {
 			intl: {
 				formatMessage
@@ -221,21 +284,27 @@ class ProductBasic extends React.Component {
                             </Select>
                         )}
                     </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label={formatMessage({id: 'app.category'})}
-                    >
-                        {getFieldDecorator('category_id', {
-                            initialValue: this.state.product.category_id?this.state.product.category_id.split(","):[],
-                            rules: [{ type: 'array', required: true, message: formatMessage({id: 'mine.product.category_warn'}) }],
-                        })(
-                            <Cascader 
-                                options={this.state.category}
-                                loadData={this.loadData}
-                                changeOnSelect
-                            />
-                      )}
-                    </FormItem>
+                    {this.state.product.category.map((item,index)=>{
+                    	return <FormItem
+                        	{...formItemLayout}
+                        	label={formatMessage({id: 'app.category'})+(index+1)}
+                    	>
+                    		<div className={css.basic_category}>
+	                    		<Cascader 
+	                                options={this.state.category}
+	                                loadData={this.loadData}
+	                                onChange={this.onChange.bind(this,index)}
+	                            />
+	                            {index==0?<Tooltip title={formatMessage({id:'mine.product.add_category'})}>
+	    							<Button icon="plus" onClick={this.handleCategory.bind(this,-1)}/>
+	  							</Tooltip>
+								:<Tooltip title={formatMessage({id:'mine.product.del_category'})}>
+	    							<Button icon="minus" onClick={this.handleCategory.bind(this,index)}/>
+	  							</Tooltip>}
+  							</div>
+                   		</FormItem>
+                    })}
+                    
                     <FormItem 
                     	{...formItemLayout}
                     	label={formatMessage({id: 'mine.product.unit'})}

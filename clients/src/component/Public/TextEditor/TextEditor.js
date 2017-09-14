@@ -57,15 +57,15 @@ class TextEditor extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		//console.log(nextProps);
 		this.setState({
-			editorHtml: nextProps.text
+			editorHtml: nextProps.value
 		})
 	}
 
 	handleChange = (html) => {
-		console.log(html);
 		this.setState({
 			editorHtml: html
 		});
+		this.props.onChange ? this.props.onChange(html) : "";
 	}
 
 	render() {

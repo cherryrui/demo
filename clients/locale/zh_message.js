@@ -189,10 +189,10 @@ const zh_CN = {
     "mine.product.management": "产品管理",
 
     "mine.product.basic": "基础信息",
-    "mine.product.attributes": "产品规格",
-    "mine.product.param": "规格参数",
+    "mine.product.attributes": "产品属性",
+    "mine.product.param": "产品规格",
     "mine.product.introduction": "产品介绍",
-    "mine.product.packaging": "套餐详情",
+    "mine.product.packaging": "包装参数",
 
     "mine.product.name": "产品名称",
     "mine.product.No": "产品编号",
@@ -227,6 +227,9 @@ const zh_CN = {
 
     "mine.product.info_select": "选择详情类别",
     "mine.product.info_descript": "产品描述",
+    "mine.product.save_fail": "保存失败，请尝试再次保存",
+    "mine.product.add_category": "添加分类",
+    "mine.product.del_category": "删除分类",
 
 
     "order.status.all": "所有",
@@ -265,15 +268,15 @@ const zh_CN = {
     "orderlist.Paid.unprocessed": "未付款",
     "orderlist.Settled.Order": "已完成订单",
     "orderdetails.Delivery.address": "交货地址",
-    "orderdetails.preview.trade.contract":"预览贸易合同",
-    "orderdetails.return":"返回",
-    "orderdetails.Order.No":"订单号",
-    "orderdetails.Brand":"品牌",
-    "orderdetails.Art.No":"货号",
-    "orderdetails.principal":"本金",
-    "orderdetails.interest":"利息",
-    "mine.person":"用户中心",
-    "orderdetails.Order.details":"订单详情",
+    "orderdetails.preview.trade.contract": "预览贸易合同",
+    "orderdetails.return": "返回",
+    "orderdetails.Order.No": "订单号",
+    "orderdetails.Brand": "品牌",
+    "orderdetails.Art.No": "货号",
+    "orderdetails.principal": "本金",
+    "orderdetails.interest": "利息",
+    "mine.person": "用户中心",
+    "orderdetails.Order.details": "订单详情",
 
 
 }
