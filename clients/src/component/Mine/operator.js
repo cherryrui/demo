@@ -11,7 +11,7 @@ export default {
         }, {
             key: 1001,
             title: "mine.person.address",
-            url: "/main/"
+            url: "/main/mine/person-address"
         }, {
             key: 1002,
             title: "mine.person.account",
@@ -22,18 +22,18 @@ export default {
         list: [{
             key: 2000,
             title: "mine.order.all",
-            url: "/main/"
+            url: "/main/mine/order-list"
         }, ]
     }, {
         name: "mine.message",
         list: [{
             key: 3000,
             title: "mine.message.system",
-            url: "/main/"
+            url: "/main/mine/system-message"
         }, {
             key: 3001,
             title: "mine.message.consult",
-            url: "/main/"
+            url: "/main/mine/message"
         }, ]
     }, {
         name: "mine.agent.center",

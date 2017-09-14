@@ -1,0 +1,59 @@
+@import '../../themes.scss';
+.table_col{
+  text-align: center !important;
+  font-size: 16px;
+  .table_address{
+    .delivery{
+      background:$color-green;
+      height: 26px;
+      border: none;
+      margin-left: 20px;
+
+
+    }
+
+  }
+  .table_operation{
+    display: flex;
+    justify-content: center;
+    line-height: 24px;
+    height: 24px;
+    .modify{
+      font-size: 24px;
+      display: block;
+      padding-right:20px;
+
+
+    }
+    .delete{
+      display: block;
+      font-size: 18px;
+      line-height: 24px;
+      height: 24px;
+    }
+    .modify:hover{
+      color: $color-orange;
+    }
+
+  }
+
+}
+.delivery_new{
+  padding-top: 20px;
+  text-align: right;
+  .buttony_new{
+
+    height: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+.cancel{
+  background-color: $button-green;
+  border-color: $button-green;
+  margin-right: 20px;
+}
+.cancel:hover{
+  background-color: $button-green-active;
+  border-color: $button-green-active;
+}

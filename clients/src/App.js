@@ -45,6 +45,7 @@ import QuotationList from './component/QuotationList/QuotationList.js';
 import ProductEditor from './component/ProductEditor/ProductEditor.js';
 import AgentProduct from './component/AgentProduct/AgentProduct.js';
 import OrderDetails from './component/OrderDetails/OrderDetails.js';
+import PersonAddress from './component/PersonAddress/PersonAddress.js';
 
 import {
     Provider
@@ -277,6 +278,7 @@ ReactDOM.render(
                             <Route path="quotation-list" component={QuotationList}/>
                             <Route path="product-editor" component={ProductEditor}/>
                             <Route path="agent-product" component={AgentProduct}/>
+                            <Route path="person-address" component={PersonAddress}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
