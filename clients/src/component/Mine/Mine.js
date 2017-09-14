@@ -21,24 +21,26 @@ const SubMenu = Menu.SubMenu;
 class Mine extends React.Component {
     constructor(props) {
         super(props);
-        console.log(localStorage.user);
         this.state = {
             user: {},
             select: 0,
         }
     }
+    componentDidMount(){
+        console.log("componentDidMount");
+    }
 
     handleClick = (e) => {
-        console.log('click ', e);
+        //console.log('click ', e);
     }
     handleMenu=(key,url)=>{
-        console.log(key);
+        //console.log(key);
         this.setState({select:key});
         window.location.href = "/#"+url;
     }
 
     render() {
-        console.log(operator.menu,this.props.children);
+        //console.log(operator.menu,this.props.children);
         return <div className={`${appcss.body} ${css.body}`}>
             <div className={css.menu}>
             {operator.menu.map(menu=> {

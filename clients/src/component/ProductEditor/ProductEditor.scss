@@ -1,7 +1,7 @@
 .body{
 	margin: 40px 0;
 }
-.product_info{
+.product_base{
 	.upload{
 		line-height: 28px;
 	}
@@ -85,4 +85,19 @@
 	.right_item{
 		margin-right: 10px;
 	}
+}
+.product_info_item{
+	display: flex;
+    align-items: center;
+    margin: 10px 0;
+    .info_item_left{
+		width: 15%;
+		margin-right: 2%;
+		text-align: right;
+		flex-shrink: 0;
+    }
+}
+.product_descrip{
+	align-items: baseline;
+	margin-bottom: 20px;
 }

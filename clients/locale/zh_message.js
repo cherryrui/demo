@@ -225,6 +225,8 @@ const zh_CN = {
     "mine.product.attr_add": "新增自定义属性",
     "mine.product.attr_delete": "删除此条自定义属性",
 
+    "mine.product.info_select": "选择详情类别",
+    "mine.product.info_descript": "产品描述",
 
 
     "order.status.all": "所有",

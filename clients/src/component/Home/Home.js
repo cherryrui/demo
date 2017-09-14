@@ -73,14 +73,14 @@ class Main extends React.Component {
     }
 
     componentWillMount() {
-        console.log("componentWillMount");
+        //console.log("componentWillMount");
         this.props.getShoppingCart();
         let index = this.getIndex();
         /**
          * 获取一级分类和最近购物车商品
          */
         axios.get('/api/get-title-data.json').then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             this.setState({
                 categorys: res.data.categorys,
                 carts: res.data.carts,
@@ -143,7 +143,7 @@ class Main extends React.Component {
     }
 
     render() {
-        console.log(this.props.cart);
+        //console.log(this.props.cart);
         let category_menu = (
             <Menu  onClick={this.handleMenuClick}>
                 {this.state.categorys.map(item => {

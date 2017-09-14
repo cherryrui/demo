@@ -393,7 +393,7 @@ router.get('/get-conditions.json', async(ctx, next) => {
 				value: "蓝色"
 			}, ]
 		}, {
-			id: 1,
+			id: 2,
 			name: "尺码",
 			value: [{
 				id: 1,
@@ -413,6 +413,12 @@ router.get('/get-conditions.json', async(ctx, next) => {
 			specif: specif
 		}
 	})
+	/**
+	 * 获取代理商产品
+	 * @param  {[type]} '/get-agent-products.json' [description]
+	 * @param  {[type]} async(ctx,                 next          [description]
+	 * @return {[type]}                            [description]
+	 */
 	.get('/get-agent-products.json', async(ctx, next) => {
 
 		let products = [],
@@ -571,7 +577,9 @@ router.get('/get-conditions.json', async(ctx, next) => {
 		}
 
 	})
-	.get('/get-product-attr.json', async(ctx, next) => {
+
+//或者产品属性
+.get('/get-product-attr.json', async(ctx, next) => {
 		let category_id = ctx.query.category_id;
 		let attr = [];
 		attr = [{
@@ -593,6 +601,29 @@ router.get('/get-conditions.json', async(ctx, next) => {
 		let attr = param.attr.concat(param.new_attr);
 		ctx.body = {
 			attr: attr
+		}
+	})
+	.post('/save-product-spec.json', async(ctx, next) => {
+		let param = ctx.request.body;
+		ctx.body = true
+	})
+	.get('/get-product-info-modal.json', async(ctx, next) => {
+		let modal = [];
+		modal = [{
+			id: 1,
+			name: "模块1"
+		}, {
+			id: 2,
+			name: "模块2"
+		}, {
+			id: 3,
+			name: "模块3"
+		}, {
+			id: 4,
+			name: "模块4"
+		}, ]
+		ctx.body = {
+			modal: modal
 		}
 	})
 
