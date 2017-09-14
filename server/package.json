@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
+    "koa": "./node_modules/.bin/runkoa bin/www",
     "pm2": "pm2 start bin/run ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

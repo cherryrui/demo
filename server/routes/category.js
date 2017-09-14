@@ -3,7 +3,7 @@ const axios = require('axios');
 
 /**
  * 获取所有一级分类
- * type: 0:所有分类，1：所有一级分类，2：某一级分类下的2级分类，3：某2级分类下的三级分类
+ * type: 0:所有分类，1：所有一级分类，2：某级分类的所有下级分类
  * id： 父分类id
  */
 router.get('/get-category.json', async(ctx, next) => {
@@ -235,6 +235,33 @@ router.get('/get-category.json', async(ctx, next) => {
 					}, ]
 				}]
 				break;
+			case 3:
+				categorys = [{
+					id: 1,
+					name: "Category name"
+				}, {
+					id: 2,
+					name: "Category name"
+				}, {
+					id: 3,
+					name: "Category name"
+				}, {
+					id: 4,
+					name: "Category name"
+				}, {
+					id: 5,
+					name: "Category name"
+				}, {
+					id: 6,
+					name: "Category name"
+				}, {
+					id: 7,
+					name: "Category name"
+				}, {
+					id: 8,
+					name: "Category name"
+				}, ]
+				break;
 			default:
 				break;
 		}
@@ -311,22 +338,22 @@ router.get('/get-category.json', async(ctx, next) => {
 		let category = [];
 		category = [{
 			id: 1,
-			name: "Category name"
+			name: "一级分类1"
 		}, {
 			id: 2,
-			name: "Category name"
+			name: "一级分类2"
 		}, {
 			id: 3,
-			name: "Category name"
+			name: "一级分类3"
 		}, {
 			id: 4,
-			name: "Category name"
+			name: "一级分类4"
 		}, {
 			id: 5,
-			name: "Category name"
+			name: "一级分类5"
 		}, {
 			id: 6,
-			name: "Category name"
+			name: "一级分类6"
 		}, {
 			id: 7,
 			name: "Category name"

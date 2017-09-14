@@ -5,15 +5,13 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack --watch",
-    "build": "atool-build -o ./dist/${npm_package_name}/${npm_package_version}/",
-    "trans": "./node_modules/.bin/atool-l10n",
-    "dev": "dora -p 8001 --plugins webpack,proxy?port=3000,hmr,livereload"
+    "build": "./node_modules/.bin/webpack"
   },
   "theme": "./theme.js",
   "author": "i@caisong.com",
   "license": "ISC",
   "dependencies": {
-    "antd": "^2.8.0",
+    "antd": "^2.8.3",
     "autoprefixer": "^6.4.1",
     "axios": "^0.13.1",
     "babel-core": "^6.17.0",
@@ -32,15 +30,18 @@
     "less": "~2.6.0",
     "less-loader": "~2.2.0",
     "less-plugin-npm-import": "^2.1.0",
+    "lrz": "^4.9.40",
     "node-sass": "^4.5.3",
     "normalize.css": "^4.2.0",
     "postcss-loader": "^0.11.1",
-    "react": "^15.3.0",
+    "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.3.1",
     "react-cookie": "1.0.4",
-    "react-dom": "^15.3.0",
+    "react-dom": "^15.4.2",
     "react-highcharts": "^10.0.0",
     "react-intl": "^2.3.0",
+    "react-quill": "^1.0.0",
+    "react-quill": "^1.0.0",
     "react-redux": "4.4.5",
     "react-router": "^2.6.1",
     "react-slick": "^0.14.11",
@@ -52,7 +53,6 @@
     "redux-logger": "2.7.0",
     "redux-promise-middleware": "4.1.0",
     "redux-thunk": "2.1.0",
-    "lrz": "^4.9.40",
     "typescript": "^2.1.4"
   },
   "devDependencies": {

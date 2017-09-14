@@ -117,7 +117,7 @@ class App extends React.Component {
     }
     componentWillMount() {
         localStorage.setItem('uid', 1);
-        console.log(localStorage.uid);
+        //console.log(localStorage.uid);
         if (localStorage.uid) {
             axios.get(`/user/get-user.json?id=${localStorage.uid}`).then(res => {
                 this.setState({
@@ -158,7 +158,7 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(this.state.message);
+        //console.log(this.state.message);
         let order_menu = (<Menu>
         {this.order_status.map(item=>{
             return <Menu.Item>
