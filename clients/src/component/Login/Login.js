@@ -108,7 +108,7 @@ class Login extends React.Component {
                         <Button size="large" type="primary" htmlType="submit" className={css.button}>
                             <FormattedMessage id="login.login" defaultMessage="登录"/>
                         </Button>
-                        <Button size="large" type="primary" htmlType="submit" className={css.button}>
+                        <Button size="large" type="primary"  className={css.button}>
                             <FormattedMessage id="login.registor" defaultMessage="注册"/>
                     </Button>
                     </FormItem>

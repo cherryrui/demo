@@ -34,7 +34,7 @@ class Mine extends React.Component {
         //console.log('click ', e);
     }
     handleMenu=(key,url)=>{
-        //console.log(key);
+        console.log(key,url);
         this.setState({select:key});
         window.location.href = "/#"+url;
     }

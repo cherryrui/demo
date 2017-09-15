@@ -44,7 +44,23 @@ class Register extends React.Component{
                 })
             }
         })
+    };
+    handleJump = (e) =>{
+        console.log('I am  Jump');
+        window.location.href = "/#/login/"
+    };
+    handleCertification = (e) =>{
+        axios.get('/user/getCertificationCode.json').then(res =>{
+            console.log('res的值为: ',res);
+            console.log('data的值为：',res.data.data);
+            if(res.data.rc==200){
+                alert(`验证码为：${res.data.data}`);
+            }else{
+                alert('获取验证码失败！');
+            }
+        })
     }
+
 
 
     render() {
@@ -86,19 +102,19 @@ class Register extends React.Component{
                     <div> <h4 className={css.d2}>User registration</h4></div>
                 </div>
                 <div className={css.input}>
-            <div>
-                <Tabs defaultActiveKey="1" onChange={callback} className={css.tabs}>
-                    <TabPane tab="Enterprise user" key="1"></TabPane>
-                    <TabPane tab="Personal user" key="2"></TabPane>
-                </Tabs>
-            </div>
-                <div  >
-                    <div className={css.input1}>
-                        <Form onSubmit={this.handleSubmit}>
-                            <FormItem {...formItemLayout}
-                                label="Your name"
-                                hasFeedback
-                            >
+                    <div>
+                        <Tabs defaultActiveKey="1" onChange={callback} className={css.tabs}>
+                            <TabPane tab={formatMessage({id: 'register.register.Enterpriseuser'})} key="1"></TabPane>
+                            <TabPane tab={formatMessage({id: 'register.register.Personaluser'})} key="2"></TabPane>
+                        </Tabs>
+                    </div>
+                    <div  >
+                        <div className={css.input1}>
+                            <Form onSubmit={this.handleSubmit}>
+                                <FormItem {...formItemLayout}
+                                    label={formatMessage({id: 'register.register.name'})}
+                                    hasFeedback
+                                >
                                 {getFieldDecorator('name',{
                                     rules:[{
                                         required:true,
@@ -107,13 +123,13 @@ class Register extends React.Component{
                                 })(
                                     <Input className={css.input1}/>
                                 )}
-                            </FormItem>
+                                </FormItem>
 
-                            <FormItem {...formItemLayout}
-                                label="E-mail"
-                                hasFeedback
-                            >
-                                {getFieldDecorator('verification',{
+                                <FormItem {...formItemLayout}
+                                    label={formatMessage({id: 'register.register.email'})}
+                                    hasFeedback
+                                >
+                                {getFieldDecorator('email',{
                                     rules:[{
                                         required:true,
                                         message:'input your email'
@@ -121,12 +137,12 @@ class Register extends React.Component{
                                 })(
                                     <Input className={css.input1}/>
                                 )}
-                            </FormItem>
+                                </FormItem>
 
-                            <FormItem {...formItemLayout}
-                                label="TEL"
-                                hasFeedback
-                            >
+                                <FormItem {...formItemLayout}
+                                    label={formatMessage({id: 'register.register.tel'})}
+                                    hasFeedback
+                                >
                                 {getFieldDecorator('tel',{
                                     rules:[{
                                         required:true,
@@ -135,14 +151,14 @@ class Register extends React.Component{
                                 })(
                                     <Input className={css.input1}/>
                                 )}
-                            </FormItem>
+                                </FormItem>
 
-                            <FormItem {...formItemLayout}
-                                label="Verification code"
-                                hasFeedback
-                            >
-                                <Row gutter={10}>
-                                    <Col span={12}>
+                                <FormItem {...formItemLayout}
+                                    label={formatMessage({id: 'register.register.Verificationcode'})}
+                                    hasFeedback
+                                >
+                                    <Row gutter={10}>
+                                        <Col span={12}>
                                         {getFieldDecorator('verificationCode',{
                                             rules:[{
                                                 required:true,
@@ -151,18 +167,20 @@ class Register extends React.Component{
                                         })(
                                             <Input size="large" className={css.input1}/>
                                         )}
-                                    </Col>
-                                    <Col span={12}>
-                                        <Button type="primary" htmlType="submit" size="large" className={css.button1}>send Verification code</Button>
-                                    </Col>
-                                </Row>
-                            </FormItem>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Button type="primary" size="large" className={css.button1} onClick={this.handleCertification}>
+                                                <FormattedMessage id="register.register.sendVerificationcode" defaultMessage="发送验证码"/>
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </FormItem>
 
 
-                            <FormItem {...formItemLayout}
-                                label="Password"
-                                hasFeedback
-                            >
+                                <FormItem {...formItemLayout}
+                                    label={formatMessage({id: 'register.register.password'})}
+                                    hasFeedback
+                                >
                                 {getFieldDecorator('password',{
                                     rules:[{
                                         required:true,
@@ -171,12 +189,12 @@ class Register extends React.Component{
                                 })(
                                     <Input className={css.input1}/>
                                 )}
-                            </FormItem>
+                                </FormItem>
 
-                            <FormItem {...formItemLayout}
-                            label="Re-enter password"
-                            hasFeedback
-                        >
+                                <FormItem {...formItemLayout}
+                                    label={formatMessage({id: 'register.register.Re-enterpassword'})}
+                                    hasFeedback
+                                >
                                 {getFieldDecorator('repassword',{
                                     rules:[{
                                         required:true,
@@ -185,15 +203,18 @@ class Register extends React.Component{
                                 })(
                                     <Input className={css.input1}/>
                                 )}
-                            </FormItem>
-                            <div className={css.desc}>By createing an account you agree to <a className={css.lbl}>Condition of Use</a> and <a className={css.lbl}>Privacy Notice</a></div>
-                            <FormItem {...tailFormItemLayout}>
-                                <Button type="primary" htmlType="submit" className={css.button2}>Sign Up</Button>
-                            </FormItem>
-                            <div className={css.desc}>Already have an account？ <a className={css.lbl}>Sign in ></a></div>
-                        </Form>
+                                </FormItem>
+                                <div className={css.desc}>By createing an account you agree to <a className={css.lbl}>Condition of Use</a> and <a className={css.lbl}>Privacy Notice</a></div>
+                                <FormItem {...tailFormItemLayout}>
+                                    <Button type="primary" htmlType="submit" className={css.button2}>
+                                        <FormattedMessage id="register.register.signup" defaultMessage="注册"/>
+                                    </Button>
+                                </FormItem>
+                                <div className={css.desc}>Already have an account？ <a onClick={this.handleJump} className={css.lbl}>
+                                    <FormattedMessage id="register.register.signin" defaultMessage="登录"/>  ></a></div>
+                            </Form>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         )

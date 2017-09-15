@@ -9,7 +9,9 @@ import React from 'react';
 import css from './RePassword.scss';
 import appcss from '../../App.scss';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import {Form, Input, Steps, Popover, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, message, Tabs } from 'antd';
+import {Form, Input, Popover, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, message, Tabs } from 'antd';
+import Steps from '../Public/Steps/Steps.js';
+import operator from './operator.js';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
@@ -41,7 +43,7 @@ class RePassword extends React.Component{
                 axios.post('/user/repassword.json',values).then(res =>{
                     console.log('2222',JSON.stringify(res));
                     if(res.data.rc==200){
-                       console.log('I get the result')
+                        console.log('I get the result')
                         window.location.href = "/#/registerComplete/"
                     }else{
                         console.log("RePassword fail:",res.data.result);
@@ -96,21 +98,13 @@ class RePassword extends React.Component{
                     <div className={css.d1}><h1 className={css.lbl}>LOGO</h1></div>
                 </div>
                 <div className={css.input}>
-                    <div className={css.fh}>
-                        <div className={css.fhc}><span className={css.circle}>1</span></div>
-                        <div className={css.fhc}><span className={css.circle}>2</span></div>
-                        <div className={css.fhc}><span className={css.circle1}>3</span></div>
-
-                    </div>
-                    <div className={css.fsh}>
-                        <div className={css.fhc}>Authentication</div>
-                        <div className={css.fhc}>Reset password</div>
-                        <div className={css.fhc}>Complete</div>
+                    <div className={css.steps}>
+                        <Steps steps={operator.steps} current={1}/>
                     </div>
                     <div className={css.fhz}>
                         <Form onSubmit={this.handleSubmit}>
                             <FormItem {...formItemLayout}
-                                label="New login password:"
+                                label={formatMessage({id:'repwd.new.pwd'})}
                                 hasFeedback
                             >
                             {getFieldDecorator('newpwd',{
@@ -118,12 +112,12 @@ class RePassword extends React.Component{
                                     required:true,
                                     message:'please input new password'
                                 }]
-                            })(<Input className={css.input1} placeholder={formatMessage({id:'newpassword'})}/>
+                            })(<Input className={css.input1} placeholder={formatMessage({id:'repwd.new.inputpwd'})}/>
                             )}
 
                             </FormItem>
                             <FormItem {...formItemLayout}
-                                label="Confirm password:"
+                                label={formatMessage({id:'repwd.config.pwd'})}
                                 hasFeedback
                             >
                             {getFieldDecorator('confipwd',{
@@ -131,12 +125,13 @@ class RePassword extends React.Component{
                                     required:true,
                                     message:'please Confirm new password'
                                 }]
-                            })(<Input className={css.input1} placeholder={formatMessage({id:'repassword'})}/>
+                            })(<Input className={css.input1} placeholder={formatMessage({id:'repwd.config.inputpwd'})}/>
                             )}
 
                             </FormItem>
                             <FormItem {...tailFormItemLayout}>
-                                <Button type="primary" htmlType="submit" className={css.button2}>Next step</Button>
+                                <Button type="primary" htmlType="submit" className={css.button2}>
+                                    <FormattedMessage id="repwd.next.step" defaultMessage="下一步"/></Button>
                             </FormItem>
                         </Form>
                     </div>

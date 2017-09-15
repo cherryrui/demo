@@ -1,7 +1,7 @@
 @import "../../themes.scss";
 .body{
 	padding-top: 40px;
-  height: 600px;
+    min-height: 600px;
 }
 .logo{
 	color: $theme-color;
@@ -12,7 +12,7 @@
 }
 .form{
 	background-color: #e1f1ff !important;
-	height: 520px;
+    padding: 40px 0;
 	display: flex;
 }
 .login_form{

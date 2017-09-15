@@ -21,6 +21,29 @@ export default {
     delivery_mode: [
         {key:1,value_id: "cart.delivery.take"},
         {key:2,value_id: "cart.delivery.home"},
+    ],
+    steps:[
+        {
+            key: 1,
+            title: "cart.cart",
+            default_message: "我的购物车",
+            icon: ""
+        },{
+            key: 2,
+            title: "cart.confirm.order",
+            default_message: "我的购物车",
+            icon: ""
+        },{
+            key: 3,
+            title: "cart.pay",
+            default_message: "我的购物车",
+            icon: ""
+        },{
+            key: 4,
+            title: "cart.payment",
+            default_message: "我的购物车",
+            icon: ""
+        },
     ]
 
 }

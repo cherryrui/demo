@@ -204,5 +204,8 @@ router
         let ids = ctx.request.body;
         ctx.body = true;
     })
+    .post('/commit-order.json',async(ctx,next) =>{
+        ctx.body = true
+    })
 
 module.exports = router;

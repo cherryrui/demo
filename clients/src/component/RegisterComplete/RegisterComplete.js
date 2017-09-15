@@ -35,7 +35,7 @@ class RegisterComplete extends React.Component{
     handleClick = (e) => {
         console.log('click',e);
         this.setState({
-           current:e.key
+            current:e.key
         });
     };
 
@@ -53,35 +53,46 @@ class RegisterComplete extends React.Component{
                             <Menu.Item key="Category" className={css.menuitem}>
                                 <Dropdown overlay={menu}>
                                     <a className="ant-dropdown-link" href="#">
-                                       All Category <Icon type="down" />
+                                        <FormattedMessage id="regcomplt.regcomplt.Category" defaultMessage="分类"/> <Icon type="down" />
                                     </a>
                                 </Dropdown>
                             </Menu.Item>
                             <Menu.Item key="home" className={css.menuitem}>
-                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Home</a>
+                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+                                    <FormattedMessage id="regcomplt.regcomplt.Home" defaultMessage="主页"/>
+                                </a>
                             </Menu.Item>
                             <Menu.Item key="brand" className={css.menuitem}>
-                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Brand</a>
+                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+                                    <FormattedMessage id="regcomplt.regcomplt.Brand" defaultMessage="供应商"/>
+                                </a>
                             </Menu.Item>
                             <Menu.Item key="news" className={css.menuitem}>
-                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">News</a>
+                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+                                    <FormattedMessage id="regcomplt.regcomplt.News" defaultMessage="公司近况"/>
+                                </a>
                             </Menu.Item>
                             <Menu.Item key="about" className={css.menuitem}>
-                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">About Us</a>
+                                <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+                                    <FormattedMessage id="regcomplt.regcomplt.aboutus" defaultMessage="关于我们"/>
+                                </a>
                             </Menu.Item>
                         </Menu>
                     </div>
                 </div>
                 <div className={css.input}>
                     <div className={css.icon}>
-                        <Icon type="smile" /> Registered successfully!
+                        <Icon type="smile-o" /> <FormattedMessage id="regcomplt.regcomplt.Registeredsuccessfully" defaultMessage="注册成功！"/>
                     </div>
                     <div className={css.mar}>
                         To improve your personal information and help us to better personalize your services,chuan chuan will keep your personal information confidential.
                     </div>
                     <div className={css.button1}>
-                        <div className={css.button11}><Button type="primary">Go Shopping</Button></div>
-                        <div className={css.button12}><Button type="primary">Go Certification</Button></div>
+                        <div className={css.button11}><Button type="primary">
+                            <FormattedMessage id="regcomplt.regcomplt.GoShopping" defaultMessage="去购物车"/>
+                        </Button></div>
+                        <div className={css.button12}><Button type="primary">
+                            <FormattedMessage id="regcomplt.regcomplt.GoCertification" defaultMessage="去认证"/></Button></div>
                     </div>
                 </div>
             </div>
