@@ -33,20 +33,26 @@ class Cart extends React.Component {
         super(props);
         this.state = {
             products: [],
-            step:0,
+            step: 0,
             order: {}
         }
 
     }
-    handleStep=(step,data)=>{
-        if(this.state.step==0){
+    componentWillMount() {
+        if (!sessionStorage.user) {
+            window.location.href = '/#/login'
+        }
+
+    }
+    handleStep = (step, data) => {
+        if (this.state.step == 0) {
             this.state.products = data;
-        }else if(this.state.step==1){
+        } else if (this.state.step == 1) {
             this.state.order = data;
         }
         this.setState({
-            step: this.state.step+step,
-        },()=>{
+            step: this.state.step + step,
+        }, () => {
             document.body.scrollTop = 0
         })
     }

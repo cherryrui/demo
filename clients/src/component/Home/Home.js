@@ -24,12 +24,14 @@ import {
     Input,
     Button,
     Popover,
-    message
+    message,
+    Modal
 } from 'antd';
 
 const Search = Input.Search;
 const Option = Select.Option;
 import cartAction from '../../action/cartAction.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 
 @connect(state => ({
     cart: state.cart
@@ -46,6 +48,8 @@ class Main extends React.Component {
             index: 1,
             categorys: [],
             carts: [],
+            visible: false,
+            confirmloading: false,
 
         };
         this.tabs = [{
@@ -141,13 +145,33 @@ class Main extends React.Component {
         })
         window.location.href = "/#/main/category-list/" + value.key;
     }
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        })
+        window.location.href = "/#/main/cart"
+    }
+    handleCart = () => {
+        if (sessionStorage.user) {
+            window.location.href = "/#/main/cart"
+        } else {
+            this.setState({
+                visible: true
+            })
+        }
+    }
 
     render() {
         //console.log(this.props.cart);
         let category_menu = (
-            <Menu  onClick={this.handleMenuClick}>
+            <Menu className={css.category_menu} onClick={this.handleMenuClick}>
                 {this.state.categorys.map(item => {
-                    return <Menu.Item key={item.id}>{item.name}</Menu.Item>
+                    return <Menu.Item key={item.id}>
+                    <div>
+                        <Icon type="menu-unfold" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>{item.name}</span>
+                    </div>
+                    </Menu.Item>
                 })}
             </Menu>
         );
@@ -175,16 +199,17 @@ class Main extends React.Component {
         return <div>
             <div className={css.header}>
                 <div className={css.left}>
-                    <p className={css.title}>LOGO</p>
-                    <p className={this.state.index == 0 ? css.active : css.title}>
-                        <Dropdown overlay={category_menu}>
-                            <p>
+                <p className={this.state.index == 0 ? css.active : css.title_category}>
+                    <Dropdown overlay={category_menu} trigger={['click']}>
+                        <p className={css.category_menu_main}>
+                            <p >
+                                <Icon type="menu-unfold" />&nbsp;&nbsp;&nbsp;&nbsp;
                                 <FormattedMessage id="app.category" defaultMessage="分类"/>
-                            &nbsp;&nbsp;
-                                <Icon type="caret-down" />
                             </p>
-                        </Dropdown>
-                    </p>
+                            <Icon type="caret-down" />
+                        </p>
+                    </Dropdown>
+                </p>
                 {this.tabs.map(item=> {
                     return <p className={this.state.index == item.key ? css.active : css.title} onClick={this.handleTabs.bind(this, item.key, item.url)}>
                         <FormattedMessage id={item.message_id} defaultMessage={item.default_message}/>
@@ -200,16 +225,14 @@ class Main extends React.Component {
                     />
                     <Dropdown overlay={cart_menu} placement="bottomRight">
                         <Badge count={this.props.cart.sum}>
-                            <Link to="main/cart">
-                                <Button type="primary" size="large" icon="shopping-cart">
-                                    <FormattedMessage id="shopping.cart" defaultMessage="购物车"/>
-                                </Button>
-                            </Link>
+                            <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
+                                <FormattedMessage id="shopping.cart" defaultMessage="购物车"/>
+                            </Button>
                         </Badge>
                     </Dropdown>
                 </div>
             </div>
-		{this.props.children}
+            {this.props.children}
             <div className={css.foot_first}>
                 <div className={css.item}>
                     <p className={css.icon}>
@@ -245,6 +268,14 @@ class Main extends React.Component {
                 </div>
 
             </div>
+            <Modal
+                title={formatMessage({id:"login.login.title"})}
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+                footer={null}
+            >
+                <LoginModal closeModal={this.handleCancel}/>
+            </Modal>
         </div>
 
     }

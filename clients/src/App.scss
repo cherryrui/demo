@@ -27,12 +27,12 @@
 }
 
 .seat{
-  height: 134px;
+  height: 114px;
 }
 .body{
   min-height: 600px;
   margin: 0 10%;
-  padding-top: 134px;
+  padding-top: 114px;
   min-width: 1150px;
   background: white;
 }
@@ -100,12 +100,6 @@
 }
 .button_theme{
     @extend %button;
-    background-color: $button-blue !important;
-    border-color: $button-blue !important;
-}
-.button_theme:hover{
-    background-color: $button-blue-active !important;
-    border-color: $button-blue-active !important;
 }
 .button_green{
     @extend %button;

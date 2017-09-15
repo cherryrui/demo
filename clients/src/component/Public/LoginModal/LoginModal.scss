@@ -1,0 +1,17 @@
+@import "../../../themes.scss";
+
+.login_form{
+  background: white;
+  padding: 28px;
+  .title{
+  	text-align: center;
+    border-bottom: 1px solid $border-color;
+  }
+  .forgot {
+    float: right;
+  }
+  .button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

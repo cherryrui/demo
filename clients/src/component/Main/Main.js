@@ -43,7 +43,6 @@ class Main extends React.Component {
     }
 
     render() {
-        console.log(this.state.category, this.state.brand)
         return <div className={appcss.body}>
             <Slider
                 dots={true}

@@ -133,6 +133,7 @@ class App extends React.Component {
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
+        console.log("sdsadasd");
         if (sessionStorage.user && !this.state.user) {
             this.setState({
                 user: JSON.parse(sessionStorage.user),
@@ -190,12 +191,12 @@ class App extends React.Component {
                             <Link className={css.item} to="login">
                                 <FormattedMessage id="app.login" defaultMessage="登录/注册"/>
                             </Link>}
-                            <Dropdown overlay={order_menu}>
+                            {this.state.user?<Dropdown overlay={order_menu}>
                                 <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
-                            </Dropdown>
-                            <p className={css.item}>
+                            </Dropdown>:""}
+                            {this.state.user?<p className={css.item}>
                                 <FormattedMessage id="app.message" defaultMessage="消息"/>
-                            </p>
+                            </p>:""}
                             <Select defaultValue="中文" className={css.language} onChange={this.handleChange}>
                                 <Option value="zn"><FormattedMessage id="app.language.zh" defaultMessage="中文"/></Option>
                                 <Option value="en"><FormattedMessage id="app.language.en" defaultMessage="英语"/></Option>
