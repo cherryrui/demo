@@ -46,6 +46,8 @@ import ProductEditor from './component/ProductEditor/ProductEditor.js';
 import AgentProduct from './component/AgentProduct/AgentProduct.js';
 import OrderDetails from './component/OrderDetails/OrderDetails.js';
 import PersonAddress from './component/PersonAddress/PersonAddress.js';
+import EnterpriseAuthentication from './component/EnterpriseAuthentication/EnterpriseAuthentication.js';
+import PersonalAuthentication from './component/PersonalAuthentication/PersonalAuthentication.js';
 
 import {
     Provider
@@ -279,6 +281,8 @@ ReactDOM.render(
                             <Route path="product-editor" component={ProductEditor}/>
                             <Route path="agent-product" component={AgentProduct}/>
                             <Route path="person-address" component={PersonAddress}/>
+                            <Route path="personal-authentication" component={PersonalAuthentication}/>
+                            <Route path="enterprise-authentication" component={EnterpriseAuthentication}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
