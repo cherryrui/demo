@@ -361,6 +361,23 @@ const zh_CN = {
     "regcomplt.regcomplt.Registeredsuccessfully": "注册成功！",
     "repwd.new.pwd": "新密码",
     "repwd.config.pwd": "确认密码",
+    "Agente.legal.person":"法人姓名",
+    "Agente.legal.person.id.No":"法人身份证号",
+    "Agente.Detailed.address":"详细地址",
+    "Agente.Contact.person":"说明",
+    "Agente.Region":"地区",
+    "Agente.Business.type":"商业类型",
+    "Agente.Store":"商户",
+    "Agente.Company":"公司",
+    "Agente.front.Side":"正面",
+    "Agente.back.Side":"反面",
+    "Agente.Please.upload.your.credentials":"请上传你的资质证明",
+    "Agente.Please.enter.the.name.of.the.company":"请上输入公司名称",
+    "Agente.Please.input.your.phone.number!":"请上输入电话号码",
+    "Agente.Please.enter.the.name.of.the.legal.person":"请上输入法人姓名",
+    "Agente.Please.enter.the.corporate.identity.card.number":"请上输入法人身份证号",
+    "Agente.Please.enter.a.detailed.address":"请输入详细地址",
+    "Agente.Please.enter.the.mailbox":"请输入邮箱",
 
 }
 export default zh_CN;
