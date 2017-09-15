@@ -1,18 +1,18 @@
 @import "../../themes.scss";
 .body{
 	padding-top: 40px;
-    min-height: 600px;
+  min-height: 600px;
 }
 .logo{
 	color: $theme-color;
-    height: 80px;
-    padding: 10px 10%;
-    font-size: 40px;
-    font-weight: bold;
+  height: 80px;
+  padding: 10px 10%;
+  font-size: 40px;
+  font-weight: bold;
 }
 .form{
 	background-color: #e1f1ff !important;
-    padding: 40px 0;
+  padding: 40px 0;
 	display: flex;
 }
 .login_form{

@@ -27,6 +27,8 @@ router.get('/get-user.json', async(ctx, next) => {
 			result = "账号密码错误";*/
 		if (status) {
 			ctx.cookie.set('uid', result.id);
+		} else {
+			ctx.cookie.set('uid', null);
 		}
 		ctx.body = {
 			status: status,
@@ -164,5 +166,38 @@ router.get('/get-user.json', async(ctx, next) => {
 		ctx.body = {
 			message: message
 		}
+	})
+	.get('/getCertificationCode.json', async(ctx) => {
+		let result = null;
+		const vercode = '5986';
+		if (vercode) {
+			result = {
+				rc: 200,
+				data: vercode
+			}
+		} else {
+			result = {
+				rc: 202,
+				errmessage: '获取验证码失败!'
+			}
+		}
+		ctx.body = result;
+	})
+	.get('/getVcodeByTelorEmail.json', async(ctx) => {
+		let result = null;
+		const teloremail = ctx.request.query.teloremail;
+		console.log(`teloremail的值为：${teloremail}`);
+		if (teloremail) {
+			result = {
+				rc: 200,
+				data: teloremail
+			};
+		} else {
+			result = {
+				rc: 202,
+				errmessage: '获取失败！'
+			};
+		}
+		ctx.body = result;
 	})
 module.exports = router;

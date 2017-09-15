@@ -19,8 +19,6 @@ import {
     Avatar
 } from 'antd';
 
-
-
 class PersonCenter extends React.Component {
     constructor(props) {
         super(props);
@@ -34,18 +32,22 @@ class PersonCenter extends React.Component {
 
     }
     componentWillMount() {
-        this.state.user = JSON.parse(localStorage.user);
-        axios.get("/user/get-recent-message.json").then(res_m => {
-            axios.get('/product/get-like-product.json').then(res_P => {
-                axios.get('/brand/get-like-brand.json').then(res_b => {
-                    this.setState({
-                        message_list: res_m.data.message,
-                        products: res_P.data.products,
-                        brands: res_b.data.brands
+        if (sessionStorage.user) {
+            this.state.user = JSON.parse(sessionStorage.user);
+            axios.get("/user/get-recent-message.json").then(res_m => {
+                axios.get('/product/get-like-product.json').then(res_P => {
+                    axios.get('/brand/get-like-brand.json').then(res_b => {
+                        this.setState({
+                            message_list: res_m.data.message,
+                            products: res_P.data.products,
+                            brands: res_b.data.brands
+                        })
                     })
                 })
             })
-        })
+        } else {
+            window.location.href = '/#/login'
+        }
     }
 
     render() {

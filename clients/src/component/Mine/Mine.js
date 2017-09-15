@@ -8,13 +8,17 @@ import axios from 'axios';
 import operator from './operator.js';
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
-import { Menu, Icon,Col }from 'antd';
+} from 'react-intl';
+import {
+    Menu,
+    Icon,
+    Col
+} from 'antd';
 const SubMenu = Menu.SubMenu;
 
 
@@ -26,17 +30,33 @@ class Mine extends React.Component {
             select: 0,
         }
     }
-    componentDidMount(){
+    componentWillMount() {
+        if (!sessionStorage.user) {
+            window.location.href = '/#/login'
+        }
+    }
+    componentDidMount() {
         console.log("componentDidMount");
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (!sessionStorage.user) {
+            window.location.href = '/#/login'
+        }
+        console.log("componentDidMount");
+        //判断页面权限 为了开发方便 注释
+        /*this.fetchPermission();*/
+        // this.getPros();
     }
 
     handleClick = (e) => {
         //console.log('click ', e);
     }
-    handleMenu=(key,url)=>{
-        console.log(key,url);
-        this.setState({select:key});
-        window.location.href = "/#"+url;
+    handleMenu = (key, url) => {
+        console.log(key, url);
+        this.setState({
+            select: key
+        });
+        window.location.href = "/#" + url;
     }
 
     render() {

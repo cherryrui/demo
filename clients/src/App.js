@@ -80,7 +80,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
+            user: sessionStorage.user ? JSON.parse(sessionStorage.user) : null,
             antd_loacl: null,
             locale: 'zh',
             message: zh_message,
@@ -118,19 +118,26 @@ class App extends React.Component {
         }, ];
     }
     componentWillMount() {
-        localStorage.setItem('uid', 1);
-        //console.log(localStorage.uid);
-        if (localStorage.uid) {
+        if (sessionStorage.user) {
+            this.setState({
+                user: JSON.parse(sessionStorage.user),
+            })
+        } else if (localStorage.uid) {
             axios.get(`/user/get-user.json?id=${localStorage.uid}`).then(res => {
+                sessionStorage.setItem('user', JSON.stringify(res.data.user))
                 this.setState({
                     user: res.data.user
                 })
             })
         }
-
     }
-    componentDidMount() {
-
+    componentDidMount() {}
+    componentDidUpdate(prevProps, prevState) {
+        if (sessionStorage.user && !this.state.user) {
+            this.setState({
+                user: JSON.parse(sessionStorage.user),
+            })
+        }
     }
 
     handleChange = (key) => {
@@ -160,6 +167,7 @@ class App extends React.Component {
     }
 
     render() {
+
         //console.log(this.state.message);
         let order_menu = (<Menu>
         {this.order_status.map(item=>{
@@ -288,8 +296,8 @@ ReactDOM.render(
                     <Route path="login" component={Login}/>
                     <Route path="register" component={Register}/>
                     <Route path="authentication" component={Authentication}/>
-                    <Route path="rePassword" component={RePassword}/>
-                    <Route path="registerComplete" component={RegisterComplete}/>                  
+                    <Route path="reset-password" component={RePassword}/>
+                    <Route path="register-complete" component={RegisterComplete}/>
                 </Route>
             </Router>
             </Provider>), document.body.appendChild(div)

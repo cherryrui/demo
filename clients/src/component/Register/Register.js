@@ -5,57 +5,72 @@ import axios from 'axios';
 import React from 'react';
 import css from './Register.scss';
 import appcss from '../../App.scss';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import {Form, Input, Tooltip, Popover, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, message, Tabs } from 'antd';
+import {
+    FormattedMessage,
+    injectIntl,
+    intlShape
+} from 'react-intl';
+import {
+    Link
+} from 'react-router';
+import {
+    Form,
+    Input,
+    Tooltip,
+    Popover,
+    Icon,
+    Cascader,
+    Select,
+    Row,
+    Col,
+    Checkbox,
+    Button,
+    AutoComplete,
+    message,
+    Tabs
+} from 'antd';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 
-function callback(key) {
-    console.log(key);
-}
 
-class Register extends React.Component{
+class Register extends React.Component {
 
     static propTypes = {
         intl: intlShape.isRequired
     };
-    constructor(props){
+    constructor(props) {
         super(props);
     }
     handleSubmit = (e) => {
         let {
-            intl:{
+            intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         e.preventDefault();
-        this.props.form.validateFields((err,values) =>{
-            if(!err){
-                console.log('RePassword success: ',values);
-                axios.post('/user/register.json',values).then(res =>{
-                    console.log('2222',JSON.stringify(res));
-                    if(res.data.rc==200){
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('RePassword success: ', values);
+                axios.post('/user/register.json', values).then(res => {
+                    console.log('2222', JSON.stringify(res));
+                    if (res.data.rc == 200) {
                         console.log('I get the result')
-                        window.location.href = "/#/authentication/"
-                    }else{
-                        console.log("RePassword fail:",res.data.result);
+                        window.location.href = "/#/register-complete"
+                    } else {
+                        console.log("RePassword fail:", res.data.result);
 
                     }
                 })
             }
         })
     };
-    handleJump = (e) =>{
-        console.log('I am  Jump');
-        window.location.href = "/#/login/"
-    };
-    handleCertification = (e) =>{
-        axios.get('/user/getCertificationCode.json').then(res =>{
-            console.log('res的值为: ',res);
-            console.log('data的值为：',res.data.data);
-            if(res.data.rc==200){
+    handleCertification = (e) => {
+        axios.get('/user/getCertificationCode.json').then(res => {
+            console.log('res的值为: ', res);
+            console.log('data的值为：', res.data.data);
+            if (res.data.rc == 200) {
                 alert(`验证码为：${res.data.data}`);
-            }else{
+            } else {
                 alert('获取验证码失败！');
             }
         })
@@ -66,155 +81,162 @@ class Register extends React.Component{
     render() {
         console.log('I am Register!');
         const {
-            intl:{
+            intl: {
                 formatMessage
-                }
-            } = this.props;
-        const { getFieldDecorator } = this.props.form;
+            }
+        } = this.props;
+        const {
+            getFieldDecorator
+        } = this.props.form;
 
         const formItemLayout = {
             labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 }
+                xs: {
+                    span: 24
+                },
+                sm: {
+                    span: 8
+                }
             },
             wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 8 }
+                xs: {
+                    span: 24
+                },
+                sm: {
+                    span: 8
+                }
             }
         };
         const tailFormItemLayout = {
             wrapperCol: {
-                xs: {
-                    span: 10,
-                    offset: 6
-                },
-                sm: {
-                    span: 14,
-                    offset: 5
-                }
+                span: 10,
+                offset: 8
             }
         };
 
         return (
             <div className={css.body}>
-                <div className={css.d}>
-                    <div className={css.d1}><h1 className={css.lbl}>LOGO</h1></div>
-                    <div> <h4 className={css.d2}>User registration</h4></div>
+                <div className={css.title}>
+                    <p className={css.logo}>LOGO</p>
+                    <p className={css.title_text}>
+                        <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
+                    </p>
                 </div>
-                <div className={css.input}>
-                    <div>
-                        <Tabs defaultActiveKey="1" onChange={callback} className={css.tabs}>
-                            <TabPane tab={formatMessage({id: 'register.register.Enterpriseuser'})} key="1"></TabPane>
-                            <TabPane tab={formatMessage({id: 'register.register.Personaluser'})} key="2"></TabPane>
-                        </Tabs>
-                    </div>
-                    <div  >
-                        <div className={css.input1}>
-                            <Form onSubmit={this.handleSubmit}>
-                                <FormItem {...formItemLayout}
-                                    label={formatMessage({id: 'register.register.name'})}
-                                    hasFeedback
-                                >
-                                {getFieldDecorator('name',{
+                <div className={css.form}>
+                    <Form onSubmit={this.handleSubmit}>
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'register.register.name'})}
+                            hasFeedback
+                        >
+                        {getFieldDecorator('name',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:'register.name.warn'})
+                            }]
+                        })(
+                            <Input />
+                        )}
+                        </FormItem>
+
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'post.email'})}
+                            hasFeedback
+                        >
+                        {getFieldDecorator('email',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:"register.email.warn"})
+                            }]
+                        })(
+                            <Input />
+                        )}
+                        </FormItem>
+
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'cart.delivery.tel'})}
+                            hasFeedback
+                        >
+                        {getFieldDecorator('tel',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:"register.tel.warn"})
+                            }]
+                        })(
+                            <Input />
+                        )}
+                        </FormItem>
+
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'register.register.verification'})}
+                            hasFeedback
+                        >
+                            <Row gutter={10}>
+                                <Col span={12}>
+                                {getFieldDecorator('verificationCode',{
                                     rules:[{
                                         required:true,
-                                        message:'input your name'
+                                        message:formatMessage({id:"register.verifivation.warn"})
                                     }]
                                 })(
-                                    <Input className={css.input1}/>
+                                    <Input size="large" />
                                 )}
-                                </FormItem>
-
-                                <FormItem {...formItemLayout}
-                                    label={formatMessage({id: 'register.register.email'})}
-                                    hasFeedback
-                                >
-                                {getFieldDecorator('email',{
-                                    rules:[{
-                                        required:true,
-                                        message:'input your email'
-                                    }]
-                                })(
-                                    <Input className={css.input1}/>
-                                )}
-                                </FormItem>
-
-                                <FormItem {...formItemLayout}
-                                    label={formatMessage({id: 'register.register.tel'})}
-                                    hasFeedback
-                                >
-                                {getFieldDecorator('tel',{
-                                    rules:[{
-                                        required:true,
-                                        message:'input your Tel'
-                                    }]
-                                })(
-                                    <Input className={css.input1}/>
-                                )}
-                                </FormItem>
-
-                                <FormItem {...formItemLayout}
-                                    label={formatMessage({id: 'register.register.Verificationcode'})}
-                                    hasFeedback
-                                >
-                                    <Row gutter={10}>
-                                        <Col span={12}>
-                                        {getFieldDecorator('verificationCode',{
-                                            rules:[{
-                                                required:true,
-                                                message:'input verification code'
-                                            }]
-                                        })(
-                                            <Input size="large" className={css.input1}/>
-                                        )}
-                                        </Col>
-                                        <Col span={12}>
-                                            <Button type="primary" size="large" className={css.button1} onClick={this.handleCertification}>
-                                                <FormattedMessage id="register.register.sendVerificationcode" defaultMessage="发送验证码"/>
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </FormItem>
-
-
-                                <FormItem {...formItemLayout}
-                                    label={formatMessage({id: 'register.register.password'})}
-                                    hasFeedback
-                                >
-                                {getFieldDecorator('password',{
-                                    rules:[{
-                                        required:true,
-                                        message:'input your password'
-                                    }]
-                                })(
-                                    <Input className={css.input1}/>
-                                )}
-                                </FormItem>
-
-                                <FormItem {...formItemLayout}
-                                    label={formatMessage({id: 'register.register.Re-enterpassword'})}
-                                    hasFeedback
-                                >
-                                {getFieldDecorator('repassword',{
-                                    rules:[{
-                                        required:true,
-                                        message:'reinput your password'
-                                    }]
-                                })(
-                                    <Input className={css.input1}/>
-                                )}
-                                </FormItem>
-                                <div className={css.desc}>By createing an account you agree to <a className={css.lbl}>Condition of Use</a> and <a className={css.lbl}>Privacy Notice</a></div>
-                                <FormItem {...tailFormItemLayout}>
-                                    <Button type="primary" htmlType="submit" className={css.button2}>
-                                        <FormattedMessage id="register.register.signup" defaultMessage="注册"/>
+                                </Col>
+                                <Col span={12}>
+                                    <Button type="primary" size="large" className={css.button1} onClick={this.handleCertification}>
+                                        <FormattedMessage id="register.register.sendVerificationcode" defaultMessage="发送验证码"/>
                                     </Button>
-                                </FormItem>
-                                <div className={css.desc}>Already have an account？ <a onClick={this.handleJump} className={css.lbl}>
-                                    <FormattedMessage id="register.register.signin" defaultMessage="登录"/>  ></a></div>
-                            </Form>
+                                </Col>
+                            </Row>
+                        </FormItem>
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'register.pwd'})}
+                            hasFeedback
+                        >
+                        {getFieldDecorator('password',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:'register.password.warn'})
+                            }]
+                        })(
+                            <Input />
+                        )}
+                        </FormItem>
+
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'register.re.pwd'})}
+                            hasFeedback
+                        >
+                        {getFieldDecorator('repassword',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:'register.re_password.warn'})
+                            }]
+                        })(
+                            <Input />
+                        )}
+                        </FormItem>
+                        <FormItem {...tailFormItemLayout}>
+                            {getFieldDecorator('remember', {
+                                valuePropName: 'checked',
+                                initialValue: true,
+                            })(
+                                <Checkbox>
+                                    <FormattedMessage id="register.notes" defaultMessage="记住密码"/>
+                                </Checkbox>
+                            )}
+                        </FormItem>
+                        <FormItem {...tailFormItemLayout}>
+                            <Button type="primary" htmlType="submit" className={css.button2}>
+                                <FormattedMessage id="login.registor" defaultMessage="注册"/>
+                            </Button>
+                        </FormItem>
+                        <div className={css.footer}>
+                            <FormattedMessage id="register.have.acount" defaultMessage="登录"/>
+                            <Link to="/login">
+                                <FormattedMessage id="register.go.login" defaultMessage="登录"/>
+                            </Link>
                         </div>
-                    </div>
+                    </Form>
                 </div>
             </div>
         )

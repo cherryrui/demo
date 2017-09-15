@@ -10,7 +10,9 @@ import {
     injectIntl,
     intlShape
 } from 'react-intl';
-
+import {
+    Link
+} from 'react-router';
 import {
     Form,
     Icon,
@@ -42,11 +44,16 @@ class Login extends React.Component {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
                     if (res.data.status) {
-                        localStorage.setItem('user', JSON.stringify(res.data.result));
+                        if (values.remember) {
+                            localStorage.setItem('uid', res.data.result.id);
+                        } else {
+                            localStorage.setItem('uid', null);
+                        }
+                        sessionStorage.setItem('user', JSON.stringify(res.data.result))
                         message.success(formatMessage({
                             id: 'login.login.success'
                         }))
-                        window.location.href = "/#/main/"
+                        window.location.href = "/#/"
                     } else {
                         message.error(formatMessage({
                             id: 'login.login.fail'
@@ -105,9 +112,9 @@ class Login extends React.Component {
                             <FormattedMessage id="login.remember" defaultMessage="记住密码"/>
                         </Checkbox>
                     )}
-                        <a className={css.forgot} href="">
+                        <Link className={css.forgot} to="/reset-password">
                             <FormattedMessage id="login.forget" defaultMessage="用户登录"/>
-                        </a>
+                        </Link>
                         <Button size="large" type="primary" htmlType="submit" className={css.button}>
                             <FormattedMessage id="login.login" defaultMessage="登录"/>
                         </Button>
