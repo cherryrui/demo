@@ -6,9 +6,10 @@
   padding:20px;
   margin-bottom: 20px;
   width: 100%;
-  .prompt p{
+  .spot_text{
+display: flex;
 
-    width:100px;
+
   }
 }
 .retrun{
@@ -55,4 +56,10 @@
       text-align: center;
     }
   }
+}
+.spot{
+  display: block;
+  font-size: 6px;
+  padding-right: 5px;
+
 }

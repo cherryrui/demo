@@ -22,6 +22,7 @@ import {
     Cascader,
     Select,
     Row,
+    menu,
     Col,
     Checkbox,
     Upload,
@@ -189,9 +190,38 @@ class Supplier extends React.Component {
         return<div>
             <div className={css.prompt}>
 
-                <p>its inception in 1995, has hundreds of business units, research institutes, laboratories and equipment to provide professional quality service. User base includes iron and steel metallurgy,
-                    nonferrous metals, metal recycling, aerospace, rail transportation, hardware, automotive electronics, home appliances and other fields. After years of development, the company has created a wealth of experience in sales and after-sales service team.
+                <p>
+                    <FormattedMessage id={"Supplier.Need.conditions"} defaultMessage="供应商需要具备的条件"/>
                 </p>
+                <p>
+                    <FormattedMessage id={"Supplier.condition.Industry.development"} defaultMessage="随着建筑零售行业的飞速发展，消费者的需求也更加多元化，需求量迅猛增长。为了共享建材行业发展的成果，我们希望与您携手前进。"/>
+
+                </p>
+                <p >
+                    <FormattedMessage id={"Supplier.have.condition"} defaultMessage="如果你具备以下条件："/>
+
+                </p>
+                <p className={css.spot_text}>
+                    <i className={css.spot}>●</i>
+                    <FormattedMessage id={"Supplier.qualification"} defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
+
+                </p>
+                <p className={css.spot_text}>
+                    <i className={css.spot}>●</i>
+                    <FormattedMessage id={"Supplier.prove"} defaultMessage=""/>
+
+                </p>
+                <p className={css.spot_text}>
+                    <i className={css.spot}>●</i>
+                    <FormattedMessage id={"Supplier.Intellectual.property"} defaultMessage=""/>
+
+                </p>
+                <p className={css.spot_text}>
+                    <i className={css.spot}>●</i>
+                    <FormattedMessage id={"Supplier.financial.statements"} defaultMessage=""/>
+
+                </p>
+
             </div>
             <div>
                 <Form onSubmit={this.handleSubmit}>

@@ -5,7 +5,11 @@
   background: $color-light-blue;
   padding:20px;
   margin-bottom: 20px;
+  .spot_text{
+    display: flex;
 
+
+  }
 }
 .retrun{
   background-color: $button-green;
@@ -51,4 +55,10 @@
     text-align: center;
   }
 }
+}
+.spot{
+  display: block;
+  font-size: 6px;
+  padding-right: 5px;
+
 }

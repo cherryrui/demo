@@ -346,7 +346,7 @@ const zh_CN = {
     "register.re_password.warn": "请再次输入密码",
     "register.notes": "同意使用条件以及隐私条款",
     "register.have.acount": "已有账号？",
-    "register.go.login": "去登录",
+    "register.go.login": "去登陆",
     "regiater.go_shopping": "去购物",
     "regiater.success.info": "为了提高您的个人信息，帮助我们更好地个性化您的服务，川川将保持您的个人信息保密。",
 
@@ -394,5 +394,14 @@ const zh_CN = {
     "SuccessfulApplication.warehouses.abroad":"到国外指定仓库",
     "SuccessfulApplication.Main.products":"主营产品",
     "SuccessfulApplication.Submit.Success":"提交成功",
+    "Supplier.Need.conditions":"供应商需要具备的条件",
+    "Supplier.condition.Industry.development":"随着建筑零售行业的飞速发展，消费者的需求也更加多元化，需求量迅猛增长。为了共享建材行业发展的成果，我们希望与您携手前进。",
+    "Supplier.have.condition":"如果你具备以下条件：",
+    "Supplier.qualification":"具有合法有效的签约资格和持续可靠的履约能力",
+    "Supplier.prove":"提供有效的证照资料（营业执照，税务登记证，组织机构代码证）和产品质量证明文件供我们核查",
+    "Supplier.Intellectual.property":"供应商应当提供证明其拥有知识产权所有权或使用权的充分文件，包括但不限于知识产权注册证、知识产权转让或许可协议及备案证明",
+    "Supplier.financial.statements":"供应商应根据要求提供其财务报表、产品质量检测报告等进一步的证明文件",
+    "agent.one":"贵公司需要一个合法的营业执照和一个独立法人，在该地区有良好的声誉和良好的声誉。",
+    "agent.two":"只有允许公司在合同授权范围内销售，拥有成熟的团队和服务能力，如果您有任何问题，请与我们联系。",
 }
 export default zh_CN;

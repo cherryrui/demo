@@ -67,6 +67,7 @@ export default {
     }, {
         name: "mine.agent",
         list: []
+
     }, {
         name: "mine.supplier",
         list: []

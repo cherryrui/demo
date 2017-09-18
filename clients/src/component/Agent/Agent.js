@@ -188,10 +188,15 @@ class Agent extends React.Component {
 
             return<div>
                 <div className={css.prompt}>
-                    <p>ompany specialized in materials and related products for the chemical composition, physical performance analysis, testing instruments and equipment suppliers and service providers. Since
+                    <p className={css.spot_text}>
+                        <i className={css.spot}>●</i>
+                        <FormattedMessage id={"agent.one"} defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
+
                     </p>
-                    <p>its inception in 1995, has hundreds of business units, research institutes, laboratories and equipment to provide professional quality service. User base includes iron and steel metallurgy,
-                        nonferrous metals, metal recycling, aerospace, rail transportation, hardware, automotive electronics, home appliances and other fields. After years of development, the company has created a wealth of experience in sales and after-sales service team.
+                    <p className={css.spot_text}>
+                        <i className={css.spot}>●</i>
+                        <FormattedMessage id={"agent.two"} defaultMessage=""/>
+
                     </p>
                 </div>
                 <div>
