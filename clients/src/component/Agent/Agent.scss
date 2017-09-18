@@ -1,0 +1,54 @@
+@import '../../themes.scss';
+
+.prompt{
+
+  background: $color-light-blue;
+  padding:20px;
+  margin-bottom: 20px;
+
+}
+.retrun{
+  background-color: $button-green;
+  border-color: $button-green;
+  margin-right: 20px;
+  width: 150px;
+  height: 50px;
+
+}
+.retrun:hover{
+  background-color: $button-green-active;
+  border-color: $button-green-active;
+}
+.submit{
+
+  width: 150px;
+  height: 50px;
+}
+.upload{
+
+  display: flex;
+.uploader_div{
+  margin-right: 20px;
+  width: 40%;
+  .uploader{
+    display: block;
+    background:$color-grey;
+    height: 120px;
+    width: 180px;
+    line-height: 120px;
+    text-align: center;
+
+    .avatar_icon{
+      color: #fff;
+      font-size: 40px;
+      font-weight: 700;
+      height: 120px;
+      line-height: 120px;
+    }
+
+  }
+  .side{
+    text-align: center;
+  }
+}
+}
