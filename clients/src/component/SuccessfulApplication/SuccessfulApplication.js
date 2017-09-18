@@ -42,7 +42,7 @@ class SuccessfulApplication extends React.Component{
                 formatMessage
                 }
             } = this.props;
-        return<div>
+        return<div className={css.submit_success}>
             <p className={css.success}>
                 <Icon className={css.smile} type="smile-o" />
                 <FormattedMessage id="SuccessfulApplication.Submit.Success"
