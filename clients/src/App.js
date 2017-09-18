@@ -48,7 +48,10 @@ import OrderDetails from './component/OrderDetails/OrderDetails.js';
 import PersonAddress from './component/PersonAddress/PersonAddress.js';
 import EnterpriseAuthentication from './component/EnterpriseAuthentication/EnterpriseAuthentication.js';
 import PersonalAuthentication from './component/PersonalAuthentication/PersonalAuthentication.js';
-
+import PersonData from './component/PersonData/PersonData.js';
+import Agent from './component/Agent/Agent.js';
+import SuccessfulApplication from './component/SuccessfulApplication/SuccessfulApplication.js';
+import Supplier from './component/Supplier/Supplier.js';
 import {
     Provider
 } from 'react-redux';
@@ -80,7 +83,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
+            user: sessionStorage.user ? JSON.parse(sessionStorage.user) : null,
             antd_loacl: null,
             locale: 'zh',
             message: zh_message,
@@ -133,6 +136,7 @@ class App extends React.Component {
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
+        console.log("sdsadasd");
         if (sessionStorage.user && !this.state.user) {
             this.setState({
                 user: JSON.parse(sessionStorage.user),
@@ -291,6 +295,10 @@ ReactDOM.render(
                             <Route path="person-address" component={PersonAddress}/>
                             <Route path="personal-authentication" component={PersonalAuthentication}/>
                             <Route path="enterprise-authentication" component={EnterpriseAuthentication}/>
+                            <Route path="person-data" component={PersonData}/>
+                            <Route path="agent" component={Agent}/>
+                            <Route path="successful-application/:type" component={SuccessfulApplication}/>
+                            <Route path="supplier" component={Supplier}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
