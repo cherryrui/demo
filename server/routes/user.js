@@ -127,22 +127,9 @@ router.get('/get-user.json', async(ctx, next) => {
 		ctx.body = result;
 	})
 	.post('/authentication.json', async(ctx) => {
-		let result = null;
-		const data = ctx.request.body;
-		console.log('1111: ', JSON.stringify(data));
-		const verification = data.verification;
-		console.log(verification);
-		if (verification) {
-			result = {
-				rc: 200,
-				Data: verification
-			};
-		} else {
-			result = {
-				rc: 202,
-				Data: 'register failed!'
-			}
-		}
+		let result = {
+			status: true,
+		};
 		ctx.body = result;
 	})
 	.get('/get-recent-message.json', async(ctx, next) => {
@@ -167,37 +154,12 @@ router.get('/get-user.json', async(ctx, next) => {
 			message: message
 		}
 	})
-	.get('/getCertificationCode.json', async(ctx) => {
-		let result = null;
-		const vercode = '5986';
-		if (vercode) {
-			result = {
-				rc: 200,
-				data: vercode
-			}
-		} else {
-			result = {
-				rc: 202,
-				errmessage: '获取验证码失败!'
-			}
-		}
-		ctx.body = result;
+	.get('/sendcode.json', async(ctx) => {
+
+		ctx.body = true;
 	})
-	.get('/getVcodeByTelorEmail.json', async(ctx) => {
-		let result = null;
-		const teloremail = ctx.request.query.teloremail;
-		console.log(`teloremail的值为：${teloremail}`);
-		if (teloremail) {
-			result = {
-				rc: 200,
-				data: teloremail
-			};
-		} else {
-			result = {
-				rc: 202,
-				errmessage: '获取失败！'
-			};
-		}
-		ctx.body = result;
+	.get('/reset-pwd.json', async(ctx) => {
+
+		ctx.body = true;
 	})
 module.exports = router;

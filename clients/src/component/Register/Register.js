@@ -27,7 +27,7 @@ import {
     Button,
     AutoComplete,
     message,
-    Tabs
+    Tabs,
 } from 'antd';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -40,6 +40,13 @@ class Register extends React.Component {
     };
     constructor(props) {
         super(props);
+        this.state = {
+            loading: false,
+            time: 0,
+            disabled: false
+        }
+        this.formatMessage = this.props.intl.formatMessage;
+        this.timer = null;
     }
     handleSubmit = (e) => {
         let {
@@ -64,22 +71,56 @@ class Register extends React.Component {
             }
         })
     };
-    handleCertification = (e) => {
-        axios.get('/user/getCertificationCode.json').then(res => {
-            console.log('res的值为: ', res);
-            console.log('data的值为：', res.data.data);
-            if (res.data.rc == 200) {
-                alert(`验证码为：${res.data.data}`);
-            } else {
-                alert('获取验证码失败！');
-            }
-        })
+    handleCode = (e) => {
+        if (this.tel.props.value || this.email.props.value) {
+            let account = this.tel.props.value ? this.tel.props.value : this.email.props.value;
+            console.log(this.account)
+            this.setState({
+                loading: false
+            })
+            axios.get(`/user/sendcode.json?account=${account}`).then(res => {
+                this.setState({
+                    loading: false,
+                    time: 60,
+                    disabled: true
+                })
+                this.timer = window.setInterval(() => {
+                    console.log(this.state.time);
+                    if (this.state.time - 1 >= 0) {
+                        this.setState({
+                            time: this.state.time - 1,
+                            disabled: true
+                        })
+                    } else {
+                        this.setState({
+                            time: 0,
+                            disabled: false
+                        })
+                        window.clearInterval(this.timer)
+                    }
+                }, 1000)
+            })
+        } else {
+            message.warn(this.formatMessage({
+                id: "authen.authen.account_warn"
+            }))
+
+        }
+    }
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback(this.formatMessage({
+                id: "repwd.check.pwd_warn"
+            }));
+        } else {
+            callback();
+        }
     }
 
 
 
     render() {
-        console.log('I am Register!');
         const {
             intl: {
                 formatMessage
@@ -91,20 +132,10 @@ class Register extends React.Component {
 
         const formItemLayout = {
             labelCol: {
-                xs: {
-                    span: 24
-                },
-                sm: {
-                    span: 8
-                }
+                span: 8
             },
             wrapperCol: {
-                xs: {
-                    span: 24
-                },
-                sm: {
-                    span: 8
-                }
+                span: 8
             }
         };
         const tailFormItemLayout = {
@@ -113,6 +144,7 @@ class Register extends React.Component {
                 offset: 8
             }
         };
+
 
         return (
             <div className={css.body}>
@@ -126,7 +158,7 @@ class Register extends React.Component {
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.name'})}
-                            hasFeedback
+                            
                         >
                         {getFieldDecorator('name',{
                             rules:[{
@@ -140,7 +172,6 @@ class Register extends React.Component {
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'post.email'})}
-                            hasFeedback
                         >
                         {getFieldDecorator('email',{
                             rules:[{
@@ -148,13 +179,12 @@ class Register extends React.Component {
                                 message:formatMessage({id:"register.email.warn"})
                             }]
                         })(
-                            <Input />
+                            <Input ref={(email)=>{this.email=email}}/>
                         )}
                         </FormItem>
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'cart.delivery.tel'})}
-                            hasFeedback
                         >
                         {getFieldDecorator('tel',{
                             rules:[{
@@ -162,13 +192,12 @@ class Register extends React.Component {
                                 message:formatMessage({id:"register.tel.warn"})
                             }]
                         })(
-                            <Input />
+                            <Input ref={(tel)=>{this.tel=tel}}/>
                         )}
                         </FormItem>
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.verification'})}
-                            hasFeedback
                         >
                             <Row gutter={10}>
                                 <Col span={12}>
@@ -182,15 +211,15 @@ class Register extends React.Component {
                                 )}
                                 </Col>
                                 <Col span={12}>
-                                    <Button type="primary" size="large" className={css.button1} onClick={this.handleCertification}>
-                                        <FormattedMessage id="register.register.sendVerificationcode" defaultMessage="发送验证码"/>
+                                    <Button type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                                        <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
+                                        {this.state.time?("("+this.state.time+")"):""}
                                     </Button>
                                 </Col>
                             </Row>
                         </FormItem>
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.pwd'})}
-                            hasFeedback
                         >
                         {getFieldDecorator('password',{
                             rules:[{
@@ -198,21 +227,22 @@ class Register extends React.Component {
                                 message:formatMessage({id:'register.password.warn'})
                             }]
                         })(
-                            <Input />
+                            <Input type='password' />
                         )}
                         </FormItem>
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.re.pwd'})}
-                            hasFeedback
                         >
                         {getFieldDecorator('repassword',{
                             rules:[{
                                 required:true,
                                 message:formatMessage({id:'register.re_password.warn'})
+                            },{
+                                validator: this.checkPassword,
                             }]
                         })(
-                            <Input />
+                            <Input type='password' />
                         )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>

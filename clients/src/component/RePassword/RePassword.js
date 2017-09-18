@@ -8,133 +8,68 @@ import axios from 'axios';
 import React from 'react';
 import css from './RePassword.scss';
 import appcss from '../../App.scss';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import {Form, Input, Popover, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, message, Tabs } from 'antd';
+import {
+    FormattedMessage,
+    injectIntl,
+    intlShape
+} from 'react-intl';
+import {
+    Form,
+    Input,
+    Popover,
+    Tooltip,
+    Icon,
+    Cascader,
+    Select,
+    Row,
+    Col,
+    Checkbox,
+    Button,
+    AutoComplete,
+    message,
+    Tabs
+} from 'antd';
 import Steps from '../Public/Steps/Steps.js';
 import operator from './operator.js';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
-const customDot = (dot, { status, index }) => (
-    <Popover content={<span>step {index} status: {status}</span>}>
-    {dot}
-    </Popover>
-);
 
 
-class RePassword extends React.Component{
+class RePassword extends React.Component {
 
     static propTypes = {
         intl: intlShape.isRequired
     };
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.state = {
+            step: 0,
+        }
     }
-    handleSubmit = (e) => {
-        let {
-            intl:{
-                formatMessage
-                }
-            } = this.props;
-        e.preventDefault();
-        this.props.form.validateFields((err,values) =>{
-            if(!err){
-                console.log('RePassword success: ',values);
-                axios.post('/user/repassword.json',values).then(res =>{
-                    console.log('2222',JSON.stringify(res));
-                    if(res.data.rc==200){
-                        console.log('I get the result')
-                        window.location.href = "/#/registerComplete/"
-                    }else{
-                        console.log("RePassword fail:",res.data.result);
-                        message.error(formatMessage({
-                            id:'repassword.fail'
-                        },{
-                            reason:res.data.result
-                        }))
-                    }
-                })
-            }
+    handleSteps = (step) => {
+        this.setState({
+            step: this.state.step + step
         })
     }
 
     render() {
-        console.log('I am RePassword!');
-        const {
-            intl:{
-                formatMessage
-                }
-            } = this.props;
-
-        const { getFieldDecorator } = this.props.form;
 
 
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 }
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 8 }
-            }
-        };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 10,
-                    offset: 6
-                },
-                sm: {
-                    span: 14,
-                    offset: 5
-                }
-            }
-        };
-
-        return(
+        return (
             <div className={css.body}>
-                <div className={css.d}>
-                    <div className={css.d1}><h1 className={css.lbl}>LOGO</h1></div>
+                <div className={css.title}>
+                    <p className={css.logo}>LOGO</p>
+                    <p className={css.title_text}>
+                        <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
+                    </p>
                 </div>
-                <div className={css.input}>
-                    <div className={css.steps}>
-                        <Steps steps={operator.steps} current={1}/>
-                    </div>
-                    <div className={css.fhz}>
-                        <Form onSubmit={this.handleSubmit}>
-                            <FormItem {...formItemLayout}
-                                label={formatMessage({id:'repwd.new.pwd'})}
-                                hasFeedback
-                            >
-                            {getFieldDecorator('newpwd',{
-                                rules: [{
-                                    required:true,
-                                    message:'please input new password'
-                                }]
-                            })(<Input className={css.input1} placeholder={formatMessage({id:'repwd.new.inputpwd'})}/>
-                            )}
-
-                            </FormItem>
-                            <FormItem {...formItemLayout}
-                                label={formatMessage({id:'repwd.config.pwd'})}
-                                hasFeedback
-                            >
-                            {getFieldDecorator('confipwd',{
-                                rules:[{
-                                    required:true,
-                                    message:'please Confirm new password'
-                                }]
-                            })(<Input className={css.input1} placeholder={formatMessage({id:'repwd.config.inputpwd'})}/>
-                            )}
-
-                            </FormItem>
-                            <FormItem {...tailFormItemLayout}>
-                                <Button type="primary" htmlType="submit" className={css.button2}>
-                                    <FormattedMessage id="repwd.next.step" defaultMessage="下一步"/></Button>
-                            </FormItem>
-                        </Form>
-                    </div>
+                <div className={css.content}>
+                    <Steps className={css.steps} steps={operator.steps} current={this.state.step}/>
+                    {this.state.step==0?<Authentication handleSteps={this.handleSteps}/>
+                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps}/>
+                    :this.state.step==2?<SetSuccess/>
+                    :""}
                 </div>
             </div>
         )
@@ -142,5 +77,250 @@ class RePassword extends React.Component{
 
     }
 }
-RePassword = Form.create()(RePassword);
-export default injectIntl(RePassword);
+class Authentication extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+            time: 0,
+            disabled: false
+        }
+        this.formatMessage = this.props.intl.formatMessage;
+        this.timer = null;
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                if (this.timer) {
+                    window.clearInterval(this.timer)
+                }
+                axios.post('/user/authentication.json', values).then(res => {
+                    if (res.data.status) {
+                        this.props.handleSteps ? this.props.handleSteps(1) : '';
+                    } else {
+                        message.error(this.formatMessage({
+                            id: 'repassword.fail'
+                        }, {
+                            reason: res.data.result
+                        }))
+                    }
+                })
+            }
+        })
+    };
+    handleCode = (e) => {
+        if (this.account.props.value) {
+            console.log(this.account)
+            this.setState({
+                loading: false
+            })
+            axios.get(`/user/sendcode.json?account=${this.account.props.value}`).then(res => {
+                this.setState({
+                    loading: false,
+                    time: 60,
+                    disabled: true
+                })
+                this.timer = window.setInterval(() => {
+                    console.log(this.state.time);
+                    if (this.state.time - 1 >= 0) {
+                        this.setState({
+                            time: this.state.time - 1,
+                            disabled: true
+                        })
+                    } else {
+                        this.setState({
+                            time: 0,
+                            disabled: false
+                        })
+                        window.clearInterval(this.timer)
+                    }
+                }, 1000)
+            })
+        } else {
+            message.warn(this.formatMessage({
+                id: "authen.authen.account_warn"
+            }))
+
+        }
+    }
+
+
+    render() {
+        const {
+            getFieldDecorator
+        } = this.props.form;
+        const formItemLayout = {
+            labelCol: {
+                span: 8
+            },
+            wrapperCol: {
+                span: 8
+            }
+        };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                span: 12,
+                offset: 10
+            }
+        };
+
+        return <div>
+            <Form onSubmit={this.handleSubmit}>
+                <FormItem {...formItemLayout}
+                    label={this.formatMessage({id: 'authen.authen.tel/email'})}
+                >
+                    <Row gutter={10}>
+                        <Col span={16}>
+                        {getFieldDecorator('account',{
+                            rules:[
+                                {
+                                    required:true,
+                                    message:this.formatMessage({id:"authen.authen.account_warn"})
+                                }
+                            ]
+                        })(
+                            <Input size="large" ref={(account)=>{this.account=account}} />
+                        )}
+
+                        </Col>
+                        <Col span={8}>
+                            <Button type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                                <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
+                                {this.state.time?("("+this.state.time+")"):""}
+                            </Button>
+                        </Col>
+                    </Row>
+                </FormItem>
+                <FormItem {...formItemLayout}
+                    label={this.formatMessage({id: 'register.register.verification'})}
+                >
+                {getFieldDecorator('code',{
+                    rules:[{
+                        required:true,
+                        message: this.formatMessage({id:"register.verifivation.warn"})
+                    }]
+                })(
+                    <Input />
+                )}
+
+                </FormItem>
+                <FormItem {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit" >
+                        <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/>
+                    </Button>
+                </FormItem>
+            </Form>
+            
+        </div>
+    }
+}
+class SetPwd extends React.Component {
+    constructor(props) {
+        super(props);
+        this.formatMessage = this.props.intl.formatMessage;
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values)
+                axios.get(`/user/reset-pwd.json?pwd=${values.password}`).then(res => {
+                    this.props.handleSteps ? this.props.handleSteps(1) : '';
+                })
+            }
+        });
+    }
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback(this.formatMessage({
+                id: "repwd.check.pwd_warn"
+            }));
+        } else {
+            callback();
+        }
+    }
+
+
+    render() {
+        const formItemLayout = {
+            labelCol: {
+                span: 8
+            },
+            wrapperCol: {
+                span: 8
+            }
+        };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                span: 12,
+                offset: 10
+            }
+        };
+        const {
+            getFieldDecorator
+        } = this.props.form;
+
+        return <div>
+            <Form onSubmit={this.handleSubmit}>
+                <FormItem {...formItemLayout}
+                    label={this.formatMessage({id:'repwd.new.pwd'})}
+                >
+                {getFieldDecorator('password',{
+                    rules: [{
+                        required:true,
+                        message:this.formatMessage({id:'repwd.new.pwd_warn'})
+                    }]
+                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.new.pwd_warn'})}/>
+                )}
+
+                </FormItem>
+                <FormItem {...formItemLayout}
+                    label={this.formatMessage({id:'repwd.config.pwd'})}
+                >
+                {getFieldDecorator('confipwd',{
+                    rules:[{
+                        required:true,
+                        message:this.formatMessage({id:'repwd.config.pwd_warn'})
+                    },{
+                        validator: this.checkPassword,
+                    }]
+                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.config.pwd_warn'})}/>
+                )}
+
+                </FormItem>
+                <FormItem {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit">
+                        <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/></Button>
+                </FormItem>
+            </Form>
+        </div>
+    }
+}
+
+class SetSuccess extends React.Component {
+
+    handleClick = () => {
+        window.location.href = "/#/login"
+    }
+    render() {
+        return <div className={css.reset_success}>
+            <div className={css.suc_content}>
+                <Icon type="smile-o" />&nbsp;&nbsp;&nbsp;&nbsp;
+                <FormattedMessage id="reset.success.info" defaultMessage="密码重置成功！"/>
+            </div>
+            <Button type="primary" onClick={this.handleClick} >
+                <FormattedMessage id="register.go.login" defaultMessage="去登录"/>
+            </Button>
+        </div>
+    }
+}
+SetPwd = Form.create()(SetPwd);
+Authentication = Form.create()(Authentication);
+Authentication = injectIntl(Authentication);
+SetPwd = injectIntl(SetPwd);
+export default RePassword;

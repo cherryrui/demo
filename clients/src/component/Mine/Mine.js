@@ -42,10 +42,6 @@ class Mine extends React.Component {
         if (!sessionStorage.user) {
             window.location.href = '/#/login'
         }
-        console.log("componentDidMount");
-        //判断页面权限 为了开发方便 注释
-        /*this.fetchPermission();*/
-        // this.getPros();
     }
 
     handleClick = (e) => {

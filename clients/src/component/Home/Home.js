@@ -149,7 +149,6 @@ class Main extends React.Component {
         this.setState({
             visible: false,
         })
-        window.location.href = "/#/main/cart"
     }
     handleCart = () => {
         if (sessionStorage.user) {
