@@ -48,6 +48,7 @@ import PersonData from './component/PersonData/PersonData.js';
 import Agent from './component/Agent/Agent.js';
 import SuccessfulApplication from './component/SuccessfulApplication/SuccessfulApplication.js';
 import Supplier from './component/Supplier/Supplier.js';
+import Certification from './component/Certification/Certification.js';
 import {
     Provider
 } from 'react-redux';
@@ -277,7 +278,7 @@ ReactDOM.render(
                         <Route path="about" component={About}>
 
                         </Route>
-                        < Route path="order-details" component={OrderDetails}/>
+                        <Route path="order-details" component={OrderDetails}/>
                         <Route path="mine" component={Mine}>
                             <IndexRoute component={PersonCenter}/>
                             <Route path="message" component={Message}/>
@@ -288,17 +289,15 @@ ReactDOM.render(
                             <Route path="product-editor" component={ProductEditor}/>
                             <Route path="agent-product" component={AgentProduct}/>
                             <Route path="person-address" component={PersonAddress}/>
-                            <Route path="personal-authentication" component={PersonalAuthentication}/>
-                            <Route path="enterprise-authentication" component={EnterpriseAuthentication}/>
                             <Route path="person-data" component={PersonData}/>
                             <Route path="agent" component={Agent}/>
                             <Route path="successful-application/:type" component={SuccessfulApplication}/>
                             <Route path="supplier" component={Supplier}/>
+                            <Route path="certification" component={Certification}/>
                         </Route>
                     </Route>
                     <Route path="login" component={Login}/>
                     <Route path="register" component={Register}/>
-                    <Route path="authentication" component={Authentication}/>
                     <Route path="reset-password" component={RePassword}/>
                     <Route path="register-complete" component={RegisterComplete}/>
                 </Route>
