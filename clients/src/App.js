@@ -80,7 +80,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: sessionStorage.user ? JSON.parse(sessionStorage.user) : null,
+            user: null,
             antd_loacl: null,
             locale: 'zh',
             message: zh_message,
@@ -133,7 +133,6 @@ class App extends React.Component {
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
-        console.log("sdsadasd");
         if (sessionStorage.user && !this.state.user) {
             this.setState({
                 user: JSON.parse(sessionStorage.user),

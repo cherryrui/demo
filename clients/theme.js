@@ -3,8 +3,8 @@
  */
 module.exports = () => {
 	return {
-		'primary-color': '#ffc80c',
-		'link-color': '#ffc80c',
+		'primary-color': '#2f5ea2',
+		'link-color': '#636363',
 		'input-height-base': '36px',
 		'input-height-lg': '48px',
 		'input-height-sm': '28px',
@@ -12,7 +12,5 @@ module.exports = () => {
 		'btn-height-base': '36px',
 		'btn-height-lg': '40px',
 		'btn-height-sm': '22px',
-		'btn-primary-color': '#2e2b2e',
-		'btn-default-color': '#2e2b2e',
-}
+	}
 };

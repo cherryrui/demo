@@ -164,14 +164,9 @@ class Main extends React.Component {
     render() {
         //console.log(this.props.cart);
         let category_menu = (
-            <Menu className={css.category_menu} onClick={this.handleMenuClick}>
+            <Menu  onClick={this.handleMenuClick}>
                 {this.state.categorys.map(item => {
-                    return <Menu.Item key={item.id}>
-                    <div>
-                        <Icon type="menu-unfold" />&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>{item.name}</span>
-                    </div>
-                    </Menu.Item>
+                    return <Menu.Item key={item.id}>{item.name}</Menu.Item>
                 })}
             </Menu>
         );
@@ -199,17 +194,16 @@ class Main extends React.Component {
         return <div>
             <div className={css.header}>
                 <div className={css.left}>
-                <p className={this.state.index == 0 ? css.active : css.title_category}>
-                    <Dropdown overlay={category_menu} trigger={['click']}>
-                        <p className={css.category_menu_main}>
-                            <p >
-                                <Icon type="menu-unfold" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p className={css.title}>LOGO</p>
+                    <p className={this.state.index == 0 ? css.active : css.title}>
+                        <Dropdown overlay={category_menu}>
+                            <p>
                                 <FormattedMessage id="app.category" defaultMessage="分类"/>
+                            &nbsp;&nbsp;
+                                <Icon type="caret-down" />
                             </p>
-                            <Icon type="caret-down" />
-                        </p>
-                    </Dropdown>
-                </p>
+                        </Dropdown>
+                    </p>
                 {this.tabs.map(item=> {
                     return <p className={this.state.index == item.key ? css.active : css.title} onClick={this.handleTabs.bind(this, item.key, item.url)}>
                         <FormattedMessage id={item.message_id} defaultMessage={item.default_message}/>
