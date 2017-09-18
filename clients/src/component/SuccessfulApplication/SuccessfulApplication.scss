@@ -1,32 +1,36 @@
 @import '../../themes.scss';
-.success{
-display:flex;
-  color: $color-orange;
-justify-content: center;
-  font-size:16px ;
-  font-weight: 700;
-  padding-top: 50px;
 
-  padding-bottom:50px;
-}
-p{
-  height: 30px;
-  line-height: 30px;
-  a {
-    color: $button-blue-active;
+.submit_success{
 
+  .success{
+    display:flex;
+    color: $color-orange;
+    justify-content: center;
+    font-size:16px ;
+    font-weight: 700;
+    padding-top: 50px;
+
+    padding-bottom:50px;
   }
-  .smile{
+  p{
     height: 30px;
     line-height: 30px;
-    padding-right: 10px;
-    display: block;
-  }
-}
-.button_retrun{
-  text-align: center;
-.retrun{
+    a {
+      color: $button-blue-active;
 
-  margin-top: 20px;
-}
+    }
+    .smile{
+      height: 30px;
+      line-height: 30px;
+      padding-right: 10px;
+      display: block;
+    }
+  }
+  .button_retrun{
+    text-align: center;
+    .retrun{
+
+      margin-top: 20px;
+    }
+  }
 }
