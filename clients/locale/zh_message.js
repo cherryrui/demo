@@ -303,7 +303,7 @@ const zh_CN = {
     "orderdetails.principal": "本金",
     "orderdetails.interest": "利息",
     "orderdetails.order.details": "订单详情",
-    "persondata.User.style": "用户类型",
+    "persondata.user.style": "用户类型",
     "persondata.account.number": "账号",
     "persondata.real.name": "真实姓名",
     "persondata.department.position": "职位",

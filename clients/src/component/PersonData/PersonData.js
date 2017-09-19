@@ -122,7 +122,7 @@ class PersonData extends React.Component{
                 </div>
                 <p  className={css.info}>
                     <span className={css.title}>
-                        <FormattedMessage  className={css.title} id="persondata.User.style" defaultMessage="类型"/>:
+                        <FormattedMessage  className={css.title} id="persondata.user.style" defaultMessage="类型"/>:
                     </span>
                     {this.state.person_data.user==1? <span
                         className={css.text}>{formatMessage({id: 'persondata.enterprise.user'})}
