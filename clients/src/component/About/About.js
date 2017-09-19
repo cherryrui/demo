@@ -66,71 +66,71 @@ class About extends React.Component {
                     <h1>
                         <FormattedMessage  id="app.profile" defaultMessage=""/>
                     </h1>
-                    <p> company specialized in materials and related products for the chemical composition, physical performance analysis, testing instruments and equipment suppliers and service providers. Since its inception in 1995, has hundreds of business units, research institutes, laboratories and equipment to provide professional quality service. User base includes iron and steel metallurgy, nonferrous metals, metal recycling, aerospace, rail transportation, hardware, automotive electronics, home appliances and other fields. After years of development, the company has created a wealth of experience in sales and after-sales service team. </p>
+                    <p> <FormattedMessage  id="about.company.profile.info" defaultMessage=""/></p>
                 </div>
                 <div className={css.list}>
                     <div className={css.item}>
-                    <p className={css.icon}> <Icon type="customer-service" /></p>
-                    <p className={css.text_title}>
-                        <FormattedMessage  id="about.Tools" defaultMessage=""/>
-                    </p>
+                        <p className={css.icon}> <Icon type="customer-service" /></p>
+                        <p className={css.text_title}>
+                            <FormattedMessage  id="about.tools" defaultMessage=""/>
+                        </p>
                     </div>
                     <div className={css.item}>
                         <p className={css.icon}> <Icon type="pushpin" /></p>
                         <p className={css.text_title}>
-                            <FormattedMessage  id="about.Buliding.Materials" defaultMessage=""/>
+                            <FormattedMessage  id="about.buliding.materials" defaultMessage=""/>
                         </p>
                     </div>
                     <div className={css.item}>
                         <p className={css.icon}> <Icon type="chrome" /></p>
                         <p className={css.text_title}>
-                            <FormattedMessage  id="about.Labor.protection" defaultMessage=""/>
-                           </p>
+                            <FormattedMessage  id="about.labor.protection" defaultMessage=""/>
+                        </p>
                     </div>
                 </div>
                 <div className={css.culture}>
                     <p className={css.culture_title}>
-                        <FormattedMessage  id="about.Company.culture" defaultMessage=""/>
+                        <FormattedMessage  id="about.company.culture" defaultMessage=""/>
                     </p>
                     <div className={css.culture_img}>
                         <div className={css.culture_content} style={{background: `url("../img/about_mission.jpg")`}}>
                             <div>
                                 <p className={css.content_title}>
-                                    <FormattedMessage  id="about.Mission" defaultMessage=""/>
+                                    <FormattedMessage  id="about.mission" defaultMessage=""/>
                                 </p>
                                 <p>
-                                    <FormattedMessage  id="about.link.to.all.core.needs.of.the.entersprise" defaultMessage=""/>
+                                    <FormattedMessage  id="about.mission.info" defaultMessage=""/>
                                 </p>
-                             </div>
+                            </div>
                         </div>
                         <div className={css.culture_content} style={{background: `url("../img/about_vision.jpg")`}}>
                            <div>
                                 <p className={css.content_title}>
-                                    <FormattedMessage  id="about.Vision" defaultMessage=""/>
+                                    <FormattedMessage  id="about.vision" defaultMessage=""/>
                                 </p>
                                 <p>
-                                    <FormattedMessage  id="about.Become.an.industry.leader" defaultMessage=""/>
+                                    <FormattedMessage  id="about.vision.info" defaultMessage=""/>
                                 </p>
                            </div>
                         </div>
                         <div className={css.culture_content} style={{background: `url("../img/about_positoning.jpg")`}}>
                             <div>
                                 <p className={css.content_title}>
-                                    <FormattedMessage  id="about.Positioning" defaultMessage=""/>
+                                    <FormattedMessage  id="about.positioning" defaultMessage=""/>
                                 </p>
                                 <p>
-                                    <FormattedMessage  id="about.Professional.industrial.supermarket" defaultMessage=""/>
+                                    <FormattedMessage  id="about.positioning.info" defaultMessage=""/>
                                 </p>
                             </div>
                         </div>
                         <div className={css.culture_content} style={{background: `url("../img/about_values.jpg")`}}>
                             <div>
                                 <p className={css.content_title}>
-                                    <FormattedMessage  id="about.Values" defaultMessage=""/>
+                                    <FormattedMessage  id="about.values" defaultMessage=""/>
                                 </p>
                                 <p>
 
-                                    <FormattedMessage  id="about.Professional.industrial.supermarket" defaultMessage=""/>
+                                    <FormattedMessage  id="about.values.info" defaultMessage=""/>
                                 </p>
                             </div>
                         </div>
@@ -140,18 +140,18 @@ class About extends React.Component {
                     <div className={css.map}><img className={css.map_img}src='../img/about_map.jpg'/></div>
                     <div className={css.information_text}>
                         <h2 className={css.information_title}>
-                            <FormattedMessage  id="about.Contact.information" defaultMessage=""/>
+                            <FormattedMessage  id="about.contact.information" defaultMessage=""/>
                         </h2>
                         <p><span className={css.information_tems}>
-                            <FormattedMessage  id="about.Headquarter.adress" defaultMessage=""/>:</span>
+                            <FormattedMessage  id="about.headquarter.adress" defaultMessage=""/>:</span>
                             <span>8/f,building2,fortune tower,dubal</span>
                         </p>
                         <p><span className={css.information_tems}>
-                            <FormattedMessage  id="about.Contact.number" defaultMessage=""/> :</span>
+                            <FormattedMessage  id="about.contact.number" defaultMessage=""/> :</span>
                             <span>400-5588-8866</span>
                         </p>
                         <p><span className={css.information_tems}>
-                            <FormattedMessage  id="about.Contact.email" defaultMessage=""/> :</span>
+                            <FormattedMessage  id="about.contact.email" defaultMessage=""/> :</span>
                             <span>info@ehsy.com</span></p>
                     </div>
                 </div>

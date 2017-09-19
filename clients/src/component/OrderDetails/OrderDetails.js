@@ -134,15 +134,15 @@ class OrderDetailst extends React.Component {
             }
         };
         this.colums_show = [{
-                title: <FormattedMessage id="orderdetails.Order.No" defaultMessage="订单号"/>,
+                title: <FormattedMessage id="orderdetails.order.no" defaultMessage="订单号"/>,
                 className: css.table_col,
                 width: "38%",
                 render: (record) => <div className={css.table_product}>
                 <img src={record.img}/>
                 <div className={css.info}>
                     <p className={css.product_title}>{record.name}</p>
-                    <p><FormattedMessage className={css.title_center} id="orderdetails.Brand" defaultMessage="规格"/>：{record.brand}</p>
-                    <p><FormattedMessage id="orderdetails.Art.No" defaultMessage="规格"/>：{record.Art_No}</p>
+                    <p><FormattedMessage className={css.title_center} id="orderdetails.brand" defaultMessage="规格"/>：{record.brand}</p>
+                    <p><FormattedMessage id="orderdetails.art.no" defaultMessage="规格"/>：{record.Art_No}</p>
 
 
 
@@ -202,20 +202,20 @@ class OrderDetailst extends React.Component {
 
         return <div className={css.body}>
             <div className={basecss.child_title}>
-                <FormattedMessage  id="orderdetails.Order.details" defaultMessage="订单详情"/>
+                <FormattedMessage  id="orderdetails.order.details" defaultMessage="订单详情"/>
             </div>
             <div className={css.personal_information}>
                 <div className={css.item}>
                     <p className={css.item_cont}><span className={css.item_name}>
-                        <FormattedMessage className={css.item_name} id="orderdetails.Delivery.address" defaultMessage="交货"/></span></p>
+                        <FormattedMessage className={css.item_name} id="orderdetails.delivery.address" defaultMessage="交货"/></span></p>
                     <p className={css.item_cont}>{this.state.order.name}</p>
                     <p>{this.state.order.tel}</p>
                     <p>{this.state.order.address}</p>
                 </div>
                 <div className={css.item}>
-                    <p className={css.item_cont}> <span className={css.item_name} ><FormattedMessage id="orderlist.Order.Status" defaultMessage="状态"/>：</span><span  className={css.status}>{this.state.order.state}</span></p>
-                    <p className={css.item_cont}><span className={css.item_name}><FormattedMessage  id="orderdetails.Order.No" defaultMessage="订单号"/>：</span><span>{this.state.order.order_no}</span></p>
-                    <p className={css.item_cont}><span className={css.item_name}><FormattedMessage  id="orderlist.Order.Order.time" defaultMessage="时间"/>：</span><span>{this.state.order.time}</span></p>
+                    <p className={css.item_cont}> <span className={css.item_name} ><FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>：</span><span  className={css.status}>{this.state.order.state}</span></p>
+                    <p className={css.item_cont}><span className={css.item_name}><FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/>：</span><span>{this.state.order.order_no}</span></p>
+                    <p className={css.item_cont}><span className={css.item_name}><FormattedMessage  id="orderlist.order.time" defaultMessage="时间"/>：</span><span>{this.state.order.time}</span></p>
                     <p className={css.item_cont}><span className={css.item_name}><FormattedMessage id="cart.delivery.mode" defaultMessage="提货方式"/>：</span><span>{this.state.order.delivery_mode}</span></p>
 
                 </div>
@@ -277,7 +277,7 @@ class OrderDetailst extends React.Component {
 
 
             <div className={css.pay_footer}>
-                <a className={css.preview}><FormattedMessage id="orderdetails.preview.trade.contract" defaultMessage="预览贸易合同"/></a>
+                <a className={css.preview}><FormattedMessage id="orderdetails.preview" defaultMessage="预览贸易合同"/></a>
                 <Button size="large" onClick={this.jump} type="primary" className={css.button_order}>
                     <FormattedMessage  id="orderdetails.return" defaultMessage="返回"/>
                 </Button>

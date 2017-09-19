@@ -15,7 +15,6 @@ import {
     Button,
     Pagination
 } from 'antd';
-
 import {
     FormattedMessage,
     injectIntl,
@@ -28,7 +27,9 @@ function onShowSizeChange(current, pageSize) {
     console.log(current, pageSize);
 }
 class OrderList extends React.Component {
-
+    static propTypes = {
+        intl: intlShape.isRequired
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -96,28 +97,26 @@ class OrderList extends React.Component {
         };
         this.formatMessage = this.props.intl.formatMessage;
         this.colums_show = [{
-                    title: <FormattedMessage id="orderlist.Order.No.and.payment.method" defaultMessage="订单号和付款方式"/>,
+                    title: <FormattedMessage id="orderlist.order.amount_payable" defaultMessage="订单号和付款方式"/>,
 
                     width: "38%",
                     render: (record) => <div className={css.table_product}>
                 <img src={record.img}/>
                 <div className={css.info}>
-                    <p className={css.product_title}><FormattedMessage  id="orderdetails.Order.No" defaultMessage="订单号"/> :{record.name}</p>
+                    <p className={css.product_title}><FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.name}</p>
                     <p className={css.table_payment}>
                         <Button type="primary" style={{background: "#e23c0a",fontSize:14,border:"none"}}>{record.installment}</Button>
                         <span className={css.payment_text}>{record.staging}</span><span className={css.payment_text}></span>
                     </p>
-
-
                 </div>
             </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Total.amount.payable" defaultMessage="应付总金额"/>,
+                    title: <FormattedMessage id="orderlist.order.amount_payable" defaultMessage="应付总金额"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Order.time" defaultMessage="订单时间"/>,
+                    title: <FormattedMessage id="orderlist.order.time" defaultMessage="订单时间"/>,
                     width: "16%",
                     className: css.table_col,
                     render: (record) => <div>
@@ -128,50 +127,50 @@ class OrderList extends React.Component {
                 })}
                 </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Status" defaultMessage="状态"/>,
+                    title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
                     width: "8%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_status}><Icon  style={{fontSize: 18,color:"#ffa300"}}type="clock-circle" />
 
                 </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="orderlist.order.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
                     <a onClick={this.jump} className={css.operation_text}>
                         <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
-                        <FormattedMessage id="orderlist.Order.View" defaultMessage=""/>
+                        <FormattedMessage id="orderlist.order.view" defaultMessage=""/>
                     </a>
-                    <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">Pay</Button></p>
+                    <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">
+                        <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
+                    </Button></p>
                 </span>
 
                 },
 
             ],
             this.colums_nopayment = [{
-                    title: <FormattedMessage id="orderlist.Order.No.and.payment.method" defaultMessage="订单号和付款方式"/>,
+                    title: <FormattedMessage id="orderlist.order.no.method" defaultMessage="订单号和付款方式"/>,
                     className: css.table_col,
                     width: "38%",
                     render: (record) => <div className={css.table_product}>
                     <img src={record.img}/>
                     <div className={css.info}>
-                        <p className={css.product_title}><FormattedMessage  id="orderdetails.Order.No" defaultMessage="订单号"/> :{record.name}</p>
+                        <p className={css.product_title}><FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.name}</p>
                         <p className={css.table_payment}>
                             <Button type="primary" style={{background: "#06cdbe",fontSize:14,border:"none"}}>{record.full}</Button>
 
                         </p>
-
-
                     </div>
                 </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Total.amount.payable" defaultMessage="应付总金额"/>,
+                    title: <FormattedMessage id="orderlist.order.payable" defaultMessage="应付总金额"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Order.time" defaultMessage="订单时间"/>,
+                    title: <FormattedMessage id="rderlist.order.time" defaultMessage="订单时间"/>,
                     width: "16%",
                     className: css.table_col,
                     render: (record) => <div>
@@ -182,7 +181,7 @@ class OrderList extends React.Component {
                 })}
                     </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Status" defaultMessage="状态"/>,
+                    title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
                     width: "8%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_status}><Icon  style={{fontSize: 18,color:"#06cdbe"}}type="pay-circle" />
@@ -195,22 +194,25 @@ class OrderList extends React.Component {
                     render: (record) => <span className={css.table_operation}>
                         <a onClick={this.jump} className={css.operation_text}>
                             <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
-                            <FormattedMessage id="orderlist.Order.View" defaultMessage=""/>
+                            <FormattedMessage id="orderlist.order.view" defaultMessage=""/>
                         </a>
-                        <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">Pay</Button></p>
+                        <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">
+                            <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
+
+                        </Button></p>
                     </span>
 
                 },
 
             ],
             this.colums_partial = [{
-                    title: <FormattedMessage id="orderlist.Order.No.and.payment.method" defaultMessage="订单号和付款方式"/>,
+                    title: <FormattedMessage id="orderlist.order.no_method" defaultMessage="订单号和付款方式"/>,
                     className: css.table_col,
                     width: "38%",
                     render: (record) => <div className={css.table_product}>
                     <img src={record.img}/>
                     <div className={css.info}>
-                        <p className={css.product_title}><FormattedMessage  id="orderdetails.Order.No" defaultMessage="订单号"/> :{record.name}</p>
+                        <p className={css.product_title}><FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.name}</p>
                         <p className={css.table_payment}>
                             <Button type="primary" style={{background: "#e23c0a",fontSize:14,border:"none"}}>{record.installment}</Button>
                             <span className={css.payment_text}>{record.staging}</span><span className={css.payment_text}></span>
@@ -220,12 +222,12 @@ class OrderList extends React.Component {
                     </div>
                 </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Total.amount.payable" defaultMessage="应付总金额"/>,
+                    title: <FormattedMessage id="orderlist.order.payable" defaultMessage="应付总金额"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Order.time" defaultMessage="订单时间"/>,
+                    title: <FormattedMessage id="rderlist.order.time" defaultMessage="订单时间"/>,
                     width: "16%",
                     className: css.table_col,
                     render: (record) => <div>
@@ -236,20 +238,20 @@ class OrderList extends React.Component {
                 })}
                     </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Status" defaultMessage="状态"/>,
+                    title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
                     width: "8%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_status}><Icon  style={{fontSize: 18,color:"#ffa300"}}type="heart" />
 
                     </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="orderlist.order.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
                         <a onClick={this.jump}  className={css.operation_text}>
                             <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
-                            <FormattedMessage id="orderlist.Order.View" defaultMessage=""/>
+                            <FormattedMessage id="orderlist.order.view" defaultMessage=""/>
                         </a>
 
                     </span>
@@ -258,13 +260,13 @@ class OrderList extends React.Component {
 
             ],
             this.colums_paid = [{
-                    title: <FormattedMessage id="orderlist.Order.No.and.payment.method" defaultMessage="订单号和付款方式"/>,
+                    title: <FormattedMessage id="orderlist.order.no_method" defaultMessage="订单号和付款方式"/>,
                     className: css.table_col,
                     width: "38%",
                     render: (record) => <div className={css.table_product}>
                     <img src={record.img}/>
                     <div className={css.info}>
-                        <p className={css.product_title}><FormattedMessage  id="orderdetails.Order.No" defaultMessage="订单号"/> :{record.name}</p>
+                        <p className={css.product_title}><FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.name}</p>
                         <p className={css.table_payment}>
                             <Button type="primary" style={{background: "#06cdbe",fontSize:14,border:"none"}}>{record.full}</Button>
 
@@ -274,12 +276,12 @@ class OrderList extends React.Component {
                     </div>
                 </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Total.amount.payable" defaultMessage="应付总金额"/>,
+                    title: <FormattedMessage id="orderlist.order.payable" defaultMessage="应付总金额"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Order.time" defaultMessage="订单时间"/>,
+                    title: <FormattedMessage id="rderlist.order.time" defaultMessage="订单时间"/>,
                     width: "16%",
                     className: css.table_col,
                     render: (record) => <div>
@@ -290,35 +292,38 @@ class OrderList extends React.Component {
                 })}
                     </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Status" defaultMessage="状态"/>,
+                    title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
                     width: "8%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_status}><Icon  style={{fontSize: 18,color:"#ffa300"}}type="clock-circle" />
 
                     </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="orderlist.order.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
                         <a onClick={this.jump} className={css.operation_text}>
                             <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
-                            <FormattedMessage id="orderlist.Order.View" defaultMessage=""/>
+                            <FormattedMessage id="orderlist.order.view" defaultMessage=""/>
                         </a>
-                        <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">Pay</Button></p>
+                        <p><Button style={{width:70,fontSize:14,border:"none"}} type="primary">
+
+                            <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
+                        </Button></p>
                     </span>
 
                 },
 
             ],
             this.colums_settled = [{
-                    title: <FormattedMessage style={{ textAlign: "center"}} id="orderlist.Order.No.and.payment.method" defaultMessage="订单号和付款方式"/>,
+                    title: <FormattedMessage style={{ textAlign: "center"}} id="orderlist.order.no_method" defaultMessage="订单号和付款方式"/>,
                     className: css.table_col,
                     width: "38%",
                     render: (record) => <div className={css.table_product}>
                     <img src={record.img}/>
                     <div className={css.info}>
-                        <p className={css.product_title}><FormattedMessage  id="orderdetails.Order.No" defaultMessage="订单号"/> :{record.name}</p>
+                        <p className={css.product_title}><FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.name}</p>
                         <p className={css.table_payment}>
                             <Button type="primary" style={{background: "#06cdbe",fontSize:14,border:"none"}}>{record.full}</Button>
 
@@ -328,12 +333,12 @@ class OrderList extends React.Component {
                     </div>
                 </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Total.amount.payable" defaultMessage="应付总金额"/>,
+                    title: <FormattedMessage id="orderlist.order.payable" defaultMessage="应付总金额"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Order.time" defaultMessage="订单时间"/>,
+                    title: <FormattedMessage id="rderlist.order.time" defaultMessage="订单时间"/>,
                     width: "16%",
                     className: css.table_col,
                     render: (record) => <div>
@@ -344,23 +349,26 @@ class OrderList extends React.Component {
                 })}
                     </div>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Status" defaultMessage="状态"/>,
+                    title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
                     width: "8%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_status}><Icon  style={{fontSize: 18,color:"#06cdbe"}}type="down-circle" />
 
                     </span>
                 }, {
-                    title: <FormattedMessage style={{ textAlign: "center"}} id="orderlist.Order.Operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage style={{ textAlign: "center"}} id="orderlist.order.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     fontSize: "20px",
                     className: css.table_col,
                     render: (record) => <span  className={css.table_operation}>
                         <a onClick={this.jump} className={css.operation_text}>
                             <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
-                            <FormattedMessage id="orderlist.Order.View" defaultMessage=""/>
+                            <FormattedMessage id="orderlist.order.view" defaultMessage=""/>
                         </a>
-                        <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">Pay</Button></p>
+                        <p><Button style={{width:70,fontSize:14,border:"none"}}type="primary">
+                            <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
+
+                        </Button></p>
                     </span>
 
                 },
@@ -369,13 +377,17 @@ class OrderList extends React.Component {
     }
     jump = (e) => {
         window.location.href = "/#/main/mine/order-details"
-
     }
     callback = () => {
-
     }
 
-    render() {
+    render()
+   {
+       let {
+           intl: {
+               formatMessage
+               }
+           } = this.props;
         return <div className={css.order_list}>
             <div className={basecss.child_title}>
                 <FormattedMessage  id="orderlist.all.order" defaultMessage="所有订单"/>
