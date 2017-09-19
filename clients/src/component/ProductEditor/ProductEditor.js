@@ -24,7 +24,7 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 4,
+			current: 0,
 			product: {}
 		}
 	}

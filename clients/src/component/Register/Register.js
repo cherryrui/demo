@@ -28,6 +28,7 @@ import {
     AutoComplete,
     message,
     Tabs,
+    Radio
 } from 'antd';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -243,6 +244,25 @@ class Register extends React.Component {
                             }]
                         })(
                             <Input type='password' />
+                        )}
+                        </FormItem>
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'persondata.User.style'})}
+                        >
+                        {getFieldDecorator('tp',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:'register.style_warn'})
+                            }]
+                        })(
+                            <Radio.Group >
+                                <Radio.Button value={0}>
+                                    <FormattedMessage id="persondata.Indivdual.User" defaultMessage="个人用户"/>
+                                </Radio.Button>
+                                <Radio.Button value={1}>
+                                    <FormattedMessage id="persondata.Enterprise.User" defaultMessage="企业用户"/>
+                                </Radio.Button>
+                            </Radio.Group>
                         )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>

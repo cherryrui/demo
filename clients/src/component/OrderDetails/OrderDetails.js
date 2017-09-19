@@ -5,11 +5,12 @@ import React from 'react';
 import axios from 'axios';
 import appcss from '../../App.scss';
 import css from './OrderDetails.scss';
+import basecss from '../Mine/Mine.scss';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Steps,
     Table,
@@ -25,54 +26,57 @@ import {
     Modal,
     Cascader,
     Form
-    } from 'antd';
+} from 'antd';
 const Step = Steps.Step;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const {
     TextArea
-    } = Input;function onShowSizeChange(current, pageSize) {
+} = Input;
+
+function onShowSizeChange(current, pageSize) {
     console.log(current, pageSize);
 }
-class OrderDetailst extends React.Component{
-    jump=(e)=>{
-        window.location.href = "/#/main/mine/order-list"}
-    constructor(props){
+class OrderDetailst extends React.Component {
+    jump = (e) => {
+        window.location.href = "/#/main/mine/order-list"
+    }
+    constructor(props) {
         super(props);
-        this.state={
-            order:{
-                name:"张三",
-                tel:12345678912,
-                address:"xxxxxxxxxxxxxxxxxxxx"  ,
-                state:"未支付",
-                time:"2017-07-08 16:19:00",
-                order_no:243456676878999,
-                delivery_mode:"自提",
-                pay_mode:"分期",
-                pay_day:"6期",
-                instalment:"",
-                advance:"首付20%,分期80%",
-                principal:900,
-                interest:100,
-                remark:"vvvvvv",
+        this.state = {
+            order: {
+                name: "张三",
+                tel: 12345678912,
+                address: "xxxxxxxxxxxxxxxxxxxx",
+                state: "未支付",
+                time: "2017-07-08 16:19:00",
+                order_no: 243456676878999,
+                delivery_mode: "自提",
+                pay_mode: "分期",
+                pay_day: "6期",
+                instalment: "",
+                advance: "首付20%,分期80%",
+                principal: 900,
+                interest: 100,
+                remark: "vvvvvv",
                 products: [{
                     id: 1,
                     name: "WEE000000",
                     img: '../img/product.jpg',
                     price: 100,
-                    staging:"6期",
+                    staging: "6期",
                     agent_price: 80,
-                    full:"full payment",
-                    installment:"分期付款",
+                    full: "full payment",
+                    installment: "分期付款",
 
-                    Art_No:3434,
+                    Art_No: 3434,
                     num: 20,
                     sum: 66,
-                    postage:8,
-                    brand:"fgg",
-                    supplier:"中建",
-                    specification:"",
+                    postage: 8,
+                    brand: "fgg",
+                    supplier: "中建",
+                    specification: "",
                     attr: [{
                         id: 1,
                         value: 1,
@@ -84,56 +88,56 @@ class OrderDetailst extends React.Component{
                         name: "28",
 
                     }]
-                },
-                    {
-                        id: 2,
-                        name: "product name",
-                        img: '../img/product.jpg',
-                        price: 100,
-                        agent_price: 80,
-                        full:"full payment",
-                        installment:"installment",
-                        num: 40,
-                        supplier:"中建",
-                        brand:"fgg",
+                }, {
+                    id: 2,
+                    name: "product name",
+                    img: '../img/product.jpg',
+                    price: 100,
+                    agent_price: 80,
+                    full: "full payment",
+                    installment: "installment",
+                    num: 40,
+                    supplier: "中建",
+                    brand: "fgg",
 
-                        specification:"1 ton",
+                    specification: "1 ton",
+                    attr: [{
+                        id: 1,
+                        value: 1,
+                        name: "红色",
                         attr: [{
                             id: 1,
-                            value: 1,
-                            name: "红色",
-                            attr: [{
-                                id: 1,
-                                name: "红色"
-                            }, {
-                                id: 2,
-                                name: "蓝色"
-                            }, {
-                                id: 3,
-                                name: "绿色"
-                            }, ]
+                            name: "红色"
                         }, {
                             id: 2,
-                            value: 2,
-                            name: "28",
-                            attr: [{
-                                id: 1,
-                                name: "27"
-                            }, {
-                                id: 2,
-                                name: "28"
-                            }, {
-                                id: 3,
-                                name: "29"
-                            }, ]
-                        }]
-                    }, ]
-            }};
+                            name: "蓝色"
+                        }, {
+                            id: 3,
+                            name: "绿色"
+                        }, ]
+                    }, {
+                        id: 2,
+                        value: 2,
+                        name: "28",
+                        attr: [{
+                            id: 1,
+                            name: "27"
+                        }, {
+                            id: 2,
+                            name: "28"
+                        }, {
+                            id: 3,
+                            name: "29"
+                        }, ]
+                    }]
+                }, ]
+            }
+        };
         this.colums_show = [{
-            title: <FormattedMessage id="orderdetails.Order.No" defaultMessage="订单号"/>,
-            className: css.table_col,
-            width: "38%",
-            render: (record) => <div className={css.table_product}>
+                title: <FormattedMessage id="orderdetails.Order.No" defaultMessage="订单号"/>,
+                className: css.table_col,
+                width: "38%",
+                render: (record) => <div className={css.table_product}>
                 <img src={record.img}/>
                 <div className={css.info}>
                     <p className={css.product_title}>{record.name}</p>
@@ -144,8 +148,7 @@ class OrderDetailst extends React.Component{
 
                 </div>
             </div>
-        },
-            {
+            }, {
                 title: <FormattedMessage id="cart.specifucation" defaultMessage="规格"/>,
                 width: "15%",
                 className: css.table_col,
@@ -156,7 +159,7 @@ class OrderDetailst extends React.Component{
                     </div>
                 })}
                 </div>
-            },{
+            }, {
                 title: <FormattedMessage id="cart.price" defaultMessage="数量"/>,
                 width: "10%",
                 className: css.table_col,
@@ -169,16 +172,14 @@ class OrderDetailst extends React.Component{
                 className: css.table_col,
                 dataIndex: 'num',
                 key: 'num',
-            },
-            {
+            }, {
                 title: <FormattedMessage id="quotation.brand" defaultMessage="供应商"/>,
                 width: "15%",
                 className: css.table_col,
                 render: (record) => <div>
                     <p>{record.supplier}</p>
                 </div>
-            },
-            {
+            }, {
                 title: <FormattedMessage id="cart.sum" defaultMessage="应付总金额"/>,
                 width: "12%",
                 className: css.table_col,
@@ -187,7 +188,7 @@ class OrderDetailst extends React.Component{
 
         ]
     }
-    callback=()=>{
+    callback = () => {
 
     }
     handlePayMode = (name, key) => {
@@ -197,13 +198,11 @@ class OrderDetailst extends React.Component{
             order: order
         })
     }
-    render(){
+    render() {
 
-        return<div className={`${appcss.body} ${css.body}`}>
-            <div className={css.title}>
-                <FormattedMessage  className={css.title} id="mine.person" defaultMessage="个人中心"/>>>
+        return <div className={css.body}>
+            <div className={basecss.child_title}>
                 <FormattedMessage  id="orderdetails.Order.details" defaultMessage="订单详情"/>
-
             </div>
             <div className={css.personal_information}>
                 <div className={css.item}>

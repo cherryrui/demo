@@ -374,6 +374,7 @@ class ProductBasic extends React.Component {
 								onPreview = {this.previewImg}
 				            	listType="picture-card"
 				            	onRemove={this.removePic}
+				            	accept="image/*"
 				            >
 				              {this.state.fileList.length >= 4 ? null : <div className={css.upload}>
 	        							<Icon type="plus" />

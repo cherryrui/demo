@@ -32,7 +32,7 @@
 .body{
   min-height: 600px;
   margin: 0 10%;
-  padding-top: 134px;
+  padding-top: 140px;
   min-width: 1150px;
   background: white;
 }
@@ -99,6 +99,13 @@
     cursor: pointer;
 }
 .button_theme{
+    background-color: $button-blue !important;
+    border-color: $button-blue !important;
+    @extend %button;
+}
+.button_theme:hover{
+  background-color: $button-blue-active !important;
+    border-color: $button-blue-active !important;
     @extend %button;
 }
 .button_green{

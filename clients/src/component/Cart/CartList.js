@@ -11,7 +11,7 @@ import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 
 import {
     Table,
@@ -22,14 +22,14 @@ import {
     Button,
     message,
     Select
-    } from 'antd';
+} from 'antd';
 const Option = Select.Option;
 
-class CartList extends React.Component{
+class CartList extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             data: [],
             loading: false,
             selectedRowKeys: [],
@@ -38,7 +38,6 @@ class CartList extends React.Component{
         }
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-            className: css.table_col,
             width: "38%",
             render: (record) => <div className={css.table_product}>
                 <img src={record.img}/>
@@ -197,14 +196,14 @@ class CartList extends React.Component{
                     }
                 })
             })
-            this.props.handleStep?this.props.handleStep(1,products):"";
+            this.props.handleStep ? this.props.handleStep(1, products) : "";
 
         } else {
             const {
                 intl: {
                     formatMessage
-                    }
-                } = this.props;
+                }
+            } = this.props;
             message.warning(formatMessage({
                 id: 'cart.select.product'
             }))
@@ -231,8 +230,8 @@ class CartList extends React.Component{
             const {
                 intl: {
                     formatMessage
-                    }
-                } = this.props;
+                }
+            } = this.props;
             message.warning(formatMessage({
                 id: 'cart.select.product'
             }))
@@ -314,8 +313,8 @@ class CartList extends React.Component{
             const {
                 intl: {
                     formatMessage
-                    }
-                } = this.props;
+                }
+            } = this.props;
             message.warning(formatMessage({
                 id: 'cart.select.product'
             }))
@@ -343,12 +342,12 @@ class CartList extends React.Component{
         Util.print("<div>" + htmls.join("<br>") + "</div>");
     };
 
-    render(){
+    render() {
         const {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
 
 
         return <div>

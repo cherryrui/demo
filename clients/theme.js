@@ -6,11 +6,11 @@ module.exports = () => {
 		'primary-color': '#2f5ea2',
 		'link-color': '#636363',
 		'input-height-base': '36px',
-		'input-height-lg': '48px',
+		'input-height-lg': '40px',
 		'input-height-sm': '28px',
 		'font-size-base': '14px',
 		'btn-height-base': '36px',
 		'btn-height-lg': '40px',
-		'btn-height-sm': '22px',
+		'btn-height-sm': '28px',
 	}
 };

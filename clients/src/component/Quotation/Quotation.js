@@ -59,7 +59,6 @@ class Quotation extends React.Component {
 		}
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-			className: css.table_col,
 			width: "38%",
 			render: (record) => <div className={css.table_product}>
                     <img src={record.img}/>

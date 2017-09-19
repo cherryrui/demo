@@ -278,12 +278,12 @@ ReactDOM.render(
                         <Route path="about" component={About}>
 
                         </Route>
-                        <Route path="order-details" component={OrderDetails}/>
                         <Route path="mine" component={Mine}>
                             <IndexRoute component={PersonCenter}/>
                             <Route path="message" component={Message}/>
                             <Route path="system-message" component={SystemMessage}/>
                             <Route path="order-list" component={OrderList}/>
+                            <Route path="order-details" component={OrderDetails}/>
                             <Route path="favorite/:type" component={Favorite}/>
                             <Route path="quotation-list" component={QuotationList}/>
                             <Route path="product-editor" component={ProductEditor}/>

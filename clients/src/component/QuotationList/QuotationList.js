@@ -175,7 +175,7 @@ class QuotationList extends React.Component {
 				    placeholder={formatMessage({
                             id: 'mine.quotation.placeholder'
                         })}
-				    style={{ width: 200 }}
+				    style={{ width: 300 }}
 				    onSearch={value => console.log(value)}
 				 />
             </div>
