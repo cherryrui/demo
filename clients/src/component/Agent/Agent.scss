@@ -1,13 +1,18 @@
 @import '../../themes.scss';
 
 .prompt{
-
   background: $color-light-blue;
   padding:20px;
   margin-bottom: 20px;
   .spot_text{
     display: flex;
+    height: 30px;
+    line-height: 30px;
+    .spot{
+      font-size: 6px;
+      padding-right: 5px;
 
+    }
 
   }
 }
@@ -55,10 +60,4 @@
     text-align: center;
   }
 }
-}
-.spot{
-  display: block;
-  font-size: 6px;
-  padding-right: 5px;
-
 }

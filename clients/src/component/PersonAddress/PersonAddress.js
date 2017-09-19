@@ -204,8 +204,8 @@ class PersonAddress extends React.Component{
                 >
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem
-                        {...formItemLayout}
                             label={formatMessage({id: 'cart.delivery.name'})}
+                        {...formItemLayout}
                         >
                         {getFieldDecorator('name', {
                             initialValue: this.state.address.name,

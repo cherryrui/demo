@@ -15,16 +15,20 @@
   p{
     height: 30px;
     line-height: 30px;
-    a {
-      color: $button-blue-active;
 
-    }
     .smile{
       height: 30px;
       line-height: 30px;
       padding-right: 10px;
       display: block;
     }
+  }
+  .link {
+    display: block;
+    color: $button-blue-active;
+    height: 30px;
+    line-height: 30px;
+
   }
   .button_retrun{
     text-align: center;

@@ -5,7 +5,6 @@ import axios from 'axios';
 import React from 'react';
 import css from './Agent.scss';
 import appcss from '../../App.scss';
-
 import {
     Link
     } from 'react-router';
@@ -64,13 +63,11 @@ const residences = [{
     }],
 }];
 
-
 function getBase64(img, callback) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
 }
-
 function beforeUpload(file) {
     const isJPG = file.type === 'image/jpeg';
     if (!isJPG) {
@@ -85,7 +82,6 @@ function beforeUpload(file) {
 class Agent extends React.Component {
     jump=(e)=>{
         window.location.href = "/#/main/mine/successful-application/1"
-
     }
     static propTypes = {
         intl: intlShape.isRequired,
@@ -96,19 +92,13 @@ class Agent extends React.Component {
             confirmDirty: false,
             autoCompleteResult: [],
         }
-
     }
-
     handleChange = (info) => {
         if (info.file.status === 'done') {
             // Get this url from response in real world.
             getBase64(info.file.originFileObj, imageUrl => this.setState({ imageUrl }));
         }
     }
-
-
-
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -121,7 +111,6 @@ class Agent extends React.Component {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
-
     checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
@@ -129,7 +118,6 @@ class Agent extends React.Component {
         }
         callback();
     }
-
     handleWebsiteChange = (value) => {
         let autoCompleteResult;
         if (!value) {
@@ -140,9 +128,7 @@ class Agent extends React.Component {
         this.setState({ autoCompleteResult });
     }
 
-
         render(){
-
             const { getFieldDecorator } = this.props.form;
             const { autoCompleteResult } = this.state;
             const imageUrl = this.state.imageUrl;
@@ -176,7 +162,6 @@ class Agent extends React.Component {
                     <Option value="87">+87</Option>
                 </Select>
             );
-
             const websiteOptions = autoCompleteResult.map(website => (
                 <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
             ));
@@ -185,18 +170,16 @@ class Agent extends React.Component {
                     formatMessage
                     }
                 } = this.props;
-
             return<div>
                 <div className={css.prompt}>
                     <p className={css.spot_text}>
                         <i className={css.spot}>●</i>
-                        <FormattedMessage id={"agent.one"} defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
-
+                        <FormattedMessage id={"agent.condition_one"}
+                        defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
                     </p>
                     <p className={css.spot_text}>
                         <i className={css.spot}>●</i>
-                        <FormattedMessage id={"agent.two"} defaultMessage=""/>
-
+                        <FormattedMessage id={"agent.condition_two"} defaultMessage=""/>
                     </p>
                 </div>
                 <div>
@@ -207,9 +190,7 @@ class Agent extends React.Component {
                         >
           {getFieldDecorator('company_name', {
               rules: [{
-                  required: true, message: formatMessage({id: 'Agente.Please.enter.the.name.of.the.company'}),
-
-
+                  required: true, message: formatMessage({id: 'agent.enter.company'}),
               }],
           })(
               <Input />
@@ -217,25 +198,21 @@ class Agent extends React.Component {
                     </FormItem>
                         <FormItem
           {...formItemLayout}
-                            label={formatMessage({id: 'Agente.Business.type'})}
-
+                            label={formatMessage({id: 'agent.type'})}
                         >
           {getFieldDecorator('radio-group')(
               <RadioGroup>
-                  <Radio value="a">{formatMessage({id: 'Agente.Company'})}</Radio>
-                  <Radio value="b">{formatMessage({id: 'Agente.Store'})}</Radio>
-
+                  <Radio value="a">{formatMessage({id: 'agent.company'})}</Radio>
+                  <Radio value="b">{formatMessage({id: 'agent.store'})}</Radio>
               </RadioGroup>
           )}
                         </FormItem>
                         <FormItem
           {...formItemLayout}
-                            label={formatMessage({id: 'Agente.Contact.person'})}
-
+                            label={formatMessage({id: 'quotation.contact.name'})}
                             hasFeedback
                         >
           {getFieldDecorator('person', {
-
           })(
               <Input />
           )}
@@ -243,39 +220,11 @@ class Agent extends React.Component {
                         <FormItem
           {...formItemLayout}
                             label={formatMessage({id: 'post.email'})}
-
                         >
           {getFieldDecorator('email', {
               rules: [{
-
               }, {
-                  required: true, message: formatMessage({id: 'Agente.Please.enter.the.mailbox'}),
-              }],
-          })(
-              <Input />
-          )}
-                        </FormItem>
-
-
-                        <FormItem
-          {...formItemLayout}
-                            label={formatMessage({id: 'Agente.Region'})}
-                        >
-          {getFieldDecorator('residence', {
-              initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-              rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!'
-              }],
-          })(
-              <Cascader options={residences} />
-          )}
-                        </FormItem>
-                        <FormItem
-          {...formItemLayout}
-                            label={formatMessage({id: 'Agente.Detailed.address'})}
-                            hasFeedback
-                        >
-          {getFieldDecorator('address', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.enter.a.detailed.address'}),
+                  required: true, message: formatMessage({id: 'register.email.warn'}),
               }],
           })(
               <Input />
@@ -286,8 +235,7 @@ class Agent extends React.Component {
                             label={formatMessage({id: 'quotation.contact.tel'})}
                         >
           {getFieldDecorator('phone', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.input.your.phone.number!'}),
-
+              rules: [{ required: true, message: formatMessage({id: 'register.tel.warn'}),
               }],
           })(
               <Input />
@@ -295,15 +243,38 @@ class Agent extends React.Component {
                         </FormItem>
                         <FormItem
           {...formItemLayout}
+                            label={formatMessage({id: 'certif.company.region'})}
+                        >
+          {getFieldDecorator('residence', {
+              initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+              rules: [{ type: 'array', required: true, message: 'agent.select.region'
+              }],
+          })(
+              <Cascader options={residences} />
+          )}
+                        </FormItem>
+                        <FormItem
+          {...formItemLayout}
+                            label={formatMessage({id: 'agent.detailed.address'})}
+                            hasFeedback
+                        >
+          {getFieldDecorator('address', {
+              rules: [{ required: true, message: formatMessage({id: 'agent.enter.detailed_address'}),
+              }],
+          })(
+              <Input />
+          )}
+                        </FormItem>
+
+                        <FormItem
+          {...formItemLayout}
                             label={formatMessage({id: 'quotation.url'})}
                         >
           {getFieldDecorator('website', {
-
           })(
               <AutoComplete
                   dataSource={websiteOptions}
                   onChange={this.handleWebsiteChange}
-                  placeholder="website"
               >
                   <Input />
               </AutoComplete>
@@ -313,11 +284,10 @@ class Agent extends React.Component {
                             wrapperCol={{ span: 12, offset: 6 }}
                         >
                             <p>
-                                {formatMessage({id: 'Agente.Please.upload.your.credentials'})}
+                                {formatMessage({id: 'agent.upload.credentials'})}
                             </p>
                             <div className={css.upload}>
                                 <div className={css.uploader_div}>
-
                                 <Upload
                                     className={css.uploader}
                                     name="avatar"
@@ -333,7 +303,7 @@ class Agent extends React.Component {
             }
                                 </Upload>
                                 <p className={css.side}>
-                                {formatMessage({id: 'Agente.front.Side'})}
+                                {formatMessage({id: 'agent.front'})}
                                 </p>
                             </div>
                                 <div className={css.uploader_div}>
@@ -353,7 +323,7 @@ class Agent extends React.Component {
             }
                                     </Upload>
                                     <p className={css.side}>
-                                    {formatMessage({id: 'Agente.back.Side'})}
+                                    {formatMessage({id: 'agent.back'})}
                                     </p>
                                 </div>
                             </div>
@@ -361,14 +331,12 @@ class Agent extends React.Component {
                         <FormItem
           {...formItemLayout}
 
-                            label={formatMessage({id: 'Agente.legal.person'})}
+                            label={formatMessage({id: 'agent.legal'})}
 
                             hasFeedback
                         >
           {getFieldDecorator('legal_person', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.enter.the.name.of.the.legal.person'}),
-
-
+              rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal'}),
               }],
           })(
               <Input />
@@ -376,12 +344,11 @@ class Agent extends React.Component {
                         </FormItem>
                         <FormItem
           {...formItemLayout}
-                            label={formatMessage({id: 'Agente.legal.person.id.No'})}
+                            label={formatMessage({id: 'agent.legal_no'})}
                             hasFeedback
                         >
           {getFieldDecorator('id_No', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.enter.the.corporate.identity.card.number'}),
-
+              rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal_no'}),
               }],
           })(
               <Input />
@@ -408,13 +375,9 @@ class Agent extends React.Component {
                         </FormItem>
                     </Form>
                 </div>
-
-
                 </div>
 
     }
 }
-
-
 Agent = Form.create()(Agent);
 export default injectIntl(Agent);

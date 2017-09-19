@@ -1,11 +1,14 @@
 
-@import "../../themes";.cont{
+@import "../../themes";
+.cont{
 
 text-align: center;
 
   .avatar{
-  padding-top: 100px;
+  padding-top: 50px;
   padding-bottom: 50px;
+    width: 50%;
+    text-align: center;
 
     .avatar_img{
 
@@ -25,19 +28,17 @@ text-align: center;
     font-weight:400;
     .title{
       display: block;
-      width: 30%;
+      width: 20%;
       text-align: right;
     }
     .text{
       display: block;
-      display: flex;
+      text-align: left;
       padding-left: 10px;
       height:50px;
       line-height: 50px;
-      .text_certification{
+      width: 40%;
 
-        color:$color-orange ;
-      }
       .button_certification{
       background-color:$color-green;
         width: 120px;
@@ -50,7 +51,7 @@ text-align: center;
 
     }
     .text_certification{
-      display: block;
+      color:$color-orange ;
       padding-left: 10px;
       height:50px;
       line-height: 50px;
@@ -60,19 +61,19 @@ text-align: center;
       color: $color-orange;
     }
   }
+  .button_person{
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    .title{
+      display: block;
+      width: 20%;
 
-}
-.button_person{
-  padding-top: 20px;
-  width: 100%;
-  display: flex;
-  .title{
-    display: block;
-    width: 30%;
-
+    }
+    .button_modifye{
+      padding-left: 10px;
+      width: 300px;
+    }
   }
-.button_modifye{
-  padding-left: 10px;
-  width: 300px;
 }
-}
+

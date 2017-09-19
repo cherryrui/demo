@@ -99,7 +99,6 @@ class Supplier extends React.Component {
     }
 
   }
-
   handleChange = (info) => {
     if (info.file.status === 'done') {
       // Get this url from response in real world.
@@ -108,9 +107,6 @@ class Supplier extends React.Component {
       }));
     }
   }
-
-
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -147,8 +143,6 @@ class Supplier extends React.Component {
       autoCompleteResult
     });
   }
-
-
   render() {
 
     const {
@@ -196,7 +190,6 @@ class Supplier extends React.Component {
                 <Option value="87">+87</Option>
             </Select>
     );
-
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
     ));
@@ -207,264 +200,259 @@ class Supplier extends React.Component {
     } = this.props;
 
     return <div>
-            <div className={css.prompt}>
+                <div className={css.prompt}>
+                    <p className={css.spot_text}>
+                        <FormattedMessage id={"supplier.need.conditions"}
+                         defaultMessage="供应商需要具备的条件"/>
+                    </p>
+                    <p className={css.spot_text}>
+                        <FormattedMessage id={"supplier.development"}
+                         defaultMessage="随着建筑零售行业的飞速发展，消费者的需求也更加多元化，需求量迅猛增长。为了共享建材行业发展的成果，我们希望与您携手前进。"/>
+                    </p>
+                    <p className={css.spot_text}>
+                        <FormattedMessage id={"supplier.have.condition"}
+                         defaultMessage="如果你具备以下条件："/>
+                    </p>
+                    <p className={css.spot_text}>
+                        <i className={css.spot}>●</i>
+                        <FormattedMessage id={"supplier.condition_one"}
+                        defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
+                    </p>
+                    <p className={css.spot_text}>
+                        <i className={css.spot}>●</i>
+                        <FormattedMessage id={"supplier.condition_two"}
+                         defaultMessage=""/>
+                    </p>
+                    <p className={css.spot_text}>
+                        <i className={css.spot}>●</i>
+                        <FormattedMessage id={"supplier.condition_three"}
+                         defaultMessage=""/>
+                    </p>
+                    <p className={css.spot_text}>
+                        <i className={css.spot}>●</i>
+                        <FormattedMessage id={"supplier.condition_four"}
+                         defaultMessage=""/>
+                    </p>
+                </div>
+                <div>
+                    <Form onSubmit={this.handleSubmit}>
+                        <FormItem
+                            {...formItemLayout}
+                            label={formatMessage({id: 'post.company_name'})}
+                        >
+              {getFieldDecorator('company_name', {
+                  rules: [{
+                      required: true, message: formatMessage({id: 'agent.enter.company'}),
 
-                <p>
-                    <FormattedMessage id={"Supplier.Need.conditions"} defaultMessage="供应商需要具备的条件"/>
-                </p>
-                <p>
-                    <FormattedMessage id={"Supplier.condition.Industry.development"} defaultMessage="随着建筑零售行业的飞速发展，消费者的需求也更加多元化，需求量迅猛增长。为了共享建材行业发展的成果，我们希望与您携手前进。"/>
 
-                </p>
-                <p >
-                    <FormattedMessage id={"Supplier.have.condition"} defaultMessage="如果你具备以下条件："/>
-
-                </p>
-                <p className={css.spot_text}>
-                    <i className={css.spot}>●</i>
-                    <FormattedMessage id={"Supplier.qualification"} defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
-
-                </p>
-                <p className={css.spot_text}>
-                    <i className={css.spot}>●</i>
-                    <FormattedMessage id={"Supplier.prove"} defaultMessage=""/>
-
-                </p>
-                <p className={css.spot_text}>
-                    <i className={css.spot}>●</i>
-                    <FormattedMessage id={"Supplier.Intellectual.property"} defaultMessage=""/>
-
-                </p>
-                <p className={css.spot_text}>
-                    <i className={css.spot}>●</i>
-                    <FormattedMessage id={"Supplier.financial.statements"} defaultMessage=""/>
-
-                </p>
-
-            </div>
-            <div>
-                <Form onSubmit={this.handleSubmit}>
-                    <FormItem
-                        {...formItemLayout}
-                        label={formatMessage({id: 'post.company_name'})}
-                    >
-          {getFieldDecorator('company_name', {
-              rules: [{
-                  required: true, message: formatMessage({id: 'Agente.Please.enter.the.name.of.the.company'}),
-
-
-              }],
-          })(
-              <Input />
-          )}
-                    </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'quotation.url'})}
-                    >
-          {getFieldDecorator('website', {
-
-          })(
-              <AutoComplete
-                  dataSource={websiteOptions}
-                  onChange={this.handleWebsiteChange}
-                  placeholder="website"
-              >
+                  }],
+              })(
                   <Input />
-              </AutoComplete>
-          )}
-                    </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'quotation.contact.name'})}
+              )}
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'quotation.url'})}
+                        >
+              {getFieldDecorator('website', {
+              })(
+                  <AutoComplete
+                      dataSource={websiteOptions}
+                      onChange={this.handleWebsiteChange}
 
+                  >
+                      <Input />
+                  </AutoComplete>
+              )}
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'quotation.contact.name'})}
+                            hasFeedback
+                        >
+              {getFieldDecorator('person', {
+              })(
+                  <Input />
+              )}
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'post.email'})}
+
+                        >
+              {getFieldDecorator('email', {
+                  rules: [{
+
+                  }, {
+                      required: true, message: formatMessage({id: 'register.email.warn'}),
+                  }],
+              })(
+                  <Input />
+              )}
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'quotation.contact.tel'})}
+                        >
+              {getFieldDecorator('phone', {
+                  rules: [{ required: true, message: formatMessage({id: 'register.tel.warn'}),
+                  }],
+              })(
+                  <Input />
+              )}
+                        </FormItem>
+
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'acertif.company.region'})}
+                        >
+              {getFieldDecorator('residence', {
+                  initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                  rules: [{ type: 'array', required: true, message: 'agent.select.region'
+                  }],
+              })(
+                  <Cascader options={residences} />
+              )}
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
+                        label={formatMessage({id: 'agent.detailed.address'})}
                         hasFeedback
                     >
-          {getFieldDecorator('person', {
-
-          })(
-              <Input />
-          )}
+              {getFieldDecorator('address', {
+                  rules: [{ required: true, message: formatMessage({id: 'agent.enter.detailed_address'}),
+                  }],
+              })(
+                  <Input />
+              )}
                     </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'post.email'})}
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'supplier.main.products'})}
+                            hasFeedback
+                        >
+              {getFieldDecorator('products', {
 
-                    >
-          {getFieldDecorator('email', {
-              rules: [{
-
-              }, {
-                  required: true, message: formatMessage({id: 'Agente.Please.enter.the.mailbox'}),
-              }],
-          })(
-              <Input />
-          )}
-                    </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'quotation.contact.tel'})}
-                    >
-          {getFieldDecorator('phone', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.input.your.phone.number!'}),
-
-              }],
-          })(
-              <Input />
-          )}
-                    </FormItem>
-
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'Agente.Region'})}
-                    >
-          {getFieldDecorator('residence', {
-              initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-              rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!'
-              }],
-          })(
-              <Cascader options={residences} />
-          )}
-                    </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                    label={formatMessage({id: 'Agente.Detailed.address'})}
-                    hasFeedback
-                >
-          {getFieldDecorator('address', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.enter.a.detailed.address'}),
-              }],
-          })(
-              <Input />
-          )}
-                </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'SuccessfulApplication.Main.products'})}
-                        hasFeedback
-                    >
-          {getFieldDecorator('products', {
-
-          })(
-              <TextArea rows={4} />
-          )}
-                    </FormItem>
+              })(
+                  <TextArea rows={4} />
+              )}
+                        </FormItem>
 
 
-                    <FormItem
-                        wrapperCol={{ span: 12, offset: 6 }}
-                    >
-                        <p>
-                                {formatMessage({id: 'Agente.Please.upload.your.credentials'})}
-                        </p>
-                        <div className={css.upload}>
-                            <div className={css.uploader_div}>
+                        <FormItem
+                            wrapperCol={{ span: 12, offset: 6 }}
+                        >
+                            <p>
+                                    {formatMessage({id: 'agent.upload.credentials'})}
+                            </p>
+                            <div className={css.upload}>
+                                <div className={css.uploader_div}>
 
-                                <Upload
-                                    className={css.uploader}
-                                    name="avatar"
-                                    showUploadList={false}
-                                    action="//jsonplaceholder.typicode.com/posts/"
-                                    beforeUpload={beforeUpload}
-                                    onChange={this.handleChange}
-                                >
-        {
-            imageUrl ?
-                <img src={imageUrl} alt="" className="avatar" /> :
-                <Icon type="plus" className={css.avatar_icon} />
-            }
-                                </Upload>
-                                <p className={css.side}>
-                                {formatMessage({id: 'Agente.front.Side'})}
-                                </p>
+                                    <Upload
+                                        className={css.uploader}
+                                        name="avatar"
+                                        showUploadList={false}
+                                        action="//jsonplaceholder.typicode.com/posts/"
+                                        beforeUpload={beforeUpload}
+                                        onChange={this.handleChange}
+                                    >
+            {
+                imageUrl ?
+                    <img src={imageUrl} alt="" className="avatar" /> :
+                    <Icon type="plus" className={css.avatar_icon} />
+                }
+                                    </Upload>
+                                    <p className={css.side}>
+                                    {formatMessage({id: 'agent.front'})}
+                                    </p>
+                                </div>
+                                <div className={css.uploader_div}>
+
+                                    <Upload
+                                        className={css.uploader}
+                                        name="avatar"
+                                        showUploadList={false}
+                                        action="//jsonplaceholder.typicode.com/posts/"
+                                        beforeUpload={beforeUpload}
+                                        onChange={this.handleChange}
+                                    >
+            {
+                imageUrl ?
+                    <img src={imageUrl} alt="" className="avatar" /> :
+                    <Icon type="plus" className={css.avatar_icon} />
+                }
+                                    </Upload>
+                                    <p className={css.side}>
+                                        {formatMessage({id: 'agent.back'})}
+                                    </p>
+                                </div>
                             </div>
-                            <div className={css.uploader_div}>
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
 
-                                <Upload
-                                    className={css.uploader}
-                                    name="avatar"
-                                    showUploadList={false}
-                                    action="//jsonplaceholder.typicode.com/posts/"
-                                    beforeUpload={beforeUpload}
-                                    onChange={this.handleChange}
-                                >
-        {
-            imageUrl ?
-                <img src={imageUrl} alt="" className="avatar" /> :
-                <Icon type="plus" className={css.avatar_icon} />
-            }
-                                </Upload>
-                                <p className={css.side}>
-                                    {formatMessage({id: 'Agente.back.Side'})}
-                                </p>
-                            </div>
-                        </div>
-                    </FormItem>
-                    <FormItem
-          {...formItemLayout}
+                            label={formatMessage({id: 'agent.legal'})}
 
-                        label={formatMessage({id: 'Agente.legal.person'})}
-
-                        hasFeedback
-                    >
-          {getFieldDecorator('legal_person', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.enter.the.name.of.the.legal.person'}),
+                            hasFeedback
+                        >
+              {getFieldDecorator('legal_person', {
+                  rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal'}),
 
 
-              }],
-          })(
-              <Input />
-          )}
-                    </FormItem>
-                    <FormItem
-          {...formItemLayout}
-                        label={formatMessage({id: 'Agente.legal.person.id.No'})}
-                        hasFeedback
-                    >
-          {getFieldDecorator('id_No', {
-              rules: [{ required: true, message: formatMessage({id: 'Agente.Please.enter.the.corporate.identity.card.number'}),
+                  }],
+              })(
+                  <Input />
+              )}
+                        </FormItem>
+                        <FormItem
+              {...formItemLayout}
+                            label={formatMessage({id: 'agent.legal_no'})}
+                            hasFeedback
+                        >
+              {getFieldDecorator('id_No', {
+                  rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal_no'}),
 
-              }],
-          })(
-              <Input />
-          )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label={formatMessage({id: 'cart.pay.mode'})}
-                    >
-          {getFieldDecorator('radio-group', {
-              valuePropName: 'checked',
-          })(
-              <RadioGroup>
-                  <Checkbox>{formatMessage({id: 'cart.pay.letter'})}</Checkbox>
-                  <Checkbox>{formatMessage({id: 'cart.pay.check'})} </Checkbox>
-                  <Checkbox>{formatMessage({id: 'cart.pay.cash'})} </Checkbox>
-                  <Checkbox>{formatMessage({id: 'cart.pay.blank'})} </Checkbox>
-              </RadioGroup>
-          )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label={formatMessage({id: 'about.Shipping.Method'})}
-                    >
-          {getFieldDecorator('radio-group', {
-              valuePropName: 'checked',
-          })(
-              <RadioGroup>
-                  <Checkbox>{formatMessage({id: 'SuccessfulApplication.Offshore.transport'})}</Checkbox>
-                  <Checkbox>{formatMessage({id: 'SuccessfulApplication.Transport.to.the.port'})} </Checkbox>
-                  <Checkbox>{formatMessage({id: 'SuccessfulApplication.warehouse.in.China'})} </Checkbox>
-                  <Checkbox>{formatMessage({id: 'SuccessfulApplication.warehouses.abroad'})} </Checkbox>
-              </RadioGroup>
-          )}
-                    </FormItem>
-                    <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" className={css.retrun}>{formatMessage({id: 'app.cancel'})}</Button>
-                        <Button type="primary" className={css.submit} onClick={this.jump} htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
-                    </FormItem>
-                </Form>
-            </div>
+                  }],
+              })(
+                  <Input />
+              )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label={formatMessage({id: 'cart.pay.mode'})}
+                        >
+              {getFieldDecorator('radio-group', {
+                  valuePropName: 'checked',
+              })(
+                  <RadioGroup>
+                      <Checkbox>{formatMessage({id: 'cart.pay.letter'})}</Checkbox>
+                      <Checkbox>{formatMessage({id: 'cart.pay.check'})} </Checkbox>
+                      <Checkbox>{formatMessage({id: 'cart.pay.cash'})} </Checkbox>
+                      <Checkbox>{formatMessage({id: 'cart.pay.blank'})} </Checkbox>
+                  </RadioGroup>
+              )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label={formatMessage({id: 'about.Shipping.Method'})}
+                        >
+              {getFieldDecorator('radio-group', {
+                  valuePropName: 'checked',
+              })(
+                  <RadioGroup>
+                      <Checkbox>{formatMessage({id: 'supplier.offshore'})}</Checkbox>
+                      <Checkbox>{formatMessage({id: 'supplier.port'})} </Checkbox>
+                      <Checkbox>{formatMessage({id: 'supplier.warehouse.China'})} </Checkbox>
+                      <Checkbox>{formatMessage({id: 'supplier.warehouses.abroad'})} </Checkbox>
+                  </RadioGroup>
+              )}
+                        </FormItem>
+                        <FormItem {...tailFormItemLayout}>
+                            <Button type="primary" className={css.retrun}>{formatMessage({id: 'app.cancel'})}</Button>
+                            <Button type="primary" className={css.submit} onClick={this.jump} htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
+                        </FormItem>
+                    </Form>
+                </div>
 
 
         </div>
