@@ -1,5 +1,7 @@
 var router = require('koa-router')();
 const axios = require('axios');
+var ReqTool = require('../tools/reqTool.js');
+import {SendEmail} from '../tools/sendemail.js';
 
 router.get('/get-user.json', async(ctx, next) => {
 		let id = ctx.query.id;
@@ -155,7 +157,12 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 	})
 	.get('/sendcode.json', async(ctx) => {
-
+    let result = null;
+    const emails = '947863843@qq.com' ;
+    const send = await SendEmail.send({emails}).then(res=>{
+        const data = JSON.stringify(res);
+        console.log(data);
+    });
 		ctx.body = true;
 	})
 	.get('/reset-pwd.json', async(ctx) => {
