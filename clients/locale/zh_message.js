@@ -419,7 +419,7 @@ const zh_CN = {
     "supplier.warehouse.China": "到国内指定仓库",
     "supplier.warehouses.abroad": "到国外指定仓库",
     "supplier.main.products": "主营产品",
-    "app.Success": "提交成功",
+    "app.success": "提交成功",
     "supplier.need.conditions": "供应商需要具备的条件",
     "supplier.development": "随着建筑零售行业的飞速发展，消费者的需求也更加多元化，需求量迅猛增长。为了共享建材行业发展的成果，我们希望与您携手前进。",
     "supplier.have.condition": "如果你具备以下条件：",

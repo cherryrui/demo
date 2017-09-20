@@ -40,7 +40,7 @@ class SuccessfulApplication extends React.Component{
         return<div className={css.submit_success}>
             <p className={css.success}>
                 <Icon className={css.smile} type="smile-o" />
-                <FormattedMessage id="app.Success"
+                <FormattedMessage id="app.success"
                 defaultMessage="提交成功"/>
             </p>
             <p><FormattedMessage id="app.success.info"
