@@ -64,12 +64,18 @@ class Message extends React.Component{
                                     <Icon type="question-circle" />
                                 </p>
                                 <p className={css.content}>{this.state.message.quotation}</p>
-                                <p className={css.time}>{this.state.message.time}</p>
+                                <p className={css.time}>
+                                    {this.state.message.time}&nbsp;&nbsp;
+                                     {this.state.message.mini}
+                                </p>
                             </div>
                             <div className={css.item}>
                                 <p className={css.icon_a}>A</p>
                                 <p className={css.content}> {this.state.message.answer}</p>
-                                <p className={css.time}>{this.state.message.time}</p>
+                                <p className={css.time}>
+                                     {this.state.message.time}&nbsp;&nbsp;
+                                     {this.state.message.mini}
+                                </p>
                             </div>
                         </div>
 
