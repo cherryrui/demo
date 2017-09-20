@@ -1,7 +1,12 @@
 var router = require('koa-router')();
 const axios = require('axios');
+const {
+	url
+} = require('../config/index');
 var ReqTool = require('../tools/reqTool.js');
-import {SendEmail} from '../tools/sendemail.js';
+import {
+	SendEmail
+} from '../tools/sendemail.js';
 
 router.get('/get-user.json', async(ctx, next) => {
 		let id = ctx.query.id;
@@ -17,26 +22,17 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.post('/login.json', async(ctx, next) => {
 		let data = ctx.request.body;
-		console.log(data);
 		let status = true,
 			result;
-
-		result = {
-				id: 1,
-				name: "张三"
+		let ul = url + "/login?loginName=" + data.userName + "&password=" + data.password;
+		await axios.get(ul).then(res => {
+			console.log(res.data);
+			result = res.data;
+			if (res.data.isSucc) {
+				ctx.cookie.set('uid', res.data.result.uid);
 			}
-			/*status = false;
-			result = "账号密码错误";*/
-		if (status) {
-			ctx.cookie.set('uid', result.id);
-		} else {
-			ctx.cookie.set('uid', null);
-		}
-		ctx.body = {
-			status: status,
-			result: result,
-		}
-
+			ctx.body = res.data
+		})
 	})
 	.get('/get-address-list.json', async(ctx, next) => {
 		let uid = ctx.query.uid;
@@ -157,12 +153,14 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 	})
 	.get('/sendcode.json', async(ctx) => {
-    let result = null;
-    const emails = '947863843@qq.com' ;
-    const send = await SendEmail.send({emails}).then(res=>{
-        const data = JSON.stringify(res);
-        console.log(data);
-    });
+		let result = null;
+		const emails = '947863843@qq.com';
+		const send = await SendEmail.send({
+			emails
+		}).then(res => {
+			const data = JSON.stringify(res);
+			console.log(data);
+		});
 		ctx.body = true;
 	})
 	.get('/reset-pwd.json', async(ctx) => {

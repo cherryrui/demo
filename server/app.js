@@ -9,7 +9,9 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const index = require('./routes/index');
 const index_en = require('./routes/index-en');
-const cookieOptions = require('./config/index');
+const {
+	cookieOptions
+} = require('./config/index');
 
 const users = require('./routes/users');
 const user = require('./routes/user.js');
@@ -38,7 +40,7 @@ app.use(views(__dirname + '/views', {
 		hjs: 'hogan'
 	}
 }))
-
+console.log(cookieOptions);
 // logger
 app.use(async(ctx, next) => {
 		ctx.cookie = {

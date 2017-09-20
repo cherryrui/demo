@@ -2,6 +2,15 @@ import React from 'react';
 import appcss from '../../App.scss';
 import axios from 'axios';
 import moment from 'moment';
+import operator from './operator.js';
+import {
+    VictoryChart,
+    VictoryArea,
+    VictoryTheme,
+    VictoryAxis,
+    VictoryBar,
+    VictoryStack
+} from 'victory';
 import {
     Link
 } from 'react-router';
@@ -31,12 +40,17 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
+import TabBar from '../Public/TabBar/TabBar.js';
 import cartAction from '../../action/cartAction.js';
-import { connect } from 'react-redux';
+import {
+    connect
+} from 'react-redux';
 /**
  * 商品详情页面，根据传递参数（id）查询商品信息并显示
  */
-@connect(state=>({cart: state.cart}),cartAction)
+@connect(state => ({
+    cart: state.cart
+}), cartAction)
 class ProductDetail extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
@@ -51,6 +65,7 @@ class ProductDetail extends React.Component {
             curImg: '', //當前选中的图片
             index_img: 0, //選中的圖片index
             visible: false,
+            current: 0
         }
     }
 
@@ -73,22 +88,10 @@ class ProductDetail extends React.Component {
     }
 
     handleChange = (key) => {
-        console.log(114, key);
-        switch (Number(key)) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                this.setState({
-                    content: <Review data={this.state.reviews}/>
-                })
-                break;
-            case 4:
-                break;
-        }
+        console.log(key)
+        this.setState({
+            current: key
+        })
 
     };
     handleNum = (value) => {
@@ -122,7 +125,7 @@ class ProductDetail extends React.Component {
                 console.log("加入购物车")
                 this.specify.style.border = "none";
                 this.specify.style.padding = "0";
-                this.props.addCart(this.state.product).then(res=>{
+                this.props.addCart(this.state.product).then(res => {
                     message.success("成功加入购物车")
                 });
             } else {
@@ -168,7 +171,7 @@ class ProductDetail extends React.Component {
             }
         });
     }
-    handleAttr=(index,e)=>{
+    handleAttr = (index, e) => {
         this.state.product.attr[index].select_value = e.target.value;
     }
 
@@ -308,81 +311,63 @@ class ProductDetail extends React.Component {
                 </div>
                 <div className={css.info}>
                     <div className={css.card_container}>
-                        <Tabs type="card" onChange={this.handleChange}>
-                            <TabPane
-                                tab={<FormattedMessage id="product.detail.information" defaultMessage="详情"/>}
-                                key={0}>
-                                <div>dsada </div>
-                            </TabPane>
-                            <TabPane
-                                tab={<FormattedMessage id="product.detail.specification" defaultMessage="规格"/>}
-                                key={1}>
-                                <div>dsada </div>
-                            </TabPane>
-                            <TabPane
-                                tab={<FormattedMessage id="product.detail.package" defaultMessage="套餐详情"/>}
-                                key={2}>
-                                <div>dsada </div>
-                            </TabPane>
-                            <TabPane
-                                tab={<FormattedMessage id="product.detail.review" defaultMessage="评价"/>}
-                                key={3}>
-                                <Review data={this.state.reviews}/>
-                            </TabPane>
-                            <TabPane
-                                tab={<FormattedMessage id="product.detail.price.move" defaultMessage="价格趋势"/>}
-                                key={4}>
-                                <div>dsada </div>
-                            </TabPane>
-                        </Tabs>
+                        <TabBar tabs={operator.tabs} current={this.state.current} 
+                            handleBar={this.handleChange}
+                        />
+                        {this.state.current==0?<div>dsada </div>
+                            :this.state.current==1?<Specification product={this.state.product}/>
+                            :this.state.current==2?<PackageDetail product={this.state.product}/>
+                            :this.state.current==3?<Review data={this.state.reviews}/>
+                            :this.state.current==4?<Price />
+                            :""}
                     </div>
                 </div>
             </div>
+            
             <Modal
                 title={formatMessage({id: 'login.login.title'})}
                 visible={this.state.visible}
                 footer={null}
             >
-            <div className={css.form}>
-                <Form onSubmit={this.handleSubmit} className={css.login_form}>
-                    <FormItem>
-                    {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],
-                    })(
-                        <Input size="large" prefix={<Icon type="user" style={{ fontSize: 13 }} />} 
-                        placeholder= {formatMessage({id: 'login.input.name'})} />
-                    )}
-                    </FormItem>
-                    <FormItem>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
-                    })(
-                        <Input size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
-                        type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
-                    )}
-                    </FormItem>
-                    <FormItem>
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: true,
-                    })(
-                        <Checkbox>
-                            <FormattedMessage id="login.remember" defaultMessage="记住密码"/>
-                        </Checkbox>
-                    )}
-                        <a className={css.forgot} href="">
-                            <FormattedMessage id="login.forget" defaultMessage="用户登录"/>
-                        </a>
-                        <Button size="large" type="primary" htmlType="submit" className={css.button}>
-                            <FormattedMessage id="login.login" defaultMessage="登录"/>
+                <div className={css.form}>
+                    <Form onSubmit={this.handleSubmit} className={css.login_form}>
+                        <FormItem>
+                        {getFieldDecorator('userName', {
+                            rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],
+                        })(
+                            <Input size="large" prefix={<Icon type="user" style={{ fontSize: 13 }} />} 
+                            placeholder= {formatMessage({id: 'login.input.name'})} />
+                        )}
+                        </FormItem>
+                        <FormItem>
+                        {getFieldDecorator('password', {
+                            rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
+                        })(
+                            <Input size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
+                            type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
+                        )}
+                        </FormItem>
+                        <FormItem>
+                        {getFieldDecorator('remember', {
+                            valuePropName: 'checked',
+                            initialValue: true,
+                        })(
+                            <Checkbox>
+                                <FormattedMessage id="login.remember" defaultMessage="记住密码"/>
+                            </Checkbox>
+                        )}
+                            <a className={css.forgot} href="">
+                                <FormattedMessage id="login.forget" defaultMessage="用户登录"/>
+                            </a>
+                            <Button size="large" type="primary" htmlType="submit" className={css.button}>
+                                <FormattedMessage id="login.login" defaultMessage="登录"/>
+                            </Button>
+                            <Button size="large" type="primary" htmlType="submit" className={css.button}>
+                                <FormattedMessage id="login.registor" defaultMessage="注册"/>
                         </Button>
-                        <Button size="large" type="primary" htmlType="submit" className={css.button}>
-                            <FormattedMessage id="login.registor" defaultMessage="注册"/>
-                    </Button>
-                    </FormItem>
-                </Form>
-            </div>
-
+                        </FormItem>
+                    </Form>
+                </div>
             </Modal>
         </div>
     }
@@ -417,11 +402,146 @@ class Review extends React.Component {
 class Price extends React.Component {
 
     render() {
+        const data = [{
+            create_time: "5-5",
+            y: 1
+        }, {
+            create_time: "5-6",
+            y: 2
+        }, {
+            create_time: "5-7",
+            y: 3
+        }, {
+            create_time: "5-8",
+            y: 2
+        }, {
+            create_time: "5-9",
+            y: 1
+        }, {
+            create_time: "5-10",
+            y: 1
+        }, {
+            create_time: "5-12",
+            y: 2
+        }, {
+            create_time: "5-13",
+            y: 3
+        }, {
+            create_time: "5-14",
+            y: 2
+        }, {
+            create_time: "5-15",
+            y: 1
+        }, {
+            create_time: "5-16",
+            y: 1
+        }, {
+            create_time: "5-17",
+            y: 2
+        }, {
+            create_time: "5-18",
+            y: 3
+        }, {
+            create_time: "5-19",
+            y: 2
+        }, {
+            create_time: "5-20",
+            y: 1
+        }];
 
-        return <div>
-            dsadasda
+        return <div className={css.price_body}>
+            <VictoryChart
+                theme={VictoryTheme.material}
+                width={1000}
+                height={300}
+            >
+                <VictoryArea
+                    style={{ 
+                        data: { fill: "#c43a31" },
+                        
+                     }}
+                    data={data}
+                    x="create_time"  
+                    labels={(datum) => "$"+datum.y}
+                />
+            </VictoryChart>
+            <div className={css.price_time}>
+                <p>
+                    <FormattedMessage id="product.detail.month" defaultMessage="最近月" />
+                </p>
+                <p>
+                    <FormattedMessage id="product.detail.three" defaultMessage="三个月" />
+                </p>
+                <p>
+                    <FormattedMessage id="product.detail.six" defaultMessage="六个月" />
+                </p>
+             </div>
         </div>
     }
 }
 ProductDetail = Form.create()(ProductDetail);
+
+class Specification extends React.Component {
+
+
+    render() {
+        return <div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.no}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.no}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.no}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.no}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.no}</p>
+            </div>
+        </div>
+    }
+}
+
+class PackageDetail extends React.Component {
+
+
+    render() {
+        return <div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.name}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.name}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.name}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.name}</p>
+            </div>
+            <div>
+                <FormattedMessage id="" defaultMessage=""/>
+                <p>{this.props.product.name}</p>
+            </div>
+        </div>
+    }
+}
 export default injectIntl(ProductDetail);

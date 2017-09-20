@@ -1,0 +1,23 @@
+@import '../../../themes.scss';
+.body{
+    display: flex;
+    justify-content: space-between;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    .item{
+    	flex-grow: 1;
+    	background: $color-light-blue;
+    	text-align: center;
+    	padding: 10px 0;
+    	border-bottom: 1px solid $border-color;
+    	border-top: 1px solid $border-color;
+    }
+    .active{
+    	@extend .item;
+    	background: white;
+    	border-bottom: none;
+    	border-left: 1px solid $border-color;
+    	border-right: 1px solid $border-color;
+		border-top: 3px solid $theme-color;
+    }
+}

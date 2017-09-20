@@ -225,6 +225,12 @@ class Main extends React.Component {
                     </Dropdown>
                 </div>
             </div>
+            <div className={css.categorys_drop}>
+                <p className={css.drop_icon}><Icon type="caret-up" /></p>
+                {this.state.categorys.map(item=>{
+                    return <p className={css.drop_item}>{item.name}</p>
+                })}
+            </div>
             {this.props.children}
             <div className={css.foot_first}>
                 <div className={css.item}>
