@@ -50,6 +50,7 @@ class Main extends React.Component {
             carts: [],
             visible: false,
             confirmloading: false,
+            showCategory: false
 
         };
         this.tabs = [{
@@ -159,6 +160,14 @@ class Main extends React.Component {
             })
         }
     }
+    handleCategory = (index) => {
+        this.setState({
+            showCategory: !this.state.showCategory
+        })
+        if (typeof(index) == 'number') {
+            window.location.href = "/#/main/category-list/" + index;
+        }
+    }
 
     render() {
         //console.log(this.props.cart);
@@ -193,15 +202,11 @@ class Main extends React.Component {
         return <div>
             <div className={css.header}>
                 <div className={css.left}>
-                    <p className={css.title}>LOGO</p>
-                    <p className={this.state.index == 0 ? css.active : css.title}>
-                        <Dropdown overlay={category_menu}>
-                            <p>
-                                <FormattedMessage id="app.category" defaultMessage="分类"/>
-                            &nbsp;&nbsp;
-                                <Icon type="caret-down" />
-                            </p>
-                        </Dropdown>
+                    <p className={css.logo}>LOGO</p>
+                    <p onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
+                        <FormattedMessage id="app.category" defaultMessage="分类"/>
+                        &nbsp;&nbsp;
+                        <Icon type="caret-down" />
                     </p>
                 {this.tabs.map(item=> {
                     return <p className={this.state.index == item.key ? css.active : css.title} onClick={this.handleTabs.bind(this, item.key, item.url)}>
@@ -225,12 +230,12 @@ class Main extends React.Component {
                     </Dropdown>
                 </div>
             </div>
-            <div className={css.categorys_drop}>
+            {this.state.showCategory?<div className={css.categorys_drop}>
                 <p className={css.drop_icon}><Icon type="caret-up" /></p>
                 {this.state.categorys.map(item=>{
-                    return <p className={css.drop_item}>{item.name}</p>
+                    return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.id)}>{item.name}</p>
                 })}
-            </div>
+            </div>:""}
             {this.props.children}
             <div className={css.foot_first}>
                 <div className={css.item}>
