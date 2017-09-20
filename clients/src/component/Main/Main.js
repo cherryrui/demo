@@ -6,6 +6,10 @@ import React from 'react';
 import css from './Main.scss';
 import appcss from '../../App.scss';
 import {
+    FaCubes,
+    FaCog
+} from 'react-icons/lib/fa';
+import {
     Router,
     Route,
     IndexRoute,
@@ -118,13 +122,26 @@ class Main extends React.Component {
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
+            <div className={css.icon}>
+                <FaCubes/>
+            </div>
+            <div className={css.title}>
+                <FormattedMessage id="app.product_category" defaultMessage="产品分类"/>
+            </div>
             {this.state.category.length>0?<Category category={this.state.category}/>:""}
             <div className={css.fixed_right}>
-                <p className={css.fiexed_item}><Icon type="to-top" /></p>
-                <p className={css.fiexed_item}><Icon type="to-top" /></p>
-                <p className={css.fiexed_item}><Icon type="to-top" /></p>
-                <p className={css.fiexed_item}><Icon type="to-top" /></p>
-                <p className={css.fiexed_item}><Icon type="to-top" /></p>
+                <p className={css.fixed_item}>
+                <Icon type="to-top" /></p>
+                <p className={css.fixed_item}>
+                    <i class="iconfont icon-set"></i>
+                </p>
+                <p className={css.fixed_item}><Icon type="to-top" /></p>
+                <p className={css.fixed_item_grey}><Icon type="to-top" /></p>
+                <p className={css.fixed_item_grey}><Icon type="to-top" /></p>
+                <p className={css.fixed_item_grey}><FaCog /></p>
+                <p className={css.fixed_item_grey}>
+                    <i class="iconfont icon-set"></i>
+                </p>
             </div>
 
         </div>

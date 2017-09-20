@@ -113,10 +113,9 @@
 }
 .icon{
   text-align: center;
-  i{
-    font-size: 25px;
-    color: $theme-color;
-  }
+  font-size: 30px;
+  color: $theme-color;
+  padding: 10px 0;
 }
 .title{
   text-align: center;
@@ -177,14 +176,18 @@
     top: 45%;
     width: 50px;
     position: fixed;
-    .fiexed_item{
+    .fixed_item{
       margin-bottom: 5px;
       background: $theme-color;
-      height: 50px;
       text-align: center;
       color: white;
-      font-size: 20px;
-      padding: 8px 0;
+      font-size: 25px;
+      line-height: 50px;
+    }
+    .fixed_item_grey{
+      @extend .fixed_item;
+      background: $color-grey;
+      color: $theme-color;
     }
 }
 .brand_button{
