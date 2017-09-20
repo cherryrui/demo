@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack --watch",
-    "build": "./node_modules/.bin/webpack"
+    "build": "set NODE_ENV=production&&webpack"
   },
   "theme": "./theme.js",
   "author": "i@caisong.com",
@@ -52,7 +52,8 @@
     "redux-logger": "2.7.0",
     "redux-promise-middleware": "4.1.0",
     "redux-thunk": "2.1.0",
-    "typescript": "^2.1.4"
+    "typescript": "^2.1.4",
+    "victory": "^0.22.2"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.1.1",

@@ -73,7 +73,7 @@ class Main extends React.Component {
                 <div className={css.img_right}><img src='../img/post.png'/> </div>
                 <div className={css.text_left}>
                     <div className={css.info_left}>
-                        <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}><span>fgfd</span><FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
+                        <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}><span></span><FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
                         <p className={css.descrip}><FormattedMessage id="main.post.descrip" defaultMessage="提交采购需求说明"/></p>
                     </div>
                     <div className={css.right}>

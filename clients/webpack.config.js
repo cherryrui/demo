@@ -19,7 +19,6 @@ if (pkg.theme && typeof(pkg.theme) === 'string') {
 } else if (pkg.theme && typeof(pkg.theme) === 'object') {
     theme = pkg.theme;
 }
-console.log(theme);
 
 module.exports = {
     context: __dirname + "/",
@@ -109,13 +108,13 @@ module.exports = {
             mangle: false,
             compress: {
                 // 压缩警告
-                //warnings: false,
+                warnings: false,
                 // 删除废代码
-                //dead_code: true
+                dead_code: true,
                 // 删除console
-                //drop_console: true
+                drop_console: true,
                 // 删除调试信息
-                // drop_debugger: true
+                drop_debugger: true,
             },
             beautify: false,
             comments: false,
