@@ -7,6 +7,7 @@ var ReqTool = require('../tools/reqTool.js');
 import {
 	SendEmail
 } from '../tools/sendemail.js';
+var querystring = require('querystring');
 
 router.get('/get-user.json', async(ctx, next) => {
 		let id = ctx.query.id;
@@ -22,17 +23,14 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.post('/login.json', async(ctx, next) => {
 		let data = ctx.request.body;
-		let status = true,
-			result;
-		let ul = url + "/login?loginName=" + data.userName + "&password=" + data.password;
-		await axios.get(ul).then(res => {
-			console.log(res.data);
-			result = res.data;
-			if (res.data.isSucc) {
-				ctx.cookie.set('uid', res.data.result.uid);
-			}
+		let param = {
+			loginName: data.userName,
+			password: data.password
+		}
+		await axios.post(url + "/login", querystring.stringify(param)).then(res => {
 			ctx.body = res.data
 		})
+		ctx.body = true;
 	})
 	.get('/get-address-list.json', async(ctx, next) => {
 		let uid = ctx.query.uid;
