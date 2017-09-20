@@ -7,101 +7,84 @@ import css from './Message.scss';
 import axios from 'axios';
 import {Icon,Pagination} from 'antd';
 
+import {
+    Link
+    } from 'react-router';
+import {
+    FormattedMessage,
+    injectIntl,
+    intlShape
+    } from 'react-intl';
+
 function onShowSizeChange(current, pageSize) {
     console.log(current, pageSize);
 }
-
 class Message extends React.Component{
+    static propTypes = {
+        intl: intlShape.isRequired
+    };
+    jump=(e)=>{
+        window.location.href = "/#/main/mine/system-message"
+    }
+    constructor(props){
+        super(props);
+        this.state={
+            message:{
+                quotation:"aaaaaaaaaaaaaaaa啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊DVD 啊啊啊啊啊啊啊啊啊啊啊啊啊啊DVD               " ,
+                answer:"ffffffffffffffffffff",
+                time:"2017-06-04",
+                mini:"16:00"
+            }
+        };
+
+    }
     render(){
+        let {
+            intl: {
+                formatMessage
+                }
+            } = this.props;
         return<div className={css.my_consulting} >
                     <div className={css.title}>
-                        <p className={css.title_left}>My consulting</p>
-                        <p className={css.title_right}>System Message</p>
+                        <p className={css.title_left}>
+                            <FormattedMessage
+                                id="mine.message.consult" defaultMessage=""/>
+                        </p>
+                        <a  onClick={this.jump} className={css.title_right}>
+                            <FormattedMessage
+                                id="mine.message.system" defaultMessage=""/>
+                        </a>
 
                     </div>
                     <div className={css.consulting_content}>
-                        <div className={css.consulting_list}>
-                            <div className={css.item_question}>
-                                <p className={css.icon}> <Icon className={css.question} type="question-circle" /></p>
-                                <p className={css.text}>Founded in 1969, Dongfeng Motor Corporation (hereafter referred to as DFM), formerly named Second Automobile Works</p>
-                                <p className={css.spacing}></p>
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                            <div className={css.item_answer}>
-                                <p className={css.icon}> <Icon className={css.answer}type="smile" /></p>
-                                <p className={css.text}>Yes it can be use </p>
-                                <p className={css.spacing}></p>
 
-                               <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
+                        <div className={css.one}>
+                            <div className={css.item}>
+                                <p className={css.icon}>
+                                    <Icon type="question-circle" />
+                                </p>
+                                <p className={css.content}>{this.state.message.quotation}</p>
+                                <p className={css.time}>{this.state.message.time}</p>
+                            </div>
+                            <div className={css.item}>
+                                <p className={css.icon_a}>A</p>
+                                <p className={css.content}> {this.state.message.answer}</p>
+                                <p className={css.time}>{this.state.message.time}</p>
                             </div>
                         </div>
-                        <div className={css.consulting_list}>
-                        <div className={css.item_question}>
-                            <p className={css.icon}> <Icon className={css.question} type="question-circle" /></p>
-                            <p className={css.text}>Founded in 1969, Dongfeng Motor Corporation (hereafter referred to as DFM), formerly named Second Automobile Works</p>
-                            <p className={css.spacing}></p>
-                            <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                        </div>
-                        <div className={css.item_answer}>
-                            <p className={css.icon}> <Icon className={css.answer}type="smile" /></p>
-                            <p className={css.text}>Yes it can be use </p>
-                            <p className={css.spacing}></p>
 
-                            <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                        </div>
+
+
                     </div>
-                        <div className={css.consulting_list}>
-                            <div className={css.item_question}>
-                                <p className={css.icon}> <Icon className={css.question} type="question-circle" /></p>
-                                <p className={css.text}>Founded in 1969, Dongfeng Motor Corporation (hereafter referred to as DFM), formerly named Second Automobile Works</p>
-                                <p className={css.spacing}></p>
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                            <div className={css.item_answer}>
-                                <p className={css.icon}> <Icon className={css.answer}type="smile" /></p>
-                                <p className={css.text}>Yes it can be use </p>
-                                <p className={css.spacing}></p>
-
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                        </div>
-                        <div className={css.consulting_list}>
-                            <div className={css.item_question}>
-                                <p className={css.icon}> <Icon className={css.question} type="question-circle" /></p>
-                                <p className={css.text}>Founded in 1969, Dongfeng Motor Corporation (hereafter referred to as DFM), formerly named Second Automobile Works</p>
-                                <p className={css.spacing}></p>
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                            <div className={css.item_answer}>
-                                <p className={css.icon}> <Icon className={css.answer}type="smile" /></p>
-                                <p className={css.text}>Yes it can be use </p>
-                                <p className={css.spacing}></p>
-
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                        </div>
-                        <div className={css.consulting_list}>
-                            <div className={css.item_question}>
-                                <p className={css.icon}> <Icon className={css.question} type="question-circle" /></p>
-                                <p className={css.text}>Founded in 1969, Dongfeng Motor Corporation (hereafter referred to as DFM), formerly named Second Automobile Works</p>
-                                <p className={css.spacing}></p>
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                            <div className={css.item_answer}>
-                                <p className={css.icon}> <Icon className={css.answer}type="smile" /></p>
-                                <p className={css.text}>Yes it can be use </p>
-                                <p className={css.spacing}></p>
-
-                                <p className={css.date}> <span className={css.year}>2017-07-08</span><span>18:00</span></p>
-                            </div>
-                        </div>
-                    </div>
-        <div className={css.message_Pagination}>
-             <div className={css.empty_message}><p>Empty message</p></div>
-            <div className={css.Pagination}> <Pagination showSizeChanger onShowSizeChange={onShowSizeChange} defaultCurrent={3} total={500} /></div>
-
-
-        </div>
+            <div className={css.message_Pagination}>
+                <div className={css.empty_message}>
+                    <p>{formatMessage({id: '清空留言'})}</p>
+                </div>
+                <div className={css.Pagination}>
+                    <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}
+                        defaultCurrent={3} total={500} />
+                </div>
+            </div>
 
 
         </div>
@@ -113,4 +96,4 @@ class Message extends React.Component{
 
 
 }
-export default Message;
+export default injectIntl(Message);

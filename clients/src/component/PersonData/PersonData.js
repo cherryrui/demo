@@ -112,7 +112,8 @@ class PersonData extends React.Component{
             intl: {
                 formatMessage
                 }
-            } = this.props; return<div>
+            } = this.props;
+        return<div>
             <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person.data" defaultMessage="分类"/>
             </div>

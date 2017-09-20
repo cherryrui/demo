@@ -11,8 +11,8 @@
     padding-bottom: 10px;
 
     .title_left{
-       font-size: 24px;
-       font-weight: 700;
+      font-size: 20px;
+      font-weight: bold;
        color:$color-deep-grey ;
 
      }
@@ -129,6 +129,48 @@
 
        }
       }
+    .one{
+      padding: 10px;
+      border-bottom: 1px solid $border-color;
+      .item{
+        display: flex;
+        align-content: flex-start;
+        padding: 10px;
+        .icon{
+          color: $color-orange;
+          font-size: 30px;
+          margin-top: -3px;
+
+        }
+        .icon_a{
+          background: $color-green;
+          color: white;
+          border-radius: 50%;
+          width: 30px;
+          text-align: center;
+          height: 30px;
+          line-height: 30px;
+          font-size: 24px;
+        }
+        .time{
+          flex-shrink: 0;
+
+          width: 25%;
+          text-align: right;
+        }
+        .content{
+          margin: 0 15px;
+          width: 70%;
+          padding-right: 10px;
+          word-break: normal;
+          font-size: 16px;
+          font-weight: 400;
+          color: #636363;
+          align-items: center;
+        }
+
+      }
+    }
     }
   .message_Pagination{
     display: flex;
