@@ -47,20 +47,22 @@ class PersonAddress extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            My_Address :[{
+            my_address :[{
                 id: 1,
                 name: "张三",
                 tel: 12344566778,
+                city:"北京",
                 address: "xxxxxxxxxxxxxxxx",
 
             } ,{
                 id: 2,
                 name: "张三",
                 tel: 12344566778,
+                city:"北京",
                 address: "xxxxxxxxxxxx",
 
             } ,],
-            title:"app.login",
+            title:"cart.address.title",
             address:{}
         };
         this.colums_show=[
@@ -83,7 +85,8 @@ class PersonAddress extends React.Component{
                 className: css.table_col,
                 width: "50%",
                 className: css.table_col,
-                render: (record) => <span className={css.table_address}>{record.address}
+                render: (record) => <span className={css.table_address}>{record.city}&nbsp;&nbsp;
+                {record.address}
                     <Button className={css.delivery}type="primary">
                         <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址 "/>
                     </Button>
@@ -95,7 +98,11 @@ class PersonAddress extends React.Component{
                 width: "12%",
                 className: css.table_col,
                 render: (record) => <span className={css.table_operation}>
-                  <a>  <Icon onClick={this.handleEditAddress} onmouseover="show('item')" className={css.modify} type="edit" /></a>
+                  <a><Icon
+                      onClick={this.handleEditAddress.bind(this)}
+                      onmouseover="show('item')"
+                      className={css.modify} type="edit" />
+                  </a>
                     <Icon type="delete" className={css.delete} />
                 </span>
             },
@@ -186,10 +193,10 @@ class PersonAddress extends React.Component{
                 rowKey="id"
                 bordered
                 columns={this.colums_show}
-                dataSource={this.state.My_Address} />
+                dataSource={this.state.my_address} />
             </div>
             <div className={css.delivery_new}>
-                <Button className={css.buttony_new}type="primary" onClick={this.handleEditAddress.bind(this)}>
+                <Button className={css.buttony_new}type="primary" onClick={this.handleEditAddress}>
                     <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址 "/>
                 </Button>
 

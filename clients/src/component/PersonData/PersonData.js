@@ -248,7 +248,7 @@ class PersonData extends React.Component{
                 <p className={css.button_person}>
                     <span className={css.title}></span>
                     <Button type="primary" className={css.button_modifye} onClick={this.handleClick}>
-                        <FormattedMessage id=  {this.state.button_name}defaultMessage=""/>
+                        <FormattedMessage id={this.state.button_name}defaultMessage=""/>
                     </Button>
                 </p>
             </div>
