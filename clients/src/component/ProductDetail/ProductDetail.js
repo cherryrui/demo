@@ -140,6 +140,35 @@ class ProductDetail extends React.Component {
             })
         }
     }
+    handleBuy = () => {
+        //console.log(109, "handleAddCart", localStorage.uid)
+        if (localStorage.uid) {
+            let flag = true;
+            this.state.product.attr.map(item => {
+                if (!item.select_value) {
+                    flag = false;
+                    return;
+                }
+            })
+            if (flag) {
+                console.log("加入购物车")
+                this.specify.style.border = "none";
+                this.specify.style.padding = "0";
+                this.props.addCart(this.state.product).then(res => {
+                    window.location.href = "/#/main/cart"
+                });
+            } else {
+                console.log("dada", this.specify.style)
+                this.specify.style.border = "2px solid #2f5ea2";
+                this.specify.style.padding = "10px";
+
+            }
+        } else {
+            this.setState({
+                visible: true
+            })
+        }
+    }
     handleSubmit = (e) => {
         let {
             intl: {
@@ -275,6 +304,11 @@ class ProductDetail extends React.Component {
                         </p>
                         <p>
                             <InputNumber size="large" min={1} defaultValue={3} onChange={this.handleNum} />
+                        </p>
+                        <p className={css.buy} onClick={this.handleBuy}>
+                            <Icon type="shopping-cart" />
+                        &nbsp;&nbsp;
+                            <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
                         </p>
                         <p className={css.add_cart} onClick={this.handleAddCart}>
                             <Icon type="shopping-cart" />
@@ -482,64 +516,99 @@ class Price extends React.Component {
 ProductDetail = Form.create()(ProductDetail);
 
 class Specification extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            specification: {
+                art: 1343545432245435,
+                brand: "中建",
+                model: "23-332",
+                moq: 23,
+                material: "金属"
+            }
+        };
+    }
 
     render() {
-        return <div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
+        return <div className={css.productdetail_teble}>
+            <div className={css.title}>
+                <FormattedMessage id="mine.product.param" defaultMessage=""/>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.no}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="orderdetails.art.no" defaultMessage=""/>
+                </p>
+                <p>{this.state.specification.art}</p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.no}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="orderdetails.brand" defaultMessage=""/>
+                </p>
+                <p>{this.state.specification.brand}</p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.no}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="product.detail.model" defaultMessage=""/>
+                </p>
+                <p>{this.state.specification.model}</p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.no}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="product.detail.MOQ" defaultMessage=""/>
+                </p>
+                <p>{this.state.specification.moq}</p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.no}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="product.detail.material" defaultMessage=""/>
+                </p>
+                <p>{this.state.specification.material}</p>
             </div>
         </div>
     }
 }
 
 class PackageDetail extends React.Component {
-
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            Package: {
+                length: 34,
+                weight: 15,
+                height: 23,
+                width: 33
+            }
+        };
+    }
     render() {
-        return <div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
+        return <div className={css.productdetail_teble}>
+            <div className={css.title}>
+                <FormattedMessage id="mine.product.packaging" defaultMessage=""/>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.name}</p>
+
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_weight" defaultMessage=""/>
+                </p>
+                <p>{this.state.Package.weight}kg/pice </p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.name}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_length" defaultMessage=""/>
+                </p>
+                <p>{this.state.Package.length} mm</p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.name}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_width" defaultMessage=""/>
+                </p>
+                <p> {this.state.Package.width}mm</p>
             </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.name}</p>
-            </div>
-            <div>
-                <FormattedMessage id="" defaultMessage=""/>
-                <p>{this.props.product.name}</p>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_height" defaultMessage=""/>
+                </p>
+                <p> {this.state.Package.height}mm</p>
             </div>
         </div>
     }
