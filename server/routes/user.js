@@ -22,15 +22,20 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 	})
 	.post('/login.json', async(ctx, next) => {
+    let result = null;
 		let data = ctx.request.body;
 		let param = {
 			loginName: data.userName,
 			password: data.password
-		}
+		};
 		await axios.post(url + "/login", querystring.stringify(param)).then(res => {
-			ctx.body = res.data
+			result = res.data;
+            console.log(result);
+            if(result.isSucc == true){
+                ctx.cookie.set('uid',result.uid);
+            }
 		})
-		ctx.body = true;
+		ctx.body = result;
 	})
 	.get('/get-address-list.json', async(ctx, next) => {
 		let uid = ctx.query.uid;
@@ -107,19 +112,17 @@ router.get('/get-user.json', async(ctx, next) => {
 		let result = null;
 		const data = ctx.request.body;
 		console.log('1111: ', JSON.stringify(data));
-		const name = data.name;
-		console.log(name);
-		if (name) {
-			result = {
-				rc: 200,
-				Data: name
-			};
-		} else {
-			result = {
-				rc: 202,
-				Data: 'register failed!'
-			}
-		}
+		const param = {
+            userName:data.name,
+            password:data.password,
+            email:data.email,
+            tel:data.tel,
+            userType:data.tp
+        };
+        await axios.post(url+'/register',querystring.stringify(param)).then(res=>{
+            console.log(res.data);
+            result = res.data;
+        })
 		ctx.body = result;
 	})
 	.post('/authentication.json', async(ctx) => {

@@ -61,14 +61,19 @@ class Register extends React.Component {
                 console.log('RePassword success: ', values);
                 axios.post('/user/register.json', values).then(res => {
                     console.log('2222', JSON.stringify(res));
-                    if (res.data.rc == 200) {
-                        console.log('I get the result')
-                        window.location.href = "/#/register-complete"
-                    } else {
-                        console.log("RePassword fail:", res.data.result);
-
+                    if(res.data.isSucc){
+                        message.success(formatMessage({
+                            id: 'regcomplt.regcomplt.Registeredsuccessfully'
+                        }));
+                        window.location.href = "/#/register-complete";
+                    }else{
+                        message.error(formatMessage({
+                            id: 'register.failed'
+                        }, {
+                            reason: res.data.message
+                        }))
                     }
-                })
+                });
             }
         })
     };

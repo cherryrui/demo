@@ -43,31 +43,34 @@ class Login extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
-                    if (res.data.status) {
-                        if (values.remember) {
-                            localStorage.setItem('uid', res.data.result.id);
+                    console.log('xxxx:',res);
+                    console.log(res.status);
+                    if (res.data.isSucc) {
+                        if (res.data.remember) {
+                            localStorage.setItem('uid', res.data.result.uid);
+                            console.log('uid', res.data.result.uid);
                         } else {
                             localStorage.setItem('uid', null);
                         }
-                        sessionStorage.setItem('user', JSON.stringify(res.data.result))
+                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
                         message.success(formatMessage({
                             id: 'login.login.success'
-                        }))
+                        }));
                         window.location.href = "/#/"
                     } else {
                         message.error(formatMessage({
                             id: 'login.login.fail'
                         }, {
-                            reason: res.data.result
+                            reason: res.data.message
                         }))
                     }
                 })
             }
         });
-    }
+    };
     handleClick = () => {
         window.location.href = "/#/register"
-    }
+    };
 
     render() {
         const {

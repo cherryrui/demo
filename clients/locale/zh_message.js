@@ -336,6 +336,7 @@ const zh_CN = {
     "enpau.enpau.relname": "真实名称",
     "enpau.enpau.departmnet": "部门",
     "enpau.enpau.save": "保存",
+    "register.failed":"注册失败：{reason}",
     "register.register.title": "注册用户",
     "register.register.Enterpriseuser": "企业用户",
     "register.register.Personaluser": "个人用户",
