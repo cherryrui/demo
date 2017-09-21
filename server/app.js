@@ -8,7 +8,7 @@ const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const index = require('./routes/index');
-const index_en = require('./routes/index-en');
+const en = require('./routes/en');
 const {
 	cookieOptions
 } = require('./config/index');
@@ -40,25 +40,26 @@ app.use(views(__dirname + '/views', {
 		hjs: 'hogan'
 	}
 }))
-console.log(cookieOptions);
+
 // logger
 app.use(async(ctx, next) => {
-		ctx.cookie = {
-			set: (k, v, opt) => {
-				opt = Object.assign({}, cookieOptions, opt);
-				return ctx.cookies.set(k, v, opt);
-			},
-			get: (k, opt) => {
-				opt = Object.assign({}, cookieOptions, opt);
-				return ctx.cookies.get(k, opt);
-			}
-		};
-		const start = new Date()
-		await next()
-		const ms = new Date() - start
-		console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-	})
-	// routes
+	ctx.cookie = {
+		set: (k, v, opt) => {
+			opt = Object.assign({}, cookieOptions, opt);
+			return ctx.cookies.set(k, v, opt);
+		},
+		get: (k, opt) => {
+			opt = Object.assign({}, cookieOptions, opt);
+			return ctx.cookies.get(k, opt);
+		}
+	};
+	const start = new Date()
+	await next()
+	const ms = new Date() - start
+	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+})
+
+// routes
 router.use('/api', api.routes(), api.allowedMethods());
 router.use('/product', product.routes(), product.allowedMethods());
 router.use('/user', user.routes(), user.allowedMethods());
@@ -67,6 +68,7 @@ router.use('/brand', brand.routes(), brand.allowedMethods());
 router.use('/cart', cart.routes(), cart.allowedMethods());
 router.use('/quotation', quotation.routes(), quotation.allowedMethods());
 router.use('/img', img.routes(), img.allowedMethods());
+router.use('/en', en.routes(), en.allowedMethods());
 router.use('/', index.routes(), index.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 

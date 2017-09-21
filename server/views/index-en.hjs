@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
     <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript">
+      var locale="en"
+    </script>
   </head>
   <body>
     <script src="/js/common.js"></script>

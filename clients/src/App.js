@@ -55,7 +55,9 @@ import {
 import {
     FormattedMessage,
     addLocaleData,
-    IntlProvider
+    IntlProvider,
+    injectIntl,
+    intlShape
 } from 'react-intl';
 import intl from 'intl';
 import store from './store';
@@ -75,15 +77,20 @@ import {
 } from 'antd';
 const Search = Input.Search;
 const Option = Select.Option;
-
+var appLocale = {
+    antd_locale: locale == "zh" ? null : enUS,
+    locale: locale,
+    message: locale == "zh" ? zh_message : en_message
+}
+console.log(locale);
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             user: sessionStorage.user ? JSON.parse(sessionStorage.user) : null,
-            antd_loacl: null,
+            /*antd_loacl: null,
             locale: 'zh',
-            message: zh_message,
+            message: zh_message,*/
         };
         this.order_status = [{
             key: 0,
@@ -141,35 +148,23 @@ class App extends React.Component {
         }
     }
 
-    handleChange = (key) => {
-        switch (key) {
-            case 'en':
-                this.setState({
-                    antd_loacl: enUS,
-                    locale: "en",
-                    message: en_message
-                })
-                break;
-            case 'zh':
-                this.setState({
-                    antd_loacl: null,
-                    locale: "zh",
-                    message: zh_message
-                })
-                break;
-            default:
-                this.setState({
-                    antd_loacl: null,
-                    locale: "zh",
-                    message: zh_message
-                })
-                break;
+
+    handleChange = () => {
+        if (appLocale.locale == 'zh') {
+            window.location.href = "/en#" + this.props.location.pathname
+        } else {
+            window.location.href = "/#" + this.props.location.pathname
         }
     }
 
     render() {
+        let {
+            intl: {
+                formatMessage
+            }
+        } = this.props;
 
-        //console.log(this.state.message);
+        console.log(appLocale);
         let order_menu = (<Menu>
         {this.order_status.map(item=>{
             return <Menu.Item>
@@ -182,9 +177,7 @@ class App extends React.Component {
             </Menu.Item>
         })}
         </Menu>)
-        return <LocaleProvider locale={this.state.antd}>
-            <IntlProvider locale={this.state.locale} messages={this.state.message}>
-            <div className={css.main} >
+        return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
                             {this.state.user?<Link to="main/mine" className={css.item}>{this.state.user.name}</Link>:
@@ -197,10 +190,14 @@ class App extends React.Component {
                             {this.state.user?<p className={css.item}>
                                 <FormattedMessage id="app.message" defaultMessage="消息"/>
                             </p>:""}
-                            <Select defaultValue="中文" className={css.language} onChange={this.handleChange}>
-                                <Option value="zn"><FormattedMessage id="app.language.zh" defaultMessage="中文"/></Option>
-                                <Option value="en"><FormattedMessage id="app.language.en" defaultMessage="英语"/></Option>
-                            </Select>
+                            <Dropdown overlay={<Menu onClick={this.handleChange}><Menu.Item>
+                                        <FormattedMessage id="app.language.en" defaultMessage="en"/>
+                                    </Menu.Item>
+                                </Menu>}>
+                                <p className={css.item}>
+                                    <FormattedMessage id="app.language.zh" defaultMessage="zh"/>
+                                <Icon type="down" /></p>
+                            </Dropdown>
                         </div>
                     </div>
                     {
@@ -253,54 +250,57 @@ class App extends React.Component {
                             <FormattedMessage id="app.rights" defaultMessage="Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000"/>
                         </div>
                     </div>
-                </div></IntlProvider>
-    </LocaleProvider>;
+                </div>;
     }
 }
-
+App = injectIntl(App);
 let div = document.createElement('div');
 div.className = css.index;
 ReactDOM.render(
-    (<Provider store={store}>
-            <Router history={hashHistory}>
-                <Route path="/" component={App}>
-                    <IndexRedirect to="/main" />
-                    <Route path="main" component={Home}>
-                        <IndexRoute component={Main}/>
-                        <Route path="category-list/:id" component={CategoryList}/>
-                        <Route path="brand-list" component={BrandList}/>
-                        <Route path="product-list/:info" component={ProductList}/>
-                        <Route path="product-detail/:id" component={ProductDetail}/>
-                        <Route path="brand-detail/:id" component={BrandDetail}/>
-                        <Route path="post-want" component={PostWant}/>
-                        <Route path="cart" component={Cart}/>
-                        <Route path="quotation(/:id)" component={Quotation}/>
-                        <Route path="about" component={About}>
+    (<LocaleProvider locale={appLocale.antd}>
+        <IntlProvider locale={appLocale.locale} messages={appLocale.message}>
+            <Provider store={store}>
+                <Router history={hashHistory}>
+                    <Route path="/" component={App}>
+                        <IndexRedirect to="/main" />
+                        <Route path="main" component={Home}>
+                            <IndexRoute component={Main}/>
+                            <Route path="category-list/:id" component={CategoryList}/>
+                            <Route path="brand-list" component={BrandList}/>
+                            <Route path="product-list/:info" component={ProductList}/>
+                            <Route path="product-detail/:id" component={ProductDetail}/>
+                            <Route path="brand-detail/:id" component={BrandDetail}/>
+                            <Route path="post-want" component={PostWant}/>
+                            <Route path="cart" component={Cart}/>
+                            <Route path="quotation(/:id)" component={Quotation}/>
+                            <Route path="about" component={About}>
 
+                            </Route>
+                            <Route path="mine" component={Mine}>
+                                <IndexRoute component={PersonCenter}/>
+                                <Route path="message" component={Message}/>
+                                <Route path="system-message" component={SystemMessage}/>
+                                <Route path="order-list" component={OrderList}/>
+                                <Route path="order-details" component={OrderDetails}/>
+                                <Route path="favorite/:type" component={Favorite}/>
+                                <Route path="quotation-list" component={QuotationList}/>
+                                <Route path="product-editor" component={ProductEditor}/>
+                                <Route path="agent-product" component={AgentProduct}/>
+                                <Route path="person-address" component={PersonAddress}/>
+                                <Route path="person-data" component={PersonData}/>
+                                <Route path="agent" component={Agent}/>
+                                <Route path="successful-application/:type" component={SuccessfulApplication}/>
+                                <Route path="supplier" component={Supplier}/>
+                                <Route path="certification" component={Certification}/>
+                            </Route>
                         </Route>
-                        <Route path="mine" component={Mine}>
-                            <IndexRoute component={PersonCenter}/>
-                            <Route path="message" component={Message}/>
-                            <Route path="system-message" component={SystemMessage}/>
-                            <Route path="order-list" component={OrderList}/>
-                            <Route path="order-details" component={OrderDetails}/>
-                            <Route path="favorite/:type" component={Favorite}/>
-                            <Route path="quotation-list" component={QuotationList}/>
-                            <Route path="product-editor" component={ProductEditor}/>
-                            <Route path="agent-product" component={AgentProduct}/>
-                            <Route path="person-address" component={PersonAddress}/>
-                            <Route path="person-data" component={PersonData}/>
-                            <Route path="agent" component={Agent}/>
-                            <Route path="successful-application/:type" component={SuccessfulApplication}/>
-                            <Route path="supplier" component={Supplier}/>
-                            <Route path="certification" component={Certification}/>
-                        </Route>
+                        <Route path="login" component={Login}/>
+                        <Route path="register" component={Register}/>
+                        <Route path="reset-password" component={RePassword}/>
+                        <Route path="register-complete" component={RegisterComplete}/>
                     </Route>
-                    <Route path="login" component={Login}/>
-                    <Route path="register" component={Register}/>
-                    <Route path="reset-password" component={RePassword}/>
-                    <Route path="register-complete" component={RegisterComplete}/>
-                </Route>
-            </Router>
-            </Provider>), document.body.appendChild(div)
+                </Router>
+            </Provider>
+        </IntlProvider>
+    </LocaleProvider>), document.body.appendChild(div)
 );

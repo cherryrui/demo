@@ -106,32 +106,6 @@ class Main extends React.Component {
         })
         return index;
     }
-
-    handleChange = (key) => {
-        switch (key) {
-            case 'en':
-                this.setState({
-                    antd_loacl: enUS,
-                    locale: "en",
-                    message: en_message
-                })
-                break;
-            case 'zh':
-                this.setState({
-                    antd_loacl: null,
-                    locale: "zh",
-                    message: zh_message
-                })
-                break;
-            default:
-                this.setState({
-                    antd_loacl: null,
-                    locale: "zh",
-                    message: zh_message
-                })
-                break;
-        }
-    }
     handleTabs = (key, url) => {
         if (key != this.state.index) {
             this.setState({

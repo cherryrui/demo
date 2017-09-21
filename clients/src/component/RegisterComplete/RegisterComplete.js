@@ -22,19 +22,11 @@ import {
 class RegisterComplete extends React.Component {
 
     handleClick = (type) => {
-        if (type == 1) {
-            window.location.href = "/#/login"
-        } else {
-            window.location.href = "/#/login"
-        }
-
+        window.location.href = "/#/login"
     };
 
 
     render() {
-        console.log('I am RegisterComplete!');
-
-
         return (
             <div className={css.body}>
                 <div className={css.title}>
@@ -51,11 +43,8 @@ class RegisterComplete extends React.Component {
                         <FormattedMessage id="regiater.success.info" defaultMessage="提示"/>
                     </div>
                     <div className={css.footer}>
-                        <Button type="primary" className={appcss.button_green} onClick={this.handleClick.bind(this,1)}>
-                            <FormattedMessage id="regiater.go_shopping" defaultMessage="去购物"/>
-                        </Button>
-                        <Button type="primary" onClick={this.handleClick.bind(this,2)}>
-                            <FormattedMessage id="regcomplt.regcomplt.GoCertification" defaultMessage="去认证"/>
+                        <Button type="primary" onClick={this.handleClick}>
+                            <FormattedMessage id="register.go.login" defaultMessage="去登录"/>
                         </Button>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
   width: 100%;
   z-index: 80;
   background: white;
-  min-width: 1150px;
+  min-width: 1500px;
   .left {
     display: flex;
     flex-grow: 1;
@@ -59,13 +59,13 @@
         font-size: 26px;
     }
     .drop_item{
-      background: rgba(47,95,163,0.5);
+      background: rgba(47,95,163,0.7);
       color: white;
       padding: 10px 20px;
       cursor: pointer;
     }
     .drop_item:hover{
-      background: rgba(47,95,163,0.8);
+      background: #122337;
     }
 
 }

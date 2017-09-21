@@ -6,10 +6,6 @@ import React from 'react';
 import css from './Main.scss';
 import appcss from '../../App.scss';
 import {
-    FaCubes,
-    FaCog
-} from 'react-icons/lib/fa';
-import {
     Router,
     Route,
     IndexRoute,
@@ -123,7 +119,6 @@ class Main extends React.Component {
                 </Link>
             </div>
             <div className={css.icon}>
-                <FaCubes/>
             </div>
             <div className={css.title}>
                 <FormattedMessage id="app.product_category" defaultMessage="产品分类"/>
@@ -138,7 +133,6 @@ class Main extends React.Component {
                 <p className={css.fixed_item}><Icon type="to-top" /></p>
                 <p className={css.fixed_item_grey}><Icon type="to-top" /></p>
                 <p className={css.fixed_item_grey}><Icon type="to-top" /></p>
-                <p className={css.fixed_item_grey}><FaCog /></p>
                 <p className={css.fixed_item_grey}>
                     <i class="iconfont icon-set"></i>
                 </p>
