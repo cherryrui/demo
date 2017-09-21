@@ -46,7 +46,7 @@ class Login extends React.Component {
                     console.log('xxxx:',res);
                     console.log(res.status);
                     if (res.data.isSucc) {
-                        if (res.data.remember) {
+                        if (values.remember) {
                             localStorage.setItem('uid', res.data.result.uid);
                             console.log('uid', res.data.result.uid);
                         } else {
