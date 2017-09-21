@@ -49,6 +49,7 @@ const zh_CN = {
     "login.registor": "注册",
     "login.login.success": "登录成功",
     "login.login.fail": "登录失败，{reason}",
+    "request.fail": "请求失败,{reason},请刷新页面再次尝试",
     "login.input.name": "请输入登录账号",
     "login.input.password": "请输入登录密码",
     "main.welcome": "欢迎来到川川",

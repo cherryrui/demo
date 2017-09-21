@@ -1,118 +1,15 @@
 var router = require('koa-router')();
 const axios = require('axios');
-
-router.get('/get-conditions.json', async(ctx, next) => {
-		let cid = ctx.query.cid;
-		let brand = [],
-			category = [];
-		let data = [{
-			id: 1,
-			img: "../img/br_bg_1.jpg",
-			name: "Tools",
-			category_id: 1,
-			rating: 4.5
-		}, {
-			id: 2,
-			img: "../img/br_bg_1.jpg",
-			name: "Building Materials",
-			category_id: 1,
-			rating: 4.5
-		}, {
-			id: 3,
-			img: "../img/br_bg_1.jpg",
-			name: "Machinery",
-			category_id: 2,
-			rating: 4.5
-		}, {
-			id: 4,
-			img: "../img/br_bg_1.jpg",
-			name: "Mechanical components",
-			category_id: 3,
-			rating: 4.5
-		}, {
-			id: 5,
-			img: "../img/br_bg_1.jpg",
-			name: "Labor protection",
-			category_id: 2,
-			rating: 4.5
-		}, {
-			id: 6,
-			img: "../img/br_bg_1.jpg",
-			name: "Torque tools",
-			category_id: 5,
-			rating: 4.5
-		}, {
-			id: 7,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 4,
-			rating: 4.5
-		}, {
-			id: 8,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 4,
-			rating: 4.5
-		}, {
-			id: 9,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 6,
-			rating: 4.5
-		}, {
-			id: 10,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 8,
-			rating: 4.5
-		}, {
-			id: 11,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 2,
-			rating: 4.5
-		}, {
-			id: 12,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 5,
-			rating: 4.5
-		}, {
-			id: 13,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 6,
-			rating: 4.5
-		}, {
-			id: 14,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 9,
-			rating: 4.5
-		}, {
-			id: 15,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 11,
-			rating: 4.5
-		}, {
-			id: 16,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 11,
-			rating: 4.5
-		}, {
-			id: 17,
-			img: "../img/br_bg_1.jpg",
-			name: "dsadasdsa",
-			category_id: 11,
-			rating: 4.5
-		}, ];
-		ctx.body = {
-			brand: data,
-			category: data,
-		}
-
+const {
+	url
+} = require('../config/index');
+router.get('/get-category.json', async(ctx, next) => {
+		let cid = ctx.query.cid,
+			result = [];
+		await axios.get(url + '/category/childList?pid=' + cid).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
 	})
 	/**
 	 * 根据搜索条件获取产品数据
@@ -123,84 +20,20 @@ router.get('/get-conditions.json', async(ctx, next) => {
 	 * @return {[type]}                        [description]
 	 */
 	.post('/search-product.json', async(ctx, next) => {
-		let param = ctx.request.body;
-		console.log(param);
-		let products = [{
-			id: 1,
-			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 2,
-			name: "dsds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 4,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 5,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 6,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "dsNSK deep groove ball bearing 6204 zzc3 BH NS7S6ds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 1,
-			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 2,
-			name: "dsds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 4,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 5,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 6,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "dsNSK deep groove ball bearing 6204 zzc3 BH NS7S6ds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, ]
-		ctx.body = {
-			products: products,
-			sum: 100,
-			pageSize: 10,
+		let param = ctx.request.body,
+			result = {};
+		let uri = url + "/product/list?"
+		for (let key in param.condition) {
+			if (param.condition[key]) {
+				uri += key + "=" + param.condition[key] + "&";
+			}
 		}
+		uri += "pageSize=" + param.pageSize + "&pageNo=" + param.page;
+		console.log(uri);
+		await axios.get(uri).then(res => {
+			result = res.data;
+		})
+		ctx.body = result
 
 	})
 	.get('/get-product-byId.json', async(ctx, next) => {

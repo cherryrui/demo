@@ -9,7 +9,9 @@ import {
     Link
 } from 'react-router';
 import {
-    FormattedMessage
+    FormattedMessage,
+    injectIntl,
+    intlShape
 } from 'react-intl';
 import {
     Breadcrumb,
@@ -49,16 +51,16 @@ class ProductList extends React.Component {
         }
         this.orderBy = {};
         this.info = this.props.params.info;
+        this.formatMessage = this.props.intl.formatMessage;
+
     }
     componentWillMount() {
         //根据分类获取产品列表
-        if (Number(this.props.params.info)) {
+        if (Number(this.info)) {
             //根据二级分类id或者供应商列表和三级分类列表
-            axios.get(`/product/get-conditions.json?cid=${this.props.params.info}`).then(res => {
+            axios.get(`/product/get-category.json?cid=${this.props.params.info}`).then(res => {
                 this.setState({
-                    brand: res.data.brand,
-                    category: res.data.category,
-                    select_brand: res.data.brand,
+                    category: res.data.result
                 })
             })
         }
@@ -70,19 +72,27 @@ class ProductList extends React.Component {
     getProduct = () => {
         let params = {
             condition: {
-                info: this.info,
-                cid: this.state.cid,
-                bid: this.state.bid,
+                searchKey: Number(this.info) ? null : this.info,
+                categoryId: this.state.cid,
+                bandId: this.state.bid,
             },
             page: this.state.current,
             pageSize: this.state.pageSize,
             orderBy: this.orderBy,
         }
         axios.post('/product/search-product.json', params).then(res => {
-            this.setState({
-                products: res.data.products,
-                sum: res.data.sum,
-            })
+            if (res.data.isSucc) {
+                this.setState({
+                    products: res.data.result.list,
+                    sum: res.data.result.allRow,
+                })
+            } else {
+                message.error(this.formatMessage({
+                    id: "request.fail"
+                }, {
+                    reason: res.data.message
+                }));
+            }
         })
 
     }
@@ -213,4 +223,5 @@ class ProductList extends React.Component {
         </div>
     }
 }
+ProductList = injectIntl(ProductList);
 export default ProductList;
