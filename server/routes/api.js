@@ -1,11 +1,24 @@
 var router = require('koa-router')();
 const axios = require('axios');
+const {url} = require('../config/index');
+var querystring = require('querystring');
 
 /**
  * 获取所有一级分类，购物最近商品和购物车总商品种量
  */
 router.get('/get-title-data.json', async(ctx, next) => {
-		let categorys = [],
+        let categorys = null
+            ,carts = [];
+        await axios.get(url+'/index/levelOneProductCategory').then(res=>{
+            console.log(res.data);
+            categorys = res.data;
+        });
+        ctx.body = {
+            categorys:categorys,
+            carts:carts,
+            cart_num:11
+        };
+		/*let categorys = [],
 			carts = [];
 		categorys = [{
 			id: 1,
@@ -62,12 +75,24 @@ router.get('/get-title-data.json', async(ctx, next) => {
 			categorys: categorys,
 			carts: carts,
 			cart_num: 10
-		}
+		}*/
 	})
 	.get('/get-main-data.json', async(ctx, next) => {
 		let brand = [],
 			category = [];
-		brand = [{
+        await axios.get(url+'/index/productCategoryList').then(res=>{
+            console.log(res.data);
+            category = res.data;
+        });
+        await axios.get(url+'/index/supplierList').then(res=>{
+            console.log(res.data);
+            brand = res.data;
+        });
+        ctx.body = {
+            category:category,
+            brand:brand
+        };
+		/*brand = [{
 			id: 1,
 			name: "SUPPLIER NAME",
 			img: '../img/branch_1.jpg',
@@ -453,6 +478,6 @@ router.get('/get-title-data.json', async(ctx, next) => {
 			ctx.body = {
 				brand: brand,
 				category: category
-			}
+			}*/
 	})
 module.exports = router;

@@ -73,7 +73,8 @@ import {
     Input,
     Button,
     Popover,
-    message
+    message,
+    Modal
 } from 'antd';
 const Search = Input.Search;
 const Option = Select.Option;
@@ -156,6 +157,27 @@ class App extends React.Component {
             window.location.href = "/#" + this.props.location.pathname
         }
     }
+    state = {visible:false}
+    showModal = () =>{
+        this.setState({
+            visible:true,
+        });
+    }
+    handleOk = (e) =>{
+        console.log(e);
+        this.setState({
+            visible:false
+        });
+        window.location.href = "/#/login";
+        localStorage.clear();
+        sessionStorage.clear();
+    }
+    handleCancel = (e) =>{
+        console.log(e);
+        this.setState({
+            visible:false
+        })
+    }
 
     render() {
         let {
@@ -180,7 +202,18 @@ class App extends React.Component {
         return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
-                            {this.state.user?<Link to="main/mine" className={css.item}>{this.state.user.name}</Link>:
+                            {this.state.user?<div> <Link to="main/mine" className={css.item1}>{this.state.user.userName}</Link>
+                                <p onClick={this.showModal} className={css.item2}><FormattedMessage id="app.pull.out" defaultMessage="退出"/>
+                                <Modal className={css.modalcontent}
+                                    title="退出系统"
+                                    visible={this.state.visible}
+                                    onOk={this.handleOk}
+                                    onCancel={this.handleCancel}>
+                                    <p>
+                                        <FormattedMessage id="app.pull.message" defaultMessage="是否退出系统"/>
+                                    </p>
+                                </Modal>
+                                </p></div>:
                             <Link className={css.item} to="login">
                                 <FormattedMessage id="app.login" defaultMessage="登录/注册"/>
                             </Link>}

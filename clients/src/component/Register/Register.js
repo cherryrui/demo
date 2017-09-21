@@ -162,6 +162,27 @@ class Register extends React.Component {
                 </div>
                 <div className={css.form}>
                     <Form onSubmit={this.handleSubmit}>
+
+                        <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'persondata.user.style'})}
+                        >
+                        {getFieldDecorator('tp',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:'register.style_warn'})
+                            }]
+                        })(
+                            <Radio.Group >
+                                <Radio.Button value={0}>
+                                    <FormattedMessage id="persondata.indivdual.user" defaultMessage="个人用户"/>
+                                </Radio.Button>
+                                <Radio.Button value={1}>
+                                    <FormattedMessage id="persondata.enterprise.user" defaultMessage="企业用户"/>
+                                </Radio.Button>
+                            </Radio.Group>
+                        )}
+                        </FormItem>
+
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.name'})}
                             
@@ -251,25 +272,7 @@ class Register extends React.Component {
                             <Input type='password' />
                         )}
                         </FormItem>
-                        <FormItem {...formItemLayout}
-                            label={formatMessage({id: 'persondata.User.style'})}
-                        >
-                        {getFieldDecorator('tp',{
-                            rules:[{
-                                required:true,
-                                message:formatMessage({id:'register.style_warn'})
-                            }]
-                        })(
-                            <Radio.Group >
-                                <Radio.Button value={0}>
-                                    <FormattedMessage id="persondata.Indivdual.User" defaultMessage="个人用户"/>
-                                </Radio.Button>
-                                <Radio.Button value={1}>
-                                    <FormattedMessage id="persondata.Enterprise.User" defaultMessage="企业用户"/>
-                                </Radio.Button>
-                            </Radio.Group>
-                        )}
-                        </FormItem>
+
                         <FormItem {...tailFormItemLayout}>
                             {getFieldDecorator('remember', {
                                 valuePropName: 'checked',

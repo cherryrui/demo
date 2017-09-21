@@ -85,9 +85,9 @@ class Main extends React.Component {
          * 获取一级分类和最近购物车商品
          */
         axios.get('/api/get-title-data.json').then(res => {
-            //console.log(res.data);
+            console.log(res.data);
             this.setState({
-                categorys: res.data.categorys,
+                categorys: res.data.categorys.result,
                 carts: res.data.carts,
                 cart_num: res.data.cart_num,
                 index: index,
@@ -145,13 +145,7 @@ class Main extends React.Component {
 
     render() {
         //console.log(this.props.cart);
-        let category_menu = (
-            <Menu  onClick={this.handleMenuClick}>
-                {this.state.categorys.map(item => {
-                    return <Menu.Item key={item.id}>{item.name}</Menu.Item>
-                })}
-            </Menu>
-        );
+
         let cart_menu = (
             <Menu>
                 {this.props.cart.carts.map(item => {
@@ -207,7 +201,9 @@ class Main extends React.Component {
             {this.state.showCategory?<div className={css.categorys_drop}>
                 <p className={css.drop_icon}><Icon type="caret-up" /></p>
                 {this.state.categorys.map(item=>{
-                    return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.id)}>{item.name}</p>
+                    return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId)}>
+                    {item.categoryName}
+                    </p>
                 })}
             </div>:""}
             {this.props.children}

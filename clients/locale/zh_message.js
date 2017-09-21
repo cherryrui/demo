@@ -2,6 +2,9 @@
  * Created by WF on 2017/8/16.
  */
 const zh_CN = {
+    "app.pull.message":"是否退出系统?",
+    "app.pull.modal.title":"退出系统",
+    "app.pull.out":"/退出",
     "app.login": "登录/注册",
     "app.message": "消息",
     "app.order": "我的订单",
