@@ -3,7 +3,7 @@ const axios = require('axios');
 const {
 	url
 } = require('../config/index');
-
+var querystring = require('querystring');
 /**
  * 根据二级分类id，获取三级分类列表
  * @param  {[type]} '/get-category.json' [description]
@@ -25,15 +25,8 @@ router.get('/get-category.json', async(ctx, next) => {
 	.post('/get-brand.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result = {};
-		let uri = url + "/product/band?"
-		for (let key in param) {
-			if (param[key]) {
-				uri += key + "=" + param[key] + "&"
-			}
-		}
-		uri = uri.substr(0, uri.length - 1);
-		console.log(35, uri);
-		await axios.get(uri).then(res => {
+		let uri = url + "/product/band"
+		await axios.post(uri, querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
@@ -50,15 +43,8 @@ router.get('/get-category.json', async(ctx, next) => {
 	.post('/search-product.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result = {};
-		let uri = url + "/product/list?"
-		for (let key in param.condition) {
-			if (param.condition[key]) {
-				uri += key + "=" + param.condition[key] + "&";
-			}
-		}
-		uri += "pageSize=" + param.pageSize + "&pageNo=" + param.page;
-		console.log(uri);
-		await axios.get(uri).then(res => {
+		let uri = url + "/product/list";
+		await axios.post(uri, querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result

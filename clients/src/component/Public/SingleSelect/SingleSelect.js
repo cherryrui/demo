@@ -60,8 +60,8 @@ class SingleSelect extends React.Component {
             })
         }
     }
-    handleSelect(item) {
-        this.props.onSelect ? this.props.onSelect(item) : "";
+    handleSelect(key) {
+        this.props.onSelect ? this.props.onSelect(key) : "";
     }
 
     render() {
@@ -74,7 +74,7 @@ class SingleSelect extends React.Component {
             </div>
             <div ref="middle" className={css.middle}>
                 {this.props.all?<div className={css.single} ref="item"
-                        onClick={this.handleSelect.bind(this,{id:0})}>
+                        onClick={this.handleSelect.bind(this,0)}>
                         {this.props.showImg?<img src='../img/product.jpg' className={current==0?css.active_img:css.item_img}/>
                         :<p className={current==0?css.active:css.item}>
                             <FormattedMessage id="app.all" defaultMessage="所有"/>
@@ -83,9 +83,9 @@ class SingleSelect extends React.Component {
                 {this.props.data.map((item,index)=>{
                     let ref= "item_"+index;
                     return (!this.state.showMore||this.state.showIndex>index||this.state.showIndex==0)?<div className={css.single} ref={ref}
-                        onClick={this.handleSelect.bind(this,item)}
+                        onClick={this.handleSelect.bind(this,item[this.props.key_id])}
                     >
-                    {this.props.showImg?<img src={item[key_name]} className={this.state.select_id==item.id?css.active_img:css.item_img}/>
+                    {this.props.showImg?<img src={item[this.props.key_name]} className={current==item[this.props.key_id]?css.active_img:css.item_img}/>
                         :<p className={current==item[this.props.key_id]?css.active:css.item}>
                         {item[this.props.key_name]}</p>}
                     </div>:""

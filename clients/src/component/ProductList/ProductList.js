@@ -39,12 +39,12 @@ class ProductList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            brand: [], //供应商列表
+            brand: [], //品牌列表
             category: [], //三级分类料表
             select_brand: [],
             products: [], //产品列表
-            select_cid: 0, //选择的三级分类id，0：全部
-            select_bid: 0, //选择的供应商id，0：全部
+            cid: 0, //选择的三级分类id，0：全部
+            bid: 0, //选择的供应商id，0：全部
             total: 50,
             current: 1,
             pageSize: 10,
@@ -55,6 +55,9 @@ class ProductList extends React.Component {
 
     }
     componentWillMount() {
+        this.getData();
+    }
+    getData() {
         //根据分类获取产品列表
         if (Number(this.info)) {
             //根据二级分类id或者供应商列表和三级分类列表
@@ -72,11 +75,21 @@ class ProductList extends React.Component {
                 }
             })
         }
-        /*this.getBrand();*/
+        this.getBrand();
         this.getProduct();
     }
     componentDidMount() {
         this.product_list.scrollIntoView();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (nextProps.params.info != this.info) {
+            this.info = nextProps.params.info;
+            this.state.bid = 0;
+            this.state.cid = 0;
+            this.getData();
+        }
     }
 
     /**
@@ -91,7 +104,9 @@ class ProductList extends React.Component {
         }
         axios.post('product/get-brand.json', param).then(res => {
             if (res.data.isSucc) {
-
+                this.setState({
+                    brand: res.data.result
+                })
             } else {
                 message.error(this.formatMessage({
                     id: "request.fail"
@@ -108,17 +123,13 @@ class ProductList extends React.Component {
      * @return {[type]} [description]
      */
     getProduct = () => {
-        let params = {
-            condition: {
-                searchKey: Number(this.info) ? null : this.info,
-                categoryId: this.state.cid,
-                bandId: this.state.bid,
-            },
-            page: this.state.current - 1,
-            pageSize: this.state.pageSize,
-            orderBy: this.orderBy,
-        }
-        axios.post('/product/search-product.json', params).then(res => {
+        let param = this.orderBy;
+        param.searchKey = Number(this.info) ? null : this.info;
+        param.categoryId = this.state.cid > 0 ? this.state.cid : Number(this.info) ? Number(this.info) : 0;
+        param.bandId = this.state.bid;
+        param.pageNo = this.state.current - 1;
+        param.pageSize = this.state.pageSize;
+        axios.post('/product/search-product.json', param).then(res => {
             if (res.data.isSucc) {
                 this.setState({
                     products: res.data.result.list,
@@ -164,17 +175,16 @@ class ProductList extends React.Component {
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
-    onSelect = (name, item) => {
-        if (name == "category") {
+    onSelect = (name, key) => {
+        this.state[name] = key;
+        if (name == "cid") {
             this.setState({
-                cid: item.categoryId
+                cid: key
             })
-            this.state.cid = item.categoryId;
             this.getBrand();
         } else {
-            this.state.bid = item.bandId;
             this.setState({
-                bid: item.bandId
+                bid: item.bid
             })
         }
         this.getProduct();
@@ -192,7 +202,6 @@ class ProductList extends React.Component {
         this.getProduct();
     }
     render() {
-        console.log(this.state.select_brand);
         return <div ref={(product_list)=>this.product_list=product_list} className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
@@ -213,16 +222,16 @@ class ProductList extends React.Component {
                 current={this.state.cid}
                 key_name="categoryName"
                 key_id="categoryId"
-                onSelect={this.onSelect.bind(this,"category")}
+                onSelect={this.onSelect.bind(this,"cid")}
             />:""}
             <SingleSelect
                 all
                 showImg
-                key_name="categoryName"
-                key_id="categoryId"
+                key_name="imgUrl"
+                key_id="bid"
                 current={this.state.bid}
-                data={this.state.select_brand}
-                onSelect={this.onSelect.bind(this,"brand")}
+                data={this.state.brand}
+                onSelect={this.onSelect.bind(this,"bid")}
                 title={<FormattedMessage id="app.brand" defaultMessage="供应商"/>}
             />
             <div className={css.header}>
@@ -233,9 +242,9 @@ class ProductList extends React.Component {
                 </div>
                 <div className={css.right}>
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"
-                        values={{total:this.state.total}}
+                        values={{total:this.state.sum}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" total={50} simple onChange={this.handleChange} />
+                    <Pagination size="small" total={this.state.sum} simple onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.product_list}>
