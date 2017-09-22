@@ -35,14 +35,16 @@ class Main extends React.Component {
     }
     componentWillMount() {
         axios.get('/api/get-main-data.json').then(res => {
+            //console.log(res.data)
             this.setState({
-                brand: res.data.brand,
-                category: res.data.category
+                brand: res.data.brand.result,
+                category: res.data.category.result
             })
         })
     }
 
     render() {
+        console.log(this.state.category);
         return <div className={appcss.body}>
             <Slider
                 dots={true}
@@ -99,14 +101,14 @@ class Main extends React.Component {
 
                 >
                    {this.state.brand.map(item => {
-                       return <Link className={css.slider_item} to={"main/brand-detail/"+item.id}>
+                       return <Link className={css.slider_item} to={"main/brand-detail/"+item.sid}>
                        <Card className={css.slider_card} >
                            <div className={css.custom_image}>
-                               <img alt="example" width="30%" src={item.img} />
+                               <img alt="example" width="30%" src={item.imgUrl} />
                            </div>
                            <div>
-                               <h2>{item.name}</h2>
-                               <p style={{textAlign: "left"}}>{item.dscrip}</p>
+                               <h2>{item.supplierName}</h2>
+                               <p style={{textAlign: "center"}}>{item.introduction}</p>
                            </div>
                        </Card>
                     </Link>
@@ -148,6 +150,7 @@ class Category extends React.Component {
             super(props)
             this.state = {}
         }
+
         /**
          * 查看更多2级分类
          * @param  {[type]} id 1级分类id
@@ -165,13 +168,13 @@ class Category extends React.Component {
                     <div className={css.cate_title} style={{background: `url(${item.img})`}}>
                         <div>
                             <p><Icon type="left-circle-o" /></p>
-                            <p className={css.cate_name}>{item.name}</p>
+                            <p className={css.cate_name}>{item.levleOneProductCategory.categoryName}</p>
                         </div>
                     </div>
                     <div>
-                    {item.cate.map(cate=>{
-                        return <Link to={"main/product-list/"+cate.id}>
-                            <p className={css.cate}>{cate.name}</p>
+                    {item.levleTwoProductCategory.map(cate=>{
+                        return <Link to={"main/product-list/"+cate.categoryId}>
+                            <p className={css.cate}>{cate.categoryName}</p>
                         </Link>
                     })}
                     <div className={css.brand_button}>
@@ -183,10 +186,10 @@ class Category extends React.Component {
                 </div>
                 <div className={css.middle}>
                     <Card bordered={false} noHovering>
-                        {item.goods.map((goods,index)=>{
-                            return (index<6?<Link to={"main/product-detail/"+goods.id}><Card.Grid className={css.card}>
+                        {item.products.map((goods,index)=>{
+                            return (index<6?<Link to={"main/product-detail/"+goods.productId}><Card.Grid className={css.card}>
                                 <img src={goods.img}/>
-                                <p className={css.name}>{goods.name}</p>
+                                <p className={css.name}>{goods.productName}</p>
                                 <p className={css.price}>
                                     <span>{goods.price}</span>
                                     <Icon type="line-chart" />
@@ -196,22 +199,24 @@ class Category extends React.Component {
                         })}
                     </Card>
                 </div>
+                {item.suppliers.length>0?
                 <div className={css.right}>
-                    <Link to={"main/brand-detail/"+item.brand[0].id}>
-                        <img style={{width: "60%",margin: "0 20%"}} src={item.brand[0].img}/>
-                        <p className={css.title} style={{paddingBottom: 0}}>{item.brand[0].name}</p>
-                        <p className={css.content} style={{padding: "10px"}}>{item.brand[0].descrip}</p>
-                    </Link>
+         
+                    <Link to={"main/brand-detail/"+item.suppliers.sid}>
+                        <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl}/>
+                        <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
+                        <p className={css.content} style={{padding: "10px"}}>{item.suppliers[0].introduction}</p>
+                    </Link>{console.log(item.suppliers.supplierName)}
                     <Card bordered={false} noHovering>
-                        {item.brand.map((brand,index)=>{
-                            return (index>0&&index<7?<Link to={"main/brand-detail/"+brand.id}>
+                        {item.suppliers.map((brand,index)=>{
+                            return (index>0&&index<7?<Link to={"main/brand-detail/"+brand.sid}>
                                 <Card.Grid className={css.card} style={{padding:"5px"}}>
-                                    <img style={{width:"100%"}} src={brand.img}/>
+                                    <img style={{width:"100%"}} src={brand.imgUrl}/>
                             </Card.Grid>
                         </Link>:"")
                         })}
-                    </Card>
-                </div>
+                    </Card>:""
+                </div>:""}
             </div>
         })}
         </div>
