@@ -3,6 +3,13 @@ const axios = require('axios');
 const {
 	url
 } = require('../config/index');
+
+/**
+ * 根据二级分类id，获取三级分类列表
+ * @param  {[type]} '/get-category.json' [description]
+ * @param  {[type]} async(ctx,           next          [description]
+ * @return {[type]}                      [description]
+ */
 router.get('/get-category.json', async(ctx, next) => {
 		let cid = ctx.query.cid,
 			result = [];
@@ -10,6 +17,27 @@ router.get('/get-category.json', async(ctx, next) => {
 			result = res.data;
 		})
 		ctx.body = result;
+	})
+	/**
+	 * 根据分类id或者产品查询关键字，获取品牌列表
+	 * 
+	 */
+	.post('/get-brand.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result = {};
+		let uri = url + "/product/band?"
+		for (let key in param) {
+			if (param[key]) {
+				uri += key + "=" + param[key] + "&"
+			}
+		}
+		uri = uri.substr(0, uri.length - 1);
+		console.log(35, uri);
+		await axios.get(uri).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
+
 	})
 	/**
 	 * 根据搜索条件获取产品数据

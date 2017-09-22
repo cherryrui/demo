@@ -22,9 +22,18 @@
     	color: $color-orange;
     	font-weight: bolder;
     	font-size: 16px;
+    	.price_down{
+    		color: $color-orange;
+    	}
+    	.price_up{
+    		color: $color-green;
+    	}
 	}
 	.footer{
 		display: flex;
+		a{
+			color: white;
+		}
 		.icon{
     		font-size: 20px;
     		background: #122337;

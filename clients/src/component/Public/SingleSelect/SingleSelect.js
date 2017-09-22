@@ -17,8 +17,6 @@ class SingleSelect extends React.Component {
         super(props);
         this.state = {
             data: [],
-            select_id: 0,
-            subcategory_id: 2,
             more: true,
             showIndex: 0,
             showMore: true,
@@ -63,14 +61,11 @@ class SingleSelect extends React.Component {
         }
     }
     handleSelect(item) {
-        this.setState({
-            select_id: item.id
-        });
         this.props.onSelect ? this.props.onSelect(item) : "";
     }
 
     render() {
-        console.log(this.state.showIndex, this.props.data.length)
+        let current = this.props.current ? this.props.current : 0;
         return <div className={css.body}>
             <div className={css.left}>
                 <p>
@@ -80,8 +75,8 @@ class SingleSelect extends React.Component {
             <div ref="middle" className={css.middle}>
                 {this.props.all?<div className={css.single} ref="item"
                         onClick={this.handleSelect.bind(this,{id:0})}>
-                        {this.props.showImg?<img src='../img/product.jpg' className={this.state.select_id==0?css.active_img:css.item_img}/>
-                        :<p className={this.state.select_id==0?css.active:css.item}>
+                        {this.props.showImg?<img src='../img/product.jpg' className={current==0?css.active_img:css.item_img}/>
+                        :<p className={current==0?css.active:css.item}>
                             <FormattedMessage id="app.all" defaultMessage="所有"/>
                         </p>}
                     </div>:""}
@@ -90,8 +85,9 @@ class SingleSelect extends React.Component {
                     return (!this.state.showMore||this.state.showIndex>index||this.state.showIndex==0)?<div className={css.single} ref={ref}
                         onClick={this.handleSelect.bind(this,item)}
                     >
-                    {this.props.showImg?<img src={item.img} className={this.state.select_id==item.id?css.active_img:css.item_img}/>
-                        :<p className={this.state.select_id==item.id?css.active:css.item}>{item.name}</p>}
+                    {this.props.showImg?<img src={item[key_name]} className={this.state.select_id==item.id?css.active_img:css.item_img}/>
+                        :<p className={current==item[this.props.key_id]?css.active:css.item}>
+                        {item[this.props.key_name]}</p>}
                     </div>:""
                 })}
             </div> 

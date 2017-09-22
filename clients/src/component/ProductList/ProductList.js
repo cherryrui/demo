@@ -59,16 +59,54 @@ class ProductList extends React.Component {
         if (Number(this.info)) {
             //根据二级分类id或者供应商列表和三级分类列表
             axios.get(`/product/get-category.json?cid=${this.props.params.info}`).then(res => {
-                this.setState({
-                    category: res.data.result
-                })
+                if (res.data.isSucc) {
+                    this.setState({
+                        category: res.data.result
+                    })
+                } else {
+                    message.error(this.formatMessage({
+                        id: "request.fail"
+                    }, {
+                        reason: res.data.message
+                    }));
+                }
             })
         }
+        /*this.getBrand();*/
         this.getProduct();
     }
     componentDidMount() {
         this.product_list.scrollIntoView();
     }
+
+    /**
+     * 搜索品牌
+     * @return {[type]} [description]
+     */
+    getBrand = () => {
+        let param = {
+            bandId: this.state.bid ? this.state.bid : Number(this.info) ? this.info : null,
+            categoryId: this.state.cid,
+            searchKey: Number(this.info) ? null : this.info,
+        }
+        axios.post('product/get-brand.json', param).then(res => {
+            if (res.data.isSucc) {
+
+            } else {
+                message.error(this.formatMessage({
+                    id: "request.fail"
+                }, {
+                    reason: res.data.message
+                }));
+            }
+        })
+
+    }
+
+    /**
+     * 搜索产品
+     * @return {[type]} [description]
+     */
     getProduct = () => {
         let params = {
             condition: {
@@ -76,7 +114,7 @@ class ProductList extends React.Component {
                 categoryId: this.state.cid,
                 bandId: this.state.bid,
             },
-            page: this.state.current,
+            page: this.state.current - 1,
             pageSize: this.state.pageSize,
             orderBy: this.orderBy,
         }
@@ -127,28 +165,17 @@ class ProductList extends React.Component {
      * @return {[type]}      [description]
      */
     onSelect = (name, item) => {
-        console.log(name, item, name === "category")
-        if (name === "category") {
-            this.state.cid = item.id;
-            this.state.bid = 0;
-            if (item.id != 0) {
-                let data = [];
-                this.state.brand.map(brand => {
-                    if (brand.category_id == item.id) {
-                        data.push(brand);
-                    }
-                })
-                console.log(data);
-                this.setState({
-                    select_brand: data
-                })
-            } else {
-                this.setState({
-                    select_brand: this.state.brand
-                })
-            }
+        if (name == "category") {
+            this.setState({
+                cid: item.categoryId
+            })
+            this.state.cid = item.categoryId;
+            this.getBrand();
         } else {
-            this.state.bid = item.id
+            this.state.bid = item.bandId;
+            this.setState({
+                bid: item.bandId
+            })
         }
         this.getProduct();
     }
@@ -183,15 +210,21 @@ class ProductList extends React.Component {
                 all
                 title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
                 data={this.state.category}
+                current={this.state.cid}
+                key_name="categoryName"
+                key_id="categoryId"
                 onSelect={this.onSelect.bind(this,"category")}
             />:""}
-            {Number(this.info)&&this.state.select_brand.length>0?<SingleSelect
+            <SingleSelect
                 all
                 showImg
+                key_name="categoryName"
+                key_id="categoryId"
+                current={this.state.bid}
                 data={this.state.select_brand}
                 onSelect={this.onSelect.bind(this,"brand")}
                 title={<FormattedMessage id="app.brand" defaultMessage="供应商"/>}
-            />:""}
+            />
             <div className={css.header}>
                 <div className={css.left}>
                     <p className={css.item}>Comprehensive</p>
@@ -199,7 +232,7 @@ class ProductList extends React.Component {
                     <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Sale"/>
                 </div>
                 <div className={css.right}>
-                    <FormattedMessage id="branch.product.sum" defaultMessage="总计"
+                    <FormattedMessage id="brand.product.sum" defaultMessage="总计"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
                     <Pagination size="small" total={50} simple onChange={this.handleChange} />
@@ -213,7 +246,6 @@ class ProductList extends React.Component {
             <div className={css.footer}>
                 <Pagination 
                     showSizeChanger 
-                    size="small" 
                     defaultCurrent={1} 
                     total={this.state.sum}
                     onShowSizeChange={this.onShowSizeChange}

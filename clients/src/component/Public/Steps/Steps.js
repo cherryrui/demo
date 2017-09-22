@@ -13,8 +13,6 @@ class Steps extends React.Component {
 	}
 	render() {
 		let current = this.props.current ? this.props.current : 0;
-		let length
-
 		return <div className={`${this.props.className} ${css.body}`} style={this.props.style}>
 			{this.props.steps.map((item,index)=>{
 				return <p className={css.steps_item}>
