@@ -2,9 +2,9 @@
  * Created by WF on 2017/8/16.
  */
 const zh_CN = {
-    "app.pull.message":"是否退出系统?",
-    "app.pull.modal.title":"退出系统",
-    "app.pull.out":"/退出",
+    "app.pull.message": "是否退出系统?",
+    "app.pull.modal.title": "退出系统",
+    "app.pull.out": "/退出",
     "app.login": "登录/注册",
     "app.message": "消息",
     "app.order": "我的订单",
@@ -47,6 +47,10 @@ const zh_CN = {
     "app.before": "上一步",
     "app.save": "保存",
     "app.product_category": "产品分类",
+    "sort.new": "新品",
+    "sort.price": "价格",
+    "sort.sale": "销量",
+
     "login.remember": "记住密码",
     "login.forget": "忘记密码？",
     "login.login": "登录",
@@ -436,8 +440,8 @@ const zh_CN = {
     "agent.condition_one": "贵公司需要一个合法的营业执照和一个独立法人，在该地区有良好的声誉和良好的声誉。",
     "agent.condition_two": "只有允许公司在合同授权范围内销售，拥有成熟的团队和服务能力，如果您有任何问题，请与我们联系。",
     "systemmessage.empty.message": "清空留言",
-    "product.detail.model":"型号",
-    "product.detail.material":"材质",
-    "mine.product.instruct_weight":"重量"
+    "product.detail.model": "型号",
+    "product.detail.material": "材质",
+    "mine.product.instruct_weight": "重量"
 }
 export default zh_CN;

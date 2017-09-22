@@ -11,6 +11,10 @@
   .item{
     padding: 0 20px;
   }
+  .item_active{
+    padding: 0 20px;
+    color: $theme-color;
+  }
   .right{
     display: flex;
   }

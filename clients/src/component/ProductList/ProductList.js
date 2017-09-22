@@ -26,7 +26,7 @@ import {
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 import Product from '../Public/Product/Product.js';
-
+import operator from './operator.js';
 
 /**
  * 产品列表页面，根据分类，查询产品
@@ -48,8 +48,9 @@ class ProductList extends React.Component {
             total: 50,
             current: 1,
             pageSize: 10,
+            sortType: 0,
+            orderType: "",
         }
-        this.orderBy = {};
         this.info = this.props.params.info;
         this.formatMessage = this.props.intl.formatMessage;
 
@@ -123,7 +124,9 @@ class ProductList extends React.Component {
      * @return {[type]} [description]
      */
     getProduct = () => {
-        let param = this.orderBy;
+        let param = {}
+        param.orderType = this.state.orderType;
+        param.sortType = this.state.sortType;
         param.searchKey = Number(this.info) ? null : this.info;
         param.categoryId = this.state.cid > 0 ? this.state.cid : Number(this.info) ? Number(this.info) : 0;
         param.bandId = this.state.bid;
@@ -152,9 +155,11 @@ class ProductList extends React.Component {
      * @param  {[type]} key  条件值，1：增序，-1：降序
      * @return {[type]}      [description]
      */
-    handleSort = (name, key) => {
-        this.orderBy[name] = key;
-        this.getProduct();
+    handleSort = (item) => {
+        this.setState({
+            sortType: item.key,
+            orderType: item.orderType
+        })
     }
     handleStar = (index) => {
         let products = this.state.products
@@ -184,7 +189,7 @@ class ProductList extends React.Component {
             this.getBrand();
         } else {
             this.setState({
-                bid: item.bid
+                bid: key
             })
         }
         this.getProduct();
@@ -236,9 +241,11 @@ class ProductList extends React.Component {
             />
             <div className={css.header}>
                 <div className={css.left}>
-                    <p className={css.item}>Comprehensive</p>
-                    <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Rating"/>
-                    <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Sale"/>
+                    {operator.sort.map(item=>{
+                        return <p className={item.key==this.state.sortType?css.item_active:css.item} onClick={this.handleSort.bind(this,item)}>
+                            <FormattedMessage id={item.id} defaultMessage={item.default}/>
+                        </p>
+                    })}
                 </div>
                 <div className={css.right}>
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"
