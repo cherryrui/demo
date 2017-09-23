@@ -5,46 +5,49 @@ import React from 'react';
 import appcss from '../../App.scss';
 import css from './Message.scss';
 import axios from 'axios';
-import {Icon,Pagination} from 'antd';
+import {
+    Icon,
+    Pagination
+} from 'antd';
 
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 
 function onShowSizeChange(current, pageSize) {
     console.log(current, pageSize);
 }
-class Message extends React.Component{
+class Message extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired
     };
-    jump=(e)=>{
-        window.location.href = "/#/main/mine/system-message"
+    jump = (e) => {
+        this.props.history.pushState(null, "/main/mine/system-message");
     }
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            message:{
-                quotation:"aaaaaaaaaaaaaaaa啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊DVD 啊啊啊啊啊啊啊啊啊啊啊啊啊啊DVD               " ,
-                answer:"ffffffffffffffffffff",
-                time:"2017-06-04",
-                mini:"16:00"
+        this.state = {
+            message: {
+                quotation: "aaaaaaaaaaaaaaaa啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊DVD 啊啊啊啊啊啊啊啊啊啊啊啊啊啊DVD               ",
+                answer: "ffffffffffffffffffff",
+                time: "2017-06-04",
+                mini: "16:00"
             }
         };
 
     }
-    render(){
+    render() {
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
-        return<div className={css.my_consulting} >
+            }
+        } = this.props;
+        return <div className={css.my_consulting} >
                     <div className={css.title}>
                         <p className={css.title_left}>
                             <FormattedMessage
@@ -97,7 +100,6 @@ class Message extends React.Component{
 
 
     }
-
 
 
 

@@ -24,6 +24,7 @@ import {
 import Brand from '../Public/Brand/Brand.js';
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
+import operator from './operator.js';
 const TabPane = Tabs.TabPane;
 
 class BrandList extends React.Component {
@@ -36,7 +37,9 @@ class BrandList extends React.Component {
             cid: 0, //分类id
             pageSize: 10, //每页商品数
             current: 1, //当前页码
-            total: 50 //供应商总数
+            total: 50, //供应商总数
+            sortType: 0, //排序名称
+            orderType: "", //排序方式，倒序，
         }
         this.orderBy = {
 
@@ -92,10 +95,13 @@ class BrandList extends React.Component {
      * @param  {[type]} key  升、降
      * @return {[type]}      [description]
      */
-    handleSort(name, key) {
-        this.orderBy[name] = key;
-        this.getBrand();
-        console.log(name, key);
+    handleSort = (key, orderType) => {
+        this.setState({
+            sortType: key,
+            orderType: orderType
+        }, () => {
+            this.getBrand();
+        })
     }
 
     /**
@@ -137,15 +143,24 @@ class BrandList extends React.Component {
             </div>
             {this.state.category.length>0?<SingleSelect
                 all
+                key_name = "name"
+                key_id = "id"
                 data={this.state.category}
                 onSelect={this.onSelect.bind(this)}
                 title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
             />:""}
             <div className={css.header}>
                 <div className={css.left}>
-                    <p className={css.item}>Comprehensive</p>
-                    <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Rating"/>
-                    <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Sale"/>
+                    {operator.sort.map(item=>{
+                        return item.orderType?<p className={item.key==this.state.sortType?css.item_active:css.item} 
+                        onClick={this.handleSort.bind(this,item.key,item.orderType)}>
+                            <FormattedMessage id={item.id} defaultMessage={item.default}/>
+                        </p>:<Sort className={css.item} 
+                            id={item.id} 
+                            default={item.default} 
+                            is_select={this.state.sortType==item.key?true:false}
+                            handleSort={this.handleSort.bind(this,item.key)}/>
+                    })}
                 </div>
                 <div className={css.right}>
                     <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"

@@ -52,94 +52,17 @@ router.get('/get-category.json', async(ctx, next) => {
 	})
 	.get('/get-product-byId.json', async(ctx, next) => {
 		let product = {},
-			products,
+			products = [],
 			id = ctx.query.id;
-		product = {
-			id: 1,
-			price: 200,
-			name: "年底萨达撒大萨达撒",
-			sales: 2000,
-			imgs: ["../img/product.jpg", "../img/product.jpg", "../img/product.jpg", "../img/product.jpg"],
-			brand: {
-				id: 1,
-				name: "SUPPLY NAME",
-				img: '../img/br_main.jpg',
-				rating: 4.5
-			},
-			attr: [{
-				id: 1,
-				name: "颜色",
-				value: [{
-					id: 1,
-					value: "红色"
-				}, {
-					id: 2,
-					value: "蓝色"
-				}, {
-					id: 3,
-					value: "绿色"
-				}]
-			}, {
-				id: 2,
-				name: "尺寸",
-				value: [{
-					id: 1,
-					value: "23"
-				}, {
-					id: 2,
-					value: "24"
-				}, {
-					id: 3,
-					value: "25"
-				}]
-			}, ]
-		}
-		products = [{
-			id: 1,
-			name: "Tools",
-			price: 90,
-			img: "../img/product.jpg"
-		}, {
-			id: 2,
-			name: "Tools",
-			price: 90,
-			img: "../img/product.jpg"
-		}, {
-			id: 3,
-			name: "Tools",
-			price: 90,
-			img: "../img/product.jpg"
-		}, {
-			id: 4,
-			name: "Tools",
-			price: 90,
-			img: "../img/product.jpg"
-		}, ];
-		let reviews = [{
-			id: 1,
-			create_time: "2017-09-12 12:12:14",
-			question: "asdasdasdasdasdasdasda",
-			answer: "dsdsadas da ProductDetail.js"
-		}, {
-			id: 2,
-			create_time: "2017-09-12 12:12:14",
-			question: "asdasdasdasdasdasdasda你打大時代按時大大大大薩達阿薩德薩達阿薩德阿斯頓撒大大大大薩達奧術大師打手打手大大大薩達撒大薩達奧術大師大薩達薩達阿薩德撒大聲地",
-			answer: "dsdsadas da ProductDetail.js"
-		}, {
-			id: 3,
-			create_time: "2017-09-12 12:12:14",
-			question: "asdasdasdasdasdasdasda",
-			answer: "dsdsadas da ProductDetail.js"
-		}, {
-			id: 4,
-			create_time: "2017-09-12 12:12:14",
-			question: "asdasdasdasdasdasdasda",
-			answer: "dsdsadas da ProductDetail.js"
-		}, ];
+		await axios.get(url + '/product/info/' + id).then(res => {
+			console.log(res.data)
+			product = res.data;
+		})
 		ctx.body = {
-			product: product,
+			product: product.result,
 			products: products,
-			reviews: reviews
+			message: product.message,
+			isSucc: product.isSucc,
 		}
 
 	})

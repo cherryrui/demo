@@ -446,7 +446,9 @@ class Quotation extends React.Component {
 	            <DatePicker
 	            	size="large"
 		          	showTime
-		          	value={this.state.quotation.valid_date?moment(this.state.quotation.valid_date, "YYYY-MM-DD HH:mm:ss"):moment()} 
+		          	style={{width:"200px"}}
+		          	defaultValue={this.state.quotation.valid_date?moment(this.state.quotation.valid_date, "YYYY-MM-DD HH:mm:ss"):moment()}
+		 
 		          	format="YYYY-MM-DD HH:mm:ss"
 		          	onChange={this.handleInfo.bind(this,3,"valid_date")}
 		        />
@@ -468,7 +470,7 @@ class Quotation extends React.Component {
 	            <p className={css.title}>
 	            	<FormattedMessage id="app.home" defaultMessage="分类"/>:
 	            </p>
-		<RadioGroup onChange={this.handleInfo.bind(this,0,"invoice_type")} value={this.state.quotation.invoice_type}>
+				<RadioGroup onChange={this.handleInfo.bind(this,0,"invoice_type")} value={this.state.quotation.invoice_type}>
 			        {operator.invoice_type.map(item=>{
 	            		return <Radio value={item.id}>
 	            			<FormattedMessage id={item.key} defaultMessage={item.value}/>

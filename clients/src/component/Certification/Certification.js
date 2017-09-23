@@ -45,7 +45,7 @@ class Certification extends React.Component {
 				user: JSON.parse(sessionStorage.user)
 			})
 		} else {
-			window.location.href = '/#/login'
+			this.props.history.pushState(null, '/login');
 		}
 	}
 	handleSuccess = () => {

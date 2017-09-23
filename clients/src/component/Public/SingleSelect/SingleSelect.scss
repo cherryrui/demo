@@ -12,6 +12,7 @@
     flex-shrink: 0;
     text-align: center;
     display: flex;
+    cursor: default;
     p{
       margin: auto;
     }
@@ -24,11 +25,12 @@
   }
   .single{
     flex-shrink: 0;
+    padding: 10px 20px;
   }
   .item{
     margin: 6px 10px;
     text-align: center;
-    cursor: context-menu;
+    cursor: pointer;
   }
   .item:hover{
     text-decoration:underline;
@@ -44,14 +46,15 @@
     flex-shrink: 0;
     width: 60px;
     height: 60px;
-    padding: 2px;
+    padding: 10px 5px;
+    cursor: pointer;
   }
   .active_img{
     @extend .item_img;
-    border: 1px solid $color-grey;
+    border: 2px solid $color-grey;
   }
   .item_img:hover{
-    border: 1px solid $color-grey;
+    border: 2px solid $color-grey;
   }
   .right{
     margin: auto 20px;

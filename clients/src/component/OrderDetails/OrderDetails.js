@@ -40,7 +40,7 @@ function onShowSizeChange(current, pageSize) {
 }
 class OrderDetailst extends React.Component {
     jump = (e) => {
-        window.location.href = "/#/main/mine/order-list"
+        this.props.history.pushState(null, "/main/mine/order-list");
     }
     constructor(props) {
         super(props);

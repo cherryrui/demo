@@ -32,7 +32,7 @@ class Mine extends React.Component {
     }
     componentWillMount() {
         if (!sessionStorage.user) {
-            window.location.href = '/#/login'
+            this.props.history.pushState(null, '/login');
         }
     }
     componentDidMount() {
@@ -40,7 +40,7 @@ class Mine extends React.Component {
     }
     componentDidUpdate(prevProps, prevState) {
         if (!sessionStorage.user) {
-            window.location.href = '/#/login'
+            this.props.history.pushState(null, '/login');
         }
     }
 
@@ -52,7 +52,7 @@ class Mine extends React.Component {
         this.setState({
             select: key
         });
-        window.location.href = "/#" + url;
+        this.props.history.pushState(null, url);
     }
 
     render() {

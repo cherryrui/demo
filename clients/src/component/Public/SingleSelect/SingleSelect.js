@@ -21,12 +21,21 @@ class SingleSelect extends React.Component {
             showIndex: 0,
             showMore: true,
         }
+        this.length = 0;
     }
     componentDidMount() {
+        this.length = this.props.data.length;
         this.getShowIndex();
+    }
+    componentDidUpdate() {
+        console.log(this.state.showIndex, this.props.data)
+        if (this.length != this.props.data.length) {
+            this.getShowIndex();
+        }
     }
 
     getShowIndex() {
+        console.log("getShowIndex", this.props.data);
         let clientWidth = this.refs.middle.clientWidth;
         let width = 0,
             showIndex = 0;
@@ -35,6 +44,7 @@ class SingleSelect extends React.Component {
         }
         this.props.data.map((item, index) => {
             let name = "item_" + index;
+            console.log(this.refs[name]);
             width += this.refs[name].clientWidth;
             if (width > clientWidth && showIndex == 0) {
                 showIndex = index;

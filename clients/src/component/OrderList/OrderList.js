@@ -376,18 +376,16 @@ class OrderList extends React.Component {
             ]
     }
     jump = (e) => {
-        window.location.href = "/#/main/mine/order-details"
+        this.props.history.pushState(null, "/main/mine/order-details");
     }
-    callback = () => {
-    }
+    callback = () => {}
 
-    render()
-   {
-       let {
-           intl: {
-               formatMessage
-               }
-           } = this.props;
+    render() {
+        let {
+            intl: {
+                formatMessage
+            }
+        } = this.props;
         return <div className={css.order_list}>
             <div className={basecss.child_title}>
                 <FormattedMessage  id="orderlist.all.order" defaultMessage="所有订单"/>

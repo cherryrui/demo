@@ -308,7 +308,8 @@ class CartList extends React.Component {
                 })
             })
             localStorage.setItem('quotation', JSON.stringify(quotation));
-            window.location.href = "/#/main/quotation";
+            /*  window.location.href = "/#/main/quotation";*/
+            this.props.history.pushState(null,"main/quotation");
         } else {
             const {
                 intl: {
@@ -350,7 +351,7 @@ class CartList extends React.Component {
         } = this.props;
 
 
-        return <div>
+        return <div className={css.cart_list}>
             <Table
                 rowSelection={{
                     selectedRowKeys: this.state.selectedRowKeys,

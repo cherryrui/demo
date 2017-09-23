@@ -6,6 +6,10 @@ import css from './Sort.scss';
 import {
     Icon
 } from 'antd';
+import {
+    FormattedMessage,
+} from 'react-intl';
+
 class Sort extends React.Component {
 
     constructor(props) {
@@ -26,10 +30,12 @@ class Sort extends React.Component {
             className={`${css.sort} ${this.props.className}`}
             style={this.props.style}
         >
-            <div className={css.title}>{this.props.value}</div>
+            <div className={css.title}>
+                <FormattedMessage id={this.props.id} defaultMessage={this.props.default}/>
+            </div>
             <div className={css.icon}>
-                <Icon className={this.state.sort==="asc"?`${css.active}`:""} onClick={this.handleClick.bind(this,"asc")} type="caret-up" />
-                <Icon className={this.state.sort==="desc"?`${css.active}`:""} onClick={this.handleClick.bind(this,"desc")} type="caret-down" />
+                <Icon className={this.state.sort==="asc" && this.props.is_select?`${css.active}`:""} onClick={this.handleClick.bind(this,"asc")} type="caret-up" />
+                <Icon className={this.state.sort==="desc" && this.props.is_select?`${css.active}`:""} onClick={this.handleClick.bind(this,"desc")} type="caret-down" />
             </div>
 
         </div>

@@ -57,22 +57,22 @@ class Main extends React.Component {
             key: 1,
             message_id: "app.home",
             default_message: "首页",
-            url: "/#/"
+            url: "/"
         }, {
             key: 2,
             message_id: "app.brand",
             default_message: "供应商",
-            url: "/#/main/brand-list"
+            url: "/main/brand-list"
         }, {
             key: 3,
             message_id: "app.news",
             default_message: "公司近况",
-            url: "/#/main/news"
+            url: "/main/news"
         }, {
             key: 4,
             message_id: "app.about",
             default_message: "关于我们",
-            url: "/#/main/about"
+            url: "/main/about"
         }, ];
         //this.language = 'zh_CN';
     }
@@ -112,13 +112,13 @@ class Main extends React.Component {
                 index: key
             })
         }
-        window.location.href = url;
+        this.props.history.pushState(null, url);
     }
     handleMenuClick = (value) => {
         this.setState({
             index: 0
         })
-        window.location.href = "/#/main/category-list/" + value.key;
+        this.props.history.pushState(null, "/main/category-list/" + value.key);
     }
     handleCancel = () => {
         this.setState({
@@ -127,7 +127,7 @@ class Main extends React.Component {
     }
     handleCart = () => {
         if (sessionStorage.user) {
-            window.location.href = "/#/main/cart"
+            this.props.history.pushState(null, "/main/cart");
         } else {
             this.setState({
                 visible: true
@@ -139,7 +139,10 @@ class Main extends React.Component {
             showCategory: !this.state.showCategory
         })
         if (typeof(index) == 'number') {
-            window.location.href = "/#/main/category-list/" + index;
+            console.log(this.props)
+                /*window.location.href = "/#/main/category-list/" + index;*/
+            this.props.history.pushState(null, "main/category-list/" + index);
+
         }
     }
 
@@ -184,15 +187,15 @@ class Main extends React.Component {
                 </div>
                 <div className={css.right}>
                     <Search
-                        placeholder="请输入商品信息"
-                        style={{width: 300, height: "36px"}}
+                        placeholder={formatMessage({id:"home.input_warn"})}
+                        style={{width: 300, height: "42px"}}
                         onSearch={value => value ? window.location.href = '/#/main/product-list/' + value
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
                     <Dropdown overlay={cart_menu} placement="bottomRight">
                         <Badge count={this.props.cart.sum}>
                             <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
-                                <FormattedMessage id="shopping.cart" defaultMessage="购物车"/>
+                                <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
                             </Button>
                         </Badge>
                     </Dropdown>

@@ -63,9 +63,9 @@ class Main extends React.Component {
             
             <div className={css.icon}><Icon type="smile-o" /></div>
             <div className={css.title}><FormattedMessage id="main.welcome" defaultMessage="欢迎来到DBUY"/></div>
-            <div className={css.content}>施蒂利克粉丝带拿到赛道上大大打算打打大
-            萨达阿萨德阿萨德阿斯顿撒大大大大萨达萨达啊实打实大阿萨德啊实打实范德萨发答
-            复安抚第三方安抚按时发达时</div>
+            <div className={css.content}>
+                <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
+            </div>
             <div className={css.brand_button}>
                 <Link  to="main/about">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
@@ -147,15 +147,15 @@ class Category extends React.Component {
 
 
     constructor(props) {
-            super(props)
-            this.state = {}
-        }
+        super(props)
+        this.state = {}
+    }
 
-        /**
-         * 查看更多2级分类
-         * @param  {[type]} id 1级分类id
-         * @return {[type]}    [description]
-         */
+    /**
+     * 查看更多2级分类
+     * @param  {[type]} id 1级分类id
+     * @return {[type]}    [description]
+     */
     handleCategory = (id) => {
 
     }

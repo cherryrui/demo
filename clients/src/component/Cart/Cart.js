@@ -40,7 +40,8 @@ class Cart extends React.Component {
     }
     componentWillMount() {
         if (!sessionStorage.user) {
-            window.location.href = '/#/login'
+            /*            window.location.href = '/#/login'*/
+            this.props.history.pushState(null, "login");
         }
 
     }

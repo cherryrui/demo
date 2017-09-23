@@ -48,9 +48,10 @@ class ProductList extends React.Component {
             total: 50,
             current: 1,
             pageSize: 10,
-            sortType: 0,
-            orderType: "",
+            sortType: 0, //排序名称
+            orderType: "", //排序方式，倒序，
         }
+        this.categoryName = "分类名称";
         this.info = this.props.params.info;
         this.formatMessage = this.props.intl.formatMessage;
 
@@ -84,7 +85,6 @@ class ProductList extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         if (nextProps.params.info != this.info) {
             this.info = nextProps.params.info;
             this.state.bid = 0;
@@ -99,8 +99,7 @@ class ProductList extends React.Component {
      */
     getBrand = () => {
         let param = {
-            bandId: this.state.bid ? this.state.bid : Number(this.info) ? this.info : null,
-            categoryId: this.state.cid,
+            categoryId: this.state.cid ? this.state.cid : Number(this.info) ? this.info : null,
             searchKey: Number(this.info) ? null : this.info,
         }
         axios.post('product/get-brand.json', param).then(res => {
@@ -155,10 +154,12 @@ class ProductList extends React.Component {
      * @param  {[type]} key  条件值，1：增序，-1：降序
      * @return {[type]}      [description]
      */
-    handleSort = (item) => {
+    handleSort = (key, orderType) => {
         this.setState({
-            sortType: item.key,
-            orderType: item.orderType
+            sortType: key,
+            orderType: orderType
+        }, () => {
+            this.getProduct();
         })
     }
     handleStar = (index) => {
@@ -181,18 +182,23 @@ class ProductList extends React.Component {
      * @return {[type]}      [description]
      */
     onSelect = (name, key) => {
-        this.state[name] = key;
+        console.log(name, key);
         if (name == "cid") {
             this.setState({
                 cid: key
+            }, () => {
+                console.log(this.state.cid)
+                this.getProduct();
+                this.getBrand();
             })
-            this.getBrand();
         } else {
             this.setState({
                 bid: key
+            }, () => {
+                this.getProduct();
             })
         }
-        this.getProduct();
+
     }
     onShowSizeChange = (current, pageSize) => {
         console.log(current, pageSize);
@@ -218,6 +224,9 @@ class ProductList extends React.Component {
                     <Breadcrumb.Item>
                         <FormattedMessage id="cart.product.list" defaultMessage="产品列表"/>
                     </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        {Number(this.info)?this.categoryName:this.info}
+                    </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
             {Number(this.info)&&this.state.category.length>0?<SingleSelect
@@ -229,7 +238,7 @@ class ProductList extends React.Component {
                 key_id="categoryId"
                 onSelect={this.onSelect.bind(this,"cid")}
             />:""}
-            <SingleSelect
+            {this.state.brand.length>0?<SingleSelect
                 all
                 showImg
                 key_name="imgUrl"
@@ -238,13 +247,18 @@ class ProductList extends React.Component {
                 data={this.state.brand}
                 onSelect={this.onSelect.bind(this,"bid")}
                 title={<FormattedMessage id="app.brand" defaultMessage="供应商"/>}
-            />
+            />:""}
             <div className={css.header}>
                 <div className={css.left}>
                     {operator.sort.map(item=>{
-                        return <p className={item.key==this.state.sortType?css.item_active:css.item} onClick={this.handleSort.bind(this,item)}>
+                        return item.orderType?<p className={item.key==this.state.sortType?css.item_active:css.item} 
+                        onClick={this.handleSort.bind(this,item.key,item.orderType)}>
                             <FormattedMessage id={item.id} defaultMessage={item.default}/>
-                        </p>
+                        </p>:<Sort className={css.item} 
+                            id={item.id} 
+                            default={item.default} 
+                            is_select={this.state.sortType==item.key?true:false}
+                            handleSort={this.handleSort.bind(this,item.key)}/>
                     })}
                 </div>
                 <div className={css.right}>
