@@ -67,7 +67,7 @@ class ProductDetail extends React.Component {
             index_img: 0, //選中的圖片index
             visible: false,
             current: 0,
-            productInfo: {},
+            productInfo: [],
             properties: [],
             specs: [],
             prices: [],
@@ -390,7 +390,7 @@ class ProductDetail extends React.Component {
                             handleBar={this.handleChange}
                         />
                         <div className={css.container_body}>
-                        {this.state.current==0?<div>{this.state.productInfo.contentType==1?<img src={this.state.productInfo.content}/>:this.state.productInfo.content} </div>
+                        {this.state.current==0?<Information data={this.state.productInfo}/>
                             :this.state.current==1?<Specification data={this.state.productInfo}/>
                             :this.state.current==2?<PackageDetail data={this.state.packInfo}/>
                             :this.state.current==3?<Review data={this.state.reviews}/>
@@ -408,6 +408,19 @@ class ProductDetail extends React.Component {
             >
                 <LoginModal closeModal={this.handleCancel}/>
             </Modal>
+        </div>
+    }
+}
+class Information extends React.Component {
+    render() {
+        console.log(this.props.data)
+        return <div>
+            {this.props.data.map(item=> {
+                return <div>
+                    <p>{item.introduceName}</p>
+                    {item.contentType==1?<img src={item.content}/>:<p>{item.content}</p>}
+                </div>
+            })}
         </div>
     }
 }

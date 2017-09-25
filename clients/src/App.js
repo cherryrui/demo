@@ -300,7 +300,7 @@ ReactDOM.render(
                             <IndexRoute component={Main}/>
                             <Route path="category-list/:id/:name" component={CategoryList}/>
                             <Route path="brand-list" component={BrandList}/>
-                            <Route path="product-list/:info(:/name)" component={ProductList}/>
+                            <Route path="product-list/:info(/:name)" component={ProductList}/>
                             <Route path="product-detail/:id" component={ProductDetail}/>
                             <Route path="brand-detail/:id" component={BrandDetail}/>
                             <Route path="post-want" component={PostWant}/>

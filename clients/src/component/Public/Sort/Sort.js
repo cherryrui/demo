@@ -18,10 +18,17 @@ class Sort extends React.Component {
             sort: this.props.sort ? this.props.sort : 0,
         }
     }
-    handleClick(sort) {
+    handleClick=()=> {
+        let sort = this.state.sort;
+        if(sort == 0||sort=='asc'){
+            sort = "desc";
+        } else{
+            sort = "asc";
+        }
         this.setState({
             sort: sort
         });
+        console.log(31,sort);
         this.props.handleSort ? this.props.handleSort(sort) : "";
     }
 
@@ -29,15 +36,15 @@ class Sort extends React.Component {
         return <div
             className={`${css.sort} ${this.props.className}`}
             style={this.props.style}
+
         >
-            <div className={css.title}>
+            <div className={css.title} onClick={this.handleClick}>
                 <FormattedMessage id={this.props.id} defaultMessage={this.props.default}/>
             </div>
-            <div className={css.icon}>
-                <Icon className={this.state.sort==="asc" && this.props.is_select?`${css.active}`:""} onClick={this.handleClick.bind(this,"asc")} type="caret-up" />
-                <Icon className={this.state.sort==="desc" && this.props.is_select?`${css.active}`:""} onClick={this.handleClick.bind(this,"desc")} type="caret-down" />
+            <div className={css.icon} onClick={this.handleClick}>
+                <Icon className={this.state.sort==="asc" && this.props.is_select?`${css.active}`:""}  type="caret-up" />
+                <Icon className={this.state.sort==="desc" && this.props.is_select?`${css.active}`:""}  type="caret-down" />
             </div>
-
         </div>
     }
 }

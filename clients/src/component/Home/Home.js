@@ -133,7 +133,7 @@ class Main extends React.Component {
             showCategory: !this.state.showCategory
         })
         if (typeof(index) == 'number') {
-                /*window.location.href = "/#/main/category-list/" + index;*/
+            /*window.location.href = "/#/main/category-list/" + index;*/
             this.props.history.pushState(null, "main/category-list/" + index + "/" + name);
 
         }
@@ -182,7 +182,9 @@ class Main extends React.Component {
             }
         } = this.props;
         return <div>
-            <div className={css.header}>
+        <div className={css.header}>
+            <div className={css.header_content}>
+            
                 <div className={css.left}>
                     <p className={css.logo}>LOGO</p>
                     <p onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
@@ -211,6 +213,7 @@ class Main extends React.Component {
                         </Badge>
                     </Dropdown>
                 </div>
+            </div>
             </div>
             {this.state.showCategory?<div className={css.categorys_drop}>
                 <p className={css.drop_icon}><Icon type="caret-up" /></p>

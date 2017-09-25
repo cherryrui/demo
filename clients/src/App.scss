@@ -2,7 +2,6 @@
 .index{
   height: 100%;
   font-size: 14px;
-  min-width: 1500px;
 }
 .head{
   display: flex;
@@ -45,9 +44,10 @@
 }
 .body{
   min-height: 600px;
-  margin: 0 10%;
+  width: 1366px;
   padding-top: 150px;
   background: white;
+  margin: 0 auto;
 }
 .foot{
   padding: 38px 10%;
