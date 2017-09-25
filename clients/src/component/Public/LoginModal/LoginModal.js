@@ -64,6 +64,7 @@ class LoginModal extends React.Component {
 						}, {
 							reason: res.data.result
 						}))
+						this.setState({loading:false});
 					}
 				})
 			}

@@ -144,7 +144,7 @@ class Main extends React.Component {
 
         let cart_menu = (
             <Menu>
-                <Menu.Item>
+                <Menu.Item style={{width:"200px"}}>
                     <FormattedMessage  id="home.recent.add" defaultMessage="最近新加产品"/>
                 </Menu.Item>
                 {this.props.cart.carts.map(item => {
@@ -153,10 +153,10 @@ class Main extends React.Component {
                             <div className={css.cart_product}>
                                 <img src={item.img}/>
                                 <div className={css.name}>
-                                    <p>{item.name}</p>
-                                    <p>
-                                        <span>{item.price}$</span>
-                                        <span>
+                                    <p className={css.pup}>{item.name}</p>
+                                    <p className={css.pdown}>
+                                        <span className={css.price}>{item.price}$</span>
+                                        <span className={css.del}>
                                             x{item.num}
                                             <Icon type="delete" />
                                         </span>

@@ -173,11 +173,8 @@ class Category extends React.Component {
         {this.props.category.map(item=>{
             return <div className={css.category_item}>
                 <div className={css.left}>
-                    <div className={css.cate_title} style={{background: `url(${item.img})`}}>
-                        <div>
-                            <p><Icon type="left-circle-o" /></p>
-                            <p className={css.cate_name}>{item.levleOneProductCategory.categoryName}</p>
-                        </div>
+                    <div className={css.cate_title} >
+                        <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@320w_320h_1e_1c.png"}/>
                     </div>
                     <div>
                     {item.levleTwoProductCategory.map(cate=>{
@@ -196,11 +193,14 @@ class Category extends React.Component {
                     <Card bordered={false} noHovering>
                         {item.products.map((goods,index)=>{
                             return (index<6?<Link to={"main/product-detail/"+goods.productId}><Card.Grid className={css.card}>
-                                <img src={goods.coverUrl}/>
+                                <img src={goods.coverUrl+"@320w_320h_1e_1c.png"}/>
                                 <p style={{textAlign: "center"}} className={css.name}>{goods.productName}</p>
                                 <p className={css.price}>
-                                    <span>{goods.price}</span>
-                                    <Icon type="line-chart" />
+                                    <span style={{color:"orange"}}>{goods.price+"$"}</span>
+                                    {goods.price<goods.lastPrice?<Icon style={{color:"orange"}} type="line-chart" />:
+                                    <Icon style={{color:"mediumturquoise"}} type="line-chart" />
+                                }
+                                    
                                 </p>
 
                         </Card.Grid></Link>:"")
