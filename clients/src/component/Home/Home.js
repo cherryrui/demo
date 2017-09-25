@@ -85,7 +85,7 @@ class Main extends React.Component {
          * 获取一级分类和最近购物车商品
          */
         axios.get('/api/get-title-data.json').then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             this.setState({
                 categorys: res.data.categorys.result,
                 carts: res.data.carts,

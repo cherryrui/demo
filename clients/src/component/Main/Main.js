@@ -44,7 +44,6 @@ class Main extends React.Component {
     }
 
     render() {
-        console.log(this.state.category);
         return <div className={appcss.body}>
             <Slider
                 dots={true}
@@ -208,7 +207,7 @@ class Category extends React.Component {
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
                         <p className={css.content} style={{padding: "10px",textAlign: "center"}}>{item.suppliers[0].introduction}</p>
-                    </Link>{console.log(item.suppliers.supplierName)}
+                    </Link>
                     <Card bordered={false} noHovering>
                         {item.suppliers.map((brand,index)=>{
                             return (index>0&&index<7?<Link to={"main/brand-detail/"+brand.sid}>
