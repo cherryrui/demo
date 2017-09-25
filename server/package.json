@@ -17,6 +17,7 @@
     "babel-register": "^6.26.0",
     "co": "^4.6.0",
     "debug": "^2.6.3",
+    "des_zxd": "^1.0.1",
     "eslint-plugin-import": "^2.3.0",
     "hjs": "~0.0.6",
     "koa": "^2.2.0",

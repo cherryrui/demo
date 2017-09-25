@@ -205,7 +205,7 @@ class Category extends React.Component {
                     <Link to={"main/brand-detail/"+item.suppliers.sid}>
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
-                        <p className={css.content} style={{padding: "10px"}}>{item.suppliers[0].introduction}</p>
+                        <p className={css.content} style={{padding: "10px",textAlign: "center"}}>{item.suppliers[0].introduction}</p>
                     </Link>{console.log(item.suppliers.supplierName)}
                     <Card bordered={false} noHovering>
                         {item.suppliers.map((brand,index)=>{

@@ -1,7 +1,8 @@
 var router = require('koa-router')();
 const axios = require('axios');
+const Dess = require('des_zxd');
 const {
-	url
+	url,des
 } = require('../config/index');
 var ReqTool = require('../tools/reqTool.js');
 import {
@@ -26,7 +27,7 @@ router.get('/get-user.json', async(ctx, next) => {
 		let data = ctx.request.body;
 		let param = {
 			loginName: data.userName,
-			password: data.password
+			password: data.password//Dess.encryptDes(data.password,des.KEY,des.IV)
 		};
 		await axios.post(url + "/login", querystring.stringify(param)).then(res => {
 			result = res.data;

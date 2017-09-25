@@ -45,16 +45,17 @@ class LoginModal extends React.Component {
 					loading: true
 				})
 				axios.post('/user/login.json', values).then(res => {
-					if (res.data.status) {
+					if (res.data.isSucc) {
 						if (values.remember) {
-							localStorage.setItem('uid', res.data.result.id);
-						} else {
-							localStorage.setItem('uid', null);
-						}
-						sessionStorage.setItem('user', JSON.stringify(res.data.result))
-						message.success(formatMessage({
-							id: 'login.login.success'
-						}))
+                            localStorage.setItem('uid', res.data.result.uid);
+                            console.log('uid', res.data.result.uid);
+                        } else {
+                            localStorage.setItem('uid', null);
+                        }
+                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                        message.success(formatMessage({
+                            id: 'login.login.success'
+                        }));
                         parent.location.reload();
 						this.props.closeModal ? this.props.closeModal() : ""
 					} else {
