@@ -123,11 +123,21 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 	})
 	.post('/get-attr-price.json', async(ctx, next) => {
-		let param = ctx.request.body;
-		let result = {
-			price: 100,
-			inventory: 120
-		}
+		let param = ctx.request.body,
+			result;
+		let specId = "",
+			specVaild = "";
+		param.specs.map(item => {
+			specId += item.specId + ",";
+			specVaild += item.select_value + ","
+		})
+		specId = specId.substr(0, specId.length - 1);
+		specVaild = specVaild.substr(0, specVaild.length - 1);
+		let uri = url + "/product/productItemByIds?productId=" + param.id + "&specId=" + specId + "&specValId=" + specVaild;
+		console.log(134, uri)
+		await axios.get(uri).then(res => {
+			result = res.data;
+		})
 		ctx.body = result;
 	})
 	.get('/get-like-product.json', async(ctx, next) => {

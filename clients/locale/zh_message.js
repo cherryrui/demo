@@ -95,6 +95,7 @@ const zh_CN = {
     "product.detail.six": "六个月",
     "product.no_price": "暂无价格波动",
     "product.no_product": "暂无该类产品",
+    "product.like": "相似产品",
     "post.company_name": "公司名称",
     "post.linkman": "联系人",
     "post.email": "邮箱",
@@ -256,7 +257,7 @@ const zh_CN = {
     "mine.product.instruct_length": "长",
     "mine.product.instruct_width": "宽",
     "mine.product.instruct_height": "高",
-    "mine.product.instruct_pack": "打包",
+    "mine.product.instruct_pack": "包装规格",
     "mine.product.instruct_special": "特性",
     "mine.product.instruct_other": "其他",
 

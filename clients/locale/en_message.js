@@ -54,7 +54,7 @@ const en_US = {
     "sort.sale": "Sales Volume",
     "home.input_warn": "please input product name or brand name",
     "login.remember": "remember password",
-    "login.forget": "Forgot password",
+    "login.forget": "Forgot password?",
     "login.login": "Login",
     "login.registor": "Register",
     "login.login.success": "Login Success",

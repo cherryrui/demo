@@ -84,7 +84,6 @@ var appLocale = {
     locale: locale,
     message: locale == "zh" ? zh_message : en_message
 }
-console.log(locale);
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -167,16 +166,14 @@ class App extends React.Component {
         });
     }
     handleOk = (e) => {
-        console.log(e);
         this.setState({
             visible: false
         });
-        window.location.href = "/#/login";
+        this.props.history.pushState(null, '/login');
         localStorage.clear();
         sessionStorage.clear();
     }
     handleCancel = (e) => {
-        console.log(e);
         this.setState({
             visible: false
         })

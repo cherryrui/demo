@@ -71,13 +71,13 @@ class ProductDetail extends React.Component {
             properties: [],
             specs: [],
             prices: [],
+            packInfo: {},
         }
     }
 
     componentWillMount() {
         console.log("ComponentWillMonut", this.props.params.id);
         axios.get(`/product/get-product-byId.json?id=${this.props.params.id}`).then(res => {
-            console.log(res.data);
             if (res.data.isSucc) {
                 let product = res.data.result.productAndSupplier;
                 product.imgs = res.data.result.imgs;
@@ -87,6 +87,7 @@ class ProductDetail extends React.Component {
                     productInfo: res.data.result.productInfo,
                     properties: res.data.result.properties,
                     specs: res.data.result.specs,
+                    packInfo: res.data.result.packInfo,
                 })
             } else {
 
@@ -234,12 +235,17 @@ class ProductDetail extends React.Component {
                 specs: this.state.specs,
             }
             axios.post('/product/get-attr-price.json', param).then(res => {
-                let product = this.state.product;
-                product.price = res.data.price;
-                product.inventory = res.data.inventory;
-                this.setState({
-                    product: product
-                })
+                if (res.data.isSucc) {
+                    let product = this.state.product;
+                    product.price = res.data.result.price;
+                    product.inventory = res.data.result.inventory;
+                    product.priceDiscounts = res.data.result.priceDiscounts;
+                    this.setState({
+                        product: product
+                    })
+                } else {
+                    message.error(res.data.message)
+                }
             })
         }
     }
@@ -336,12 +342,12 @@ class ProductDetail extends React.Component {
                             {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
                         <div className={css.bottom_right}>
-                            <p className={css.buy} onClick={this.handleAddCart.bind(this,1)}>
+                            <p className={appcss.button_green} onClick={this.handleAddCart.bind(this,1)}>
                                 <Icon type="shopping-cart" />
                                 &nbsp;&nbsp;
                                 <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
                             </p>
-                            <p className={css.add_cart} onClick={this.handleAddCart.bind(this,2)}>
+                            <p className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
                                 <Icon type="shopping-cart" />
                                 &nbsp;&nbsp;
                                 <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
@@ -371,9 +377,12 @@ class ProductDetail extends React.Component {
             </div>
             <div className={css.body}>
                 <div className={css.product_list}>
-				{this.state.products.map(item => {
-                    return <Product product={item} className={css.product} key={item.id}/>
-                })}
+                    <p className={css.product_list_title}>
+                        <FormattedMessage id='product.like' defaultMessage="相似产品"/>
+                    </p>
+    				{this.state.products.map(item => {
+                        return <Product product={item} className={css.product} key={item.id}/>
+                    })}
                 </div>
                 <div className={css.info}>
                     <div className={css.card_container}>
@@ -383,7 +392,7 @@ class ProductDetail extends React.Component {
                         <div className={css.container_body}>
                         {this.state.current==0?<div>{this.state.productInfo.contentType==1?<img src={this.state.productInfo.content}/>:this.state.productInfo.content} </div>
                             :this.state.current==1?<Specification data={this.state.productInfo}/>
-                            :this.state.current==2?<PackageDetail data={this.state.product}/>
+                            :this.state.current==2?<PackageDetail data={this.state.packInfo}/>
                             :this.state.current==3?<Review data={this.state.reviews}/>
                             :this.state.current==4?<Price data={this.state.prices} />
                             :""}
@@ -528,44 +537,69 @@ class Specification extends React.Component {
 class PackageDetail extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            Package: {
-                length: 34,
-                weight: 15,
-                height: 23,
-                width: 33
-            }
-        };
+        this.state = {};
     }
     render() {
+        console.log(this.props.data.customProperty)
         return <div className={css.productdetail_teble}>
             <div className={css.title}>
                 <FormattedMessage id="mine.product.packaging" defaultMessage=""/>
-            </div>
-
-            <div className={css.row}>
-                <p className={css.row_title}>
-                    <FormattedMessage id="mine.product.instruct_weight" defaultMessage=""/>
-                </p>
-                <p>{this.state.Package.weight}kg/pice </p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_length" defaultMessage=""/>
                 </p>
-                <p>{this.state.Package.length} mm</p>
+                <p>{this.props.data.length}&nbsp;&nbsp;{this.props.data.lengthUnit}</p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_width" defaultMessage=""/>
                 </p>
-                <p> {this.state.Package.width}mm</p>
+                <p> {this.props.data.width}&nbsp;&nbsp;{this.props.data.widthUnit}</p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_height" defaultMessage=""/>
                 </p>
-                <p> {this.state.Package.height}mm</p>
+                <p> {this.props.data.height}&nbsp;&nbsp;{this.props.data.heightUnit}</p>
+            </div>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_weight" defaultMessage=""/>
+                </p>
+                <p>{this.props.data.weight}&nbsp;&nbsp;{this.props.data.weightUnit} </p>
+            </div>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_pack" defaultMessage=""/>
+                </p>
+                <p>{this.props.data.specInfo}&nbsp;&nbsp;{this.props.data.specMeteringUnit}/{this.props.data.specVolumeUnit} </p>
+            </div>
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="mine.product.instruct_special" defaultMessage=""/>
+                </p>
+                <p>
+                    {this.props.data.type?JSON.parse(this.props.data.type).map(item=>{
+                        return <span>{item.name}&nbsp;&nbsp;</span>
+                    }):""}
+                </p>
+            </div>
+            {this.props.data.customProperty?JSON.parse(this.props.data.customProperty).map(item=>{
+                return <div className={css.row}>
+                    <p className={css.row_title}>
+                        {item.name}    
+                    </p>
+                    <p>
+                        {item.content}&nbsp;{item.unit}
+                    </p>
+                </div>
+            }):""}
+            <div className={css.row}>
+                <p className={css.row_title}>
+                    <FormattedMessage id="cart.remark" defaultMessage=""/>
+                </p>
+                <p>{this.props.data.remark}</p>
             </div>
         </div>
     }
