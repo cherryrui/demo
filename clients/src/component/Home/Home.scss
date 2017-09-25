@@ -5,6 +5,7 @@
   position: fixed;
   width: 100%;
   z-index: 80;
+  min-width: 1366px;
   background: white;
   .header_content{
     display: flex;
