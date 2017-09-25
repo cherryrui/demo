@@ -10,12 +10,12 @@ import operator from './operator.js';
 
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Table,
     Select,
@@ -30,13 +30,13 @@ import {
     Modal,
     Cascader,
     Form
-    } from 'antd';
+} from 'antd';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const {
     TextArea
-    } = Input;
+} = Input;
 
 class ConfirmOrder extends React.Component {
 
@@ -109,7 +109,7 @@ class ConfirmOrder extends React.Component {
         axios.get('/user/get-address-list.json').then(res => {
             this.setState({
                 address_list: res.data.address,
-                select: res.data.address.length>0?res.data.address[0].id:0,
+                select: res.data.address.length > 0 ? res.data.address[0].id : 0,
             })
         })
         let sum = 0,
@@ -158,10 +158,10 @@ class ConfirmOrder extends React.Component {
                 loading: false,
             })
             let order = {
-                id:1,
+                id: 1,
                 pay_money: 100
             }
-            this.props.handleStep ? this.props.handleStep(1,order) : '';
+            this.props.handleStep ? this.props.handleStep(1, order) : '';
         })
 
     }
@@ -231,7 +231,7 @@ class ConfirmOrder extends React.Component {
     render() {
         const {
             getFieldDecorator
-            } = this.props.form;
+        } = this.props.form;
         const formItemLayout = {
             labelCol: {
                 span: 6
@@ -249,8 +249,8 @@ class ConfirmOrder extends React.Component {
         const {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         return <div>
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.delivery.info" defaultMessage="收货信息"/>
@@ -419,7 +419,8 @@ class ConfirmOrder extends React.Component {
                     >
                         {getFieldDecorator('city', {
                             initialValue: this.state.address.city?this.state.address.city.split(","):[],
-                            rules: [{ type: 'array', required: true, message: formatMessage({id: 'cart.cart'}) }],
+
+                            rules: [{ type: 'array', required: true, message: formatMessage({id: 'cart.delivery.city'}) }],
                         })(
                             <Cascader
                                 options={this.state.options}
