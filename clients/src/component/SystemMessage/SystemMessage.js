@@ -79,7 +79,7 @@ class SystemMessage extends React.Component{
                  </div>
                  <div className={css.message_Pagination}>
                      <div className={css.empty_message}>
-                         <p>{formatMessage({id: '清空留言'})}</p>
+                         <p>{formatMessage({id: 'systemmessage.empty.message'})}</p>
                      </div>
                      <div className={css.Pagination}>
                          <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}

@@ -141,7 +141,7 @@ class OrderDetailst extends React.Component {
                 <img src={record.img}/>
                 <div className={css.info}>
                     <p className={css.product_title}>{record.name}</p>
-                    <p><FormattedMessage className={css.title_center} id="orderdetails.brand" defaultMessage="规格"/>：{record.brand}</p>
+                    <p><FormattedMessage className={css.title_center} id="app.brand" defaultMessage="规格"/>：{record.brand}</p>
                     <p><FormattedMessage id="orderdetails.art.no" defaultMessage="规格"/>：{record.Art_No}</p>
 
 
@@ -207,7 +207,7 @@ class OrderDetailst extends React.Component {
             <div className={css.personal_information}>
                 <div className={css.item}>
                     <p className={css.item_cont}><span className={css.item_name}>
-                        <FormattedMessage className={css.item_name} id="orderdetails.delivery.address" defaultMessage="交货"/></span></p>
+                        <FormattedMessage className={css.item_name} id="cart.delivery.address" defaultMessage="交货"/></span></p>
                     <p className={css.item_cont}>{this.state.order.name}</p>
                     <p>{this.state.order.tel}</p>
                     <p>{this.state.order.address}</p>

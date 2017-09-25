@@ -25,7 +25,7 @@ export default {
                 {key: 3002, title: "about.customer.protection", url: "/main/"},
             ]
         },{
-            title: "about.Contact.Us",
+            title: "about.contact.us",
             list: [
                 {key: 3000, title: "about.feed.back", url: "/main/"},
                 {key: 3001, title: "about.how.supplier", url: "/main/"},
