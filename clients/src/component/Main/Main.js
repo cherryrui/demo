@@ -76,12 +76,14 @@ class Main extends React.Component {
                 <div className={css.text_left}>
                     <div className={css.info_left}>
                         <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}><span></span><FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
-                        <p className={css.descrip}><FormattedMessage id="main.post.descrip" defaultMessage="提交采购需求说明"/></p>
+                        <p className={css.descrip}>
+                            <FormattedMessage id="main.post.descrip" defaultMessage="提交采购需求说明"/>
+                        </p>
                     </div>
-                    <div className={css.right}>
-                        <Button className={css.theme_button} type="primary" size="large">
-                            <FormattedMessage id="main.post" defaultMessage="购买"/>
-                        </Button>
+                    <div className={`${css.right} ${css.brand_button}`}>
+                        <Link  to="main/post-want">
+                            <FormattedMessage id="main.post" defaultMessage="更多"/>
+                        </Link>
                     </div>
                 </div>
             </div>

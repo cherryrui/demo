@@ -102,6 +102,11 @@
 .total{
 	padding: 20px;
 	background: $color-grey;
+	
+	.total_money{
+		color: $color-orange;
+	font-weight: bolder;
+	}
 }
 .quotation{
 	padding: 20px;

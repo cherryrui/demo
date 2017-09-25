@@ -189,7 +189,7 @@ class Main extends React.Component {
                     <Search
                         placeholder={formatMessage({id:"home.input_warn"})}
                         style={{width: 300, height: "42px"}}
-                        onSearch={value => value ? window.location.href = '/#/main/product-list/' + value
+                        onSearch={value => value ? this.props.history.pushState(null, '/main/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
                     <Dropdown overlay={cart_menu} placement="bottomRight">

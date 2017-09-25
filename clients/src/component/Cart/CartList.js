@@ -309,7 +309,7 @@ class CartList extends React.Component {
             })
             localStorage.setItem('quotation', JSON.stringify(quotation));
             /*  window.location.href = "/#/main/quotation";*/
-            this.props.history.pushState(null,"main/quotation");
+            this.props.history.pushState(null, "main/quotation");
         } else {
             const {
                 intl: {
@@ -380,7 +380,7 @@ class CartList extends React.Component {
                             defaultMessage="总计"
                             values={{total:this.state.selectedRowKeys.length}}
                         />
-                        :&nbsp;&nbsp;${this.state.sum}
+                        :<span className={css.total_money}>${this.state.sum}</span>
                     </p>
                     <p className={css.quotation} onClick={this.goQuotation}>
                         <FormattedMessage id="quotation.generate" defaultMessage="我的购物车"/>

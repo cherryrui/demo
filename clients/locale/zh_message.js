@@ -90,6 +90,7 @@ const zh_CN = {
     "product.detail.month": "最近月",
     "product.detail.three": "三个月",
     "product.detail.six": "六个月",
+    "product.no_product": "暂无该类产品",
     "post.company_name": "公司名称",
     "post.linkman": "联系人",
     "post.email": "邮箱",

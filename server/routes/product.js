@@ -44,9 +44,13 @@ router.get('/get-category.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result = {};
 		let uri = url + "/product/list";
-		await axios.post(uri, querystring.stringify(param)).then(res => {
-			result = res.data;
-		})
+		try {
+			await axios.post(uri, querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} catch (e) {
+
+		}
 		ctx.body = result
 
 	})

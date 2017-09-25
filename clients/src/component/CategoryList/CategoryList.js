@@ -45,7 +45,7 @@ class CategoryList extends React.Component {
 
     render() {
         return <div ref={(category_list)=>this.category_list=category_list} className={appcss.body}>
-            <div className={css.navigate}>
+            <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="main/">

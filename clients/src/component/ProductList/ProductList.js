@@ -248,40 +248,45 @@ class ProductList extends React.Component {
                 onSelect={this.onSelect.bind(this,"bid")}
                 title={<FormattedMessage id="app.brand" defaultMessage="供应商"/>}
             />:""}
-            <div className={css.header}>
-                <div className={css.left}>
-                    {operator.sort.map(item=>{
-                        return item.orderType?<p className={item.key==this.state.sortType?css.item_active:css.item} 
-                        onClick={this.handleSort.bind(this,item.key,item.orderType)}>
-                            <FormattedMessage id={item.id} defaultMessage={item.default}/>
-                        </p>:<Sort className={css.item} 
-                            id={item.id} 
-                            default={item.default} 
-                            is_select={this.state.sortType==item.key?true:false}
-                            handleSort={this.handleSort.bind(this,item.key)}/>
+            {this.state.products.length>0?<div>
+                <div className={css.header}>
+                    <div className={css.left}>
+                        {operator.sort.map(item=>{
+                            return item.orderType?<p className={item.key==this.state.sortType?css.item_active:css.item} 
+                            onClick={this.handleSort.bind(this,item.key,item.orderType)}>
+                                <FormattedMessage id={item.id} defaultMessage={item.default}/>
+                            </p>:<Sort className={css.item} 
+                                id={item.id} 
+                                default={item.default} 
+                                is_select={this.state.sortType==item.key?true:false}
+                                handleSort={this.handleSort.bind(this,item.key)}/>
+                        })}
+                    </div>
+                    <div className={css.right}>
+                        <FormattedMessage id="brand.product.sum" defaultMessage="总计"
+                            values={{total:this.state.sum}}
+                        />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Pagination size="small" total={this.state.sum} simple onChange={this.handleChange} />
+                    </div>
+                </div>
+                <div className={css.product_list}>
+                    {this.state.products.map((item,index)=>{
+                        return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,index)} addCart/>
                     })}
                 </div>
-                <div className={css.right}>
-                    <FormattedMessage id="brand.product.sum" defaultMessage="总计"
-                        values={{total:this.state.sum}}
-                    />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" total={this.state.sum} simple onChange={this.handleChange} />
+                <div className={css.footer}>
+                    <Pagination 
+                        showSizeChanger 
+                        defaultCurrent={1} 
+                        total={this.state.sum}
+                        onShowSizeChange={this.onShowSizeChange}
+                        onChange={this.handleChange} 
+                        />
                 </div>
             </div>
-            <div className={css.product_list}>
-                {this.state.products.map((item,index)=>{
-                    return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,index)} addCart/>
-                })}
-            </div>
-            <div className={css.footer}>
-                <Pagination 
-                    showSizeChanger 
-                    defaultCurrent={1} 
-                    total={this.state.sum}
-                    onShowSizeChange={this.onShowSizeChange}
-                    onChange={this.handleChange} 
-                    />
-            </div>
+            :<div className={css.product_no}>
+                <FormattedMessage id='product.no_product' defaultMessage="暂无搜索到商品"/>
+            </div>}
         </div>
     }
 }

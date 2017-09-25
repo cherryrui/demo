@@ -28,9 +28,7 @@ class PostWant extends React.Component {
 	}
 	constructor(props) {
 		super(props);
-		this.state = {
-			search: "dasd",
-		}
+		this.state = {}
 	}
 	handleSubmit = () => {
 
@@ -54,7 +52,7 @@ class PostWant extends React.Component {
 				span: 8,
 			},
 		};
-		return <div>
+		return <div className={appcss.body}>
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
@@ -63,9 +61,7 @@ class PostWant extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <FormattedMessage id="category.list.search" defaultMessage={this.state.search}
-                            values={{search:this.state.search}}
-                        />
+                        <FormattedMessage id="main.post" defaultMessage="Post Your Want"/>
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>

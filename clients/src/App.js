@@ -49,6 +49,7 @@ import Agent from './component/Agent/Agent.js';
 import SuccessfulApplication from './component/SuccessfulApplication/SuccessfulApplication.js';
 import Supplier from './component/Supplier/Supplier.js';
 import Certification from './component/Certification/Certification.js';
+import News from './component/News/News.js';
 import {
     Provider
 } from 'react-redux';
@@ -157,25 +158,27 @@ class App extends React.Component {
             window.location.href = "/#" + this.props.location.pathname
         }
     }
-    state = {visible:false}
-    showModal = () =>{
+    state = {
+        visible: false
+    }
+    showModal = () => {
         this.setState({
-            visible:true,
+            visible: true,
         });
     }
-    handleOk = (e) =>{
+    handleOk = (e) => {
         console.log(e);
         this.setState({
-            visible:false
+            visible: false
         });
         window.location.href = "/#/login";
         localStorage.clear();
         sessionStorage.clear();
     }
-    handleCancel = (e) =>{
+    handleCancel = (e) => {
         console.log(e);
         this.setState({
-            visible:false
+            visible: false
         })
     }
 
@@ -307,8 +310,8 @@ ReactDOM.render(
                             <Route path="cart" component={Cart}/>
                             <Route path="quotation(/:id)" component={Quotation}/>
                             <Route path="about" component={About}>
-
                             </Route>
+                            <Route path="news" component={News}/>
                             <Route path="mine" component={Mine}>
                                 <IndexRoute component={PersonCenter}/>
                                 <Route path="message" component={Message}/>
