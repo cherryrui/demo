@@ -301,9 +301,9 @@ ReactDOM.render(
                         <IndexRedirect to="/main" />
                         <Route path="main" component={Home}>
                             <IndexRoute component={Main}/>
-                            <Route path="category-list/:id" component={CategoryList}/>
+                            <Route path="category-list/:id/:name" component={CategoryList}/>
                             <Route path="brand-list" component={BrandList}/>
-                            <Route path="product-list/:info" component={ProductList}/>
+                            <Route path="product-list/:info(:/name)" component={ProductList}/>
                             <Route path="product-detail/:id" component={ProductDetail}/>
                             <Route path="brand-detail/:id" component={BrandDetail}/>
                             <Route path="post-want" component={PostWant}/>

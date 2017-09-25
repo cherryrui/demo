@@ -42,6 +42,7 @@ const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 import TabBar from '../Public/TabBar/TabBar.js';
 import cartAction from '../../action/cartAction.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 import {
     connect
 } from 'react-redux';
@@ -65,30 +66,48 @@ class ProductDetail extends React.Component {
             curImg: '', //當前选中的图片
             index_img: 0, //選中的圖片index
             visible: false,
-            current: 0
+            current: 0,
+            productInfo: {},
+            properties: [],
+            specs: [],
+            prices: [],
         }
     }
 
     componentWillMount() {
         console.log("ComponentWillMonut", this.props.params.id);
         axios.get(`/product/get-product-byId.json?id=${this.props.params.id}`).then(res => {
-            this.setState({
-                products: res.data.products,
-                reviews: res.data.reviews,
-                product: res.data.product,
-                curImg: res.data.product.imgs[0]
-            })
+            console.log(res.data);
+            if (res.data.isSucc) {
+                let product = res.data.result.productAndSupplier;
+                product.imgs = res.data.result.imgs;
+                this.setState({
+                    product: product,
+                    curImg: res.data.result.imgs[0].imgUrl,
+                    productInfo: res.data.result.productInfo,
+                    properties: res.data.result.properties,
+                    specs: res.data.result.specs,
+                })
+            } else {
+
+            }
+
+        })
+        axios.get(`/product/get-like-product.json?id=${this.props.params.id}`).then(res => {
+            if (res.data.isSucc) {
+                this.setState({
+                    products: res.data.result
+                })
+            }
         })
     }
 
     componentDidMount() {
-        console.log(this.product_detail);
         //this.refs.product_detail.scrollIntoView();
         this.product_detail.scrollIntoView();
     }
 
     handleChange = (key) => {
-        console.log(key)
         this.setState({
             current: key
         })
@@ -104,14 +123,14 @@ class ProductDetail extends React.Component {
      */
     changeImg = (index) => {
         this.setState({
-            curImg: this.state.product.imgs[index],
+            curImg: this.state.product.imgs[index].imgUrl,
             index_img: index
         })
     };
     callback = (key) => {
         console.log(key);
     };
-    handleAddCart = () => {
+    handleAddCart = (type) => {
         //console.log(109, "handleAddCart", localStorage.uid)
         if (localStorage.uid) {
             let flag = true;
@@ -201,9 +220,29 @@ class ProductDetail extends React.Component {
         });
     }
     handleAttr = (index, e) => {
-        this.state.product.attr[index].select_value = e.target.value;
+        this.state.specs[index].select_value = e.target.value;
+        let flag = true;
+        this.state.specs.map(item => {
+            if (!item.select_value) {
+                flag = false;
+                return;
+            }
+        })
+        if (flag) {
+            let param = {
+                id: this.state.product.productId,
+                specs: this.state.specs,
+            }
+            axios.post('/product/get-attr-price.json', param).then(res => {
+                let product = this.state.product;
+                product.price = res.data.price;
+                product.inventory = res.data.inventory;
+                this.setState({
+                    product: product
+                })
+            })
+        }
     }
-
 
     render() {
         const {
@@ -223,36 +262,34 @@ class ProductDetail extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <FormattedMessage id="category.list.search" defaultMessage={this.state.search}
-                            values={{search: this.state.product.name?this.state.product.name:"null"}}
-                        />
+                        <span>{this.state.product.productName}</span>
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
             <div className={css.header}>
                 <div className={css.main_img}>
-                    <img  src={this.state.curImg}/>
+                    <img  src={this.state.curImg+"@320w_320h_1e_1c.png"}/>
                 </div>
                 <div className={css.middle}>
                     <div className={css.product_name}>
-	           			{this.state.product.name}
+	           			{this.state.product.productName}
                     </div>
                     <div className={css.product_price}>
                         <p className={css.price_info}>
                             <FormattedMessage id="product.detail.price" defaultMessage="单价"/>
-                            :
+                            &nbsp;:
                             <span className={css.price}>
                                 ${this.state.product.price}
                             </span>
-                            <span className={css.off}>20% off
-                            </span>
+                            {this.state.product.priceDiscounts?<span className={css.off}>{this.state.product.price/this.state.product.priceDiscounts}% off
+                            </span>:""}
                         </p>
                         <p className={css.sales}>
                             <span className={css.bold}>
                                 <FormattedMessage id="product.detail.sales" defaultMessage="销量"/>
                                 :
                             </span>
-                            &nbsp;&nbsp;{this.state.product.sales}&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;{this.state.product.saleVolume}&nbsp;&nbsp;&nbsp;&nbsp;
                             <span className={css.bold}>
                                 <FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
                                 :
@@ -266,30 +303,23 @@ class ProductDetail extends React.Component {
                             <FormattedMessage id="product.detail.inventory" defaultMessage="库存"/>
                             :
                         </p>
-                        <p>3232</p>
-                    </div>
-                    <div className={css.item}>
-                        <p className={css.title}>
-                            <FormattedMessage id="product.detail.delivery" defaultMessage="送达时效"/>
-                            :
-                        </p>
-                        <p>3232</p>
+                        <p>{this.state.product.inventory}</p>
                     </div>
                     <div className={css.item}>
                         <p className={css.title}>
                             <FormattedMessage id="product.detail.MOQ" defaultMessage="起订量"/>
                             :
                         </p>
-                        <p>3232</p>
+                        <p>{this.state.product.moq}</p>
                     </div>
                     <div ref={(specify)=>this.specify=specify}>
-                        {this.state.product.attr?this.state.product.attr.map((item,index)=>{
+                        {this.state.specs.length>0?this.state.specs.map((item,index)=>{
                             return <div key={item.id} className={css.item}>
-                            <p className={css.title}>{item.name}</p>
+                            <p className={css.title}>{item.specName}</p>
                             <p>
                                 <RadioGroup onChange={this.handleAttr.bind(this,index)}>
-                                    {item.value.map(attr=>{
-                                        return <RadioButton key={attr.id} value={attr.id}>{attr.value}</RadioButton>
+                                    {item.specVal.map(attr=>{
+                                        return <RadioButton key={attr.valid} value={attr.valid}>{attr.specValue}</RadioButton>
                                     })}
                                 </RadioGroup>
                             </p>
@@ -303,38 +333,40 @@ class ProductDetail extends React.Component {
                             :
                         </p>
                         <p>
-                            <InputNumber size="large" min={1} defaultValue={3} onChange={this.handleNum} />
+                            {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
-                        <p className={css.buy} onClick={this.handleBuy}>
-                            <Icon type="shopping-cart" />
-                        &nbsp;&nbsp;
-                            <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
-                        </p>
-                        <p className={css.add_cart} onClick={this.handleAddCart}>
-                            <Icon type="shopping-cart" />
-                            &nbsp;&nbsp;
-                            <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
-                        </p>
+                        <div className={css.bottom_right}>
+                            <p className={css.buy} onClick={this.handleAddCart.bind(this,1)}>
+                                <Icon type="shopping-cart" />
+                                &nbsp;&nbsp;
+                                <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
+                            </p>
+                            <p className={css.add_cart} onClick={this.handleAddCart.bind(this,2)}>
+                                <Icon type="shopping-cart" />
+                                &nbsp;&nbsp;
+                                <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                {this.state.product.brand?<div className={css.left}>
-                    <img src={this.state.product.brand.img}/>
-                    <p className={css.name}>{this.state.product.brand.name}</p>
+                {this.state.product.supplierId?<div className={css.left}>
+                    <img src={this.state.product.supplierImg+"@320w_320h_1e_1c.png"}/>
+                    <p className={css.name}>{this.state.product.supplierName}</p>
                     <p className={css.foot}>
-                        <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>
-                        <Rate className={css.rating} allowHalf defaultValue={this.state.product.brand.rating} disabled />
-                        <span>{this.state.product.brand.rating}</span>
+                        <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>&nbsp;&nbsp;
+                        <Rate className={css.rating} allowHalf defaultValue={this.state.product.supplierLevel} disabled />
+                        <span>{this.state.product.supplierLevel}</span>
                     </p>
                     <div className={css.contact}>
                         <Icon type="customer-service" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                         <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
                     </div>
                 </div>:""}
             </div>
             <div className={css.product_img}>
              {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
-                 return <img key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item} onClick={this.changeImg.bind(this, index)}/>
+                 return <img key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} onClick={this.changeImg.bind(this, index)}/>
              }):""}
             </div>
             <div className={css.body}>
@@ -348,60 +380,24 @@ class ProductDetail extends React.Component {
                         <TabBar tabs={operator.tabs} current={this.state.current} 
                             handleBar={this.handleChange}
                         />
-                        {this.state.current==0?<div>dsada </div>
-                            :this.state.current==1?<Specification product={this.state.product}/>
-                            :this.state.current==2?<PackageDetail product={this.state.product}/>
+                        <div className={css.container_body}>
+                        {this.state.current==0?<div>{this.state.productInfo.contentType==1?<img src={this.state.productInfo.content}/>:this.state.productInfo.content} </div>
+                            :this.state.current==1?<Specification data={this.state.productInfo}/>
+                            :this.state.current==2?<PackageDetail data={this.state.product}/>
                             :this.state.current==3?<Review data={this.state.reviews}/>
-                            :this.state.current==4?<Price />
+                            :this.state.current==4?<Price data={this.state.prices} />
                             :""}
+                        </div>
                     </div>
                 </div>
             </div>
-            
             <Modal
-                title={formatMessage({id: 'login.login.title'})}
+                title={formatMessage({id:"login.login.title"})}
                 visible={this.state.visible}
+                onCancel={this.handleCancel}
                 footer={null}
             >
-                <div className={css.form}>
-                    <Form onSubmit={this.handleSubmit} className={css.login_form}>
-                        <FormItem>
-                        {getFieldDecorator('userName', {
-                            rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],
-                        })(
-                            <Input size="large" prefix={<Icon type="user" style={{ fontSize: 13 }} />} 
-                            placeholder= {formatMessage({id: 'login.input.name'})} />
-                        )}
-                        </FormItem>
-                        <FormItem>
-                        {getFieldDecorator('password', {
-                            rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
-                        })(
-                            <Input size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
-                            type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
-                        )}
-                        </FormItem>
-                        <FormItem>
-                        {getFieldDecorator('remember', {
-                            valuePropName: 'checked',
-                            initialValue: true,
-                        })(
-                            <Checkbox>
-                                <FormattedMessage id="login.remember" defaultMessage="记住密码"/>
-                            </Checkbox>
-                        )}
-                            <a className={css.forgot} href="">
-                                <FormattedMessage id="login.forget" defaultMessage="用户登录"/>
-                            </a>
-                            <Button size="large" type="primary" htmlType="submit" className={css.button}>
-                                <FormattedMessage id="login.login" defaultMessage="登录"/>
-                            </Button>
-                            <Button size="large" type="primary" htmlType="submit" className={css.button}>
-                                <FormattedMessage id="login.registor" defaultMessage="注册"/>
-                        </Button>
-                        </FormItem>
-                    </Form>
-                </div>
+                <LoginModal closeModal={this.handleCancel}/>
             </Modal>
         </div>
     }
@@ -426,8 +422,10 @@ class Review extends React.Component {
                         <p className={css.time}>{moment(item.create_time).format('YYYY-MM-DD HH:DD')}</p>
                     </div>
                 </div>
-            }) : <div></div>
-            }
+            }) : <div className={css.no_data}> 
+                <FormattedMessage id="product.no_review" defaultMessage="暂无提问"/>
+            </div>
+        }
             
         </div>
     }
@@ -436,80 +434,39 @@ class Review extends React.Component {
 class Price extends React.Component {
 
     render() {
-        const data = [{
-            create_time: "5-5",
-            y: 1
-        }, {
-            create_time: "5-6",
-            y: 2
-        }, {
-            create_time: "5-7",
-            y: 3
-        }, {
-            create_time: "5-8",
-            y: 2
-        }, {
-            create_time: "5-9",
-            y: 1
-        }, {
-            create_time: "5-10",
-            y: 1
-        }, {
-            create_time: "5-12",
-            y: 2
-        }, {
-            create_time: "5-13",
-            y: 3
-        }, {
-            create_time: "5-14",
-            y: 2
-        }, {
-            create_time: "5-15",
-            y: 1
-        }, {
-            create_time: "5-16",
-            y: 1
-        }, {
-            create_time: "5-17",
-            y: 2
-        }, {
-            create_time: "5-18",
-            y: 3
-        }, {
-            create_time: "5-19",
-            y: 2
-        }, {
-            create_time: "5-20",
-            y: 1
-        }];
 
         return <div className={css.price_body}>
-            <VictoryChart
-                theme={VictoryTheme.material}
-                width={1000}
-                height={300}
-            >
-                <VictoryArea
-                    style={{ 
-                        data: { fill: "#c43a31" },
-                        
-                     }}
-                    data={data}
-                    x="create_time"  
-                    labels={(datum) => "$"+datum.y}
-                />
-            </VictoryChart>
-            <div className={css.price_time}>
-                <p>
-                    <FormattedMessage id="product.detail.month" defaultMessage="最近月" />
-                </p>
-                <p>
-                    <FormattedMessage id="product.detail.three" defaultMessage="三个月" />
-                </p>
-                <p>
-                    <FormattedMessage id="product.detail.six" defaultMessage="六个月" />
-                </p>
+            {this.props.data.length>0?<div>
+                <VictoryChart
+                    theme={VictoryTheme.material}
+                    width={1000}
+                    height={300}
+                >
+                    <VictoryArea
+                        style={{ 
+                            data: { fill: "#c43a31" },
+                            
+                         }}
+                        data={data}
+                        x="create_time"  
+                        labels={(datum) => "$"+datum.y}
+                    />
+                </VictoryChart>
+                <div className={css.price_time}>
+                    <p>
+                        <FormattedMessage id="product.detail.month" defaultMessage="最近月" />
+                    </p>
+                    <p>
+                        <FormattedMessage id="product.detail.three" defaultMessage="三个月" />
+                    </p>
+                    <p>
+                        <FormattedMessage id="product.detail.six" defaultMessage="六个月" />
+                    </p>
+                 </div>
              </div>
+             :<div className={css.no_data}>
+                <FormattedMessage id='product.no_price' defaultMessage='暂无价格波动'/>
+            </div>}
         </div>
     }
 }

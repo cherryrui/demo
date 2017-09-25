@@ -60,7 +60,9 @@ class Main extends React.Component {
                 <div><img className={css.slider_img} src='../img/autoSlide.jpg'/></div>
             </Slider>
             
-            <div className={css.icon}><Icon type="smile-o" /></div>
+            <div className={css.icon}>
+                <i class="iconfont icon-icon"></i>
+            </div>
             <div className={css.title}><FormattedMessage id="main.welcome" defaultMessage="欢迎来到DBUY"/></div>
             <div className={css.content}>
                 <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
@@ -74,7 +76,9 @@ class Main extends React.Component {
                 <div className={css.img_right}><img src='../img/post.png'/> </div>
                 <div className={css.text_left}>
                     <div className={css.info_left}>
-                        <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}><span></span><FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
+                        <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}>
+                            <i class="iconfont icon-dingzhi"></i>
+                            <FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
                         <p className={css.descrip}>
                             <FormattedMessage id="main.post.descrip" defaultMessage="提交采购需求说明"/>
                         </p>
@@ -86,9 +90,11 @@ class Main extends React.Component {
                     </div>
                 </div>
             </div>
-            <div className={css.icon}><Icon type="safety" /></div>
+            <div className={css.icon}>
+                <i class="iconfont icon-pinpai"></i>
+            </div>
             <div className={css.title}>
-                <FormattedMessage id="app.brand" defaultMessage="品牌"/>
+                <FormattedMessage id="app.supplier" defaultMessage="供应商"/>
             </div>
             <div className={css.slip}>
                 {this.state.brand.length>0?<Slider
@@ -122,6 +128,7 @@ class Main extends React.Component {
                 </Link>
             </div>
             <div className={css.icon}>
+                <i class="iconfont icon-dailishangtubiao-"></i>
             </div>
             <div className={css.title}>
                 <FormattedMessage id="app.product_category" defaultMessage="产品分类"/>
@@ -174,12 +181,12 @@ class Category extends React.Component {
                     </div>
                     <div>
                     {item.levleTwoProductCategory.map(cate=>{
-                        return <Link to={"main/product-list/"+cate.categoryId}>
+                        return <Link to={"main/product-list/"+cate.categoryId+"/"+cate.categoryName}>
                             <p className={css.cate}>{cate.categoryName}</p>
                         </Link>
                     })}
                     <div className={css.brand_button}>
-                        <Link  to={"main/category-list/"+item.id}>
+                        <Link  to={"main/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
                             <FormattedMessage id="app.more" defaultMessage="更多"/>
                         </Link>
                     </div>
@@ -207,7 +214,7 @@ class Category extends React.Component {
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
                         <p className={css.content} style={{padding: "10px",textAlign: "center"}}>{item.suppliers[0].introduction}</p>
-                    </Link>
+                    </Link>{console.log(item.suppliers.supplierName)}
                     <Card bordered={false} noHovering>
                         {item.suppliers.map((brand,index)=>{
                             return (index>0&&index<7?<Link to={"main/brand-detail/"+brand.sid}>

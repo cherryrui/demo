@@ -20,4 +20,20 @@
     	border-right: 1px solid $border-color;
 		border-top: 3px solid $theme-color;
     }
+    .left_active{
+        @extend .item;
+        background: white;
+        border-bottom: none;
+        border-left: none;
+        border-right: 1px solid $border-color;
+        border-top: 3px solid $theme-color;
+    }
+    .right_active{
+        @extend .item;
+        background: white;
+        border-bottom: none;
+        border-left: 1px solid $border-color;
+        border-right: none;
+        border-top: 3px solid $theme-color;
+    }
 }

@@ -225,7 +225,7 @@ class ProductList extends React.Component {
                         <FormattedMessage id="cart.product.list" defaultMessage="产品列表"/>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        {Number(this.info)?this.categoryName:this.info}
+                        {Number(this.info)?this.props.params.name:this.info}
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>

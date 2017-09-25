@@ -53,9 +53,7 @@ class CategoryList extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <FormattedMessage id="category.list.search" defaultMessage={this.state.search}
-                            values={{search:this.state.search}}
-                        />
+                        {this.props.params.name}
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>

@@ -49,25 +49,26 @@ router.get('/get-category.json', async(ctx, next) => {
 				result = res.data;
 			})
 		} catch (e) {
-
+			result = {
+				isSucc: false,
+				message: "请求失败！"
+			}
 		}
 		ctx.body = result
 
 	})
 	.get('/get-product-byId.json', async(ctx, next) => {
-		let product = {},
-			products = [],
+		let result = {},
 			id = ctx.query.id;
-		await axios.get(url + '/product/info/' + id).then(res => {
-			console.log(res.data)
-			product = res.data;
-		})
-		ctx.body = {
-			product: product.result,
-			products: products,
-			message: product.message,
-			isSucc: product.isSucc,
+		try {
+			await axios.get(url + '/product/info/' + id).then(res => {
+				console.log(res.data)
+				result = res.data;
+			})
+		} catch (err) {
+
 		}
+		ctx.body = result;
 
 	})
 	.get('/get-product-info-byid.json', async(ctx, next) => {
@@ -121,42 +122,29 @@ router.get('/get-category.json', async(ctx, next) => {
 			product: product
 		}
 	})
-	.get('/get-like-product.json', async(ctx, next) => {
-		let products = [];
-		products = [{
-			id: 1,
-			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 2,
-			name: "dsds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 4,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 5,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 6,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, ];
-		ctx.body = {
-			products: products
+	.post('/get-attr-price.json', async(ctx, next) => {
+		let param = ctx.request.body;
+		let result = {
+			price: 100,
+			inventory: 120
 		}
+		ctx.body = result;
+	})
+	.get('/get-like-product.json', async(ctx, next) => {
+		let id = ctx.query.id,
+			result;
+		try {
+
+			await axios.get(url + '/product/similarProduct/' + id).then(res => {
+				result = res.data
+			})
+		} catch (e) {
+			result = {
+				isSucc: false
+			}
+		}
+
+		ctx.body = result
 	})
 	.get('/get-favorite-product.json', async(ctx, next) => {
 		let products = [],

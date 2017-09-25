@@ -22,7 +22,7 @@ class TabBar extends React.Component {
 		console.log(this.props.current)
 		return <div className={`${css.body} ${this.props.className}`} style={this.props.style}>
 			{this.props.tabs.map((item,index)=>{
-				return <div className={index==this.props.current?css.active:css.item}
+				return <div className={index!=this.props.current?css.item:index==0?css.left_active:index==this.props.tabs.length-1?css.right_active:css.active}
 					onClick={this.handleBar.bind(this,index)}
 				>
 					<FormattedMessage id={item.key} defaultMessage="tabbar"/>

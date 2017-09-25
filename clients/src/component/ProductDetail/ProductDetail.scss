@@ -32,6 +32,7 @@
 			font-size: 34px;
 			color: $color-red;
 			font-weight: bold;
+			padding: 0px 10px;
 		}
 		.off{
 			background: $color-orange;
@@ -64,6 +65,11 @@
 	.bottom{
 		display: flex;
 		margin-top: 10px;
+		.bottom_right{
+			display: flex;
+    		flex-grow: 1;
+    		justify-content: flex-end;
+		}
 	}
 	.num{
 		width: 100px;
@@ -134,11 +140,13 @@
 	.active{
 		@extend .img;
 		border: 1px solid $border-color;
-		border-radius: 2px
+		border-radius: 2px;
+		padding: 5px;
 	}
 }
 .body{
 	display: flex;
+	margin-top: 10px;
 }
 .product_list{
 	border: 1px solid $border-color;
@@ -165,25 +173,18 @@
 	
 }
 .card_container{
-	border: 1px solid $border-color;
-	div[class="ant-tabs-nav-container"]{
-		height: inherit!important;
-	}
-	div[class="ant-tabs-bar"]{
-		background: #f9f9f9;
-	}
-	div[class=" ant-tabs-tab"]{
-		border: none!important;
-		padding: 10px 20px !important;
-   		color: $font-color !important;
-	}
-	div[class="ant-tabs-tab-active ant-tabs-tab"]{
-		border-radius: 0 !important;
-   		border-top: 3px solid $theme-color !important;
-   		color: $font-color !important;
-   		padding: 10px 20px 12px !important;
+	
+}
+.container_body{
+	border-left: 1px solid $border-color;
+	border-right: 1px solid $border-color;
+	border-bottom: 1px solid $border-color;
+	padding-top: 20px;
+	img{
+		width: 100%
 	}
 }
+
 .review{
 
 }
@@ -269,4 +270,8 @@
       margin-right: 30px;
     }
   }
+}
+.no_data{
+	text-align: center;
+    padding: 40px 0;
 }

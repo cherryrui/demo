@@ -116,6 +116,9 @@
   font-size: 30px;
   color: $theme-color;
   padding: 10px 0;
+  i{
+    font-size: 40px;
+  }
 }
 .title{
   text-align: center;
@@ -123,6 +126,10 @@
   font-weight: bold;
   padding-bottom: 25px;
   color: $theme-color;
+  i{
+    font-size: 40px;
+    margin-right: 10px;
+  }
 }
 .content{
   font-size: 14px;
