@@ -211,12 +211,12 @@ class Supplier extends React.Component {
                     </p>
                     <p className={css.spot_text}>
                         <FormattedMessage id={"supplier.have.condition"}
-                         defaultMessage="如果你具备以下条件："/>
+                         defaultMessage=""/>
                     </p>
                     <p className={css.spot_text}>
                         <i className={css.spot}>●</i>
                         <FormattedMessage id={"supplier.condition_one"}
-                        defaultMessage="具有合法有效的签约资格和持续可靠的履约能力"/>
+                        defaultMessage=""/>
                     </p>
                     <p className={css.spot_text}>
                         <i className={css.spot}>●</i>
@@ -304,7 +304,7 @@ class Supplier extends React.Component {
 
                         <FormItem
               {...formItemLayout}
-                            label={formatMessage({id: 'acertif.company.region'})}
+                            label={formatMessage({id: 'certif.company.region'})}
                         >
               {getFieldDecorator('residence', {
                   initialValue: ['zhejiang', 'hangzhou', 'xihu'],
@@ -434,7 +434,7 @@ class Supplier extends React.Component {
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label={formatMessage({id: 'about.Shipping.Method'})}
+                            label={formatMessage({id: 'about.shipping.method'})}
                         >
               {getFieldDecorator('radio-group', {
                   valuePropName: 'checked',
