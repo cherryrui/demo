@@ -114,12 +114,6 @@ class Main extends React.Component {
         }
         this.props.history.pushState(null, url);
     }
-    handleMenuClick = (value) => {
-        this.setState({
-            index: 0
-        })
-        this.props.history.pushState(null, "/main/category-list/" + value.key);
-    }
     handleCancel = () => {
         this.setState({
             visible: false,
@@ -134,14 +128,13 @@ class Main extends React.Component {
             })
         }
     }
-    handleCategory = (index) => {
+    handleCategory = (index, name) => {
         this.setState({
             showCategory: !this.state.showCategory
         })
         if (typeof(index) == 'number') {
-            console.log(this.props)
                 /*window.location.href = "/#/main/category-list/" + index;*/
-            this.props.history.pushState(null, "main/category-list/" + index);
+            this.props.history.pushState(null, "main/category-list/" + index + "/" + name);
 
         }
     }
@@ -151,18 +144,36 @@ class Main extends React.Component {
 
         let cart_menu = (
             <Menu>
+                <Menu.Item>
+                    <FormattedMessage  id="home.recent.add" defaultMessage="最近新加产品"/>
+                </Menu.Item>
                 {this.props.cart.carts.map(item => {
                     return <Menu.Item>
                         <Link  to={"main/product-detail/" + item.id}>
                             <div className={css.cart_product}>
                                 <img src={item.img}/>
-                                <p className={css.name}>{item.name}</p>
-                                <p>{item.num}</p>
+                                <div className={css.name}>
+                                    <p>{item.name}</p>
+                                    <p>
+                                        <span>{item.price}$</span>
+                                        <span>
+                                            x{item.num}
+                                            <Icon type="delete" />
+                                        </span>
+                                    </p>
+                                </div>
+
                             </div>
 
                         </Link>
                     </Menu.Item>
                 })}
+                <Menu.Item>
+
+                </Menu.Item>
+                <Menu.Item>
+                    <FormattedMessage  id="home.recent.go" defaultMessage=""/>
+                </Menu.Item>
             </Menu>
         );
         const {
@@ -204,7 +215,7 @@ class Main extends React.Component {
             {this.state.showCategory?<div className={css.categorys_drop}>
                 <p className={css.drop_icon}><Icon type="caret-up" /></p>
                 {this.state.categorys.map(item=>{
-                    return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId)}>
+                    return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
                     {item.categoryName}
                     </p>
                 })}
