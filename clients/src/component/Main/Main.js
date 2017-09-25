@@ -196,8 +196,8 @@ class Category extends React.Component {
                     <Card bordered={false} noHovering>
                         {item.products.map((goods,index)=>{
                             return (index<6?<Link to={"main/product-detail/"+goods.productId}><Card.Grid className={css.card}>
-                                <img src={goods.img}/>
-                                <p className={css.name}>{goods.productName}</p>
+                                <img src={goods.coverUrl}/>
+                                <p style={{textAlign: "center"}} className={css.name}>{goods.productName}</p>
                                 <p className={css.price}>
                                     <span>{goods.price}</span>
                                     <Icon type="line-chart" />
