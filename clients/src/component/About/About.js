@@ -20,6 +20,9 @@ const SubMenu = Menu.SubMenu;
 
 
 class About extends React.Component {
+    static propTypes = {
+        intl: intlShape.isRequired
+    };
     constructor(props) {
         super(props);
         console.log(localStorage.user);
@@ -38,6 +41,11 @@ class About extends React.Component {
     }
 
     render() {
+        let {
+            intl: {
+                formatMessage
+                }
+            } = this.props;
         console.log(column.menu,this.props.children);
         return <div className={`${appcss.body} ${css.body}`}>
             <div className={css.menu}>
@@ -159,4 +167,4 @@ class About extends React.Component {
         </div>
     }
 }
-export default About;
+export default injectIntl(About);

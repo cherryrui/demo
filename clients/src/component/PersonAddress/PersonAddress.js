@@ -93,7 +93,7 @@ class PersonAddress extends React.Component{
                 </span>
             },
             {
-                title: <FormattedMessage id="orderlist.Order.Operation" defaultMessage="操作"/>,
+                title: <FormattedMessage id="cart.operation" defaultMessage="操作"/>,
                 className: css.table_col,
                 width: "12%",
                 className: css.table_col,

@@ -134,7 +134,7 @@ class OrderList extends React.Component {
 
                 </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.order.operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
@@ -188,7 +188,7 @@ class OrderList extends React.Component {
 
                     </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.Order.Operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
@@ -245,7 +245,7 @@ class OrderList extends React.Component {
 
                     </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.order.operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
@@ -299,7 +299,7 @@ class OrderList extends React.Component {
 
                     </span>
                 }, {
-                    title: <FormattedMessage id="orderlist.order.operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     className: css.table_col,
                     render: (record) => <span className={css.table_operation}>
@@ -356,7 +356,7 @@ class OrderList extends React.Component {
 
                     </span>
                 }, {
-                    title: <FormattedMessage style={{ textAlign: "center"}} id="orderlist.order.operation" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage style={{ textAlign: "center"}} id="cart.operation" defaultMessage="我的购物车"/>,
                     width: "12%",
                     fontSize: "20px",
                     className: css.table_col,
@@ -422,5 +422,4 @@ class OrderList extends React.Component {
         </div>
     }
 }
-OrderList = injectIntl(OrderList);
-export default OrderList;
+export default injectIntl(OrderList);

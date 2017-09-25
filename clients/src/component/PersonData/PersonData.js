@@ -22,11 +22,13 @@ import {
     Button,
     Input,
     Cascader,
+    Form,
     Select
 
     } from 'antd';
 
-const Option = Select.Option
+const Option = Select.Option;
+const FormItem = Form.Item;
 const options = [{
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -108,6 +110,9 @@ class PersonData extends React.Component{
         }
     }
     render() {
+        const {
+            getFieldDecorator
+            } = this.props.form;
         let {
             intl: {
                 formatMessage
@@ -140,7 +145,7 @@ class PersonData extends React.Component{
                 </p>
                 <p className={css.info}>
                     <span className={css.title}>
-                        <FormattedMessage  id="persondata.Certification" defaultMessage="认证"/>:
+                        <FormattedMessage  id="persondata.certification" defaultMessage="认证"/>:
                     </span>
                     {this.state.person_data.certification==1?
                     <span className={css.text}>
@@ -256,4 +261,5 @@ class PersonData extends React.Component{
     }
 
 }
+PersonData = Form.create()(PersonData);
 export default injectIntl(PersonData);
