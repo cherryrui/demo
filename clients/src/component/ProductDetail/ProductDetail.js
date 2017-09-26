@@ -274,7 +274,12 @@ class ProductDetail extends React.Component {
             </div>
             <div className={css.header}>
                 <div className={css.main_img}>
-                    <img  src={this.state.curImg+"@320w_320h_1e_1c.png"}/>
+                    <img className={css.img_main} src={this.state.curImg+"@320w_320h_1e_1c.png"}/>
+                    <div className={css.product_img}>
+                         {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
+                             return <img key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} onClick={this.changeImg.bind(this, index)}/>
+                         }):""}
+                    </div>
                 </div>
                 <div className={css.middle}>
                     <div className={css.product_name}>
@@ -322,12 +327,11 @@ class ProductDetail extends React.Component {
                         {this.state.specs.length>0?this.state.specs.map((item,index)=>{
                             return <div key={item.id} className={css.item}>
                             <p className={css.title}>{item.specName}</p>
-                            <p>
-                                <RadioGroup onChange={this.handleAttr.bind(this,index)}>
-                                    {item.specVal.map(attr=>{
-                                        return <RadioButton key={attr.valid} value={attr.valid}>{attr.specValue}</RadioButton>
-                                    })}
-                                </RadioGroup>
+                            <p className={css.spec_content}> 
+                                {item.specVal.map(attr=>{
+                                    return <p onClick={this.handleAttr.bind(this,index,attr.valid)}>{attr.specValue}</p>
+                                })}
+                                
                             </p>
                         </div>
                         }):""}
@@ -370,11 +374,7 @@ class ProductDetail extends React.Component {
                     </div>
                 </div>:""}
             </div>
-            <div className={css.product_img}>
-             {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
-                 return <img key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} onClick={this.changeImg.bind(this, index)}/>
-             }):""}
-            </div>
+
             <div className={css.body}>
                 <div className={css.product_list}>
                     <p className={css.product_list_title}>
@@ -417,7 +417,7 @@ class Information extends React.Component {
         return <div>
             {this.props.data.map(item=> {
                 return <div>
-                    <p>{item.introduceName}</p>
+                    <p className={css.info_title}>{item.introduceName}</p>
                     {item.contentType==1?<img src={item.content}/>:<p>{item.content}</p>}
                 </div>
             })}
