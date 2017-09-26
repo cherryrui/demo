@@ -54,7 +54,6 @@ class Product extends React.Component {
                 <p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>
                 <p className={css.add_cart}>
                     <Link to={"/page/product-detail/"+this.props.product.productId}>
-                        <Icon type="shopping-cart" />&nbsp;&nbsp;&nbsp;&nbsp;
                         <FormattedMessage id="product.detail.see" defaultMessage="加入购物车"/>
                     </Link>
                 </p>
