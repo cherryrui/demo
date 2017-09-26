@@ -89,14 +89,13 @@
     flex-shrink: 0;
   }
   .middle{
-    margin: 1px;
-    padding: 10px 20px;
     display: flex;
     flex-grow: 1;
     flex-wrap: wrap;
     justify-content: space-around;
     .product{
       width: 220px;
+      margin: 10px 0;
     }
   }
   .card{
