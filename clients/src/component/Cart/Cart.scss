@@ -228,7 +228,7 @@
 }
 
 .pay_mode{
-	padding: 40px 10%;
+
 	.pay_title{
 		color: $color-orange;
 		font-size: 20px;
@@ -238,33 +238,71 @@
 	.pay_info{
 		text-align: center;
 		font-size: 14px;
-		padding: 10px 20px;
+		padding: 15px 15px;
 
 	}
 	.payments{
-		border: 1px solid $color-grey;
-		padding: 10px 20px;
+		border: 1px solid $border-color;
+		padding: 15px 16px 0px 16px;
 		display: flex;
-		.item{
-			margin-bottom: 10px;
-			margin: 10px;
-			img{
-				width: 80px;
-		    	height: 80px;
-		    	margin-right: 20px; 
-		    	border: 1px solid #eee;
-			}
-		}
+      width:740px;
+      margin: auto;
+      justify-content: space-between;
+
+      .payments_left{
+        display: flex;
+        .item{
+          margin-bottom: 20px;
+          img{
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            border: 1px solid #eee;
+          }
+        }
+      }
+      .grand_total {
+        font-size:18px;
+        text-align: right;
+        .total_text{
+          font-size:24px;
+          font-weight:700;
+          color:$color-red ;
+        }
+      }
 	}
 }
 .pay_footer{
 	text-align: center;
 	margin-top: 20px;
-	button{
-		margin: 10px;
-		padding: 0px 30px;
-		
+  padding-bottom: 160px;
+  .button_before{
+background:  $button-green;
+    border: none;
+   border-radius: 2px;
+  width: 190px;
+    height:50px;
+    line-height:50px;
 	}
+.button_pay{
+    margin: 20px;
+    padding: 0px 30px;
+  background: $button-blue;
+  border: none;
+  border-radius: 2px;
+  width: 190px;
+  height:50px;
+  line-height:50px;
+  }
+  .button_before:hover{
+    background-color: $button-green-active;
+
+  }
+  .button_pay:hover{
+    background-color: $button-blue-active;
+
+  }
+
 }
 .cancel{
 	background-color: $button-green;

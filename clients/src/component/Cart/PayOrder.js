@@ -55,28 +55,38 @@ class PayOrder extends React.Component {
                 <FormattedMessage id="cart.submit.info" defaultMessage="订单提交成功"/>
             </p>
             <div className={css.payments}>
-                <p>
-                    <FormattedMessage id="cart.pay.mode" defaultMessage="支付方式"/>：
-                </p>
-                <div>
-                    {this.pay_mode.map(item=>{
-                        return <p className={css.item}>
-                            <Radio
-                                checked={this.state.pay_mode==item.id?true:false}
-                                onClick={this.handlePayMode.bind(this,item.id)}>
-                                <FormattedMessage id={item.key} defaultMessage={item.defaultValue}/>
-                            </Radio>
-                            {this.state.pay_mode==item.id && this.state.pay_mode==2?<div>
-                                <img src="../img/product.jpg"/>
-                                <img src="../img/product.jpg"/>
-                                <img src="../img/product.jpg"/>
-                            </div>:""}
-                        </p>
-                    })}
+                <div className={css.payments_left}>
+                    <p>
+                        <FormattedMessage id="cart.pay.mode" defaultMessage="支付方式"/>：
+                    </p>
+                    <div>
+                        {this.pay_mode.map(item=>{
+                            return <p className={css.item}>
+                                <Radio
+                                    checked={this.state.pay_mode==item.id?true:false}
+                                    onClick={this.handlePayMode.bind(this,item.id)}>
+                                    <FormattedMessage id={item.key} defaultMessage={item.defaultValue}/>
+                                </Radio>
+                                {this.state.pay_mode==item.id && this.state.pay_mode==2?<div>
+                                    <img src="../img/product.jpg"/>
+                                    <img src="../img/product.jpg"/>
+                                    <img src="../img/product.jpg"/>
+                                </div>:""}
+                            </p>
+                        })}
+                    </div>
+                </div>
+                <div className={css.grand_total}>
+                    <p> <FormattedMessage id="cart.grand" defaultMessage="订单提交成功"/></p>
+                    <p className={css.total_text}>$3000</p>
                 </div>
             </div>
+
             <div className={css.pay_footer}>
-                <Button size="large" type="primary" className={appcss.button_theme}>
+                <Button size="large" type="primary" className={css.button_before}>
+                    <FormattedMessage id="app.before" defaultMessage="支付"/>
+                </Button>
+                <Button size="large" type="primary" className={css.button_pay}>
                     <FormattedMessage id="cart.pay" defaultMessage="支付"/>
                 </Button>
             </div>
