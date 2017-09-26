@@ -43,6 +43,7 @@
   .left{
     background-color: $color-grey;
     width: 170px;
+    flex-shrink: 0;
     .cate_title{
       text-align: center;
       font-size: 16px;
@@ -84,12 +85,19 @@
   }
   .right{
     border-left: 1px solid $border-color;
-    width: 23%;
+    width: 220px;
+    flex-shrink: 0;
   }
   .middle{
-    width: 60%;
     margin: 1px;
     padding: 10px 20px;
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .product{
+      width: 220px;
+    }
   }
   .card{
     width: 31.20%;

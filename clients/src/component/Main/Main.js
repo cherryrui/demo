@@ -23,7 +23,8 @@ import {
 } from 'react-intl';
 
 const Search = Input.Search;
-import Slider from 'react-slick'
+import Slider from 'react-slick';
+import Product from '../Public/Product/Product.js';
 
 class Main extends React.Component {
     constructor(props) {
@@ -190,22 +191,9 @@ class Category extends React.Component {
                     </div>
                 </div>
                 <div className={css.middle}>
-                    <Card bordered={false} noHovering>
-                        {item.products.map((goods,index)=>{
-                            return (index<6?<Link to={"page/product-detail/"+goods.productId}><Card.Grid className={css.card}>
-                                <img src={goods.coverUrl+"@320w_320h_1e_1c.png"}/>
-                                <p style={{textAlign: "left"}} className={css.name}>{goods.productName}</p>
-                                <p className={css.price}>
-                                    <span style={{color:"orange"}}>{goods.price+"$"}</span>
-                                    <span className={goods.lastPrice>goods.price?css.price_down:css.price_up} >
-                                    <i class="iconfont icon-DYC-2"></i>
-                                    </span>
-                                    
-                                </p>
-
-                        </Card.Grid></Link>:"")
-                        })}
-                    </Card>
+                    {item.products.map((goods,index)=>{
+                        return <Product className={css.product}  product={goods}/>
+                    })}
                 </div>
                 {item.suppliers.length>0?
                 <div className={css.right}>

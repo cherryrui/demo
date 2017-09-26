@@ -12,12 +12,8 @@ import {
     Link
 } from 'react-router';
 import css from './App.scss';
-import en from 'react-intl/locale-data/en.js';
 import zh from 'react-intl/locale-data/zh.js';
-import enUS from 'antd/lib/locale-provider/en_US.js';
 import zh_message from '../locale/zh_message';
-import en_message from '../locale/en_message';
-
 import Main from './component/Main/Main.js';
 import Login from './component/Login/Login.js';
 import CategoryList from './component/CategoryList/CategoryList.js';

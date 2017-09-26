@@ -39,7 +39,7 @@ module.exports = {
     },
     module: {
         noParse: [
-            'react-dom', 'react-router', 'axios'
+            'react', 'react-dom', 'react-router', 'axios'
         ],
         loaders: [{
             test: /\.jsx?$/,
@@ -56,7 +56,7 @@ module.exports = {
                     }]
                 ]
             }
-        },{
+        }, {
             test(filePath) {
                 return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
             },
@@ -65,15 +65,14 @@ module.exports = {
                 'postcss!' +
                 `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
             )
-        },
-            {
-                test: /\.module\.less$/,
-                loader: ExtractTextPlugin.extract(
-                    'css?sourceMap&modules&localIdentName=[local]___[hash:base64:5]!!' +
-                    'postcss!' +
-                    `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
-                )
-            }, {
+        }, {
+            test: /\.module\.less$/,
+            loader: ExtractTextPlugin.extract(
+                'css?sourceMap&modules&localIdentName=[local]___[hash:base64:5]!!' +
+                'postcss!' +
+                `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
+            )
+        }, {
             test: /\.scss/,
             loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
         }, {
@@ -105,7 +104,9 @@ module.exports = {
         }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
-            mangle: false,
+            mangle: {
+                except: ['$super', '$', 'exports', 'require', 'module', '_']
+            },
             compress: {
                 // 压缩警告
                 warnings: false,
@@ -118,7 +119,10 @@ module.exports = {
             },
             beautify: false,
             comments: false,
-            sourcemap: false
+            sourcemap: false,
+            output: {
+                comments: false,
+            }
         }),
         new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
         new ExtractTextPlugin('../css/[name].css', {
