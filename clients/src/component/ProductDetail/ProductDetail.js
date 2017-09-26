@@ -81,6 +81,7 @@ class ProductDetail extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.params.id != this.props.params.id) {
             this.getData(nextProps.params.id);
+            this.product_detail.scrollIntoView();
         }
     }
 
@@ -358,7 +359,6 @@ class ProductDetail extends React.Component {
                         </div>
                         }):""}
                     </div>
-                    
                     <div className={css.bottom}>
                         <p className={css.num}>
                             <FormattedMessage id="product.detail.num" defaultMessage="数量"/>
@@ -420,7 +420,7 @@ class ProductDetail extends React.Component {
                         <div className={css.container_body}>
                         {this.state.current==0?<Information data={this.state.productInfo}/>
                             :this.state.current==1?<Specification data={this.state.productInfo}/>
-                            :this.state.current==2?<PackageDetail data={this.state.packInfo}/>
+                            :this.state.current==2?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
                             :this.state.current==3?<Review data={this.state.reviews}/>
                             :this.state.current==4?<Price data={this.state.prices} />
                             :""}
@@ -443,12 +443,14 @@ class Information extends React.Component {
     render() {
         console.log(this.props.data)
         return <div>
-            {this.props.data.map(item=> {
+            {this.props.data.length>0?this.props.data.map(item=> {
                 return <div>
-                    <p className={css.info_title}>{item.introduceName}</p>
-                    {item.contentType==1?<img src={item.content+"@800w_1e.png"}/>:<p>{item.content}</p>}
+                    <div dangerouslySetInnerHTML={{__html: item.content}}/>
+                    {item.contentType==1?<img src={item.content+"@800w_1e_1c.png"}/>:<p>{item.content}</p>}
                 </div>
-            })}
+            }):<div className={css.no_data}> 
+                <FormattedMessage id="product.no_information" defaultMessage="暂无介绍信息"/>
+            </div>}
         </div>
     }
 }
@@ -485,8 +487,8 @@ class Price extends React.Component {
 
     render() {
 
-        return <div className={css.price_body}>
-            {this.props.data.length>0?<div>
+        return <div>
+            {this.props.data.length>0?<div className={css.price_body}>
                 <VictoryChart
                     theme={VictoryTheme.material}
                     width={1000}
@@ -581,7 +583,6 @@ class PackageDetail extends React.Component {
         this.state = {};
     }
     render() {
-        console.log(this.props.data.customProperty)
         return <div className={css.productdetail_teble}>
             <div className={css.title}>
                 <FormattedMessage id="mine.product.packaging" defaultMessage=""/>
@@ -590,7 +591,7 @@ class PackageDetail extends React.Component {
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_length" defaultMessage=""/>
                 </p>
-                <p>{this.props.data.length}&nbsp;&nbsp;{this.props.data.lengthUnit}</p>
+                <p>{this.props.data.len}&nbsp;&nbsp;{this.props.data.lenUnit}</p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>

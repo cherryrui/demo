@@ -4,12 +4,12 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{{ title }}</title>
-    <link rel='stylesheet' href='/css/store.css' />
-    <link rel="stylesheet" href="/lib/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
     <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_426610_gzehxabwqfhqto6r.css">
+    <link rel='stylesheet' href='/css/store.css' />
+    <link rel="stylesheet" href="/lib/style.css">
     <script type="text/javascript">
       var locale="zh"
     </script>

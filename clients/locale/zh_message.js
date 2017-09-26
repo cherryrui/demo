@@ -82,6 +82,7 @@ const zh_CN = {
     "product.detail.review": "客户提问",
     "product.detail.price.move": "价格波动",
     "product.no_review": "该产品暂无相关提问",
+    "product.no_information": "暂无介绍信息",
     "product.detail.contact": "联系客服",
     "product.detail.price": "单价",
     "product.detail.sales": "销量",
