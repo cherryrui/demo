@@ -76,14 +76,27 @@ class ProductDetail extends React.Component {
     }
 
     componentWillMount() {
-        console.log("ComponentWillMonut", this.props.params.id);
-        axios.get(`/product/get-product-byId.json?id=${this.props.params.id}`).then(res => {
+        this.getData(this.props.params.id);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.params.id != this.props.params.id) {
+            this.getData(nextProps.params.id);
+        }
+    }
+
+    componentDidMount() {
+        //this.refs.product_detail.scrollIntoView();
+        this.product_detail.scrollIntoView();
+    }
+
+    getData(id) {
+        axios.get(`/product/get-product-byId.json?id=${id}`).then(res => {
             if (res.data.isSucc) {
                 let product = res.data.result.productAndSupplier;
                 product.imgs = res.data.result.imgs;
                 this.setState({
                     product: product,
-                    curImg: res.data.result.imgs[0].imgUrl,
+                    curImg: res.data.result.imgs.length > 0 ? res.data.result.imgs[0].imgUrl : "",
                     productInfo: res.data.result.productInfo,
                     properties: res.data.result.properties,
                     specs: res.data.result.specs,
@@ -94,21 +107,13 @@ class ProductDetail extends React.Component {
             }
 
         })
-        axios.get(`/product/get-like-product.json?id=${this.props.params.id}`).then(res => {
+        axios.get(`/product/get-like-product.json?id=${id}`).then(res => {
             if (res.data.isSucc) {
                 this.setState({
                     products: res.data.result
                 })
             }
         })
-    }
-    componentWillReceiveProps() {
-
-    }
-
-    componentDidMount() {
-        //this.refs.product_detail.scrollIntoView();
-        this.product_detail.scrollIntoView();
     }
 
     handleChange = (key) => {
@@ -289,7 +294,9 @@ class ProductDetail extends React.Component {
             </div>
             <div className={css.header}>
                 <div className={css.main_img}>
-                    <img className={css.img_main} src={this.state.curImg+"@320w_320h_1e_1c.png"}/>
+                    <div className={css.cus_img}>
+                        <img className={css.img_main} src={this.state.curImg+"@320w_320h_1e_1c.png"}/>
+                    </div>
                     <div className={css.product_img}>
                          {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
                              return <img key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} onClick={this.changeImg.bind(this, index)}/>
@@ -374,32 +381,36 @@ class ProductDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-                {this.state.product.supplierId?<div className={css.left}>
-                    <p className={css.custom_img}>
-                        <img src={this.state.product.supplierImg+"@320w_320h_1e_1c.png"}/>
-                    </p>
-                    <p className={css.name}>{this.state.product.supplierName}</p>
-                    <p className={css.foot}>
-                        <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>&nbsp;&nbsp;
-                        <Rate className={css.rating} allowHalf defaultValue={this.state.product.supplierLevel} disabled />
-                        <span>{this.state.product.supplierLevel}</span>
-                    </p>
-                    <div className={css.contact}>
-                        <Icon type="customer-service" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
+                {this.state.product.supplierId?<div className={css.right}>
+                    <div className={css.right_content}>
+                        <p className={css.custom_img}>
+                            <img src={this.state.product.supplierImg+"@320w_320h_1e_1c.png"}/>
+                        </p>
+                        <p className={css.name}>{this.state.product.supplierName}</p>
+                        <p className={css.foot}>
+                            <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>&nbsp;&nbsp;
+                            <Rate className={css.rating} allowHalf defaultValue={this.state.product.supplierLevel} disabled />
+                            <span>{this.state.product.supplierLevel}</span>
+                        </p>
+                        <div className={css.contact}>
+                            <Icon type="customer-service" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
+                        </div>
                     </div>
                 </div>:""}
             </div>
 
             <div className={css.body}>
                 <div className={css.product_list}>
-                    <p className={css.product_list_title}>
-                        <FormattedMessage id='product.like' defaultMessage="相似产品"/>
-                    </p>
-    				{this.state.products.map(item => {
-                        return <Product product={item} className={css.product} key={item.id}/>
-                    })}
+                    <div className={css.list_content}>
+                        <p className={css.product_list_title}>
+                            <FormattedMessage id='product.like' defaultMessage="相似产品"/>
+                        </p>
+        				{this.state.products.map(item => {
+                            return <Product product={item} className={css.product} key={item.id}/>
+                        })}
+                    </div>
                 </div>
                 <div className={css.info}>
                     <div className={css.card_container}>
@@ -435,7 +446,7 @@ class Information extends React.Component {
             {this.props.data.map(item=> {
                 return <div>
                     <p className={css.info_title}>{item.introduceName}</p>
-                    {item.contentType==1?<img src={item.content}/>:<p>{item.content}</p>}
+                    {item.contentType==1?<img src={item.content+"@800w_1e.png"}/>:<p>{item.content}</p>}
                 </div>
             })}
         </div>
