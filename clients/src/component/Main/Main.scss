@@ -42,7 +42,7 @@
   border-bottom: 40px solid $theme-color;
   .left{
     background-color: $color-grey;
-    width: 17%;
+    width: 170px;
     .cate_title{
       text-align: center;
       font-size: 16px;
@@ -101,7 +101,7 @@
     padding: 10px 24px;
     color: $font-color;
     img{
-      width: 80%;
+      width: 100%;
     }
     .card:hover{
       border: 1px solid #eee;
@@ -150,9 +150,15 @@
   }
 }
 .content{
-  font-size: 14px;
   padding: 20px 70px;
+  line-height: 24px;
   color: $font-color;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  text-align: left;
 }
 
 .button{
@@ -234,7 +240,7 @@
 .brand_intro{
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       word-break: break-all;
       text-align: left;

@@ -114,8 +114,8 @@ class Main extends React.Component {
                                <img alt="example" width="30%" src={item.imgUrl+"@100w_100h_1e_1c.png"} />
                            </div>
                            <div>
-                               <h2>{item.supplierName}</h2>
-                               <p className={css.brand_intro}>{item.introduction}</p>
+                               <h3>{item.supplierName}</h3>
+                               <p className={css.brand_intro}><div dangerouslySetInnerHTML={{__html: item.introduction}} /></p>
                            </div>
                        </Card>
                     </Link>
@@ -194,7 +194,7 @@ class Category extends React.Component {
                         {item.products.map((goods,index)=>{
                             return (index<6?<Link to={"page/product-detail/"+goods.productId}><Card.Grid className={css.card}>
                                 <img src={goods.coverUrl+"@320w_320h_1e_1c.png"}/>
-                                <p style={{textAlign: "center"}} className={css.name}>{goods.productName}</p>
+                                <p style={{textAlign: "left"}} className={css.name}>{goods.productName}</p>
                                 <p className={css.price}>
                                     <span style={{color:"orange"}}>{goods.price+"$"}</span>
                                     <span className={goods.lastPrice>goods.price?css.price_down:css.price_up} >
@@ -213,7 +213,7 @@ class Category extends React.Component {
                     <Link to={"page/brand-detail/"+item.suppliers.sid}>
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
-                        <p className={css.content} style={{padding: "10px",textAlign: "center"}}>{item.suppliers[0].introduction}</p>
+                        <p className={css.content} style={{padding: "10px",textAlign: "left"}}><div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} /></p>
                     </Link>{console.log(item.suppliers.supplierName)}
                     <Card bordered={false} noHovering>
                         {item.suppliers.map((brand,index)=>{
