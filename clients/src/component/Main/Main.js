@@ -104,8 +104,8 @@ class Main extends React.Component {
                     slidesToShow={4}
                     slidesToScroll={1}
                     arrows={true}
-                    nextArrow={<Icon type="right-circle-o" />}
-                    prevArrow={<Icon type="left-circle-o" />}
+                    nextArrow={<Icon className={css.slider_icon} type="right-circle-o" />}
+                    prevArrow={<Icon className={css.slider_icon} type="left-circle-o" />}
 
                 >
                    {this.state.brand.map(item => {
