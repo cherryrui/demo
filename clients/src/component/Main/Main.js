@@ -106,16 +106,16 @@ class Main extends React.Component {
                     nextArrow={<Icon type="right-circle-o" />}
                     prevArrow={<Icon type="left-circle-o" />}
 
-                >
+                >{console.log(2222)}
                    {this.state.brand.map(item => {
                        return <Link className={css.slider_item} to={"page/brand-detail/"+item.sid}>
                        <Card className={css.slider_card} >
                            <div className={css.custom_image}>
-                               <img alt="example" width="30%" src={item.imgUrl} />
+                               <img alt="example" width="30%" src={item.imgUrl+"@100w_100h_1e_1c.png"} />
                            </div>
                            <div>
                                <h2>{item.supplierName}</h2>
-                               <p style={{textAlign: "center"}}>{item.introduction}</p>
+                               <p className={css.brand_intro}}>{item.introduction}</p>
                            </div>
                        </Card>
                     </Link>
@@ -174,7 +174,7 @@ class Category extends React.Component {
             return <div className={css.category_item}>
                 <div className={css.left}>
                     <div className={css.cate_title} >
-                        <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@320w_320h_1e_1c.png"}/>
+                        <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_120h_1e_1c.png"}/>
                     </div>
                     <div>
                     {item.levleTwoProductCategory.map(cate=>{
@@ -197,9 +197,9 @@ class Category extends React.Component {
                                 <p style={{textAlign: "center"}} className={css.name}>{goods.productName}</p>
                                 <p className={css.price}>
                                     <span style={{color:"orange"}}>{goods.price+"$"}</span>
-                                    {goods.price<goods.lastPrice?<Icon style={{color:"orange"}} type="line-chart" />:
-                                    <Icon style={{color:"mediumturquoise"}} type="line-chart" />
-                                }
+                                    <span className={goods.lastPrice>goods.price?css.price_down:css.price_up} >
+                                    <i class="iconfont icon-DYC-2"></i>
+                                    </span>
                                     
                                 </p>
 
@@ -211,19 +211,19 @@ class Category extends React.Component {
                 <div className={css.right}>
          
                     <Link to={"page/brand-detail/"+item.suppliers.sid}>
-                        <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl}/>
+                        <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
                         <p className={css.content} style={{padding: "10px",textAlign: "center"}}>{item.suppliers[0].introduction}</p>
                     </Link>{console.log(item.suppliers.supplierName)}
                     <Card bordered={false} noHovering>
                         {item.suppliers.map((brand,index)=>{
                             return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
-                                <Card.Grid className={css.card} style={{padding:"5px"}}>
-                                    <img style={{width:"100%"}} src={brand.imgUrl}/>
+                                <Card.Grid className={css.cards} style={{padding:"5px"}}>
+                                    <img style={{width:"100%"}} src={brand.imgUrl+"@320w_320h_1e_1c.png"}/>
                             </Card.Grid>
                         </Link>:"")
                         })}
-                    </Card>:""
+                    </Card>
                 </div>:""}
             </div>
         })}

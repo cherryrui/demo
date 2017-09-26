@@ -8,8 +8,12 @@
     box-shadow: none;
     border: none;
     color: $font-color;
+    width:230px;
+    height:245px;
     img{
       display: inline-block;
+      width:80px;
+      height:80px;
     }
   }
   i:after{
@@ -59,7 +63,8 @@
 
     }
     .cate{
-      padding: 20px;
+      padding: 10px;
+      margin-left:20px;
       color: $font-color;
     }
     .cate:hover{
@@ -87,7 +92,9 @@
     padding: 10px 20px;
   }
   .card{
-    width: 33.33%;
+    width: 31.20%;
+    height:220px;
+    margin-left:10px;
     text-align: center;
     border: none ;
     box-shadow: none;
@@ -96,13 +103,21 @@
     img{
       width: 80%;
     }
+    .card:hover{
+      border: 1px solid #eee;
+    }
+    .price_down{
+        color: $color-orange;
+      }
+      .price_up{
+        color: $color-green;
+      }
     .name{
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       word-break: break-all;
-      height: 35px;
       text-align: left;
     }
     .price{
@@ -216,3 +231,23 @@
     box-shadow: 0 0 10px $theme-color;
   }
 }
+.brand_intro{
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      text-align: left;
+      margin-top:20px;
+}
+.cards{
+    width: 33.33%;
+    text-align: center;
+    border: none ;
+    box-shadow: none;
+    padding: 10px 24px;
+    color: $font-color;
+    img{
+      width: 80%;
+    }
+ }   
