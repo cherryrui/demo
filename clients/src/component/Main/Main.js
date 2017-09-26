@@ -106,7 +106,7 @@ class Main extends React.Component {
                     nextArrow={<Icon type="right-circle-o" />}
                     prevArrow={<Icon type="left-circle-o" />}
 
-                >{console.log(2222)}
+                >
                    {this.state.brand.map(item => {
                        return <Link className={css.slider_item} to={"page/brand-detail/"+item.sid}>
                        <Card className={css.slider_card} >
@@ -115,7 +115,7 @@ class Main extends React.Component {
                            </div>
                            <div>
                                <h2>{item.supplierName}</h2>
-                               <p className={css.brand_intro}}>{item.introduction}</p>
+                               <p className={css.brand_intro}>{item.introduction}</p>
                            </div>
                        </Card>
                     </Link>

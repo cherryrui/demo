@@ -38,7 +38,7 @@ const zh_CN = {
     "app.protection": "法律声明",
     "app.contact": "联系客服",
     "app.feedback": "问题反馈",
-    "app.supplier": "诚征英才",
+    "app.supplier": "供应商",
     "app.program": "联盟计划",
     "app.rights": "Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000",
     "app.search": "请输入供应商或者商品名称",
