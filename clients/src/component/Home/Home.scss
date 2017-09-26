@@ -5,7 +5,6 @@
   position: fixed;
   width: 100%;
   z-index: 80;
-  min-width: 1366px;
   background: white;
   .header_content{
     display: flex;
@@ -76,7 +75,9 @@
 
 .foot_first {
   display: flex;
-  padding: 50px 10%;
+  padding: 50px 0px;
+  width: 1100px;
+  margin: 0px auto;
   .item {
     flex-grow: 1;
     text-align: center;

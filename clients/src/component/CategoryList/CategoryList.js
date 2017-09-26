@@ -48,7 +48,7 @@ class CategoryList extends React.Component {
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="main/">
+                        <Link to="page/">
                             <FormattedMessage id="app.home" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -63,7 +63,7 @@ class CategoryList extends React.Component {
                 return <div className={css.category_item}>
                     <div className={css.title} style={{background:`url(${item.img})`}}>{item.name}</div>
                     {item.items.map(cate=>{
-                        return <p className={css.item}><Link to={"main/product-list/"+item.id}>{cate.name}</Link></p>
+                        return <p className={css.item}><Link to={"page/product-list/"+item.id}>{cate.name}</Link></p>
                     })}
                 </div>
             })}

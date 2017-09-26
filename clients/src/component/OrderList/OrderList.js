@@ -376,7 +376,7 @@ class OrderList extends React.Component {
             ]
     }
     jump = (e) => {
-        this.props.history.pushState(null, "/main/mine/order-details");
+        this.props.history.pushState(null, "/page/mine/order-details");
     }
     callback = () => {}
 

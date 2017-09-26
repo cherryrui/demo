@@ -85,8 +85,7 @@ function beforeUpload(file) {
 }
 class Supplier extends React.Component {
   jump = (e) => {
-    window.location.href = "/#/main/mine/successful-application/2"
-
+    this.props.history.pushState(null, "page/mine/successful-application/2");
   }
   static propTypes = {
     intl: intlShape.isRequired,

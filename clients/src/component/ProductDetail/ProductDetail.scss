@@ -63,6 +63,27 @@
 		font-weight: bold;
         margin: auto 0;
 	}
+	.spec_content{
+		display: flex;
+		.content_item{
+			border: 1px solid $font-color;
+			color: $font-color;
+    		padding: 0 17px;
+    		margin-right: 10px;
+    		line-height: 24px;
+			border-radius: 2px;
+			cursor: pointer;
+		}
+		.content_item:hover{
+			color: $color-orange;
+			border-color: $color-orange;
+		}
+		.content_active{
+			@extend .content_item;
+			color: $color-orange;
+			border-color: $color-orange;
+		}
+	}
 	.bottom{
 		display: flex;
 		margin-top: 10px;
@@ -87,19 +108,24 @@
 		text-align: center;
 		border: 1px solid $border-color;
 		padding: 10px;
+		.custom_img{
+			width: 150px;
+			height: 150px;
+		}
 		img{
 			width: 100%
 		}
 		.name{
+			margin: 15px auto;
 			font-size: 14px;
 			font-weight: bold;
 		}
 	}
 	.foot{
-    	padding: 10px;
+		font-size: 13px;
     	text-align: center;
     	.rating{
-      		font-size: 14px;
+      		font-size: 13px;
       		li{
         		cursor: default;
         		margin-bottom: 5px;

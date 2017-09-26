@@ -62,17 +62,17 @@ class Main extends React.Component {
             key: 2,
             message_id: "app.brand",
             default_message: "供应商",
-            url: "/main/brand-list"
+            url: "/page/brand-list"
         }, {
             key: 3,
             message_id: "app.news",
             default_message: "公司近况",
-            url: "/main/news"
+            url: "/page/news"
         }, {
             key: 4,
             message_id: "app.about",
             default_message: "关于我们",
-            url: "/main/about"
+            url: "/page/about"
         }, ];
         //this.language = 'zh_CN';
     }
@@ -121,7 +121,7 @@ class Main extends React.Component {
     }
     handleCart = () => {
         if (sessionStorage.user) {
-            this.props.history.pushState(null, "/main/cart");
+            this.props.history.pushState(null, "/page/cart");
         } else {
             this.setState({
                 visible: true
@@ -134,7 +134,7 @@ class Main extends React.Component {
         })
         if (typeof(index) == 'number') {
             /*window.location.href = "/#/main/category-list/" + index;*/
-            this.props.history.pushState(null, "main/category-list/" + index + "/" + name);
+            this.props.history.pushState(null, "page/category-list/" + index + "/" + name);
 
         }
     }
@@ -149,7 +149,7 @@ class Main extends React.Component {
                 </Menu.Item>
                 {this.props.cart.carts.map(item => {
                     return <Menu.Item>
-                        <Link  to={"main/product-detail/" + item.id}>
+                        <Link  to={"page/product-detail/" + item.id}>
                             <div className={css.cart_product}>
                                 <img src={item.img}/>
                                 <div className={css.name}>
@@ -202,7 +202,7 @@ class Main extends React.Component {
                     <Search
                         placeholder={formatMessage({id:"home.input_warn"})}
                         style={{width: 300, height: "42px"}}
-                        onSearch={value => value ? this.props.history.pushState(null, '/main/product-list/' + value)
+                        onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
                     <Dropdown overlay={cart_menu} placement="bottomRight">

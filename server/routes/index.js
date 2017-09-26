@@ -5,7 +5,7 @@ var message = require('../public/locale/zh_message.js');
 router.get('/', async(ctx, next) => {
 	console.log('/sdasdas');
 	await ctx.render('index', {
-		title: 'Hello ',
+		title: '川川 ',
 	})
 })
 module.exports = router

@@ -6,23 +6,23 @@ import axios from 'axios';
 import css from './SuccessfulApplication.scss';
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Button,
     Icon,
-    } from 'antd';
+} from 'antd';
 
-class SuccessfulApplication extends React.Component{
-    agent=(a)=>{
-        window.location.href = "/#/main/mine/agent"
+class SuccessfulApplication extends React.Component {
+    agent = (a) => {
+        this.props.history.pushState(null, "page/mine/agent");
     }
-    supplier=(s)=>{
-        window.location.href = "/#/main/mine/supplier"
+    supplier = (s) => {
+        this.props.history.pushState(null, "page/mine/supplier");
     }
     static propTypes = {
         intl: intlShape.isRequired
@@ -31,13 +31,13 @@ class SuccessfulApplication extends React.Component{
         super(props);
         this.type = Number(this.props.params.type)
     }
-    render(){
+    render() {
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
-        return<div className={css.submit_success}>
+            }
+        } = this.props;
+        return <div className={css.submit_success}>
             <p className={css.success}>
                 <Icon className={css.smile} type="smile-o" />
                 <FormattedMessage id="app.success"

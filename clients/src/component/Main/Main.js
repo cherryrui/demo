@@ -84,7 +84,7 @@ class Main extends React.Component {
                         </p>
                     </div>
                     <div className={`${css.right} ${css.brand_button}`}>
-                        <Link  to="main/post-want">
+                        <Link  to="page/post-want">
                             <FormattedMessage id="main.post" defaultMessage="更多"/>
                         </Link>
                     </div>
@@ -108,7 +108,7 @@ class Main extends React.Component {
 
                 >
                    {this.state.brand.map(item => {
-                       return <Link className={css.slider_item} to={"main/brand-detail/"+item.sid}>
+                       return <Link className={css.slider_item} to={"page/brand-detail/"+item.sid}>
                        <Card className={css.slider_card} >
                            <div className={css.custom_image}>
                                <img alt="example" width="30%" src={item.imgUrl} />
@@ -123,7 +123,7 @@ class Main extends React.Component {
                 </Slider>:""}
             </div>
             <div className={css.brand_button}>
-                <Link  to="main/brand-list">
+                <Link  to="page/brand-list">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
@@ -178,12 +178,12 @@ class Category extends React.Component {
                     </div>
                     <div>
                     {item.levleTwoProductCategory.map(cate=>{
-                        return <Link to={"main/product-list/"+cate.categoryId+"/"+cate.categoryName}>
+                        return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
                             <p className={css.cate}>{cate.categoryName}</p>
                         </Link>
                     })}
                     <div className={css.brand_button}>
-                        <Link  to={"main/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
+                        <Link  to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
                             <FormattedMessage id="app.more" defaultMessage="更多"/>
                         </Link>
                     </div>
@@ -192,7 +192,7 @@ class Category extends React.Component {
                 <div className={css.middle}>
                     <Card bordered={false} noHovering>
                         {item.products.map((goods,index)=>{
-                            return (index<6?<Link to={"main/product-detail/"+goods.productId}><Card.Grid className={css.card}>
+                            return (index<6?<Link to={"page/product-detail/"+goods.productId}><Card.Grid className={css.card}>
                                 <img src={goods.coverUrl+"@320w_320h_1e_1c.png"}/>
                                 <p style={{textAlign: "center"}} className={css.name}>{goods.productName}</p>
                                 <p className={css.price}>
@@ -210,14 +210,14 @@ class Category extends React.Component {
                 {item.suppliers.length>0?
                 <div className={css.right}>
          
-                    <Link to={"main/brand-detail/"+item.suppliers.sid}>
+                    <Link to={"page/brand-detail/"+item.suppliers.sid}>
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
                         <p className={css.content} style={{padding: "10px",textAlign: "center"}}>{item.suppliers[0].introduction}</p>
                     </Link>{console.log(item.suppliers.supplierName)}
                     <Card bordered={false} noHovering>
                         {item.suppliers.map((brand,index)=>{
-                            return (index>0&&index<7?<Link to={"main/brand-detail/"+brand.sid}>
+                            return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
                                 <Card.Grid className={css.card} style={{padding:"5px"}}>
                                     <img style={{width:"100%"}} src={brand.imgUrl}/>
                             </Card.Grid>

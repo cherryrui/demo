@@ -27,7 +27,7 @@ class Message extends React.Component {
         intl: intlShape.isRequired
     };
     jump = (e) => {
-        this.props.history.pushState(null, "/main/mine/system-message");
+        this.props.history.pushState(null, "/page/mine/system-message");
     }
     constructor(props) {
         super(props);

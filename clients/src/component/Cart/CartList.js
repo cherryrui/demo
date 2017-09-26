@@ -309,7 +309,7 @@ class CartList extends React.Component {
             })
             localStorage.setItem('quotation', JSON.stringify(quotation));
             /*  window.location.href = "/#/main/quotation";*/
-            this.props.history.pushState(null, "main/quotation");
+            this.props.history.pushState(null, "page/quotation");
         } else {
             const {
                 intl: {

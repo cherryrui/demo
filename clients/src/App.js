@@ -202,7 +202,7 @@ class App extends React.Component {
         return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
-                            {this.state.user?<div> <Link to="main/mine" className={css.item1}>{this.state.user.userName}</Link>
+                            {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}</Link>
                                 <p onClick={this.showModal} className={css.item2}><FormattedMessage id="app.pull.out" defaultMessage="退出"/>
                                 <Modal className={css.modalcontent}
                                     title="退出系统"
@@ -237,7 +237,8 @@ class App extends React.Component {
                         this.props.children && React.cloneElement(this.props.children)
                     }               
                     <div className={css.footer}>
-                        <div className={css.foot}>
+                        <div className={css.footer_first}>
+                            <div className={css.foot}>
                                 <div className={css.item}>
                                     <p className={css.title}>
                                         <FormattedMessage id="app.about" defaultMessage="关于我们"/></p>
@@ -279,6 +280,7 @@ class App extends React.Component {
                                         <FormattedMessage id="app.program" defaultMessage="联盟计划"/></p>
                                 </div>
                             </div>
+                        </div>
                         <div className={css.bottom}>
                             <FormattedMessage id="app.rights" defaultMessage="Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000"/>
                         </div>
@@ -295,8 +297,8 @@ ReactDOM.render(
             <Provider store={store}>
                 <Router history={hashHistory}>
                     <Route path="/" component={App}>
-                        <IndexRedirect to="/main" />
-                        <Route path="main" component={Home}>
+                        <IndexRedirect to="/page" />
+                        <Route path="page" component={Home}>
                             <IndexRoute component={Main}/>
                             <Route path="category-list/:id/:name" component={CategoryList}/>
                             <Route path="brand-list" component={BrandList}/>

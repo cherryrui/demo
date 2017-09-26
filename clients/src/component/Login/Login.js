@@ -43,7 +43,7 @@ class Login extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
-                    console.log('xxxx:',res);
+                    console.log('xxxx:', res);
                     console.log(res.status);
                     if (res.data.isSucc) {
                         if (values.remember) {
@@ -102,7 +102,7 @@ class Login extends React.Component {
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
                     })(
-                        <Input size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
+                        <Input className={css.input} size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
                         type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
                     )}
                     </FormItem>

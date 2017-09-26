@@ -63,7 +63,7 @@ class Cart extends React.Component {
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="main/">
+                        <Link to="page/">
                             <FormattedMessage id="app.home" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>

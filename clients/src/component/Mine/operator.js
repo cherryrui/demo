@@ -7,62 +7,62 @@ export default {
         list: [{
             key: 1000,
             title: "mine.person.data",
-            url: "/main/mine/person-data"
+            url: "/page/mine/person-data"
         }, {
             key: 1001,
             title: "mine.person.address",
-            url: "/main/mine/person-address"
+            url: "/page/mine/person-address"
         }, {
             key: 1002,
             title: "mine.person.account",
-            url: "/main/mine/person-data"
+            url: "/page/mine/person-data"
         }, ]
     }, {
         name: "mine.order",
         list: [{
             key: 2000,
             title: "mine.order.all",
-            url: "/main/mine/order-list"
+            url: "/page/mine/order-list"
         }, ]
     }, {
         name: "mine.message",
         list: [{
             key: 3000,
             title: "mine.message.system",
-            url: "/main/mine/system-message"
+            url: "/page/mine/system-message"
         }, {
             key: 3001,
             title: "mine.message.consult",
-            url: "/main/mine/message"
+            url: "/page/mine/message"
         }, ]
     }, {
         name: "mine.agent.center",
         list: [{
             key: 4000,
             title: "mine.quotation.list",
-            url: "/main/mine/quotation-list"
+            url: "/page/mine/quotation-list"
         }]
     }, {
         name: "mine.favorite",
         list: [{
             key: 5000,
             title: "mine.favorite.product",
-            url: "/main/mine/favorite/1"
+            url: "/page/mine/favorite/1"
         }, {
             key: 5001,
             title: "mine.favorite.brand",
-            url: "/main/mine/favorite/2"
+            url: "/page/mine/favorite/2"
         }, ]
     }, {
         name: "mine.product.management",
         list: [{
             key: 6000,
             title: "mine.product.list",
-            url: "/main/mine/agent-product"
+            url: "/page/mine/agent-product"
         }, {
             key: 6001,
             title: "mine.product.upload",
-            url: "/main/mine/product-editor"
+            url: "/page/mine/product-editor"
         }]
     }, {
         name: "mine.agent",

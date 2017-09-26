@@ -9,46 +9,50 @@ import appcss from '../../App.scss';
 import css from './SystemMessage.scss';
 import basecss from '../Mine/Mine.scss';
 import axios from 'axios';
-import {Icon,Pagination} from 'antd';
+import {
+    Icon,
+    Pagination
+} from 'antd';
 
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 
 function onShowSizeChange(current, pageSize) {
     console.log(current, pageSize);
 }
 
-class SystemMessage extends React.Component{
+class SystemMessage extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired
     };
-    jump=(e)=>{
-        window.location.href = "/#/main/mine/message"
-    }
-    constructor(props){
-        super(props);
-    this.state={
-        system:{
-            message:"gbfg bfg g" ,
-            time:"2017-06-04",
-            mini:"16:00"
-        }
-    };
+    jump = (e) => {
+        this.props.history.pushState(null, "page/mine/message");
 
     }
- render(){
-     let {
-         intl: {
-             formatMessage
-             }
-         } = this.props;
-     return<div className={css.my_consulting} >
+    constructor(props) {
+        super(props);
+        this.state = {
+            system: {
+                message: "gbfg bfg g",
+                time: "2017-06-04",
+                mini: "16:00"
+            }
+        };
+
+    }
+    render() {
+        let {
+            intl: {
+                formatMessage
+            }
+        } = this.props;
+        return <div className={css.my_consulting} >
                  <div className={css.title}>
                      <p  className={css.title_left}>
                          <FormattedMessage
@@ -89,7 +93,7 @@ class SystemMessage extends React.Component{
 
 
      </div>
- }
+    }
 
 }
 

@@ -82,7 +82,7 @@ function beforeUpload(file) {
 }
 class Agent extends React.Component {
   jump = (e) => {
-    this.props.history.pushState(null, "main/mine/successful-application/1")
+    this.props.history.pushState(null, "page/mine/successful-application/1")
   }
   static propTypes = {
     intl: intlShape.isRequired,

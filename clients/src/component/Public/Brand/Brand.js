@@ -31,7 +31,7 @@ class Brand extends React.Component {
                 <span className={`${appcss.custom_icon} ${this.props.brand.rz ? css.icon_rz_active : css.icon_rz}`}/>
                 <span className={`${appcss.custom_icon} ${this.props.brand.hz ? css.icon_hz_active : css.icon_hz}`}/>
             </div>
-            <Link to={"main/brand-detail/" + this.props.brand.id}>
+            <Link to={"page/brand-detail/" + this.props.brand.id}>
                 <div className={css.custom_image}>
                     <img alt="example" width="100%" src={this.props.brand.img} />
                 </div>

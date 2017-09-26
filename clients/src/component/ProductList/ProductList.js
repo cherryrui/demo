@@ -20,13 +20,16 @@ import {
     Pagination,
     Icon,
     Card,
-    Rate
+    Rate,
+    Row,
+    Col
 } from 'antd';
 
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 import Product from '../Public/Product/Product.js';
 import operator from './operator.js';
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 
 /**
  * 产品列表页面，根据分类，查询产品
@@ -45,9 +48,9 @@ class ProductList extends React.Component {
             products: [], //产品列表
             cid: 0, //选择的三级分类id，0：全部
             bid: 0, //选择的供应商id，0：全部
-            total: 50,
+            total: 0,
             current: 1,
-            pageSize: 10,
+            pageSize: 4,
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
         }
@@ -129,7 +132,7 @@ class ProductList extends React.Component {
         param.searchKey = Number(this.info) ? null : this.info;
         param.categoryId = this.state.cid > 0 ? this.state.cid : Number(this.info) ? Number(this.info) : 0;
         param.bandId = this.state.bid;
-        param.pageNo = this.state.current - 1;
+        param.pageNo = this.state.current;
         param.pageSize = this.state.pageSize;
         axios.post('/product/search-product.json', param).then(res => {
             if (res.data.isSucc) {
@@ -217,7 +220,7 @@ class ProductList extends React.Component {
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="main/">
+        <Link to="page/">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -266,23 +269,15 @@ class ProductList extends React.Component {
                         <FormattedMessage id="brand.product.sum" defaultMessage="总计"
                             values={{total:this.state.sum}}
                         />&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Pagination size="small" total={this.state.sum} simple onChange={this.handleChange} />
+                        <Pagination size="small" pageSize={this.state.pageSize} total={this.state.sum} simple onChange={this.handleChange} />
                     </div>
                 </div>
                 <div className={css.product_list}>
                     {this.state.products.map((item,index)=>{
-                        return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,index)} addCart/>
+                        return <Product className={(index+1)%4==0?css.product_right:css.product}  product={item} handleStar={this.handleStar.bind(this,index)} addCart/>
                     })}
                 </div>
-                <div className={css.footer}>
-                    <Pagination 
-                        showSizeChanger 
-                        defaultCurrent={1} 
-                        total={this.state.sum}
-                        onShowSizeChange={this.onShowSizeChange}
-                        onChange={this.handleChange} 
-                        />
-                </div>
+                <CusPagination onChange={this.handleChange} total={this.state.sum} onShowSizeChange={this.onShowSizeChange} />
             </div>
             :<div className={css.product_no}>
                 <FormattedMessage id='product.no_product' defaultMessage="暂无搜索到商品"/>

@@ -298,12 +298,12 @@ class Quotation extends React.Component {
             <div className={appcss.navigate}>
             	{this.state.quotation.id?<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="main/mine">
+                        <Link to="page/mine">
                             <FormattedMessage id="mine.person" defaultMessage="个人中心"/>
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item >
-                        <Link to="main/mine/quotation-list">
+                        <Link to="page/mine/quotation-list">
                             <FormattedMessage id="mine.quotation.list" defaultMessage="报价单列表"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -313,7 +313,7 @@ class Quotation extends React.Component {
                 </Breadcrumb>
                 :<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="main/cart">
+                        <Link to="page/cart">
                             <FormattedMessage id="cart.cart" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>

@@ -102,6 +102,9 @@ class ProductDetail extends React.Component {
             }
         })
     }
+    componentWillReceiveProps() {
+
+    }
 
     componentDidMount() {
         //this.refs.product_detail.scrollIntoView();
@@ -175,7 +178,8 @@ class ProductDetail extends React.Component {
                 this.specify.style.border = "none";
                 this.specify.style.padding = "0";
                 this.props.addCart(this.state.product).then(res => {
-                    window.location.href = "/#/main/cart"
+                    this.props.history.pushState(null, "page/cart");
+
                 });
             } else {
                 console.log("dada", this.specify.style)
@@ -220,8 +224,13 @@ class ProductDetail extends React.Component {
             }
         });
     }
-    handleAttr = (index, e) => {
-        this.state.specs[index].select_value = e.target.value;
+    handleAttr = (index, value) => {
+        console.log(index, value);
+        let specs = this.state.specs;
+        specs[index].select_value = value;
+        this.setState({
+            specs: specs,
+        })
         let flag = true;
         this.state.specs.map(item => {
             if (!item.select_value) {
@@ -250,6 +259,12 @@ class ProductDetail extends React.Component {
         }
     }
 
+    handleCancel = () => {
+        this.setState({
+            visible: false
+        })
+    }
+
     render() {
         const {
             intl: {
@@ -263,7 +278,7 @@ class ProductDetail extends React.Component {
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-                        <Link to="main/">
+                        <Link to="page/">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
@@ -327,12 +342,12 @@ class ProductDetail extends React.Component {
                         {this.state.specs.length>0?this.state.specs.map((item,index)=>{
                             return <div key={item.id} className={css.item}>
                             <p className={css.title}>{item.specName}</p>
-                            <p className={css.spec_content}> 
+                            <div className={css.spec_content}> 
                                 {item.specVal.map(attr=>{
-                                    return <p onClick={this.handleAttr.bind(this,index,attr.valid)}>{attr.specValue}</p>
+                                    return <p className={item.select_value==attr.valid?css.content_active:css.content_item} onClick={this.handleAttr.bind(this,index,attr.valid)}>{attr.specValue}</p>
                                 })}
                                 
-                            </p>
+                            </div>
                         </div>
                         }):""}
                     </div>
@@ -360,7 +375,9 @@ class ProductDetail extends React.Component {
                     </div>
                 </div>
                 {this.state.product.supplierId?<div className={css.left}>
-                    <img src={this.state.product.supplierImg+"@320w_320h_1e_1c.png"}/>
+                    <p className={css.custom_img}>
+                        <img src={this.state.product.supplierImg+"@320w_320h_1e_1c.png"}/>
+                    </p>
                     <p className={css.name}>{this.state.product.supplierName}</p>
                     <p className={css.foot}>
                         <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>&nbsp;&nbsp;

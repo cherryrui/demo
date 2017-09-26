@@ -238,7 +238,7 @@ class QuotationList extends React.Component {
             				<FormattedMessage id="cart.delete" defaultMessage="删除"/>
 	            	
             			</p>
-            			<Link className={css.item_icon} to={'main/quotation/'+item.id}>
+            			<Link className={css.item_icon} to={'page/quotation/'+item.id}>
             				<Icon type="eye-o" />&nbsp;&nbsp;
             				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
             			</Link>

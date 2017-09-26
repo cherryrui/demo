@@ -31,6 +31,14 @@
     color: $theme-color;
     font-weight: bold;
   }
+  .input{
+    input{
+      border-radius: 2px;
+    }
+    span{
+      margin-right: 20px;
+    }
+  }
   .button {
     width: 100%;
     margin-top: 10px;

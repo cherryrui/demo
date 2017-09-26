@@ -36,7 +36,7 @@ class Product extends React.Component {
     render() {
         return <Card className={`${css.product} ${this.props.className}`}bodyStyle={{ padding: 0 }}>
             {this.props.check?<Checkbox checked={this.props.product.checked?true:false}onChange={this.onChange}></Checkbox>:""}
-            <Link to={"main/product-detail/"+this.props.product.id}>
+            <Link to={"page/product-detail/"+this.props.product.productId}>
                 <div className={css.custom_image}>
                     <img alt="example" width="100%" src={this.props.product.coverUrl+"@320w_320h_1e_1c.png"}/>
                 </div>
@@ -46,12 +46,14 @@ class Product extends React.Component {
                 <span>
                 {this.props.product.price}$
                 </span>
-                <Icon className={this.props.product.lastPrice-this.props.product.price>0?css.price_down:css.price_up} type="line-chart" />
+                <span className={this.props.product.lastPrice-this.props.product.price>0?css.price_down:css.price_up} >
+                    <i class="iconfont icon-DYC-2"></i>
+                </span>
             </p>}
             {this.props.addCart ? <div className={css.footer}>
                 <p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>
                 <p className={css.add_cart}>
-                    <Link to={"/main/product/"+this.props.product.productId}>
+                    <Link to={"/page/product-detail/"+this.props.product.productId}>
                         <Icon type="shopping-cart" />&nbsp;&nbsp;&nbsp;&nbsp;
                         <FormattedMessage id="product.detail.see" defaultMessage="加入购物车"/>
                     </Link>

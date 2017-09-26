@@ -22,13 +22,14 @@
     display: flex;
     overflow: hidden;
     align-items: center;
+    max-height: 210px;
+    overflow-y: auto;
   }
   .single{
     flex-shrink: 0;
-    padding: 10px 20px;
+    padding: 15px 20px;
   }
   .item{
-    margin: 6px 10px;
     text-align: center;
     cursor: pointer;
   }
@@ -42,19 +43,18 @@
     color: $theme-color
   }
   .item_img{
-    margin: 10px;
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
-    padding: 10px 5px;
+    width: 70px;
+    height: 70px;
+    border: 1px solid $color-grey;
     cursor: pointer;
   }
   .active_img{
     @extend .item_img;
-    border: 2px solid $color-grey;
+    border: 2px solid $color-orange;
   }
   .item_img:hover{
-    border: 2px solid $color-grey;
+    border: 2px solid $color-orange;
   }
   .right{
     margin: auto 20px;

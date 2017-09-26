@@ -27,15 +27,20 @@ class SingleSelect extends React.Component {
         this.length = this.props.data.length;
         this.getShowIndex();
     }
+    componentWillReceiveProps(nextProps) {
+        if (this.props.data.length != nextProps.data.length) {
+            this.state.showIndex = 0;
+        }
+    }
     componentDidUpdate() {
-        console.log(this.state.showIndex, this.props.data)
         if (this.length != this.props.data.length) {
+            this.length = this.props.data.length;
+            console.log(this.length, this.props.data.length)
             this.getShowIndex();
         }
     }
 
     getShowIndex() {
-        console.log("getShowIndex", this.props.data);
         let clientWidth = this.refs.middle.clientWidth;
         let width = 0,
             showIndex = 0;
@@ -85,7 +90,9 @@ class SingleSelect extends React.Component {
             <div ref="middle" className={css.middle}>
                 {this.props.all?<div className={css.single} ref="item"
                         onClick={this.handleSelect.bind(this,0)}>
-                        {this.props.showImg?<img src='../img/product.jpg' className={current==0?css.active_img:css.item_img}/>
+                        {this.props.showImg?<p className={current==0?css.active_img:css.item_img}>
+                            <i style={{lineHeight: "70px",fontSize:"60px"}}class="iconfont icon-quanbu"></i>
+                        </p>
                         :<p className={current==0?css.active:css.item}>
                             <FormattedMessage id="app.all" defaultMessage="所有"/>
                         </p>}
@@ -102,7 +109,7 @@ class SingleSelect extends React.Component {
                 })}
             </div> 
             {this.state.showIndex<this.props.data.length ?
-                <Button className={css.right} onClick={this.handleClick}>
+                <Button type="primary" ghost size="small" className={css.right} onClick={this.handleClick}>
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                     {this.state.showMore?<Icon type="down"/>:<Icon type="up" />}
                 </Button> : ""

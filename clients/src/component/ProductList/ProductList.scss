@@ -19,6 +19,9 @@
   }
   .right{
     display: flex;
+    span{
+      line-height: 24px;
+    }
   }
 }
 .product_list{
@@ -29,11 +32,14 @@
 .product{
    width: 220px;
    margin-right: 73px; 
+   margin-bottom: 30px;
 }
-.footer{
-  text-align: right;
-  margin-top: 20px;
+.product_right{
+  width: 220px;
+  margin-right: 0px;
+  margin-bottom: 30px;
 }
+
 .product_no{
   text-align: center;
   margin: 40px;
