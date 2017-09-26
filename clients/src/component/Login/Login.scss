@@ -1,7 +1,7 @@
 @import "../../themes.scss";
 .body{
 	padding-top: 40px;
-  min-height: 600px;
+  min-height: 445px;
 }
 .logo{
 	color: $theme-color;
@@ -16,31 +16,61 @@
 	display: flex;
 }
 .login_form{
-  width: 350px;
-  margin: auto 10% auto auto;
+  width: 340px;
+  margin: auto 14% auto auto;
   background: white;
-  padding: 28px;
-  border-radius: 5px;
+  padding-top: 28px;
+  border-radius: 4px;
   box-shadow: 0 0 10px #8a96ad;
+  height: 360px;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-bottom: 35px;
+  .input_row{
+
+    input{
+      border-radius: 2PX;
+      padding-left: 33px !important;
+
+    }
+  }
   .title{
   	text-align: center;
     border-bottom: 1px solid $border-color;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    padding-bottom: 10px;
+   display: block;
+  }
+
+  .remember{
+    font-size: 12px;
+    line-height: 14px;
+    float: left;
   }
   .forgot {
     float: right;
     color: $theme-color;
     font-weight: bold;
-  }
-  .input{
-    input{
-      border-radius: 2px;
-    }
-    span{
-      margin-right: 20px;
-    }
+    font-size: 12px;
+    line-height: 14px;
   }
   .button {
     width: 100%;
+    margin-top:20px;
+    border-radius: 2px;
+    border:none;
+  }
+  .button_registor{
+    background:$button-green;
+    border:none;
+    width: 100%;
+    border-radius: 2px;
     margin-top: 10px;
+  }
+  .button_registor:hover{
+
+    background-color: $button-green-active;
   }
 }

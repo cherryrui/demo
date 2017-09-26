@@ -9,10 +9,10 @@ import {
     FormattedMessage,
     injectIntl,
     intlShape
-} from 'react-intl';
+    } from 'react-intl';
 import {
     Link
-} from 'react-router';
+    } from 'react-router';
 import {
     Form,
     Icon,
@@ -20,7 +20,7 @@ import {
     Button,
     Checkbox,
     message
-} from 'antd';
+    } from 'antd';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
@@ -36,14 +36,14 @@ class Login extends React.Component {
         let {
             intl: {
                 formatMessage
-            }
-        } = this.props;
+                }
+            } = this.props;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
-                    console.log('xxxx:', res);
+                    console.log('xxxx:',res);
                     console.log(res.status);
                     if (res.data.isSucc) {
                         if (values.remember) {
@@ -76,11 +76,11 @@ class Login extends React.Component {
         const {
             intl: {
                 formatMessage
-            }
-        } = this.props;
+                }
+            } = this.props;
         const {
             getFieldDecorator
-        } = this.props.form;
+            } = this.props.form;
         return <div className={css.body}>
             <div className={css.logo}>LOGO</div>
             <div className={css.form} style={{background: `url("../img/login_bg.png")`}}>
@@ -94,16 +94,16 @@ class Login extends React.Component {
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],
                     })(
-                        <Input size="large" prefix={<Icon type="user" style={{ fontSize: 13 }} />} 
-                        placeholder= {formatMessage({id: 'login.input.name'})} />
+                        <Input  className={css.input_row}size="large" prefix={<Icon type="user" style={{ fontSize: 24 }} />}
+                            placeholder= {formatMessage({id: 'login.input.name'})} />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem  style={{ marginBottom: 10,orderRadius: 2 }}>
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
                     })(
-                        <Input className={css.input} size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
-                        type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
+                        <Input className={css.input_row}size="large" prefix={<Icon type="lock" style={{ fontSize: 24,paddingRight:20 }} />}
+                            type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
                     )}
                     </FormItem>
                     <FormItem>
@@ -111,19 +111,19 @@ class Login extends React.Component {
                         valuePropName: 'checked',
                         initialValue: true,
                     })(
-                        <Checkbox>
+                        <Checkbox className={css.remember} >
                             <FormattedMessage id="login.remember" defaultMessage="记住密码"/>
                         </Checkbox>
                     )}
-                        <Link className={css.forgot} to="/reset-password">
+                        <Link className={css.forgot} to="/reset-password" >
                             <FormattedMessage id="login.forget" defaultMessage="用户登录"/>
                         </Link>
                         <Button size="large" type="primary" htmlType="submit" className={css.button}>
                             <FormattedMessage id="login.login" defaultMessage="登录"/>
                         </Button>
-                        <Button size="large" type="primary" onClick={this.handleClick}  className={css.button}>
+                        <Button size="large" type="primary" onClick={this.handleClick}  className={css.button_registor}>
                             <FormattedMessage id="login.registor" defaultMessage="注册"/>
-                    </Button>
+                        </Button>
                     </FormItem>
                 </Form>
             </div>
@@ -132,3 +132,19 @@ class Login extends React.Component {
 }
 Login = Form.create()(Login);
 export default injectIntl(Login);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
