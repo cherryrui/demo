@@ -124,7 +124,7 @@ class ProductDetail extends React.Component {
 
     };
     handleNum = (value) => {
-        console.log('changed', value);
+        this.state.product.productNum = value;
     };
 
     /**
@@ -141,20 +141,24 @@ class ProductDetail extends React.Component {
         console.log(key);
     };
     handleAddCart = (type) => {
-        //console.log(109, "handleAddCart", localStorage.uid)
+        console.log(109, "handleAddCart", this.state.product)
         if (localStorage.uid) {
             let flag = true;
-            this.state.product.attr.map(item => {
+            this.state.specs.map(item => {
                 if (!item.select_value) {
                     flag = false;
                     return;
                 }
             })
             if (flag) {
-                console.log("加入购物车")
+                let param = {
+                    itemId: this.state.product.itemId,
+                    productId: this.state.product.productId,
+                    productNum: this.state.product.productNum ? this.state.product.productNum : 1,
+                }
                 this.specify.style.border = "none";
                 this.specify.style.padding = "0";
-                this.props.addCart(this.state.product).then(res => {
+                this.props.addCart(param).then(res => {
                     message.success("成功加入购物车")
                 });
             } else {
@@ -231,12 +235,8 @@ class ProductDetail extends React.Component {
         });
     }
     handleAttr = (index, value) => {
-        console.log(index, value);
         let specs = this.state.specs;
         specs[index].select_value = value;
-        this.setState({
-            specs: specs,
-        })
         let flag = true;
         this.state.specs.map(item => {
             if (!item.select_value) {
@@ -255,12 +255,21 @@ class ProductDetail extends React.Component {
                     product.price = res.data.result.price;
                     product.inventory = res.data.result.inventory;
                     product.priceDiscounts = res.data.result.priceDiscounts;
+                    product.itemId = res.data.result.itemId;
                     this.setState({
-                        product: product
+                        product: product,
+                        specs: specs,
                     })
                 } else {
                     message.error(res.data.message)
+                    this.setState({
+                        specs: specs,
+                    })
                 }
+            })
+        } else {
+            this.setState({
+                specs: specs,
             })
         }
     }

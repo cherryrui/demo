@@ -3,6 +3,10 @@
  */
 var router = require('koa-router')();
 const axios = require('axios');
+var querystring = require('querystring');
+const {
+    url,
+} = require('../config/index');
 
 router
     .get('/get-shopping-cart.json', async(ctx, next) => {
@@ -40,6 +44,12 @@ router
     })
     .post('/add-cart.json', async(ctx, next) => {
         console.log(41, ctx.request.body);
+        let param = ctx.request.body;
+        param.authorization = ctx.cookie.get('token');;
+        console.log(param);
+        await axios.post(url + "/auth/shopCar/addCar", querystring.stringify(param)).then(res => {
+            console.log(res.data);
+        })
         ctx.body = {
             cart: {
                 id: 6,
@@ -204,7 +214,7 @@ router
         let ids = ctx.request.body;
         ctx.body = true;
     })
-    .post('/commit-order.json',async(ctx,next) =>{
+    .post('/commit-order.json', async(ctx, next) => {
         ctx.body = true
     })
 
