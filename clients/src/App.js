@@ -172,6 +172,9 @@ class App extends React.Component {
         this.props.history.pushState(null, '/login');
         localStorage.clear();
         sessionStorage.clear();
+        this.setState({
+                    user: ""
+                })
     }
     handleCancel = (e) => {
         this.setState({

@@ -85,7 +85,7 @@ class Main extends React.Component {
          * 获取一级分类和最近购物车商品
          */
         axios.get('/api/get-title-data.json').then(res => {
-            //console.log(res.data);
+            //console.log('home.js:',res.data);
             this.setState({
                 categorys: res.data.categorys.result,
                 carts: res.data.carts,
@@ -140,14 +140,14 @@ class Main extends React.Component {
     }
 
     render() {
-        console.log(this.props.cart);
+        //console.log(this.props.cart);
 
         let cart_menu = (
             <Menu>
                 <Menu.Item style={{width:"200px"}}>
                     <FormattedMessage  id="home.recent.add" defaultMessage="最近新加产品"/>
                 </Menu.Item>
-                {this.props.cart.isSucc?this.props.cart.result.list.map(item => {
+                {this.state.carts.map(item => {
                     return <Menu.Item>
                         <Link  to={"page/product-detail/" + item.id}>
                             <div className={css.cart_product}>
@@ -167,7 +167,7 @@ class Main extends React.Component {
 
                         </Link>
                     </Menu.Item>
-                }):""}
+                })}
                 <Menu.Item>
 
                 </Menu.Item>

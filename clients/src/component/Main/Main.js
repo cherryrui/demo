@@ -36,7 +36,7 @@ class Main extends React.Component {
     }
     componentWillMount() {
         axios.get('/api/get-main-data.json').then(res => {
-            //console.log(res.data)
+            //console.log('main.js:',res.data)
             this.setState({
                 brand: res.data.brand.result,
                 category: res.data.category.result
