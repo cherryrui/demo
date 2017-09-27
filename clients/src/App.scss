@@ -112,13 +112,14 @@
 %button{
     padding: 10px 20px;
     color: white;
-    border-radius: 4px;
+    border-radius: 2px !important;
     display: inline-block;
     cursor: pointer;
 }
 .button_theme{
     background-color: $button-blue !important;
     border-color: $button-blue !important;
+  border-radius: 2px !important;
     @extend %button;
 }
 .button_theme:hover{

@@ -85,11 +85,11 @@ class PersonAddress extends React.Component{
                 className: css.table_col,
                 width: "50%",
                 className: css.table_col,
-                render: (record) => <span className={css.table_address}>{record.city}&nbsp;&nbsp;
-                {record.address}
-                    <Button className={css.delivery}type="primary">
+                render: (record) => <span className={css.table_address}>
+                    <p>{record.city}&nbsp;&nbsp;{record.address}</p>
+                    <p className={css.delivery}type="primary">
                         <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址 "/>
-                    </Button>
+                    </p>
                 </span>
             },
             {
@@ -196,7 +196,7 @@ class PersonAddress extends React.Component{
                 dataSource={this.state.my_address} />
             </div>
             <div className={css.delivery_new}>
-                <Button className={css.buttony_new}type="primary" onClick={this.handleEditAddress}>
+                <Button className={appcss.button_theme}type="primary" onClick={this.handleEditAddress}>
                     <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址 "/>
                 </Button>
 

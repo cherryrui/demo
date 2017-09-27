@@ -105,7 +105,7 @@ class PersonData extends React.Component{
         }else {
             this.setState({
                 edit: true,
-                button_name: "perau.perau.save"
+                button_name: "app.save"
             })
         }
     }
