@@ -101,13 +101,14 @@ class ConfirmOrder extends React.Component {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "18%",
             className: css.table_col,
-            dataIndex: 'num',
-            key: 'num',
+            dataIndex: 'productNum',
+            key: 'productNum',
+            render: (num) => <span className={css.table_price}>{num}</span>
         }, {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
             width: "12%",
             className: css.table_col,
-            render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
+            render: (record) => <span className={css.table_price}>${record.price*record.productNum}</span>
         }, ]
     }
     componentWillMount() {
@@ -121,7 +122,7 @@ class ConfirmOrder extends React.Component {
         let sum = 0,
             order = this.state.order;
         this.props.products.map(item => {
-            sum += item.price * item.num;
+            sum += item.price * item.productNum;
         })
         order.sum = sum;
         order.postage = 100;
