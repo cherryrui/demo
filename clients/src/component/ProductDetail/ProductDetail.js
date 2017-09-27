@@ -438,14 +438,7 @@ class ProductDetail extends React.Component {
                     </div>
                 </div>
             </div>
-            <Modal
-                title={formatMessage({id:"login.login.title"})}
-                visible={this.state.visible}
-                onCancel={this.handleCancel}
-                footer={null}
-            >
-                <LoginModal closeModal={this.handleCancel}/>
-            </Modal>
+            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
         </div>
     }
 }

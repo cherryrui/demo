@@ -79,7 +79,9 @@ class Main extends React.Component {
 
     componentWillMount() {
         //console.log("componentWillMount");
-        this.props.getShoppingCart();
+        if (sessionStorage.user) {
+            this.props.getShoppingCart();
+        }
         let index = this.getIndex();
         /**
          * 获取一级分类和最近购物车商品
@@ -115,6 +117,7 @@ class Main extends React.Component {
         this.props.history.pushState(null, url);
     }
     handleCancel = () => {
+        console.log("cancel");
         this.setState({
             visible: false,
         })
@@ -201,13 +204,15 @@ class Main extends React.Component {
                         onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
-                    <Dropdown overlay={cart_menu} placement="bottomRight" trigger="click">
-                        <Badge count={this.props.cart.sum}>
+                    {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight">
+                        <Badge count={this.props.cart.result.allRow} overflowCount={99}>
                             <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
                                 <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
                             </Button>
                         </Badge>
-                    </Dropdown>
+                    </Dropdown>:<Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
+                                <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
+                            </Button>}
                 </div>
             </div>
             </div>
@@ -257,17 +262,10 @@ class Main extends React.Component {
                         <FormattedMessage id="app.24.service" defaultMessage="24小时服务"/>
                     </p>
                 </div>
-
             </div>
-            <Modal
-                title={formatMessage({id:"login.login.title"})}
-                visible={this.state.visible}
-                onCancel={this.handleCancel}
-                footer={null}
-            >
-                <LoginModal closeModal={this.handleCancel}/>
-            </Modal>
+            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
         </div>
+
 
     }
 }

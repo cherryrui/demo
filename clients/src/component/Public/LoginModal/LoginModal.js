@@ -19,6 +19,7 @@ import {
 	message
 } from 'antd';
 const FormItem = Form.Item;
+import CusModal from '../CusModal/CusModal.js';
 
 class LoginModal extends React.Component {
 
@@ -30,14 +31,11 @@ class LoginModal extends React.Component {
 		this.state = {
 			loading: false
 		}
+		console.log(this.props, props)
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 
 	handleSubmit = (e) => {
-		let {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
@@ -47,54 +45,66 @@ class LoginModal extends React.Component {
 				axios.post('/user/login.json', values).then(res => {
 					if (res.data.isSucc) {
 						if (values.remember) {
-                            localStorage.setItem('uid', res.data.result.uid);
-                            console.log('uid', res.data.result.uid);
-                        } else {
-                            localStorage.setItem('uid', null);
-                        }
-                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                        message.success(formatMessage({
-                            id: 'login.login.success'
-                        }));
-                        parent.location.reload();
+							localStorage.setItem('uid', res.data.result.uid);
+							console.log('uid', res.data.result.uid);
+						} else {
+							localStorage.setItem('uid', null);
+						}
+						sessionStorage.setItem('user', JSON.stringify(res.data.result));
+						message.success(this.formatMessage({
+							id: 'login.login.success'
+						}));
+						parent.location.reload();
 						this.props.closeModal ? this.props.closeModal() : ""
 					} else {
-						message.error(formatMessage({
+						message.error(this.formatMessage({
 							id: 'login.login.fail'
 						}, {
 							reason: res.data.result
 						}))
-						this.setState({loading:false});
+						this.setState({
+							loading: false
+						});
 					}
 				})
 			}
 		});
 	}
+	handleCancel = () => {
+		this.props.closeModal ? this.props.closeModal() : ""
+	}
 
 	render() {
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
+
 		const {
 			getFieldDecorator
 		} = this.props.form;
-		return <Form onSubmit={this.handleSubmit} className={css.login_form}>
+		return <CusModal closeModal={this.handleCancel} visible={this.props.visible}>
+				<Form onSubmit={this.handleSubmit} className={css.login_form}>
+					<FormItem>
+                        <p className={css.title}>
+                            <FormattedMessage id="login.login.title" defaultMessage="用户登录"/>
+                        </p>
+                    </FormItem>
                     <FormItem>
                     {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],
+                        rules: [{ required: true, message: this.formatMessage({id: 'login.input.name'}) }],
                     })(
                         <Input size="large" prefix={<Icon type="user" style={{ fontSize: 13 }} />} 
-                        placeholder= {formatMessage({id: 'login.input.name'})} />
+							placeholder = {
+								this.formatMessage({
+									id: 'login.input.name'
+								})
+							}
+							/>
                     )}
                     </FormItem>
                     <FormItem>
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
+                        rules: [{ required: true, message: this.formatMessage({id: 'login.input.password'}) }],
                     })(
                         <Input size="large" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} 
-                        type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
+                        type="password" placeholder= {this.formatMessage({id: 'login.input.password'})} />
                     )}
                     </FormItem>
                     <FormItem>
@@ -114,6 +124,7 @@ class LoginModal extends React.Component {
                         </Button>
                     </FormItem>
                 </Form>
+            </CusModal>
 	}
 }
 
