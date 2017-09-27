@@ -47,6 +47,11 @@
   display: flex;
   align-items: center;
   padding: 10px;
+  height:50px;
+  img{
+    width:50px;
+    height:50px;
+  }
 }
 .categorys_drop{
     position: fixed;
@@ -90,20 +95,19 @@
     }
   }
 }
-
 .pup {
-   margin-bottom: 70px;
+   margin-bottom: 43px;
+   width:0px;
+   float:left;
+   font-size: 10px;
+   margin-left: 5px;
 }
 .pdown {
-   margin-top: 70px;
+   margin-top: 38px;
+   margin-left: 5px;
+   font-size: 12px;
 }
 .price {
       float:left;
       color:orange;
-   }
-.del {
-      float:right;
-   }
-.del {
-      margin-left:"5px";
    }

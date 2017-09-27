@@ -85,10 +85,10 @@ class Main extends React.Component {
          * 获取一级分类和最近购物车商品
          */
         axios.get('/api/get-title-data.json').then(res => {
-            //console.log('home.js:',res.data);
+            console.log('home.js:',res.data);
             this.setState({
                 categorys: res.data.categorys.result,
-                carts: res.data.carts,
+                carts: this.props,
                 cart_num: res.data.cart_num,
                 index: index,
             });
@@ -140,25 +140,25 @@ class Main extends React.Component {
     }
 
     render() {
-        //console.log(this.props.cart);
+        console.log(143,this.props);
 
         let cart_menu = (
             <Menu>
-                <Menu.Item style={{width:"200px"}}>
+                <Menu.Item style={{width:"240px"}}>
                     <FormattedMessage  id="home.recent.add" defaultMessage="最近新加产品"/>
                 </Menu.Item>
-                {this.state.carts.map(item => {
-                    return <Menu.Item>
-                        <Link  to={"page/product-detail/" + item.id}>
+                {this.props.cart.result?this.props.cart.result.list.map(item => {
+                    return <Menu.Item style={{width:"240px"}}>
+                        <Link  to={"page/product-detail/" + item.productId}>
                             <div className={css.cart_product}>
-                                <img src={item.img}/>
+                                <img src={item.coverUrl+"@100w_100h_1e_1c.png"}/>
                                 <div className={css.name}>
-                                    <p className={css.pup}>{item.name}</p>
+                                    <p className={css.pup}>{item.productName}</p>
                                     <p className={css.pdown}>
-                                        <span className={css.price}>{item.price}$</span>
+                                        <span className={css.price}>{item.itemPrice?item.itemPrice:item.price}$</span>
                                         <span className={css.del}>
-                                            x{item.num}
-                                            <Icon type="delete" />
+                                            <span className={css.num}>x{item.productNum}</span>
+                                            <span className={css.icons}><Icon type="delete" /></span>
                                         </span>
                                     </p>
                                 </div>
@@ -167,11 +167,11 @@ class Main extends React.Component {
 
                         </Link>
                     </Menu.Item>
-                })}
-                <Menu.Item>
+                }):""}
+                <Menu.Item >
 
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item style={{width:"240px"}}>
                     <FormattedMessage  id="home.recent.go" defaultMessage=""/>
                 </Menu.Item>
             </Menu>
@@ -205,7 +205,7 @@ class Main extends React.Component {
                         onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
-                    <Dropdown overlay={cart_menu} placement="bottomRight">
+                    <Dropdown overlay={cart_menu} placement="bottomRight" trigger="click">
                         <Badge count={this.props.cart.sum}>
                             <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
                                 <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
