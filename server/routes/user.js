@@ -2,7 +2,8 @@ var router = require('koa-router')();
 const axios = require('axios');
 const Dess = require('des_zxd');
 const {
-	url,des
+	url,
+	des
 } = require('../config/index');
 var ReqTool = require('../tools/reqTool.js');
 import {
@@ -18,23 +19,25 @@ router.get('/get-user.json', async(ctx, next) => {
 			name: "张三"
 		}
 		ctx.cookie.set('uid', user.id);
+		ctx.cookie.set('token', user.token);
 		ctx.body = {
 			user: user,
 		}
 	})
 	.post('/login.json', async(ctx, next) => {
-    let result = null;
+		let result = null;
 		let data = ctx.request.body;
 		let param = {
 			loginName: data.userName,
-			password: data.password//Dess.encryptDes(data.password,des.KEY,des.IV)
+			password: data.password //Dess.encryptDes(data.password,des.KEY,des.IV)
 		};
 		await axios.post(url + "/login", querystring.stringify(param)).then(res => {
 			result = res.data;
-            console.log(result);
-            if(result.isSucc == true){
-                ctx.cookie.set('uid',result.uid);
-            }
+			console.log(result);
+			if (result.isSucc == true) {
+				ctx.cookie.set('uid', result.result.uid);
+				ctx.cookie.set('token', result.result.token);
+			}
 		})
 		ctx.body = result;
 	})
@@ -114,16 +117,16 @@ router.get('/get-user.json', async(ctx, next) => {
 		const data = ctx.request.body;
 		console.log('1111: ', JSON.stringify(data));
 		const param = {
-            userName:data.name,
-            password:data.password,
-            email:data.email,
-            tel:data.tel,
-            userType:data.tp
-        };
-        await axios.post(url+'/register',querystring.stringify(param)).then(res=>{
-            console.log(res.data);
-            result = res.data;
-        })
+			userName: data.name,
+			password: data.password,
+			email: data.email,
+			tel: data.tel,
+			userType: data.tp
+		};
+		await axios.post(url + '/register', querystring.stringify(param)).then(res => {
+			console.log(res.data);
+			result = res.data;
+		})
 		ctx.body = result;
 	})
 	.post('/authentication.json', async(ctx) => {
