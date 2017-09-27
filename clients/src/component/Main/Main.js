@@ -202,7 +202,7 @@ class Category extends React.Component {
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
                         <p className={css.content} style={{padding: "10px",textAlign: "left"}}><div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} /></p>
-                    </Link>{console.log(item.suppliers.supplierName)}
+                    </Link>
                     <Card bordered={false} noHovering bodyStyle={{padding: "0px"}}>
                         {item.suppliers.map((brand,index)=>{
                             return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
