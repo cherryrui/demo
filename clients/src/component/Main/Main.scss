@@ -1,5 +1,6 @@
 @import "../../themes";
 .slip{
+  margin: 0px 40px;
   .slider_item{
     text-align: center;
     padding: 20px;
@@ -16,11 +17,18 @@
       height:80px;
     }
   }
+  i[class="anticon anticon-left-circle-o slick-arrow slick-prev"]{
+    margin-left: -15px;
+  }
+  i[class="anticon anticon-right-circle-o slick-arrow slick-next"]{
+        margin-right: 8px;
+  }
   i:after{
     color: $back-ground-grey;
-    font-size:30px;
+    font-size:43px !important;
   }
   i:before{
+    font-size: 43px !important;
     color: $back-ground-grey;
   }
 }
@@ -29,9 +37,6 @@
   ul[class="slick-dots"]{
     bottom: 5px;
   }
-}
-.slider_icon{
-
 }
 
 .slider_img{
@@ -126,14 +131,20 @@
 }
 .content{
   padding: 20px 70px;
-  line-height: 24px;
-  color: $font-color;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  word-break: break-all;
-  text-align: left;
+  div{
+      max-height: 117px;
+      overflow: hidden;
+  }
+  p{
+    line-height: 24px;
+    color: $font-color;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    text-align: left;
+  }
 }
 
 .button{
@@ -213,6 +224,11 @@
   }
 }
 .brand_intro{
+  div{
+        max-height: 101px;
+        overflow: hidden;
+  }
+  p{
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 4;
@@ -220,6 +236,7 @@
       word-break: break-all;
       text-align: left;
       margin-top:20px;
+    }
 }
 .cards{
     margin-left: 0px;

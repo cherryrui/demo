@@ -59,7 +59,7 @@ class Quotation extends React.Component {
 		}
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-			width: "38%",
+			width: "450px",
 			render: (record) => <div className={css.table_product}>
                     <img src={record.img}/>
                     <div className={css.info}>
@@ -74,7 +74,7 @@ class Quotation extends React.Component {
                 </div>
 		}, {
 			title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
-			width: "10%",
+			width: "170px",
 			className: css.table_col,
 			render: (record) => <div>
                 {record.attr.map((item,index)=>{
@@ -85,38 +85,38 @@ class Quotation extends React.Component {
             </div>
 		}, {
 			title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
-			width: "18%",
+			width: "140px",
 			className: css.table_col,
 			dataIndex: 'num',
 			key: 'num',
 			render: (text, record) => <div className={css.table_num}>
-                <Input type="number" addonBefore={<Icon onClick={this.handleNum.bind(this,record,"num",-1)} type="minus" />} 
-                addonAfter={<Icon onClick={this.handleNum.bind(this,record,"num",1)} type="plus" />} 
+                <Input addonBefore={<Icon onClick={this.handleNum.bind(this,record,"num",-1)} type="minus" />}
+                addonAfter={<Icon onClick={this.handleNum.bind(this,record,"num",1)} type="plus" />}
                 onChange={this.handleNum.bind(this,record,"num")}
                 value={text} />
             </div>
 		}, {
 			title: <FormattedMessage id="quotation.sale.price" defaultMessage="我的购物车"/>,
-			width: "18%",
+			width: "140px",
 			className: css.table_col,
 			dataIndex: 'sale_price',
 			key: 'sale_price',
 			render: (text, record) => <div className={css.table_num}>
-                <Input type="number" addonBefore={<Icon onClick={this.handleNum.bind(this,record,"sale_price",-1)} type="minus" />} 
-                addonAfter={<Icon onClick={this.handleNum.bind(this,record,"sale_price",1)} type="plus" />} 
+                <Input  addonBefore={<Icon onClick={this.handleNum.bind(this,record,"sale_price",-1)} type="minus" />}
+                addonAfter={<Icon onClick={this.handleNum.bind(this,record,"sale_price",1)} type="plus" />}
                 onChange={this.handleNum.bind(this,record,"sale_price")}
                 value={text} />
             </div>
 		}, {
 			title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
-			width: "8%",
+			width: "110px",
 			dataIndex: 'price',
 			key: 'price',
 			className: css.table_col,
 			render: (text) => <span className={css.table_price}>${text}</span>
 		}, {
 			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
-			width: "8%",
+			width: "110px",
 			className: css.table_col,
 			dataIndex: 'agent_price',
 			key: 'agent_price',
@@ -295,6 +295,7 @@ class Quotation extends React.Component {
 		} = this.props;
 		console.log(this.state.width);
 		return <div className={appcss.body} ref={(quotation)=>this.quotation=quotation}>
+<div  className={css.qutation}>
             <div className={appcss.navigate}>
             	{this.state.quotation.id?<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
@@ -322,11 +323,11 @@ class Quotation extends React.Component {
                     </Breadcrumb.Item>
                 </Breadcrumb>}
             </div>
-            <Table 
+            <Table
                 pagination={false}
                 rowKey="id"
-                bordered  
-                columns={this.columns} 
+                bordered
+                columns={this.columns}
                 dataSource={this.state.quotation.products} />
             <div className={css.order_sum}>
             	<p className={css.sum_item}>
@@ -335,15 +336,15 @@ class Quotation extends React.Component {
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.sum" defaultMessage="总售价"/>:
-            		<p className={css.sum_right}>{this.state.quotation.sale_price}</p>
+            		<p className={css.sum_price}>{this.state.quotation.sale_price}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.profits" defaultMessage="利润"/>:
-            		<p className={css.sum_right}>{this.state.quotation.profit}</p>
+            		<p className={css.sum_profit}>{this.state.quotation.profit}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
-            		<Input size="large" type="number" value={this.state.quotation.postage} className={css.sum_right} 
+            		<Input size="large" type="number" value={this.state.quotation.postage} className={css.sum_right}
             		onChange={this.handleInfo.bind(this,0,"postage")} />
             	</p>
             </div>
@@ -357,7 +358,7 @@ class Quotation extends React.Component {
         	</div>
             <div className={css.info_write}>
             	<div className={css.left}>
-	            	<p className={css.item}>
+	            	<p className={css.item_one}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
@@ -395,7 +396,7 @@ class Quotation extends React.Component {
 	            	</p>
             	</div>
             	<div className={css.right}>
-	            	<p className={css.item}>
+	            	<p className={css.item_one}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
@@ -446,9 +447,9 @@ class Quotation extends React.Component {
 	            <DatePicker
 	            	size="large"
 		          	showTime
-		          	style={{width:"200px"}}
+		          	style={{width:"300px"}}
 		          	defaultValue={this.state.quotation.valid_date?moment(this.state.quotation.valid_date, "YYYY-MM-DD HH:mm:ss"):moment()}
-		 
+
 		          	format="YYYY-MM-DD HH:mm:ss"
 		          	onChange={this.handleInfo.bind(this,3,"valid_date")}
 		        />
@@ -463,7 +464,7 @@ class Quotation extends React.Component {
 	            			<FormattedMessage id={item.key} defaultMessage={item.value}/>
 	            		</Radio>
 	            	})}
-			   
+
 			    </RadioGroup>
 	        </p>
 	        <p className={`${css.item} ${css.padd_20}`}>
@@ -510,9 +511,9 @@ class Quotation extends React.Component {
                 </p>
 	        </div>
 	        <Modal
-		          width={this.state.width} 
-		          title={<ModalHeader width={this.state.width}      
-			          setWidth={this.handleState} 
+		          width={this.state.width}
+		          title={<ModalHeader width={this.state.width}
+			          setWidth={this.handleState}
 			          export={this.exportQuotation}
 			          title={formatMessage({
 	                            id: 'quotation.online'
@@ -525,6 +526,7 @@ class Quotation extends React.Component {
 		          <QuotationPdf quotation={this.state.quotation}/>
 		        </div>
 	        </Modal>
+</div>
 		</div>
 	}
 

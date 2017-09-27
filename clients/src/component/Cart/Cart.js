@@ -60,7 +60,7 @@ class Cart extends React.Component {
 
     render() {
         return <div className={appcss.body} ref={(cart)=>this.cart=cart}>
-            <div className={appcss.navigate}>
+            <div className={`${appcss.navigate} ${css.cart_title}`}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="page/">

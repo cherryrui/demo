@@ -5,6 +5,9 @@
 	font-size: 20px;
 	padding-bottom: 10px;
 }
+.cart_title{
+	border-bottom: 1px solid $border-color;
+}
 .steps{
 	padding: 30px 10%;
 	div[class="ant-steps-head-inner"]{
@@ -42,30 +45,34 @@
 }
 .table_product{
 	display: flex;
-
 	img{
 		border: 1px solid $border-color;
+		flex-shrink: 0;
 		width: 100px;
 		height: 100px;
-
 	}
 	.info{
-
       padding-left: 10px;
       height: 100px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: space-between;
+      text-align: left;
+      .name{
+      	overflow: hidden;
+    	display: -webkit-box;
+    	-webkit-line-clamp: 1;
+    	-webkit-box-orient: vertical;
+   	 	word-break: break-all;
+    	height: 18px;
+      }
 	}
-p{
-  padding-top: 10px;
-  line-height: 16px;
-}
 }
 .cart_list{
 	th{
 		border-right: none !important;
+		padding: 14px 0px !important;
 	}
     td[class="ant-table-selection-column"]{
       border-right: none !important;
@@ -83,7 +90,7 @@ p{
 
 }
 .table_num{
-	margin: 20%;
+	margin: 0 20px;
 }
 .table_price{
 	color: $color-red;
@@ -92,6 +99,9 @@ p{
 .table_col{
 	text-align: center !important;
 	font-size: 14px;
+	a:hover{
+		color: $font-color;
+	}
 }
 .table_operator{
 	font-size: 18px;
@@ -114,6 +124,7 @@ p{
     align-items: center;
 	i{
 		padding: 0 20px;
+		margin-top: 3px;
 	}
 }
 .right{
@@ -123,7 +134,7 @@ p{
 .total{
 	padding: 20px;
 	background: $color-grey;
-	
+
 	.total_money{
 		color: $color-red;
 		font-weight: bolder;
