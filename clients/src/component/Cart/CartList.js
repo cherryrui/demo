@@ -6,7 +6,9 @@ import React from 'react';
 import css from './Cart.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
-
+import {
+    Link
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
@@ -40,49 +42,54 @@ class CartList extends React.Component {
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "415px",
-            render: (record) => <div className={css.table_product}>
-                <img src={record.img}/>
+            className: css.table_col,
+            render: (record) => <Link to={"page/product-detail/"+record.productId} className={css.table_product}>
+                <img src={record.coverUrl}/>
                 <div className={css.info}>
-                    <p >{record.name}</p>
+                    <p className={css.name}>{record.productName}</p>
                     <p>
-                        <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
-                            {record.brand}
+                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
+                        ：{record.brandNameCn}
                     </p>
-                    <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/></p>
-                    <p>{record.name}</p>
+                    <p>
+                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+                        ：{record.moq}
+                    </p>
+                    <p>
+                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+                        ：{record.productNo}</p>
                 </div>
-            </div>
+            </Link>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
             width: "140px",
             className: css.table_col,
             render: (record) => <div>
-                {record.attr?record.attr.map((item,index)=>{
-                    return <div>
+                {record.selectSpecs?record.selectSpecs.map((item,index)=>{
+                    return false?<div>
                         <Select defaultValue={item.value} style={{ width: 120,marginBottom: "10px" }}
                             onChange={this.handleChange.bind(this,record,index)}>
                             {item.attr.map(att=>{
                                 return <Option value={att.id}>{att.name}</Option>
                             })}
                         </Select>
-                    </div>
+                    </div>:<p>{item.specName}:{item.specVal[0].spec_value}</p>
                 }):""}
             </div>
         }, {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
             width: "110px",
             className: css.table_col,
-            dataIndex: 'price',
-            key: 'price',
-            render: (text) => <span className={css.table_price}>${text}</span>
+            render: (record) => <span className={css.table_price}>
+            ${record.itemPrice?record.itemPrice:record.price}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "140px",
             className: css.table_col,
-            dataIndex: 'num',
-            key: 'num',
+            dataIndex: 'productNum',
+            key: 'productNum',
             render: (text, record) => <div className={css.table_num}>
-                <Input type="number" addonBefore={<Icon onClick={this.handleNum.bind(this,record,-1)} type="minus" />}
+                <Input addonBefore={<Icon onClick={this.handleNum.bind(this,record,-1)} type="minus" />}
                     addonAfter={<Icon onClick={this.handleNum.bind(this,record,1)} type="plus" />}
                     onChange={this.handleNum.bind(this,record)}
                     value={text} />
@@ -91,7 +98,8 @@ class CartList extends React.Component {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
             width: "140px",
             className: css.table_col,
-            render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
+            render: (record) => <span className={css.table_price}>
+            ${(record.price*record.productNum).toFixed(2)}</span>
         }, {
             title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
             width: "110px",
@@ -112,6 +120,9 @@ class CartList extends React.Component {
         })
         axios.get('/cart/get-carts.json').then(res => {
             if (res.data.isSucc) {
+                res.data.result.list.map(item => {
+                    item.price = item.itemPrice ? item.itemPrice : item.price;
+                })
                 this.setState({
                     data: res.data.result.list,
                     loading: false
@@ -133,7 +144,7 @@ class CartList extends React.Component {
         let sum = 0;
         this.state.data.map(item => {
             if (selectedRowKeys.indexOf(item.id) > -1) {
-                sum += item.num * item.price;
+                sum += item.productNum * item.price;
             }
         })
         this.setState({
@@ -154,18 +165,22 @@ class CartList extends React.Component {
         })
     }
     handleNum = (record, num) => {
+        console.log(record, num);
         let data = this.state.data;
         let sum = 0;
         data.map(item => {
             if (item.id == record.id) {
                 if (isNaN(num)) {
-                    item.num = isNaN(num.target.value) ? 0 : Number(num.target.value);
+                    item.productNum = isNaN(num.target.value) ? 0 : Number(num.target.value);
                 } else {
-                    item.num = item.num + num;
+                    item.productNum = item.productNum + num;
                 }
             }
+            if (item.productNum <= 0) {
+                item.productNum = 1;
+            }
             if (this.state.selectedRowKeys.indexOf(item.id) > -1) {
-                sum += item.num * item.price;
+                sum += item.productNum * item.price;
             }
         })
         this.setState({
@@ -180,14 +195,14 @@ class CartList extends React.Component {
         if (e.target.checked) {
             this.state.data.map(item => {
                 key.push(item.id);
-                sum += item.price * item.num;
+                sum += item.price * item.productNum;
             })
         }
+
         this.setState({
             selectedRowKeys: key,
             select_all: !this.state.select_all,
             sum: sum
-
         });
     }
 
@@ -208,12 +223,7 @@ class CartList extends React.Component {
             this.props.handleStep ? this.props.handleStep(1, products) : "";
 
         } else {
-            const {
-                intl: {
-                    formatMessage
-                }
-            } = this.props;
-            message.warning(formatMessage({
+            message.warning(this.formatMessage({
                 id: 'cart.select.product'
             }))
         }
@@ -222,56 +232,82 @@ class CartList extends React.Component {
     deleteCart = () => {
         if (this.state.selectedRowKeys.length > 0) {
             axios.post('/cart/delete-cart.json', this.state.selectedRowKeys).then(res => {
-                let data = [];
-                this.state.data.map(item => {
-                    if (this.state.selectedRowKeys.indexOf(item.id) == -1) {
-                        data.push(item);
-                    }
-                })
-                this.setState({
-                    data: data,
-                    selectedRowKeys: [],
-                    sum: 0,
-                })
+                if (res.data.isSucc) {
+                    let data = [];
+                    this.state.data.map(item => {
+                        if (this.state.selectedRowKeys.indexOf(item.id) == -1) {
+                            data.push(item);
+                        }
+                    })
+                    this.setState({
+                        data: data,
+                        selectedRowKeys: [],
+                        sum: 0,
+                    })
+                    message.success(
+                        this.formatMessage({
+                            id: "cart.delete_warn"
+                        })
+                    )
+                } else {
+                    message.error(this.formatMessage({
+                        id: "request.fail"
+                    }, {
+                        reason: res.data.message
+                    }))
+                }
 
             })
         } else {
-            const {
-                intl: {
-                    formatMessage
-                }
-            } = this.props;
-            message.warning(formatMessage({
+            message.warning(this.formatMessage({
                 id: 'cart.select.product'
             }))
         }
     }
     handleDelete = (id) => {
-        let data = this.state.data;
-        let select = this.state.selectedRowKeys;
-        let sum = 0;
-        data.map((item, index) => {
-            if (item.id == id) {
-                data.splice(index, 1);
-            }
-        })
-        if (select.indexOf(id) > -1) {
-            select.map((item, index) => {
-                if (item == id) {
-                    select.splice(index, 1);
+        let data = [];
+        data.push(id);
+        axios.post('/cart/delete-cart.json', data).then(res => {
+            if (res.data.isSucc) {
+                let data = this.state.data;
+                let select = this.state.selectedRowKeys;
+                let sum = 0;
+                data.map((item, index) => {
+                    if (item.id == id) {
+                        data.splice(index, 1);
+                    }
+                })
+                if (select.indexOf(id) > -1) {
+                    select.map((item, index) => {
+                        if (item == id) {
+                            select.splice(index, 1);
+                        }
+                    })
                 }
-            })
-        }
-        data.map(item => {
-            if (select.indexOf(item.id) > -1) {
-                sum += item.price * item.num;
+                data.map(item => {
+                    if (select.indexOf(item.id) > -1) {
+                        sum += item.price * item.productNum;
+                    }
+                })
+                this.setState({
+                    data: data,
+                    selectedRowKeys: select,
+                    sum: sum
+                })
+                message.success(
+                    this.formatMessage({
+                        id: "cart.delete_warn"
+                    })
+                )
+
+            } else {
+                message.error(this.formatMessage({
+                    id: "request.fail"
+                }, {
+                    reason: res.data.message
+                }))
             }
-        })
-        this.setState({
-            data: data,
-            selectedRowKeys: select,
-            sum: sum
-        })
+        });
 
     }
     handleStep = (num) => {
@@ -321,12 +357,7 @@ class CartList extends React.Component {
             console.log(this.props.history, this.state, this.props);
             /*this.props.history.pushState(null, "page/quotation");*/
         } else {
-            const {
-                intl: {
-                    formatMessage
-                }
-            } = this.props;
-            message.warning(formatMessage({
+            message.warning(this.formatMessage({
                 id: 'cart.select.product'
             }))
         }
@@ -373,7 +404,7 @@ class CartList extends React.Component {
                 bordered
                 loading={this.state.loading}
                 columns={this.columns}
-                scroll={{y: 600}}
+                scroll={{y: 700}}
                 dataSource={this.state.data} />
             <div className={css.footer}>
                 <div className={css.left}>
@@ -390,7 +421,7 @@ class CartList extends React.Component {
                             defaultMessage="总计"
                             values={{total:this.state.selectedRowKeys.length}}
                         />
-                        :<span className={css.total_money}>${this.state.sum}</span>
+                        :<span className={css.total_money}>${this.state.sum.toFixed(2)}</span>
                     </p>
                     <p className={css.quotation} onClick={this.goQuotation.bind(this)}>
                         <FormattedMessage id="quotation.generate" defaultMessage="我的购物车"/>

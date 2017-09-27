@@ -13,7 +13,7 @@ var querystring = require('querystring');
 router.get('/get-category.json', async(ctx, next) => {
 		let cid = ctx.query.cid,
 			result = [];
-		await axios.get(url + '/category/childList?pid=' + cid).then(res => {
+		await axios.get(url + '/category/queryChildList?pid=' + cid).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;

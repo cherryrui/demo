@@ -57,20 +57,26 @@ class ConfirmOrder extends React.Component {
             title: "cart.address.title", //地址信息模态框title
             loading: false, //正在提交订单
         };
+        this.formatMessage = this.props.intl.formatMessage;
         this.colums_show = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             className: css.table_col,
             width: "38%",
             render: (record) => <div className={css.table_product}>
-                <img src={record.img}/>
+                <img src={record.coverUrl}/>
                 <div className={css.info}>
-                    <p >{record.name}</p>
+                    <p className={css.name}>{record.productName}</p>
                     <p>
-                        <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
-                            {record.brand}
+                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
+                        ：{record.brandNameCn}
                     </p>
-                    <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>{record.moq}</p>
-                    <p>{record.name}</p>
+                    <p>
+                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+                        ：{record.moq}
+                    </p>
+                    <p>
+                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+                        ：{record.productNo}</p>
                 </div>
             </div>
         }, {
@@ -78,11 +84,11 @@ class ConfirmOrder extends React.Component {
             width: "16%",
             className: css.table_col,
             render: (record) => <div>
-                {record.attr.map((item,index)=>{
+                {record.selectSpecs?record.selectSpecs.map((item,index)=>{
                     return <div>
-                        {item.name}
+                        <p>{item.specName}:{item.specVal[0].spec_value}</p>
                     </div>
-                })}
+                }):""}
             </div>
         }, {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
@@ -229,6 +235,7 @@ class ConfirmOrder extends React.Component {
         });
     }
     render() {
+        console.log(this.props.products);
         const {
             getFieldDecorator
         } = this.props.form;
@@ -246,11 +253,6 @@ class ConfirmOrder extends React.Component {
                 offset: 6,
             },
         };
-        const {
-            intl: {
-                formatMessage
-            }
-        } = this.props;
         return <div>
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.delivery.info" defaultMessage="收货信息"/>
@@ -385,7 +387,7 @@ class ConfirmOrder extends React.Component {
                 </div>
             </div>
             <Modal
-                title={formatMessage({id: this.state.title})}
+                title={this.formatMessage({id: this.state.title})}
                 visible={this.state.visible}
                 onOk={this.handleSubmit}
                 onCancel={this.handleCancel}
@@ -394,18 +396,18 @@ class ConfirmOrder extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem
                         {...formItemLayout}
-                        label={formatMessage({id: 'cart.delivery.name'})}
+                        label={this.formatMessage({id: 'cart.delivery.name'})}
                     >
                         {getFieldDecorator('name', {
                             initialValue: this.state.address.name,
-                            rules: [{ required: true, message: formatMessage({id: 'cart.address.name'}), whitespace: true }],
+                            rules: [{ required: true, message: this.formatMessage({id: 'cart.address.name'}), whitespace: true }],
                         })(
                             <Input />
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label={formatMessage({id: 'post.company_name'})}
+                        label={this.formatMessage({id: 'post.company_name'})}
                     >
                         {getFieldDecorator('company_name', {
                             initialValue: this.state.address.company_name,
@@ -415,12 +417,12 @@ class ConfirmOrder extends React.Component {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label={formatMessage({id: 'cart.delivery.city'})}
+                        label={this.formatMessage({id: 'cart.delivery.city'})}
                     >
                         {getFieldDecorator('city', {
                             initialValue: this.state.address.city?this.state.address.city.split(","):[],
 
-                            rules: [{ type: 'array', required: true, message: formatMessage({id: 'cart.delivery.city'}) }],
+                            rules: [{ type: 'array', required: true, message: this.formatMessage({id: 'cart.delivery.city'}) }],
                         })(
                             <Cascader
                                 options={this.state.options}
@@ -431,22 +433,22 @@ class ConfirmOrder extends React.Component {
                     </FormItem>
                     <FormItem
                           {...formItemLayout}
-                        label={formatMessage({id: 'cart.delivery.address'})}
+                        label={this.formatMessage({id: 'cart.delivery.address'})}
                     >
                         {getFieldDecorator('address', {
                             initialValue: this.state.address.address,
-                            rules: [{ required: true, message: formatMessage({id: 'cart.address.address'}) }],
+                            rules: [{ required: true, message: this.formatMessage({id: 'cart.address.address'}) }],
                         })(
                             <Input />
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label={formatMessage({id: 'cart.delivery.tel'})}
+                        label={this.formatMessage({id: 'cart.delivery.tel'})}
                     >
                         {getFieldDecorator('tel', {
                             initialValue: this.state.address.tel,
-                            rules: [{ required: true, message: formatMessage({id: 'cart.address.tel'}) }],
+                            rules: [{ required: true, message: this.formatMessage({id: 'cart.address.tel'}) }],
                         })(
                             <Input />
                         )}
@@ -456,12 +458,12 @@ class ConfirmOrder extends React.Component {
                             valuePropName: 'checked',
                             initialValue: this.state.address.default==1?true:false,
                         })(
-                            <Checkbox>{formatMessage({id: 'cart.address.default'})}</Checkbox>
+                            <Checkbox>{this.formatMessage({id: 'cart.address.default'})}</Checkbox>
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{formatMessage({id: 'app.cancel'})}</Button>
-                        <Button type="primary" htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
+                        <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
+                        <Button type="primary" htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                     </FormItem>
                 </Form>
             </Modal>

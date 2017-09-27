@@ -220,7 +220,7 @@ class ProductList extends React.Component {
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-        <Link to="page/">
+                        <Link to="page/">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>

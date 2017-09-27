@@ -294,7 +294,8 @@ class ProductDetail extends React.Component {
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="page/">
-                            <FormattedMessage id="app.category" defaultMessage="分类"/>
+                        {this.props.params.name?this.props.params.name
+                            :<FormattedMessage id="app.home" defaultMessage=""/>}
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
@@ -454,8 +455,9 @@ class Information extends React.Component {
         return <div>
             {this.props.data.length>0?this.props.data.map(item=> {
                 return <div>
-                    <div dangerouslySetInnerHTML={{__html: item.content}}/>
-                    {item.contentType==1?<img src={item.content+"@800w_1e_1c.png"}/>:<p>{item.content}</p>}
+                    <p className={css.info_title}>{item.introduceName}</p>
+                    {item.contentType==1?<img src={item.content+"@800w_1e_1c.png"}/>
+                    :<div dangerouslySetInnerHTML={{__html: item.content}}/>}
                 </div>
             }):<div className={css.no_data}> 
                 <FormattedMessage id="product.no_information" defaultMessage="暂无介绍信息"/>

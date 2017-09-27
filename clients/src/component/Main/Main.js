@@ -116,7 +116,9 @@ class Main extends React.Component {
                            </div>
                            <div>
                                <h3>{item.supplierName}</h3>
-                               <p className={css.brand_intro}><div dangerouslySetInnerHTML={{__html: item.introduction}} /></p>
+                               <p className={css.brand_intro}>
+                                <div dangerouslySetInnerHTML={{__html: item.introduction}} />
+                               </p>
                            </div>
                        </Card>
                     </Link>
@@ -175,7 +177,7 @@ class Category extends React.Component {
             return <div className={css.category_item}>
                 <div className={css.left}>
                     <div className={css.cate_title} >
-                        <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_120h_1e_1c.png"}/>
+                        <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>
                     </div>
                     <div>
                     {item.levleTwoProductCategory.map(cate=>{
@@ -201,7 +203,9 @@ class Category extends React.Component {
                     <Link to={"page/brand-detail/"+item.suppliers.sid}>
                         <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
                         <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
-                        <p className={css.content} style={{padding: "10px",textAlign: "left"}}><div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} /></p>
+                        <p className={css.content} style={{padding: "10px",textAlign: "left"}}>
+                            <div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} />
+                        </p>
                     </Link>
                     <Card bordered={false} noHovering bodyStyle={{padding: "0px"}}>
                         {item.suppliers.map((brand,index)=>{

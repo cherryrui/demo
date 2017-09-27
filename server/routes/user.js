@@ -13,6 +13,7 @@ var querystring = require('querystring');
 
 router.get('/get-user.json', async(ctx, next) => {
 		let id = ctx.query.id;
+
 		console.log(4, id);
 		let user = {
 			id: 1,

@@ -1,282 +1,290 @@
 @import "../../themes";
-
-.quotation {
-  font-size: 12px !important;
-  .title {
-    color: $theme-color;
-    border-bottom: 1px solid $border-color;
-    font-size: 20px;
-    padding-bottom: 10px;
-  }
-  .steps {
-    padding: 30px 10%;
-    div[class="ant-steps-head-inner"] {
-      border-color: $color-grey !important;
-      background-color: $color-grey !important;
-      height: 30px;
-      width: 30px;
-      color: white;
-    }
-    div[class="ant-steps-title"] {
-      font-size: 20px;
-    }
-    div[class="ant-steps-item ant-steps-status-process"] {
-      div[class="ant-steps-head-inner"] {
-        border-color: $color-green !important;
-        background-color: $color-green !important;
-        font-size: 20px;
-      }
-      div[class="ant-steps-title"] {
-        color: $color-green !important;
-        font-size: 20px;
-      }
-    }
-    div[class="ant-steps-item ant-steps-status-finish"] {
-      div[class="ant-steps-head-inner"] {
-        border-color: $color-green !important;
-        background-color: $color-green !important;
-        font-size: 20px;
-      }
-      span[class="ant-steps-icon anticon anticon-check"] {
-        color: white !important;
-        font-size: 20px;
-      }
-    }
-  }
-  .table_product {
-    display: flex;
-
-    img {
-      border: 1px solid $border-color;
-      width: 100px;
-      height: 100px;
-
-    }
-    .info {
-
+.title{
+	color: $theme-color;
+	border-bottom: 1px solid $border-color;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+.cart_title{
+	border-bottom: 1px solid $border-color;
+}
+.steps{
+	padding: 30px 10%;
+	div[class="ant-steps-head-inner"]{
+		border-color: $color-grey !important;
+		background-color: $color-grey !important;
+		height: 30px;
+		width: 30px;
+		color: white;
+	}
+	div[class="ant-steps-title"]{
+		font-size: 20px;
+	}
+	div[class="ant-steps-item ant-steps-status-process"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		div[class="ant-steps-title"]{
+			color: $color-green !important;
+			font-size: 20px;
+		}
+	}
+	div[class="ant-steps-item ant-steps-status-finish"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		span[class="ant-steps-icon anticon anticon-check"]{
+			color: white !important;
+			font-size: 20px;
+		}
+	}
+}
+.table_product{
+	display: flex;
+	img{
+		border: 1px solid $border-color;
+		flex-shrink: 0;
+		width: 100px;
+		height: 100px;
+	}
+	.info{
       padding-left: 10px;
       height: 100px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-    }
-    p {
-      padding-top: 10px;
-      line-height: 16px;
-    }
-  }
-  .cart_list {
-    th {
-      border-right: none !important;
-    }
-    td[class="ant-table-selection-column"] {
+      justify-content: space-between;
+      text-align: left;
+      .name{
+      	overflow: hidden;
+    	display: -webkit-box;
+    	-webkit-line-clamp: 1;
+    	-webkit-box-orient: vertical;
+   	 	word-break: break-all;
+    	height: 18px;
+      }
+	}
+}
+.cart_list{
+	th{
+		border-right: none !important;
+		padding: 14px 0px !important;
+	}
+    td[class="ant-table-selection-column"]{
       border-right: none !important;
       width: 35px !important;
       min-width: 35px !important;
     }
-    th[class="ant-table-selection-column"] {
-      width: 35px !important;
-      min-width: 35px !important;
+  th[class="ant-table-selection-column"]{
+     width: 35px !important;
+    min-width: 35px !important;
 
-    }
-    td {
-      padding: 20px 0px 20px 0px !important;
-    }
+   }
+ td{
+   padding: 20px 0px 20px 0px !important;
+ }
 
-  }
-  .table_num {
-    margin: 20%;
-  }
-  .table_price {
-    color: $color-red;
-    font-weight: bold;
-  }
-  .table_col {
-    text-align: center !important;
-    font-size: 14px;
-  }
-  .table_operator {
-    font-size: 18px;
-  }
-  .footer {
-    display: flex;
+}
+.table_num{
+	margin: 0 20px;
+}
+.table_price{
+	color: $color-red;
+	font-weight: bold;
+}
+.table_col{
+	text-align: center !important;
+	font-size: 14px;
+	a:hover{
+		color: $font-color;
+	}
+}
+.table_operator{
+	font-size: 18px;
+}
+.footer{
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	margin-top: 20px;
+	background: $color-grey;
+	label{
+		display: flex;
+    	align-items: center;
+	}
+}
+.left{
+	margin-left: 10px;
+	flex-grow: 1;
+	display: flex;
     align-items: center;
-    font-size: 16px;
-    margin-top: 20px;
-    background: $color-grey;
-    label {
-      display: flex;
-      align-items: center;
-    }
-  }
-  .left {
-    margin-left: 10px;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    i {
-      padding: 0 20px;
-    }
-  }
-  .right {
-    display: flex;
+	i{
+		padding: 0 20px;
+		margin-top: 3px;
+	}
+}
+.right{
+	display: flex;
 
-  }
-  .total {
-    padding: 20px;
-    background: $color-grey;
+}
+.total{
+	padding: 20px;
+	background: $color-grey;
 
-    .total_money {
-      color: $color-red;
-      font-weight: bolder;
-    }
-  }
-  .quotation {
-    padding: 20px;
+	.total_money{
+		color: $color-red;
+		font-weight: bolder;
+	}
+}
+.quotation{
+	padding: 20px;
     background: $color-green;
     color: white;
-  }
-  .calculate {
-    padding: 20px 40px;
+}
+.calculate{
+	padding: 20px 40px;
     background: $theme-color;
     color: white;
-  }
-  .confirm_title {
-    font-size: 16px;
+}
+.confirm_title{
+	font-size: 16px;
     font-weight: bold;
     padding: 20px 0 10px 0;
     display: flex;
     justify-content: space-between;
-  }
-  %confirm_body {
-    border: 1px solid #eee;
+}
+%confirm_body{
+	border: 1px solid #eee;
     padding: 20px;
-  }
-  .confirm_address {
-    @extend %confirm_body;
-    .radio_content {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .item {
-      padding: 5px 20px;
-      span {
-        font-weight: bold;
-      }
-    }
-    .item_default {
-      padding: 4px 10px;
-      background: $color-green;
-      color: white;
-      border-radius: 4px;
-    }
-  }
-  .confirm_pay {
-    @extend %confirm_body;
-  }
-  .confirm_mode {
-    display: flex;
-    .item {
-      padding: 10px 30px;
-      background: #eee;
-      border-radius: 3px;
-      margin-right: 30px;
-      margin-bottom: 20px;
-    }
-    .active {
-      @extend .item;
-      border: 2px solid $theme-color;
-    }
-  }
-  .radio {
-    padding: 10px 0;
-  }
-  .advance_pay {
-    display: flex;
-    flex-wrap: wrap;
-    .item {
-      padding: 10px 5px;
-      width: 40%;
-      border: 1px solid $color-grey;
-      margin: 10px;
-    }
-    .active {
-      @extend .item;
-      border: 2px solid $theme-color;
-    }
-  }
-  .order_sum {
-    background: $color-grey;
+}
+.confirm_address{
+	@extend %confirm_body;
+	.radio_content{
+		display: flex;
+    	justify-content: space-between;
+    	margin-bottom: 10px;
+	}
+	.item{
+		padding: 5px 20px;
+		span{
+			font-weight: bold;
+		}
+	}
+	.item_default{
+		padding: 4px 10px;
+		background: $color-green;
+		color: white;
+		border-radius: 4px;
+	}
+}
+.confirm_pay{
+	@extend %confirm_body;
+}
+.confirm_mode{
+	display: flex;
+	.item{
+		padding: 10px 30px;
+    	background: #eee;
+    	border-radius: 3px;
+    	margin-right: 30px;
+    	margin-bottom: 20px;
+	}
+	.active{
+		@extend .item;
+		border: 2px solid $theme-color;
+	}
+}
+.radio{
+	padding: 10px 0;
+}
+.advance_pay{
+	display: flex;
+	flex-wrap: wrap;
+	.item{
+		padding: 10px 5px;
+    	width: 40%;
+    	border: 1px solid $color-grey;
+    	margin: 10px;
+	}
+	.active{
+		@extend .item;
+		border: 2px solid $theme-color;
+	}
+}
+.order_sum{
+	background: $color-grey;
     padding: 10px;
     text-align: right;
     margin: 20px 0;
-    p {
-      padding: 5px 0;
-      display: inline-block;
-      width: 100px;
+    p{
+    	padding: 5px 0;
+    	display: inline-block;
+    	width: 100px;
     }
-    .order_sum_orange {
-      color: $color-red;
-      font-size: 16px;
+    .order_sum_orange{
+		color: $color-red;
+		font-size: 16px;
     }
-  }
-  .order_footer {
-    display: flex;
-    align-items: center;
+}
+.order_footer{
+	display: flex;
+	align-items: center;
     justify-content: space-between;
-    .footer_right {
-      display: flex;
-      align-items: center;
-      button {
-        margin-left: 10px;
-        padding: 0px 20px;
-        height: 42px;
-      }
-      .button_green {
-        color: white;
-        background-color: $button-green;
-        border-color: $button-green;
-      }
-      .button_green:hover {
-        background-color: $button-green-active;
-        border-color: $button-green-active;
-      }
-      .footer_orange {
-        color: $color-red;
-        font-size: 16px;
-      }
+    .footer_right{
+    	display: flex;
+    	align-items: center;
+    	button{
+    		margin-left: 10px;
+    		padding: 0px 20px;
+    		height: 42px;
+    	}
+    	.button_green{
+    		color: white;
+    		background-color: $button-green ;
+    		border-color: $button-green ;
+		}
+		.button_green:hover{
+		    background-color: $button-green-active ;
+		    border-color: $button-green-active ;
+		}
+    	.footer_orange{
+    		color: $color-red;
+    		font-size: 16px;
+    	}
     }
-  }
+}
 
-  .pay_mode {
+.pay_mode{
 
-    .pay_title {
-      color: $color-red;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-    .pay_info {
-      text-align: center;
-      font-size: 14px;
-      padding: 15px 15px;
+	.pay_title{
+		color: $color-red;
+		font-size: 20px;
+		font-weight: bold;
+		text-align: center;
+	}
+	.pay_info{
+		text-align: center;
+		font-size: 14px;
+		padding: 15px 15px;
 
-    }
-    .payments {
-      border: 1px solid $border-color;
-      padding: 15px 16px 0px 16px;
-      display: flex;
-      width: 740px;
+	}
+	.payments{
+		border: 1px solid $border-color;
+		padding: 15px 16px 0px 16px;
+		display: flex;
+      width:740px;
       margin: auto;
       justify-content: space-between;
 
-      .payments_left {
+      .payments_left{
         display: flex;
-        .item {
+        .item{
           margin-bottom: 20px;
-          img {
+          img{
             width: 80px;
             height: 80px;
             margin-right: 20px;
@@ -285,55 +293,54 @@
         }
       }
       .grand_total {
-        font-size: 18px;
+        font-size:18px;
         text-align: right;
-        .total_text {
-          font-size: 24px;
-          font-weight: 700;
-          color: $color-red;
+        .total_text{
+          font-size:24px;
+          font-weight:700;
+          color:$color-red ;
         }
       }
-    }
+	}
+}
+.pay_footer{
+	text-align: center;
+	margin-top: 20px;
+  padding-bottom: 160px;
+  .button_before{
+background:  $button-green;
+    border: none;
+   border-radius: 2px;
+  width: 190px;
+    height:50px;
+    line-height:50px;
+	}
+.button_pay{
+    margin: 20px;
+    padding: 0px 30px;
+  background: $button-blue;
+  border: none;
+  border-radius: 2px;
+  width: 190px;
+  height:50px;
+  line-height:50px;
   }
-  .pay_footer {
-    text-align: center;
-    margin-top: 20px;
-    padding-bottom: 160px;
-    .button_before {
-      background: $button-green;
-      border: none;
-      border-radius: 2px;
-      width: 190px;
-      height: 50px;
-      line-height: 50px;
-    }
-    .button_pay {
-      margin: 20px;
-      padding: 0px 30px;
-      background: $button-blue;
-      border: none;
-      border-radius: 2px;
-      width: 190px;
-      height: 50px;
-      line-height: 50px;
-    }
-    .button_before:hover {
-      background-color: $button-green-active;
-
-    }
-    .button_pay:hover {
-      background-color: $button-blue-active;
-
-    }
+  .button_before:hover{
+    background-color: $button-green-active;
 
   }
-  .cancel {
-    background-color: $button-green;
+  .button_pay:hover{
+    background-color: $button-blue-active;
+
+  }
+
+}
+.cancel{
+	background-color: $button-green;
     border-color: $button-green;
     margin-right: 20px;
-  }
-  .cancel:hover {
-    background-color: $button-green-active;
-    border-color: $button-green-active;
-  }
+}
+.cancel:hover{
+	background-color: $button-green-active;
+	border-color: $button-green-active;
 }

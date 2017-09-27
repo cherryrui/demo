@@ -130,14 +130,15 @@ class App extends React.Component {
             this.setState({
                 user: JSON.parse(sessionStorage.user),
             })
-        } else if (localStorage.uid) {
+        }
+        /*else if (localStorage.uid) {
             axios.get(`/user/get-user.json?id=${localStorage.uid}`).then(res => {
                 sessionStorage.setItem('user', JSON.stringify(res.data.user))
                 this.setState({
                     user: res.data.user
                 })
             })
-        }
+        }*/
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
@@ -173,8 +174,8 @@ class App extends React.Component {
         localStorage.clear();
         sessionStorage.clear();
         this.setState({
-                    user: ""
-                })
+            user: ""
+        })
     }
     handleCancel = (e) => {
         this.setState({
@@ -306,8 +307,8 @@ ReactDOM.render(
                             <Route path="category-list/:id/:name" component={CategoryList}/>
                             <Route path="brand-list" component={BrandList}/>
                             <Route path="product-list/:info(/:name)" component={ProductList}/>
-                            <Route path="product-detail/:id" component={ProductDetail}/>
-                            <Route path="brand-detail/:id" component={BrandDetail}/>
+                            <Route path="product-detail/:id(/:name)" component={ProductDetail}/>
+                            <Route path="brand-detail/(/:name)" component={BrandDetail}/>
                             <Route path="post-want" component={PostWant}/>
                             <Route path="cart" component={Cart}/>
                             <Route path="quotation(/:id)" component={Quotation}/>

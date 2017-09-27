@@ -140,25 +140,25 @@ class Main extends React.Component {
     }
 
     render() {
-        //console.log(this.props.cart);
+        console.log(this.props.cart);
 
         let cart_menu = (
             <Menu>
-                <Menu.Item style={{width:"200px"}}>
+                <Menu.Item className={css.cart_product_title}>
                     <FormattedMessage  id="home.recent.add" defaultMessage="最近新加产品"/>
                 </Menu.Item>
-                {this.state.carts.map(item => {
+                {this.props.cart.result?this.props.cart.result.list.map(item => {
                     return <Menu.Item>
                         <Link  to={"page/product-detail/" + item.id}>
                             <div className={css.cart_product}>
-                                <img src={item.img}/>
-                                <div className={css.name}>
-                                    <p className={css.pup}>{item.name}</p>
-                                    <p className={css.pdown}>
-                                        <span className={css.price}>{item.price}$</span>
-                                        <span className={css.del}>
-                                            x{item.num}
-                                            <Icon type="delete" />
+                                <img src={item.coverUrl}/>
+                                <div className={css.product_info}>
+                                    <p className={css.product_name}>{item.productName}</p>
+                                    <p className={css.product_price}>
+                                        <span className={css.price}>{item.itemPrice?item.itemPrice:item.price}$</span>
+                                        <span >
+                                            x{item.productNum}
+                                            <Icon type="delete" style={{paddingLeft: "20px"}}/>
                                         </span>
                                     </p>
                                 </div>
@@ -167,11 +167,8 @@ class Main extends React.Component {
 
                         </Link>
                     </Menu.Item>
-                })}
-                <Menu.Item>
-
-                </Menu.Item>
-                <Menu.Item>
+                }):""}
+                <Menu.Item className={css.cart_product_footer}>
                     <FormattedMessage  id="home.recent.go" defaultMessage=""/>
                 </Menu.Item>
             </Menu>
@@ -184,7 +181,6 @@ class Main extends React.Component {
         return <div>
         <div className={css.header}>
             <div className={css.header_content}>
-            
                 <div className={css.left}>
                     <p className={css.logo}>LOGO</p>
                     <p onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
@@ -205,7 +201,7 @@ class Main extends React.Component {
                         onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
-                    <Dropdown overlay={cart_menu} placement="bottomRight">
+                    <Dropdown overlay={cart_menu} placement="bottomRight" trigger="click">
                         <Badge count={this.props.cart.sum}>
                             <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
                                 <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
@@ -216,12 +212,16 @@ class Main extends React.Component {
             </div>
             </div>
             {this.state.showCategory?<div className={css.categorys_drop}>
-                <p className={css.drop_icon}><Icon type="caret-up" /></p>
-                {this.state.categorys.map(item=>{
-                    return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
-                    {item.categoryName}
-                    </p>
-                })}
+                <div className={css.categorys_body}>
+                    <div className={css.categorys_content}>
+                        <p className={css.drop_icon}><Icon type="caret-up" /></p>
+                        {this.state.categorys.map(item=>{
+                            return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
+                            {item.categoryName}
+                            </p>
+                        })}
+                    </div>
+                </div>
             </div>:""}
             {this.props.children}
             <div className={css.foot_first}>
