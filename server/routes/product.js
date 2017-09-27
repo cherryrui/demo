@@ -25,7 +25,7 @@ router.get('/get-category.json', async(ctx, next) => {
 	.post('/get-brand.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result = {};
-		let uri = url + "/product/band"
+		let uri = url + "/product/queryBandList"
 		await axios.post(uri, querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
@@ -43,9 +43,8 @@ router.get('/get-category.json', async(ctx, next) => {
 	.post('/search-product.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result = {};
-		let uri = url + "/product/list";
 		try {
-			await axios.post(uri, querystring.stringify(param)).then(res => {
+			await axios.post(url + "/product/queryProductList", querystring.stringify(param)).then(res => {
 				result = res.data;
 			})
 		} catch (e) {

@@ -50,7 +50,7 @@ class ProductList extends React.Component {
             bid: 0, //选择的供应商id，0：全部
             total: 0,
             current: 1,
-            pageSize: 4,
+            pageSize: 12,
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
         }

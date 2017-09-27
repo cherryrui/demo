@@ -36,6 +36,7 @@ class CartList extends React.Component {
             select_all: false,
             sum: 0,
         }
+        this.formatMessage = this.props.intl.formatMessage;
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "415px",
@@ -56,7 +57,7 @@ class CartList extends React.Component {
             width: "140px",
             className: css.table_col,
             render: (record) => <div>
-                {record.attr.map((item,index)=>{
+                {record.attr?record.attr.map((item,index)=>{
                     return <div>
                         <Select defaultValue={item.value} style={{ width: 120,marginBottom: "10px" }}
                             onChange={this.handleChange.bind(this,record,index)}>
@@ -65,7 +66,7 @@ class CartList extends React.Component {
                             })}
                         </Select>
                     </div>
-                })}
+                }):""}
             </div>
         }, {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
@@ -110,10 +111,18 @@ class CartList extends React.Component {
             loading: true,
         })
         axios.get('/cart/get-carts.json').then(res => {
-            this.setState({
-                data: res.data.carts,
-                loading: false
-            })
+            if (res.data.isSucc) {
+                this.setState({
+                    data: res.data.result.list,
+                    loading: false
+                })
+            } else {
+                message.error(this.formatMessage({
+                    id: "request.fail"
+                }, {
+                    reason: res.data.message
+                }))
+            }
         })
     }
     onSelectChange = (selectedRowKeys) => {
@@ -308,8 +317,9 @@ class CartList extends React.Component {
                 })
             })
             localStorage.setItem('quotation', JSON.stringify(quotation));
-            /*  window.location.href = "/#/main/quotation";*/
-            this.props.history.pushState(null, "page/quotation");
+            window.location.href = "/#/page/quotation";
+            console.log(this.props.history, this.state, this.props);
+            /*this.props.history.pushState(null, "page/quotation");*/
         } else {
             const {
                 intl: {
@@ -382,7 +392,7 @@ class CartList extends React.Component {
                         />
                         :<span className={css.total_money}>${this.state.sum}</span>
                     </p>
-                    <p className={css.quotation} onClick={this.goQuotation}>
+                    <p className={css.quotation} onClick={this.goQuotation.bind(this)}>
                         <FormattedMessage id="quotation.generate" defaultMessage="我的购物车"/>
                     </p>
                     <p className={css.calculate} onClick={this.handleCart}>

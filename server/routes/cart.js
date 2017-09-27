@@ -23,15 +23,18 @@ router
         ctx.body = result;
     })
     .post('/add-cart.json', async(ctx, next) => {
-        let param = ctx.request.body;
+        let param = ctx.request.body,
+            result;
         axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
         await axios.post(url + "/auth/shopCar/addCar", querystring.stringify(param)).then(res => {
-            if (res.data.isSucc) {
-                axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
-                    result = res.data;
-                })
-            }
+            result = res.data;
         })
+        if (result.isSucc) {
+            await axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
+                result = res.data;
+            })
+        }
+        console.log(result)
         ctx.body = result;
     })
     .get('/get-carts.json', async(ctx, next) => {
@@ -40,7 +43,7 @@ router
                 pageNo: 1,
                 pageSize: 100,
             },
-            result;
+            result = {};
         await axios.post(url + "/auth/shopCar/queryShopCarList", querystring.stringify(param)).then(res => {
             console.log(res.data);
             result = res.data;
