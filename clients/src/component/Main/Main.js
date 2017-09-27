@@ -69,7 +69,7 @@ class Main extends React.Component {
                 <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
             </div>
             <div className={css.brand_button}>
-                <Link  to="main/about">
+                <Link  to="page/about">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>

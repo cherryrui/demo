@@ -7,7 +7,6 @@ var querystring = require('querystring');
 const {
     url,
 } = require('../config/index');
-
 router
     .get('/get-shopping-cart.json', async(ctx, next) => {
         axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
@@ -38,18 +37,25 @@ router
     .get('/get-carts.json', async(ctx, next) => {
         axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
         let param = {
-            pageNo: 1,
-            pageSize: 100,
-        }
-        await axios.post(url + "/auth/shopCar/queryShopCarList", param).then(res => {
-
+                pageNo: 1,
+                pageSize: 100,
+            },
+            result;
+        await axios.post(url + "/auth/shopCar/queryShopCarList", querystring.stringify(param)).then(res => {
+            console.log(res.data);
+            result = res.data;
         })
-        ctx.body = {
-            carts: data
-        }
+        ctx.body = result;
     })
     .post('/delete-cart.json', async(ctx, next) => {
         let ids = ctx.request.body;
+        axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+
+        await axios.post(url + "/auth/shopCar/deleteShops", querystring.stringify({
+            ids: ids.join(",")
+        })).then(res => {
+            console.log(res.data)
+        })
         ctx.body = true;
     })
     .post('/commit-order.json', async(ctx, next) => {
