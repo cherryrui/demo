@@ -30,6 +30,9 @@ class PostWant extends React.Component {
 		super(props);
 		this.state = {}
 	}
+	componentDidMount() {
+		this.postwant.scrollIntoView();
+	}
 	handleSubmit = () => {
 
 	}
@@ -52,7 +55,7 @@ class PostWant extends React.Component {
 				span: 8,
 			},
 		};
-		return <div className={appcss.body}>
+		return <div className={appcss.body} ref={(postwant)=>{this.postwant=postwant}}>
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
