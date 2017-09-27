@@ -42,31 +42,51 @@
 }
 .table_product{
 	display: flex;
-	padding: 10px 0;
+
 	img{
 		border: 1px solid $border-color;
 		width: 100px;
 		height: 100px;
-		flex-shrink: 0;
-		margin: auto 0;
+
 	}
 	.info{
-		padding: 10px;
-    	text-align: left;
-    	flex-grow: 1;
-	}
 
+      padding-left: 10px;
+      height: 100px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+	}
+p{
+  padding-top: 10px;
+  line-height: 16px;
+}
 }
 .cart_list{
 	th{
 		border-right: none !important;
 	}
+    td[class="ant-table-selection-column"]{
+      border-right: none !important;
+      width: 35px !important;
+      min-width: 35px !important;
+    }
+  th[class="ant-table-selection-column"]{
+     width: 35px !important;
+    min-width: 35px !important;
+
+   }
+ td{
+   padding: 20px 0px 20px 0px !important;
+ }
+
 }
 .table_num{
 	margin: 20%;
 }
 .table_price{
-	color: $color-orange;
+	color: $color-red;
 	font-weight: bold;
 }
 .table_col{
@@ -88,7 +108,7 @@
 	}
 }
 .left{
-	margin-left: 20px;
+	margin-left: 10px;
 	flex-grow: 1;
 	display: flex;
     align-items: center;
@@ -105,7 +125,7 @@
 	background: $color-grey;
 	
 	.total_money{
-		color: $color-orange;
+		color: $color-red;
 		font-weight: bolder;
 	}
 }
@@ -195,7 +215,7 @@
     	width: 100px;
     }
     .order_sum_orange{
-		color: $color-orange;
+		color: $color-red;
 		font-size: 16px;
     }
 }
@@ -221,7 +241,7 @@
 		    border-color: $button-green-active ;
 		}
     	.footer_orange{
-    		color: $color-orange;
+    		color: $color-red;
     		font-size: 16px;
     	}
     }
@@ -230,7 +250,7 @@
 .pay_mode{
 
 	.pay_title{
-		color: $color-orange;
+		color: $color-red;
 		font-size: 20px;
 		font-weight: bold;
 		text-align: center;

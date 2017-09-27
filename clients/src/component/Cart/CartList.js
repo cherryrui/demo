@@ -38,7 +38,7 @@ class CartList extends React.Component {
         }
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-            width: "38%",
+            width: "415px",
             render: (record) => <div className={css.table_product}>
                 <img src={record.img}/>
                 <div className={css.info}>
@@ -53,7 +53,7 @@ class CartList extends React.Component {
             </div>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
-            width: "16%",
+            width: "140px",
             className: css.table_col,
             render: (record) => <div>
                 {record.attr.map((item,index)=>{
@@ -69,14 +69,14 @@ class CartList extends React.Component {
             </div>
         }, {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
-            width: "8%",
+            width: "110px",
             className: css.table_col,
             dataIndex: 'price',
             key: 'price',
             render: (text) => <span className={css.table_price}>${text}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
-            width: "18%",
+            width: "140px",
             className: css.table_col,
             dataIndex: 'num',
             key: 'num',
@@ -88,12 +88,12 @@ class CartList extends React.Component {
             </div>
         }, {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-            width: "12%",
+            width: "140px",
             className: css.table_col,
             render: (record) => <span className={css.table_price}>${record.price*record.num}</span>
         }, {
             title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
-            width: "8%",
+            width: "110px",
             className: css.table_col,
             render: (record) => <div className={css.table_operator}>
                 <Tooltip title={<FormattedMessage id="cart.delete" defaultMessage="我的购物车"/>}>
