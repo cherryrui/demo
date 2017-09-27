@@ -2,27 +2,26 @@
 
 .qutation{
 
-  font-size: 12px !important;
-
-tbody[class="ant-table-tbody"]{
-
-  font-size: 12px !important;
+    .qutation_title{
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 20px;
+    }
+      font-size: 12px !important;
+  tbody[class="ant-table-tbody"]{
+       font-size: 12px !important;
 }
   thead[class="ant-table-thead"]{
-
-
    }
-td[class="Quotation__table_col___wsg4k"]{
 
-  font-size: 12px;
+  td[class="Quotation__table_col___wsg4k"]{
+      font-size: 12px;
 }
-th{
-  background:$back-ground-shallow-grey !important;
- color: $font-color !important;
+  th{
+      background:$back-ground-shallow-grey !important;
+      color: $font-color !important;
  }
-
-td{
-  padding: 20px 20px !important;
+  td{
+       padding: 20px 20px !important;
 }
 .table_product{
 	display: flex;
@@ -181,11 +180,9 @@ td{
 }
 .remark{
   font-size:12px ;
-	padding: 10px 0px;
+  padding: 10px 0px 20px 0px;
 	.title{
 		margin: 0px 10px 0px 20px;
-
-
 	}
 }
 .valid_date{

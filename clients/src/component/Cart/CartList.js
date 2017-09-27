@@ -62,7 +62,7 @@ class CartList extends React.Component {
             </Link>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
-            width: "140px",
+            width: "170px",
             className: css.table_col,
             render: (record) => <div>
                 {record.selectSpecs?record.selectSpecs.map((item,index)=>{
