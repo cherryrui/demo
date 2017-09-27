@@ -296,7 +296,7 @@ class Quotation extends React.Component {
 		console.log(this.state.width);
 		return <div className={appcss.body} ref={(quotation)=>this.quotation=quotation}>
 <div  className={css.qutation}>
-            <div className={appcss.navigate}>
+            <div className={`${appcss.navigate} ${css.qutation_title}`}>
             	{this.state.quotation.id?<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="page/mine">
