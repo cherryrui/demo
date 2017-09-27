@@ -206,9 +206,9 @@ class Category extends React.Component {
                     <Card bordered={false} noHovering bodyStyle={{padding: "0px"}}>
                         {item.suppliers.map((brand,index)=>{
                             return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
-                                <Card.Grid className={css.cards} style={{padding:"5px"}}>
+                                <div className={css.cards} style={{padding:"5px"}}>
                                     <img style={{width:"100%"}} src={brand.imgUrl+"@320w_320h_1e_1c.png"}/>
-                            </Card.Grid>
+                            </div>
                         </Link>:"")
                         })}
                     </Card>
