@@ -61,7 +61,7 @@ router.get('/get-category.json', async(ctx, next) => {
 		let result = {},
 			id = ctx.query.id;
 		try {
-			await axios.get(url + '/product/info/' + id).then(res => {
+			await axios.get(url + '/product/queryProductDetails/' + id).then(res => {
 				console.log(res.data)
 				result = res.data;
 			})
@@ -133,7 +133,7 @@ router.get('/get-category.json', async(ctx, next) => {
 		})
 		specId = specId.substr(0, specId.length - 1);
 		specVaild = specVaild.substr(0, specVaild.length - 1);
-		let uri = url + "/product/productItemByIds?productId=" + param.id + "&specId=" + specId + "&specValId=" + specVaild;
+		let uri = url + "/product/queryProductItemByIds?productId=" + param.id + "&specId=" + specId + "&specValId=" + specVaild;
 		console.log(134, uri)
 		await axios.get(uri).then(res => {
 			result = res.data;
@@ -145,7 +145,7 @@ router.get('/get-category.json', async(ctx, next) => {
 			result;
 		try {
 
-			await axios.get(url + '/product/similarProduct/' + id).then(res => {
+			await axios.get(url + '/product/querySimilarProduct/' + id).then(res => {
 				result = res.data
 			})
 		} catch (e) {
