@@ -1,6 +1,7 @@
 import React from 'react';
 import appcss from '../../App.scss';
 import css from './BrandDetail.scss';
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 import axios from 'axios';
 import {
 	Breadcrumb,
@@ -28,7 +29,7 @@ class BrandDetail extends React.Component {
 			brand: {},
 			category: [],
 			products: [],
-			pageSize: 10,
+			pageSize: 12,
 			current: 0,
 			total: 0,
 		}
@@ -157,13 +158,7 @@ class BrandDetail extends React.Component {
                     return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,index)} addCart/>
                 })}
             </div>
-            <div className={css.footer}>
-                <Pagination 
-                showSizeChanger 
-                onChange={this.handleChange} 
-                onShowSizeChange={this.onShowSizeChange} 
-                defaultCurrent={1} total={this.state.total} />
-            </div>
+            <CusPagination onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
 		</div>
 	}
 }

@@ -308,7 +308,7 @@ ReactDOM.render(
                             <Route path="brand-list" component={BrandList}/>
                             <Route path="product-list/:info(/:name)" component={ProductList}/>
                             <Route path="product-detail/:id(/:name)" component={ProductDetail}/>
-                            <Route path="brand-detail/(/:name)" component={BrandDetail}/>
+                            <Route path="brand-detail/:id" component={BrandDetail}/>
                             <Route path="post-want" component={PostWant}/>
                             <Route path="cart" component={Cart}/>
                             <Route path="quotation(/:id)" component={Quotation}/>
