@@ -448,7 +448,8 @@ const en_US = {
     "systemmessage.empty.message": "Empty message",
     "product.detail.model": "model",
     "product.detail.material": "material",
-    "mine.product.instruct_weight": "weight"
+    "mine.product.instruct_weight": "weight",
+    "app.view.order": "view the order"
 
 }
 export default en_US

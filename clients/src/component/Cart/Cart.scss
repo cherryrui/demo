@@ -10,6 +10,38 @@
 }
 .steps{
 	padding: 30px 10%;
+	div[class="ant-steps-head-inner"]{
+		border-color: $color-grey !important;
+		background-color: $color-grey !important;
+		height: 30px;
+		width: 30px;
+		color: white;
+	}
+	div[class="ant-steps-title"]{
+		font-size: 20px;
+	}
+	div[class="ant-steps-item ant-steps-status-process"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		div[class="ant-steps-title"]{
+			color: $color-green !important;
+			font-size: 20px;
+		}
+	}
+	div[class="ant-steps-item ant-steps-status-finish"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		span[class="ant-steps-icon anticon anticon-check"]{
+			color: white !important;
+			font-size: 20px;
+		}
+	}
 }
 .table_product{
 	display: flex;
@@ -240,7 +272,7 @@
 .pay_mode{
 
 	.pay_title{
-		color: $color-red;
+		color: $color-orange;
 		font-size: 20px;
 		font-weight: bold;
 		text-align: center;
@@ -249,6 +281,12 @@
 		text-align: center;
 		font-size: 14px;
 		padding: 15px 15px;
+
+	}
+	.pay_last{
+		text-align: center;
+		font-size: 14px;
+		padding-top: 40px;
 
 	}
 	.payments{
@@ -312,7 +350,51 @@ background:  $button-green;
     background-color: $button-blue-active;
 
   }
+.return_cart{
+	background:  $button-green;
 
+}
+.return_order{
+	background: $button-blue;
+}
+}
+.pay_success{
+  text-align: center;
+
+  padding-bottom: 160px;
+  .button_before{
+    background:  $button-green;
+    border: none;
+    border-radius: 2px;
+    width: 190px;
+    height:50px;
+    line-height:50px;
+  }
+  .button_pay{
+    margin: 20px;
+    padding: 0px 30px;
+    background: $button-blue;
+    border: none;
+    border-radius: 2px;
+    width: 190px;
+    height:50px;
+    line-height:50px;
+  }
+  .button_before:hover{
+    background-color: $button-green-active;
+
+  }
+  .button_pay:hover{
+    background-color: $button-blue-active;
+
+  }
+  .return_cart{
+    background:  $button-green;
+
+  }
+  .return_order{
+    background: $button-blue;
+  }
 }
 .cancel{
 	background-color: $button-green;

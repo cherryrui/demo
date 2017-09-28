@@ -455,6 +455,7 @@ const zh_CN = {
     "systemmessage.empty.message": "清空留言",
     "product.detail.model": "型号",
     "product.detail.material": "材质",
-    "mine.product.instruct_weight": "重量"
+    "mine.product.instruct_weight": "重量",
+    "app.view.order": "查看订单"
 }
 export default zh_CN;

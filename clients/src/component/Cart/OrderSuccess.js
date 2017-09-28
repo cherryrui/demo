@@ -6,12 +6,15 @@ import React from 'react';
 import css from './Cart.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
-import {Icon,Button} from 'antd';
+import {
+    Icon,
+    Button
+} from 'antd';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 
 class OrderSuccess extends React.Component {
 
@@ -22,15 +25,15 @@ class OrderSuccess extends React.Component {
                 <Icon type="smile-o" />&nbsp;&nbsp;
                 <FormattedMessage id="cart.payment" defaultMessage="订单提交成功"/>
             </p>
-            <p className={css.pay_info}>
+        <p className={css.pay_last}>
                 <FormattedMessage id="cart.pay.success" defaultMessage="订单提交成功"/>
             </p>
-            <div className={css.pay_footer}>
-                <Button size="large" type="primary" className={appcss.button_green}>
-                    <FormattedMessage id="cart.pay" defaultMessage="支付"/>
+            <div className={css.pay_success}>
+                <Button size="large" type="primary" className={css.button_before}>
+                    <FormattedMessage id="cart.return.cart" defaultMessage="支付"/>
                 </Button>
-                <Button size="large" type="primary" className={appcss.button_theme}>
-                    <FormattedMessage id="cart.see.order" defaultMessage="支付"/>
+                <Button size="large" type="primary" className={css.button_pay}>
+                    <FormattedMessage id="app.view.order" defaultMessage="支付"/>
                 </Button>
             </div>
         </div>
