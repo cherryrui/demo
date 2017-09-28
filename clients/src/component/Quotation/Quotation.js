@@ -6,6 +6,7 @@ import operator from './operator.js';
 import moment from 'moment';
 import QuotationPdf from '../QuotationPdf/QuotationPdf.js';
 import ModalHeader from '../Public/ModalHeader/ModalHeader.js';
+import CusModal from '../Public/CusModal/CusModal.js';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -26,7 +27,8 @@ import {
 	Radio,
 	Breadcrumb,
 	DatePicker,
-	Modal
+	Modal,
+	message
 } from 'antd';
 const Step = Steps.Step;
 const Option = Select.Option;
@@ -57,47 +59,51 @@ class Quotation extends React.Component {
 			width: "80%", //模态框宽度
 
 		}
+		this.formatMessage = this.props.intl.formatMessage;
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
 			width: "450px",
 			render: (record) => <div className={css.table_product}>
-                    <img src={record.img}/>
-                    <div className={css.info}>
-                        <p >{record.name}</p>
-                        <p>
-                            <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
-                            {record.branch}
-                        </p>
-                        <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/></p>
-                        <p>{record.name}</p>
-                    </div>
+                    <img src={record.coverUrl}/>
+	                <div className={css.info}>
+	                    <p className={css.name}>{record.productName}</p>
+	                    <p>
+	                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
+	                        ：{record.brandNameCn}
+	                    </p>
+	                    <p>
+	                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+	                        ：{record.moq}
+	                    </p>
+	                    <p>
+	                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+	                        ：{record.productNo}</p>
+	                </div>
                 </div>
 		}, {
 			title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
-			width: "170px",
+			width: "150px",
 			className: css.table_col,
 			render: (record) => <div>
-                {record.attr.map((item,index)=>{
-                    return <div>
-                        {item.name}
-                    </div>
-                })}
+                {record.selectSpecs?record.selectSpecs.map((item,index)=>{
+                    return <p>{item.specName}:{item.specVal[0].spec_value}</p>
+                }):""}
             </div>
 		}, {
 			title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
 			width: "140px",
 			className: css.table_col,
-			dataIndex: 'num',
-			key: 'num',
+			dataIndex: 'productNum',
+			key: 'productNum',
 			render: (text, record) => <div className={css.table_num}>
-                <Input addonBefore={<Icon onClick={this.handleNum.bind(this,record,"num",-1)} type="minus" />}
-                addonAfter={<Icon onClick={this.handleNum.bind(this,record,"num",1)} type="plus" />}
-                onChange={this.handleNum.bind(this,record,"num")}
+                <Input addonBefore={<Icon onClick={this.handleNum.bind(this,record,"productNum",-1)} type="minus" />}
+                addonAfter={<Icon onClick={this.handleNum.bind(this,record,"productNum",1)} type="plus" />}
+                onChange={this.handleNum.bind(this,record,"productNum")}
                 value={text} />
             </div>
 		}, {
 			title: <FormattedMessage id="quotation.sale.price" defaultMessage="我的购物车"/>,
-			width: "140px",
+			width: "180px",
 			className: css.table_col,
 			dataIndex: 'sale_price',
 			key: 'sale_price',
@@ -105,18 +111,18 @@ class Quotation extends React.Component {
                 <Input  addonBefore={<Icon onClick={this.handleNum.bind(this,record,"sale_price",-1)} type="minus" />}
                 addonAfter={<Icon onClick={this.handleNum.bind(this,record,"sale_price",1)} type="plus" />}
                 onChange={this.handleNum.bind(this,record,"sale_price")}
-                value={text} />
+                value={"$"+(text?text:record.price)} />
             </div>
 		}, {
 			title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
-			width: "110px",
+			width: "100px",
 			dataIndex: 'price',
 			key: 'price',
 			className: css.table_col,
 			render: (text) => <span className={css.table_price}>${text}</span>
 		}, {
 			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
-			width: "110px",
+			width: "100px",
 			className: css.table_col,
 			dataIndex: 'agent_price',
 			key: 'agent_price',
@@ -131,30 +137,34 @@ class Quotation extends React.Component {
 				})
 			})
 
-		} else {
-			let quotation = JSON.parse(localStorage.quotation);
+		} else if (sessionStorage.quotation) {
+			let quotation = JSON.parse(sessionStorage.quotation);
 			let data = this.state.quotation;
 			data.products = quotation.products;
 			data.sale_price = quotation.sale_price;
 			data.profit = quotation.profit;
+			data.sum_num = quotation.sum_num;
 			this.setState({
 				quotation: data
 			})
+		} else {
+			message.error("");
+			this.props.history.pushState(null, "/");
 		}
 	}
 	getProfile(products) {
 		let profits = 0,
-			sale_price = 0;
+			sale_price = 0,
+			sum = 0;
 		products.map(item => {
-			profits += item.num * (item.sale_price - item.agent_price);
-			sale_price += item.num * item.sale_price;
+			profits += item.productNum * (item.sale_price - item.agent_price);
+			sale_price += item.productNum * item.sale_price;
+			sum += item.productNum;
 		})
 		let quotation = this.state.quotation;
 		quotation.sale_price = sale_price;
 		quotation.profit = profits
 		this.setState({
-			sale_price: sale_price,
-			profit: profits,
 			quotation: quotation
 		})
 	}
@@ -163,23 +173,29 @@ class Quotation extends React.Component {
 		this.quotation.scrollIntoView();
 	}
 	handleNum = (record, name, value) => {
-		console.log(record, name, value);
+		console.log(record, name)
 		let data = this.state.quotation;
 		let sum = 0,
+			num = 0,
 			profit = 0;
 		data.products.map(item => {
 			if (item.id == record.id) {
 				if (isNaN(value)) {
-					item[name] = isNaN(value.target.value) ? 0 : parseFloat(value.target.value).toFixed(2);
+					console.log(value.target.value);
+					item[name] = isNaN(value.target.value.substr(1)) ? 0 : parseFloat(value.target.value.substr(1));
 				} else {
+					console.log(value);
 					item[name] = item[name] + value;
 				}
 			}
-			sum += item.sale_price * item.num;
-			profit += (item.sale_price - item.agent_price) * item.num;
+			item.productNum = item.productNum > 1 ? item.productNum : 1;
+			sum += item.sale_price * item.productNum;
+			num += item.productNum;
+			profit += (item.sale_price - item.agent_price) * item.productNum;
 		})
 		data.sale_price = sum;
 		data.profit = profit;
+		data.sum_num = num;
 		this.setState({
 			products: data,
 			sale_price: sum,
@@ -198,7 +214,7 @@ class Quotation extends React.Component {
 				quotation.clients[name] = e.target.value;
 				break;
 			case 2: //保存代理商信息
-				quotation.agent_price[name] = e.target.value;
+				quotation.agent[name] = e.target.value;
 				break;
 			case 3:
 				quotation[name] = e;
@@ -225,7 +241,7 @@ class Quotation extends React.Component {
 			visible: true,
 		})
 	}
-	export = () => {
+	exportPDF = () => {
 		this.setState({
 			visible: true,
 		}, this.exportQuotation)
@@ -288,14 +304,9 @@ class Quotation extends React.Component {
 
 
 	render() {
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
-		console.log(this.state.width);
+		console.log(this.state.quotation);
 		return <div className={appcss.body} ref={(quotation)=>this.quotation=quotation}>
-<div  className={css.qutation}>
+		<div  className={css.qutation}>
             <div className={`${appcss.navigate} ${css.qutation_title}`}>
             	{this.state.quotation.id?<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
@@ -332,15 +343,15 @@ class Quotation extends React.Component {
             <div className={css.order_sum}>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.num" defaultMessage="总数量"/>:
-            		<p className={css.sum_right}>{this.state.quotation.products.length}</p>
+            		<p className={css.sum_right}>{this.state.quotation.sum_num}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.sum" defaultMessage="总售价"/>:
-            		<p className={css.sum_price}>{this.state.quotation.sale_price}</p>
+            		<p className={css.sum_price}>{this.state.quotation.sale_price?this.state.quotation.sale_price.toFixed(2):""}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.profits" defaultMessage="利润"/>:
-            		<p className={css.sum_profit}>{this.state.quotation.profit}</p>
+            		<p className={css.sum_profit}>{this.state.quotation.profit?this.state.quotation.profit.toFixed(2):0}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
@@ -502,7 +513,7 @@ class Quotation extends React.Component {
 	        	<p className={appcss.button_orange} onClick={this.onlineShow}>
                     <FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
                 </p>
-                <p className={appcss.button_green} onClick={this.export}>
+                <p className={appcss.button_green} onClick={this.exportPDF}>
                     <FormattedMessage id="quotation.export" defaultMessage="导出报价单"/>
                 </p>
                 <p className={appcss.button_theme}>
@@ -510,24 +521,25 @@ class Quotation extends React.Component {
                 	:<FormattedMessage id="quotation.generate" defaultMessage="生成报价单"/>}
                 </p>
 	        </div>
-	        <Modal
-		          width={this.state.width}
-		          title={<ModalHeader width={this.state.width}
-			          setWidth={this.handleState}
-			          export={this.exportQuotation}
-			          title={formatMessage({
-	                            id: 'quotation.online'
-	                        })}/>}
-		          visible={this.state.visible}
-		          footer={null}
-		          onCancel={this.handleCancel}
-	        >
-		        <div id="content">
-		          <QuotationPdf quotation={this.state.quotation}/>
-		        </div>
-	        </Modal>
-</div>
+            <Modal
+                width={this.state.width}
+                title={<ModalHeader width={this.state.width}
+                    setWidth={this.handleState}
+                    export={this.exportQuotation}
+                    title={this.formatMessage({
+                        id: 'quotation.online'
+                    })}/>}
+                visible={this.state.visible}
+                footer={null}
+                onCancel={this.handleCancel}
+            >
+                <div id="content">
+                    <QuotationPdf quotation={this.state.quotation}/>
+                </div>
+            </Modal>
+	       
 		</div>
+	</div>
 	}
 
 

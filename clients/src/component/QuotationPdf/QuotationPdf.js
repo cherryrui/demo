@@ -22,27 +22,30 @@ class QuotationPdf extends React.Component {
 			className: css.table_col,
 			width: "38%",
 			render: (record) => <div className={css.table_product}>
-                    <img src={record.img}/>
-                    <div className={css.info}>
-                        <p >{record.name}</p>
-                        <p>
-                            <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>
-                            {record.branch}
-                        </p>
-                        <p><FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/></p>
-                        <p>{record.name}</p>
-                    </div>
+            <img src={record.coverUrl}/>
+                <div className={css.info}>
+                    <p className={css.name}>{record.productName}</p>
+                    <p>
+                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
+                        ：{record.brandNameCn}
+                    </p>
+                    <p>
+                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+                        ：{record.moq}
+                    </p>
+                    <p>
+                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+                        ：{record.productNo}</p>
                 </div>
+            </div>
 		}, {
 			title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
 			width: "10%",
 			className: css.table_col,
 			render: (record) => <div>
-                {record.attr.map((item,index)=>{
-                    return <div>
-                        {item.name}
-                    </div>
-                })}
+                {record.selectSpecs?record.selectSpecs.map((item,index)=>{
+                    return <p>{item.specName}:{item.specVal[0].spec_value}</p>
+                }):""}
             </div>
 		}, {
 			title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
@@ -63,35 +66,54 @@ class QuotationPdf extends React.Component {
 			key: 'price',
 			className: css.table_col,
 			render: (text) => <span className={css.table_price}>${text}</span>
-		}, {
-			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
-			width: "8%",
-			className: css.table_col,
-			dataIndex: 'agent_price',
-			key: 'agent_price',
-			render: (text) => <span className={css.table_price}>${text}</span>
 		}, ]
+	}
+	componentWillMount() {
+		if (this.props.quotation.select && this.props.quotation.plat_price) {
+			this.columns.push({
+				title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
+				width: "8%",
+				dataIndex: 'price',
+				key: 'price',
+				className: css.table_col,
+				render: (text) => <span className={css.table_price}>${text}</span>
+			});
+		}
+		if (this.props.quotation.select && this.props.quotation.agent_price) {
+			this.columns.push({
+				title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
+				width: "8%",
+				className: css.table_col,
+				dataIndex: 'agent_price',
+				key: 'agent_price',
+				render: (text) => <span className={css.table_price}>${text}</span>
+			});
+		}
 	}
 
 	render() {
-
+		console.log(this.props.quotation)
 		return <div className={css.body}>
 			<div className={css.title}>
-				<p className={css.logo}>LOGO</p>
+				<p className={css.logo}>
+					{this.props.quotation.select&this.props.quotation.select.logo?"LOGO":""}</p>
 				<div>
+					<p className={css.title_item}>
+						<FormattedMessage id="quotation.url" defaultMessage="报价单"/>
+						：www.chuanchuan.com
+					</p>
+					<p className={css.title_item}>
+						<FormattedMessage id="quotation.contact.tel" defaultMessage="报价单"/>
+						：028-123456
+					</p>
+					<p className={css.title_item}>
+						<FormattedMessage id="quotation.contact.email" defaultMessage="报价单"/>
+						：36941555@qq.com
+					</p>
 					<p className={css.title_item}>
 						<FormattedMessage id="quotation.url" defaultMessage="报价单"/>
 						:DSADSA
 					</p>
-					<p className={css.title_item}>
-						<FormattedMessage id="quotation.contact.tel" defaultMessage="报价单"/>
-						:DSADSA</p>
-					<p className={css.title_item}>
-					<FormattedMessage id="quotation.contact.email" defaultMessage="报价单"/>
-						:DSADSA</p>
-					<p className={css.title_item}>
-					<FormattedMessage id="quotation.url" defaultMessage="报价单"/>
-						:DSADSA</p>
 				</div>
 			</div>
 			<p className={css.quotation_title}>

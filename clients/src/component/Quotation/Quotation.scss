@@ -24,24 +24,30 @@
        padding: 20px 20px !important;
 }
 .table_product{
-	display: flex;
-
-	img{
-		border: 1px solid $border-color;
-		width: 100px;
-		height: 100px;
-		flex-shrink: 0;
-		margin: auto 0;
-	}
-	.info{
+  display: flex;
+  img{
+    border: 1px solid $border-color;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+  }
+  .info{
       padding-left: 10px;
-    	text-align: left;
-    	flex-grow: 1;
+      height: 100px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-	}
-
+      justify-content: space-between;
+      text-align: left;
+      .name{
+        overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      height: 18px;
+      }
+  }
 }
 .table_col{
 	text-align: center !important;
@@ -77,7 +83,7 @@
     color: $color-green;
   }
 	input{
-		margin-top: -5px;
+		  margin-top: -6px;
       width: 110px;
       border-radius: 0px;
       height: 36px;

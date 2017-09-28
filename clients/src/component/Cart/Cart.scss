@@ -140,15 +140,26 @@
 		font-weight: bolder;
 	}
 }
-.quotation{
-	padding: 20px;
-    background: $color-green;
+%button{
+	padding: 20px 0;
+	width: 150px;
+	text-align: center;
     color: white;
+    cursor: pointer;
+}
+.quotation{
+	@extend %button;
+    background: $color-green;
+}
+.quotation:hover{
+	background: $button-green-active
 }
 .calculate{
-	padding: 20px 40px;
+	@extend %button;
     background: $theme-color;
-    color: white;
+}
+.calculate:hover{
+	background: $button-blue-active;
 }
 .confirm_title{
 	font-size: 16px;

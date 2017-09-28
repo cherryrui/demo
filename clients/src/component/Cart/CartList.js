@@ -128,11 +128,16 @@ class CartList extends React.Component {
                     loading: false
                 })
             } else {
-                message.error(this.formatMessage({
-                    id: "request.fail"
-                }, {
-                    reason: res.data.message
-                }))
+                console.log(res.data.code);
+                if (res.data.code == 104) {
+                    this.props.goLink("/login");
+                } else {
+                    message.error(this.formatMessage({
+                        id: "request.fail"
+                    }, {
+                        reason: res.data.message
+                    }))
+                }
             }
         })
     }
@@ -322,40 +327,25 @@ class CartList extends React.Component {
             let quotation = {
                 products: [],
                 sale_price: 0,
-                profit: 0
+                profit: 0,
+                sum_num: 0,
             }
             this.state.data.map(item => {
                 this.state.selectedRowKeys.map(key => {
                     if (item.id === key) {
-                        quotation.products.push({
-                            id: item.id,
-                            attr_id: 1,
-                            attr: [{
-                                id: 1,
-                                name: "红色"
-                            }, {
-                                id: 2,
-                                name: "56"
-                            }, ],
-                            num: item.num,
-                            sale_price: item.price,
-                            price: item.price,
-                            agent_price: item.agent_price,
-                            img: item.img,
-                            name: item.name,
-                            brand: item.brand,
-                            moq: 1,
-                            NO: "3213213",
-                        });
-                        quotation.sale_price += item.num * item.price;
-                        quotation.profit += item.num * (item.price - item.agent_price);
+                        quotation.sum_num += item.productNum;
+                        item.sale_price = item.price;
+                        quotation.products.push(item);
+                        quotation.sale_price += item.productNum * item.price;
+                        quotation.profit += item.productNum * (item.price - item.agent_price);
                     }
                 })
             })
-            localStorage.setItem('quotation', JSON.stringify(quotation));
-            window.location.href = "/#/page/quotation";
-            console.log(this.props.history, this.state, this.props);
-            /*this.props.history.pushState(null, "page/quotation");*/
+            sessionStorage.setItem('quotation', JSON.stringify(quotation));
+            this.props.goLink("/page/quotation")
+                /* window.location.href = "/#/page/quotation";
+                 console.log(this.props.history, this.state, this.props);*/
+                /*this.props.history.pushState(null, "page/quotation");*/
         } else {
             message.warning(this.formatMessage({
                 id: 'cart.select.product'

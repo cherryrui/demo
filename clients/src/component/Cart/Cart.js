@@ -40,7 +40,6 @@ class Cart extends React.Component {
     }
     componentWillMount() {
         if (!sessionStorage.user) {
-            /*            window.location.href = '/#/login'*/
             this.props.history.pushState(null, "login");
         }
 
@@ -56,6 +55,9 @@ class Cart extends React.Component {
         }, () => {
             document.body.scrollTop = 0
         })
+    }
+    goLink = (url) => {
+        this.props.history.pushState(null, url);
     }
 
     render() {
@@ -77,7 +79,9 @@ class Cart extends React.Component {
             <div className={css.steps}>
                 <Steps current={this.state.step} steps={operator.steps}/>
             </div>
-            {this.state.step==0?<CartList handleStep={this.handleStep}/>
+            {this.state.step==0?<CartList
+                goLink={this.goLink}
+                handleStep={this.handleStep}/>
                 :this.state.step==1?<ConfirmOrder
                     products={this.state.products}
                     handleStep={this.handleStep}

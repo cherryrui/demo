@@ -6,20 +6,29 @@
 }
 .table_product{
 	display: flex;
-	padding: 10px 0;
 	img{
 		border: 1px solid $border-color;
+		flex-shrink: 0;
 		width: 100px;
 		height: 100px;
-		flex-shrink: 0;
-		margin: auto 0;
 	}
 	.info{
-		padding: 10px;
-    	text-align: left;
-    	flex-grow: 1;
+      padding-left: 10px;
+      height: 100px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      .name{
+      	overflow: hidden;
+    	display: -webkit-box;
+    	-webkit-line-clamp: 1;
+    	-webkit-box-orient: vertical;
+   	 	word-break: break-all;
+    	height: 18px;
+      }
 	}
-
 }
 .table_col{
 	text-align: center !important;

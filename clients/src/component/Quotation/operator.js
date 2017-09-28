@@ -9,25 +9,17 @@ export default {
 		value: "brand"
 	}, {
 		id: 3,
-		key: "cart.pay.mode",
+		key: "mine.product.param",
 		value: "specification"
 	}, {
 		id: 4,
 		key: "quotation.platform.price",
-		value: "price"
+		value: "plat_price"
 	}, {
 		id: 5,
 		key: "quotation.agency.price",
 		value: "agent_price"
-	}, {
-		id: 6,
-		key: "quotation.agency.price",
-		value: "commod"
-	}, {
-		id: 7,
-		key: "quotation.platform.price",
-		value: "commod"
-	}, ],
+	}],
 	pay_mode: [{
 		id: 0,
 		key: "cart.pay.cash",
