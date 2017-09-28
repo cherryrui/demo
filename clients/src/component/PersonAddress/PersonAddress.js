@@ -9,12 +9,12 @@ import basecss from '../Mine/Mine.scss';
 
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Steps,
     Table,
@@ -30,74 +30,70 @@ import {
     Modal,
     Cascader,
     Form
-    } from 'antd';
+} from 'antd';
 const Step = Steps.Step;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const {
     TextArea
-    } = Input;
+} = Input;
 
 
-class PersonAddress extends React.Component{
+class PersonAddress extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
     }
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            my_address :[{
+        this.state = {
+            my_address: [{
                 id: 1,
                 name: "张三",
                 tel: 12344566778,
-                city:"北京",
+                city: "北京",
                 address: "xxxxxxxxxxxxxxxx",
 
-            } ,{
+            }, {
                 id: 2,
                 name: "张三",
                 tel: 12344566778,
-                city:"北京",
+                city: "北京",
                 address: "xxxxxxxxxxxx",
 
-            } ,],
-            title:"cart.address.title",
-            address:{}
+            }, ],
+            title: "cart.address.title",
+            address: {}
         };
-        this.colums_show=[
-            {
-                title: <FormattedMessage id="cart.delivery.name" defaultMessage=" 收货人"/>,
-                className: css.table_col,
-                width: "20%",
-                className: css.table_col,
-                render: (record) => <span className={css.table_namne}>{record.name}</span>
-            },
-            {
-                title: <FormattedMessage id="cart.delivery.tel" defaultMessage="联系电话 "/>,
-                className: css.table_col,
-                width: "18%",
-                className: css.table_col,
-                render: (record) => <span className={css.table_tel}>{record.tel}</span>
-            },
-            {
-                title: <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址 "/>,
-                className: css.table_col,
-                width: "50%",
-                className: css.table_col,
-                render: (record) => <span className={css.table_address}>
+        this.colums_show = [{
+            title: <FormattedMessage id="cart.delivery.name" defaultMessage=" 收货人"/>,
+            className: css.table_col,
+            width: "20%",
+            className: css.table_col,
+            render: (record) => <span className={css.table_namne}>{record.name}</span>
+        }, {
+            title: <FormattedMessage id="cart.delivery.tel" defaultMessage="联系电话 "/>,
+            className: css.table_col,
+            width: "18%",
+            className: css.table_col,
+            render: (record) => <span className={css.table_tel}>{record.tel}</span>
+        }, {
+            title: <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址 "/>,
+            className: css.table_col,
+            width: "50%",
+            className: css.table_col,
+            render: (record) => <span className={css.table_address}>
                     <p>{record.city}&nbsp;&nbsp;{record.address}</p>
                     <p className={css.delivery}type="primary">
                         <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址 "/>
                     </p>
                 </span>
-            },
-            {
-                title: <FormattedMessage id="cart.operation" defaultMessage="操作"/>,
-                className: css.table_col,
-                width: "12%",
-                className: css.table_col,
-                render: (record) => <span className={css.table_operation}>
+        }, {
+            title: <FormattedMessage id="cart.operation" defaultMessage="操作"/>,
+            className: css.table_col,
+            width: "12%",
+            className: css.table_col,
+            render: (record) => <span className={css.table_operation}>
                   <a><Icon
                       onClick={this.handleEditAddress.bind(this)}
                       onmouseover="show('item')"
@@ -105,8 +101,7 @@ class PersonAddress extends React.Component{
                   </a>
                     <Icon type="delete" className={css.delete} />
                 </span>
-            },
-        ]
+        }, ]
     }
 
     handleEditAddress = (address) => {
@@ -143,10 +138,10 @@ class PersonAddress extends React.Component{
         })
     }
 
-    render(){
+    render() {
         const {
             getFieldDecorator
-            } = this.props.form;
+        } = this.props.form;
         const formItemLayout = {
             labelCol: {
                 xs: {
@@ -180,9 +175,9 @@ class PersonAddress extends React.Component{
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
-        return<div>
+            }
+        } = this.props;
+        return <div>
             <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person.address" defaultMessage="分类"/>
 
@@ -202,23 +197,23 @@ class PersonAddress extends React.Component{
 
             </div>
             <div>
-                <Modal
+                <Modal className={css.address_modal}
                     title={formatMessage({id: this.state.title})}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
                     footer={null}
                 >
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormItem
+        <Form onSubmit={this.handleSubmit} className={css.address_form}>
+                        <FormItem 
                             label={formatMessage({id: 'cart.delivery.name'})}
                         {...formItemLayout}
                         >
-                        {getFieldDecorator('name', {
+                        {getFieldDecorator ('name', {
                             initialValue: this.state.address.name,
                             rules: [{ required: true, message: formatMessage({id: 'cart.address.name'}), whitespace: true }],
                         })(
-                            <Input />
+                            <Input className={css.address_input}/>
                         )}
                         </FormItem>
                         <FormItem
@@ -228,7 +223,7 @@ class PersonAddress extends React.Component{
                         {getFieldDecorator('company_name', {
                             initialValue: this.state.address.company_name,
                         })(
-                            <Input />
+                            <Input className={css.address_input}/>
                         )}
                         </FormItem>
                         <FormItem
@@ -239,7 +234,7 @@ class PersonAddress extends React.Component{
                             initialValue: this.state.address.city?this.state.address.city.split(","):[],
                             rules: [{ type: 'array', required: true, message: formatMessage({id: 'cart.cart'}) }],
                         })(
-                            <Cascader
+                            <Cascader className={css.address_input}
                                 options={this.state.options}
                                 loadData={this.loadData}
                                 changeOnSelect
@@ -254,7 +249,7 @@ class PersonAddress extends React.Component{
                             initialValue: this.state.address.address,
                             rules: [{ required: true, message: formatMessage({id: 'cart.address.address'}) }],
                         })(
-                            <Input />
+                            <Input className={css.address_input}/>
                         )}
                         </FormItem>
                         <FormItem
@@ -265,20 +260,20 @@ class PersonAddress extends React.Component{
                             initialValue: this.state.address.tel,
                             rules: [{ required: true, message: formatMessage({id: 'cart.address.tel'}) }],
                         })(
-                            <Input />
+                            <Input className={css.address_input}/>
                         )}
                         </FormItem>
-                        <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+                        <FormItem {...tailFormItemLayout} style={{ marginBottom:8}}>
                         {getFieldDecorator('default', {
                             valuePropName: 'checked',
                             initialValue: this.state.address.default==1?true:false,
                         })(
-                            <Checkbox>{formatMessage({id: 'cart.address.default'})}</Checkbox>
+                            <Checkbox className={css.address_checkbox}>{formatMessage({id: 'cart.address.default'})}</Checkbox>
                         )}
                         </FormItem>
-                        <FormItem {...tailFormItemLayout}>
+        <FormItem {...tailFormItemLayout} style={{ marginBottom:4}}>
                             <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{formatMessage({id: 'app.cancel'})}</Button>
-                            <Button type="primary" htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
+                            <Button type="primary" className={css.submit} htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
                         </FormItem>
                     </Form>
                 </Modal>

@@ -59,8 +59,45 @@ align-items: center;
   background-color: $button-green;
   border-color: $button-green;
   margin-right: 20px;
+  border-radius: 2px;
+  width:120px;
 }
 .cancel:hover{
   background-color: $button-green-active;
   border-color: $button-green-active;
+}
+.submit{
+    width:120px;
+    border-radius: 2px ;
+    background-color:$button-blue;
+}
+.submit:hover{
+    width:120px;
+    border-radius: 2px ;
+    background-color:$button-blue-active;
+}
+.address_modal{
+
+  width: 660px!important;
+}
+
+.address_form{
+  padding: 8px !important;
+
+          .address_input{
+
+            width: 400px;
+            height: 36px;
+            border-radius: 2px !important;
+           margin-left: 2px;
+             input{
+              border-radius: 2px !important;
+              height: 36px;
+             }
+          
+  }
+  .address_checkbox{
+    height: 20px !important;
+
+  }
 }
