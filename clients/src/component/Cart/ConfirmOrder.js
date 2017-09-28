@@ -131,21 +131,26 @@ class ConfirmOrder extends React.Component {
         order.total = order.total.toFixed(2);
         //console.log(order.total.toFixed(2));
         axios.get('/user/get-city-by-parent.json').then(res => {
-            console.log('get-city-parent:',JSON.parse(res.data.address.result));
+            console.log('get-city-parent:', JSON.parse(res.data.address.result));
             let address = this.convertData(JSON.parse(res.data.address.result));
+            console.log(address);
             this.setState({
-                options: JSON.parse(res.data.address.result),
+                options: address,
                 order: order
             })
         })
     }
 
-    convertData(data){
-        data.map(item=>{
+    convertData(data) {
+        console.log(data);
+        data.map(item => {
             item.value = item.v;
             item.label = item.n;
-            if(item.s && item.s.length>0){
-                this.convertData(item.s);
+            item.children = item.s;
+            if (item.children && item.children.length > 0) {
+                this.convertData(item.children);
+            } else {
+                return data;
             }
         })
         return data;
@@ -178,15 +183,15 @@ class ConfirmOrder extends React.Component {
             loading: true,
         })
         let param = this.state.order;
-        console.log('PayOrder.js:',this.state)
+        console.log('PayOrder.js:', this.state)
         axios.post('/cart/commit-order.json', param).then(res => {
             this.setState({
-                loading: false,
-            })
-            /*let order = {
-                id: 1,
-                pay_money: 100
-            }*/
+                    loading: false,
+                })
+                /*let order = {
+                    id: 1,
+                    pay_money: 100
+                }*/
             let order = param;
             this.props.handleStep ? this.props.handleStep(1, order) : '';
         })
@@ -196,7 +201,7 @@ class ConfirmOrder extends React.Component {
         this.props.next ? this.props.next(num) : '';
     }
     handleEditAddress = (address) => {
-        console.log('address:',address);
+        console.log('address:', address);
         let title = '',
             addr;
         if (address.id) {
@@ -240,8 +245,8 @@ class ConfirmOrder extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                axios.post('/user/add-user-address.json',values).then(res => {
-                    console.log('add-useraddress:',res.data);
+                axios.post('/user/add-user-address.json', values).then(res => {
+                    console.log('add-useraddress:', res.data);
                 })
             }
         });

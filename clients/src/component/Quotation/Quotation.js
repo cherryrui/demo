@@ -57,7 +57,7 @@ class Quotation extends React.Component {
 				clients: {},
 				agent: {},
 			},
-			width: "680px", //模态框宽度
+			width: "80%", //模态框宽度
 		}
 		this.user = JSON.parse(sessionStorage.user);
 		this.formatMessage = this.props.intl.formatMessage;
@@ -327,7 +327,7 @@ class Quotation extends React.Component {
 
 	saveQuotation = () => {
 		console.log(this.state.quotation);
-		if (this.checkParam()) {
+		if (!this.state.quotation.subject) {
 
 		} else {
 			message.error(this.formatMessage({
@@ -417,6 +417,7 @@ class Quotation extends React.Component {
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
+	            			<span></span>
 	            			<FormattedMessage id="quotation.contact.name" defaultMessage="联系人"/>:
 	            		</p>
 	            		<Input size='large' value={this.state.quotation.clients.realName} onChange={this.handleInfo.bind(this,1,"realName")} />
@@ -485,7 +486,7 @@ class Quotation extends React.Component {
 	            </p>
 	            <Input size='large' value={this.state.quotation.subject} onChange={this.handleInfo.bind(this,0,"subject")} />
 	        </p>
-	        <p className={css.valid_date}>
+	        {/*<p className={css.valid_date}>
             	<p className={css.title}>
 	            	<FormattedMessage id="quotation.valid.date" defaultMessage="截止有效期"/>:
 	            </p>
@@ -497,7 +498,7 @@ class Quotation extends React.Component {
 		          	format="YYYY-MM-DD HH:mm:ss"
 		          	onChange={this.handleInfo.bind(this,3,"valid_date")}
 		        />
-	        </p>
+	        </p>*/}
 	        <p className={`${css.item} ${css.padd_20_w}`}>
 	        	<p className={css.title}>
 	            	<FormattedMessage id="cart.pay.mode" defaultMessage="支付方式"/>:
