@@ -9,12 +9,12 @@
 	img{
 		border: 1px solid $border-color;
 		flex-shrink: 0;
-		width: 100px;
-		height: 100px;
+		width: 50px;
+		height: 50px;
 	}
 	.info{
+	  font-size: 8px;
       padding-left: 10px;
-      height: 100px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -26,7 +26,6 @@
     	-webkit-line-clamp: 1;
     	-webkit-box-orient: vertical;
    	 	word-break: break-all;
-    	height: 18px;
       }
 	}
 }
@@ -35,7 +34,7 @@
 	font-size: 14px;
 }
 .table_num{
-	margin: 20%;
+	margin: 10px;
 }
 .title{
 	display: flex;
@@ -103,10 +102,10 @@
 		text-align: right;
 		display: flex;
 		justify-content: flex-end;
-		padding: 10px 0;
+		padding: 5px 0;
 	}
 	.sum_right{
-		width: 150px;
+		width: 50px;
 		margin-left: 10px;
 	}
 	input{

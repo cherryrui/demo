@@ -10,38 +10,6 @@
 }
 .steps{
 	padding: 30px 10%;
-	div[class="ant-steps-head-inner"]{
-		border-color: $color-grey !important;
-		background-color: $color-grey !important;
-		height: 30px;
-		width: 30px;
-		color: white;
-	}
-	div[class="ant-steps-title"]{
-		font-size: 20px;
-	}
-	div[class="ant-steps-item ant-steps-status-process"]{
-		div[class="ant-steps-head-inner"]{
-			border-color: $color-green !important;
-			background-color: $color-green !important;
-			font-size: 20px;
-		}
-		div[class="ant-steps-title"]{
-			color: $color-green !important;
-			font-size: 20px;
-		}
-	}
-	div[class="ant-steps-item ant-steps-status-finish"]{
-		div[class="ant-steps-head-inner"]{
-			border-color: $color-green !important;
-			background-color: $color-green !important;
-			font-size: 20px;
-		}
-		span[class="ant-steps-icon anticon anticon-check"]{
-			color: white !important;
-			font-size: 20px;
-		}
-	}
 }
 .table_product{
 	display: flex;

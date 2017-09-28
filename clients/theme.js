@@ -12,6 +12,6 @@ module.exports = () => {
 		'btn-height-base': '36px',
 		'btn-height-lg': '40px',
 		'btn-height-sm': '28px',
-		"table-header-bg": "edeff2"
+		"table-header-bg": "#edeff2"
 	}
 };

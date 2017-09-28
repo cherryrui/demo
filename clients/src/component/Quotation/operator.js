@@ -8,10 +8,6 @@ export default {
 		key: "app.brand",
 		value: "brand"
 	}, {
-		id: 3,
-		key: "mine.product.param",
-		value: "specification"
-	}, {
 		id: 4,
 		key: "quotation.platform.price",
 		value: "plat_price"

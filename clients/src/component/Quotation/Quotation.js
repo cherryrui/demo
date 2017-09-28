@@ -52,13 +52,14 @@ class Quotation extends React.Component {
 				sale_price: 100,
 				profit: 200,
 				pay_mode: 0, //支付方式
+				pay_mode_name: "在线",
 				invoice_type: 0, //发票类型
 				clients: {},
 				agent: {},
 			},
-			width: "80%", //模态框宽度
-
+			width: "680px", //模态框宽度
 		}
+		this.user = JSON.parse(sessionStorage.user);
 		this.formatMessage = this.props.intl.formatMessage;
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
@@ -144,6 +145,14 @@ class Quotation extends React.Component {
 			data.sale_price = quotation.sale_price;
 			data.profit = quotation.profit;
 			data.sum_num = quotation.sum_num;
+			data.agent = {
+				companyName: this.user.companyName,
+				deapartment: "",
+				realName: this.user.realName,
+				tel: this.user.tel,
+				email: this.user.email,
+				fox: ""
+			}
 			this.setState({
 				quotation: data
 			})
@@ -169,7 +178,6 @@ class Quotation extends React.Component {
 		})
 	}
 	componentDidMount() {
-		console.log(this.quotation);
 		this.quotation.scrollIntoView();
 	}
 	handleNum = (record, name, value) => {
@@ -295,11 +303,37 @@ class Quotation extends React.Component {
 			visible: false,
 		})
 	}
+
 	handleState = (width) => {
 		console.log(width);
 		this.setState({
 			width: width,
 		})
+	}
+
+	/**
+	 * 检查数据完整性
+	 * @return {[type]} [description]
+	 */
+	checkParam() {
+		let flag = true;
+		let quotation = this.state.quotation;
+		if (!quotation.clients.realName || !quotation.agent.realName ||
+			!quotation.clients.tel || !quotation.agent.tel || !quotation.subject || !quotation.valid_date) {
+			flag = false;
+		}
+		return flag;
+	}
+
+	saveQuotation = () => {
+		console.log(this.state.quotation);
+		if (this.checkParam()) {
+
+		} else {
+			message.error(this.formatMessage({
+				id: "quotation.param"
+			}))
+		}
 	}
 
 
@@ -373,7 +407,7 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.clients.company} onChange={this.handleInfo.bind(this,1,"company")} />
+	            		<Input size='large' value={this.state.quotation.clients.companyName} onChange={this.handleInfo.bind(this,1,"companyName")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
@@ -385,7 +419,7 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.name" defaultMessage="联系人"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.clients.name} onChange={this.handleInfo.bind(this,1,"name")} />
+	            		<Input size='large' value={this.state.quotation.clients.realName} onChange={this.handleInfo.bind(this,1,"realName")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
@@ -411,7 +445,7 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.agent.company} onChange={this.handleInfo.bind(this,2,"company")} />
+	            		<Input size='large' value={this.state.quotation.agent.companyName} onChange={this.handleInfo.bind(this,2,"companyName")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
@@ -423,7 +457,7 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.name" defaultMessage="联系人"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.agent.name} onChange={this.handleInfo.bind(this,2,"name")} />
+	            		<Input size='large' value={this.state.quotation.agent.realName} onChange={this.handleInfo.bind(this,2,"realName")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
@@ -459,8 +493,7 @@ class Quotation extends React.Component {
 	            	size="large"
 		          	showTime
 		          	style={{width:"300px"}}
-		          	defaultValue={this.state.quotation.valid_date?moment(this.state.quotation.valid_date, "YYYY-MM-DD HH:mm:ss"):moment()}
-
+		          	defaultValue={this.state.quotation.valid_date?moment(this.state.quotation.valid_date, "YYYY-MM-DD HH:mm:ss"):null}
 		          	format="YYYY-MM-DD HH:mm:ss"
 		          	onChange={this.handleInfo.bind(this,3,"valid_date")}
 		        />
@@ -480,7 +513,7 @@ class Quotation extends React.Component {
 	        </p>
 	        <p className={`${css.item} ${css.padd_20}`}>
 	            <p className={css.title}>
-	            	<FormattedMessage id="app.home" defaultMessage="分类"/>:
+	            	<FormattedMessage id="quotation.invoice" defaultMessage="分类"/>:
 	            </p>
 				<RadioGroup onChange={this.handleInfo.bind(this,0,"invoice_type")} value={this.state.quotation.invoice_type}>
 			        {operator.invoice_type.map(item=>{
@@ -516,7 +549,7 @@ class Quotation extends React.Component {
                 <p className={appcss.button_green} onClick={this.exportPDF}>
                     <FormattedMessage id="quotation.export" defaultMessage="导出报价单"/>
                 </p>
-                <p className={appcss.button_theme}>
+                <p className={appcss.button_theme} onClick={this.saveQuotation}>
                 	{this.state.quotation.id?<FormattedMessage id="quotation.save" defaultMessage="保存报价单"/>
                 	:<FormattedMessage id="quotation.generate" defaultMessage="生成报价单"/>}
                 </p>

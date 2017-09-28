@@ -223,28 +223,30 @@ class Register extends React.Component {
                         )}
                         </FormItem>
 
-                        <FormItem {...formItemLayout}
-                            label={formatMessage({id: 'register.register.verification'})}
-                        >
-                            <Row gutter={10}>
-                                <Col span={12}>
-                                {getFieldDecorator('verificationCode',{
-                                    rules:[{
-                                        required:true,
-                                        message:formatMessage({id:"register.verifivation.warn"})
-                                    }]
-                                })(
-                                    <Input size="large" />
-                                )}
-                                </Col>
-                                <Col span={12}>
-                                    <Button type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
-                                        <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
-                                        {this.state.time?("("+this.state.time+")"):""}
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </FormItem>
+        {
+            /*<FormItem {...formItemLayout}
+                                        label={formatMessage({id: 'register.register.verification'})}
+                                    >
+                                        <Row gutter={10}>
+                                            <Col span={12}>
+                                            {getFieldDecorator('verificationCode',{
+                                                rules:[{
+                                                    required:true,
+                                                    message:formatMessage({id:"register.verifivation.warn"})
+                                                }]
+                                            })(
+                                                <Input size="large" />
+                                            )}
+                                            </Col>
+                                            <Col span={12}>
+                                                <Button type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                                                    <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
+                                                    {this.state.time?("("+this.state.time+")"):""}
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </FormItem>*/
+        }
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.pwd'})}
                         >
