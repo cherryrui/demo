@@ -10,12 +10,13 @@ export default {
 		default: "新品",
 		orderType: "desc"
 	}, {
-		key: 2,
-		id: "sort.price",
-		default: "价格",
-	}, {
 		key: 3,
 		id: "sort.sale",
 		default: "销量",
+		orderType: "desc"
+	}, {
+		key: 2,
+		id: "sort.price",
+		default: "价格",
 	}, ]
 }

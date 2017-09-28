@@ -60,7 +60,7 @@ class PostWant extends React.Component {
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="/">
-                            <FormattedMessage id="app.category" defaultMessage="分类"/>
+                            <FormattedMessage id="app.home" defaultMessage="分类"/>
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>

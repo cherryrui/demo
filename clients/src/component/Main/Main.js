@@ -179,7 +179,7 @@ class Category extends React.Component {
                     <div className={css.cate_title} >
                         <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>
                     </div>
-                    <div>
+                    <div className={css.left_content}>
                     {item.levleTwoProductCategory.map(cate=>{
                         return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
                             <p className={css.cate}>{cate.categoryName}</p>
@@ -199,23 +199,20 @@ class Category extends React.Component {
                 </div>
                 {item.suppliers.length>0?
                 <div className={css.right}>
-         
                     <Link to={"page/brand-detail/"+item.suppliers.sid}>
-                        <img style={{width: "60%",margin: "0 20%"}} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
-                        <p className={css.title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
-                        <p className={css.content} style={{padding: "10px",textAlign: "left"}}>
+                        <img className={css.right_img} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
+                        <p className={css.right_title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
+                        <p className={css.right_content}>
                             <div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} />
                         </p>
                     </Link>
-                    <Card bordered={false} noHovering bodyStyle={{padding: "0px"}}>
+                    <div className={css.right_brand}>
                         {item.suppliers.map((brand,index)=>{
                             return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
-                                <div className={css.cards} style={{padding:"5px"}}>
-                                    <img style={{width:"100%"}} src={brand.imgUrl+"@320w_320h_1e_1c.png"}/>
-                            </div>
-                        </Link>:"")
+                                <img className={css.right_img_item} src={brand.imgUrl+"@70w_70h_1e_1c.png"}/>
+                            </Link>:"")
                         })}
-                    </Card>
+                    </div>
                 </div>:""}
             </div>
         })}

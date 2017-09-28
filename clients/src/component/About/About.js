@@ -9,13 +9,17 @@ import column from './column.js';
 
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
-import { Menu, Icon,Col }from 'antd';
+} from 'react-intl';
+import {
+    Menu,
+    Icon,
+    Col
+} from 'antd';
 const SubMenu = Menu.SubMenu;
 
 
@@ -31,23 +35,28 @@ class About extends React.Component {
             select: 0,
         }
     }
+    componentDidMount() {
+        this.about.scrollIntoView();
+    }
 
     handleClick = (e) => {
         console.log('click ', e);
     }
-    handleMenu=(key)=>{
+    handleMenu = (key) => {
         console.log(key);
-        this.setState({select:key})
+        this.setState({
+            select: key
+        })
     }
 
     render() {
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
-        console.log(column.menu,this.props.children);
-        return <div className={`${appcss.body} ${css.body}`}>
+            }
+        } = this.props;
+        console.log(column.menu, this.props.children);
+        return <div className={`${appcss.body} ${css.body}`} ref={(about)=>{this.about= about}}>
             <div className={css.menu}>
             {column.menu.map(menu=> {
                 console.log(45,menu,menu.title);

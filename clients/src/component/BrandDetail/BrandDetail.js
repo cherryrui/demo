@@ -2,6 +2,7 @@ import React from 'react';
 import appcss from '../../App.scss';
 import css from './BrandDetail.scss';
 import CusPagination from '../Public/CusPagination/CusPagination.js';
+import operator from './operator.js'
 import axios from 'axios';
 import {
 	Breadcrumb,
@@ -108,9 +109,7 @@ class BrandDetail extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <FormattedMessage id="category.list.search" defaultMessage={this.state.search}
-                            values={{search:this.state.search}}
-                        />
+                        {this.state.brand.naem}
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
@@ -142,9 +141,16 @@ class BrandDetail extends React.Component {
             />:""}
             <div className={css.header}>
                 <div className={css.left}>
-                    <p className={css.item}>Comprehensive</p>
-                    <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Rating"/>
-                    <Sort className={css.item} handleSort={this.handleSort.bind(this,"rating")} value="Sale"/>
+                    {operator.sort.map(item=>{
+                            return item.orderType?<p className={item.key==this.state.sortType?css.item_active:css.item} 
+                            onClick={this.handleSort.bind(this,item.key,item.orderType)}>
+                                <FormattedMessage id={item.id} defaultMessage={item.default}/>
+                            </p>:<Sort className={css.item} 
+                                id={item.id} 
+                                default={item.default} 
+                                is_select={this.state.sortType==item.key?true:false}
+                                handleSort={this.handleSort.bind(this,item.key)}/>
+                        })}
                 </div>
                 <div className={css.right}>
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"

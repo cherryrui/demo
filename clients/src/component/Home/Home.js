@@ -185,7 +185,7 @@ class Main extends React.Component {
         <div className={css.header}>
             <div className={css.header_content}>
                 <div className={css.left}>
-                    <p className={css.logo}>LOGO</p>
+                    <Link to="/" className={css.logo}>LOGO</Link>
                     <p onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                         &nbsp;&nbsp;
