@@ -86,7 +86,7 @@ class Cart extends React.Component {
                     products={this.state.products}
                     handleStep={this.handleStep}
                 />
-                :this.state.step==2?<PayOrder order={this.state.order}/>
+                :this.state.step==2?<PayOrder handleStep={this.handleStep} order={this.state.order}/>
                 :this.state.step==3?<OrderSuccess/>
                 :""}
         </div>

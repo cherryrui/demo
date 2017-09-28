@@ -160,14 +160,16 @@ class ConfirmOrder extends React.Component {
             loading: true,
         })
         let param = this.state.order;
+        console.log('PayOrder.js:',this.state)
         axios.post('/cart/commit-order.json', param).then(res => {
             this.setState({
                 loading: false,
             })
-            let order = {
+            /*let order = {
                 id: 1,
                 pay_money: 100
-            }
+            }*/
+            let order = param;
             this.props.handleStep ? this.props.handleStep(1, order) : '';
         })
 
@@ -176,6 +178,7 @@ class ConfirmOrder extends React.Component {
         this.props.next ? this.props.next(num) : '';
     }
     handleEditAddress = (address) => {
+        console.log('address:',address);
         let title = '',
             addr;
         if (address.id) {
@@ -236,7 +239,7 @@ class ConfirmOrder extends React.Component {
         });
     }
     render() {
-        console.log(this.props.products);
+        //console.log(this.props.products);
         const {
             getFieldDecorator
         } = this.props.form;
