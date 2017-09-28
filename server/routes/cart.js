@@ -69,6 +69,25 @@ router
         ctx.body = result;
     })
     .post('/commit-order.json', async(ctx, next) => {
+        let result = null;
+        let data = ctx.request.body;
+        console.log('1111',data);
+        const param = {
+            addressId:12,
+            productIds:data.productIds,
+            productNumbers:data.productNumbers,
+            itemIds:data.itemIds,
+            itemNumbers:data.itemNumbers,
+            payModelId:data.pay_mode,
+            payModelStageId:data.advance_pay,
+            deliveryId:data.advance_mode,
+            remark:data.remark
+        };
+        console.log(222222);
+        axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+        await axios.post(url+'/auth/order/generateOrder',querystring.stringify(param)).then(res => {
+            console.log('generateOrder:',res.data)
+        })
         ctx.body = true
     })
 

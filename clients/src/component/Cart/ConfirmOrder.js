@@ -193,7 +193,12 @@ class ConfirmOrder extends React.Component {
                     pay_money: 100
                 }*/
             let order = param;
-            this.props.handleStep ? this.props.handleStep(1, order) : '';
+            if(res.data.isSucc){
+                this.props.handleStep ? this.props.handleStep(1, order) : '';
+            }else{
+                alert(res.data.message);
+            }
+            
         })
 
     }
@@ -435,7 +440,7 @@ class ConfirmOrder extends React.Component {
                     <FormItem
                         {...formItemLayout}
                         label={this.formatMessage({id: 'cart.delivery.city'})}
-                    >
+                    >{console.log(this.state.address)}
                         {getFieldDecorator('city', {
                             initialValue: this.state.address.city?this.state.address.city.split(","):[],
 

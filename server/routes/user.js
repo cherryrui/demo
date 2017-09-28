@@ -44,7 +44,24 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.post('/add-user-address.json',async(ctx) => {
 		let result = null;
-		const param = ctx.request.body;
+		const data = ctx.request.body;
+		const param = {
+			country:data.country,
+			countryId:data.countryId,
+			province:data.province,
+			provinceId:data.provinceId,
+			city:data.city,
+			cityId:data.cityId,
+			district:data.district,
+			districtId:data.districtId,
+			address:data.address,
+			name:data.name,
+			companyName:data.companyName,
+			phone:data.phone,
+			phoneDcId:data.phoneDcId,
+			phoneDc:data.phoneDc,
+			isDefault:data.isDefault
+		};
 		console.log(param);
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url+'/auth/userAddress/insertAddress',querystring.stringify(param)).then(res => {
