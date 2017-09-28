@@ -96,7 +96,7 @@ class ConfirmOrder extends React.Component {
             className: css.table_col,
             dataIndex: 'price',
             key: 'price',
-            render: (text) => <span className={css.table_price}>${text}</span>
+            render: (text) => <span className={css.table_price}>${text.toFixed(2)}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "18%",
@@ -108,7 +108,7 @@ class ConfirmOrder extends React.Component {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
             width: "12%",
             className: css.table_col,
-            render: (record) => <span className={css.table_price}>${record.price*record.productNum}</span>
+            render: (record) => <span className={css.table_price}>${(record.price*record.productNum).toFixed(2)}</span>
         }, ]
     }
     componentWillMount() {
@@ -127,9 +127,13 @@ class ConfirmOrder extends React.Component {
         order.sum = sum;
         order.postage = 100;
         order.total = order.sum + order.postage;
+        order.sum = order.sum.toFixed(2);
+        order.total = order.total.toFixed(2);
+        //console.log(order.total.toFixed(2));
         axios.get('/user/get-city-by-parent.json').then(res => {
+            console.log('get-city-parent:',JSON.parse(res.data.address.result));
             this.setState({
-                options: res.data.address,
+                options: JSON.parse(res.data.address.result),
                 order: order
             })
         })
@@ -235,6 +239,9 @@ class ConfirmOrder extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                axios.post('/user/add-user-address.json',values).then(res => {
+                    console.log('add-useraddress:',res.data);
+                })
             }
         });
     }
@@ -366,7 +373,7 @@ class ConfirmOrder extends React.Component {
                 </div>
                 <div>
                     <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
-                    <p >$&nbsp;{this.state.order.postage}</p>
+                    <p >$&nbsp;{this.state.order.postage.toFixed(2)}</p>
                 </div>
                 <div>
                     <FormattedMessage id="cart.grand" defaultMessage="总金额"/>:

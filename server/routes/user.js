@@ -42,8 +42,23 @@ router.get('/get-user.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
+	.post('/add-user-address.json',async(ctx) => {
+		let result = null;
+		const param = ctx.request.body;
+		console.log(param);
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		await axios.post(url+'/auth/userAddress/insertAddress',querystring.stringify(param)).then(res => {
+			console.log('add address:',res.data);
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 	.get('/get-address-list.json', async(ctx, next) => {
 		let uid = ctx.query.uid;
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		await axios.post(url+'/auth/userAddress/queryAllAddressList').then(res => {
+			console.log('getAddress:',res.data);
+		})
 		ctx.body = {
 			address: [{
 				id: 1,
@@ -77,9 +92,13 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 	})
 	.get('/get-city-by-parent.json', async(ctx, nexy) => {
+		let result = null;
 		let cid = ctx.query.cid ? ctx.query.cid : 0; //父级城市id
-
-		let address = [{
+		await axios.post(url+'/district/queryDistrictList').then(res => {
+			console.log('get Country',res.data);
+			result = res.data;
+		})
+		/*let address = [{
 			id: cid + 1,
 			value: 'zhejiang',
 			label: 'Zhejiang',
@@ -89,9 +108,9 @@ router.get('/get-user.json', async(ctx, next) => {
 			value: 'jiangsu',
 			label: 'Jiangsu',
 			isLeaf: cid > 3 ? true : false,
-		}];
+		}];*/
 		ctx.body = {
-			address: address
+			address: result
 		}
 	})
 	.post('/repassword.json', async(ctx) => {

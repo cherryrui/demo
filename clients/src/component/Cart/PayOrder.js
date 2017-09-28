@@ -49,8 +49,12 @@ class PayOrder extends React.Component {
 
     handlePay = () => {
         let param = this.props.order;
-        console.log(1111111,this.props.handleStep);
+        //console.log(1111111,this.props.handleStep);
         this.props.handleStep ? this.props.handleStep(1,param) : "";
+    }
+    handleBack = () => {
+        let param = this.props.order;
+        this.props.handleStep ? this.props.handleStep(0,param) : "";
     }
 
     render() {
@@ -93,7 +97,7 @@ class PayOrder extends React.Component {
             </div>
 
             <div className={css.pay_footer}>
-                <Button size="large" type="primary" className={css.button_before}>
+                <Button size="large" type="primary" onClick={this.handleBacks} className={css.button_before}>
                     <FormattedMessage id="app.before" defaultMessage="支付"/>
                 </Button>
                 <Button size="large" type="primary" onClick={this.handlePay} className={css.button_pay}>
