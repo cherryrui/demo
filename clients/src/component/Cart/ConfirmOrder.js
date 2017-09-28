@@ -132,12 +132,26 @@ class ConfirmOrder extends React.Component {
         //console.log(order.total.toFixed(2));
         axios.get('/user/get-city-by-parent.json').then(res => {
             console.log('get-city-parent:',JSON.parse(res.data.address.result));
+            let address = this.convertData(JSON.parse(res.data.address.result));
             this.setState({
                 options: JSON.parse(res.data.address.result),
                 order: order
             })
         })
     }
+
+    convertData(data){
+        data.map(item=>{
+            item.value = item.v;
+            item.label = item.n;
+            if(item.s && item.s.length>0){
+                this.convertData(item.s);
+            }
+        })
+        return data;
+    }
+
+
 
     /**
      * 保存订单相关信息
@@ -219,19 +233,6 @@ class ConfirmOrder extends React.Component {
         this.setState({
             inputValue: selectedOptions.map(o => o.label).join(', '),
         });
-    }
-
-    loadData = (selectedOptions) => {
-        console.log(selectedOptions);
-        const targetOption = selectedOptions[selectedOptions.length - 1];
-        targetOption.loading = true;
-        axios.get(`/user/get-city-by-parent.json?cid=${targetOption.id}`).then(res => {
-            targetOption.loading = false;
-            targetOption.children = res.data.address;
-            this.setState({
-                options: [...this.state.options],
-            });
-        })
     }
 
     handleSubmit = (e) => {
@@ -437,8 +438,6 @@ class ConfirmOrder extends React.Component {
                         })(
                             <Cascader
                                 options={this.state.options}
-                                loadData={this.loadData}
-                                changeOnSelect
                             />
                         )}
                     </FormItem>
