@@ -438,7 +438,7 @@ class ConfirmOrder extends React.Component {
                                 <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址"/>
                             </span>:""}
                         </p>
-                        {item.addressId==this.state.select?<Icon type="edit" onClick={this.handleEditAddress.bind(this,item)} />:""}
+                        {item.addressId==this.state.select?<Icon className={css.pointer}type="edit" onClick={this.handleEditAddress.bind(this,item)} />:""}
                     </div>
                 })}
             </div>
@@ -514,7 +514,7 @@ class ConfirmOrder extends React.Component {
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.remark" defaultMessage="备注"/>
             </div>
-            <TextArea rows={4} onChange={this.handlePayMode.bind(this,"note")}/>
+            <TextArea rows={4} onChange={this.handlePayMode.bind(this,"note")} className={css.remark_test}/>
             <div className={css.order_sum}>
                 <div>
                     <FormattedMessage id="cart.order.total" defaultMessage="订单总金额"/>:
@@ -546,7 +546,7 @@ class ConfirmOrder extends React.Component {
                     </Button>
                 </div>
             </div>
-            <CusModal
+            <CusModal  className={css.address_modal}
                 title={this.formatMessage({id: this.state.title})}
                 visible={this.state.visible}
                 closeModal={this.handleCancel}
@@ -560,7 +560,7 @@ class ConfirmOrder extends React.Component {
                             initialValue: this.state.address.name,
                             rules: [{ required: true, message: this.formatMessage({id: 'cart.address.name'}), whitespace: true }],
                         })(
-                            <Input />
+                            <Input  className={css.address_input}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -570,7 +570,7 @@ class ConfirmOrder extends React.Component {
                         {getFieldDecorator('companyName', {
                             initialValue: this.state.address.companyName,
                         })(
-                            <Input />
+                            <Input  className={css.address_input}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -581,7 +581,7 @@ class ConfirmOrder extends React.Component {
                             initialValue: this.state.address.city?this.state.address.city:[],
                             rules: [{ type: 'array', required: true, message: this.formatMessage({id: 'cart.delivery.city'}) }],
                         })(
-                            <Cascader
+                            <Cascader  className={css.address_input}
                                 options={this.state.options}
                                 onChange={this.changeAddress}
                             />
@@ -595,7 +595,7 @@ class ConfirmOrder extends React.Component {
                             initialValue: this.state.address.address,
                             rules: [{ required: true, message: this.formatMessage({id: 'cart.address.address'}) }],
                         })(
-                            <Input />
+                            <Input  className={css.address_input}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -606,7 +606,7 @@ class ConfirmOrder extends React.Component {
                             initialValue: this.state.address.phone,
                             rules: [{ required: true, message: this.formatMessage({id: 'cart.address.tel'}) }],
                         })(
-                            <Input addonBefore={prefixSelector} />
+                            <Input addonBefore={prefixSelector}  className={css.address_input_tel}/>
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
@@ -617,9 +617,9 @@ class ConfirmOrder extends React.Component {
                             <Checkbox>{this.formatMessage({id: 'cart.address.default'})}</Checkbox>
                         )}
                     </FormItem>
-                    <FormItem {...tailFormItemLayout}>
+                    <FormItem {...tailFormItemLayout}style={{ marginBottom:14}}>
                         <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
-                        <Button type="primary" loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                        <Button type="primary" className={css.submit} loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                     </FormItem>
                 </Form>
             </CusModal>

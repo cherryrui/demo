@@ -117,8 +117,55 @@
     	align-items: center;
 	}
 }
+.address_modal{
+  width: 650px;
+}
 .modify_address{
-	padding-top: 10px;
+	padding-top: 24px;
+  .address_input{
+    height: 36px;
+    width: 400px;
+    border-radius: 2px;
+
+  input{
+    border-radius: 2px !important;
+    height: 36px;
+  }
+
+  }
+  .address_input_tel{
+    width: 340px !important;
+    border-radius: 2px !important;
+    height:36px;
+    input{
+      border-radius: 2px !important;
+      height: 36px;
+
+    }
+
+  }
+  .cancel{
+    background-color: $button-green;
+    border-color: $button-green;
+    margin-right: 20px;
+    border-radius: 2px;
+    width:120px;
+  }
+  .cancel:hover{
+    background-color: $button-green-active;
+    border-color: $button-green-active;
+  }
+  .submit{
+    width:120px;
+    border-radius: 2px ;
+    background-color:$button-blue;
+  }
+  .submit:hover{
+    width:120px;
+    border-radius: 2px ;
+    background-color:$button-blue-active;
+  }
+
 }
 .left{
 	margin-left: 10px;
@@ -205,10 +252,10 @@
 	display: flex;
 	.item{
 		padding: 10px 30px;
-    	background: #eee;
-    	border-radius: 3px;
+    	background: #ffffff;
+    	border-radius: 2px;
     	margin-right: 30px;
-    	margin-bottom: 20px;
+      border: 1px solid #ddd;
 	}
 	.active{
 		@extend .item;
@@ -410,4 +457,11 @@ background:  $button-green;
 .cancel:hover{
 	background-color: $button-green-active;
 	border-color: $button-green-active;
+}
+.pointer{
+  cursor: pointer;
+}
+.remark_test{
+  height: 6px;
+  border-radius: 2px;
 }
