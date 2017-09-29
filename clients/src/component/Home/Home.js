@@ -181,7 +181,11 @@ class Main extends React.Component {
                     </Menu.Item>
                 }):""}
                 <Menu.Item className={css.cart_product_footer}>
-                    <FormattedMessage  id="home.recent.go" defaultMessage=""/>
+                    <Link to="page/cart" >
+                        <p >
+                        <FormattedMessage  id="home.recent.go" defaultMessage=""/>
+                        </p>
+                    </Link>
                 </Menu.Item>
             </Menu>
         );
@@ -213,7 +217,7 @@ class Main extends React.Component {
                         onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
-                    {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight">
+                    {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight" trigger={['click']}>
                         <Badge count={this.props.cart.result.allRow} overflowCount={99}>
                             <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
                                 <FormattedMessage id="cart.cart" defaultMessage="购物车"/>

@@ -22,7 +22,8 @@ class QuotationPdf extends React.Component {
                 participant: {},
                 quotationOrder: {},
                 productList: []
-            }
+            },
+            select:{}
         }
 
         this.columns = [{
@@ -32,7 +33,7 @@ class QuotationPdf extends React.Component {
             <img src={record.productUrl}/>
                 <div className={css.info}>
                     <p className={css.name}>{record.productName}</p>
-                    {this.state.quotation.select&&this.props.quotation.select.brand?<p>
+                    {this.state.select&&this.state.select.brand?<p>
                         <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
                         ：{JSON.parse(record.productBrand).brandNameCn}
                     </p>:""}
@@ -85,7 +86,7 @@ class QuotationPdf extends React.Component {
             }
             if (select.plat_price) {
                 this.columns.push({
-                    title: <FormattedMessage id="quotation.sale.price" defaultMessage="我的购物车"/>,
+                    title: <FormattedMessage id="quotation.platform.price" defaultMessage="我的购物车"/>,
                     className: css.table_col,
                     dataIndex: 'productPrice',
                     key: 'productPrice',
@@ -190,7 +191,7 @@ class QuotationPdf extends React.Component {
                         </p>
                         <p className={css.title_item}>
                             <FormattedMessage id="quotation.contact.fox" defaultMessage="报价单"/>
-                            ：DSADSA
+                            ：028-1234567899
                         </p>
                     </div>
                 </div>
@@ -325,7 +326,7 @@ class QuotationPdf extends React.Component {
                 <p className={css.quotation_info}>
                     <FormattedMessage id="quotation.invoice" defaultMessage="发票类型"/>：
                     {operator.invoice_type.map(item=>{
-                        if(item.id==this.state.quotation.invoiceType){
+                        if(item.id==this.state.quotation.quotationOrder.invoiceType){
                             return <FormattedMessage id={item.key} defaultMessage={item.value}/>
                         }
                     })}
@@ -333,7 +334,7 @@ class QuotationPdf extends React.Component {
 
                 <p className={css.quotation_info}>
                     <FormattedMessage id="cart.remark" defaultMessage="备注"/>：
-                    {this.state.quotation.remark}
+                    {this.state.quotation.quotationOrder.remark}
                 </p>
                 <p className={css.quotation_info}>
                     <FormattedMessage id="quotation.ps" defaultMessage="截止有效期"/>
