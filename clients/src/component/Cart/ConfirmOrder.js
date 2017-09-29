@@ -483,8 +483,8 @@ class ConfirmOrder extends React.Component {
                                             <FormattedMessage id="cart.pay.day" defaultMessage="3期"
                                                 values={{
                                                     num: pay.stageNum,
-                                                    principal: this.state.order.sum*(1-pay.firstMoney).toFixed(2),
-                                                    interest: this.state.order.sum*(1-pay.firstMoney)*pay.interestRate.toFixed(2),
+                                                    principal: (this.state.order.sum*(1-pay.firstMoney)).toFixed(2),
+                                                    interest: (this.state.order.sum*(1-pay.firstMoney)*pay.interestRate).toFixed(2),
                                                 }}
                                             />
                                             {pay.name}

@@ -139,15 +139,22 @@ class Main extends React.Component {
             {this.state.category.length>0?<Category category={this.state.category}/>:""}
             <div className={css.fixed_right}>
                 <p className={css.fixed_item}>
-                <Icon type="to-top" /></p>
-                <p className={css.fixed_item}>
-                    <i class="iconfont icon-set"></i>
+                    <Icon type="to-top" />
                 </p>
-                <p className={css.fixed_item}><Icon type="to-top" /></p>
-                <p className={css.fixed_item_grey}><Icon type="to-top" /></p>
-                <p className={css.fixed_item_grey}><Icon type="to-top" /></p>
+                <p className={css.fixed_item} >
+                    <i class="iconfont icon-dingzhi"></i>
+                </p>
+                <p className={css.fixed_item}>
+                    <i class="iconfont icon-DYC-7"></i>
+                </p>
                 <p className={css.fixed_item_grey}>
                     <i class="iconfont icon-set"></i>
+                </p>
+                <p className={css.fixed_item_grey}>
+                    <i class="iconfont icon-DYC-8"></i>
+                </p>
+                <p className={css.fixed_item_grey}>
+                    <i class="iconfont icon-iconfontcolor26"></i>
                 </p>
             </div>
 

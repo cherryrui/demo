@@ -142,7 +142,13 @@ class Main extends React.Component {
         }
     }
     onMouse = (e) => {
-        console.log("onMouse", e);
+        console.log(e);
+        if (e == "enter" && !this.state.showCategory) {
+            this.handleCategory()
+        }
+        if (e == "cate_leave" && this.state.showCategory) {
+            this.handleCategory()
+        }
     }
 
     render() {
@@ -189,7 +195,7 @@ class Main extends React.Component {
             <div className={css.header_content}>
                 <div className={css.left}>
                     <Link to="/" className={css.logo}>LOGO</Link>
-                    <p onmouseover={this.onMouse} onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
+                    <p onMouseEnter={this.onMouse.bind(this,"enter")} onMouseLeave={this.onMouse.bind(this,"leave")} onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                         &nbsp;&nbsp;
                         <Icon type="caret-down" />
@@ -221,7 +227,7 @@ class Main extends React.Component {
             </div>
             {this.state.showCategory?<div className={css.categorys_drop}>
                 <div className={css.categorys_body}>
-                    <div className={css.categorys_content}>
+                    <div className={css.categorys_content} onMouseEnter={this.onMouse.bind(this,"cate_enter")} onMouseLeave={this.onMouse.bind(this,"cate_leave")}>
                         <p className={css.drop_icon}><Icon type="caret-up" /></p>
                         {this.state.categorys.map(item=>{
                             return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>

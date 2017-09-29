@@ -107,6 +107,10 @@ class QuotationPdf extends React.Component {
             });
         }*/
     }
+
+    componentDidMount() {
+        this.quotation_pdf.scrollIntoView();
+    }
     exportPDF = () => {
         html2canvas(document.getElementById("content"), {
             onrendered: (canvas) => {
@@ -148,7 +152,8 @@ class QuotationPdf extends React.Component {
                 this.setState({
                     visible: false,
                 })
-            }
+            },
+            useCORS: true
         });
     }
 

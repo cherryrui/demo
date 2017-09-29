@@ -122,6 +122,16 @@
   border-radius: 2px !important;
     @extend %button;
 }
+.quit_modal{
+   padding: 10px;
+}
+.quit_button{
+  padding: 10px;
+  text-align: center;
+  button{
+    margin: 0px 10px;
+  }
+}
 .button_theme:hover{
   background-color: $button-blue-active !important;
     border-color: $button-blue-active !important;

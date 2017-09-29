@@ -19,7 +19,7 @@ import {
 class OrderSuccess extends React.Component {
 
     handleBackToCart = (e) => {
-        window.location.href = "/#/page/"
+        this.props.handleStep ? this.props.handleStep(-3) : ""
     }
     handleBackToOrder = (e) => {
         window.location.href = "/#/page/mine/order-details"

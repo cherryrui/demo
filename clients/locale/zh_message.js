@@ -161,6 +161,7 @@ const zh_CN = {
     "cart.address.tel": "请输入收货人联系电话",
     "cart.address.default": "设置为默认地址",
     "cart.see.order": "查看",
+    "cart.pay.way": "请选择支付方式",
     "cart.select.product": "请先选择产品",
     "quotation.sale.price": "销售价",
     "quotation.platform.price": "平台销售价",

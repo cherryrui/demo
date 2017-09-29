@@ -51,6 +51,7 @@ import Supplier from './component/Supplier/Supplier.js';
 import Certification from './component/Certification/Certification.js';
 import News from './component/News/News.js';
 import QuotationPdf from './component/QuotationPdf/QuotationPdf.js';
+import CusModal from './component/Public/CusModal/CusModal.js';
 import {
     Provider
 } from 'react-redux';
@@ -94,6 +95,7 @@ class App extends React.Component {
             locale: 'zh',
             message: zh_message,*/
         };
+        this.formatMessage = this.props.intl.formatMessage;
         this.order_status = [{
             key: 0,
             message: "app.all",
@@ -208,18 +210,11 @@ class App extends React.Component {
                     <div className={css.fixed_title}>
                         <div className={css.head}>
                             {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}</Link>
-                                <p onClick={this.showModal} className={css.item2}><FormattedMessage id="app.pull.out" defaultMessage="退出"/>
-                                <Modal className={css.modalcontent}
-                                    title="退出系统"
-                                    visible={this.state.visible}
-                                    onOk={this.handleOk}
-                                    onCancel={this.handleCancel}>
-                                    <p>
-                                        <FormattedMessage id="app.pull.message" defaultMessage="是否退出系统"/>
-                                    </p>
-                                </Modal>
-                                </p></div>:
-                            <Link className={css.item} to="login">
+                                <p onClick={this.showModal} className={css.item2}>
+                                    <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
+                                </p>
+                            </div>
+                            :<Link className={css.item} to="login">
                                 <FormattedMessage id="app.login" defaultMessage="登录/注册"/>
                             </Link>}
                             {this.state.user?<Dropdown overlay={order_menu}>
@@ -290,6 +285,19 @@ class App extends React.Component {
                             <FormattedMessage id="app.rights" defaultMessage="Dbuy360@2017 版权所有|重庆CC科技有限公司|维权热线：130000000"/>
                         </div>
                     </div>
+                    <CusModal closeModal={this.handleCancel} visible={this.state.visible} title={this.formatMessage({id:"app.pull.modal.title"})}>
+                        <p className={css.quit_modal}>
+                            <FormattedMessage id="app.pull.message" defaultMessage="是否退出系统"/>
+                        </p>
+                        <p className={css.quit_button}>
+                            <Button className={css.button_green} type="primary" onClick={this.handleCancel} >
+                                <FormattedMessage id="app.cancel" defaultMessage="取消"/>
+                            </Button>
+                            <Button className={css.button_theme} type="primary" onClick={this.handleOk} >
+                                <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
+                            </Button>
+                        </p>
+                    </CusModal>
                 </div>;
     }
 }

@@ -226,8 +226,10 @@
       background: $theme-color;
       text-align: center;
       color: white;
-      font-size: 25px;
       line-height: 50px;
+      i{
+        font-size: 25px;
+      }
     }
     .fixed_item_grey{
       @extend .fixed_item;

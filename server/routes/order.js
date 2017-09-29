@@ -43,6 +43,13 @@ router
 		})
 		ctx.body = result;
 	})
+	.get('/get-pay-way.json', async(ctx, next) => {
+		let result;
+		await axios.get(url + '/transport/queryPaymentWayList').then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 
 
 module.exports = router;

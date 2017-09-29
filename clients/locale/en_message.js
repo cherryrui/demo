@@ -155,6 +155,7 @@ const en_US = {
     "cart.address.tel": "please input contact tel",
     "cart.address.default": "Set Default",
     "cart.see.order": "Check",
+    "cart.pay.way": "please select pay mode",
     "cart.select.product": "Please select product",
     "quotation.sale.price": "Sale Proce",
     "quotation.platform.price": "Platform price",
