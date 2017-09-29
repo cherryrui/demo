@@ -217,7 +217,7 @@ class Main extends React.Component {
                         onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + value)
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
-                    {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight" trigger={['click']}>
+                    {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight">
                         <Badge count={this.props.cart.result.allRow} overflowCount={99}>
                             <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
                                 <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
