@@ -18,6 +18,13 @@ import {
 
 class OrderSuccess extends React.Component {
 
+    handleBackToCart = (e) => {
+        window.location.href = "/#/page/"
+    }
+    handleBackToOrder = (e) => {
+        window.location.href = "/#/page/mine/order-details"
+    }
+
     render() {
 
         return <div className={css.pay_mode}>
@@ -29,11 +36,11 @@ class OrderSuccess extends React.Component {
                 <FormattedMessage id="cart.pay.success" defaultMessage="订单提交成功"/>
             </p>
             <div className={css.pay_success}>
-                <Button size="large" type="primary" className={css.button_before}>
-                    <FormattedMessage id="cart.return.cart" defaultMessage="支付"/>
+                <Button size="large" type="primary" onClick={this.handleBackToCart} className={css.button_before}>
+                    <FormattedMessage id="cart.return.cart" defaultMessage="返回购物车"/>
                 </Button>
-                <Button size="large" type="primary" className={css.button_pay}>
-                    <FormattedMessage id="app.view.order" defaultMessage="支付"/>
+                <Button size="large" type="primary" onClick={this.handleBackToOrder} className={css.button_pay}>
+                    <FormattedMessage id="app.view.order" defaultMessage="查看订单"/>
                 </Button>
             </div>
         </div>
