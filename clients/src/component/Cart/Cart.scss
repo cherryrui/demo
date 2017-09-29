@@ -252,15 +252,29 @@
 	display: flex;
 	.item{
 		padding: 10px 30px;
-    	background: #ffffff;
+    	background: $back-ground-shallow-grey;
     	border-radius: 2px;
     	margin-right: 30px;
-      border: 1px solid #ddd;
+
 	}
 	.active{
 		@extend .item;
 		border: 2px solid $theme-color;
 	}
+}
+.confirm_mode_delivery{
+  display: flex;
+  .item{
+    padding: 10px 30px;
+    background: #ffffff;
+    border-radius: 2px;
+    margin-right: 30px;
+    border: 1px solid #ddd;
+  }
+  .active{
+    @extend .item;
+    border: 2px solid $theme-color;
+  }
 }
 .radio{
 	padding: 10px 0;

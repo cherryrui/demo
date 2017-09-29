@@ -501,7 +501,7 @@ class ConfirmOrder extends React.Component {
                 <FormattedMessage id="cart.delivery.mode" defaultMessage="提货方式"/>
             </div>
 
-            <div className={css.confirm_mode}>
+            <div className={css.confirm_mode_delivery}>
                 {operator.delivery_mode.map(item=>{
                     return <p className={this.state.order.delivery_mode==item.key?css.active:css.item}
                         onClick={this.handlePayMode.bind(this,"delivery_mode",item.key)}
