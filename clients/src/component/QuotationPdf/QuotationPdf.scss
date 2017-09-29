@@ -1,10 +1,26 @@
 @import "../../themes";
 .body{
   background: white;
-  padding: 36px;
-  font-size: 14px;
+  
+}
+.quotation_title{
+  text-align: center;
+  .quotation_info{
+    color: $color-orange;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+  }
+  i{
+    font-size: 30px;
+  }
+
 }
 .quotation_pdf{
+  background: white;
+  padding: 36px;
+  font-size: 14px;
   thead[class="ant-table-thead"]{
     font-weight: bold !important;
   }

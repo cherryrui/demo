@@ -1,5 +1,6 @@
 import React from 'react';
 import css from './QuotationPdf.scss';
+import appcss from '../../App.scss';
 import moment from 'moment';
 import axios from 'axios';
 import operator from '../Quotation/operator.js';
@@ -18,7 +19,9 @@ class QuotationPdf extends React.Component {
         super(props);
         this.state = {
             quotation: {
-                participant: {}
+                participant: {},
+                quotationOrder: {},
+                productList: []
             }
         }
 
@@ -26,16 +29,16 @@ class QuotationPdf extends React.Component {
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "38%",
             render: (record) => <div className={css.table_product}>
-            <img src={record.coverUrl}/>
+            <img src={record.productUrl}/>
                 <div className={css.info}>
                     <p className={css.name}>{record.productName}</p>
                     {this.state.quotation.select&&this.props.quotation.select.brand?<p>
                         <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
-                        ：{record.brandNameCn}
+                        ：{JSON.parse(record.productBrand).brandNameCn}
                     </p>:""}
                     <p>
                         <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
-                        ：{record.moq}
+                        ：{record.minBuyQuantity}
                     </p>
                     <p className={css.name}>
                         <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
@@ -53,35 +56,35 @@ class QuotationPdf extends React.Component {
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             className: css.table_col,
-            dataIndex: 'num',
-            key: 'num',
+            dataIndex: 'productNum',
+            key: 'productNum',
         }, {
             title: <FormattedMessage id="quotation.sale.price" defaultMessage="我的购物车"/>,
             className: css.table_col,
-            dataIndex: 'sale_price',
-            key: 'sale_price',
-        }, {
-            title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
-            width: "100px",
-            dataIndex: 'price',
-            key: 'price',
-            className: css.table_col,
-            render: (text) => <span className={css.table_price}>${text}</span>
-        }, {
-            title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
-            width: "100px",
-            className: css.table_col,
-            dataIndex: 'agent_price',
-            key: 'agent_price',
-            render: (text) => <span className={css.table_price}>${text}</span>
+            dataIndex: 'salePrice',
+            key: 'salePrice',
         }, ];
 
     }
     componentWillMount() {
 
         axios.get('/quotation/get-quotation-byid.json?id=' + this.props.params.id).then(res => {
+
+            let select = {};
+            if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
+                select = JSON.parse(res.data.result.quotationOrder.exportOption);
+            }
+            if (select.plat_price) {
+                this.columns.push({
+                    title: <FormattedMessage id="quotation.sale.price" defaultMessage="我的购物车"/>,
+                    className: css.table_col,
+                    dataIndex: 'productPrice',
+                    key: 'productPrice',
+                }, )
+            }
             this.setState({
-                quotation: res.data.result
+                quotation: res.data.result,
+                select: select
             })
         })
 
@@ -95,23 +98,67 @@ class QuotationPdf extends React.Component {
             });
         }*/
     }
+    exportPDF = () => {
+        html2canvas(document.getElementById("content"), {
+            onrendered: (canvas) => {
+                console.log(canvas);
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                //一页pdf显示html页面生成的canvas高度;
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                //未生成pdf的html页面高度
+                var leftHeight = contentHeight;
+                //页面偏移
+                var position = 0;
+                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                var imgWidth = 595.28;
+                var imgHeight = 592.28 / contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                //当内容未超过pdf一页显示的范围，无需分页
+                console.log(leftHeight, pageHeight);
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                } else {
+                    while (leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if (leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save('content.pdf');
+                this.setState({
+                    visible: false,
+                })
+            }
+        });
+    }
 
     render() {
         console.log(this.props.quotation)
-        return <div className={css.body}>
-            <div>
-               <Icon type="smile-o" />
-               <p>
-                   <FormattedMessage id="quotation.message" defaultMessage="创建成功"/>
-                   <Button>
-                       <FormattedMessage id="quotation.export" defaultMessage="导出"/>
-                   </Button>
+        return <div className={`${appcss.body} ${css.body}`}>
+            <div className={css.quotation_title}> 
+               <p className={css.quotation_info}>
+                    <Icon type="smile-o" />&nbsp;&nbsp;
+                   <FormattedMessage id="quotation.message" defaultMessage="创建成功"/> 
                </p>
+               <Button type="primary" onClick={this.exportPDF}>
+                    <FormattedMessage id="quotation.export" defaultMessage="导出"/>
+                </Button>
             </div>
-            <div className={css.quotation_pdf}>
+            <div className={css.quotation_pdf} id="content">
                 <div className={css.title}>
                     <p className={css.logo}>
-                        {this.state.quotation.select && this.state.quotation.select.logo?"LOGO":""}
+                        {this.state.quotation.quotationOrder && this.state.quotation.quotationOrder.logo?"LOGO":""}
                     LOGO
                     </p>
                     <div>
@@ -138,16 +185,16 @@ class QuotationPdf extends React.Component {
                 </p>
                 <p>
                     <FormattedMessage id="quotation.subject" defaultMessage="报价单"/>
-                    :{this.state.quotation.quotationSubject}
+                    ：{this.state.quotation.quotationOrder.quotationSubject}
                 </p>
                 <p className={css.quotation_create}>
                     <p>
                         <FormattedMessage id="quotation.no" defaultMessage="报价单"/>
-                        :{this.state.quotation.id}
+                        ：{this.state.quotation.quotationOrder.quotationNo}
                     </p>
                     <p>
                         <FormattedMessage id="quotation.create_time" defaultMessage="报价单"/>
-                        ：{this.state.quotation.create_time?moment(this.props.quotation.create_time).format('YYYY-MM-DD'):moment().format('YYYY-MM-DD')}
+                        ：{this.state.quotation.quotationOrder.createTime?moment(this.state.quotation.quotationOrder.createTime).format('YYYY-MM-DD'):""}
                     </p>
                 </p>
                 <div className={css.infomation}>
@@ -238,30 +285,30 @@ class QuotationPdf extends React.Component {
                 </div>
                 <Table
                     pagination={false}
-                    rowKey="id"
+                    rowKey={record => ""+record.productId+record.itemId}
                     bordered
                     columns={this.columns}
-                    dataSource={this.state.quotation.products} />
+                    dataSource={this.state.quotation.productList} />
                 <div className={css.order_sum}>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.num" defaultMessage="总数量"/>：
-                        <p className={css.sum_right_num}>{this.state.quotation.totalQuantity}</p>
+                        <p className={css.sum_right_num}>{this.state.quotation.quotationOrder.totalQuantity}</p>
                     </p>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.sum" defaultMessage="总售价"/>：
-                        <p className={css.sum_right}>{this.state.quotation.totalSalePrice}</p>
+                        <p className={css.sum_right}>{this.state.quotation.quotationOrder.totalSalePrice}</p>
                     </p>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.profits" defaultMessage="利润"/>：
-                        <p className={css.sum_right}>{this.state.quotation.profits}</p>
+                        <p className={css.sum_right}>{this.state.quotation.quotationOrder.profits}</p>
                     </p>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>：
-                        <p className={css.sum_right}>{this.state.quotation.shoppingCharges}</p>
+                        <p className={css.sum_right}>{this.state.quotation.quotationOrder.shoppingCharges}</p>
                     </p>
                 </div>
                 <p className={css.quotation_info}>
-                    <FormattedMessage id="uotation.invoice" defaultMessage="分类"/>：
+                    <FormattedMessage id="quotation.invoice" defaultMessage="分类"/>：
                     {operator.invoice_type.map(item=>{
                         if(item.id==this.state.quotation.invoiceType){
                             return <FormattedMessage id={item.key} defaultMessage={item.value}/>

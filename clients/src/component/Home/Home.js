@@ -141,6 +141,9 @@ class Main extends React.Component {
 
         }
     }
+    onMouse = (e) => {
+        console.log("onMouse", e);
+    }
 
     render() {
         console.log(this.props.cart);
@@ -186,7 +189,7 @@ class Main extends React.Component {
             <div className={css.header_content}>
                 <div className={css.left}>
                     <Link to="/" className={css.logo}>LOGO</Link>
-                    <p onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
+                    <p onmouseover={this.onMouse} onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                         &nbsp;&nbsp;
                         <Icon type="caret-down" />

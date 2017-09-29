@@ -260,48 +260,7 @@ class Quotation extends React.Component {
 			}, this.exportQuotation)*/
 	}
 	exportQuotation = () => {
-		html2canvas(document.getElementById("content"), {
-			onrendered: (canvas) => {
-				console.log(canvas);
-				var contentWidth = canvas.width;
-				var contentHeight = canvas.height;
 
-				//一页pdf显示html页面生成的canvas高度;
-				var pageHeight = contentWidth / 592.28 * 841.89;
-				//未生成pdf的html页面高度
-				var leftHeight = contentHeight;
-				//页面偏移
-				var position = 0;
-				//a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-				var imgWidth = 595.28;
-				var imgHeight = 592.28 / contentWidth * contentHeight;
-
-				var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-				var pdf = new jsPDF('', 'pt', 'a4');
-
-				//有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-				//当内容未超过pdf一页显示的范围，无需分页
-				console.log(leftHeight, pageHeight);
-				if (leftHeight < pageHeight) {
-					pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-				} else {
-					while (leftHeight > 0) {
-						pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-						leftHeight -= pageHeight;
-						position -= 841.89;
-						//避免添加空白页
-						if (leftHeight > 0) {
-							pdf.addPage();
-						}
-					}
-				}
-				pdf.save('content.pdf');
-				this.setState({
-					visible: false,
-				})
-			}
-		});
 	}
 	handleCancel = () => {
 		this.setState({
@@ -345,6 +304,9 @@ class Quotation extends React.Component {
 						brandNameCn: item.brandNameCn,
 						brandNameEn: item.brandNameEn,
 					}),
+					productUrl: item.coverUrl,
+					minBuyQuantity: item.moq,
+					productNo: item.productNo,
 					productName: item.productName,
 					productPrice: item.price,
 					salePrice: item.salePrice,
@@ -358,9 +320,11 @@ class Quotation extends React.Component {
 			delete param.products;
 			delete param.num;
 			axios.post('/quotation/create-quotation.json', param).then(res => {
-				/*if (res.data.isSucc) {*/
-				this.props.history.pushState(null, "page/quotation-pdf/" + 1);
-				/*}*/
+				if (res.data.isSucc) {
+					this.props.history.pushState(null, "page/quotation-pdf/" + res.data.result);
+				} else {
+					message.error(res.data.message);
+				}
 			})
 
 		} else {
@@ -419,7 +383,7 @@ class Quotation extends React.Component {
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.profits" defaultMessage="利润"/>:
-            		<p className={css.sum_profit}>{this.state.quotation.profits?this.state.quotation.profits.toFixed(2):0}</p>
+            		<p className={css.sum_profit}>{this.state.quotation.profits?this.state.quotation.profits:0}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
