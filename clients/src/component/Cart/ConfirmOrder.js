@@ -247,7 +247,7 @@ class ConfirmOrder extends React.Component {
                     this.setState({
                         loading: false,
                     })
-                    this.props.handleStep ? this.props.handleStep(1, order) : '';
+                    this.props.handleStep ? this.props.handleStep(1, res.data.result) : '';
                 } else {
                     message.error("失败");
                 }
@@ -289,6 +289,7 @@ class ConfirmOrder extends React.Component {
         })
     }
     getAddressList = () => {
+        console.log("get-address-list.json")
         axios.get('/user/get-address-list.json').then(res => {
             this.setState({
                 address_list: res.data.result,
@@ -319,7 +320,6 @@ class ConfirmOrder extends React.Component {
                     loading: true
                 })
                 let param = values;
-                console.log(param);
                 if (this.select_address.length > 0) {
                     param.country = this.select_address[0].label;
                     param.countryId = this.select_address[0].value;
@@ -329,20 +329,34 @@ class ConfirmOrder extends React.Component {
                     param.cityId = this.select_address.length > 2 ? this.select_address[2].value : 0;
                     param.district = this.select_address.length > 3 ? this.select_address[3].label : "";
                     param.districtId = this.select_address.length > 3 ? this.select_address[3].value : 0;
-
+                } else if (this.state.address.addressId) {
+                    param.country = this.state.address.country;
+                    param.countryId = this.state.address.countryId;
+                    param.province = this.state.address.province;
+                    param.provinceId = this.state.address.provinceId;
+                    param.city = this.state.address.city;
+                    param.cityId = this.state.address.cityId;
+                    param.district = this.state.address.district;
+                    param.districtId = this.state.address.districtId;
                 }
+                param.isDefault = values.isDefault ? 1 : 0;
                 this.state.telCode.map(item => {
                     if (item.id == param.phoneDcId) {
                         param.phoneDc = item.districtCode
                     }
                 })
-                console.log(values, this.state.address);
                 if (this.state.address.addressId) {
+                    param.addressId = this.state.address.addressId;
                     axios.post('/user/update-address.json', param).then(res => {
                         console.log(res.data)
                         if (res.data.isSucc) {
-
+                            this.setState({
+                                loading: false,
+                                visible: false,
+                            })
+                            this.getAddressList();
                         }
+
                     })
 
                 } else {
@@ -383,8 +397,9 @@ class ConfirmOrder extends React.Component {
                 offset: 6,
             },
         };
-        const prefixSelector = getFieldDecorator('phoneDcId', {})(
+        const prefixSelector = getFieldDecorator('phoneDcId', {
             initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : null,
+        })(
             <Select style={{ width: 60 }}>
             {this.state.telCode.map(item=>{
                 return <Option value={item.id}>{item.districtCode}</Option>

@@ -56,7 +56,7 @@ router.get('/get-user.json', async(ctx, next) => {
 	.post('/update-address.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
-		delete data.city;
+		delete param.city;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		console.log(59, param);
 		try {

@@ -33,12 +33,14 @@ router
 		ctx.body = result;
 	})
 	.post('/commit-order.json', async(ctx, next) => {
-		let param = ctx.request.body;
+		let param = ctx.request.body,
+			result;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url + '/auth/order/generateOrder', querystring.stringify(param)).then(res => {
 			console.log('generateOrder:', res.data)
+			result = res.data;
 		})
-		ctx.body = true;
+		ctx.body = result;
 	})
 
 
