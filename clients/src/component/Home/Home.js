@@ -152,7 +152,7 @@ class Main extends React.Component {
                 </Menu.Item>
                 {this.props.cart.result?this.props.cart.result.list.map(item => {
                     return <Menu.Item>
-                        <Link  to={"page/product-detail/" + item.id}>
+                        <Link  to={"page/product-detail/" + item.productId}>
                             <div className={css.cart_product}>
                                 <img src={item.coverUrl}/>
                                 <div className={css.product_info}>
