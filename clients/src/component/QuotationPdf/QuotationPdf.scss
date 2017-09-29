@@ -56,9 +56,11 @@
 .table_col{
   text-align: center !important;
   font-size: 14px;
-
-
 }
+ .table_price{
+   color:$color-red ;
+   font-weight: bold;
+ }
 .table_num{
   margin: 10px;
 }
@@ -151,6 +153,7 @@
     width: 50px;
     margin-left: 10px;
     color:$color-red ;
+    font-weight: bold;
   }
   .sum_right_num{
     width: 50px;

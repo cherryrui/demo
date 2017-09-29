@@ -456,6 +456,7 @@ const zh_CN = {
     "product.detail.model": "型号",
     "product.detail.material": "材质",
     "mine.product.instruct_weight": "重量",
-    "app.view.order": "查看订单"
+    "app.view.order": "查看订单",
+    "app.bank.imformation": "银行信息"
 }
 export default zh_CN;

@@ -63,7 +63,16 @@ class QuotationPdf extends React.Component {
             className: css.table_col,
             dataIndex: 'salePrice',
             key: 'salePrice',
-        }, ];
+            render: (text) => <span className={css.table_price}>${text}</span>
+
+        },{
+            title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+            className: css.table_col,
+            dataIndex: 'totalMoney',
+            key: 'totalMoney',
+            render: (text) => <span className={css.table_price}>${text}</span>
+
+        },];
 
     }
     componentWillMount() {
@@ -175,7 +184,7 @@ class QuotationPdf extends React.Component {
                             ：36941555@qq.com
                         </p>
                         <p className={css.title_item}>
-                            <FormattedMessage id="quotation.url" defaultMessage="报价单"/>
+                            <FormattedMessage id="quotation.contact.fox" defaultMessage="报价单"/>
                             ：DSADSA
                         </p>
                     </div>
@@ -239,7 +248,7 @@ class QuotationPdf extends React.Component {
                         </p>
                         <p className={css.item}>
                             <p className={css.info_title}>
-                                <FormattedMessage id="app.home" defaultMessage="分类"/>：
+                                <FormattedMessage id="quotation.contact.fox" defaultMessage="分类"/>：
                             </p>
                             <p>{this.state.quotation.participant.cusFax}</p>
                         </p>
@@ -274,10 +283,11 @@ class QuotationPdf extends React.Component {
                                 <FormattedMessage id="quotation.contact.email" defaultMessage="邮箱"/>：
                             </p>
                             <p>{this.state.quotation.participant.ageEmail}</p>
+
                         </p>
                         <p className={css.item}>
                             <p className={css.info_title}>
-                                <FormattedMessage id="app.home" defaultMessage="分类"/>：
+                                <FormattedMessage id="quotation.contact.fox" defaultMessage="分类"/>：
                             </p>
                             <p>{this.state.quotation.participant.ageFax}</p>
                         </p>
@@ -296,25 +306,26 @@ class QuotationPdf extends React.Component {
                     </p>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.sum" defaultMessage="总售价"/>：
-                        <p className={css.sum_right}>{this.state.quotation.quotationOrder.totalSalePrice}</p>
+                        <p className={css.sum_right}>${this.state.quotation.quotationOrder.totalSalePrice}</p>
                     </p>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.profits" defaultMessage="利润"/>：
-                        <p className={css.sum_right}>{this.state.quotation.quotationOrder.profits}</p>
+                        <p className={css.sum_right}>${this.state.quotation.quotationOrder.profits}</p>
                     </p>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>：
-                        <p className={css.sum_right}>{this.state.quotation.quotationOrder.shoppingCharges}</p>
+                        <p className={css.sum_right}>${this.state.quotation.quotationOrder.shoppingCharges}</p>
                     </p>
                 </div>
                 <p className={css.quotation_info}>
-                    <FormattedMessage id="quotation.invoice" defaultMessage="分类"/>：
+                    <FormattedMessage id="quotation.invoice" defaultMessage="发票类型"/>：
                     {operator.invoice_type.map(item=>{
                         if(item.id==this.state.quotation.invoiceType){
                             return <FormattedMessage id={item.key} defaultMessage={item.value}/>
                         }
                     })}
                 </p>
+
                 <p className={css.quotation_info}>
                     <FormattedMessage id="cart.remark" defaultMessage="备注"/>：
                     {this.state.quotation.remark}
