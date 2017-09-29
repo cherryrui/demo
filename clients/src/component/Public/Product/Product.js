@@ -30,7 +30,7 @@ class Product extends React.Component {
         this.props.handleStar ? this.props.handleStar() : "";
     }
     onChange = () => {
-        this.props.onCheck ? this.props.onCheck(this.props.product.id) : "";
+        this.props.onCheck ? this.props.onCheck(this.props.product.productId) : "";
     }
 
     render() {
