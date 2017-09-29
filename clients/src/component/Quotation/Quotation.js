@@ -250,12 +250,17 @@ class Quotation extends React.Component {
 		})
 	}
 	exportPDF = () => {
-		this.setState({
+		this.exportQuotation();
+		/*this.setState({
 			visible: true,
-		}, this.exportQuotation)
+		}, this.exportQuotation)*/
 	}
 	exportQuotation = () => {
-		html2canvas(document.getElementById("content"), {
+
+		var doc = new jsPDF();
+		doc.text(20, 20, "dasdasd");
+		doc.save('content.pdf');
+		/*html2canvas(document.getElementById("content"), {
 			onrendered: (canvas) => {
 				console.log(canvas);
 				var contentWidth = canvas.width;
@@ -296,7 +301,7 @@ class Quotation extends React.Component {
 					visible: false,
 				})
 			}
-		});
+		});*/
 	}
 	handleCancel = () => {
 		this.setState({
@@ -393,7 +398,7 @@ class Quotation extends React.Component {
             		onChange={this.handleInfo.bind(this,0,"postage")} />
             	</p>
             </div>
-            <div className={css.infomation}>
+            <div className={css.infomation} id="info">
         		<p className={css.left}>
         			<FormattedMessage id="quotation.customer.info" defaultMessage="客户信息"/>
         		</p>
@@ -575,7 +580,5 @@ class Quotation extends React.Component {
 		</div>
 	</div>
 	}
-
-
 }
 export default injectIntl(Quotation);

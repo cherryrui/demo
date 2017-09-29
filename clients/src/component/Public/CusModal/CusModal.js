@@ -24,6 +24,9 @@ class CusModal extends React.Component {
 		return <div className={css.login_modal} ref="modal" style={{display:this.props.visible?"block":"none"}}>
 			<div className={css.content} style={{width:this.props.width?this.props.width:"400px"}}>
 				<p className={css.modal_title} onClick={this.handleCancel}><Icon type="close" /></p>
+				 <p className={css.title}>
+                       {this.props.title}
+                  </p>
 				{this.props.children}
             </div>
         </div>

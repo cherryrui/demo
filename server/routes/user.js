@@ -42,100 +42,47 @@ router.get('/get-user.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
-	.post('/add-user-address.json',async(ctx) => {
+	.post('/add-user-address.json', async(ctx) => {
 		let result = null;
-		const data = ctx.request.body;
-		const param = {
-			country:data.country,
-			countryId:data.countryId,
-			province:data.province,
-			provinceId:data.provinceId,
-			city:data.city,
-			cityId:data.cityId,
-			district:data.district,
-			districtId:data.districtId,
-			address:data.address,
-			name:data.name,
-			companyName:data.companyName,
-			phone:data.phone,
-			phoneDcId:data.phoneDcId,
-			phoneDc:data.phoneDc,
-			isDefault:data.isDefault
-		};
-		console.log(param);
+		let data = ctx.request.body;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		await axios.post(url+'/auth/userAddress/insertAddress',querystring.stringify(param)).then(res => {
-			console.log('add address:',res.data);
+		await axios.post(url + '/auth/userAddress/insertAddress', querystring.stringify(data)).then(res => {
+			console.log('add address:', res.data);
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.post('/update-address.json', async(ctx, next) => {
+		let param = ctx.result.body,
+			result;
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		await axios.post(url + "/auth/userAddress/updateAddress", querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
 	})
 	.get('/get-address-list.json', async(ctx, next) => {
-		let uid = ctx.query.uid;
+		let uid = ctx.query.uid,
+			result;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		await axios.post(url+'/auth/userAddress/queryAllAddressList').then(res => {
-			console.log('getAddress:',res.data);
+		await axios.post(url + '/auth/userAddress/queryAllAddressList').then(res => {
+			result = res.data;
 		})
-		ctx.body = {
-			address: [{
-				id: 1,
-				name: "张三",
-				tel: "2321321",
-				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
-				city: "dsa",
-				default: 1,
-			}, {
-				id: 2,
-				name: "张三",
-				tel: "2321321",
-				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
-				city: "dsa",
-				default: 0,
-			}, {
-				id: 3,
-				name: "张三",
-				tel: "2321321",
-				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
-				city: "dsa",
-				default: 0,
-			}, {
-				id: 4,
-				name: "张三",
-				tel: "2321321",
-				address: "你啊实打实阿斯顿撒撒撒打算的撒的撒的撒的撒",
-				city: "dsa",
-				default: 0,
-			}, ]
-		}
+		ctx.body = result
 	})
 	.get('/get-city-by-parent.json', async(ctx, nexy) => {
 		let result = null;
 		let cid = ctx.query.cid ? ctx.query.cid : 0; //父级城市id
-		await axios.post(url+'/district/queryDistrictList').then(res => {
-			console.log('get Country',res.data);
+		await axios.post(url + '/district/queryDistrictList').then(res => {
+			console.log('get Country', res.data);
 			result = res.data;
 		})
-		/*let address = [{
-			id: cid + 1,
-			value: 'zhejiang',
-			label: 'Zhejiang',
-			isLeaf: cid > 3 ? true : false,
-		}, {
-			id: cid + 2,
-			value: 'jiangsu',
-			label: 'Jiangsu',
-			isLeaf: cid > 3 ? true : false,
-		}];*/
 		ctx.body = {
 			address: result
 		}
 	})
 	.post('/repassword.json', async(ctx) => {
 		let result = null;
-		const data = ctx.request.body;
-		console.log('1111: ', JSON.stringify(data));
-		const newPwd = data.newpwd;
-		console.log(newPwd);
 		if (newPwd) {
 			result = {
 				rc: 200,
@@ -151,8 +98,6 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.post('/register.json', async(ctx) => {
 		let result = null;
-		const data = ctx.request.body;
-		console.log('1111: ', JSON.stringify(data));
 		const param = {
 			userName: data.name,
 			password: data.password,

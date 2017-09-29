@@ -117,6 +117,9 @@
     	align-items: center;
 	}
 }
+.modify_address{
+	padding-top: 10px;
+}
 .left{
 	margin-left: 10px;
 	flex-grow: 1;
@@ -167,6 +170,9 @@
     padding: 20px 0 10px 0;
     display: flex;
     justify-content: space-between;
+    p{
+    	cursor: pointer;
+    }
 }
 %confirm_body{
 	border: 1px solid #eee;

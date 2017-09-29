@@ -7,7 +7,7 @@ import React from 'react';
 import css from './Cart.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
-
+import CusModal from '../Public/CusModal/CusModal.js';
 import {
     Link
 } from 'react-router';
@@ -45,10 +45,12 @@ class ConfirmOrder extends React.Component {
         this.state = {
             order: {
                 pay_mode: 0, //支付方式，1：全款，2：分期
-                advance_mode: operator.advance_mode[0].key, //首付额度
-                advance_pay: operator.instalment_mode[0].key,
-                delivery_mode: 0,
+                advance_mode: 0, //首付额度
+                stageId: 0, //分期方式
+                delivery_mode: 1,
             },
+            pay_mode_list: [], //支付方式列表
+            pay_mode_detail: [], // 支付方式对应的详情
             address_list: [],
             select: 0, //默认选择的地址列表
             address: {}, //当前选中地址
@@ -57,6 +59,7 @@ class ConfirmOrder extends React.Component {
             title: "cart.address.title", //地址信息模态框title
             loading: false, //正在提交订单
         };
+        this.select_address = [];
         this.formatMessage = this.props.intl.formatMessage;
         this.colums_show = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
@@ -112,13 +115,7 @@ class ConfirmOrder extends React.Component {
         }, ]
     }
     componentWillMount() {
-        console.log(this.props.products);
-        axios.get('/user/get-address-list.json').then(res => {
-            this.setState({
-                address_list: res.data.address,
-                select: res.data.address.length > 0 ? res.data.address[0].id : 0,
-            })
-        })
+        this.getAddressList();
         let sum = 0,
             order = this.state.order;
         this.props.products.map(item => {
@@ -139,8 +136,33 @@ class ConfirmOrder extends React.Component {
                 order: order
             })
         })
+        axios.get('/order/get-pay-mode.json').then(res => {
+            console.log(137, res.data)
+            this.setState({
+                pay_mode_list: res.data.result
+            })
+        })
     }
 
+    getPayDetail = () => {
+        axios.get(`/order/get-pay-mode-detail.json?pay_mode=${this.state.order.pay_mode}`).then(res => {
+            console.log(res.data);
+            if (res.data.isSucc) {
+                let order = this.state.order;
+                order.advance_mode = 0;
+                if (res.data.result.length == 0) {
+                    order.stageId = -1;
+                } else {
+                    order.stageId = 0;
+                }
+                this.setState({
+                    pay_mode_detail: res.data.result,
+                    order: order
+
+                })
+            }
+        })
+    }
     convertData(data) {
         console.log(data);
         data.map(item => {
@@ -172,6 +194,9 @@ class ConfirmOrder extends React.Component {
             order[name] = mode
         }
         this.setState(order: order);
+        if (name == "pay_mode") {
+            this.getPayDetail();
+        }
     }
 
     /**
@@ -179,27 +204,51 @@ class ConfirmOrder extends React.Component {
      * @return {[type]} [description]
      */
     handlePay = () => {
-        this.setState({
-            loading: true,
-        })
-        let param = this.state.order;
-        console.log('PayOrder.js:', this.state)
-        axios.post('/cart/commit-order.json', param).then(res => {
+        console.log(this.state.order)
+        if (this.state.order.stageId) {
             this.setState({
-                    loading: false,
-                })
-                /*let order = {
-                    id: 1,
-                    pay_money: 100
-                }*/
-            let order = param;
-            if(res.data.isSucc){
-                this.props.handleStep ? this.props.handleStep(1, order) : '';
-            }else{
-                alert(res.data.message);
+                loading: true,
+            })
+            let param = {
+                addressId: this.state.select,
+                productIds: [],
+                productNumbers: [],
+                itemIds: [],
+                itemNumbers: [],
+                payModelId: this.state.order.pay_mode,
+                payModelStageId: this.state.order.stageId > 0 ? this.state.order.stageId : null,
+                deliveryId: this.state.order.delivery_mode,
+                remark: this.state.order.note,
             }
-            
-        })
+            this.props.products.map(item => {
+                if (item.itemId) {
+                    param.itemIds.push(item.itemId);
+                    param.itemNumbers.push(item.productNum);
+                } else {
+                    param.productIds.push(item.productId);
+                    param.productNumbers.push(item.productNum);
+                }
+            })
+            param.itemIds = param.itemIds.join(",");
+            param.itemNumbers = param.itemNumbers.join(",");
+            param.productIds = param.productIds.join(",");
+            param.productNumbers = param.productNumbers.join(",");
+            axios.post('/order/commit-order.json', param).then(res => {
+                if (res.data.isSucc) {
+                    this.setState({
+                        loading: false,
+                    })
+                    this.props.handleStep ? this.props.handleStep(1, order) : '';
+                } else {
+                    message.error("失败");
+                }
+
+            })
+        } else {
+            message.error(this.formatMessage({
+                id: "cart_pay_warn"
+            }))
+        }
 
     }
     handleStep = (num) => {
@@ -209,13 +258,19 @@ class ConfirmOrder extends React.Component {
         console.log('address:', address);
         let title = '',
             addr;
-        if (address.id) {
+        if (address.addressId) {
             addr = address;
+            addr.city = [];
+            addr.city.push(address.countryId);
+            addr.city.push(address.provinceId);
+            addr.city.push(address.cityId);
+            addr.city.push(address.districtId);
             title = "cart.address.title";
         } else {
             title = "cart.delivery.new";
             addr = {};
         }
+        this.select_address = [];
         this.setState({
             address: addr,
             title: title,
@@ -224,9 +279,17 @@ class ConfirmOrder extends React.Component {
             this.props.form.resetFields();
         })
     }
-    handleAddress = (item) => {
+    getAddressList = () => {
+        axios.get('/user/get-address-list.json').then(res => {
+            this.setState({
+                address_list: res.data.result,
+                select: res.data.result.length > 0 ? res.data.result[0].addressId : 0,
+            })
+        })
+    }
+    handleAddress = (key) => {
         this.setState({
-            select: item.id
+            select: key
         })
     }
     handleOk = () => {
@@ -238,26 +301,77 @@ class ConfirmOrder extends React.Component {
             address: {},
         })
     }
-    onChange = (value, selectedOptions) => {
-        console.log(value, selectedOptions);
-        this.setState({
-            inputValue: selectedOptions.map(o => o.label).join(', '),
-        });
-    }
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
-                axios.post('/user/add-user-address.json', values).then(res => {
-                    console.log('add-useraddress:', res.data);
+                this.setState({
+                    loading: true
                 })
+                let param;
+                console.log(values, this.state.address);
+                if (this.state.address) {
+                    param = this.state.address;
+                    if (this.select_address.length > 0) {
+                        param = {
+                            country: this.select_address[0].label,
+                            countryId: values.city[0],
+                            province: this.select_address.length > 1 ? this.select_address[1].label : "",
+                            provinceId: values.city.length > 1 ? values.city[1] : 0,
+                            city: this.select_address.length > 2 ? this.select_address[2].label : "",
+                            cityId: values.city.length > 2 ? values.city[2] : 0,
+                            district: this.select_address.length > 3 ? this.select_address[3].label : "",
+                            districtId: values.city.length > 3 ? values.city[3] : 0,
+                        }
+                    }
+                    param = {
+                        address: values.address,
+                        companyName: values.companyName,
+                        phone: values.phone,
+                        isDefault: values.isDefault ? 1 : 0,
+                        name: values.name
+                    };
+                    axios.post('/user/update-address.json', parm).then(res => {
+
+                    })
+
+                } else {
+                    param = {
+                        country: this.select_address[0].label,
+                        countryId: values.city[0],
+                        province: this.select_address.length > 1 ? this.select_address[1].label : "",
+                        provinceId: values.city.length > 1 ? values.city[1] : 0,
+                        city: this.select_address.length > 2 ? this.select_address[2].label : "",
+                        cityId: values.city.length > 2 ? values.city[2] : 0,
+                        district: this.select_address.length > 3 ? this.select_address[3].label : "",
+                        districtId: values.city.length > 3 ? values.city[3] : 0,
+                        address: values.address,
+                        companyName: values.companyName,
+                        phone: values.phone,
+                        isDefault: values.isDefault ? 1 : 0,
+                        name: values.name
+                    };
+                    axios.post('/user/add-user-address.json', param).then(res => {
+                        console.log('add-useraddress:', res.data);
+                        if (res.data.isSucc) {
+                            this.setState({
+                                loading: false,
+                                visible: false,
+                            });
+                            this.getAddressList();
+                        }
+                    })
+                }
             }
         });
     }
+
+    changeAddress = (value, selectedOptions) => {
+        this.select_address = selectedOptions;
+    }
+
     render() {
-        //console.log(this.props.products);
         const {
             getFieldDecorator
         } = this.props.form;
@@ -287,25 +401,25 @@ class ConfirmOrder extends React.Component {
             <div className={css.confirm_address}>
                 {this.state.address_list.map(item=>{
                     return <div className={css.radio_content}>
-                        <p onClick={this.handleAddress.bind(this,item)}>
-                            <Radio value={item.id} checked={item.id==this.state.select?true:false}></Radio>
+                        <p onClick={this.handleAddress.bind(this,item.addressId)}>
+                            <Radio checked={item.addressId==this.state.select?true:false}></Radio>
                             <span className={css.item}>
                                 <FormattedMessage id="cart.delivery.name" defaultMessage="收货人"/>
                             &nbsp;{item.name}&nbsp;&nbsp;
                             </span>
                             <span className={css.item}>
                                 <FormattedMessage id="cart.delivery.tel" defaultMessage="电话"/>
-                            &nbsp;{item.tel}&nbsp;&nbsp;
+                            &nbsp;{item.phoneDc}-{item.phone}&nbsp;&nbsp;
                             </span>
                             <span className={css.item}>
                                 <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址"/>
-                            &nbsp;:{item.city}&nbsp;&nbsp;{item.address}
+                            &nbsp;:{item.country},{item.province},{item.city},{item.district},{item.address}
                             </span>
-                            {item.default==1?<span className={css.item_default}>
+                            {item.isDefault==1?<span className={css.item_default}>
                                 <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址"/>
                             </span>:""}
                         </p>
-                        {item.id==this.state.select?<Icon type="edit" onClick={this.handleEditAddress.bind(this,item)} />:""}
+                        {item.addressId==this.state.select?<Icon type="edit" onClick={this.handleEditAddress.bind(this,item)} />:""}
                     </div>
                 })}
             </div>
@@ -320,30 +434,39 @@ class ConfirmOrder extends React.Component {
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.pay.mode" defaultMessage="支付信息"/>
             </div>
-            <div className={css.confirm_pay}>
+            <div className={css.confirm_pay} ref={(pay_mode)=>{this.pay_mode=pay_mode}}>
                 <div className={css.confirm_mode}>
-                {operator.pay_mode.map(item=>{
-                    return <p className={this.state.pay_mode==item.key?css.active:css.item}
-                        onClick={this.handlePayMode.bind(this,"pay_mode",item.key)}>
-                        <FormattedMessage id={item.value_id} />
+                {this.state.pay_mode_list.map(item=>{
+                    return <p className={this.state.pay_mode==item.payModelId?css.active:css.item}
+                        onClick={this.handlePayMode.bind(this,"pay_mode",item.payModelId)}>
+                        {item.payModelName}
                     </p>
                 })}
                 </div>
-                {this.state.order.pay_mode==2?<div>
-                    {operator.advance_mode.map(item => {
+                {this.state.pay_mode_detail.length>0?<div>
+                    {this.state.pay_mode_detail.map(item => {
                         return <div>
                             <p className={css.radio}>
-                                <Radio checked={this.state.order.advance_mode==item.key?true:false}
-                                    onClick={this.handlePayMode.bind(this,"advance_mode",item.key)}>
-                                    <FormattedMessage id={item.value_id} defaultMessage="全额支付"/>
+                                <Radio checked={this.state.order.advance_mode==item.firstMoney?true:false}
+                                    onClick={this.handlePayMode.bind(this,"advance_mode",item.firstMoney)}>
+                                    <FormattedMessage id="cart.advance" 
+                                        values={{
+                                            firstMoney:item.firstMoney*100,
+                                            lastMoney: 100-item.firstMoney*100,
+                                        }}
+                                    defaultMessage="全额支付"/>
                                 </Radio>
                             </p>
-                                {this.state.order.advance_mode==item.key?<div className={css.advance_pay}>
-                                    {operator.instalment_mode.map(pay=>{
-                                        return <p className={this.state.order.advance_pay==pay.key?css.active:css.item}
-                                            onClick={this.handlePayMode.bind(this,"advance_pay",pay.key)}>
+                                {this.state.order.advance_mode==item.firstMoney?<div className={css.advance_pay}>
+                                    {item.paymentModelStages.map(pay=>{
+                                        return <p className={this.state.order.stageId==pay.stageId?css.active:css.item}
+                                            onClick={this.handlePayMode.bind(this,"stageId",pay.stageId)}>
                                             <FormattedMessage id="cart.pay.day" defaultMessage="3期"
-                                                values={{num: pay.num}}
+                                                values={{
+                                                    num: pay.stageNum,
+                                                    principal: this.state.order.sum*(1-pay.firstMoney),
+                                                    interest: this.state.order.sum*(1-pay.firstMoney)*pay.interestRate
+                                                }}
                                             />
                                             {pay.name}
                                         </p>
@@ -393,12 +516,11 @@ class ConfirmOrder extends React.Component {
             </div>
             <div className={css.order_footer}>
                 <p>
-                    <FormattedMessage id="cart.advance.payment" defaultMessage="首父金额"/>
                 </p>
                 <div className={css.footer_right}>
                     <p>
                         <FormattedMessage id="cart.advance.payment" defaultMessage="首期金额"/>:
-                        <span className={css.footer_orange}>$&nbsp;{this.state.order.instal}</span>
+                        <span className={css.footer_orange}>$&nbsp;{this.state.order.sum*this.state.order.advance_mode}</span>
                     </p>
                     <Button type='primary' size="large" className={css.button_green} onClick={this.handleStep.bind(this,-1)}>
                         <FormattedMessage id="app.before" defaultMessage="首期金额"/>
@@ -408,14 +530,12 @@ class ConfirmOrder extends React.Component {
                     </Button>
                 </div>
             </div>
-            <Modal
+            <CusModal
                 title={this.formatMessage({id: this.state.title})}
                 visible={this.state.visible}
-                onOk={this.handleSubmit}
-                onCancel={this.handleCancel}
-                footer={null}
+                closeModal={this.handleCancel}
             >
-                <Form onSubmit={this.handleSubmit}>
+                <Form className={css.modify_address} onSubmit={this.handleSubmit}>
                     <FormItem
                         {...formItemLayout}
                         label={this.formatMessage({id: 'cart.delivery.name'})}
@@ -431,8 +551,8 @@ class ConfirmOrder extends React.Component {
                         {...formItemLayout}
                         label={this.formatMessage({id: 'post.company_name'})}
                     >
-                        {getFieldDecorator('company_name', {
-                            initialValue: this.state.address.company_name,
+                        {getFieldDecorator('companyName', {
+                            initialValue: this.state.address.companyName,
                         })(
                             <Input />
                         )}
@@ -440,14 +560,14 @@ class ConfirmOrder extends React.Component {
                     <FormItem
                         {...formItemLayout}
                         label={this.formatMessage({id: 'cart.delivery.city'})}
-                    >{console.log(this.state.address)}
+                    >
                         {getFieldDecorator('city', {
-                            initialValue: this.state.address.city?this.state.address.city.split(","):[],
-
+                            initialValue: this.state.address.city?this.state.address.city:[],
                             rules: [{ type: 'array', required: true, message: this.formatMessage({id: 'cart.delivery.city'}) }],
                         })(
                             <Cascader
                                 options={this.state.options}
+                                onChange={this.changeAddress}
                             />
                         )}
                     </FormItem>
@@ -466,27 +586,27 @@ class ConfirmOrder extends React.Component {
                         {...formItemLayout}
                         label={this.formatMessage({id: 'cart.delivery.tel'})}
                     >
-                        {getFieldDecorator('tel', {
-                            initialValue: this.state.address.tel,
+                        {getFieldDecorator('phone', {
+                            initialValue: this.state.address.phone,
                             rules: [{ required: true, message: this.formatMessage({id: 'cart.address.tel'}) }],
                         })(
                             <Input />
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-                        {getFieldDecorator('default', {
+                        {getFieldDecorator('isDefault', {
                             valuePropName: 'checked',
-                            initialValue: this.state.address.default==1?true:false,
+                            initialValue: this.state.address.isDefault==1?true:false,
                         })(
                             <Checkbox>{this.formatMessage({id: 'cart.address.default'})}</Checkbox>
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout}>
                         <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
-                        <Button type="primary" htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                        <Button type="primary" loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                     </FormItem>
                 </Form>
-            </Modal>
+            </CusModal>
         </div>
     }
 }

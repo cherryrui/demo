@@ -14,9 +14,14 @@
   box-shadow: 0 0 10px #8a96ad;
   margin: 200px auto;
   background: white;
+  padding: 10px;
 }
 .modal_title{
   text-align: right;
-  padding: 10px;
   cursor: pointer;
+}
+.title{
+    padding-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
 }
