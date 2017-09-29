@@ -251,7 +251,7 @@ class ConfirmOrder extends React.Component {
                     })
                     this.props.handleStep ? this.props.handleStep(1, res.data.result) : '';
                 } else {
-                    message.error("失败");
+                    message.error(res.data.message);
                 }
 
             })
@@ -539,10 +539,10 @@ class ConfirmOrder extends React.Component {
                         <span className={css.footer_orange}>$&nbsp;{this.state.order.sum*this.state.order.advance_mode}</span>
                     </p>
                     <Button type='primary' size="large" className={css.button_green} onClick={this.handleStep.bind(this,-1)}>
-                        <FormattedMessage id="app.before" defaultMessage="首期金额"/>
+                        <FormattedMessage id="app.before" defaultMessage="上一步"/>
                     </Button>
                     <Button type='primary' loading={this.state.loading} size="large" className={css.button_theme} onClick={this.handlePay}>
-                        <FormattedMessage id="cart.submit" defaultMessage="首期金额"/>
+                        <FormattedMessage id="cart.submit" defaultMessage="提交订单"/>
                     </Button>
                 </div>
             </div>

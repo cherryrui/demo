@@ -116,6 +116,7 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.post('/register.json', async(ctx) => {
 		let result = null;
+		let data = ctx.request.body;
 		const param = {
 			userName: data.name,
 			password: data.password,
