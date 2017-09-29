@@ -225,9 +225,11 @@ class ConfirmOrder extends React.Component {
                 itemIds: [],
                 itemNumbers: [],
                 payModelId: this.state.order.pay_mode,
-                payModelStageId: this.state.order.stageId > 0 ? this.state.order.stageId : null,
                 deliveryId: this.state.order.delivery_mode,
                 remark: this.state.order.note,
+            }
+            if (this.state.order.stageId > 0) {
+                param.payModelStageId = this.state.order.stageId;
             }
             this.props.products.map(item => {
                 if (item.itemId) {

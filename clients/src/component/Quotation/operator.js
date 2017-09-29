@@ -34,15 +34,15 @@ export default {
 		value: "其他"
 	}, ],
 	invoice_type: [{
-		id: 0,
+		id: 1,
 		key: "special.vat.invoice",
 		value: "增值锐专用发票"
 	}, {
-		id: 1,
+		id: 2,
 		key: "vat.invoice",
 		value: "增值锐发票"
 	}, {
-		id: 2,
+		id: 3,
 		key: "ordinary.invoice",
 		value: "普通发票"
 	}, ]

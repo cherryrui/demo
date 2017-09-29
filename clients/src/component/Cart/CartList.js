@@ -122,6 +122,7 @@ class CartList extends React.Component {
             if (res.data.isSucc) {
                 res.data.result.list.map(item => {
                     item.price = item.itemPrice ? item.itemPrice : item.price;
+                    item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
                 })
                 this.setState({
                     data: res.data.result.list,
@@ -334,10 +335,10 @@ class CartList extends React.Component {
                 this.state.selectedRowKeys.map(key => {
                     if (item.id === key) {
                         quotation.sum_num += item.productNum;
-                        item.sale_price = item.price;
+                        item.salePrice = item.price;
                         quotation.products.push(item);
                         quotation.sale_price += item.productNum * item.price;
-                        quotation.profit += item.productNum * (item.price - item.agent_price);
+                        quotation.profit += item.productNum * (item.price - item.priceSupplier);
                     }
                 })
             })

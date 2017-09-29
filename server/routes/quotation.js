@@ -1,6 +1,9 @@
 var router = require('koa-router')();
 const axios = require('axios');
-
+var querystring = require('querystring');
+const {
+	url,
+} = require('../config/index');
 router.get('/get-quotation.json', async(ctx, next) => {
 		let quotations = [],
 			total = 1;
@@ -595,6 +598,13 @@ router.get('/get-quotation.json', async(ctx, next) => {
 			quotation: quotation
 		}
 
+	})
+	.post('/create-quotation.json', async(ctx, next) => {
+		let param = ctx.request.body;
+		await axios.post(url + "", querystring.stringify(param)).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
 	})
 
 module.exports = router;
