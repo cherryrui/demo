@@ -245,10 +245,10 @@ class ConfirmOrder extends React.Component {
             param.productIds = param.productIds.join(",");
             param.productNumbers = param.productNumbers.join(",");
             axios.post('/order/commit-order.json', param).then(res => {
+                this.setState({
+                    loading: false,
+                })
                 if (res.data.isSucc) {
-                    this.setState({
-                        loading: false,
-                    })
                     this.props.handleStep ? this.props.handleStep(1, res.data.result) : '';
                 } else {
                     message.error(res.data.message);
