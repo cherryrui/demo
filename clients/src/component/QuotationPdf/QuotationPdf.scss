@@ -54,12 +54,16 @@
 
   .logo{
     padding-bottom: 10px;
-    height: 65px;
-    width: 65px;
-
+    height: 115px;
+    width: 150px;
+    font-size: 69px;
+    font-size: 56px;
+    line-height: 146px;
+    font-weight: bold;
+    color: $theme-color;
     img{
-      height: 65px;
-      width: 65px;
+      height: 115px;
+      width: 150px;
     }
   }
   .title_item{
