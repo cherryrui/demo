@@ -1,7 +1,6 @@
 const router = require('koa-router')();
-var zh = require('../public/lib/zh.js');
-var message = require('../public/locale/zh_message.js');
-
+const axios = require('axios');
+axios.defaults.headers.common['authorization'] = "";
 router.get('/', async(ctx, next) => {
 	console.log('/sdasdas');
 	await ctx.render('index', {

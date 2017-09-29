@@ -600,10 +600,17 @@ router.get('/get-quotation.json', async(ctx, next) => {
 
 	})
 	.post('/create-quotation.json', async(ctx, next) => {
-		let param = ctx.request.body;
-		await axios.post(url + "", querystring.stringify(param)).then(res => {
-			result = res.data;
-		})
+		let param = ctx.request.body,
+			result;
+		try {
+			await axios.post(url + "/quotation/insertQuotationOrder", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} catch (e) {
+			result = {
+				isSucc: false
+			}
+		}
 		ctx.body = result;
 	})
 

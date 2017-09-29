@@ -20,6 +20,7 @@ import {
 	Table,
 	Select,
 	Input,
+	InputNumber,
 	Icon,
 	Tooltip,
 	Checkbox,
@@ -49,11 +50,10 @@ class Quotation extends React.Component {
 			quotation: {
 				products: [],
 				num: 0,
-				sale_price: 0,
-				profit: 0,
+				totalSalePrice: 0,
+				profits: 0,
 				invoiceType: 1, //发票类型
-				clients: {},
-				agent: {},
+				totalQuantity: 0,
 			},
 			width: "80%", //模态框宽度
 		}
@@ -107,10 +107,10 @@ class Quotation extends React.Component {
 			dataIndex: 'salePrice',
 			key: 'salePrice',
 			render: (text, record) => <div className={css.table_num}>
-                <Input  addonBefore={<Icon onClick={this.handleNum.bind(this,record,"salePrice",-1)} type="minus" />}
+                <Input addonBefore={<Icon onClick={this.handleNum.bind(this,record,"salePrice",-1)} type="minus" />}
                 addonAfter={<Icon onClick={this.handleNum.bind(this,record,"salePrice",1)} type="plus" />}
                 onChange={this.handleNum.bind(this,record,"salePrice")}
-                value={"$"+(text?text:record.price)} />
+                value={"$"+text} />
             </div>
 		}, {
 			title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
@@ -140,16 +140,22 @@ class Quotation extends React.Component {
 			let quotation = JSON.parse(sessionStorage.quotation);
 			let data = this.state.quotation;
 			data.products = quotation.products;
-			data.sale_price = quotation.sale_price;
-			data.profit = quotation.profit;
-			data.sum_num = quotation.sum_num;
+			data.totalSalePrice = quotation.sale_price.toFixed(2);
+			data.profits = quotation.profit;
+			data.totalQuantity = quotation.sum_num;
 			data.participant = {
 				ageCompanyName: this.user.companyName,
 				ageDepartment: "",
 				ageContactPerson: this.user.realName,
 				ageContectPhone: this.user.tel,
 				ageEmail: this.user.email,
-				ageFax: ""
+				ageFax: "",
+				cusCompanyName: '',
+				cusDepartment: '',
+				cusContactPerson: '',
+				cusContectPhone: '',
+				cusEmail: '',
+				cusFax: '',
 			}
 			this.setState({
 				quotation: data
@@ -169,8 +175,8 @@ class Quotation extends React.Component {
 			sum += item.productNum;
 		})
 		let quotation = this.state.quotation;
-		quotation.sale_price = sale_price;
-		quotation.profit = profits
+		quotation.totalSalePrice = sale_price.toFixed(2);
+		quotation.profits = profits.toFixed(2);
 		this.setState({
 			quotation: quotation
 		})
@@ -179,7 +185,7 @@ class Quotation extends React.Component {
 		this.quotation.scrollIntoView();
 	}
 	handleNum = (record, name, value) => {
-		console.log(record, name)
+		console.log(record, name, value)
 		let data = this.state.quotation;
 		let sum = 0,
 			num = 0,
@@ -187,30 +193,30 @@ class Quotation extends React.Component {
 		data.products.map(item => {
 			if (item.id == record.id) {
 				if (isNaN(value)) {
-					console.log(value.target.value);
-					item[name] = isNaN(value.target.value.substr(1)) ? 0 : parseFloat(value.target.value.substr(1));
+					console.log(value, value.target.value);
+					let price = value.target.value.substr(1);
+					price = price.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+					item[name] = price;
 				} else {
-					console.log(value);
 					item[name] = item[name] + value;
 				}
 			}
 			item.productNum = item.productNum > 1 ? item.productNum : 1;
-			sum += item.sale_price * item.productNum;
+			sum += item.salePrice * item.productNum;
 			num += item.productNum;
-			profit += (item.sale_price - item.priceSupplier) * item.productNum;
+			profit += (item.salePrice - item.priceSupplier) * item.productNum;
 		})
-		data.sale_price = sum;
-		data.profit = profit;
-		data.sum_num = num;
+		data.totalSalePrice = sum.toFixed(2);
+		data.profits = profit.toFixed(2);
+		data.totalQuantity = num;
 		this.setState({
 			products: data,
-			sale_price: sum,
-			profit: profit,
+			totalSalePrice: sum.toFixed(2),
+			profits: profit.toFixed(2),
 			quotation: data
 		})
 	}
 	handleInfo = (type, name, e) => {
-		console.log(type, name, e);
 		let quotation = this.state.quotation;
 		switch (type) {
 			case 0:
@@ -220,7 +226,7 @@ class Quotation extends React.Component {
 				quotation.participant[name] = e.target.value;
 				break;
 			case 2: //
-
+				quotation[name] = e;
 				break;
 			case 3:
 				quotation[name] = e;
@@ -239,8 +245,8 @@ class Quotation extends React.Component {
 		});
 	}
 	handlePrint = (key, e) => {
-		this.state.quotation.select = this.state.quotation.select ? this.state.quotation.select : {};
-		this.state.quotation.select[key] = e.target.checked;
+		this.state.quotation.exportOption = this.state.quotation.exportOption ? this.state.quotation.exportOption : {};
+		this.state.quotation.exportOption[key] = e.target.checked;
 	}
 	onlineShow = () => {
 		this.setState({
@@ -326,29 +332,35 @@ class Quotation extends React.Component {
 
 	saveQuotation = () => {
 		console.log(this.state.quotation);
-		if (!this.state.quotation.subject) {
-			let param = this.state.quotation.subject;
+		if (this.state.quotation.quotationSubject) {
+			let param = this.state.quotation;
 			console.log(param);
 			param.participant = JSON.stringify(param.participant);
 			var productList = [];
 			this.state.quotation.products.map(item => {
 				productList.push({
 					productId: item.productId,
-					itemId: item.itemId,
-					productBrand: {
+					productSpecification: item.itemId,
+					productBrand: JSON.stringify({
 						brandNameCn: item.brandNameCn,
 						brandNameEn: item.brandNameEn,
-					},
+					}),
 					productName: item.productName,
 					productPrice: item.price,
 					salePrice: item.salePrice,
 					agentPrice: item.priceSupplier,
 					productNum: item.productNum,
-					totalMoney: item.price,
+					totalMoney: item.salePrice * item.productNum,
 				});
 			})
+			param.productList = JSON.stringify(productList);
+			param.exportOption = JSON.stringify(this.state.quotation.exportOption);
+			delete param.products;
+			delete param.num;
 			axios.post('/quotation/create-quotation.json', param).then(res => {
-
+				/*if (res.data.isSucc) {*/
+				this.props.history.pushState(null, "page/quotation-pdf/" + 1);
+				/*}*/
 			})
 
 		} else {
@@ -399,20 +411,20 @@ class Quotation extends React.Component {
             <div className={css.order_sum}>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.num" defaultMessage="总数量"/>:
-            		<p className={css.sum_right}>{this.state.quotation.sum_num}</p>
+            		<p className={css.sum_right}>{this.state.quotation.totalQuantity}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.sum" defaultMessage="总售价"/>:
-            		<p className={css.sum_price}>{this.state.quotation.sale_price?this.state.quotation.sale_price.toFixed(2):""}</p>
+            		<p className={css.sum_price}>{this.state.quotation.totalSalePrice?this.state.quotation.totalSalePrice:""}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.profits" defaultMessage="利润"/>:
-            		<p className={css.sum_profit}>{this.state.quotation.profit?this.state.quotation.profit.toFixed(2):0}</p>
+            		<p className={css.sum_profit}>{this.state.quotation.profits?this.state.quotation.profits.toFixed(2):0}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
-            		<Input size="large" type="number" value={this.state.quotation.postage} className={css.sum_right}
-            		onChange={this.handleInfo.bind(this,0,"postage")} />
+            		<InputNumber size="large" min={0} precision="2" value={this.state.quotation.shoppingCharges} className={css.sum_right}
+            		onChange={this.handleInfo.bind(this,2,"shoppingCharges")} />
             	</p>
             </div>
             <div className={css.infomation} id="info">
@@ -468,13 +480,13 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.company.name" defaultMessage="公司名称"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.participant.ageCompanyName} onChange={this.handleInfo.bind(this,1,"companyName")} />
+	            		<Input size='large' value={this.state.quotation.participant.ageCompanyName} onChange={this.handleInfo.bind(this,1,"ageCompanyName")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.department" defaultMessage="部门"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.participant.ageDepartment} onChange={this.handleInfo.bind(this,1,"department")} />
+	            		<Input size='large' value={this.state.quotation.participant.ageDepartment} onChange={this.handleInfo.bind(this,1,"ageDepartment")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
@@ -507,13 +519,13 @@ class Quotation extends React.Component {
             		<span style={{color: "red",fontSize:"16px"}}>*&nbsp;</span>
 	            	<FormattedMessage id="quotation.subject" defaultMessage="报价单主题"/>:
 	            </p>
-	            <Input size='large' value={this.state.quotation.subject} onChange={this.handleInfo.bind(this,0,"subject")} />
+	            <Input size='large' value={this.state.quotation.quotationSubject} onChange={this.handleInfo.bind(this,0,"quotationSubject")} />
 	        </p>
 	        <p className={`${css.item} ${css.padd_20}`}>
 	            <p className={css.title}>
 	            	<FormattedMessage id="quotation.invoice" defaultMessage="分类"/>:
 	            </p>
-				<RadioGroup onChange={this.handleInfo.bind(this,0,"invoice_type")} value={this.state.quotation.invoice_type}>
+				<RadioGroup onChange={this.handleInfo.bind(this,0,"invoiceType")} value={this.state.quotation.invoiceType}>
 			        {operator.invoice_type.map(item=>{
 	            		return <Radio value={item.id}>
 	            			<FormattedMessage id={item.key} defaultMessage={item.value}/>

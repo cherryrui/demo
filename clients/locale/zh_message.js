@@ -181,6 +181,7 @@ const zh_CN = {
     "quotation.export": "导出报价单",
     "quotation.generate": "生成报价单",
     "quotation.save": "保存报价单",
+    "quotation.message": "报价单创建成功，预览如下",
     "special.vat.invoice": "增值锐专用发票",
     "vat.invoice": "增值锐发票",
     "ordinary.invoice": "普通发票",

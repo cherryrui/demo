@@ -263,7 +263,7 @@ class ConfirmOrder extends React.Component {
 
     }
     handleStep = (num) => {
-        this.props.next ? this.props.next(num) : '';
+        this.props.handleStep ? this.props.handleStep(num) : '';
     }
     handleEditAddress = (address) => {
         console.log('address:', address);
@@ -295,7 +295,7 @@ class ConfirmOrder extends React.Component {
         axios.get('/user/get-address-list.json').then(res => {
             this.setState({
                 address_list: res.data.result,
-                select: res.data.result.length > 0 ? res.data.result[0].addressId : 0,
+                select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
             })
         })
     }
@@ -483,8 +483,8 @@ class ConfirmOrder extends React.Component {
                                             <FormattedMessage id="cart.pay.day" defaultMessage="3期"
                                                 values={{
                                                     num: pay.stageNum,
-                                                    principal: this.state.order.sum*(1-pay.firstMoney),
-                                                    interest: this.state.order.sum*(1-pay.firstMoney)*pay.interestRate
+                                                    principal: this.state.order.sum*(1-pay.firstMoney).toFixed(2),
+                                                    interest: this.state.order.sum*(1-pay.firstMoney)*pay.interestRate.toFixed(2),
                                                 }}
                                             />
                                             {pay.name}

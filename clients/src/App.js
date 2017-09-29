@@ -50,6 +50,7 @@ import SuccessfulApplication from './component/SuccessfulApplication/SuccessfulA
 import Supplier from './component/Supplier/Supplier.js';
 import Certification from './component/Certification/Certification.js';
 import News from './component/News/News.js';
+import QuotationPdf from './component/QuotationPdf/QuotationPdf.js';
 import {
     Provider
 } from 'react-redux';
@@ -312,6 +313,7 @@ ReactDOM.render(
                             <Route path="post-want" component={PostWant}/>
                             <Route path="cart" component={Cart}/>
                             <Route path="quotation(/:id)" component={Quotation}/>
+                            <Route path="quotation-pdf/:id" component={QuotationPdf}/>
                             <Route path="about" component={About}>
                             </Route>
                             <Route path="news" component={News}/>

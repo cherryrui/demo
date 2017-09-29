@@ -35,6 +35,7 @@ router
 	.post('/commit-order.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
+		console.log(38, url);
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url + '/auth/order/generateOrder', querystring.stringify(param)).then(res => {
 			console.log('generateOrder:', res.data)

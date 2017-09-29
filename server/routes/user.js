@@ -11,6 +11,8 @@ import {
 } from '../tools/sendemail.js';
 var querystring = require('querystring');
 
+axios.defaults.headers.common['authorization'] = "";
+
 router.get('/get-user.json', async(ctx, next) => {
 		let id = ctx.query.id;
 

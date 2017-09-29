@@ -9,10 +9,10 @@ import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     Form,
     Icon,
@@ -20,7 +20,7 @@ import {
     Button,
     Checkbox,
     message
-    } from 'antd';
+} from 'antd';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
@@ -36,14 +36,14 @@ class Login extends React.Component {
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
-                    console.log('xxxx:',res);
+                    console.log('xxxx:', res);
                     console.log(res.status);
                     if (res.data.isSucc) {
                         if (values.remember) {
@@ -76,13 +76,13 @@ class Login extends React.Component {
         const {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         const {
             getFieldDecorator
-            } = this.props.form;
+        } = this.props.form;
         return <div className={css.body}>
-            <div className={css.logo}>LOGO</div>
+            <Link to="/" className={css.logo}>LOGO</Link>
             <div className={css.form} style={{background: `url("../img/login_bg.png")`}}>
                 <Form onSubmit={this.handleSubmit} className={css.login_form}>
                     <FormItem>
@@ -132,19 +132,3 @@ class Login extends React.Component {
 }
 Login = Form.create()(Login);
 export default injectIntl(Login);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

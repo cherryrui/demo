@@ -94,6 +94,8 @@ class ProductDetail extends React.Component {
         axios.get(`/product/get-product-byId.json?id=${id}`).then(res => {
             if (res.data.isSucc) {
                 let product = res.data.result.productAndSupplier;
+                product.imgs = [];
+                console.log(product.imgs, res.data.result.imgs);
                 product.imgs = res.data.result.imgs;
                 this.setState({
                     product: product,

@@ -11,10 +11,6 @@ export default {
 		id: 4,
 		key: "quotation.platform.price",
 		value: "plat_price"
-	}, {
-		id: 5,
-		key: "quotation.agency.price",
-		value: "agent_price"
 	}],
 	pay_mode: [{
 		id: 0,
