@@ -314,7 +314,7 @@ const en_US = {
     "orderlist.need.pay": "Paid unprocessed",
     "orderlist.settled": "Settled order",
     "orderdetails.delivery.address": "交货地址",
-    "orderdetails.preview": "预览贸易合同",
+    "orderdetails.preview": "Preview trade contract",
     "orderdetails.return": "return",
     "orderdetails.order.no": "Order No",
     "orderdetails.brand": "品牌",
