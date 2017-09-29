@@ -421,7 +421,7 @@ class ConfirmOrder extends React.Component {
                 {this.state.address_list.map(item=>{
                     return <div className={css.radio_content}>
                         <p onClick={this.handleAddress.bind(this,item.addressId)}>
-                            <Radio checked={item.addressId==this.state.select?true:false}></Radio>
+                            <Radio style={{bottom: 1}} checked={item.addressId==this.state.select?true:false}></Radio>
                             <span className={css.item}>
                                 <FormattedMessage id="cart.delivery.name" defaultMessage="收货人"/>
                             &nbsp;{item.name}&nbsp;&nbsp;
@@ -520,10 +520,7 @@ class ConfirmOrder extends React.Component {
                     <FormattedMessage id="cart.order.total" defaultMessage="订单总金额"/>:
                     <p >$&nbsp;{this.state.order.sum}</p>
                 </div>
-                <div>
-                    <FormattedMessage id="cart.discount" defaultMessage="折扣"/>:
-                    <p >$&nbsp;{this.state.order.total}</p>
-                </div>
+
                 <div>
                     <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
                     <p >$&nbsp;{this.state.order.postage.toFixed(2)}</p>
