@@ -521,9 +521,9 @@ class ConfirmOrder extends React.Component {
                     <p >$&nbsp;{this.state.order.sum}</p>
                 </div>
 
-                <div>
+                <div>{console.log(this.state)}
                     <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
-                    <p >$&nbsp;{this.state.order.postage.toFixed(2)}</p>
+                    <p >$&nbsp;{this.state.delivery_mode == 1 ? "0.00" : this.state.order.postage.toFixed(2)}</p>
                 </div>
                 <div>
                     <FormattedMessage id="cart.grand" defaultMessage="总金额"/>:
