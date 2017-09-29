@@ -330,8 +330,8 @@ class Quotation extends React.Component {
 			let param = this.state.quotation.subject;
 			console.log(param);
 			param.participant = JSON.stringify(param.participant);
-			let productList = [];
-			this.state.quotation.products.map(item = {
+			var productList = [];
+			this.state.quotation.products.map(item => {
 				productList.push({
 					productId: item.productId,
 					itemId: item.itemId,
@@ -340,12 +340,12 @@ class Quotation extends React.Component {
 						brandNameEn: item.brandNameEn,
 					},
 					productName: item.productName,
-					productPrice: item.price
+					productPrice: item.price,
 					salePrice: item.salePrice,
 					agentPrice: item.priceSupplier,
 					productNum: item.productNum,
-					totalMoney: item.price
-				})
+					totalMoney: item.price,
+				});
 			})
 			axios.post('/quotation/create-quotation.json', param).then(res => {
 
