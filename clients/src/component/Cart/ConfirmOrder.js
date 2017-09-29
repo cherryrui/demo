@@ -58,6 +58,7 @@ class ConfirmOrder extends React.Component {
             options: [], //多级联动地址信息
             title: "cart.address.title", //地址信息模态框title
             loading: false, //正在提交订单
+            telCode: [],
         };
         this.select_address = [];
         this.formatMessage = this.props.intl.formatMessage;
@@ -112,7 +113,8 @@ class ConfirmOrder extends React.Component {
             width: "12%",
             className: css.table_col,
             render: (record) => <span className={css.table_price}>${(record.price*record.productNum).toFixed(2)}</span>
-        }, ]
+        }, ];
+        this.telSelect = null;
     }
     componentWillMount() {
         this.getAddressList();
@@ -141,6 +143,13 @@ class ConfirmOrder extends React.Component {
             this.setState({
                 pay_mode_list: res.data.result
             })
+        })
+        axios.get('/user/get-tel-code.json').then(res => {
+            if (res.data.isSucc) {
+                this.setState({
+                    telCode: res.data.result
+                })
+            }
         })
     }
 
@@ -309,49 +318,34 @@ class ConfirmOrder extends React.Component {
                 this.setState({
                     loading: true
                 })
-                let param;
-                console.log(values, this.state.address);
-                if (this.state.address) {
-                    param = this.state.address;
-                    if (this.select_address.length > 0) {
-                        param = {
-                            country: this.select_address[0].label,
-                            countryId: values.city[0],
-                            province: this.select_address.length > 1 ? this.select_address[1].label : "",
-                            provinceId: values.city.length > 1 ? values.city[1] : 0,
-                            city: this.select_address.length > 2 ? this.select_address[2].label : "",
-                            cityId: values.city.length > 2 ? values.city[2] : 0,
-                            district: this.select_address.length > 3 ? this.select_address[3].label : "",
-                            districtId: values.city.length > 3 ? values.city[3] : 0,
-                        }
-                    }
-                    param = {
-                        address: values.address,
-                        companyName: values.companyName,
-                        phone: values.phone,
-                        isDefault: values.isDefault ? 1 : 0,
-                        name: values.name
-                    };
-                    axios.post('/user/update-address.json', parm).then(res => {
+                let param = values;
+                console.log(param);
+                if (this.select_address.length > 0) {
+                    param.country = this.select_address[0].label;
+                    param.countryId = this.select_address[0].value;
+                    param.province = this.select_address.length > 1 ? this.select_address[1].label : "";
+                    param.provinceId = this.select_address.length > 1 ? this.select_address[1].value : 0;
+                    param.city = this.select_address.length > 2 ? this.select_address[2].label : "";
+                    param.cityId = this.select_address.length > 2 ? this.select_address[2].value : 0;
+                    param.district = this.select_address.length > 3 ? this.select_address[3].label : "";
+                    param.districtId = this.select_address.length > 3 ? this.select_address[3].value : 0;
 
+                }
+                this.state.telCode.map(item => {
+                    if (item.id == param.phoneDcId) {
+                        param.phoneDc = item.districtCode
+                    }
+                })
+                console.log(values, this.state.address);
+                if (this.state.address.addressId) {
+                    axios.post('/user/update-address.json', param).then(res => {
+                        console.log(res.data)
+                        if (res.data.isSucc) {
+
+                        }
                     })
 
                 } else {
-                    param = {
-                        country: this.select_address[0].label,
-                        countryId: values.city[0],
-                        province: this.select_address.length > 1 ? this.select_address[1].label : "",
-                        provinceId: values.city.length > 1 ? values.city[1] : 0,
-                        city: this.select_address.length > 2 ? this.select_address[2].label : "",
-                        cityId: values.city.length > 2 ? values.city[2] : 0,
-                        district: this.select_address.length > 3 ? this.select_address[3].label : "",
-                        districtId: values.city.length > 3 ? values.city[3] : 0,
-                        address: values.address,
-                        companyName: values.companyName,
-                        phone: values.phone,
-                        isDefault: values.isDefault ? 1 : 0,
-                        name: values.name
-                    };
                     axios.post('/user/add-user-address.json', param).then(res => {
                         console.log('add-useraddress:', res.data);
                         if (res.data.isSucc) {
@@ -389,6 +383,14 @@ class ConfirmOrder extends React.Component {
                 offset: 6,
             },
         };
+        const prefixSelector = getFieldDecorator('phoneDcId', {})(
+            initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : null,
+            <Select style={{ width: 60 }}>
+            {this.state.telCode.map(item=>{
+                return <Option value={item.id}>{item.districtCode}</Option>
+            })}
+        </Select>
+        );
         return <div>
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.delivery.info" defaultMessage="收货信息"/>
@@ -590,7 +592,7 @@ class ConfirmOrder extends React.Component {
                             initialValue: this.state.address.phone,
                             rules: [{ required: true, message: this.formatMessage({id: 'cart.address.tel'}) }],
                         })(
-                            <Input />
+                            <Input addonBefore={prefixSelector} />
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>

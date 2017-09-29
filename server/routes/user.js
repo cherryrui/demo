@@ -45,6 +45,7 @@ router.get('/get-user.json', async(ctx, next) => {
 	.post('/add-user-address.json', async(ctx) => {
 		let result = null;
 		let data = ctx.request.body;
+		delete data.city;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url + '/auth/userAddress/insertAddress', querystring.stringify(data)).then(res => {
 			console.log('add address:', res.data);
@@ -53,12 +54,18 @@ router.get('/get-user.json', async(ctx, next) => {
 		ctx.body = result;
 	})
 	.post('/update-address.json', async(ctx, next) => {
-		let param = ctx.result.body,
+		let param = ctx.request.body,
 			result;
+		delete data.city;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		await axios.post(url + "/auth/userAddress/updateAddress", querystring.stringify(param)).then(res => {
-			result = res.data;
-		})
+		console.log(59, param);
+		try {
+			await axios.post(url + "/auth/userAddress/updateAddress", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} catch (e) {
+			console.log(e);
+		}
 		ctx.body = result;
 	})
 	.get('/get-address-list.json', async(ctx, next) => {
@@ -80,6 +87,17 @@ router.get('/get-user.json', async(ctx, next) => {
 		ctx.body = {
 			address: result
 		}
+	})
+	.get('/get-tel-code.json', async(ctx, body) => {
+		let result = {};
+		try {
+			await axios.post(url + "/districtCode/queryDistrictCodeList").then(res => {
+				result = res.data;
+			})
+		} catch (e) {
+			console.log(e);
+		}
+		ctx.body = result;
 	})
 	.post('/repassword.json', async(ctx) => {
 		let result = null;
