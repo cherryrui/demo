@@ -62,14 +62,18 @@
   .item{
     flex-grow: 1;
     padding-left: 50px;
+    width: 25%;
+    flex-shrink: 0;
   }
   .title{
     font-size: 16px;
     color: #ffffff;
+    padding-bottom: 10px
   }
   .info{
     font-size: 14px;
     color: #e6e6e6;
+    padding: 5px 0px;
   }
 }
 .bottom{
