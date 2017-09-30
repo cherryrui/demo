@@ -165,3 +165,10 @@
   }
 }
 }
+.quo_footer{
+    display: flex;
+    justify-content: space-between;
+    .quo_footer_right{
+      margin: auto 0;
+    }
+}

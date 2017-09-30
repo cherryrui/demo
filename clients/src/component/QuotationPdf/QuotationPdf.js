@@ -165,13 +165,13 @@ class QuotationPdf extends React.Component {
                     visible: false,
                 })
             },
-            useCORS: true
+            /*useCORS: true,
+            allowTaint: true,*/
         });
     }
 
     render() {
-        console.log(this.props.quotation)
-        return <div className={`${appcss.body} ${css.body}`}>
+        return <div className={`${appcss.body} ${css.body}`} ref={(quotation_pdf)=>{this.quotation_pdf=quotation_pdf}}>
             <div className={css.quotation_title}> 
                <p className={css.quotation_info}>
                     <Icon type="smile-o" />&nbsp;&nbsp;
@@ -334,22 +334,29 @@ class QuotationPdf extends React.Component {
                         <p className={css.sum_right}>${this.state.quotation.quotationOrder.shoppingCharges}</p>
                     </p>
                 </div>
-                <p className={css.quotation_info}>
-                    <FormattedMessage id="quotation.invoice" defaultMessage="发票类型"/>：
-                    {operator.invoice_type.map(item=>{
-                        if(item.id==this.state.quotation.quotationOrder.invoiceType){
-                            return <FormattedMessage id={item.key} defaultMessage={item.value}/>
-                        }
-                    })}
-                </p>
+                <div className={css.quo_footer}>
+                    <div>
+                        <p className={css.quotation_info}>
+                            <FormattedMessage id="quotation.invoice" defaultMessage="发票类型"/>：
+                            {operator.invoice_type.map(item=>{
+                                if(item.id==this.state.quotation.quotationOrder.invoiceType){
+                                    return <FormattedMessage id={item.key} defaultMessage={item.value}/>
+                                }
+                            })}
+                        </p>
 
-                <p className={css.quotation_info}>
-                    <FormattedMessage id="cart.remark" defaultMessage="备注"/>：
-                    {this.state.quotation.quotationOrder.remark}
-                </p>
-                <p className={css.quotation_info}>
-                    <FormattedMessage id="quotation.ps" defaultMessage="截止有效期"/>
-                </p>
+                        <p className={css.quotation_info}>
+                            <FormattedMessage id="cart.remark" defaultMessage="备注"/>：
+                            {this.state.quotation.quotationOrder.remark}
+                        </p>
+                        <p className={css.quotation_info}>
+                            <FormattedMessage id="quotation.ps" defaultMessage="截止有效期"/>
+                        </p>
+                    </div>
+                    <div className={css.quo_footer_right}>
+                        <img src="../img/yin.jpg"/>
+                    </div>
+                </div>
             </div>
 		</div>
     }

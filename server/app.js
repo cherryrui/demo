@@ -44,23 +44,22 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async(ctx, next) => {
-	ctx.cookie = {
-		set: (k, v, opt) => {
-			opt = Object.assign({}, cookieOptions, opt);
-			return ctx.cookies.set(k, v, opt);
-		},
-		get: (k, opt) => {
-			opt = Object.assign({}, cookieOptions, opt);
-			return ctx.cookies.get(k, opt);
-		}
-	};
-	const start = new Date()
-	await next()
-	const ms = new Date() - start
-	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
-
-// routes
+		ctx.cookie = {
+			set: (k, v, opt) => {
+				opt = Object.assign({}, cookieOptions, opt);
+				return ctx.cookies.set(k, v, opt);
+			},
+			get: (k, opt) => {
+				opt = Object.assign({}, cookieOptions, opt);
+				return ctx.cookies.get(k, opt);
+			}
+		};
+		const start = new Date()
+		await next()
+		const ms = new Date() - start
+		console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+	})
+	// routes
 router.use('/api', api.routes(), api.allowedMethods());
 router.use('/product', product.routes(), product.allowedMethods());
 router.use('/user', user.routes(), user.allowedMethods());
