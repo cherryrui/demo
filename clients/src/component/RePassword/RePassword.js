@@ -31,6 +31,9 @@ import {
 } from 'antd';
 import Steps from '../Public/Steps/Steps.js';
 import operator from './operator.js';
+import {
+    Link
+    } from 'react-router';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
@@ -59,9 +62,9 @@ class RePassword extends React.Component {
         return (
             <div className={css.body}>
                 <div className={css.title}>
-                    <p className={css.logo}>LOGO</p>
+                    <Link to="/" className={css.logo}> LOGO </Link>
                     <p className={css.title_text}>
-                        <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
+                        <FormattedMessage id="authen.authen.resetpassword" defaultMessage="用户注册"/>
                     </p>
                 </div>
                 <div className={css.content}>
@@ -154,10 +157,10 @@ class Authentication extends React.Component {
         } = this.props.form;
         const formItemLayout = {
             labelCol: {
-                span: 8
+                span: 6
             },
             wrapperCol: {
-                span: 8
+                span: 12
             }
         };
         const tailFormItemLayout = {
@@ -182,12 +185,12 @@ class Authentication extends React.Component {
                                 }
                             ]
                         })(
-                            <Input size="large" ref={(account)=>{this.account=account}} />
+                            <Input size="large" ref={(account)=>{this.account=account}}className={css.password_input} />
                         )}
 
                         </Col>
                         <Col span={8}>
-                            <Button type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                            <Button className={css.code_Button} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
                                 <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                 {this.state.time?("("+this.state.time+")"):""}
                             </Button>
@@ -203,12 +206,12 @@ class Authentication extends React.Component {
                         message: this.formatMessage({id:"register.verifivation.warn"})
                     }]
                 })(
-                    <Input />
+                    <Input  className={css.password_input} className={css.password_input}/>
                 )}
 
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" >
+                    <Button type="primary" htmlType="submit" className={css.password_Button} >
                         <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/>
                     </Button>
                 </FormItem>
@@ -275,7 +278,7 @@ class SetPwd extends React.Component {
                         required:true,
                         message:this.formatMessage({id:'repwd.new.pwd_warn'})
                     }]
-                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.new.pwd_warn'})}/>
+                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.new.pwd_warn'})} className={css.password_input}/>
                 )}
 
                 </FormItem>
@@ -289,12 +292,12 @@ class SetPwd extends React.Component {
                     },{
                         validator: this.checkPassword,
                     }]
-                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.config.pwd_warn'})}/>
+                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.config.pwd_warn'})} className={css.password_input}/>
                 )}
 
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" className={css.password_Button}>
                         <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/></Button>
                 </FormItem>
             </Form>
@@ -313,7 +316,7 @@ class SetSuccess extends React.Component {
                 <Icon type="smile-o" />&nbsp;&nbsp;&nbsp;&nbsp;
                 <FormattedMessage id="reset.success.info" defaultMessage="密码重置成功！"/>
             </div>
-            <Button type="primary" onClick={this.handleClick} >
+            <Button type="primary" onClick={this.handleClick} className={css.password_Button}>
                 <FormattedMessage id="register.go.login" defaultMessage="去登录"/>
             </Button>
         </div>

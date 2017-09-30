@@ -461,6 +461,7 @@ const en_US = {
     "cart.advance": "down payment {firstMoney}%,staging {lastMoney}%",
     "cart.pay.day": "{num} Stage Instalment amount：{principal}  interest：{interest}",
     "quotation.param": "Please fill in the quotation sheet",
-    "quotation.message": "The price list is successful and the preview is as follows"
+    "quotation.message": "The price list is successful and the preview is as follows",
+    "product.no_product": "There is no such product",
 }
 export default en_US;

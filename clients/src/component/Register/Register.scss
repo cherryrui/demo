@@ -13,6 +13,7 @@
   .logo{
     font-size: 40px;
     font-weight: bold;
+    color: $theme-color;
   }
   .title_text{
     font-size: 20px;
@@ -31,4 +32,26 @@
     a{
       color: $theme-color;
     }
+}
+.reqister_input{
+  width: 400px !important;
+  height:36px ;
+  border-radius: 2px;
+}
+.reqister_Button{
+  background: $button-blue;
+  width: 120px;
+  border-radius: 2px;
+}
+.reqister_Button:hover{
+  background: $button-blue-active;
+  width: 120px;
+  border-radius: 2px;
+
+}
+.reqister_radio_one{
+   border-radius: 2px 0 0 2px !important;
+ }
+.reqister_radio_two{
+  border-radius: 2px 0 0 2px  !important;
 }

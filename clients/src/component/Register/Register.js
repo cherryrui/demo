@@ -155,7 +155,7 @@ class Register extends React.Component {
         return (
             <div className={css.body}>
                 <div className={css.title}>
-                    <p className={css.logo}>LOGO</p>
+                    <Link to="/" className={css.logo}> LOGO </Link>
                     <p className={css.title_text}>
                         <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
                     </p>
@@ -173,10 +173,10 @@ class Register extends React.Component {
                             }]
                         })(
                             <Radio.Group >
-                                <Radio.Button value={0}>
+                                <Radio.Button value={0}className={css.reqister_radio_one}>
                                     <FormattedMessage id="persondata.indivdual.user" defaultMessage="个人用户"/>
                                 </Radio.Button>
-                                <Radio.Button value={1}>
+                                <Radio.Button value={1} className={css.reqister_radio_two}>
                                     <FormattedMessage id="persondata.enterprise.user" defaultMessage="企业用户"/>
                                 </Radio.Button>
                             </Radio.Group>
@@ -193,7 +193,7 @@ class Register extends React.Component {
                                 message:formatMessage({id:'register.name.warn'})
                             }]
                         })(
-                            <Input />
+                            <Input  className={css.reqister_input}/>
                         )}
                         </FormItem>
 
@@ -206,7 +206,7 @@ class Register extends React.Component {
                                 message:formatMessage({id:"register.email.warn"})
                             }]
                         })(
-                            <Input ref={(email)=>{this.email=email}}/>
+                            <Input ref={(email)=>{this.email=email}} className={css.reqister_input}/>
                         )}
                         </FormItem>
 
@@ -219,7 +219,7 @@ class Register extends React.Component {
                                 message:formatMessage({id:"register.tel.warn"})
                             }]
                         })(
-                            <Input ref={(tel)=>{this.tel=tel}}/>
+                            <Input ref={(tel)=>{this.tel=tel}} className={css.reqister_input}/>
                         )}
                         </FormItem>
 
@@ -254,7 +254,7 @@ class Register extends React.Component {
                                 message:formatMessage({id:'register.password.warn'})
                             }]
                         })(
-                            <Input type='password' />
+                            <Input type='password' className={css.reqister_input}/>
                         )}
                         </FormItem>
 
@@ -269,7 +269,7 @@ class Register extends React.Component {
                                 validator: this.checkPassword,
                             }]
                         })(
-                            <Input type='password' />
+                            <Input type='password' className={css.reqister_input}/>
                         )}
                         </FormItem>
 
@@ -284,7 +284,7 @@ class Register extends React.Component {
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
-                            <Button type="primary" htmlType="submit" className={css.button2}>
+                            <Button type="primary" htmlType="submit" className={css.reqister_Button}>
                                 <FormattedMessage id="login.registor" defaultMessage="注册"/>
                             </Button>
                         </FormItem>
