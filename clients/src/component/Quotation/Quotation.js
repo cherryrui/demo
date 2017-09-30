@@ -141,7 +141,7 @@ class Quotation extends React.Component {
 			let data = this.state.quotation;
 			data.products = quotation.products;
 			data.totalSalePrice = quotation.sale_price.toFixed(2);
-			data.profits = quotation.profit;
+			data.profits = quotation.profit.toFixed(2);
 			data.totalQuantity = quotation.sum_num;
 			data.participant = {
 				ageCompanyName: this.user.companyName,
@@ -294,7 +294,7 @@ class Quotation extends React.Component {
 		if (this.state.quotation.quotationSubject) {
 			let param = this.state.quotation;
 			console.log(param);
-			param.profits = (param.profits).toFixed(2);
+			/*param.profits = (param.profits).toFixed(2);*/
 			param.participant = JSON.stringify(param.participant);
 			var productList = [];
 			this.state.quotation.products.map(item => {
@@ -384,7 +384,7 @@ class Quotation extends React.Component {
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.profits" defaultMessage="利润"/>:
-            		<p className={css.sum_profit}>{this.state.quotation.profits?(this.state.quotation.profits).toFixed(2):0}</p>
+            		<p className={css.sum_profit}>{this.state.quotation.profits?this.state.quotation.profits:0}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
