@@ -101,7 +101,7 @@ const en_US = {
     "cart.cart": "My Cart",
     "cart.confirm.order": "Confirm Order",
     "cart.pay": "Pay",
-    "cart.calu": "Calu",
+    "cart.calu": "Clearing",
     "cart.payment": "Payment Success",
     "cart.product.info": "Product Information",
     "cart.specifucation": "Specifications",
