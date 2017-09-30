@@ -43,7 +43,7 @@ class RegisterComplete extends React.Component {
                         <FormattedMessage id="regiater.success.info" defaultMessage="提示"/>
                     </div>
                     <div className={css.footer}>
-                        <Button type="primary" onClick={this.handleClick}>
+                        <Button type="primary" onClick={this.handleClick} className={css.reqister_Button}>
                             <FormattedMessage id="register.go.login" defaultMessage="去登录"/>
                         </Button>
                     </div>

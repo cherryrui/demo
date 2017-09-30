@@ -157,7 +157,7 @@ class Authentication extends React.Component {
         } = this.props.form;
         const formItemLayout = {
             labelCol: {
-                span: 6
+                span: 8
             },
             wrapperCol: {
                 span: 12
@@ -210,7 +210,7 @@ class Authentication extends React.Component {
                 )}
 
                 </FormItem>
-                <FormItem {...tailFormItemLayout}>
+                <FormItem className={css.Button_center}>
                     <Button type="primary" htmlType="submit" className={css.password_Button} >
                         <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/>
                     </Button>
@@ -261,7 +261,7 @@ class SetPwd extends React.Component {
         const tailFormItemLayout = {
             wrapperCol: {
                 span: 12,
-                offset: 10
+                offset: 12
             }
         };
         const {
@@ -296,7 +296,7 @@ class SetPwd extends React.Component {
                 )}
 
                 </FormItem>
-                <FormItem {...tailFormItemLayout}>
+                <FormItem className={css.Button_center}>
                     <Button type="primary" htmlType="submit" className={css.password_Button}>
                         <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/></Button>
                 </FormItem>

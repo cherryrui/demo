@@ -40,6 +40,17 @@
 .footer{
   button{
     margin: 20px;
+
   }
 }
+.reqister_Button{
+  background: $button-blue;
+  width: 120px;
+  border-radius: 2px;
+}
+.reqister_Button:hover{
+  background: $button-blue-active;
+  width: 120px;
+  border-radius: 2px;
 
+}
