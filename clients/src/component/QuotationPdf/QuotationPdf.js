@@ -66,14 +66,7 @@ class QuotationPdf extends React.Component {
             key: 'salePrice',
             render: (text) => <span className={css.table_price}>${text}</span>
 
-        }, {
-            title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-            className: css.table_col,
-            dataIndex: 'totalMoney',
-            key: 'totalMoney',
-            render: (text) => <span className={css.table_price}>${text}</span>
-
-        }, ];
+        } ];
 
     }
     componentWillMount() {
@@ -90,7 +83,25 @@ class QuotationPdf extends React.Component {
                     className: css.table_col,
                     dataIndex: 'productPrice',
                     key: 'productPrice',
-                }, )
+                    render: (text) => <span className={css.table_price}>${text}</span>
+                })
+                this.columns.push({
+                    title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+                    className: css.table_col,
+                    dataIndex: 'totalMoney',
+                    key: 'totalMoney',
+                    render: (text) => <span className={css.table_price}>${text}</span>
+
+                },);
+            }else{
+                this.columns.push({
+                    title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+                    className: css.table_col,
+                    dataIndex: 'totalMoney',
+                    key: 'totalMoney',
+                    render: (text) => <span className={css.table_price}>${text}</span>
+
+                },);
             }
             this.setState({
                 quotation: res.data.result,
