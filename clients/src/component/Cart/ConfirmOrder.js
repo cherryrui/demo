@@ -90,7 +90,7 @@ class ConfirmOrder extends React.Component {
             render: (record) => <div>
                 {record.selectSpecs?record.selectSpecs.map((item,index)=>{
                     return <div>
-                        <p>{item.specName}:{item.specVal[0].spec_value}</p>
+                        <p>{item.specName}:{item.specVal[0].specValue}</p>
                     </div>
                 }):""}
             </div>
@@ -534,10 +534,10 @@ class ConfirmOrder extends React.Component {
                 <p>
                 </p>
                 <div className={css.footer_right}>
-                    <p>
+                    {this.state.order.advance_mode>0?<p>
                         <FormattedMessage id="cart.advance.payment" defaultMessage="首期金额"/>:
-                        <span className={css.footer_orange}>$&nbsp;{this.state.order.sum*this.state.order.advance_mode}</span>
-                    </p>
+                        <span className={css.footer_orange}>$&nbsp;{(this.state.order.sum*this.state.order.advance_mode).toFixed(2)}</span>
+                    </p>:""}
                     <Button type='primary' size="large" className={css.button_green} onClick={this.handleStep.bind(this,-1)}>
                         <FormattedMessage id="app.before" defaultMessage="上一步"/>
                     </Button>

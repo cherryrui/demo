@@ -85,7 +85,7 @@ class Quotation extends React.Component {
 			className: css.table_col,
 			render: (record) => <div>
                 {record.selectSpecs?record.selectSpecs.map((item,index)=>{
-                    return <p>{item.specName}:{item.specVal[0].spec_value}</p>
+                    return <p>{item.specName}:{item.specVal[0].specValue}</p>
                 }):""}
             </div>
 		}, {

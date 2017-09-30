@@ -155,7 +155,23 @@ class ProductDetail extends React.Component {
                 if (type == 1) {
                     let product = this.state.product;
                     product.coverUrl = product.productImg;
-                    product.selectSpecs = this.state.specs;
+                    let selectSpecs = [];
+                    console.log(this.state.specs);
+                    this.state.specs.map(item => {
+                        let spec = {
+                            specId: item.specId,
+                            specName: item.specName,
+                            type: item.type,
+                            specVal: [],
+                        };
+                        item.specVal.map(attr => {
+                            if (item.select_value == attr.valid) {
+                                spec.specVal.push(attr);
+                            }
+                        })
+                        selectSpecs.push(spec);
+                    })
+                    product.selectSpecs = selectSpecs;
                     sessionStorage.setItem("products", JSON.stringify(product));
                     this.props.history.pushState(null, "page/cart/1");
                 } else {

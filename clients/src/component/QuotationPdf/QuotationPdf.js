@@ -23,7 +23,7 @@ class QuotationPdf extends React.Component {
                 quotationOrder: {},
                 productList: []
             },
-            select:{}
+            select: {}
         }
 
         this.columns = [{
@@ -51,7 +51,7 @@ class QuotationPdf extends React.Component {
             className: css.table_col,
             render: (record) => <div>
                 {record.selectSpecs?record.selectSpecs.map((item,index)=>{
-                    return <p>{item.specName}:{item.specVal[0].spec_value}</p>
+                    return <p>{item.specName}:{item.specVal[0].specValue}</p>
                 }):""}
             </div>
         }, {
@@ -66,14 +66,14 @@ class QuotationPdf extends React.Component {
             key: 'salePrice',
             render: (text) => <span className={css.table_price}>${text}</span>
 
-        },{
+        }, {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
             className: css.table_col,
             dataIndex: 'totalMoney',
             key: 'totalMoney',
             render: (text) => <span className={css.table_price}>${text}</span>
 
-        },];
+        }, ];
 
     }
     componentWillMount() {
