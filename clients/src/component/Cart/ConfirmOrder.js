@@ -546,7 +546,7 @@ class ConfirmOrder extends React.Component {
                     </Button>
                 </div>
             </div>
-            <CusModal  className={css.address_modal}
+            <CusModal width="650"
                 title={this.formatMessage({id: this.state.title})}
                 visible={this.state.visible}
                 closeModal={this.handleCancel}

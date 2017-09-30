@@ -117,56 +117,57 @@
     	align-items: center;
 	}
 }
-.address_modal{
-  width: 650px;
-}
-.modify_address{
-	padding-top: 24px;
-  .address_input{
-    height: 36px;
-    width: 400px;
-    border-radius: 2px;
 
-  input{
-    border-radius: 2px !important;
-    height: 36px;
-  }
 
-  }
-  .address_input_tel{
-    width: 340px !important;
-    border-radius: 2px !important;
-    height:36px;
-    input{
-      border-radius: 2px !important;
+  .modify_address{
+    padding-top: 24px;
+    .address_input{
       height: 36px;
+      width: 400px;
+      border-radius: 2px;
 
+      input{
+        border-radius: 2px !important;
+        height: 36px;
+      }
+
+    }
+    .address_input_tel{
+      width: 340px !important;
+      border-radius: 2px !important;
+      height:36px;
+      input{
+        border-radius: 2px !important;
+        height: 36px;
+
+      }
+
+    }
+    .cancel{
+      background-color: $button-green;
+      border-color: $button-green;
+      margin-right: 20px;
+      border-radius: 2px;
+      width:120px;
+    }
+    .cancel:hover{
+      background-color: $button-green-active;
+      border-color: $button-green-active;
+    }
+    .submit{
+      width:120px;
+      border-radius: 2px ;
+      background-color:$button-blue;
+    }
+    .submit:hover{
+      width:120px;
+      border-radius: 2px ;
+      background-color:$button-blue-active;
     }
 
   }
-  .cancel{
-    background-color: $button-green;
-    border-color: $button-green;
-    margin-right: 20px;
-    border-radius: 2px;
-    width:120px;
-  }
-  .cancel:hover{
-    background-color: $button-green-active;
-    border-color: $button-green-active;
-  }
-  .submit{
-    width:120px;
-    border-radius: 2px ;
-    background-color:$button-blue;
-  }
-  .submit:hover{
-    width:120px;
-    border-radius: 2px ;
-    background-color:$button-blue-active;
-  }
 
-}
+
 .left{
 	margin-left: 10px;
 	flex-grow: 1;
@@ -250,6 +251,7 @@
 }
 .confirm_mode{
 	display: flex;
+
 	.item{
 		padding: 10px 30px;
     	background: $back-ground-shallow-grey;
@@ -260,6 +262,7 @@
 	.active{
 		@extend .item;
 		border: 2px solid $theme-color;
+
 	}
 }
 .confirm_mode_delivery{

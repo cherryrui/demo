@@ -87,7 +87,7 @@ const en_US = {
     "product.detail.delivery": "送达时间",
     "product.detail.MOQ": "MOQ",
     "product.detail.num": "Quantity",
-    "product.no_spec": "no specification",
+    "product.no_spec": "No relevant information is available",
     "product.detail.month": "Recent month",
     "product.detail.three": "Three months",
     "product.detail.six": "Six months",
@@ -102,7 +102,7 @@ const en_US = {
     "cart.cart": "My Cart",
     "cart.confirm.order": "Confirm Order",
     "cart.pay": "Pay",
-    "cart.calu": "Clearing",
+    "cart.calu": "Settle Accounts",
     "cart.payment": "Payment Success",
     "cart.product.info": "Product Information",
     "cart.specifucation": "Specifications",
@@ -452,6 +452,11 @@ const en_US = {
     "product.detail.material": "material",
     "mine.product.instruct_weight": "weight",
     "app.view.order": "view the order",
-    "app.bank.imformation": "Bank imformation"
+    "app.bank.imformation": "Bank imformation",
+    "product.no_information": "No information is available",
+    "product.no_review": "No questions asked",
+    "product.no_price": "There is no price fluctuation",
+    "product.like": "Similar products",
+    "home.recent.add": "Newly added products"
 }
-export default en_US
+export default en_US;

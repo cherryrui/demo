@@ -79,13 +79,14 @@ class LoginModal extends React.Component {
 		const {
 			getFieldDecorator
 		} = this.props.form;
-		return <CusModal closeModal={this.handleCancel} visible={this.props.visible}>
+		return <CusModal style={{width:400}}
+            title={this.formatMessage({id: 'login.login.title'})}
+            closeModal={this.handleCancel}
+            visible={this.props.visible}>
 				<Form onSubmit={this.handleSubmit} className={css.login_form}>
 					<FormItem>
-                        <p className={css.title}>
-                            <FormattedMessage id="login.login.title" defaultMessage="用户登录"/>
-                        </p>
-                    </FormItem>
+
+                </FormItem>
                     <FormItem>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: this.formatMessage({id: 'login.input.name'}) }],

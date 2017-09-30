@@ -22,7 +22,7 @@ class CusModal extends React.Component {
 	render() {
 		console.log(this.props.visible)
 		return <div className={css.login_modal} ref="modal" style={{display:this.props.visible?"block":"none"}}>
-			<div className={css.content} style={{width:this.props.width?this.props.width:"650px"}}>
+			<div className={css.content} style={{width:this.props.width?this.props.width:"400px"}}>
 				<p className={css.modal_title} onClick={this.handleCancel}>
 				<span className={css.title}>{this.props.title}</span>
 				<Icon type="close" />
