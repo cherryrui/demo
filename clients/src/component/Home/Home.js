@@ -253,7 +253,7 @@ class Main extends React.Component {
             <div className={css.foot_first}>
                 <div className={css.item}>
                     <p className={css.icon}>
-                        <Icon type="like-o" />
+                        <i class="iconfont icon-DYC-6"></i>
                     </p>
                     <p className={css.text}>
                         <FormattedMessage id="app.authority" defaultMessage="权威"/>
@@ -261,7 +261,7 @@ class Main extends React.Component {
                 </div>
                 <div className={css.item}>
                     <p className={css.icon}>
-                        <Icon type="trophy" />
+                        <i class="iconfont icon-DYC-4"></i>
                     </p>
                     <p className={css.text}>
                         <FormattedMessage id="app.integrity" defaultMessage="完善"/>
@@ -269,7 +269,7 @@ class Main extends React.Component {
                 </div>
                 <div className={css.item}>
                     <p className={css.icon}>
-                        <Icon type="safety" />
+                        <i class="iconfont icon-DYC-3"></i>
                     </p>
                     <p className={css.text}>
                         <FormattedMessage id="app.safety" defaultMessage="安全"/>
@@ -277,7 +277,7 @@ class Main extends React.Component {
                 </div>
                 <div className={css.item}>
                     <p className={css.icon}>
-                        <Icon type="customer-service" />
+                        <i class="iconfont icon-DYC-5"></i>
                     </p>
                     <p className={css.text}>
                         <FormattedMessage id="app.24.service" defaultMessage="24小时服务"/>
