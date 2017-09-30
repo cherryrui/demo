@@ -95,6 +95,7 @@ const zh_CN = {
     "product.detail.six": "六个月",
     "product.no_price": "暂无价格波动",
     "product.no_product": "暂无该类产品",
+    "product.no_spec": "暂无相关信息",
     "product.like": "相似产品",
     "post.company_name": "公司名称",
     "post.linkman": "联系人",

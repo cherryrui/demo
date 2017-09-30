@@ -87,6 +87,7 @@ const en_US = {
     "product.detail.delivery": "送达时间",
     "product.detail.MOQ": "MOQ",
     "product.detail.num": "Quantity",
+    "product.no_spec": "no specification",
     "product.detail.month": "Recent month",
     "product.detail.three": "Three months",
     "product.detail.six": "Six months",

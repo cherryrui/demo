@@ -95,6 +95,7 @@ class ProductDetail extends React.Component {
             if (res.data.isSucc) {
                 let product = res.data.result.productAndSupplier;
                 product.imgs = res.data.result.imgs;
+                product.productNum = product.moq;
                 this.setState({
                     product: product,
                     curImg: res.data.result.imgs.length > 0 ? res.data.result.imgs[0].imgUrl : "",
@@ -142,7 +143,7 @@ class ProductDetail extends React.Component {
     };
     handleAddCart = (type) => {
         console.log(109, "handleAddCart", this.state.product)
-        if (localStorage.uid) {
+        if (sessionStorage.user) {
             let flag = true;
             this.state.specs.map(item => {
                 if (!item.select_value) {
@@ -151,48 +152,29 @@ class ProductDetail extends React.Component {
                 }
             })
             if (flag) {
-                let param = {
-                    itemId: this.state.product.itemId,
-                    productId: this.state.product.productId,
-                    productNum: this.state.product.productNum ? this.state.product.productNum : 1,
+                if (type == 1) {
+                    let product = this.state.product;
+                    product.coverUrl = product.productImg;
+                    product.selectSpecs = this.state.specs;
+                    sessionStorage.setItem("products", JSON.stringify(product));
+                    this.props.history.pushState(null, "page/cart/1");
+                } else {
+                    let param = {
+                        itemId: this.state.product.itemId,
+                        productId: this.state.product.productId,
+                        productNum: this.state.product.productNum ? this.state.product.productNum : 1,
+                    }
+                    this.specify.style.border = "none";
+                    this.specify.style.padding = "0";
+                    this.props.addCart(param).then(res => {
+                        message.success("成功加入购物车")
+                    });
                 }
-                this.specify.style.border = "none";
-                this.specify.style.padding = "0";
-                this.props.addCart(param).then(res => {
-                    message.success("成功加入购物车")
-                });
             } else {
                 console.log("dada", this.specify.style)
                 this.specify.style.border = "2px solid #2f5ea2";
                 this.specify.style.padding = "10px";
 
-            }
-        } else {
-            this.setState({
-                visible: true
-            })
-        }
-    }
-    handleBuy = () => {
-        //console.log(109, "handleAddCart", localStorage.uid)
-        if (localStorage.uid) {
-            let flag = true;
-            this.state.specs.map(item => {
-                if (!item.select_value) {
-                    flag = false;
-                    return;
-                }
-            })
-            if (flag) {
-                console.log("加入购物车", this.state.product)
-                this.specify.style.border = "none";
-                this.specify.style.padding = "0";
-                let product = this.state.product;
-                product.itemId
-
-            } else {
-                this.specify.style.border = "2px solid #2f5ea2";
-                this.specify.style.padding = "10px";
             }
         } else {
             this.setState({
@@ -212,7 +194,7 @@ class ProductDetail extends React.Component {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
                     if (res.data.status) {
-                        localStorage.setItem('user', JSON.stringify(res.data.result));
+                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
                         message.success(formatMessage({
                             id: 'login.login.success'
                         }))
@@ -250,6 +232,7 @@ class ProductDetail extends React.Component {
                 if (res.data.isSucc) {
                     let product = this.state.product;
                     product.price = res.data.result.price;
+                    product.itemPrice = res.data.result.price;
                     product.inventory = res.data.result.inventory;
                     product.priceDiscounts = res.data.result.priceDiscounts;
                     product.itemId = res.data.result.itemid;
@@ -322,7 +305,7 @@ class ProductDetail extends React.Component {
                             <span className={css.price}>
                                 ${this.state.product.price}
                             </span>
-                            {this.state.product.priceDiscounts?<span className={css.off}>{this.state.product.price/this.state.product.priceDiscounts}% off
+                            {this.state.product.priceDiscounts?<span className={css.off}>{(this.state.product.price/this.state.product.priceDiscounts).toFixed(2)}% off
                             </span>:""}
                         </p>
                         <p className={css.sales}>
@@ -426,7 +409,7 @@ class ProductDetail extends React.Component {
                         />
                         <div className={css.container_body}>
                         {this.state.current==0?<Information data={this.state.productInfo}/>
-                            :this.state.current==1?<Specification data={this.state.productInfo}/>
+                            :this.state.current==1?<Specification data={this.state.properties}/>
                             :this.state.current==2?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
                             :this.state.current==3?<Review data={this.state.reviews}/>
                             :this.state.current==4?<Price data={this.state.prices} />
@@ -447,7 +430,7 @@ class Information extends React.Component {
                 return <div>
                     <p className={css.info_title}>{item.introduceName}</p>
                     {item.contentType==1?<img src={item.content+"@800w_1e_1c.png"}/>
-                    :<div dangerouslySetInnerHTML={{__html: item.content}}/>}
+                    :<div style={{padding: "20px"}} dangerouslySetInnerHTML={{__html: item.content}}/>}
                 </div>
             }):<div className={css.no_data}> 
                 <FormattedMessage id="product.no_information" defaultMessage="暂无介绍信息"/>
@@ -528,53 +511,28 @@ ProductDetail = Form.create()(ProductDetail);
 class Specification extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            specification: {
-                art: 1343545432245435,
-                brand: "中建",
-                model: "23-332",
-                moq: 23,
-                material: "金属"
-            }
-        };
     }
 
     render() {
-        return <div className={css.productdetail_teble}>
+        console.log(this.props.data);
+        return this.props.data && this.props.data.length > 0 ? <div className={css.productdetail_teble}>
             <div className={css.title}>
                 <FormattedMessage id="mine.product.param" defaultMessage=""/>
             </div>
-            <div className={css.row}>
+            {this.props.data.map(item=>{
+                return <div className={css.row}>
                 <p className={css.row_title}>
-                    <FormattedMessage id="orderdetails.art.no" defaultMessage=""/>
+                    {item.propertyName}
                 </p>
-                <p>{this.state.specification.art}</p>
-            </div>
-            <div className={css.row}>
-                <p className={css.row_title}>
-                    <FormattedMessage id="orderdetails.brand" defaultMessage=""/>
+                <p>{item.propertyVal.map(property=>{
+                    return <span>{property.propertyValue}</span>
+                })}
                 </p>
-                <p>{this.state.specification.brand}</p>
             </div>
-            <div className={css.row}>
-                <p className={css.row_title}>
-                    <FormattedMessage id="product.detail.model" defaultMessage=""/>
-                </p>
-                <p>{this.state.specification.model}</p>
+            })}
+        </div> : <div className={css.no_data}> 
+                <FormattedMessage id="product.no_spec" defaultMessage="暂无介绍信息"/>
             </div>
-            <div className={css.row}>
-                <p className={css.row_title}>
-                    <FormattedMessage id="product.detail.MOQ" defaultMessage=""/>
-                </p>
-                <p>{this.state.specification.moq}</p>
-            </div>
-            <div className={css.row}>
-                <p className={css.row_title}>
-                    <FormattedMessage id="product.detail.material" defaultMessage=""/>
-                </p>
-                <p>{this.state.specification.material}</p>
-            </div>
-        </div>
     }
 }
 

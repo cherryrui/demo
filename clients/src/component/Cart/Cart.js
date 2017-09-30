@@ -42,6 +42,17 @@ class Cart extends React.Component {
         if (!sessionStorage.user) {
             this.props.history.pushState(null, "login");
         }
+        if (this.props.params.step && this.props.params.step == 1) {
+            let products = [];
+            console.log(sessionStorage.products);
+            products.push(JSON.parse(sessionStorage.products));
+            this.setState({
+                step: 1,
+                products: products
+            })
+        } else {
+            this.props.history.pushState(null, "/");
+        }
 
     }
     handleStep = (step, data) => {
