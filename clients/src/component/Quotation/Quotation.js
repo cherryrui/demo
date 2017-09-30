@@ -294,6 +294,7 @@ class Quotation extends React.Component {
 		if (this.state.quotation.quotationSubject) {
 			let param = this.state.quotation;
 			console.log(param);
+			param.profits = (param.profits).toFixed(2);
 			param.participant = JSON.stringify(param.participant);
 			var productList = [];
 			this.state.quotation.products.map(item => {
@@ -383,7 +384,7 @@ class Quotation extends React.Component {
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.profits" defaultMessage="利润"/>:
-            		<p className={css.sum_profit}>{this.state.quotation.profits?this.state.quotation.profits:0}</p>
+            		<p className={css.sum_profit}>{this.state.quotation.profits?(this.state.quotation.profits).toFixed(2):0}</p>
             	</p>
             	<p className={css.sum_item}>
             		<FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
@@ -462,7 +463,7 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.tel" defaultMessage="电话"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.participant.ageContectPhone} onChange={this.handleInfo.bind(this,1,"ageContectPhone")} />
+	            		<Input size='large' value={this.state.quotation.participant.ageContactPerson} onChange={this.handleInfo.bind(this,1,"ageContactPerson")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>
