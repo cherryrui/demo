@@ -50,8 +50,6 @@ class Cart extends React.Component {
                 step: 1,
                 products: products
             })
-        } else {
-            this.props.history.pushState(null, "/");
         }
 
     }
