@@ -169,7 +169,7 @@ const en_US = {
     "quotation.contact.tel": "MOB/TEL",
     "quotation.contact.email": "Email",
     "quotation.contact.fox": "FAX",
-    "quotation.subject": "Quotations subject",
+    "quotation.subject": "Subject",
     "quotation.valid.date": "Valid until",
     "quotation.invoice": "Invoice type",
     "quotation.export.option": "Export option",
@@ -457,6 +457,10 @@ const en_US = {
     "product.no_review": "No questions asked",
     "product.no_price": "There is no price fluctuation",
     "product.like": "Similar products",
-    "home.recent.add": "Newly added products"
+    "home.recent.add": "Newly added products",
+    "cart.advance": "down payment {firstMoney}%,staging {lastMoney}%",
+    "cart.pay.day": "{num} Stage Instalment amount：{principal}  interest：{interest}",
+    "quotation.param": "Please fill in the quotation sheet",
+    "quotation.message": "The price list is successful and the preview is as follows"
 }
 export default en_US;

@@ -459,5 +459,6 @@ const zh_CN = {
     "mine.product.instruct_weight": "重量",
     "app.view.order": "查看订单",
     "app.bank.imformation": "银行信息"
+
 }
 export default zh_CN;
