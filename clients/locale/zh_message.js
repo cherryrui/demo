@@ -18,7 +18,7 @@ const zh_CN = {
     "app.home": "首页",
     "app.category": "分类",
     "app.brand": "品牌",
-    "app.supply": "供应商",
+    "app.supplier": "供应商",
     "app.more": "更多",
     "app.authority": "专业服务",
     "app.integrity": "权威认证",

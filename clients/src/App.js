@@ -217,7 +217,7 @@ class App extends React.Component {
                             :<div><Link className={css.item} to="login">
                                 <FormattedMessage id="login.login" defaultMessage="登录"/>
                             </Link><Link style={{color:"white"}} to="register">
-                                <FormattedMessage id="login.registors" defaultMessage="注册"/>
+                                /<FormattedMessage id="login.registor" defaultMessage="注册"/>
                             </Link></div>}
                             {this.state.user?<Dropdown overlay={order_menu}>
                                 <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>

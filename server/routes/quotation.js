@@ -508,6 +508,7 @@ router.get('/get-quotation.json', async(ctx, next) => {
 	.post('/create-quotation.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
+		param.userId = ctx.cookie.get("uid");
 		try {
 			await axios.post(url + "/quotation/insertQuotationOrder", querystring.stringify(param)).then(res => {
 				console.log(600, res.data);

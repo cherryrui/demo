@@ -19,7 +19,14 @@ const addCart = param => dispatch => {
         payload: axios.post('/cart/add-cart.json', param)
     })
 }
+const deleteCart = param => dispatch => {
+    return dispatch({
+        type: "DELETE_CART",
+        payload: axios.post('/cart/delete-cart.json', param)
+    })
+}
 export default {
     getShoppingCart,
-    addCart
+    addCart,
+    deleteCart
 }

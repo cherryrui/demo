@@ -88,6 +88,11 @@ router
             })).then(res => {
                 result = res.data
             })
+            if (result.isSucc) {
+                await axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
+                    result = res.data;
+                })
+            }
         } else {
             result = {
                 isSucc: false,

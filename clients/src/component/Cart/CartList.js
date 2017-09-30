@@ -6,6 +6,7 @@ import React from 'react';
 import css from './Cart.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
+import cartAction from '../../action/cartAction.js';
 import {
     Link
 } from 'react-router';
@@ -26,8 +27,19 @@ import {
     Select
 } from 'antd';
 const Option = Select.Option;
+import {
+    connect
+} from 'react-redux';
 
+@connect(state => ({
+    carts: state.carts
+}), cartAction)
 class CartList extends React.Component {
+
+    static propTypes = {
+        intl: intlShape.isRequired,
+        deleteCart: React.PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props);
@@ -237,8 +249,10 @@ class CartList extends React.Component {
     }
     deleteCart = () => {
         if (this.state.selectedRowKeys.length > 0) {
-            axios.post('/cart/delete-cart.json', this.state.selectedRowKeys).then(res => {
-                if (res.data.isSucc) {
+            /*axios.post('/cart/delete-cart.json', this.state.selectedRowKeys).then(res => {*/
+            this.props.deleteCart(this.state.selectedRowKeys).then(res => {
+                console.log(res);
+                if (res.value.data.isSucc) {
                     let data = [];
                     this.state.data.map(item => {
                         if (this.state.selectedRowKeys.indexOf(item.id) == -1) {
@@ -273,8 +287,9 @@ class CartList extends React.Component {
     handleDelete = (id) => {
         let data = [];
         data.push(id);
-        axios.post('/cart/delete-cart.json', data).then(res => {
-            if (res.data.isSucc) {
+        /* axios.post('/cart/delete-cart.json', data).then(res => {*/
+        this.props.deleteCart(data).then(res => {
+            if (res.value.data.isSucc) {
                 let data = this.state.data;
                 let select = this.state.selectedRowKeys;
                 let sum = 0;
