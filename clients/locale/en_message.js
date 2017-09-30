@@ -79,7 +79,7 @@ const en_US = {
     "product.detail.package": "Packaging Details",
     "product.detail.review": "Customer Consulting",
     "product.detail.price.move": "Price movements",
-    "product.detail.contact": "Contact with me",
+    "product.detail.contact": "Contact",
     "product.detail.price": "Unit price",
     "product.detail.sales": "Sales",
     "product.detail.collect": "Collect",

@@ -94,8 +94,6 @@ class ProductDetail extends React.Component {
         axios.get(`/product/get-product-byId.json?id=${id}`).then(res => {
             if (res.data.isSucc) {
                 let product = res.data.result.productAndSupplier;
-                product.imgs = [];
-                console.log(product.imgs, res.data.result.imgs);
                 product.imgs = res.data.result.imgs;
                 this.setState({
                     product: product,
@@ -179,25 +177,22 @@ class ProductDetail extends React.Component {
         //console.log(109, "handleAddCart", localStorage.uid)
         if (localStorage.uid) {
             let flag = true;
-            this.state.product.attr.map(item => {
+            this.state.specs.map(item => {
                 if (!item.select_value) {
                     flag = false;
                     return;
                 }
             })
             if (flag) {
-                console.log("加入购物车")
+                console.log("加入购物车", this.state.product)
                 this.specify.style.border = "none";
                 this.specify.style.padding = "0";
-                this.props.addCart(this.state.product).then(res => {
-                    this.props.history.pushState(null, "page/cart");
+                let product = this.state.product;
+                product.itemId
 
-                });
             } else {
-                console.log("dada", this.specify.style)
                 this.specify.style.border = "2px solid #2f5ea2";
                 this.specify.style.padding = "10px";
-
             }
         } else {
             this.setState({

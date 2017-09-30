@@ -120,6 +120,7 @@ class ConfirmOrder extends React.Component {
         this.getAddressList();
         let sum = 0,
             order = this.state.order;
+        console.log(this.props.products);
         this.props.products.map(item => {
             sum += item.price * item.productNum;
         })
@@ -173,7 +174,6 @@ class ConfirmOrder extends React.Component {
         })
     }
     convertData(data) {
-        console.log(data);
         data.map(item => {
             item.value = item.v;
             item.label = item.n;

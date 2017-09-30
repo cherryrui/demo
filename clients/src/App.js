@@ -319,7 +319,7 @@ ReactDOM.render(
                             <Route path="product-detail/:id(/:name)" component={ProductDetail}/>
                             <Route path="brand-detail/:id" component={BrandDetail}/>
                             <Route path="post-want" component={PostWant}/>
-                            <Route path="cart" component={Cart}/>
+                            <Route path="cart(/:step)" component={Cart}/>
                             <Route path="quotation(/:id)" component={Quotation}/>
                             <Route path="quotation-pdf/:id" component={QuotationPdf}/>
                             <Route path="about" component={About}>

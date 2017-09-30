@@ -47,7 +47,6 @@ router.get('/get-user.json', async(ctx, next) => {
 	.post('/add-user-address.json', async(ctx) => {
 		let result = null;
 		let data = ctx.request.body;
-		delete data.city;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url + '/auth/userAddress/insertAddress', querystring.stringify(data)).then(res => {
 			console.log('add address:', res.data);
@@ -58,7 +57,6 @@ router.get('/get-user.json', async(ctx, next) => {
 	.post('/update-address.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
-		delete param.city;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		console.log(59, param);
 		try {
