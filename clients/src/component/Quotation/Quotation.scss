@@ -1,7 +1,6 @@
 @import "../../themes";
 
 .qutation{
-  font-size: 12px !important;
   .qutation_title{
     border-bottom: 1px solid $border-color;
     margin-bottom: 20px;
@@ -11,13 +10,10 @@
   }
   thead[class="ant-table-thead"]{
   }
-
-  td[class="Quotation__table_col___wsg4k"]{
-    font-size: 12px;
-  }
   th{
     background:$back-ground-shallow-grey !important;
     color: $font-color !important;
+    border-right: none !important;
   }
   td{
     padding: 20px 20px !important;
@@ -50,7 +46,7 @@
   }
   .table_col{
     text-align: center !important;
-    font-size: 14px;
+    font-size: 12px;
   }
   .table_num{
 
@@ -58,8 +54,7 @@
   .order_sum{
     padding: 20px 10px;
     background: $back-ground-shallow-grey;
-    height: 150px;
-    font-size:12px ;
+    font-size:14px ;
     .sum_item{
       text-align: right;
       display: flex;
@@ -104,16 +99,12 @@
     border-right: 1px solid $border-color;
   }
   .info_write{
-    font-size:12px ;
     display: flex;
     border: 1px solid $border-color;
     border-top: none;
     margin-bottom: 10px;
-    font-size: 12px !important;
-
   }
   .item{
-    font-size:12px ;
     display: flex;
     padding-bottom:20px ;
     textarea[class="ant-input"]{
@@ -138,7 +129,6 @@
     }
   }
   .item_one{
-    font-size:12px ;
     display: flex;
     padding-top:20px ;
     padding-bottom:20px ;
@@ -154,64 +144,40 @@
     }
   }
   .padd_20{
-    font-size:12px ;
     padding: 10px 20px;
     label[class="ant-radio-wrapper ant-radio-wrapper-checked"]{
       padding-right: 32px;
-      font-size: 12px;
     }
     label[class="ant-radio-wrapper"]{
       padding-right: 32px;
-      font-size: 12px;
     }
   }
   .padd_20_w{
-    font-size:12px ;
     padding: 10px 20px;
 
     label[class="ant-radio-wrapper ant-radio-wrapper-checked"]{
       padding-right: 32px;
-      font-size: 12px;
     }
     label[class="ant-radio-wrapper"]{
       padding-right: 32px;
-      font-size: 12px;
     }
   }
   .remark{
-    font-size:12px ;
     padding: 10px 0px 20px 0px;
     .title{
       margin: 0px 10px 0px 20px;
     }
   }
-  .valid_date{
-    font-size:12px ;
-    display: flex;
-    padding: 10px 20px;
-    .title{
-      width: 103px;
-      text-align: right;
-      margin: auto 10px auto 0px;
-      flex-shrink: 0;
-    }
-    input{
-      border-radius: 0px;
-    }
-  }
   .export{
-    font-size:12px ;
     border: 1px solid $border-color;
     padding: 20px;
     label[class="ant-steps-title"]{
       margin-right: 32px;
-      font-size: 12px;
     }
   }
   .footer {
     text-align: right;
     margin-top: 20px;
-    font-size: 12px;
     p {
       margin-left: 10px;
     }

@@ -45,7 +45,7 @@ router
 	})
 	.get('/get-pay-way.json', async(ctx, next) => {
 		let result;
-		await axios.get(url + '/transport/queryPaymentWayList').then(res => {
+		await axios.get(url + '/payment/queryPaymentWayList').then(res => {
 			result = res.data;
 		})
 		ctx.body = result;

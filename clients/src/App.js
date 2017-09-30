@@ -307,7 +307,7 @@ App = injectIntl(App);
 let div = document.createElement('div');
 div.className = css.index;
 ReactDOM.render(
-    (<LocaleProvider locale={appLocale.antd}>
+    (<LocaleProvider locale={appLocale.antd_locale}>
         <IntlProvider locale={appLocale.locale} messages={appLocale.message}>
             <Provider store={store}>
                 <Router history={hashHistory}>

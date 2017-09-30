@@ -61,7 +61,7 @@ class Quotation extends React.Component {
 		this.formatMessage = this.props.intl.formatMessage;
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-			width: "450px",
+			width: "430px",
 			render: (record) => <div className={css.table_product}>
                     <img src={record.coverUrl}/>
 	                <div className={css.info}>
@@ -114,14 +114,14 @@ class Quotation extends React.Component {
             </div>
 		}, {
 			title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
-			width: "100px",
+			width: "110px",
 			dataIndex: 'price',
 			key: 'price',
 			className: css.table_col,
 			render: (text) => <span className={css.table_price}>${text}</span>
 		}, {
 			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
-			width: "100px",
+			width: "110px",
 			className: css.table_col,
 			dataIndex: 'priceSupplier',
 			key: 'priceSupplier',
@@ -141,7 +141,7 @@ class Quotation extends React.Component {
 			let data = this.state.quotation;
 			data.products = quotation.products;
 			data.totalSalePrice = quotation.sale_price.toFixed(2);
-			data.profits = quotation.profit.toFixed(2);
+			data.profits = quotation.profit;
 			data.totalQuantity = quotation.sum_num;
 			data.participant = {
 				ageCompanyName: this.user.companyName,
@@ -322,6 +322,7 @@ class Quotation extends React.Component {
 			delete param.num;
 			axios.post('/quotation/create-quotation.json', param).then(res => {
 				if (res.data.isSucc) {
+					sessionStorage.removeItem("quotation");
 					this.props.history.pushState(null, "page/quotation-pdf/" + res.data.result);
 				} else {
 					message.error(res.data.message);

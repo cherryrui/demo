@@ -249,6 +249,7 @@ class ConfirmOrder extends React.Component {
                     loading: false,
                 })
                 if (res.data.isSucc) {
+                    sessionStorage.removeItem("products");
                     this.props.handleStep ? this.props.handleStep(1, res.data.result) : '';
                 } else {
                     message.error(res.data.message);
@@ -483,8 +484,8 @@ class ConfirmOrder extends React.Component {
                                             <FormattedMessage id="cart.pay.day" defaultMessage="3期"
                                                 values={{
                                                     num: pay.stageNum,
-                                                    principal: (this.state.order.sum*(1-pay.firstMoney)).toFixed(2),
-                                                    interest: (this.state.order.sum*(1-pay.firstMoney)*pay.interestRate).toFixed(2),
+                                                    principal: (this.state.order.sum*(1-pay.firstMoney)/pay.stageNum).toFixed(2),
+                                                    interest: (this.state.order.sum*(1-pay.firstMoney)*pay.interestRate/pay.stageNum).toFixed(2),
                                                 }}
                                             />
                                             {pay.name}

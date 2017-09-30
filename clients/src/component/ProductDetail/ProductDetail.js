@@ -153,27 +153,33 @@ class ProductDetail extends React.Component {
             })
             if (flag) {
                 if (type == 1) {
-                    let product = this.state.product;
-                    product.coverUrl = product.productImg;
-                    let selectSpecs = [];
-                    console.log(this.state.specs);
-                    this.state.specs.map(item => {
-                        let spec = {
-                            specId: item.specId,
-                            specName: item.specName,
-                            type: item.type,
-                            specVal: [],
-                        };
-                        item.specVal.map(attr => {
-                            if (item.select_value == attr.valid) {
-                                spec.specVal.push(attr);
-                            }
+                    if (this.state.product.inventory < this.state.product.productNum) {
+                        message.error(this.formatMessage({
+                            id: "product.detail.inventory.no"
+                        }))
+                    } else {
+                        let product = this.state.product;
+                        product.coverUrl = product.productImg;
+                        let selectSpecs = [];
+                        console.log(this.state.specs);
+                        this.state.specs.map(item => {
+                            let spec = {
+                                specId: item.specId,
+                                specName: item.specName,
+                                type: item.type,
+                                specVal: [],
+                            };
+                            item.specVal.map(attr => {
+                                if (item.select_value == attr.valid) {
+                                    spec.specVal.push(attr);
+                                }
+                            })
+                            selectSpecs.push(spec);
                         })
-                        selectSpecs.push(spec);
-                    })
-                    product.selectSpecs = selectSpecs;
-                    sessionStorage.setItem("products", JSON.stringify(product));
-                    this.props.history.pushState(null, "page/cart/1");
+                        product.selectSpecs = selectSpecs;
+                        sessionStorage.setItem("products", JSON.stringify(product));
+                        this.props.history.pushState(null, "page/cart/1");
+                    }
                 } else {
                     let param = {
                         itemId: this.state.product.itemId,
