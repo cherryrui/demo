@@ -291,47 +291,54 @@ class Quotation extends React.Component {
 
 	saveQuotation = () => {
 		console.log(this.state.quotation);
-		if (this.state.quotation.quotationSubject) {
-			let param = this.state.quotation;
-			console.log(param);
-			/*param.profits = (param.profits).toFixed(2);*/
-			param.participant = JSON.stringify(param.participant);
-			var productList = [];
-			this.state.quotation.products.map(item => {
-				productList.push({
-					productId: item.productId,
-					productSpecification: item.itemId,
-					productBrand: JSON.stringify({
-						brandNameCn: item.brandNameCn,
-						brandNameEn: item.brandNameEn,
-					}),
-					productUrl: item.coverUrl,
-					minBuyQuantity: item.moq,
-					productNo: item.productNo,
-					productName: item.productName,
-					productPrice: item.price,
-					salePrice: item.salePrice,
-					agentPrice: item.priceSupplier,
-					productNum: item.productNum,
-					totalMoney: item.salePrice * item.productNum,
-				});
-			})
-			param.productList = JSON.stringify(productList);
-			param.exportOption = JSON.stringify(this.state.quotation.exportOption);
-			delete param.products;
-			delete param.num;
-			axios.post('/quotation/create-quotation.json', param).then(res => {
-				if (res.data.isSucc) {
-					sessionStorage.removeItem("quotation");
-					this.props.history.pushState(null, "page/quotation-pdf/" + res.data.result);
-				} else {
-					message.error(res.data.message);
-				}
-			})
+		if (sessionStorage.user) {
+			if (this.state.quotation.quotationSubject) {
+				let param = this.state.quotation;
+				console.log(param);
+				/*param.profits = (param.profits).toFixed(2);*/
+				param.participant = JSON.stringify(param.participant);
+				var productList = [];
+				this.state.quotation.products.map(item => {
+					productList.push({
+						productId: item.productId,
+						productSpecification: item.itemId,
+						productBrand: JSON.stringify({
+							brandNameCn: item.brandNameCn,
+							brandNameEn: item.brandNameEn,
+						}),
+						productUrl: item.coverUrl,
+						minBuyQuantity: item.moq,
+						productNo: item.productNo,
+						productName: item.productName,
+						productPrice: item.price,
+						salePrice: item.salePrice,
+						agentPrice: item.priceSupplier,
+						productNum: item.productNum,
+						totalMoney: item.salePrice * item.productNum,
+					});
+				})
+				param.productList = JSON.stringify(productList);
+				param.exportOption = JSON.stringify(this.state.quotation.exportOption);
+				delete param.products;
+				delete param.num;
+				param.userId = JSON.parse(sessionStorage.user).uid;
+				axios.post('/quotation/create-quotation.json', param).then(res => {
+					if (res.data.isSucc) {
+						sessionStorage.removeItem("quotation");
+						this.props.history.pushState(null, "page/quotation-pdf/" + res.data.result);
+					} else {
+						message.error(res.data.message);
+					}
+				})
 
+			} else {
+				message.error(this.formatMessage({
+					id: "quotation.param"
+				}))
+			}
 		} else {
 			message.error(this.formatMessage({
-				id: "quotation.param"
+				id: "product.login.info"
 			}))
 		}
 	}

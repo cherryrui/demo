@@ -66,7 +66,7 @@ class QuotationPdf extends React.Component {
             key: 'salePrice',
             render: (text) => <span className={css.table_price}>${text}</span>
 
-        } ];
+        }];
 
     }
     componentWillMount() {
@@ -92,8 +92,8 @@ class QuotationPdf extends React.Component {
                     key: 'totalMoney',
                     render: (text) => <span className={css.table_price}>${text}</span>
 
-                },);
-            }else{
+                }, );
+            } else {
                 this.columns.push({
                     title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
                     className: css.table_col,
@@ -101,7 +101,7 @@ class QuotationPdf extends React.Component {
                     key: 'totalMoney',
                     render: (text) => <span className={css.table_price}>${text}</span>
 
-                },);
+                }, );
             }
             this.setState({
                 quotation: res.data.result,
@@ -335,7 +335,7 @@ class QuotationPdf extends React.Component {
                     </p>
                 </div>
                 <div className={css.quo_footer}>
-                    <div>
+                    <div className={css.quo_left}>
                         <p className={css.quotation_info}>
                             <FormattedMessage id="quotation.invoice" defaultMessage="发票类型"/>：
                             {operator.invoice_type.map(item=>{
