@@ -5,7 +5,7 @@ const en_US = {
 
     "app.pull.message": "Do you want to quit the system?",
     "app.pull.modal.title": "Quit System",
-    "app.pull.out": "/Quit",
+    "app.pull.out": "Quit",
     "app.login": "Login/Registor",
     "app.message": "Message",
     "app.order": "My Order",
@@ -39,7 +39,6 @@ const en_US = {
     "app.protection": "Customer Protection",
     "app.contact": "Contact Us",
     "app.feedback": "Feedback",
-    "app.supplier": "How To Be Our Supplier",
     "app.program": "Affiliate Program",
     "app.rights": "Dbuy360@2017 all rights reserver|Chongqing CC technology co.LTD|Chongqing,ICP,130000000",
     "app.search": "please input product name or brand name",
@@ -53,6 +52,7 @@ const en_US = {
     "sort.price": "Price",
     "sort.sale": "Sales Volume",
     "home.input_warn": "please input product name or brand name",
+    "home.recent.go": "Go Cart",
     "login.remember": "remember password",
     "login.forget": "Forgot password?",
     "login.login": "Login",
@@ -451,6 +451,6 @@ const en_US = {
     "product.detail.material": "material",
     "mine.product.instruct_weight": "weight",
     "app.view.order": "view the order",
-    "app.bank.imformation":"Bank imformation"
+    "app.bank.imformation": "Bank imformation"
 }
 export default en_US

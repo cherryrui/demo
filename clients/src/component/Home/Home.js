@@ -150,6 +150,16 @@ class Main extends React.Component {
             this.handleCategory()
         }
     }
+    deleteCart = (id) => {
+        let param = [];
+        param.push(id);
+        axios.post('/cart/delete-cart.json', param).then(res => {
+            console.log(res.data);
+            if (res.data.isSucc) {
+                this.props.getShoppingCart();
+            }
+        })
+    }
 
     render() {
         console.log(this.props.cart);
@@ -161,29 +171,27 @@ class Main extends React.Component {
                 </Menu.Item>
                 {this.props.cart.result?this.props.cart.result.list.map(item => {
                     return <Menu.Item>
-                        <Link  to={"page/product-detail/" + item.productId}>
-                            <div className={css.cart_product}>
+                        <div className={css.cart_product}>
+                            <Link  to={"page/product-detail/" + item.productId}>
                                 <img src={item.coverUrl}/>
-                                <div className={css.product_info}>
-                                    <p className={css.product_name}>{item.productName}</p>
-                                    <p className={css.product_price}>
-                                        <span className={css.price}>{item.itemPrice?item.itemPrice:item.price}$</span>
-                                        <span >
-                                            x{item.productNum}
-                                            <Icon type="delete" style={{paddingLeft: "20px"}}/>
-                                        </span>
-                                    </p>
-                                </div>
-
+                            </Link>
+                            <div className={css.product_info}>
+                                <p className={css.product_name}>{item.productName}</p>
+                                <p className={css.product_price}>
+                                    <span className={css.price}>{item.itemPrice?item.itemPrice:item.price}$</span>
+                                    <span >
+                                        x{item.productNum}
+                                        <Icon onClick={this.deleteCart.bind(this,item.id)} type="delete" style={{paddingLeft: "20px"}}/>
+                                    </span>
+                                </p>
                             </div>
-
-                        </Link>
+                        </div>
                     </Menu.Item>
                 }):""}
                 <Menu.Item className={css.cart_product_footer}>
                     <Link to="page/cart" >
                         <p >
-                        <FormattedMessage  id="home.recent.go" defaultMessage=""/>
+                            <FormattedMessage  id="home.recent.go" defaultMessage=""/>
                         </p>
                     </Link>
                 </Menu.Item>
@@ -219,12 +227,12 @@ class Main extends React.Component {
                     />
                     {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight">
                         <Badge count={this.props.cart.result.allRow} overflowCount={99}>
-                            <Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
-                                <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
+                            <Button type="primary" size="large" onClick={this.handleCart}>
+                                <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<FormattedMessage id="cart.cart" defaultMessage="购物车"/>
                             </Button>
                         </Badge>
-                    </Dropdown>:<Button type="primary" size="large" icon="shopping-cart" onClick={this.handleCart}>
-                                <FormattedMessage id="cart.cart" defaultMessage="购物车"/>
+                    </Dropdown>:<Button type="primary" size="large" onClick={this.handleCart}>
+                                <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<FormattedMessage id="cart.cart" defaultMessage="购物车"/>
                             </Button>}
                 </div>
             </div>

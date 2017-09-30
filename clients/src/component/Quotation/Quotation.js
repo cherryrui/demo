@@ -462,7 +462,7 @@ class Quotation extends React.Component {
 	            		<p className={css.title}>
 	            			<FormattedMessage id="quotation.contact.tel" defaultMessage="电话"/>:
 	            		</p>
-	            		<Input size='large' value={this.state.quotation.participant.ageContactPerson} onChange={this.handleInfo.bind(this,1,"ageContactPerson")} />
+	            		<Input size='large' value={this.state.quotation.participant.ageContectPhone} onChange={this.handleInfo.bind(this,1,"ageContectPhone")} />
 	            	</p>
 	            	<p className={css.item}>
 	            		<p className={css.title}>

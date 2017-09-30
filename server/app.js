@@ -70,7 +70,7 @@ router.use('/cart', cart.routes(), cart.allowedMethods());
 router.use('/quotation', quotation.routes(), quotation.allowedMethods());
 router.use('/img', img.routes(), img.allowedMethods());
 router.use('/order', order.routes(), order.allowedMethods());
-router.use('/en', en.routes(), en.allowedMethods());
+router.use('/cn', en.routes(), en.allowedMethods());
 router.use('/', index.routes(), index.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 

@@ -22,6 +22,11 @@ import {
     FormattedMessage
 } from 'react-intl';
 
+import {
+    Anchor
+} from 'antd';
+
+const AnchorLink = Anchor.Link;
 const Search = Input.Search;
 import Slider from 'react-slick';
 import Product from '../Public/Product/Product.js';
@@ -45,7 +50,7 @@ class Main extends React.Component {
     }
 
     render() {
-        return <div className={appcss.body}>
+        return <div className={appcss.body} id="home">
             <Slider
                 dots={true}
                 autoplay
@@ -73,7 +78,7 @@ class Main extends React.Component {
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
-            <div>
+            <div id="dingzhi">
                 <div className={css.img_right}><img src='../img/post.png'/> </div>
                 <div className={css.text_left}>
                     <div className={css.info_left}>
@@ -91,8 +96,8 @@ class Main extends React.Component {
                     </div>
                 </div>
             </div>
-            <div className={css.icon}>
-                <i class="iconfont icon-pinpai"></i>
+            <div id="suppliers" className={css.icon}>
+                <i class="iconfont icon-DYC-14"></i>
             </div>
             <div className={css.title}>
                 <FormattedMessage id="app.supplier" defaultMessage="供应商"/>
@@ -125,7 +130,7 @@ class Main extends React.Component {
                    })}
                 </Slider>:""}
             </div>
-            <div className={css.brand_button}>
+            <div className={css.brand_button} >
                 <Link  to="page/brand-list">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
@@ -138,26 +143,37 @@ class Main extends React.Component {
             </div>
             {this.state.category.length>0?<Category category={this.state.category}/>:""}
             <div className={css.fixed_right}>
-                <p className={css.fixed_item}>
-                    <Icon type="to-top" />
-                </p>
-                <p className={css.fixed_item} >
-                    <i class="iconfont icon-dingzhi"></i>
-                </p>
-                <p className={css.fixed_item}>
-                    <i class="iconfont icon-DYC-7"></i>
-                </p>
-                <p className={css.fixed_item_grey}>
-                    <i class="iconfont icon-set"></i>
-                </p>
-                <p className={css.fixed_item_grey}>
-                    <i class="iconfont icon-DYC-8"></i>
-                </p>
-                <p className={css.fixed_item_grey}>
-                    <i class="iconfont icon-iconfontcolor26"></i>
-                </p>
+                <a href="#home">
+                    <p className={css.fixed_item}>
+                        <i class="iconfont icon-dingbu"></i>
+                    </p>
+                </a>
+                <a href="#dingzhi">
+                    <p className={css.fixed_item} >
+                        <i class="iconfont icon-dingzhi"></i>
+                    </p>
+                </a>
+                <a href="#suppliers">
+                    <p className={css.fixed_item}>
+                        <i class="iconfont icon-DYC-14"></i>
+                    </p>
+                </a>
+                <a href="#category_0">
+                    <p className={css.fixed_item_grey}>
+                        <i class="iconfont icon-DYC-13"></i>
+                    </p>
+                </a>
+                <a href="#category_1">
+                    <p className={css.fixed_item_grey}>
+                        <i class="iconfont icon-DYC-15"></i>
+                    </p>
+                </a>
+                <a href="#category_2">
+                    <p className={css.fixed_item_grey}>
+                        <i class="iconfont icon-DYC-11"></i>
+                    </p>
+                </a>
             </div>
-
         </div>
     }
 }
@@ -180,8 +196,8 @@ class Category extends React.Component {
 
     render() {
         return <div className={css.category}>
-        {this.props.category.map(item=>{
-            return <div className={css.category_item}>
+        {this.props.category.map((item,index)=>{
+            return <div className={css.category_item} id={"category_"+index}>
                 <div className={css.left}>
                     <div className={css.cate_title} >
                         <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>

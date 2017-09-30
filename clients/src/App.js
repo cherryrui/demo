@@ -156,9 +156,9 @@ class App extends React.Component {
 
     handleChange = () => {
         if (appLocale.locale == 'zh') {
-            window.location.href = "/en#" + this.props.location.pathname
-        } else {
             window.location.href = "/#" + this.props.location.pathname
+        } else {
+            window.location.href = "/cn#" + this.props.location.pathname
         }
     }
     state = {
@@ -209,7 +209,7 @@ class App extends React.Component {
         return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.head}>
-                            {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}</Link>
+                            {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}/</Link>
                                 <p onClick={this.showModal} className={css.item2}>
                                     <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
                                 </p>
@@ -275,7 +275,7 @@ class App extends React.Component {
                                     <p className={css.info}>
                                         <FormattedMessage id="app.feedback" defaultMessage="问题反馈"/></p>
                                     <p className={css.info}>
-                                        <FormattedMessage id="app.supplier" defaultMessage="诚征英才"/></p>
+                                        <FormattedMessage id="about.how.supplier" defaultMessage="诚征英才"/></p>
                                     <p className={css.info}>
                                         <FormattedMessage id="app.program" defaultMessage="联盟计划"/></p>
                                 </div>
