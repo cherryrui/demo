@@ -214,9 +214,11 @@ class App extends React.Component {
                                     <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
                                 </p>
                             </div>
-                            :<Link className={css.item} to="login">
-                                <FormattedMessage id="app.login" defaultMessage="登录/注册"/>
-                            </Link>}
+                            :<div><Link className={css.item} to="login">
+                                <FormattedMessage id="login.login" defaultMessage="登录"/>
+                            </Link><Link style={{color:"white"}} to="register">
+                                <FormattedMessage id="login.registors" defaultMessage="注册"/>
+                            </Link></div>}
                             {this.state.user?<Dropdown overlay={order_menu}>
                                 <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
                             </Dropdown>:""}

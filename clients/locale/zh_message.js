@@ -57,6 +57,7 @@ const zh_CN = {
     "login.forget": "忘记密码？",
     "login.login": "登录",
     "login.registor": "注册",
+    "login.registors": "/注册",
     "login.login.success": "登录成功",
     "login.login.fail": "登录失败，{reason}",
     "request.fail": "请求失败,{reason}",
