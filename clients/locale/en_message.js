@@ -357,7 +357,7 @@ const en_US = {
     "register.register.title": "注册用户",
     "register.register.Enterpriseuser": "企业用户",
     "register.register.Personaluser": "个人用户",
-    "register.register.name": "用户名",
+    "register.register.name": "name",
     "register.register.verification": "验证码",
     "register.pwd": "password",
     "register.re.pwd": "confirm password",

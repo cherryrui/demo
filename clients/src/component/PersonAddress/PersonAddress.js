@@ -177,6 +177,14 @@ class PersonAddress extends React.Component {
                 formatMessage
             }
         } = this.props;
+        const prefixSelector = getFieldDecorator('prefix', {
+            initialValue: '86',
+        })(
+            <Select style={{ width: 60 }}>
+                <Option value="86">+86</Option>
+                <Option value="87">+87</Option>
+            </Select>
+        );
         return <div>
             <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person.address" defaultMessage="分类"/>
@@ -260,7 +268,7 @@ class PersonAddress extends React.Component {
                             initialValue: this.state.address.tel,
                             rules: [{ required: true, message: formatMessage({id: 'cart.address.tel'}) }],
                         })(
-                            <Input className={css.address_input}/>
+                            <Input  addonBefore={prefixSelector} className={css.address_input_tel}/>
                         )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout} style={{ marginBottom:8}}>

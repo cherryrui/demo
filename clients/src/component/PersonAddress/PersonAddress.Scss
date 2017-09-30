@@ -84,17 +84,28 @@ align-items: center;
 .address_form{
   padding: 8px !important;
 
-          .address_input{
+  .address_input{
 
             width: 400px;
             height: 36px;
             border-radius: 2px !important;
-           margin-left: 2px;
+
              input{
               border-radius: 2px !important;
               height: 36px;
              }
           
+  }
+  .address_input_tel{
+    width: 340px !important;
+    border-radius: 2px !important;
+    height:36px;
+    input{
+      border-radius: 2px !important;
+      height: 36px;
+
+    }
+
   }
   .address_checkbox{
     height: 20px !important;
