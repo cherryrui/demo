@@ -167,7 +167,7 @@ class QuotationPdf extends React.Component {
                 })
             },
             background: '#FFFFFF',
-            allowTaint: true,
+            useCORS: true,
         });
     }
 
