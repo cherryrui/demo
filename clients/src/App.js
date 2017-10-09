@@ -20,30 +20,10 @@ import en_message from '../locale/en_message';
 import Main from './component/Main/Main.js';
 import Home from './component/Home/Home.js';
 
-import PostWant from './component/PostWant/PostWant.js';
-import Cart from './component/Cart/Cart.js';
-import Quotation from './component/Quotation/Quotation.js';
 import PersonCenter from './component/PersonCenter/PersonCenter.js';
-import About from './component/About/About.js';
-import Message from './component/Message/Message.js';
-import SystemMessage from './component/SystemMessage/SystemMessage.js';
-import RePassword from './component/RePassword/RePassword.js';
-import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
-import OrderList from './component/OrderList/OrderList.js';
-
-import QuotationList from './component/QuotationList/QuotationList.js';
-import ProductEditor from './component/ProductEditor/ProductEditor.js';
-import AgentProduct from './component/AgentProduct/AgentProduct.js';
-import OrderDetails from './component/OrderDetails/OrderDetails.js';
-import PersonAddress from './component/PersonAddress/PersonAddress.js';
-import PersonData from './component/PersonData/PersonData.js';
-import Agent from './component/Agent/Agent.js';
-import SuccessfulApplication from './component/SuccessfulApplication/SuccessfulApplication.js';
-import Supplier from './component/Supplier/Supplier.js';
-import Certification from './component/Certification/Certification.js';
-import News from './component/News/News.js';
-import QuotationPdf from './component/QuotationPdf/QuotationPdf.js';
 import CusModal from './component/Public/CusModal/CusModal.js';
+
+
 import {
     Provider
 } from 'react-redux';
@@ -78,6 +58,16 @@ var appLocale = {
     locale: locale,
     message: locale == "zh" ? zh_message : en_message
 }
+/*const Main = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Main/Main.js').default)
+    }, 'Main')
+}
+const Home = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Home/Home.js').default)
+    }, 'Home')
+}*/
 const Login = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/Login/Login.js').default)
@@ -101,28 +91,144 @@ const ProductDetail = (location, cb) => {
 const ProductList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/ProductList/ProductList.js').default)
-    }, 'ProductList')
+    }, 'product-list')
 }
 const BrandList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/BrandList/BrandList.js').default)
-    }, 'BrandList')
+    }, 'brand-list')
 }
 const CategoryList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/CategoryList/CategoryList.js').default)
-    }, 'CategoryList')
+    }, 'category-list')
 }
 const Favorite = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/Favorite/Favorite.js').default)
-    }, 'Favorite')
+    }, 'favorite')
 }
 const BrandDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/BrandDetail/BrandDetail.js').default)
-    }, 'BrandDetail')
+    }, 'brand-detail')
 }
+const PostWant = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/PostWant/PostWant.js').default)
+    }, 'post-want')
+}
+const Cart = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Cart/Cart.js').default)
+    }, 'cart')
+}
+const Quotation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Quotation/Quotation.js').default)
+    }, 'quotation')
+}
+/*const PersonCenter = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/PersonCenter/PersonCenter.js').default)
+    }, 'PersonCenter')
+}*/
+const About = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/About/About.js').default)
+    }, 'about')
+}
+const Message = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Message/Message.js').default)
+    }, 'message')
+}
+const SystemMessage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/SystemMessage/SystemMessage.js').default)
+    }, 'system-message')
+}
+const RePassword = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/RePassword/RePassword.js').default)
+    }, 'reset-password')
+}
+
+const RegisterComplete = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/RegisterComplete/RegisterComplete.js').default)
+    }, 'register-complete')
+}
+const OrderList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/OrderList/OrderList.js').default)
+    }, 'order-list')
+}
+const QuotationList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/QuotationList/QuotationList.js').default)
+    }, 'quotation-list')
+}
+const ProductEditor = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/ProductEditor/ProductEditor.js').default)
+    }, 'product-editor')
+}
+const AgentProduct = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/AgentProduct/AgentProduct.js').default)
+    }, 'agent-product')
+}
+const OrderDetails = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/OrderDetails/OrderDetails.js').default)
+    }, 'order-details')
+}
+const PersonAddress = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/PersonAddress/PersonAddress.js').default)
+    }, 'person-address')
+}
+const PersonData = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/PersonData/PersonData.js').default)
+    }, 'person-data')
+}
+const Agent = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Agent/Agent.js').default)
+    }, 'agent')
+}
+const SuccessfulApplication = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/SuccessfulApplication/SuccessfulApplication.js').default)
+    }, 'successful-application')
+}
+const Supplier = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Supplier/Supplier.js').default)
+    }, 'supplier')
+}
+const Certification = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Certification/Certification.js').default)
+    }, 'certification')
+}
+const News = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/News/News.js').default)
+    }, 'news')
+}
+const QuotationPdf = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/QuotationPdf/QuotationPdf.js').default)
+    }, 'quotation-pdf')
+}
+/*const CusModal = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Public/CusModal/CusModal.js').default)
+    }, 'CusModal')
+}*/
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -357,35 +463,35 @@ ReactDOM.render(
                             <Route path="product-list/:info(/:name)" getComponent={ProductList}/>
                             <Route path="product-detail/:id(/:name)" getComponent={ProductDetail}/>
                             <Route path="brand-detail/:id" getComponent={BrandDetail}/>
-                            <Route path="post-want" component={PostWant}/>
-                            <Route path="cart(/:step)" component={Cart}/>
-                            <Route path="quotation(/:id)" component={Quotation}/>
-                            <Route path="quotation-pdf/:id" component={QuotationPdf}/>
-                            <Route path="about" component={About}>
+                            <Route path="post-want" getComponent={PostWant}/>
+                            <Route path="cart(/:step)" getComponent={Cart}/>
+                            <Route path="quotation(/:id)" getComponent={Quotation}/>
+                            <Route path="quotation-pdf/:id" getComponent={QuotationPdf}/>
+                            <Route path="about" getComponent={About}>
                             </Route>
-                            <Route path="news" component={News}/>
+                            <Route path="news" getComponent={News}/>
                             <Route path="mine" getComponent={Mine}>
                                 <IndexRoute component={PersonCenter}/>
-                                <Route path="message" component={Message}/>
-                                <Route path="system-message" component={SystemMessage}/>
-                                <Route path="order-list" component={OrderList}/>
-                                <Route path="order-details" component={OrderDetails}/>
-                                <Route path="favorite/:type" component={Favorite}/>
-                                <Route path="quotation-list" component={QuotationList}/>
-                                <Route path="product-editor" component={ProductEditor}/>
-                                <Route path="agent-product" component={AgentProduct}/>
-                                <Route path="person-address" component={PersonAddress}/>
-                                <Route path="person-data" component={PersonData}/>
-                                <Route path="agent" component={Agent}/>
-                                <Route path="successful-application/:type" component={SuccessfulApplication}/>
-                                <Route path="supplier" component={Supplier}/>
-                                <Route path="certification" component={Certification}/>
+                                <Route path="message" getComponent={Message}/>
+                                <Route path="system-message" getComponent={SystemMessage}/>
+                                <Route path="order-list" getComponent={OrderList}/>
+                                <Route path="order-details" getComponent={OrderDetails}/>
+                                <Route path="favorite/:type" getComponent={Favorite}/>
+                                <Route path="quotation-list" getComponent={QuotationList}/>
+                                <Route path="product-editor" getComponent={ProductEditor}/>
+                                <Route path="agent-product" getComponent={AgentProduct}/>
+                                <Route path="person-address" getComponent={PersonAddress}/>
+                                <Route path="person-data" getComponent={PersonData}/>
+                                <Route path="agent" getComponent={Agent}/>
+                                <Route path="successful-application/:type" getComponent={SuccessfulApplication}/>
+                                <Route path="supplier" getComponent={Supplier}/>
+                                <Route path="certification" getComponent={Certification}/>
                             </Route>
                         </Route>
                         <Route path="login" getComponent={Login}/>
                         <Route path="register" getComponent={Register}/>
-                        <Route path="reset-password" component={RePassword}/>
-                        <Route path="register-complete" component={RegisterComplete}/>
+                        <Route path="reset-password" getComponent={RePassword}/>
+                        <Route path="register-complete" getComponent={RegisterComplete}/>
                     </Route>
                 </Router>
             </Provider>
