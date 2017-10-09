@@ -7,9 +7,6 @@ import {
     VictoryChart,
     VictoryArea,
     VictoryTheme,
-    VictoryAxis,
-    VictoryBar,
-    VictoryStack
 } from 'victory';
 import {
     Link

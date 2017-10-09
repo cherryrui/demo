@@ -24,7 +24,7 @@ module.exports = {
     context: __dirname + "/",
     devtool: debug ? 'source-map' : null,
     entry: {
-        store: ['babel-polyfill', path.join(__dirname, "./src/App.js")],
+        store: path.join(__dirname, "./src/App.js"),
         common: [
             'react', 'react-dom', 'react-router', 'axios'
         ],
