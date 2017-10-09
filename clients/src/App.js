@@ -17,28 +17,20 @@ import zh from 'react-intl/locale-data/zh.js';
 import enUS from 'antd/lib/locale-provider/en_US.js';
 import zh_message from '../locale/zh_message';
 import en_message from '../locale/en_message';
-
 import Main from './component/Main/Main.js';
-import Login from './component/Login/Login.js';
-import CategoryList from './component/CategoryList/CategoryList.js';
-import BrandList from './component/BrandList/BrandList.js';
-import ProductList from './component/ProductList/ProductList.js';
-import ProductDetail from './component/ProductDetail/ProductDetail.js';
-import BrandDetail from './component/BrandDetail/BrandDetail.js';
-import PostWant from './component/PostWant/PostWant.js';
 import Home from './component/Home/Home.js';
+
+import PostWant from './component/PostWant/PostWant.js';
 import Cart from './component/Cart/Cart.js';
 import Quotation from './component/Quotation/Quotation.js';
-import Mine from './component/Mine/Mine.js';
 import PersonCenter from './component/PersonCenter/PersonCenter.js';
 import About from './component/About/About.js';
 import Message from './component/Message/Message.js';
 import SystemMessage from './component/SystemMessage/SystemMessage.js';
-import Register from './component/Register/Register.js';
 import RePassword from './component/RePassword/RePassword.js';
 import RegisterComplete from './component/RegisterComplete/RegisterComplete.js';
 import OrderList from './component/OrderList/OrderList.js';
-import Favorite from './component/Favorite/Favorite.js';
+
 import QuotationList from './component/QuotationList/QuotationList.js';
 import ProductEditor from './component/ProductEditor/ProductEditor.js';
 import AgentProduct from './component/AgentProduct/AgentProduct.js';
@@ -85,6 +77,51 @@ var appLocale = {
     antd_locale: locale == "zh" ? null : enUS,
     locale: locale,
     message: locale == "zh" ? zh_message : en_message
+}
+const Login = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Login/Login.js').default)
+    }, 'login')
+}
+const Register = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Register/Register.js').default)
+    }, 'register')
+}
+const Mine = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Mine/Mine.js').default)
+    }, 'mine')
+}
+const ProductDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/ProductDetail/ProductDetail.js').default)
+    }, 'product-detail')
+}
+const ProductList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/ProductList/ProductList.js').default)
+    }, 'ProductList')
+}
+const BrandList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/BrandList/BrandList.js').default)
+    }, 'BrandList')
+}
+const CategoryList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/CategoryList/CategoryList.js').default)
+    }, 'CategoryList')
+}
+const Favorite = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Favorite/Favorite.js').default)
+    }, 'Favorite')
+}
+const BrandDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/BrandDetail/BrandDetail.js').default)
+    }, 'BrandDetail')
 }
 class App extends React.Component {
     constructor(props) {
@@ -315,11 +352,11 @@ ReactDOM.render(
                         <IndexRedirect to="/page" />
                         <Route path="page" component={Home}>
                             <IndexRoute component={Main}/>
-                            <Route path="category-list/:id/:name" component={CategoryList}/>
+                            <Route path="category-list/:id/:name" getComponent={CategoryList}/>
                             <Route path="brand-list" component={BrandList}/>
-                            <Route path="product-list/:info(/:name)" component={ProductList}/>
-                            <Route path="product-detail/:id(/:name)" component={ProductDetail}/>
-                            <Route path="brand-detail/:id" component={BrandDetail}/>
+                            <Route path="product-list/:info(/:name)" getComponent={ProductList}/>
+                            <Route path="product-detail/:id(/:name)" getComponent={ProductDetail}/>
+                            <Route path="brand-detail/:id" getComponent={BrandDetail}/>
                             <Route path="post-want" component={PostWant}/>
                             <Route path="cart(/:step)" component={Cart}/>
                             <Route path="quotation(/:id)" component={Quotation}/>
@@ -327,7 +364,7 @@ ReactDOM.render(
                             <Route path="about" component={About}>
                             </Route>
                             <Route path="news" component={News}/>
-                            <Route path="mine" component={Mine}>
+                            <Route path="mine" getComponent={Mine}>
                                 <IndexRoute component={PersonCenter}/>
                                 <Route path="message" component={Message}/>
                                 <Route path="system-message" component={SystemMessage}/>
@@ -345,8 +382,8 @@ ReactDOM.render(
                                 <Route path="certification" component={Certification}/>
                             </Route>
                         </Route>
-                        <Route path="login" component={Login}/>
-                        <Route path="register" component={Register}/>
+                        <Route path="login" getComponent={Login}/>
+                        <Route path="register" getComponent={Register}/>
                         <Route path="reset-password" component={RePassword}/>
                         <Route path="register-complete" component={RegisterComplete}/>
                     </Route>

@@ -37,7 +37,7 @@ import LoginModal from '../Public/LoginModal/LoginModal.js';
     cart: state.cart
 }), cartAction)
 
-class Main extends React.Component {
+class Home extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
         getShoppingCart: React.PropTypes.func.isRequired
@@ -290,4 +290,5 @@ class Main extends React.Component {
 
     }
 }
-export default injectIntl(Main);
+Home = injectIntl(Home);
+export default Home;

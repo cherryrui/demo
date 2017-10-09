@@ -24,10 +24,10 @@ module.exports = {
     context: __dirname + "/",
     devtool: debug ? 'source-map' : null,
     entry: {
-        store: path.join(__dirname, "./src/App.js"),
+        store: ['babel-polyfill', path.join(__dirname, "./src/App.js")],
         common: [
             'react', 'react-dom', 'react-router', 'axios'
-        ]
+        ],
     },
     resolve: {
         alias: {
@@ -86,7 +86,9 @@ module.exports = {
     postcss: [autoprefixer],
     output: {
         path: __dirname + "/../server/public/js",
-        filename: "[name].js"
+        filename: "[name].js",
+        publicPath: "/js/",
+        chunkFilename: '[name].js'
     },
     plugins: debug ? [
         new ExtractTextPlugin("../css/[name].css", {
