@@ -450,7 +450,7 @@ ReactDOM.render(
                         <Route path="page" component={Home}>
                             <IndexRoute component={Main}/>
                             <Route path="category-list/:id/:name" getComponent={CategoryList}/>
-                            <Route path="brand-list" component={BrandList}/>
+                            <Route path="brand-list" getComponent={BrandList}/>
                             <Route path="product-list/:info(/:name)" getComponent={ProductList}/>
                             <Route path="product-detail/:id(/:name)" getComponent={ProductDetail}/>
                             <Route path="brand-detail/:id" getComponent={BrandDetail}/>
