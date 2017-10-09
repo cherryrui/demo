@@ -26,7 +26,7 @@ module.exports = {
     entry: {
         store: path.join(__dirname, "./src/App.js"),
         common: [
-            'react', 'react-dom', 'react-router', 'axios'
+            'react', 'react-dom', 'react-router', 'axios', 'react-redux'
         ],
     },
     resolve: {

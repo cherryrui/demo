@@ -58,16 +58,6 @@ var appLocale = {
     locale: locale,
     message: locale == "zh" ? zh_message : en_message
 }
-/*const Main = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./component/Main/Main.js').default)
-    }, 'Main')
-}
-const Home = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./component/Home/Home.js').default)
-    }, 'Home')
-}*/
 const Login = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/Login/Login.js').default)

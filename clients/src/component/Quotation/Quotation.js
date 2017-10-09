@@ -141,7 +141,7 @@ class Quotation extends React.Component {
 			let data = this.state.quotation;
 			data.products = quotation.products;
 			data.totalSalePrice = quotation.sale_price.toFixed(2);
-			data.profits = quotation.profit;
+			data.profits = quotation.profit.toFixed(2);
 			data.totalQuantity = quotation.sum_num;
 			data.participant = {
 				ageCompanyName: this.user.companyName,
