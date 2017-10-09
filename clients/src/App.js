@@ -86,22 +86,22 @@ const Mine = (location, cb) => {
 const ProductDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/ProductDetail/ProductDetail.js').default)
-    }, 'product-detail')
+    }, 'productDetail')
 }
 const ProductList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/ProductList/ProductList.js').default)
-    }, 'product-list')
+    }, 'productList')
 }
 const BrandList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/BrandList/BrandList.js').default)
-    }, 'brand-list')
+    }, 'brandList')
 }
 const CategoryList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/CategoryList/CategoryList.js').default)
-    }, 'category-list')
+    }, 'categoryList')
 }
 const Favorite = (location, cb) => {
     require.ensure([], require => {
@@ -111,12 +111,12 @@ const Favorite = (location, cb) => {
 const BrandDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/BrandDetail/BrandDetail.js').default)
-    }, 'brand-detail')
+    }, 'brandDetail')
 }
 const PostWant = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/PostWant/PostWant.js').default)
-    }, 'post-want')
+    }, 'postWant')
 }
 const Cart = (location, cb) => {
     require.ensure([], require => {
@@ -128,11 +128,6 @@ const Quotation = (location, cb) => {
         cb(null, require('./component/Quotation/Quotation.js').default)
     }, 'quotation')
 }
-/*const PersonCenter = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./component/PersonCenter/PersonCenter.js').default)
-    }, 'PersonCenter')
-}*/
 const About = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/About/About.js').default)
@@ -146,53 +141,53 @@ const Message = (location, cb) => {
 const SystemMessage = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/SystemMessage/SystemMessage.js').default)
-    }, 'system-message')
+    }, 'systemMessage')
 }
 const RePassword = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/RePassword/RePassword.js').default)
-    }, 'reset-password')
+    }, 'resetPassword')
 }
 
 const RegisterComplete = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/RegisterComplete/RegisterComplete.js').default)
-    }, 'register-complete')
+    }, 'registerComplete')
 }
 const OrderList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/OrderList/OrderList.js').default)
-    }, 'order-list')
+    }, 'orderList')
 }
 const QuotationList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/QuotationList/QuotationList.js').default)
-    }, 'quotation-list')
+    }, 'quotationList')
 }
 const ProductEditor = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/ProductEditor/ProductEditor.js').default)
-    }, 'product-editor')
+    }, 'productEditor')
 }
 const AgentProduct = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/AgentProduct/AgentProduct.js').default)
-    }, 'agent-product')
+    }, 'agentProduct')
 }
 const OrderDetails = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/OrderDetails/OrderDetails.js').default)
-    }, 'order-details')
+    }, 'orderDetails')
 }
 const PersonAddress = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/PersonAddress/PersonAddress.js').default)
-    }, 'person-address')
+    }, 'personAddress')
 }
 const PersonData = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/PersonData/PersonData.js').default)
-    }, 'person-data')
+    }, 'personData')
 }
 const Agent = (location, cb) => {
     require.ensure([], require => {
@@ -222,13 +217,9 @@ const News = (location, cb) => {
 const QuotationPdf = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/QuotationPdf/QuotationPdf.js').default)
-    }, 'quotation-pdf')
+    }, 'quotationPdf')
 }
-/*const CusModal = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./component/Public/CusModal/CusModal.js').default)
-    }, 'CusModal')
-}*/
+
 class App extends React.Component {
     constructor(props) {
         super(props);

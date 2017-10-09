@@ -3,6 +3,7 @@ const app = new Koa();
 const router = require('koa-router')();
 const views = require('koa-views');
 const co = require('co');
+var cors = require('koa-cors');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
@@ -26,11 +27,11 @@ const order = require('./routes/order.js');
 
 // error handler
 onerror(app)
-
-// middlewares
+	// middlewares
 app.use(bodyparser({
 	enableTypes: ['json', 'form', 'text']
 }))
+
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
