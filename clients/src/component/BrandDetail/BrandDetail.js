@@ -117,7 +117,7 @@ class BrandDetail extends React.Component {
                 <div className={css.img}>
             		<img src={this.state.brand.img}/>
             		<p className={css.star}>
-                		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>
+                		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
                 		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.rating} disabled />
                 		<span>{this.state.brand.rating}</span>
            			</p>

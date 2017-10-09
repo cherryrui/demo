@@ -11,22 +11,25 @@
   margin-top: 20px;
   flex-wrap: wrap;
   .category_item{
-    width: 27%;
+    width: 300px;
     background: $color-grey;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 18px;
   }
   .title{
-    height: 150px;
+    height: 140px;
     color: white;
     text-align: center;
     padding: 60px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bolder;
     background-repeat: round !important;
+    margin-bottom: 18px;
   }
   .item{
-    padding: 10px 20px;
+    margin: 0px 0px 18px 20px;
+    height: 14px;
+    line-height: 14px;
     a{
       color: $font-color;
       font-size: 14px;

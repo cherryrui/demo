@@ -130,7 +130,7 @@ class BrandList extends React.Component {
     render() {
         return <div ref={(brand_list)=>this.brand_list=brand_list} className={appcss.body}>
             <div className={appcss.navigate}>
-                <Breadcrumb separator=">>">
+                <Breadcrumb separator=">>" style={{marginBottom: "10px"}}>
                     <Breadcrumb.Item >
                         <Link to="/main">
                             <FormattedMessage id="app.category" defaultMessage="分类"/>
@@ -170,8 +170,8 @@ class BrandList extends React.Component {
                 </div>
             </div>
             <div className={css.brand}>
-            {this.state.brand.map(item=>{
-                return <Brand brand={item} showStar className={css.item}/>
+            {this.state.brand.map((item,index)=>{
+                return <Brand brand={item} showStar className={(index+1)%6==0?css.right_item:css.item}/>
             })}
             </div>
             <div className={css.footer}>

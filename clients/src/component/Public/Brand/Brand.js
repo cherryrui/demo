@@ -24,7 +24,7 @@ class Brand extends React.Component {
     }
 
     render() {
-        return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{padding: "10px"}}>
+        return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{padding: "0"}}>
             <div className={css.icon}>
                 {this.props.check ? <Checkbox checked={this.props.brand.checked ? true : false} onChange={this.onChange}>
                 </Checkbox> : ""}
@@ -33,12 +33,12 @@ class Brand extends React.Component {
             </div>
             <Link to={"page/brand-detail/" + this.props.brand.id}>
                 <div className={css.custom_image}>
-                    <img alt="example" width="100%" src={this.props.brand.img} />
+                    <img alt="example" src={this.props.brand.img} />
                 </div>
 
                 <p className={css.name}>{this.props.brand.name}</p>
                 {this.props.showStar ? <p className={css.foot}>
-                    <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>
+                    <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
                     <Rate className={css.rating} allowHalf defaultValue={this.props.brand.rating} disabled />
                     <span>{this.props.brand.rating}</span>
                 </p> : ""}

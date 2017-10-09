@@ -214,7 +214,7 @@ class Agent extends React.Component {
                   required: true, message: formatMessage({id: 'agent.enter.company'}),
               }],
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                     </FormItem>
                         <FormItem
@@ -223,7 +223,7 @@ class Agent extends React.Component {
                         >
           {getFieldDecorator('radio-group')(
               <RadioGroup>
-                  <Radio value="a">{formatMessage({id: 'agent.company'})}</Radio>
+                  <Radio value="a"  className={css.agent_checkbox}>{formatMessage({id: 'agent.company'})}</Radio>
                   <Radio value="b">{formatMessage({id: 'agent.store'})}</Radio>
               </RadioGroup>
           )}
@@ -235,7 +235,7 @@ class Agent extends React.Component {
                         >
           {getFieldDecorator('person', {
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                         </FormItem>
                         <FormItem
@@ -248,7 +248,7 @@ class Agent extends React.Component {
                   required: true, message: formatMessage({id: 'register.email.warn'}),
               }],
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                         </FormItem>
                         <FormItem
@@ -259,7 +259,7 @@ class Agent extends React.Component {
               rules: [{ required: true, message: formatMessage({id: 'register.tel.warn'}),
               }],
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                         </FormItem>
                         <FormItem
@@ -271,7 +271,7 @@ class Agent extends React.Component {
               rules: [{ type: 'array', required: true, message: 'agent.select.region'
               }],
           })(
-              <Cascader options={residences} />
+              <Cascader options={residences} className={css.agent_input}/>
           )}
                         </FormItem>
                         <FormItem
@@ -283,7 +283,7 @@ class Agent extends React.Component {
               rules: [{ required: true, message: formatMessage({id: 'agent.enter.detailed_address'}),
               }],
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                         </FormItem>
 
@@ -293,11 +293,11 @@ class Agent extends React.Component {
                         >
           {getFieldDecorator('website', {
           })(
-              <AutoComplete
+              <AutoComplete className={css.agent_input}
                   dataSource={websiteOptions}
                   onChange={this.handleWebsiteChange}
               >
-                  <Input />
+                  <Input/>
               </AutoComplete>
           )}
                         </FormItem>
@@ -360,7 +360,7 @@ class Agent extends React.Component {
               rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal'}),
               }],
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                         </FormItem>
                         <FormItem
@@ -372,7 +372,7 @@ class Agent extends React.Component {
               rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal_no'}),
               }],
           })(
-              <Input />
+              <Input className={css.agent_input}/>
           )}
                         </FormItem>
                         <FormItem
@@ -383,10 +383,10 @@ class Agent extends React.Component {
               valuePropName: 'checked',
           })(
               <RadioGroup>
-              <Checkbox>{formatMessage({id: 'cart.pay.letter'})}</Checkbox>
-              <Checkbox>{formatMessage({id: 'cart.pay.check'})} </Checkbox>
-                  <Checkbox>{formatMessage({id: 'cart.pay.cash'})} </Checkbox>
-                  <Checkbox>{formatMessage({id: 'cart.pay.blank'})} </Checkbox>
+                      <Checkbox  className={css.agent_checkbox}>{formatMessage({id: 'cart.pay.letter'})}</Checkbox>
+                      <Checkbox className={css.agent_checkbox}>{formatMessage({id: 'cart.pay.check'})} </Checkbox>
+                      <Checkbox className={css.agent_checkbox}>{formatMessage({id: 'cart.pay.cash'})} </Checkbox>
+                      <Checkbox>{formatMessage({id: 'cart.pay.blank'})} </Checkbox>
               </RadioGroup>
           )}
                         </FormItem>

@@ -176,7 +176,7 @@ class Supplier extends React.Component {
           offset: 0,
         },
         sm: {
-          span: 14,
+          span: 18,
           offset: 6,
         },
       },
@@ -246,7 +246,7 @@ class Supplier extends React.Component {
 
                   }],
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem
@@ -260,7 +260,7 @@ class Supplier extends React.Component {
                       onChange={this.handleWebsiteChange}
 
                   >
-                      <Input />
+                      <Input className={css.supplier_input}/>
                   </AutoComplete>
               )}
                         </FormItem>
@@ -271,7 +271,7 @@ class Supplier extends React.Component {
                         >
               {getFieldDecorator('person', {
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem
@@ -286,7 +286,7 @@ class Supplier extends React.Component {
                       required: true, message: formatMessage({id: 'register.email.warn'}),
                   }],
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem
@@ -297,7 +297,7 @@ class Supplier extends React.Component {
                   rules: [{ required: true, message: formatMessage({id: 'register.tel.warn'}),
                   }],
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                         </FormItem>
 
@@ -310,7 +310,7 @@ class Supplier extends React.Component {
                   rules: [{ type: 'array', required: true, message: 'agent.select.region'
                   }],
               })(
-                  <Cascader options={residences} />
+                  <Cascader options={residences} className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem
@@ -322,7 +322,7 @@ class Supplier extends React.Component {
                   rules: [{ required: true, message: formatMessage({id: 'agent.enter.detailed_address'}),
                   }],
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                     </FormItem>
                         <FormItem
@@ -333,7 +333,7 @@ class Supplier extends React.Component {
               {getFieldDecorator('products', {
 
               })(
-                  <TextArea rows={4} />
+                  <TextArea rows={4} className={css.supplier_textarea}/>
               )}
                         </FormItem>
 
@@ -400,7 +400,7 @@ class Supplier extends React.Component {
 
                   }],
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem
@@ -413,7 +413,7 @@ class Supplier extends React.Component {
 
                   }],
               })(
-                  <Input />
+                  <Input className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem
@@ -424,9 +424,9 @@ class Supplier extends React.Component {
                   valuePropName: 'checked',
               })(
                   <RadioGroup>
-                      <Checkbox>{formatMessage({id: 'cart.pay.letter'})}</Checkbox>
-                      <Checkbox>{formatMessage({id: 'cart.pay.check'})} </Checkbox>
-                      <Checkbox>{formatMessage({id: 'cart.pay.cash'})} </Checkbox>
+                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'cart.pay.letter'})}</Checkbox>
+                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'cart.pay.check'})} </Checkbox>
+                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'cart.pay.cash'})} </Checkbox>
                       <Checkbox>{formatMessage({id: 'cart.pay.blank'})} </Checkbox>
                   </RadioGroup>
               )}
@@ -439,9 +439,9 @@ class Supplier extends React.Component {
                   valuePropName: 'checked',
               })(
                   <RadioGroup>
-                      <Checkbox>{formatMessage({id: 'supplier.offshore'})}</Checkbox>
-                      <Checkbox>{formatMessage({id: 'supplier.port'})} </Checkbox>
-                      <Checkbox>{formatMessage({id: 'supplier.warehouse.China'})} </Checkbox>
+                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.offshore'})}</Checkbox>
+                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.port'})} </Checkbox>
+                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.warehouse.China'})} </Checkbox>
                       <Checkbox>{formatMessage({id: 'supplier.warehouses.abroad'})} </Checkbox>
                   </RadioGroup>
               )}

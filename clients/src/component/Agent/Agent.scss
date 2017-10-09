@@ -22,6 +22,7 @@
   margin-right: 20px;
   width: 150px;
   height: 50px;
+  border-radius: 2px;
 
 }
 .retrun:hover{
@@ -29,7 +30,7 @@
   border-color: $button-green-active;
 }
 .submit{
-
+  border-radius: 2px;
   width: 150px;
   height: 50px;
 }
@@ -60,4 +61,16 @@
     text-align: center;
   }
 }
+}
+.agent_input{
+   width: 400px  !important;
+   border-radius: 2px !important;
+  input{
+    width: 400px !important;
+    border-radius: 2px !important;
+
+  }
+ }
+.agent_checkbox{
+  margin-right: 20px !important;
 }

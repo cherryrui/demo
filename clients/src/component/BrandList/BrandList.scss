@@ -24,9 +24,18 @@
 .brand{
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
   .item{
-    width: 16%;
-    margin: 20px 0 20px 0.66%;
+    height: 240px;
+    width: 150px;
+    margin-bottom: 35px;
+    margin-right: 40px;
+  }
+  .right_item{
+    height: 240px;
+    width: 150px;
+    margin-bottom: 35px;
+    margin-right: none !important;
   }
 }
 .footer{

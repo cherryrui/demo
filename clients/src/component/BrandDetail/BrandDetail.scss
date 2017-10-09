@@ -9,17 +9,22 @@
 		flex-shrink: 0;
 		padding-right: 30px;
 		img{
-			width: 100%;
+              width: 120px !important;
+          height: 120px !important;
 		}
 	}
 	.star{
-		padding-top: 10px;
+
 	    text-align: center;
 	    .rating{
 	      font-size: 12px;
+          padding-left: 2px;
 	      li{
 	        cursor: default;
 	        margin-bottom: 5px;
+            font-size: 8px;
+            margin-right: 2px;
+            color: $border-color;
 	      }
 	    }
 	}
@@ -57,7 +62,7 @@
     display: flex;
   }
   .item{
-    padding: 0 20px;
+    padding: 0 15px;
   }
   .right{
     display: flex;
