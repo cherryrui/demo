@@ -50,6 +50,17 @@ router
 		})
 		ctx.body = result;
 	})
+	.post('/pay-order.json',async(ctx) =>{
+		let result = null;
+		const param = ctx.request.body;
+		//console.log(param);
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		await axios.post(url+'/auth/order/payOrder',querystring.stringify(param)).then(res =>{
+			//console.log('pay-order:',res.data);
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 
 
 module.exports = router;
