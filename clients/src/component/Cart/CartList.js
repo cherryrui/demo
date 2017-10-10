@@ -53,7 +53,7 @@ class CartList extends React.Component {
         this.formatMessage = this.props.intl.formatMessage;
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-            width: "415px",
+            width: "350px",
             className: css.table_col,
             render: (record) => <Link to={"page/product-detail/"+record.productId} className={css.table_product}>
                 <img src={record.coverUrl}/>

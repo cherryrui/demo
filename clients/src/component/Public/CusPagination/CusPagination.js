@@ -7,6 +7,10 @@ import {
 } from 'antd';
 
 class CusPagination extends React.Component {
+    constructor(props){
+        super(props);
+        this.options = props.pageSizeOptions?props.pageSizeOptions: operator.pageSizeOptions;
+    }
 	onShowSizeChange = (current, pageSize) => {
 		this.props.onShowSizeChange ? this.props.onShowSizeChange(current, pageSize) : "";
 	}
@@ -22,8 +26,8 @@ class CusPagination extends React.Component {
                         total={this.props.total}
                         onShowSizeChange={this.onShowSizeChange}
                         onChange={this.handleChange} 
-                        defaultPageSize={Number(operator.pageSizeOptions[0])}
-                        pageSizeOptions={operator.pageSizeOptions}
+                        defaultPageSize={Number(this.options[0])}
+                        pageSizeOptions={this.options}
                         />
                 </div>
 	}

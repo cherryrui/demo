@@ -27,12 +27,14 @@
       flex-direction: column;
       justify-content: space-between;
       text-align: left;
+      width: 250px;
       .name{
-      	overflow: hidden;
+      overflow: hidden;
     	display: -webkit-box;
     	-webkit-line-clamp: 1;
     	-webkit-box-orient: vertical;
    	 	word-break: break-all;
+      text-overflow: ellipsis;
     	height: 18px;
       }
 	}

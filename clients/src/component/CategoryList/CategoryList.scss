@@ -7,14 +7,18 @@
 }
 .category{
   display: flex;
-  justify-content: space-between;
   margin-top: 20px;
   flex-wrap: wrap;
   .category_item{
     width: 300px;
+    height: 580px;
     background: $color-grey;
     margin-bottom: 40px;
     padding-bottom: 18px;
+  }
+  .category_item_right{
+    @extend .category_item;
+    margin-right: 100px;
   }
   .title{
     height: 140px;
@@ -24,15 +28,23 @@
     font-size: 20px;
     font-weight: bolder;
     background-repeat: round !important;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
   }
   .item{
-    margin: 0px 0px 18px 20px;
-    height: 14px;
+    height: 30px;
+    padding: 0px 20px;
     line-height: 14px;
     a{
       color: $font-color;
       font-size: 14px;
+      height: 30px;
+      /* overflow: hidden; */
+      line-height: 30px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
     }
     a:hover{
       color: $theme-color;

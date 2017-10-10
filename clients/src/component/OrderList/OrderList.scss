@@ -4,39 +4,27 @@
 }
 .card_container{
   border: 1px solid $border-color;
-  div[class="ant-tabs-nav-container"]{
-    height: inherit!important;
-  }
-  div[class="ant-tabs-bar"]{
-    background: $color-light-blue;
-  }
-  div[class=" ant-tabs-tab"]{
-    border: none!important;
-    padding: 10px 20px !important;
-    color: $font-color !important;
-    background: $color-light-blue !important;
-  }
-  div[class="ant-tabs-tab-active ant-tabs-tab"]{
-    border-radius: 0 !important;
-      border-top: 3px solid $theme-color !important;
-      color: $font-color !important;
-      padding: 10px 20px 12px !important;
-  }
 }
 
 .table_product{
     display: flex;
     align-items: center;
     img{
+        flex-shrink: 0;
         border: 1px solid $border-color;
-        width:100px;
-        height:100px;
+        width:70px;
+        height:70px;
     }
     .info{
-        padding-left: 20px;
         .product_title{
             font-size: 16px;
             font-weight: 500;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
+            color: #636363;
         }
         .table_payment{
             display: flex;

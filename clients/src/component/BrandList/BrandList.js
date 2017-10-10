@@ -128,8 +128,12 @@ class BrandList extends React.Component {
      * @return {[type]}      [description]
      */
     onSelect = (item) => {
-        this.state.cid = item;
-        this.getBrand();
+        this.setState({
+            cid: item
+        },()=>{
+            this.getBrand();
+        })
+
     }
 
     render() {
@@ -148,6 +152,7 @@ class BrandList extends React.Component {
             </div>
             {this.state.category.length>0?<SingleSelect
                 all
+                current={this.state.cid}
                 key_name = "categoryName"
                 key_id = "categoryId"
                 data={this.state.category}
@@ -171,7 +176,7 @@ class BrandList extends React.Component {
                     <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" simple total={50} onChange={this.handleChange} />
+                    <Pagination size="small" simple total={this.state.total} onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.brand}>

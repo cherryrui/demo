@@ -30,7 +30,7 @@ class QuotationPdf extends React.Component {
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "38%",
             render: (record) => <div className={css.table_product}>
-            <img src={record.productUrl} crossOrigin = "Anonymous" />
+            <img src={record.productUrl} />
                 <div className={css.info}>
                     <p className={css.name}>{record.productName}</p>
                     {this.state.select&&this.state.select.brand?<p>
@@ -124,7 +124,7 @@ class QuotationPdf extends React.Component {
         this.quotation_pdf.scrollIntoView();
     }
     exportPDF = () => {
-
+        let content = document.getElementById("content");
         html2canvas(document.getElementById("content"), {
             onrendered: (canvas) => {
                 console.log(canvas);
@@ -166,6 +166,8 @@ class QuotationPdf extends React.Component {
                     visible: false,
                 })
             },
+            tainttest: true, //检测每张图片都已经加载完
+            logging: true, //日志开关，发布的时候记得改成false
             background: '#FFFFFF',
             useCORS: true,
         });

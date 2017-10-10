@@ -50,13 +50,29 @@ router
 		})
 		ctx.body = result;
 	})
-	.post('/pay-order.json',async(ctx) =>{
+	.post('/pay-order.json', async(ctx) => {
 		let result = null;
 		const param = ctx.request.body;
 		//console.log(param);
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		await axios.post(url+'/auth/order/payOrder',querystring.stringify(param)).then(res =>{
+		await axios.post(url + '/auth/order/payOrder', querystring.stringify(param)).then(res => {
 			//console.log('pay-order:',res.data);
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.post('/get-user-order.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		let uri = url;
+		if (param.type == 1) {
+			uri += "/auth/order/queryUserOrderByOrderIdOrProductName";
+		} else {
+			uri += "/auth/order/queryUserOrderByOrderStatus";
+		}
+		await axios.post(uri, querystring.stringify(param)).then(res => {
+			console.log(69, res.data)
 			result = res.data;
 		})
 		ctx.body = result;

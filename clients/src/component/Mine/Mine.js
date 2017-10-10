@@ -52,7 +52,8 @@ class Mine extends React.Component {
         this.setState({
             select: key
         });
-        this.props.history.pushState(null, url);
+        if (url)
+            this.props.history.pushState(null, url);
     }
 
     render() {
@@ -61,9 +62,11 @@ class Mine extends React.Component {
             <div className={css.menu}>
             {operator.menu.map(menu=> {
                 return <div>
-                    <p className={css.menu_title}>
+                    {menu.list.length>0?<p className={css.menu_title_show}>
+                        <FormattedMessage id={menu.name} defaultMessage="分类"/>       
+                    </p>:<p className={this.state.select == menu.key?css.menu_active:css.menu_title} onClick={this.handleMenu.bind(this,menu.key,menu.url)} >
                         <FormattedMessage id={menu.name} defaultMessage="分类"/>
-                    </p>
+                    </p>}
                     {menu.list.map(item=> {
                         return <p className={this.state.select == item.key ? css.active : css.item}
                             onClick={this.handleMenu.bind(this,item.key,item.url)}

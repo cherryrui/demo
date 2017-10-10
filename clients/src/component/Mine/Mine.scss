@@ -5,9 +5,9 @@
 .menu{
   flex-shrink: 0;
   background: $color-grey;
-  padding: 30px 50px;
+  padding: 20px;
   font-size: 16px;
-  min-width: 150px;
+  width: 225px;
   margin-right: 20px;
   ul{
     background: $color-grey;
@@ -19,10 +19,26 @@
     font-size: 18px;
     font-weight: bold;
     padding: 10px 0;
+    cursor: pointer;
+  }
+  .menu_title_show{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 0;
+    cursor: default;
+  }
+  .menu_title:hover{
+      color: $theme-color;
+      text-decoration: underline;
+  }
+  .menu_active{
+    @extend .menu_title;
+    color: $theme-color;
   }
   .item{
     color: $font-color;
     padding: 10px 0;
+    cursor: pointer;
     span:hover{
       color: $theme-color;
       text-decoration: underline;
@@ -31,6 +47,7 @@
   .active{
     padding: 10px 0;
     color: $theme-color;
+    cursor: pointer;
   }
 }
 .title{}

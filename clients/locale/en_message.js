@@ -316,6 +316,7 @@ const en_US = {
     "orderlist.instal.unpay": "Partial payment unprocessed",
     "orderlist.need.pay": "Paid unprocessed",
     "orderlist.settled": "Settled order",
+    "orderlist.search.warn": "please input order no. or product name",
     "orderdetails.delivery.address": "交货地址",
     "orderdetails.preview": "Preview trade contract",
     "orderdetails.return": "return",

@@ -9,7 +9,8 @@ import {
     Link
 } from 'react-router';
 import {
-    Breadcrumb
+    Breadcrumb,
+    message
 } from 'antd'
 import {
     FormattedMessage
@@ -28,18 +29,32 @@ class CategoryList extends React.Component {
         this.getCategory();
     }
     componentDidMount() {
+        this.category_list.scrollIntoView(true);
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.params.id);
+        if (this.cid != nextProps.params.id) {
+            this.cid = nextProps.params.id
+            this.getCategory();
             this.category_list.scrollIntoView(true);
         }
-        /**
-         * 根据一级分类id，查找其所有的子分类
-         * @return {[type]} [description]
-         */
+    }
+
+
+    /**
+     * 根据一级分类id，查找其所有的子分类
+     * @return {[type]} [description]
+     */
     getCategory = () => {
-        axios.get(`/category/get-category.json?type=2&cid=${this.cid}`).then(res => {
-            this.setState({
-                search: res.data.category_name,
-                category: res.data.categorys
-            })
+        axios.get(`/category/get-child-category.json?cid=${this.cid}`).then(res => {
+            if (res.data.isSucc) {
+                this.setState({
+                    category: res.data.result
+                })
+            } else {
+                message.error(res.data.message);
+            }
+
         })
     }
 
@@ -58,12 +73,11 @@ class CategoryList extends React.Component {
                 </Breadcrumb>
             </div>
             <div className={css.category}>
-            {this.state.category.map(item=>{
-                console.log(item.img);
-                return <div className={css.category_item}>
-                    <div className={css.title} style={{background:`url(${item.img})`}}>{item.name}</div>
-                    {item.items.map(cate=>{
-                        return <p className={css.item}><Link to={"page/product-list/"+item.id}>{cate.name}</Link></p>
+            {this.state.category.map((item,index)=>{
+                return <div className={(index+1)%3==0?css.category_item:css.category_item_right}>
+                    <div className={css.title} style={{background:`url(${item.imgUrl})`}}>{item.categoryName}</div>
+                    {item.childProductCategoryList.map(cate=>{
+                        return <p className={css.item}><Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>
                     })}
                 </div>
             })}
