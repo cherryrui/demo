@@ -61,7 +61,7 @@ router.get('/get-category.json', async(ctx, next) => {
 			id = ctx.query.id;
 		try {
 			await axios.get(url + '/product/queryProductDetails/' + id).then(res => {
-				console.log(res.data)
+				/*console.log(res.data)*/
 				result = res.data;
 			})
 		} catch (err) {

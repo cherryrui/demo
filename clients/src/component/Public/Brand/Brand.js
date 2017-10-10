@@ -31,12 +31,12 @@ class Brand extends React.Component {
                 <span className={`${appcss.custom_icon} ${this.props.brand.rz ? css.icon_rz_active : css.icon_rz}`}/>
                 <span className={`${appcss.custom_icon} ${this.props.brand.hz ? css.icon_hz_active : css.icon_hz}`}/>
             </div>
-            <Link to={"page/brand-detail/" + this.props.brand.id}>
+            <Link to={"page/brand-detail/" + this.props.brand.sid}>
                 <div className={css.custom_image}>
-                    <img alt="example" src={this.props.brand.img} />
+                    <img alt="example" src={this.props.brand.imgUrl} />
                 </div>
 
-                <p className={css.name}>{this.props.brand.name}</p>
+                <p className={css.name}>{this.props.brand.supplierName}</p>
                 {this.props.showStar ? <p className={css.foot}>
                     <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
                     <Rate className={css.rating} allowHalf defaultValue={this.props.brand.rating} disabled />

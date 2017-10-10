@@ -46,9 +46,10 @@ class BrandList extends React.Component {
         }
     }
     componentWillMount() {
-        axios.get('/category/get-category.json?type=1').then(res => {
+        axios.get('/category/get-category.json?pid=0').then(res => {
+            /*console.log(res.data)*/
             this.setState({
-                category: res.data.categorys,
+                category: res.data.result,
             })
         })
         this.getBrand();
@@ -60,16 +61,20 @@ class BrandList extends React.Component {
      */
     getBrand = () => {
         let param = {
-            cid: this.state.cid,
-            orderBy: this.orderBy,
-            page: this.state.current,
+            productCategoryId: this.state.cid,
+            orderType: this.orderBy,
+            pageNo: this.state.current,
             pageSize: this.state.pageSize,
-        }
+            sortType:this.state.sortType
+        };
         axios.post('/brand/get-brand.json', param).then(res => {
-            this.setState({
-                brand: res.data.brand,
-                total: res.data.sum
-            })
+            if(res.data.isSucc){
+                this.setState({
+                    brand: res.data.result.list,
+                    total: res.data.result.totalPage * res.data.result.pageSize
+                })
+            }
+            
         })
     }
     componentDidMount() {
@@ -111,7 +116,7 @@ class BrandList extends React.Component {
      * @return {[type]}          [description]
      */
     handleChange = (page, pageSize) => {
-        console.log(page, pageSize);
+        /*console.log(page, pageSize);*/
         this.state.current = page;
         this.state.pageSize = pageSize;
         this.getBrand();
@@ -123,7 +128,7 @@ class BrandList extends React.Component {
      * @return {[type]}      [description]
      */
     onSelect = (item) => {
-        this.state.cid = item.id;
+        this.state.cid = item;
         this.getBrand();
     }
 
@@ -143,8 +148,8 @@ class BrandList extends React.Component {
             </div>
             {this.state.category.length>0?<SingleSelect
                 all
-                key_name = "name"
-                key_id = "id"
+                key_name = "categoryName"
+                key_id = "categoryId"
                 data={this.state.category}
                 onSelect={this.onSelect.bind(this)}
                 title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}

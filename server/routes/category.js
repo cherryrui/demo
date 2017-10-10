@@ -1,5 +1,8 @@
 var router = require('koa-router')();
 const axios = require('axios');
+const {
+	url,
+} = require('../config/index');
 
 /**
  * 获取所有一级分类
@@ -7,7 +10,17 @@ const axios = require('axios');
  * id： 父分类id
  */
 router.get('/get-category.json', async(ctx, next) => {
-		let categorys = [];
+
+		let categorys = [],
+			result = null;
+		let pid = ctx.query.pid;	
+
+		await axios.get(url+`/category/queryChildList?pid=${pid}`).then(res =>{
+			result = res.data;
+		})
+		ctx.body = result;
+
+		/*let categorys = [];
 		let type = ctx.query.type,
 			id = ctx.query.cid;
 		switch (Number(type)) {
@@ -269,10 +282,18 @@ router.get('/get-category.json', async(ctx, next) => {
 		ctx.body = {
 			categorys: categorys,
 			category_name: "Tools"
-		}
+		}*/
 	})
 	.get('/get-brand-category.json', async(ctx, next) => {
-		let category = [],
+
+		let result = null;
+		const supplierId = ctx.query.supplierId;
+		await axios.get(url+`/supplier/queryCategoryBySupplierId/${supplierId}`).then(res =>{
+			result = res.data;
+		})
+		ctx.body = result;
+
+		/*let category = [],
 			bid = ctx.query.cid;
 		category = [{
 			id: 1,
@@ -301,7 +322,7 @@ router.get('/get-category.json', async(ctx, next) => {
 		}, ]
 		ctx.body = {
 			category: category
-		}
+		}*/
 	})
 	.get('/get-favorite-category.json', async(ctx, next) => {
 		let category = [];

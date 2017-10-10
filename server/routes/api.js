@@ -12,7 +12,7 @@ router.get('/get-title-data.json', async(ctx, next) => {
 		let categorys = null,
 			carts = [];
 		await axios.get(url + '/index/queryLevelOneProductCategoryList').then(res => {
-			console.log(res.data);
+			console.log(11111111111111111111,res.data);
 			categorys = res.data;
 		});
 		ctx.body = {

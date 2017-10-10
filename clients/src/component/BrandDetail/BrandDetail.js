@@ -33,17 +33,30 @@ class BrandDetail extends React.Component {
 			pageSize: 12,
 			current: 0,
 			total: 0,
+			sortType: 0, //排序名称
+            orderType: "", //排序方式，倒序，
 		}
 	}
 	componentWillMount() {
-		axios.get(`/category/get-brand-category.json?bid=${this.bid}`).then(res => {
-			axios.get(`/brand/get-brand-byid.json?id=${this.bid}`).then(re => {
+		
+		axios.get(`/category/get-brand-category.json?supplierId=${this.props.params.id}`).then(re =>{
+			axios.get(`/brand/get-brand-byid.json?supplierId=${this.props.params.id}`).then(res => {
+				
 				this.setState({
-					category: res.data.category,
-					brand: re.data.brand,
+					category : re.data.result,
+					brand : res.data.result
 				})
 			})
 		})
+		
+		/*axios.get(`/category/get-brand-category.json?bid=${this.bid}`).then(res => {
+			axios.get(`/brand/get-brand-byid.json?id=${this.bid}`).then(re => {
+				this.setState({
+					category: : res.data.category,
+					brand: re.data.brand,
+				})
+			})
+		})*/
 		this.getProduct();
 	}
 	componentDidMount() {
@@ -55,7 +68,8 @@ class BrandDetail extends React.Component {
 	 * @return {[type]} [description]
 	 */
 	getProduct = () => {
-		let params = {
+		/*console.log(this)*/
+		/*let params = {
 			condition: {
 				cid: this.state.cid,
 				bid: this.bid,
@@ -63,10 +77,20 @@ class BrandDetail extends React.Component {
 			page: this.state.current,
 			pageSize: this.state.pageSize,
 			orderBy: this.orderBy,
+		}*/
+		let params = {
+			bandId:this.state.brand.sid,
+			categoryId:this.state.category.categoryId,
+			searchKey:this.state.search,
+			pageSize:this.state.pageSize,
+			pageNo:this.state.current,
+			sortType:this.state.sortType,
+			orderType:this.state.orderType
 		}
 		axios.post('/product/search-product.json', params).then(res => {
+			/*console.log(res.data)*/
 			this.setState({
-				products: res.data.products,
+				products: res.data.result.list,
 				total: res.data.sum,
 			})
 		})
@@ -91,7 +115,7 @@ class BrandDetail extends React.Component {
 		this.getProduct();
 	}
 	handleChange = (page, pageSize) => {
-		console.log(page, pageSize);
+		/*console.log(page, pageSize);*/
 		this.state.current = page;
 		this.state.pageSize = pageSize;
 		this.getProduct();
@@ -109,28 +133,28 @@ class BrandDetail extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        {this.state.brand.naem}
+                        {this.state.brand.supplierName}
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
             <div className={css.brand_info}>
                 <div className={css.img}>
-            		<img src={this.state.brand.img}/>
+            		<img src={this.state.brand.imgUrl}/>
             		<p className={css.star}>
                 		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
-                		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.rating} disabled />
-                		<span>{this.state.brand.rating}</span>
+                		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.level} disabled />
+                		<span>{this.state.brand.level}</span>
            			</p>
             	</div>
             	<div className={css.info}>
             		<div className={css.title}>
-            			{this.state.brand.name}
+            			{this.state.brand.supplierName}
             			<p className={css.collect}>
             				<Icon className={true?css.active:css.icon} type="star" />
             				<FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
             			</p>
             		</div>
-            		<p>{this.state.brand.descrip}</p>
+            		<p><div dangerouslySetInnerHTML={{__html: this.state.brand.introduction}} /></p>
             	</div>
             </div>
             {this.state.category.length>0?<SingleSelect 
