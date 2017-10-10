@@ -46,6 +46,8 @@ class BrandDetail extends React.Component {
 					category : re.data.result,
 					brand : res.data.result
 				})
+				/*console.log(this.state.category[0].categoryId);*/
+				this.getProduct();
 			})
 		})
 		
@@ -57,7 +59,7 @@ class BrandDetail extends React.Component {
 				})
 			})
 		})*/
-		this.getProduct();
+		
 	}
 	componentDidMount() {
 		this.brand_detail.scrollIntoView(true);
@@ -68,7 +70,7 @@ class BrandDetail extends React.Component {
 	 * @return {[type]} [description]
 	 */
 	getProduct = () => {
-		/*console.log(this)*/
+		/*console.log(this.state.category)*/
 		/*let params = {
 			condition: {
 				cid: this.state.cid,
@@ -80,7 +82,7 @@ class BrandDetail extends React.Component {
 		}*/
 		let params = {
 			bandId:this.state.brand.sid,
-			categoryId:this.state.category.categoryId,
+			categoryId:this.state.category[0].categoryId,
 			searchKey:this.state.search,
 			pageSize:this.state.pageSize,
 			pageNo:this.state.current,
@@ -111,7 +113,8 @@ class BrandDetail extends React.Component {
 		});
 	}
 	onSelect = (item) => {
-		this.state.cid = item.id;
+		/*console.log(item)*/
+		this.state.cid = item;
 		this.getProduct();
 	}
 	handleChange = (page, pageSize) => {
@@ -159,6 +162,8 @@ class BrandDetail extends React.Component {
             </div>
             {this.state.category.length>0?<SingleSelect 
             	all 
+            	key_name = "categoryName"
+                key_id = "categoryId"
             	data={this.state.category}
             	onSelect={this.onSelect.bind(this)}
             	title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
