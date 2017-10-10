@@ -62,7 +62,7 @@ class BrandList extends React.Component {
     getBrand = () => {
         let param = {
             productCategoryId: this.state.cid,
-            orderType: this.orderBy,
+            orderType: this.state.orderType,
             pageNo: this.state.current,
             pageSize: this.state.pageSize,
             sortType:this.state.sortType
@@ -71,7 +71,7 @@ class BrandList extends React.Component {
             if(res.data.isSucc){
                 this.setState({
                     brand: res.data.result.list,
-                    total: res.data.result.totalPage * res.data.result.pageSize
+                    total: res.data.result.allRow
                 })
             }
             
@@ -172,7 +172,7 @@ class BrandList extends React.Component {
                             handleSort={this.handleSort.bind(this,item.key)}/>
                     })}
                 </div>
-                <div className={css.right}>
+                <div className={css.right}>{console.log(this.state)}
                     <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
@@ -189,7 +189,7 @@ class BrandList extends React.Component {
                 showSizeChanger 
                 onShowSizeChange={this.onShowSizeChange} 
                 defaultCurrent={1} 
-                total={this.state.total}
+                total={this.state.totalPage}
                 onChange={this.handleChange}
                 />
             </div>

@@ -39,8 +39,8 @@ class Brand extends React.Component {
                 <p className={css.name}>{this.props.brand.supplierName}</p>
                 {this.props.showStar ? <p className={css.foot}>
                     <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
-                    <Rate className={css.rating} allowHalf defaultValue={this.props.brand.rating} disabled />
-                    <span>{this.props.brand.rating}</span>
+                    <Rate className={css.rating} allowHalf defaultValue={this.props.brand.level} disabled />
+                    <span>{this.props.brand.level}</span>
                 </p> : ""}
             </Link>
         </Card>

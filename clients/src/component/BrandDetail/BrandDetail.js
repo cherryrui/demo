@@ -89,11 +89,12 @@ class BrandDetail extends React.Component {
 			sortType:this.state.sortType,
 			orderType:this.state.orderType
 		}
+		console.log(params)
 		axios.post('/product/search-product.json', params).then(res => {
-			/*console.log(res.data)*/
+			console.log(res.data)
 			this.setState({
 				products: res.data.result.list,
-				total: res.data.sum,
+				total: res.data.result.allRow,
 			})
 		})
 
@@ -113,10 +114,13 @@ class BrandDetail extends React.Component {
 		});
 	}
 	onSelect = (item) => {
-		/*console.log(item)*/
-		this.state.cid = item;
-		this.getProduct();
-	}
+        this.setState({
+            cid: item
+        },()=>{
+            this.getProduct();
+        })
+
+    }
 	handleChange = (page, pageSize) => {
 		/*console.log(page, pageSize);*/
 		this.state.current = page;
@@ -162,6 +166,7 @@ class BrandDetail extends React.Component {
             </div>
             {this.state.category.length>0?<SingleSelect 
             	all 
+            	current={this.state.cid}
             	key_name = "categoryName"
                 key_id = "categoryId"
             	data={this.state.category}
