@@ -22,7 +22,7 @@ import {
 class RegisterComplete extends React.Component {
 
     handleClick = (type) => {
-        window.location.href = "/#/login"
+        window.location.href = "/#/page"
     };
 
 

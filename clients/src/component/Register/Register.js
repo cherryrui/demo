@@ -65,7 +65,26 @@ class Register extends React.Component {
                         message.success(formatMessage({
                             id: 'regcomplt.regcomplt.Registeredsuccessfully'
                         }));
-                        window.location.href = "/#/register-complete";
+                        let param = {
+                            userName:values.name,
+                            password:values.password
+                        };
+                        axios.post('/user/login.json', param).then(res => {
+                            /*console.log('xxxx:', res);
+                            console.log(res.status);*/
+                            if (res.data.isSucc) {
+                                sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                /*this.props.history.pushState(null, "/");*/
+                                window.location.href = "/#/register-complete";
+                            } else {
+                                message.error(formatMessage({
+                                    id: 'login.login.fail'
+                                }, {
+                                    reason: res.data.message
+                                }))
+                            }
+                        })
+                       
                     } else {
                         message.error(formatMessage({
                             id: 'register.failed'
