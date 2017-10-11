@@ -4,6 +4,23 @@
 }
 .card_container{
   border: 1px solid $border-color;
+  td{
+    border-bottom: 1px dashed #e9e9e9 !important;
+  }
+}
+.tabtar{
+  img{
+    width: 20px;
+    height: 20px;
+  }
+  sup{
+    height: 15px;
+    border-radius: 50%;
+    min-width: 15px;
+    line-height: 15px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
 }
 
 .table_product{
@@ -14,6 +31,7 @@
         border: 1px solid $border-color;
         width:70px;
         height:70px;
+        margin-right: 10px;
     }
     .info{
         .product_title{
@@ -26,17 +44,24 @@
             word-break: break-all;
             color: #636363;
         }
+        .table_payment_full{
+          background: $color-blue;
+          color: white;
+          width: 80px;
+          text-align: center;
+          height: 18px;
+          line-height: 18px;
+          font-size: 12px;
+          border-radius: 4px;
+          margin-top: 12px;
+        }
         .table_payment{
-            display: flex;
-            padding-top: 10px;
-            line-height: 30px;
-
-            .payment_text{
-                padding-left: 5px;
-                font-size: 14px;
-                color:$color-red;
-                font-weight: 500;
-
+            color: $font-orange;
+            span{
+                @extend .table_payment_full;
+                background: $color-cheng;
+                display: inline-block;
+                margin-right: 10px;
             }
         }
     }

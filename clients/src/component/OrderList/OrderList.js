@@ -14,8 +14,12 @@ import {
     Table,
     Button,
     Pagination,
-    message
+    message,
+    Tooltip
 } from 'antd';
+import {
+    Link
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
@@ -41,7 +45,7 @@ class OrderList extends React.Component {
         };
         this.formatMessage = this.props.intl.formatMessage;
         this.colums_show = [{
-                title: <FormattedMessage id="orderlist.order.amount_payable" defaultMessage="订单号和付款方式"/>,
+                title: <FormattedMessage id="orderlist.order.info" defaultMessage="订单号和付款方式"/>,
                 width: "320px",
                 render: (record) => <div className={css.table_product}>
                 <img src={record.productImgUrl}/>
@@ -49,14 +53,16 @@ class OrderList extends React.Component {
                     <p className={css.product_title}>
                         <FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.orderId}
                     </p>
-                    <p className={css.table_payment}>
-                        <FormattedMessage  id={record.stageNum?"":""} defaultMessage="订单号"/>
-        
-                    </p>
+                    {record.stageNum?<p className={css.table_payment}>
+                        <FormattedMessage  id="orderlist.pay.installment" defaultMessage="订单号"/>
+                         {record.stageNum} {this.formatMessage({id:"orderlist.pay.payment"})}
+                    </p>:<p className={css.table_payment_full}>
+                        <FormattedMessage  id="orderlist.pay.full" defaultMessage="订单号"/>
+                    </p>}
                 </div>
             </div>
             }, {
-                title: <FormattedMessage id="orderlist.order.amount_payable" defaultMessage="应付总金额"/>,
+                title: <FormattedMessage id="orderlist.order.money" defaultMessage="应付总金额"/>,
                 width: "200px",
                 className: css.table_col,
                 dataIndex: 'totalMoney',
@@ -69,26 +75,32 @@ class OrderList extends React.Component {
                 key: 'createTime',
                 className: css.table_col,
                 render: (text) => <div>
-                        {moment(text).format('YYYY-MM-DD')}
+                    {moment(text).format('YYYY-MM-DD')}
                 </div>
             }, {
                 title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
                 width: "100px",
                 className: css.table_col,
-                dataIndex: 'payStatus',
-                key: 'payStatus',
-                render: (text) => <span className={css.table_status}><Icon  style={{fontSize: 18,color:"#ffa300"}}type="clock-circle" />
-                    {text}
+                dataIndex: 'orderStatus',
+                key: 'orderStatus',
+                render: (text) => <span className={css.table_status}>
+                    {operator.order_status.map(item=>{
+                        if(text == item.value){
+                            return <Tooltip title={this.formatMessage({id: item.key})}>
+                                <i class={item.icon}></i>
+                            </Tooltip>
+                        }
+                    })}
                 </span>
             }, {
                 title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
                 width: "140px",
                 className: css.table_col,
                 render: (record) => <span className={css.table_operation}>
-                    <p className={css.operation_text}>
+                    <Link to={"page/mine/order-details/"+record.orderId} className={css.operation_text}>
                         <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
-                        <FormattedMessage id="orderlist.order.view" defaultMessage=""/>
-                    </p>
+                        <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
+                    </Link>
                     <p>
                         <Button style={{width:70,fontSize:14,border:"none"}}type="primary">
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
@@ -144,7 +156,8 @@ class OrderList extends React.Component {
         this.props.history.pushState(null, "/page/mine/order-details");
     }
     callback = () => {}
-    handleCance = (item) => {
+    handleCancel = (item) => {
+        console.log(item);
         this.setState({
             visible: false
         })
@@ -172,11 +185,6 @@ class OrderList extends React.Component {
         }
     }
     render() {
-        let {
-            intl: {
-                formatMessage
-            }
-        } = this.props;
         return <div className={css.order_list}>
             <div className={basecss.child_title}>
                 <FormattedMessage  id="orderlist.all.order" defaultMessage="所有订单"/>
@@ -189,7 +197,7 @@ class OrderList extends React.Component {
                  />
             </div>
             <div className={css.card_container}>
-                <TabBar tabs={operator.order_status} current={this.state.current} 
+                <TabBar className={css.tabtar} hiddenTest tabs={operator.order_status} current={this.state.current} 
                             handleBar={this.handleBar.bind(this)}
                         />
                 <Table

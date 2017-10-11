@@ -133,7 +133,7 @@ class Home extends React.Component {
     }
     handleCategory = (index, name) => {
         this.setState({
-            showCategory: !this.state.showCategory
+            showCategory: false
         })
         if (typeof(index) == 'number') {
             /*window.location.href = "/#/main/category-list/" + index;*/
@@ -141,14 +141,33 @@ class Home extends React.Component {
 
         }
     }
+    handleShow = (status) => {
+        this.setState({
+            showCategory: status
+        })
+    }
     onMouse = (e) => {
         console.log(e);
         if (e == "enter" && !this.state.showCategory) {
-            this.handleCategory()
+            this.handleShow(true)
+        }
+        if (e == 'leave') {
+            setTimeout(() => {
+                if (this.state.showCategory && !this.state.cate_enter) {
+                    this.handleShow(false);
+                }
+            }, 3000);
+        }
+        if (e == "cate_enter") {
+            this.state.cate_enter = true;
         }
         if (e == "cate_leave" && this.state.showCategory) {
-            this.handleCategory()
+            this.state.cate_enter = false;
+            this.handleShow(false)
         }
+    }
+    goHome = () => {
+        this.props.history.pushState(null, "/");
     }
     deleteCart = (id) => {
         let param = [];
@@ -206,7 +225,7 @@ class Home extends React.Component {
         <div className={css.header}>
             <div className={css.header_content}>
                 <div className={css.left}>
-                    <Link to="/" className={css.logo}>LOGO</Link>
+                    <p onClick={this.goHome} className={css.logo}>LOGO</p>
                     <p onMouseEnter={this.onMouse.bind(this,"enter")} onMouseLeave={this.onMouse.bind(this,"leave")} onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                         &nbsp;&nbsp;

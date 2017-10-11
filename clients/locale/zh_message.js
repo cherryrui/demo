@@ -329,6 +329,8 @@ const zh_CN = {
     "orderdetails.delivery.address": "交货地址",
     "orderdetails.preview": "预览贸易合同",
     "orderdetails.return": "返回",
+    "orderlist.order.info": "订单信息",
+    "orderlist.order.money": "订单金额",
     "orderdetails.order.no": "订单号",
     "orderdetails.brand": "品牌",
     "orderdetails.art.no": "货号",

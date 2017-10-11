@@ -31,6 +31,7 @@ const Step = Steps.Step;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 const {
     TextArea
 } = Input;
@@ -38,100 +39,16 @@ const {
 function onShowSizeChange(current, pageSize) {
     console.log(current, pageSize);
 }
-class OrderDetailst extends React.Component {
+class OrderDetails extends React.Component {
     jump = (e) => {
         this.props.history.pushState(null, "/page/mine/order-list");
     }
     constructor(props) {
         super(props);
+        console.log("orderdetail constructor")
         this.state = {
-            order: {
-                name: "张三",
-                tel: 12345678912,
-                address: "xxxxxxxxxxxxxxxxxxxx",
-                state: "未支付",
-                time: "2017-07-08 16:19:00",
-                order_no: 243456676878999,
-                delivery_mode: "自提",
-                pay_mode: "分期",
-                pay_day: "6期",
-                instalment: "",
-                advance: "首付20%,分期80%",
-                principal: 900,
-                interest: 100,
-                remark: "vvvvvv",
-                products: [{
-                    id: 1,
-                    name: "WEE000000",
-                    img: '../img/product.jpg',
-                    price: 100,
-                    staging: "6期",
-                    agent_price: 80,
-                    full: "full payment",
-                    installment: "分期付款",
-
-                    Art_No: 3434,
-                    num: 20,
-                    sum: 66,
-                    postage: 8,
-                    brand: "fgg",
-                    supplier: "中建",
-                    specification: "",
-                    attr: [{
-                        id: 1,
-                        value: 1,
-                        name: "红色",
-
-                    }, {
-                        id: 2,
-                        value: 2,
-                        name: "28",
-
-                    }]
-                }, {
-                    id: 2,
-                    name: "product name",
-                    img: '../img/product.jpg',
-                    price: 100,
-                    agent_price: 80,
-                    full: "full payment",
-                    installment: "installment",
-                    num: 40,
-                    supplier: "中建",
-                    brand: "fgg",
-
-                    specification: "1 ton",
-                    attr: [{
-                        id: 1,
-                        value: 1,
-                        name: "红色",
-                        attr: [{
-                            id: 1,
-                            name: "红色"
-                        }, {
-                            id: 2,
-                            name: "蓝色"
-                        }, {
-                            id: 3,
-                            name: "绿色"
-                        }, ]
-                    }, {
-                        id: 2,
-                        value: 2,
-                        name: "28",
-                        attr: [{
-                            id: 1,
-                            name: "27"
-                        }, {
-                            id: 2,
-                            name: "28"
-                        }, {
-                            id: 3,
-                            name: "29"
-                        }, ]
-                    }]
-                }, ]
-            }
+            order: {},
+            visible: false,
         };
         this.colums_show = [{
                 title: <FormattedMessage id="orderdetails.order.no" defaultMessage="订单号"/>,
@@ -143,9 +60,6 @@ class OrderDetailst extends React.Component {
                     <p className={css.product_title}>{record.name}</p>
                     <p><FormattedMessage className={css.title_center} id="app.brand" defaultMessage="规格"/>：{record.brand}</p>
                     <p><FormattedMessage id="orderdetails.art.no" defaultMessage="规格"/>：{record.Art_No}</p>
-
-
-
                 </div>
             </div>
             }, {
@@ -188,6 +102,25 @@ class OrderDetailst extends React.Component {
 
         ]
     }
+
+    componentWillMount() {
+        axios.post('/order/get-order-detail.json', {
+            orderId: this.props.params.id
+        }).then(res => {
+            if (res.data.code == 104) {
+                this.setState({
+                    visible: true
+                })
+            } else if (res.data.isSucc) {
+                this.setState({
+                    order: res.data.result,
+                })
+            } else {
+                message.error(res.data.message);
+            }
+        })
+    }
+
     callback = () => {
 
     }
@@ -196,6 +129,12 @@ class OrderDetailst extends React.Component {
         order[name] = key;
         this.setState({
             order: order
+        })
+    }
+    handleCancel = (item) => {
+        console.log(item);
+        this.setState({
+            visible: false
         })
     }
     render() {
@@ -251,11 +190,7 @@ class OrderDetailst extends React.Component {
                     bordered
                     columns={this.colums_show}
                     dataSource={this.state.order.products} />
-
-
             </div>
-
-
             <div className={css.order_sum}>
                 <div>
                     <FormattedMessage id="cart.order.total" defaultMessage="订单总金额"/>:
@@ -274,8 +209,6 @@ class OrderDetailst extends React.Component {
                     <p className={css.order_sum_orange}>$&nbsp;{this.state.order.total}</p>
                 </div>
             </div>
-
-
             <div className={css.pay_footer}>
                 <a className={css.preview}><FormattedMessage id="orderdetails.preview" defaultMessage="预览贸易合同"/></a>
                 <Button size="large" onClick={this.jump} type="primary" className={css.button_order}>
@@ -285,9 +218,8 @@ class OrderDetailst extends React.Component {
                     <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
                 </Button>
             </div>
-
-
+            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>  
         </div>
     }
 }
-export default OrderDetailst;
+export default OrderDetails;

@@ -108,16 +108,6 @@ class QuotationPdf extends React.Component {
                 select: select
             })
         })
-
-        /*if (this.state.quotation.select && this.props.quotation.select.plat_price) {
-            this.columns.push({
-                title: <FormattedMessage id="quotation.platform.price" defaultMessage="平台销售价"/>,
-                dataIndex: 'price',
-                key: 'price',
-                className: css.table_col,
-                render: (text) => <span className={css.table_price}>${text}</span>
-            });
-        }*/
     }
 
     componentDidMount() {
@@ -125,6 +115,18 @@ class QuotationPdf extends React.Component {
     }
     exportPDF = () => {
         let content = document.getElementById("content");
+        var w = content.clientWidth;
+        var h = content.clientHeight;
+        //要将 canvas 的宽高设置成容器宽高的 2 倍
+        var canvas = document.createElement("canvas");
+        canvas.width = w * 3;
+        canvas.height = h * 3;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        var context = canvas.getContext("2d");
+        //然后将画布缩放，将图像放大两倍画到画布上
+        context.scale(3, 3);
+
         html2canvas(document.getElementById("content"), {
             onrendered: (canvas) => {
                 console.log(canvas);

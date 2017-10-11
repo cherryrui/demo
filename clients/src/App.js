@@ -456,7 +456,7 @@ ReactDOM.render(
                                 <Route path="message" getComponent={Message}/>
                                 <Route path="system-message" getComponent={SystemMessage}/>
                                 <Route path="order-list" getComponent={OrderList}/>
-                                <Route path="order-details" getComponent={OrderDetails}/>
+                                <Route path="order-details/:id" getComponent={OrderDetails}/>
                                 <Route path="favorite/:type" getComponent={Favorite}/>
                                 <Route path="quotation-list" getComponent={QuotationList}/>
                                 <Route path="product-editor" getComponent={ProductEditor}/>

@@ -64,17 +64,41 @@ router
 	.post('/get-user-order.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
-		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		let uri = url;
-		if (param.type == 1) {
-			uri += "/auth/order/queryUserOrderByOrderIdOrProductName";
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			let uri = url;
+			if (param.type == 1) {
+				uri += "/auth/order/queryUserOrderByOrderIdOrProductName";
+			} else {
+				uri += "/auth/order/queryUserOrderByOrderStatus";
+			}
+			await axios.post(uri, querystring.stringify(param)).then(res => {
+			/*console.log(69, res.data)*/
+				result = res.data;
+			})
 		} else {
-			uri += "/auth/order/queryUserOrderByOrderStatus";
+			result = {
+				isSucc: false,
+				code: 104
+			}
 		}
-		await axios.post(uri, querystring.stringify(param)).then(res => {
-			console.log(69, res.data)
-			result = res.data;
-		})
+		ctx.body = result;
+	})
+	.post('/get-order-detail.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/order/queryUserOrderDetails", querystring.stringify(param)).then(res => {
+				console.log(93, res.data)
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
 		ctx.body = result;
 	})
 

@@ -12,6 +12,11 @@
     	border-bottom: 1px solid $border-color;
     	border-top: 1px solid $border-color;
         cursor: pointer;
+        span[class="ant-badge"]{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
     .active{
     	@extend .item;
