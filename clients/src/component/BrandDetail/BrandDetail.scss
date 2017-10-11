@@ -79,3 +79,18 @@
 .footer{
   text-align: right;
 }
+.brand_intro{
+  div{
+        max-height: 101px;
+        overflow: hidden;
+  }
+  p{
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      text-align: left;
+      margin-top:10px;
+    }
+}

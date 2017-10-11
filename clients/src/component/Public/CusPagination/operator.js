@@ -1,3 +1,3 @@
 export default {
-	pageSizeOptions: ["12", "24", "36"],
+	pageSizeOptions: ["1", "2", "3"],
 }

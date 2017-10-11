@@ -101,6 +101,12 @@ class BrandDetail extends React.Component {
 	}
 	handleSort = (name, key) => {
 		console.log(name, key)
+		this.setState({
+			sortType:name,
+			orderType:key
+		},()=>{
+			this.getProduct()
+		})
 	}
 	handleStar = (index) => {
 		let products = this.state.products
@@ -147,7 +153,7 @@ class BrandDetail extends React.Component {
             <div className={css.brand_info}>
                 <div className={css.img}>
             		<img src={this.state.brand.imgUrl}/>
-            		<p className={css.star}>
+            		<p className={css.foot}>
                 		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
                 		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.level} disabled />
                 		<span>{this.state.brand.level}</span>
@@ -161,7 +167,7 @@ class BrandDetail extends React.Component {
             				<FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
             			</p>
             		</div>
-            		<p><div dangerouslySetInnerHTML={{__html: this.state.brand.introduction}} /></p>
+            		<p className={css.brand_intro}><div dangerouslySetInnerHTML={{__html: this.state.brand.introduction}} /></p>
             	</div>
             </div>
             {this.state.category.length>0?<SingleSelect 

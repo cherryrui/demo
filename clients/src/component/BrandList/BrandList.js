@@ -25,6 +25,7 @@ import Brand from '../Public/Brand/Brand.js';
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 import operator from './operator.js';
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 const TabPane = Tabs.TabPane;
 
 class BrandList extends React.Component {
@@ -35,9 +36,9 @@ class BrandList extends React.Component {
             category: [], //一级分类列表
             brand: [], //供应商列表
             cid: 0, //分类id
-            pageSize: 10, //每页商品数
+            pageSize: 1, //每页商品数
             current: 1, //当前页码
-            total: 50, //供应商总数
+            total: 0, //供应商总数
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
         }
@@ -184,15 +185,7 @@ class BrandList extends React.Component {
                 return <Brand brand={item} showStar className={(index+1)%6==0?css.right_item:css.item}/>
             })}
             </div>
-            <div className={css.footer}>
-                <Pagination 
-                showSizeChanger 
-                onShowSizeChange={this.onShowSizeChange} 
-                defaultCurrent={1} 
-                total={this.state.totalPage}
-                onChange={this.handleChange}
-                />
-            </div>
+            <CusPagination onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
         </div>
     }
 }
