@@ -165,7 +165,7 @@ class Supplier extends React.Component {
           span: 24
         },
         sm: {
-          span: 14
+          span: 18
         },
       },
     };
@@ -176,7 +176,7 @@ class Supplier extends React.Component {
           offset: 0,
         },
         sm: {
-          span: 18,
+          span: 14,
           offset: 6,
         },
       },
@@ -233,7 +233,7 @@ class Supplier extends React.Component {
                          defaultMessage=""/>
                     </p>
                 </div>
-                <div>
+                <div  className={css.supplier_form}>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem
                             {...formItemLayout}
@@ -255,12 +255,12 @@ class Supplier extends React.Component {
                         >
               {getFieldDecorator('website', {
               })(
-                  <AutoComplete
+                  <AutoComplete className={css.supplier_input}
                       dataSource={websiteOptions}
                       onChange={this.handleWebsiteChange}
 
                   >
-                      <Input className={css.supplier_input}/>
+                      <Input/>
                   </AutoComplete>
               )}
                         </FormItem>
@@ -341,7 +341,7 @@ class Supplier extends React.Component {
                         <FormItem
                             wrapperCol={{ span: 12, offset: 6 }}
                         >
-                            <p>
+                            <p className={css.credentials}>
                                     {formatMessage({id: 'agent.upload.credentials'})}
                             </p>
                             <div className={css.upload}>
@@ -416,7 +416,7 @@ class Supplier extends React.Component {
                   <Input className={css.supplier_input}/>
               )}
                         </FormItem>
-                        <FormItem
+                        <FormItem  className={css.input_left}
                             {...formItemLayout}
                             label={formatMessage({id: 'cart.pay.mode'})}
                         >
@@ -431,7 +431,7 @@ class Supplier extends React.Component {
                   </RadioGroup>
               )}
                         </FormItem>
-                        <FormItem
+                        <FormItem  className={css.checkbox_bottom}
                             {...formItemLayout}
                             label={formatMessage({id: 'about.shipping.method'})}
                         >

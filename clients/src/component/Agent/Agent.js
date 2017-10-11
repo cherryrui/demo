@@ -203,7 +203,7 @@ class Agent extends React.Component {
                         <FormattedMessage id={"agent.condition_two"} defaultMessage=""/>
                     </p>
                 </div>
-                <div>
+                <div className={css.agent_form}>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem
                         {...formItemLayout}
@@ -217,7 +217,7 @@ class Agent extends React.Component {
               <Input className={css.agent_input}/>
           )}
                     </FormItem>
-                        <FormItem
+                        <FormItem className={css.input_left}
           {...formItemLayout}
                             label={formatMessage({id: 'agent.type'})}
                         >
@@ -297,14 +297,14 @@ class Agent extends React.Component {
                   dataSource={websiteOptions}
                   onChange={this.handleWebsiteChange}
               >
-                  <Input/>
+                  <Input className={css.agent_input}/>
               </AutoComplete>
           )}
                         </FormItem>
                         <FormItem
                             wrapperCol={{ span: 12, offset: 6 }}
                         >
-                            <p>
+                            <p className={css.credentials}>
                                 {formatMessage({id: 'agent.upload.credentials'})}
                             </p>
                             <div className={css.upload}>
@@ -375,7 +375,7 @@ class Agent extends React.Component {
               <Input className={css.agent_input}/>
           )}
                         </FormItem>
-                        <FormItem
+                        <FormItem   className={css.input_left}
                         {...formItemLayout}
                             label={formatMessage({id: 'cart.pay.mode'})}
                             >

@@ -16,6 +16,10 @@
 
   }
 }
+.agent_form{
+  padding-top:20px ;
+  padding-bottom: 10px;
+
 .retrun{
   background-color: $button-green;
   border-color: $button-green;
@@ -43,14 +47,14 @@
   .uploader{
     display: block;
     background:$color-grey;
-    height: 120px;
-    width: 180px;
+    height: 110px;
+    width: 150px;
     line-height: 120px;
     text-align: center;
 
     .avatar_icon{
       color: #fff;
-      font-size: 40px;
+      font-size: 32px;
       font-weight: 700;
       height: 120px;
       line-height: 120px;
@@ -59,18 +63,37 @@
   }
   .side{
     text-align: center;
+    height: 14px;
+    line-height: 14px;
+    margin-top: 20px;
   }
 }
 }
 .agent_input{
    width: 400px  !important;
    border-radius: 2px !important;
+  height: 36px !important;
   input{
     width: 400px !important;
     border-radius: 2px !important;
+    height: 36px !important;
+  }
+
+
+}
+  .agent_checkbox{
+    margin-right: 40px !important;
 
   }
- }
-.agent_checkbox{
-  margin-right: 20px !important;
+  .credentials{
+    height: 14px;
+    line-height: 14px;
+    margin-bottom: 20px;
+  }
+  .input_left{
+    height: 14px !important;
+    line-height: 14 !important;
+
+    padding-bottom: 24px !important;
+  }
 }
