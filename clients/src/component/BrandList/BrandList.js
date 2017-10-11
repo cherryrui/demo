@@ -41,6 +41,7 @@ class BrandList extends React.Component {
             total: 0, //供应商总数
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
+            totalPage:0, //总页数
         }
         this.orderBy = {
 
@@ -69,10 +70,12 @@ class BrandList extends React.Component {
             sortType:this.state.sortType
         };
         axios.post('/brand/get-brand.json', param).then(res => {
+            /*console.log(res.data)*/
             if(res.data.isSucc){
                 this.setState({
                     brand: res.data.result.list,
-                    total: res.data.result.allRow
+                    total: res.data.result.allRow,
+                    totalPage: res.data.result.totalPage
                 })
             }
             
@@ -177,7 +180,7 @@ class BrandList extends React.Component {
                     <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" simple total={this.state.total} onChange={this.handleChange} />
+                    <Pagination size="small" simple pageSize={this.state.pageSize} total={this.state.totalPage} onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.brand}>

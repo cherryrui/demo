@@ -30,11 +30,12 @@ class BrandDetail extends React.Component {
 			brand: {},
 			category: [],
 			products: [],
-			pageSize: 12,
+			pageSize: 1,
 			current: 0,
 			total: 0,
 			sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
+            totalPage:0, //总页数
 		}
 	}
 	componentWillMount() {
@@ -96,6 +97,7 @@ class BrandDetail extends React.Component {
 			this.setState({
 				products: res.data.result.list,
 				total: res.data.result.allRow,
+                totalPage: res.data.result.totalPage
 			})
 		})
 
@@ -197,7 +199,7 @@ class BrandDetail extends React.Component {
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"
                         values={{total:(this.state.total==0?"0":this.state.total)}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" total={this.state.total} simple onChange={this.handleChange}  />
+                    <Pagination size="small" simple pageSize={this.state.pageSize} total={this.state.totalPage} onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.product_list}>
