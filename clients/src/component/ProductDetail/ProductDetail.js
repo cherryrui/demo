@@ -427,11 +427,11 @@ class ProductDetail extends React.Component {
                             handleBar={this.handleChange}
                         />
                         <div className={css.container_body}>
-                        {this.state.current==0?<Information data={this.state.productInfo}/>
-                            :this.state.current==1?<Specification data={this.state.properties}/>
-                            :this.state.current==2?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
-                            :this.state.current==3?<Review data={this.state.reviews}/>
-                            :this.state.current==4?<Price data={this.state.prices} />
+                        {this.state.current==1?<Information data={this.state.productInfo}/>
+                            :this.state.current==2?<Specification data={this.state.properties}/>
+                            :this.state.current==3?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
+                            :this.state.current==4?<Review data={this.state.reviews}/>
+                            :this.state.current==5?<Price data={this.state.prices} />
                             :""}
                         </div>
                     </div>

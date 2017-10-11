@@ -30,38 +30,27 @@ class BrandDetail extends React.Component {
 			brand: {},
 			category: [],
 			products: [],
-			pageSize: 1,
-			current: 0,
+			pageSize: 12,
+			current: 1,
 			total: 0,
 			sortType: 0, //排序名称
-            orderType: "", //排序方式，倒序，
-            totalPage:0, //总页数
+			orderType: "", //排序方式，倒序，
+			cid: 0,
 		}
 	}
 	componentWillMount() {
-		
-		axios.get(`/category/get-brand-category.json?supplierId=${this.props.params.id}`).then(re =>{
+
+		axios.get(`/category/get-brand-category.json?supplierId=${this.props.params.id}`).then(re => {
 			axios.get(`/brand/get-brand-byid.json?supplierId=${this.props.params.id}`).then(res => {
-				
+
 				this.setState({
-					category : re.data.result,
-					brand : res.data.result,
-					total: res.data.result.allRow
-				})
-				/*console.log(this.state.category[0].categoryId);*/
+						category: re.data.result,
+						brand: res.data.result,
+					})
+					/*console.log(this.state.category[0].categoryId);*/
 				this.getProduct();
 			})
 		})
-		
-		/*axios.get(`/category/get-brand-category.json?bid=${this.bid}`).then(res => {
-			axios.get(`/brand/get-brand-byid.json?id=${this.bid}`).then(re => {
-				this.setState({
-					category: : res.data.category,
-					brand: re.data.brand,
-				})
-			})
-		})*/
-		
 	}
 	componentDidMount() {
 		this.brand_detail.scrollIntoView(true);
@@ -72,24 +61,14 @@ class BrandDetail extends React.Component {
 	 * @return {[type]} [description]
 	 */
 	getProduct = () => {
-		/*console.log(this.state.category)*/
-		/*let params = {
-			condition: {
-				cid: this.state.cid,
-				bid: this.bid,
-			},
-			page: this.state.current,
-			pageSize: this.state.pageSize,
-			orderBy: this.orderBy,
-		}*/
 		let params = {
-			bandId:this.state.brand.sid,
-			categoryId:this.state.category[0].categoryId,
-			searchKey:this.state.search,
-			pageSize:this.state.pageSize,
-			pageNo:this.state.current,
-			sortType:this.state.sortType,
-			orderType:this.state.orderType
+			bandId: this.state.brand.sid,
+			categoryId: this.state.cid,
+			searchKey: this.state.search,
+			pageSize: this.state.pageSize,
+			pageNo: this.state.current,
+			sortType: this.state.sortType,
+			orderType: this.state.orderType
 		}
 		console.log(params)
 		axios.post('/product/search-product.json', params).then(res => {
@@ -97,7 +76,7 @@ class BrandDetail extends React.Component {
 			this.setState({
 				products: res.data.result.list,
 				total: res.data.result.allRow,
-                totalPage: res.data.result.totalPage
+				totalPage: res.data.result.totalPage
 			})
 		})
 
@@ -105,9 +84,9 @@ class BrandDetail extends React.Component {
 	handleSort = (name, key) => {
 		console.log(name, key)
 		this.setState({
-			sortType:name,
-			orderType:key
-		},()=>{
+			sortType: name,
+			orderType: key
+		}, () => {
 			this.getProduct()
 		})
 	}
@@ -123,13 +102,13 @@ class BrandDetail extends React.Component {
 		});
 	}
 	onSelect = (item) => {
-        this.setState({
-            cid: item
-        },()=>{
-            this.getProduct();
-        })
+		this.setState({
+			cid: item
+		}, () => {
+			this.getProduct();
+		})
 
-    }
+	}
 	handleChange = (page, pageSize) => {
 		/*console.log(page, pageSize);*/
 		this.state.current = page;
@@ -199,7 +178,7 @@ class BrandDetail extends React.Component {
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"
                         values={{total:(this.state.total==0?"0":this.state.total)}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" simple pageSize={this.state.pageSize} total={this.state.totalPage} onChange={this.handleChange} />
+                    <Pagination size="small" simple pageSize={this.state.pageSize} total={this.state.total} current={this.state.current} onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.product_list}>

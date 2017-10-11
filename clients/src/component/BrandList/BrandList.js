@@ -36,13 +36,13 @@ class BrandList extends React.Component {
             category: [], //一级分类列表
             brand: [], //供应商列表
             cid: 0, //分类id
-            pageSize: 1, //每页商品数
+            pageSize: 18, //每页商品数
             current: 1, //当前页码
             total: 0, //供应商总数
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
-            totalPage:0, //总页数
         }
+        this.pageSizeOptions = ["18", "24", "30"];
         this.orderBy = {
 
         }
@@ -67,18 +67,18 @@ class BrandList extends React.Component {
             orderType: this.state.orderType,
             pageNo: this.state.current,
             pageSize: this.state.pageSize,
-            sortType:this.state.sortType
+            sortType: this.state.sortType
         };
         axios.post('/brand/get-brand.json', param).then(res => {
             /*console.log(res.data)*/
-            if(res.data.isSucc){
+            if (res.data.isSucc) {
                 this.setState({
                     brand: res.data.result.list,
                     total: res.data.result.allRow,
                     totalPage: res.data.result.totalPage
                 })
             }
-            
+
         })
     }
     componentDidMount() {
@@ -134,7 +134,7 @@ class BrandList extends React.Component {
     onSelect = (item) => {
         this.setState({
             cid: item
-        },()=>{
+        }, () => {
             this.getBrand();
         })
 
@@ -180,7 +180,7 @@ class BrandList extends React.Component {
                     <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Pagination size="small" simple pageSize={this.state.pageSize} total={this.state.totalPage} onChange={this.handleChange} />
+                    <Pagination size="small" simple current={this.state.current} total={this.state.total} pageSize={this.state.pageSize} onChange={this.handleChange} />
                 </div>
             </div>
             <div className={css.brand}>
@@ -188,7 +188,7 @@ class BrandList extends React.Component {
                 return <Brand brand={item} showStar className={(index+1)%6==0?css.right_item:css.item}/>
             })}
             </div>
-            <CusPagination onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
+            <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
         </div>
     }
 }

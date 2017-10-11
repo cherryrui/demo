@@ -117,7 +117,6 @@ class Home extends React.Component {
         this.props.history.pushState(null, url);
     }
     handleCancel = () => {
-        console.log("cancel");
         this.setState({
             visible: false,
         })
@@ -147,7 +146,7 @@ class Home extends React.Component {
         })
     }
     onMouse = (e) => {
-        console.log(e);
+        console.log(e, this.state.showCategory, this.state.cate_enter);
         if (e == "enter" && !this.state.showCategory) {
             this.handleShow(true)
         }
@@ -181,8 +180,6 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log(this.props.cart);
-
         let cart_menu = (
             <Menu>
                 <Menu.Item className={css.cart_product_title}>
