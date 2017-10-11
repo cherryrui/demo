@@ -28,30 +28,7 @@
     padding: 20px 20px !important;
   }
 .table_product{
-  display: flex;
-
-  img{
-    border: 1px solid $border-color;
-    flex-shrink: 0;
-    width: 95px;
-    height: 95px;
-  }
-  .info{
-    font-size: 14px;
-    padding-left: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: left;
-    .name{
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      word-break: break-all;
-    }
-  }
+  width: 350px;
 }
 .table_col{
   text-align: center !important;

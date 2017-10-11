@@ -90,6 +90,7 @@ class ProductDetail extends React.Component {
     getData(id) {
         axios.get(`/product/get-product-byId.json?id=${id}`).then(res => {
             if (res.data.isSucc) {
+                this.product_detail.scrollIntoView(true);
                 let product = res.data.result.productAndSupplier;
                 product.imgs = res.data.result.imgs;
                 product.productNum = product.moq;
@@ -374,7 +375,7 @@ class ProductDetail extends React.Component {
                             :
                         </p>
                         <p>
-                            {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
+                            {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} max={this.state.product.inventory} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
                         <div className={css.bottom_right}>
                             <p className={appcss.button_green} onClick={this.handleAddCart.bind(this,1)}>
@@ -393,7 +394,7 @@ class ProductDetail extends React.Component {
                 {this.state.product.supplierId?<div className={css.right}>
                     <div className={css.right_content}>
                         <p className={css.custom_img}>
-                            <img src={this.state.product.supplierImg+"@320w_320h_1e_1c.png"}/>
+                            <img src={this.state.product.supplierImg+"@350w_350h_1e_1c.png"}/>
                         </p>
                         <p className={css.name}>{this.state.product.supplierName}</p>
                         <p className={css.foot}>

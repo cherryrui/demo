@@ -55,7 +55,7 @@ class OrderList extends React.Component {
                     </p>
                     {record.stageNum?<p className={css.table_payment}>
                         <FormattedMessage  id="orderlist.pay.installment" defaultMessage="订单号"/>
-                         {record.stageNum} {this.formatMessage({id:"orderlist.pay.payment"})}
+                        {this.formatMessage({id:"orderlist.pay.payment"},{stageNum: record.stageNum})}
                     </p>:<p className={css.table_payment_full}>
                         <FormattedMessage  id="orderlist.pay.full" defaultMessage="订单号"/>
                     </p>}
@@ -98,7 +98,7 @@ class OrderList extends React.Component {
                 width: "140px",
                 className: css.table_col,
                 render: (record) => <span className={css.table_operation}>
-                    <Link to={"page/mine/order-details/"+record.orderId} className={css.operation_text}>
+                    <Link to={"page/order-details/"+record.orderId} className={css.operation_text}>
                         <i class="iconfont icon-DYC-23"/>
                         <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                     </Link>

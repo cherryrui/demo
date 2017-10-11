@@ -7,6 +7,7 @@ import moment from 'moment';
 import QuotationPdf from '../QuotationPdf/QuotationPdf.js';
 import ModalHeader from '../Public/ModalHeader/ModalHeader.js';
 import CusModal from '../Public/CusModal/CusModal.js';
+import ProductItem from '../Public/ProductItem/ProductItem.js'
 import {
 	FormattedMessage,
 	injectIntl,
@@ -62,23 +63,7 @@ class Quotation extends React.Component {
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
 			width: "430px",
-			render: (record) => <div className={css.table_product}>
-                    <img src={record.coverUrl}/>
-	                <div className={css.info}>
-	                    <p className={css.name}>{record.productName}</p>
-	                    <p>
-	                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
-	                        ：{record.brandNameCn}
-	                    </p>
-	                    <p>
-	                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
-	                        ：{record.moq}
-	                    </p>
-	                    <p>
-	                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
-	                        ：{record.productNo}</p>
-	                </div>
-                </div>
+			render: (record) => <ProductItem className={css.table_product} product={record}/>
 		}, {
 			title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
 			width: "150px",

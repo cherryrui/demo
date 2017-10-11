@@ -12,32 +12,7 @@
 	padding: 30px 10%;
 }
 .table_product{
-	display: flex;
-	img{
-		border: 1px solid $border-color;
-		flex-shrink: 0;
-		width: 100px;
-		height: 100px;
-	}
-	.info{
-      padding-left: 10px;
-      height: 100px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: left;
-      width: 250px;
-      .name{
-      overflow: hidden;
-    	display: -webkit-box;
-    	-webkit-line-clamp: 1;
-    	-webkit-box-orient: vertical;
-   	 	word-break: break-all;
-      text-overflow: ellipsis;
-    	height: 18px;
-      }
-	}
+	
 }
 .cart_list{
 	th{
@@ -260,6 +235,9 @@
     	width: 40%;
     	border: 1px solid $color-grey;
     	margin: 10px;
+      a{
+       color: $color-red;
+      }
 	}
 	.active{
 		@extend .item;

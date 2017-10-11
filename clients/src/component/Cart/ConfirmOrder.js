@@ -9,6 +9,7 @@ import appcss from '../../App.scss';
 import operator from './operator.js';
 import CusModal from '../Public/CusModal/CusModal.js';
 import cartAction from '../../action/cartAction.js';
+import ProductItem from '../Public/ProductItem/ProductItem.js'
 import {
     Link
 } from 'react-router';
@@ -76,27 +77,11 @@ class ConfirmOrder extends React.Component {
         this.colums_show = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             className: css.table_col,
-            width: "38%",
-            render: (record) => <div className={css.table_product}>
-                <img src={record.coverUrl}/>
-                <div className={css.info}>
-                    <p className={css.name}>{record.productName}</p>
-                    <p>
-                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
-                        ：{record.brandNameCn}
-                    </p>
-                    <p>
-                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
-                        ：{record.moq}
-                    </p>
-                    <p>
-                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
-                        ：{record.productNo}</p>
-                </div>
-            </div>
+            width: "536px",
+            render: (record) => <ProductItem product={record}/>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
-            width: "16%",
+            width: "170px",
             className: css.table_col,
             render: (record) => <div>
                 {record.selectSpecs?record.selectSpecs.map((item,index)=>{
@@ -107,21 +92,21 @@ class ConfirmOrder extends React.Component {
             </div>
         }, {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
-            width: "8%",
+            width: "100px",
             className: css.table_col,
             dataIndex: 'price',
             key: 'price',
             render: (text) => <span className={css.table_price}>${text.toFixed(2)}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
-            width: "18%",
+            width: "100px",
             className: css.table_col,
             dataIndex: 'productNum',
             key: 'productNum',
             render: (num) => <span className={css.table_price}>{num}</span>
         }, {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-            width: "12%",
+            width: "170px",
             className: css.table_col,
             render: (record) => <span className={css.table_price}>${(record.price*record.productNum).toFixed(2)}</span>
         }, ];
@@ -489,9 +474,9 @@ class ConfirmOrder extends React.Component {
                                     {item.paymentModelStages.map(pay=>{
                                         return <p className={this.state.order.stageId==pay.stageId?css.active:css.item}
                                             onClick={this.handlePayMode.bind(this,"stageId",pay.stageId)}>
-                                            <FormattedMessage id="cart.pay.day" defaultMessage="3期"
+                                            <FormattedMessage id="orderlist.pay.payment" values={{stageNum: pay.stageNum}} defaultMessage=""/>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <FormattedMessage tagName='a' id="cart.pay.day" defaultMessage="3期"
                                                 values={{
-                                                    num: pay.stageNum,
                                                     principal: (this.state.order.sum*(1-pay.firstMoney)/pay.stageNum).toFixed(2),
                                                     interest: (this.state.order.sum*(1-pay.firstMoney)*pay.interestRate/pay.stageNum).toFixed(2),
                                                 }}

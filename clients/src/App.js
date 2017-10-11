@@ -451,12 +451,12 @@ ReactDOM.render(
                             <Route path="about" getComponent={About}>
                             </Route>
                             <Route path="news" getComponent={News}/>
+                            <Route path="order-details/:id" getComponent={OrderDetails}/>
                             <Route path="mine" getComponent={Mine}>
                                 <IndexRoute component={PersonCenter}/>
                                 <Route path="message" getComponent={Message}/>
                                 <Route path="system-message" getComponent={SystemMessage}/>
                                 <Route path="order-list" getComponent={OrderList}/>
-                                <Route path="order-details/:id" getComponent={OrderDetails}/>
                                 <Route path="favorite/:type" getComponent={Favorite}/>
                                 <Route path="quotation-list" getComponent={QuotationList}/>
                                 <Route path="product-editor" getComponent={ProductEditor}/>

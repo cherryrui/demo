@@ -4,6 +4,7 @@ import appcss from '../../App.scss';
 import moment from 'moment';
 import axios from 'axios';
 import operator from '../Quotation/operator.js';
+import ProductItem from '../Public/ProductItem/ProductItem.js'
 import {
     FormattedMessage,
 } from 'react-intl';
@@ -29,23 +30,7 @@ class QuotationPdf extends React.Component {
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "38%",
-            render: (record) => <div className={css.table_product}>
-            <img src={record.productUrl} />
-                <div className={css.info}>
-                    <p className={css.name}>{record.productName}</p>
-                    {this.state.select&&this.state.select.brand?<p>
-                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
-                        ：{JSON.parse(record.productBrand).brandNameCn}
-                    </p>:""}
-                    <p>
-                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
-                        ：{record.minBuyQuantity}
-                    </p>
-                    <p className={css.name}>
-                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
-                        ：{record.productNo}</p>
-                </div>
-            </div>
+            render: (record) => <ProductItem className={css.table_product} product={record}/>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
             className: css.table_col,
@@ -72,7 +57,6 @@ class QuotationPdf extends React.Component {
     componentWillMount() {
 
         axios.get('/quotation/get-quotation-byid.json?id=' + this.props.params.id).then(res => {
-
             let select = {};
             if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
                 select = JSON.parse(res.data.result.quotationOrder.exportOption);
@@ -103,8 +87,12 @@ class QuotationPdf extends React.Component {
 
                 }, );
             }
+            let quotation = res.data.result;
+            quotation.productList.map(item => {
+                item.coverUrl = item.productUrl;
+            })
             this.setState({
-                quotation: res.data.result,
+                quotation: quotation,
                 select: select
             })
         })

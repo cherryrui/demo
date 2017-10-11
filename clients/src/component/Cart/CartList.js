@@ -7,6 +7,7 @@ import css from './Cart.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
 import cartAction from '../../action/cartAction.js';
+import ProductItem from '../Public/ProductItem/ProductItem.js'
 import {
     Link
 } from 'react-router';
@@ -55,23 +56,7 @@ class CartList extends React.Component {
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "350px",
             className: css.table_col,
-            render: (record) => <Link to={"page/product-detail/"+record.productId} className={css.table_product}>
-                <img src={record.coverUrl}/>
-                <div className={css.info}>
-                    <p className={css.name}>{record.productName}</p>
-                    <p>
-                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
-                        ：{record.brandNameCn}
-                    </p>
-                    <p>
-                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
-                        ：{record.moq}
-                    </p>
-                    <p>
-                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
-                        ：{record.productNo}</p>
-                </div>
-            </Link>
+            render: (record) => <ProductItem product={record}/>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
             width: "170px",
