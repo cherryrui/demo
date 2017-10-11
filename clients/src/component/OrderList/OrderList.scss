@@ -85,6 +85,15 @@
     color: $theme-color;
     padding-bottom: 5px;
     font-weight: 500;
+    i{
+      font-size: 20px;
+      color: $font-color;
+    }
+  }
+}
+.table_status{
+  img{
+    width: 20px;
   }
 }
 .table_col{

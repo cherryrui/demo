@@ -141,7 +141,6 @@ class CartList extends React.Component {
                     loading: false
                 })
             } else {
-                console.log(res.data.code);
                 if (res.data.code == 104) {
                     this.props.goLink("/login");
                 } else {
@@ -427,7 +426,7 @@ class CartList extends React.Component {
                             defaultMessage="总计"
                             values={{total:this.state.selectedRowKeys.length}}
                         />
-                        :<span className={css.total_money}>${this.state.sum.toFixed(2)}</span>
+                        ：<span className={css.total_money}>${this.state.sum.toFixed(2)}</span>
                     </p>
                     <p className={css.quotation} onClick={this.goQuotation.bind(this)}>
                         <FormattedMessage id="quotation.generate" defaultMessage="我的购物车"/>

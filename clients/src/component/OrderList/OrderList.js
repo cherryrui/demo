@@ -75,7 +75,8 @@ class OrderList extends React.Component {
                 key: 'createTime',
                 className: css.table_col,
                 render: (text) => <div>
-                    {moment(text).format('YYYY-MM-DD')}
+                    <p>{moment(text).format('YYYY-MM-DD ')}</p>
+                    <p>{moment(text).format(' hh:MM:ss')}</p>
                 </div>
             }, {
                 title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
@@ -87,7 +88,7 @@ class OrderList extends React.Component {
                     {operator.order_status.map(item=>{
                         if(text == item.value){
                             return <Tooltip title={this.formatMessage({id: item.key})}>
-                                <i class={item.icon}></i>
+                                <img src={item.icon}/>
                             </Tooltip>
                         }
                     })}
@@ -98,11 +99,11 @@ class OrderList extends React.Component {
                 className: css.table_col,
                 render: (record) => <span className={css.table_operation}>
                     <Link to={"page/mine/order-details/"+record.orderId} className={css.operation_text}>
-                        <Icon style={{fontSize: 18,color:"#636363",paddingRight:5}} type="file-text" />
+                        <i class="iconfont icon-DYC-23"/>
                         <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                     </Link>
                     <p>
-                        <Button style={{width:70,fontSize:14,border:"none"}}type="primary">
+                        <Button size="small" style={{width:70,fontSize:14,border:"none"}} type="primary">
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
                         </Button>
                     </p>
@@ -140,7 +141,7 @@ class OrderList extends React.Component {
             } else if (res.data.isSucc) {
                 this.setState({
                     orders: res.data.result.list,
-                    total: 23,
+                    total: res.data.result.allRow,
                 })
             } else {
                 message.error(res.data.message);
