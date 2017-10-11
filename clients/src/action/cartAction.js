@@ -25,8 +25,15 @@ const deleteCart = param => dispatch => {
         payload: axios.post('/cart/delete-cart.json', param)
     })
 }
+const commitOrder = param => dispatch => {
+    return dispatch({
+        type: "COMMIT_CART",
+        payload: axios.post('/order/commit-order.json', param)
+    })
+}
 export default {
     getShoppingCart,
     addCart,
-    deleteCart
+    deleteCart,
+    commitOrder
 }

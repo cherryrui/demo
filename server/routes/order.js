@@ -35,12 +35,17 @@ router
 	.post('/commit-order.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
-		console.log(38, url);
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url + '/auth/order/generateOrder', querystring.stringify(param)).then(res => {
 			console.log('generateOrder:', res.data)
 			result = res.data;
+			result.order = result.result;
 		})
+		if (result.isSucc) {
+			await axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
+				result.result = res.data.result;
+			})
+		}
 		ctx.body = result;
 	})
 	.get('/get-pay-way.json', async(ctx, next) => {
@@ -73,7 +78,7 @@ router
 				uri += "/auth/order/queryUserOrderByOrderStatus";
 			}
 			await axios.post(uri, querystring.stringify(param)).then(res => {
-			/*console.log(69, res.data)*/
+				/*console.log(69, res.data)*/
 				result = res.data;
 			})
 		} else {

@@ -8,6 +8,7 @@ import css from './Cart.scss';
 import appcss from '../../App.scss';
 import operator from './operator.js';
 import CusModal from '../Public/CusModal/CusModal.js';
+import cartAction from '../../action/cartAction.js';
 import {
     Link
 } from 'react-router';
@@ -37,9 +38,19 @@ const FormItem = Form.Item;
 const {
     TextArea
 } = Input;
+import {
+    connect
+} from 'react-redux';
 
+@connect(state => ({
+    carts: state.carts
+}), cartAction)
 class ConfirmOrder extends React.Component {
 
+    static propTypes = {
+        intl: intlShape.isRequired,
+        commitOrder: React.PropTypes.func.isRequired
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -125,11 +136,10 @@ class ConfirmOrder extends React.Component {
             sum += item.price * item.productNum;
         })
         order.sum = sum;
-        order.postage = 100;
+        order.postage = 0;
         order.total = order.sum + order.postage;
         order.sum = order.sum.toFixed(2);
         order.total = order.total.toFixed(2);
-        //console.log(order.total.toFixed(2));
         axios.get('/user/get-city-by-parent.json').then(res => {
             console.log('get-city-parent:', JSON.parse(res.data.address.result));
             let address = this.convertData(JSON.parse(res.data.address.result));
@@ -174,27 +184,24 @@ class ConfirmOrder extends React.Component {
         })
     }
     convertData(data) {
-        data.map(item => {
-            item.value = item.v;
-            item.label = item.n;
-            item.children = item.s;
-            if (item.children && item.children.length > 0) {
-                this.convertData(item.children);
-            } else {
-                return data;
-            }
-        })
-        return data;
-    }
-
-
-
-    /**
-     * 保存订单相关信息
-     * @param  {[type]} name [description]
-     * @param  {[type]} mode [description]
-     * @return {[type]}      [description]
-     */
+            data.map(item => {
+                item.value = item.v;
+                item.label = item.n;
+                item.children = item.s;
+                if (item.children && item.children.length > 0) {
+                    this.convertData(item.children);
+                } else {
+                    return data;
+                }
+            })
+            return data;
+        }
+        /**
+         * 保存订单相关信息
+         * @param  {[type]} name [description]
+         * @param  {[type]} mode [description]
+         * @return {[type]}      [description]
+         */
     handlePayMode = (name, mode) => {
         let order = this.state.order;
         if (name === 'note') {
@@ -244,15 +251,16 @@ class ConfirmOrder extends React.Component {
             param.itemNumbers = param.itemNumbers.join(",");
             param.productIds = param.productIds.join(",");
             param.productNumbers = param.productNumbers.join(",");
-            axios.post('/order/commit-order.json', param).then(res => {
+            this.props.commitOrder(param).then(res => {
+                console.log(res);
                 this.setState({
                     loading: false,
                 })
-                if (res.data.isSucc) {
+                if (res.value.data.isSucc) {
                     sessionStorage.removeItem("products");
-                    this.props.handleStep ? this.props.handleStep(1, res.data.result) : '';
+                    this.props.handleStep ? this.props.handleStep(1, res.value.data.order) : '';
                 } else {
-                    message.error(res.data.message);
+                    message.error(res.value.data.message);
                 }
 
             })

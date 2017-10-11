@@ -18,6 +18,8 @@ export default (state = initialState, action) => {
             return action.payload.data;
         case 'DELETE_CART_FULFILLED':
             return action.payload.data;
+        case 'COMMIT_CART_FULFILLED':
+            return action.payload.data;
         default:
             return state;
     }
