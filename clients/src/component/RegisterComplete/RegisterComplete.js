@@ -25,6 +25,10 @@ class RegisterComplete extends React.Component {
         window.location.href = "/#/page"
     };
 
+    handleCertification = () =>{
+        window.location.href = "/#/page/mine"
+    }
+
 
     render() {
         return (
@@ -45,6 +49,9 @@ class RegisterComplete extends React.Component {
                     <div className={css.footer}>
                         <Button type="primary" onClick={this.handleClick} className={css.reqister_Button}>
                             <FormattedMessage id="register.go.login" defaultMessage="去登录"/>
+                        </Button>
+                        <Button type="primary" onClick={this.handleCertification} className={css.reqister_Button}>
+                            <FormattedMessage id="persondata.go.certification" defaultMessage="去认证"/>
                         </Button>
                     </div>
                 </div>
