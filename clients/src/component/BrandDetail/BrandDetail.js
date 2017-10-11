@@ -44,7 +44,8 @@ class BrandDetail extends React.Component {
 				
 				this.setState({
 					category : re.data.result,
-					brand : res.data.result
+					brand : res.data.result,
+					total: res.data.result.allRow
 				})
 				/*console.log(this.state.category[0].categoryId);*/
 				this.getProduct();
@@ -141,8 +142,8 @@ class BrandDetail extends React.Component {
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
                     <Breadcrumb.Item >
-						<Link to="/main">
-                            <FormattedMessage id="app.category" defaultMessage="分类"/>
+						<Link to="/page">
+                            <FormattedMessage id="app.home" defaultMessage="首页"/>
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
@@ -153,7 +154,7 @@ class BrandDetail extends React.Component {
             <div className={css.brand_info}>
                 <div className={css.img}>
             		<img src={this.state.brand.imgUrl}/>
-            		<p className={css.foot}>
+            		<p className={css.star}>
                 		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
                 		<Rate className={css.rating} allowHalf defaultValue={this.state.brand.level} disabled />
                 		<span>{this.state.brand.level}</span>
@@ -192,9 +193,9 @@ class BrandDetail extends React.Component {
                                 handleSort={this.handleSort.bind(this,item.key)}/>
                         })}
                 </div>
-                <div className={css.right}>
+                <div className={css.right}>{console.log(this.state.total)}
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"
-                        values={{total:this.state.total}}
+                        values={{total:(this.state.total==0?"0":this.state.total)}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
                     <Pagination size="small" total={this.state.total} simple onChange={this.handleChange}  />
                 </div>

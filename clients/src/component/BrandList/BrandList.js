@@ -142,8 +142,8 @@ class BrandList extends React.Component {
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>" style={{marginBottom: "10px"}}>
                     <Breadcrumb.Item >
-                        <Link to="/main">
-                            <FormattedMessage id="app.category" defaultMessage="分类"/>
+                        <Link to="/page">
+                            <FormattedMessage id="app.home" defaultMessage="首页"/>
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
@@ -173,7 +173,7 @@ class BrandList extends React.Component {
                             handleSort={this.handleSort.bind(this,item.key)}/>
                     })}
                 </div>
-                <div className={css.right}>{console.log(this.state)}
+                <div className={css.right}>
                     <FormattedMessage id="brand.product.sum" defaultMessage="共{total}商品"
                         values={{total:this.state.total}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;

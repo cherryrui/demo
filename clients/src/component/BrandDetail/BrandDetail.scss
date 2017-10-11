@@ -62,7 +62,13 @@
     display: flex;
   }
   .item{
-    padding: 0 15px;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+  .item_active{
+    @extend .item;
+    color: $theme-color;
+    text-decoration: underline;
   }
   .right{
     display: flex;
