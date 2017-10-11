@@ -210,9 +210,9 @@ class QuotationList extends React.Component {
             		</div>
             		<div className={css.quotation_item_body}>
             			<p className={css.item_info}>
-            				<div className={css.item_img}>
+
             					<img src={item.img}/>
-            				</div>
+
             				<div>
 	            				<FormattedMessage id="quotation.subject" defaultMessage="报价单名称"/>
 	            				:{item.subject}
