@@ -95,9 +95,33 @@ class Supplier extends React.Component {
     this.state = {
       confirmDirty: false,
       autoCompleteResult: [],
+      address_option: []
     }
 
   }
+  componentWillMount() {
+        axios.get('/user/get-city-by-parent.json').then(res => {
+            console.log('get-city-parent:', JSON.parse(res.data.address.result));
+            let address = this.convertData(JSON.parse(res.data.address.result));
+            console.log(address);
+            this.setState({
+                address_option: address,
+            })
+        })
+    }
+    convertData(data) {
+            data.map(item => {
+                item.value = item.v;
+                item.label = item.n;
+                item.children = item.s;
+                if (item.children && item.children.length > 0) {
+                    this.convertData(item.children);
+                } else {
+                    return data;
+                }
+            })
+            return data;
+        }
   handleChange = (info) => {
     if (info.file.status === 'done') {
       // Get this url from response in real world.
@@ -310,7 +334,7 @@ class Supplier extends React.Component {
                   rules: [{ type: 'array', required: true, message: 'agent.select.region'
                   }],
               })(
-                  <Cascader options={residences} className={css.supplier_input}/>
+                  <Cascader options={this.state.address_option} className={css.supplier_input}/>
               )}
                         </FormItem>
                         <FormItem

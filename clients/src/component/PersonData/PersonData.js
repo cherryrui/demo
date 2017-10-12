@@ -79,26 +79,42 @@ class PersonData extends React.Component{
     static propTypes = {
         intl: intlShape.isRequired
     };
+
     constructor(props){
         super(props);
         this.state={
             edit: false,
             button_name: "persondata.modify",
-            person_data:{
-                user:1,//用户类型1企业用户2个人用户，
-                num:4365475668,
-                certification:3,///1去认证/2正在审核，3已认证，
-                suer_name:"反对广泛覆盖",
-                tel:123456778,
-                email:"567809@qq.com",
-                options: [1],
-                address:"xxxxxxxxxxxxxxxxxxxxxxxxxx",
-                real_name:"张三",//真实姓名，
-                position:"文员"
-            }
-        };
+            user: JSON.parse(sessionStorage.user),
+            address_option: [],
+        };console.log(this.state.user)
 
     }
+    componentWillMount() {
+        axios.get('/user/get-city-by-parent.json').then(res => {
+            console.log('get-city-parent:', JSON.parse(res.data.address.result));
+            let address = this.convertData(JSON.parse(res.data.address.result));
+            console.log(address);
+            let person_data = this.state.person_data;
+            /*person_data.options = address;*/
+            this.setState({
+                address_option: address,
+            })
+        })
+    }
+    convertData(data) {
+            data.map(item => {
+                item.value = item.v;
+                item.label = item.n;
+                item.children = item.s;
+                if (item.children && item.children.length > 0) {
+                    this.convertData(item.children);
+                } else {
+                    return data;
+                }
+            })
+            return data;
+        }
     handleClick = () => {
         if(this.state.edit){
             console.log("baocun")
@@ -130,24 +146,24 @@ class PersonData extends React.Component{
                     <span className={css.title}>
                         <FormattedMessage  className={css.title} id="persondata.user.style" defaultMessage="类型"/>:
                     </span>
-                    {this.state.person_data.user==1? <span
+                    {this.state.user.userType==1? <span
                         className={css.text}>{formatMessage({id: 'persondata.enterprise.user'})}
                     </span>
-                    :this.state.person_data.user==2?<span
+                    :<span
                         className={css.text}>{formatMessage({id: 'indivdual.user'})}
-                    </span>:""}
+                    </span>}
                 </p>
                 <p  className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="persondata.account.number" defaultMessage="账户"/>:
                     </span>
-                    <span className={css.text}>{this.state.person_data.num}</span>
+                    <span className={css.text}>{this.state.user.uid}</span>
                 </p>
                 <p className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="persondata.certification" defaultMessage="认证"/>:
                     </span>
-                    {this.state.person_data.certification==1?
+                    {this.state.user.isAuthentication==1?
                     <span className={css.text}>
                             <span  className={css.text_certification}>
                                 {formatMessage({id: 'persondata.go.certification'})}
@@ -156,11 +172,11 @@ class PersonData extends React.Component{
                                     <FormattedMessage  id="persondata.certification" defaultMessage="认证"/>
                             </Button>
                     </span>
-                            :this.state.person_data.certification==2?<span
+                            :this.state.user.isAuthentication==2?<span
                                  className={css.text} style={{ color: '#ffa300' }}>
                                 {formatMessage({id: 'persondata.under.review'})}
                             </span>
-                            :this.state.person_data.certification==3?<span
+                            :this.state.user.isAuthentication==3?<span
                                  className={css.text}>
                                  {formatMessage({id: 'persondata.certificationed'})}
                             </span>:""
@@ -170,7 +186,7 @@ class PersonData extends React.Component{
                     <span className={css.title}>
                         <FormattedMessage  id="quotation.contact.tel" defaultMessage="电话"/>:
                     </span>
-                    <span className={css.text}>{this.state.person_data.tel}</span>
+                    <span className={css.text}>{this.state.user.tel}</span>
                 </p>
                 <p  className={css.info}>
                     <span className={css.title}>
@@ -179,10 +195,10 @@ class PersonData extends React.Component{
                     {this.state.edit?<span className={css.text}>
                         <Input
                             style={{ width: '100%' }}
-                            defaultValue={this.state.person_data.email}
+                            defaultValue={this.state.user.email}
                         />
                     </span>
-                    :<span className={css.text}>{this.state.person_data.email}
+                    :<span className={css.text}>{this.state.user.email}
                     </span>
                     }
                 </p>
@@ -192,7 +208,7 @@ class PersonData extends React.Component{
                             <FormattedMessage  id="certif.company.region" defaultMessage="城市"/>:
                         </span>
                         <span className={css.text}>
-                            <Cascader style={{ width: '100%'}} options={options}
+                            <Cascader style={{ width: '100%'}} options={this.state.address_option}
                             />
                         </span>
                 </p>:
@@ -205,16 +221,16 @@ class PersonData extends React.Component{
                     {this.state.edit?<span className={css.text}>
                         <Input
                             style={{ width: '100%' }}
-                            defaultValue={this.state.person_data.address}
+                            defaultValue={this.state.user.address}
                         />
                     </span>
                     :<span className={css.text}>
-                        {this.state.person_data.options}&nbsp;&nbsp;
-                        {this.state.person_data.address}
+                        {this.state.address_option}&nbsp;&nbsp;
+                        {this.state.user.address}
                     </span>
                     }
                 </p>
-                {this.state.person_data.user == 1 ? <div>
+                {this.state.user.userType == 1 ? <div>
                 <p  className={css.info}>
                     <span className={css.title}>
                       <FormattedMessage  id="persondata.real.name" defaultMessage="真实姓名"/>:
@@ -222,11 +238,11 @@ class PersonData extends React.Component{
                     {this.state.edit?<span className={css.text}>
                         <Input
                             style={{ width: '100%' }}
-                            defaultValue={this.state.person_data.real_name}
+                            defaultValue={this.state.user.realName}
                         />
                     </span>:
                      <span className={css.text}>
-                         {this.state.person_data.real_name}
+                         {this.state.user.realName}
                      </span>
                     }
                 </p>
@@ -242,12 +258,12 @@ class PersonData extends React.Component{
                         />
                     </span>
                     :<span className={css.text}>
-                           {this.state.person_data.position}
+                           {this.state.position}
                     </span>
                     }
                 </p>
                 </div>
-                :this.state.person_data.user == 2 ?
+                :this.state.user.userType == 2 ?
                 <div></div>:""
                 }
                 <p className={css.button_person}>
