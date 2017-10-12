@@ -6,6 +6,9 @@ import axios from 'axios';
 import operator from '../Quotation/operator.js';
 import ProductItem from '../Public/ProductItem/ProductItem.js'
 import {
+    Link
+} from 'react-router';
+import {
     FormattedMessage,
 } from 'react-intl';
 
@@ -30,7 +33,23 @@ class QuotationPdf extends React.Component {
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "38%",
-            render: (record) => <ProductItem className={css.table_product} product={record}/>
+            render: (record) => <Link to={"page/product-detail/"+record.productId} className={css.table_product}>
+                <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
+                <div className={css.info}>
+                    <p className={css.name}>{record.productName}</p>
+                    <p>
+                        <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>：
+                        {locale=="en"?record.brandNameEn:record.brandNameCn}
+                    </p>
+                    {this.props.hiddenMoq?"":<p>
+                        <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+                        ：{record.moq}
+                    </p>}
+                    <p>
+                        <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+                        ：{record.productNo}</p>
+                </div>
+            </Link>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
             className: css.table_col,

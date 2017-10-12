@@ -117,7 +117,7 @@
 }
 %button{
     padding: 10px 20px;
-    color: white;
+    color: white !important;
     border-radius: 2px !important;
     display: inline-block;
     cursor: pointer;
@@ -139,7 +139,7 @@
   }
 }
 .button_theme:hover{
-  background-color: $button-blue-active !important;
+    background-color: $button-blue-active !important;
     border-color: $button-blue-active !important;
     @extend %button;
 }

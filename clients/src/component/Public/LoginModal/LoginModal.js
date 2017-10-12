@@ -31,7 +31,6 @@ class LoginModal extends React.Component {
 		this.state = {
 			loading: false
 		}
-		console.log(this.props, props)
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
@@ -46,7 +45,6 @@ class LoginModal extends React.Component {
 					if (res.data.isSucc) {
 						if (values.remember) {
 							localStorage.setItem('uid', res.data.result.uid);
-							console.log('uid', res.data.result.uid);
 						} else {
 							localStorage.setItem('uid', null);
 						}
@@ -85,8 +83,7 @@ class LoginModal extends React.Component {
             visible={this.props.visible}>
 				<Form onSubmit={this.handleSubmit} className={css.login_form}>
 					<FormItem>
-
-                </FormItem>
+                	</FormItem>
                     <FormItem>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: this.formatMessage({id: 'login.input.name'}) }],

@@ -29,6 +29,32 @@
   }
 .table_product{
   width: 350px;
+  display: flex;
+  img{
+    border: 1px solid $border-color;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+  }
+  .info{
+      padding-left: 10px;
+      height: 100px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      width: 100%;
+      .name{
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      height: 20px;
+      }
+  }
 }
 .table_col{
   text-align: center !important;

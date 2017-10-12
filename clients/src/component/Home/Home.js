@@ -53,6 +53,8 @@ class Home extends React.Component {
             showCategory: false
 
         };
+        this.timer = false;
+        this.cate_enter = false;
         this.tabs = [{
             key: 1,
             message_id: "app.home",
@@ -146,22 +148,27 @@ class Home extends React.Component {
         })
     }
     onMouse = (e) => {
-        console.log(e, this.state.showCategory, this.state.cate_enter);
-        if (e == "enter" && !this.state.showCategory) {
+        if (e == "enter") {
+            console.log(this.timer);
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
             this.handleShow(true)
         }
         if (e == 'leave') {
-            setTimeout(() => {
-                if (this.state.showCategory && !this.state.cate_enter) {
+            this.timer = setTimeout(() => {
+                if (this.state.showCategory && !this.cate_enter) {
                     this.handleShow(false);
+
                 }
             }, 3000);
         }
+
         if (e == "cate_enter") {
-            this.state.cate_enter = true;
+            this.cate_enter = true;
         }
         if (e == "cate_leave" && this.state.showCategory) {
-            this.state.cate_enter = false;
+            this.cate_enter = false;
             this.handleShow(false)
         }
     }
@@ -223,7 +230,7 @@ class Home extends React.Component {
             <div className={css.header_content}>
                 <div className={css.left}>
                     <p onClick={this.goHome} className={css.logo}>LOGO</p>
-                    <p onMouseEnter={this.onMouse.bind(this,"enter")} onMouseLeave={this.onMouse.bind(this,"leave")} onClick={this.handleCategory} className={this.state.index == 0 ? css.active : css.title}>  
+                    <p onMouseEnter={this.onMouse.bind(this,"enter")} onMouseLeave={this.onMouse.bind(this,"leave")} className={this.state.index == 0 ? css.active : css.title}>  
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                         &nbsp;&nbsp;
                         <Icon type="caret-down" />

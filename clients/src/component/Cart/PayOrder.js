@@ -48,26 +48,24 @@ class PayOrder extends React.Component {
     }
 
     handlePay = () => {
-        if(this.state.pay_mode == 0){
+        if (this.state.pay_mode == 0) {
             message.error(this.formatMessage({
-                    id: "cart.pay.way"
+                id: "cart.pay.way"
             }))
-        }else{
+        } else {
             let param = {
-            orderId: this.props.order.orderId,
-            payWayId: this.state.pay_mode
+                orderId: this.props.order.orderId,
+                payWayId: this.state.pay_mode
             };
             axios.post('/order/pay-order.json', param).then(res => {
                 if (res.data.isSucc) {
                     this.props.handleStep ? this.props.handleStep(1) : "";
                 } else {
-                    message.error(this.formatMessage({
-                        reason: res.data.message
-                    }))
+                    message.error(res.data.message)
                 }
             })
         }
-        
+
 
     }
     handleBack = () => {

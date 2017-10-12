@@ -113,6 +113,19 @@ class OrderList extends React.Component {
         ];
     }
 
+    goTop = () => {
+        //设置定时器
+        let timer = setInterval(() => {
+            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var speed = Math.floor(-osTop / 6); //速度随距离动态变化，越来越小
+            document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
+            let isTop = true;
+            if (osTop == 0) {
+                clearInterval(timer); //回到顶部时关闭定时器
+            }
+        }, 30)
+    }
+
     componentWillMount() {
         this.searchOrder();
     }
@@ -139,6 +152,7 @@ class OrderList extends React.Component {
                     visible: true
                 })
             } else if (res.data.isSucc) {
+                this.goTop();
                 this.setState({
                     orders: res.data.result.list,
                     total: res.data.result.allRow,
@@ -156,7 +170,6 @@ class OrderList extends React.Component {
     jump = (e) => {
         this.props.history.pushState(null, "/page/mine/order-details");
     }
-    callback = () => {}
     handleCancel = (item) => {
         console.log(item);
         this.setState({
@@ -164,7 +177,6 @@ class OrderList extends React.Component {
         })
     }
     handleBar = (key) => {
-        console.log(key);
         this.setState({
             current: key
         }, () => {
@@ -186,7 +198,7 @@ class OrderList extends React.Component {
         }
     }
     render() {
-        return <div className={css.order_list}>
+        return <div className={css.order_list} ref={(order_list)=>this.order_list = order_list}>
             <div className={basecss.child_title}>
                 <FormattedMessage  id="orderlist.all.order" defaultMessage="所有订单"/>
                 <Search
@@ -205,7 +217,9 @@ class OrderList extends React.Component {
                     pagination={false}
                     rowKey="orderId"
                     columns={this.colums_show}
-                    dataSource={this.state.orders} />
+                    dataSource={this.state.orders}
+                    scroll={{y: 100}}
+                />
             </div>
             <div className={css.Pagination}> 
                 <Pagination showSizeChanger 

@@ -41,10 +41,6 @@ import ProductItem from '../Public/ProductItem/ProductItem.js'
 const {
     TextArea
 } = Input;
-
-function onShowSizeChange(current, pageSize) {
-    console.log(current, pageSize);
-}
 class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
@@ -125,8 +121,10 @@ class OrderDetails extends React.Component {
         })
     }
 
-    callback = () => {
-
+    handleClick = (type) => {
+        if (type == 1) {
+            this.props.history.pushState(null, "page/mine/order-list");
+        }
     }
     handlePayMode = (name, key) => {
         let order = this.state.order;
@@ -229,7 +227,7 @@ class OrderDetails extends React.Component {
             </div>
             <div className={css.pay_footer}>
                 <a className={css.preview}><FormattedMessage id="orderdetails.preview" defaultMessage="预览贸易合同"/></a>
-                <Button size="large" onClick={this.jump} type="primary" className={css.button_order}>
+                <Button size="large" onClick={this.handleClick.bind(this,1)} type="primary" className={css.button_order}>
                     <FormattedMessage  id="orderdetails.return" defaultMessage="返回"/>
                 </Button>
                 <Button size="large" type="primary" className={css.button_order}>

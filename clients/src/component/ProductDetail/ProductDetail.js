@@ -63,12 +63,13 @@ class ProductDetail extends React.Component {
             curImg: '', //當前选中的图片
             index_img: 0, //選中的圖片index
             visible: false,
-            current: 0,
+            current: 1,
             productInfo: [],
             properties: [],
             specs: [],
             prices: [],
             packInfo: {},
+            disabled: false,
         }
     }
 
@@ -123,6 +124,11 @@ class ProductDetail extends React.Component {
 
     };
     handleNum = (value) => {
+        if (value < 0) {
+            value = 0;
+        } else if (value > this.state.product.inventory) {
+            value = this.state.product.inventory;
+        }
         this.state.product.productNum = value;
     };
 
@@ -378,16 +384,16 @@ class ProductDetail extends React.Component {
                             {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} max={this.state.product.inventory} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
                         <div className={css.bottom_right}>
-                            <p className={appcss.button_green} onClick={this.handleAddCart.bind(this,1)}>
+                            <Button disabled={this.state.disabled} className={appcss.button_green} onClick={this.handleAddCart.bind(this,1)}>
                                 <Icon type="shopping-cart" />
                                 &nbsp;&nbsp;
                                 <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
-                            </p>
-                            <p className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
+                            </Button>
+                            <Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
                                 <Icon type="shopping-cart" />
                                 &nbsp;&nbsp;
                                 <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
-                            </p>
+                            </Button>
                         </div>
                     </div>
                 </div>

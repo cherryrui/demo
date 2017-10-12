@@ -8,12 +8,10 @@ import {
 } from 'react-intl';
 
 class ProductItem extends React.Component {
-
-
     render() {
         return <div className={this.props.className}>
 			<Link to={"page/product-detail/"+this.props.product.productId} className={css.table_product}>
-                <img src={this.props.product.coverUrl}/>
+                <img src={this.props.product.coverUrl+"@100w_100h_1e_1c.png"}/>
                 <div className={css.info}>
                     <p className={css.name}>{this.props.product.productName}</p>
                     <p>
