@@ -99,6 +99,28 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
+	.post('/del-address-byids',async(ctx, body) =>{
+		let id = ctx.request.body,
+            result;
+            console.log(id)
+            let param = {
+            	addressIds:id.ids
+            };
+        if (ctx.cookie.get("token")) {
+            axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+            await axios.post(url + "/auth/userAddress/deleteAddress", querystring.stringify(
+                param
+            )).then(res => {
+                result = res.data
+            })
+        } else {
+            result = {
+                isSucc: false,
+                code: 104
+            }
+        }
+        ctx.body = result;
+	})
 	.post('/repassword.json', async(ctx) => {
 		let result = null;
 		if (newPwd) {
