@@ -126,13 +126,13 @@ class QuotationPdf extends React.Component {
         var h = content.clientHeight;
         //要将 canvas 的宽高设置成容器宽高的 2 倍
         var canvas = document.createElement("canvas");
-        canvas.width = w * 3;
-        canvas.height = h * 3;
+        canvas.width = w * 2;
+        canvas.height = h * 2;
         canvas.style.width = w + "px";
         canvas.style.height = h + "px";
         var context = canvas.getContext("2d");
         //然后将画布缩放，将图像放大两倍画到画布上
-        context.scale(3, 3);
+        context.scale(2, 2);
 
         html2canvas(document.getElementById("content"), {
             onrendered: (canvas) => {
@@ -176,7 +176,7 @@ class QuotationPdf extends React.Component {
                 })
             },
             tainttest: true, //检测每张图片都已经加载完
-            logging: true, //日志开关，发布的时候记得改成false
+            logging: false, //日志开关，发布的时候记得改成false
             background: '#FFFFFF',
             useCORS: true,
         });
