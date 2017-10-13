@@ -317,7 +317,11 @@ const zh_CN = {
     "orderlist.order.operation": "操作",
     "orderlist.order.view": "查看",
     "orderlist.all.order": "所有订单",
-    "orderlist.unpay": "未付款订单",
+    "orderlist.unconfirm.unpay": "未确认未付款订单",
+    "orderlist.unconfirm.payed": "未确认已付款订单",
+    "orderlist.confirmed.unpay": "已确认未付款订单",
+    "orderlist.confirmed.instal.unpay": "已确认部分付款订单",
+    "orderlist.confirmed.unpayed": "已确认已付款订单",
     "orderlist.instal.unpay": "分期未付款订单",
     "orderlist.need.pay": "需付款",
     "orderlist.pay.full": "全款",
@@ -471,12 +475,16 @@ const zh_CN = {
     "app.products": "产品",
     "app.demand.management": "需求管理",
     "app.requirements": "需求",
-    "app.processing": "需求管理",
-    "app.processed": "需求",
+    "app.processing": "审核中",
+    "app.processed": "已通过审核",
     "app.goods": "商品",
     "quotation.all_quotation": "全部报价",
     "post.linkman.info":"请输入联系人",
     "post.select.file":"选择文件",
-    "post.fill.again":"嗨，请 {click} 这里下载我们的表格，填好再上传"
+    "post.fill.again":"嗨，请 {click} 这里下载我们的表格，填好再上传",
+    "app.proval": "已上架",
+    "app.provaling":"审核中",
+    "app.not.provaled":"审核没通过",
+    "app.not.review":"没有审核 "
 }
 export default zh_CN;

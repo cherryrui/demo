@@ -308,7 +308,11 @@ const en_US = {
     "orderlist.order.operation": "操作",
     "orderlist.order.view": "View",
     "orderlist.all.order": "All Order",
-    "orderlist.unpay": "No payment unprocessed",
+    "orderlist.unconfirm.unpay": "unconfirm unpay",
+    "orderlist.unconfirm.payed": "unconfirm payed",
+    "orderlist.confirmed.unpay": "confirmed .unpay",
+    "orderlist.confirmed.instal.unpay": "confirmed instal unpay",
+    "orderlist.confirmed.unpayed": "confirmed unpayed",
     "orderlist.instal.unpay": "Partial payment unprocessed",
     "orderlist.need.pay": "Paid unprocessed",
     "orderlist.settled": "Settled order",
@@ -477,6 +481,10 @@ const en_US = {
     "quotation.all_quotation": "All quotation",
    "post.linkman.info":"Please enter the contact person" ,
     "post.select.file":"Select file",
-    "post.fill.again":"Hi,Please{click} to download our form and fill it out"
+    "post.fill.again":"Hi,Please {click} to download our form and fill it out",
+    "app.proval": "proval",
+    "app.provaling":"provaling",
+    "app.not.provaled":"not provaled",
+    "app.not.review":"not review"
 }
 export default en_US;

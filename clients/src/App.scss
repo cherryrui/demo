@@ -123,10 +123,11 @@
     cursor: pointer;
 }
 .button_theme{
+  @extend %button;
     background-color: $button-blue !important;
     border-color: $button-blue !important;
   border-radius: 2px !important;
-    @extend %button;
+
 }
 .quit_modal{
    padding: 10px;
@@ -142,6 +143,17 @@
     background-color: $button-blue-active !important;
     border-color: $button-blue-active !important;
     @extend %button;
+}
+.button_radius{
+  @extend %button;
+  width: 200px  !important;
+  border-radius: 30px  !important;
+}
+.button_radius:hover{
+  @extend %button;
+  width: 200px  !important;
+  border-radius: 30px  !important;
+  background-color: $button-blue-active !important;
 }
 .button_green{
     @extend %button;
