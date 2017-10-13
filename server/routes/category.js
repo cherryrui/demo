@@ -103,35 +103,11 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 	})
 	.get('/get-agent-category.json', async(ctx, next) => {
-		let category = [];
-		category = [{
-			id: 1,
-			name: "一级分类1"
-		}, {
-			id: 2,
-			name: "一级分类2"
-		}, {
-			id: 3,
-			name: "一级分类3"
-		}, {
-			id: 4,
-			name: "一级分类4"
-		}, {
-			id: 5,
-			name: "一级分类5"
-		}, {
-			id: 6,
-			name: "一级分类6"
-		}, {
-			id: 7,
-			name: "Category name"
-		}, {
-			id: 8,
-			name: "Category name"
-		}, ]
-		ctx.body = {
-			category: category
-		}
+		let result = null;
+		await axios.get(url+'/category/queryLevelOneProductCategoryList').then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
 	})
 
 module.exports = router;

@@ -95,8 +95,13 @@ class Supplier extends React.Component {
     this.state = {
       confirmDirty: false,
       autoCompleteResult: [],
-      address_option: []
+      address_option: [],
+      category_onelist : [],
+      category_twolist : [],
     }
+    this.select_address = [];
+    this.select_levelone = [];
+    this.select_leveltwo = [];
 
   }
   componentWillMount() {
@@ -107,6 +112,17 @@ class Supplier extends React.Component {
             this.setState({
                 address_option: address,
             })
+        })
+        axios.get('/category/get-agent-category.json').then(res =>{
+            if(res.data.isSucc){
+              this.setState({
+                category_onelist:res.data.result
+              })
+            }else{
+              message.error({
+                reason:res.data.message
+              })
+            }
         })
     }
     convertData(data) {
@@ -133,8 +149,52 @@ class Supplier extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
+      console.log(values)
       if (!err) {
         console.log('Received values of form: ', values);
+        let param = values;
+        /*if(this.select_address.length>0){
+          param.country = this.select_address[0].label;
+                    param.countryId = this.select_address[0].value;
+                    param.province = this.select_address.length > 1 ? this.select_address[1].label : "";
+                    param.provinceId = this.select_address.length > 1 ? this.select_address[1].value : 0;
+                    param.city = this.select_address.length > 2 ? this.select_address[2].label : "";
+                    param.cityId = this.select_address.length > 2 ? this.select_address[2].value : 0;
+                    param.district = this.select_address.length > 3 ? this.select_address[3].label : "";
+                    param.districtId = this.select_address.length > 3 ? this.select_address[3].value : 0;
+        }*/
+        param.country = values.residence[0];
+        param.province = values.residence[1];
+        param.city = values.residence[2];
+        param.district = values.residence[3];
+        param.supplierName = values.company_name;
+        param.imgUrl = '12345.png';
+        param.contactPerson = values.person;
+        param.contactPhone = values.phone;
+        param.email = values.person;
+        param.address = values.address;
+        param.website = values.website;
+        param.businessLicense = '123.png';
+        param.businessLicenseB = '123.png';
+        param.legalPerson = values.legal_person;
+        param.cardId = values.id_No;
+        param.introduction = values.products;
+        param.payWay = values.payWay;
+        param.transportWay = values.transportWay;
+        param.LevelOneProductCategorys = `${values.levelone[0]},${values.levelone[1]},${values.levelone[2]},${values.levelone[3]}`;
+        param.LevelTwoProductCategorys = `${values.leveltwo[0]},${values.leveltwo[1]},${values.leveltwo[2]},${values.leveltwo[3]}`;
+        
+        console.log(param)
+        axios.post('/user/supplier-register.json',param).then(res =>{
+          console.log(res.data);
+          if(res.data.isSucc){
+            this.jump();
+          }else{
+            message.error({
+              reason:res.data.message
+            })
+          }
+        })
       }
     });
   }
@@ -166,6 +226,20 @@ class Supplier extends React.Component {
       autoCompleteResult
     });
   }
+
+  changeAddress = (value, selectedOptions) => {
+        console.log(value, selectedOptions)
+        this.select_address = selectedOptions;
+  }
+  changeLevelone = (value, selectedOptions) => {
+        this.select_levelone = selectedOptions;
+  }
+  changeLeveltwo = (value, selectedOptions) => {
+        this.select_leveltwo = selectedOptions;
+  }
+
+
+
   render() {
 
     const {
@@ -334,7 +408,11 @@ class Supplier extends React.Component {
                   rules: [{ type: 'array', required: true, message: 'agent.select.region'
                   }],
               })(
-                  <Cascader options={this.state.address_option} className={css.supplier_input}/>
+                  <Cascader 
+                    options={this.state.address_option} 
+                    onChange={this.changeAddress} 
+                    className={css.supplier_input}
+                  />
               )}
                         </FormItem>
                         <FormItem
@@ -409,6 +487,26 @@ class Supplier extends React.Component {
                                         {formatMessage({id: 'agent.back'})}
                                     </p>
                                 </div>
+                                <div className={css.uploader_div}>
+
+                                    <Upload
+                                        className={css.uploader}
+                                        name="avatar"
+                                        showUploadList={false}
+                                        action="//jsonplaceholder.typicode.com/posts/"
+                                        beforeUpload={beforeUpload}
+                                        onChange={this.handleChange}
+                                    >
+            {
+                imageUrl ?
+                    <img src={imageUrl} alt="" className="avatar" /> :
+                    <Icon type="plus" className={css.avatar_icon} />
+                }
+                                    </Upload>
+                                    <p className={css.side}>
+                                        {formatMessage({id: 'quotation.logo'})}
+                                    </p>
+                                </div>
                             </div>
                         </FormItem>
                         <FormItem
@@ -428,23 +526,55 @@ class Supplier extends React.Component {
               )}
                         </FormItem>
                         <FormItem
-              {...formItemLayout}
-                            label={formatMessage({id: 'agent.legal_no'})}
-                            hasFeedback
+                          {...formItemLayout}
+                              label={formatMessage({id: 'agent.legal_no'})}
+                              hasFeedback
                         >
-              {getFieldDecorator('id_No', {
-                  rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal_no'}),
-
-                  }],
-              })(
-                  <Input className={css.supplier_input}/>
-              )}
+                          {getFieldDecorator('id_No', {
+                              rules: [{ required: true, message: formatMessage({id: 'agent.enter.legal_no'}),}],
+                          })(
+                              <Input className={css.supplier_input}/>
+                          )}
                         </FormItem>
+
+                      
+
+                        <FormItem
+                          {...formItemLayout}
+                            label={formatMessage({id: 'suupplier.levelone.products.category'})}
+                        >
+                            {getFieldDecorator('levelone', {
+                                initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                                rules: [{ type: 'array', required: true, message: 'agent.select.region' }],
+                            })(
+                                <Cascader options={this.state.address_option} 
+                                    onChange={this.changeLevelone} 
+                                    className={css.supplier_input}
+                                />
+                            )}
+                        </FormItem>
+                        <FormItem
+                          {...formItemLayout}
+                            label={formatMessage({id: 'suupplier.leveltwo.products.category'})}
+                        >
+                            {getFieldDecorator('leveltwo', {
+                                initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                                rules: [{ type: 'array', required: true, message: 'agent.select.region' }],
+                            })(
+                                <Cascader options={this.state.address_option} 
+                                    onChange={this.changeLeveltwo} 
+                                    className={css.supplier_input}
+                                />
+                            )}
+                        </FormItem>
+
+
+
                         <FormItem  className={css.input_left}
                             {...formItemLayout}
                             label={formatMessage({id: 'cart.pay.mode'})}
                         >
-              {getFieldDecorator('radio-group', {
+              {getFieldDecorator('payWay', {
                   valuePropName: 'checked',
               })(
                   <RadioGroup>
@@ -459,20 +589,20 @@ class Supplier extends React.Component {
                             {...formItemLayout}
                             label={formatMessage({id: 'about.shipping.method'})}
                         >
-              {getFieldDecorator('radio-group', {
-                  valuePropName: 'checked',
-              })(
-                  <RadioGroup>
-                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.offshore'})}</Checkbox>
-                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.port'})} </Checkbox>
-                      <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.warehouse.China'})} </Checkbox>
-                      <Checkbox>{formatMessage({id: 'supplier.warehouses.abroad'})} </Checkbox>
-                  </RadioGroup>
-              )}
+                            {getFieldDecorator('transportWay', {
+                                valuePropName: 'checked',
+                            })(
+                                <RadioGroup>
+                                    <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.offshore'})}</Checkbox>
+                                    <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.port'})} </Checkbox>
+                                    <Checkbox className={css.supplier_checkbox}>{formatMessage({id: 'supplier.warehouse.China'})} </Checkbox>
+                                    <Checkbox>{formatMessage({id: 'supplier.warehouses.abroad'})} </Checkbox>
+                                </RadioGroup>
+                            )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Button type="primary" className={css.retrun}>{formatMessage({id: 'app.cancel'})}</Button>
-                            <Button type="primary" className={css.submit} onClick={this.jump} htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
+                            <Button type="primary" className={css.submit}  htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
                         </FormItem>
                     </Form>
                 </div>

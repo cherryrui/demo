@@ -195,4 +195,14 @@ router.get('/get-user.json', async(ctx, next) => {
 
 		ctx.body = true;
 	})
+	.post('/supplier-register.json',async (ctx) =>{
+		let result = null;
+		let param = ctx.request.body;
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		await axios.post(url+'/auth/usertosupplier/userApplySupplier',querystring.stringify(param)).then(res =>{
+			console.log(res.data);
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 module.exports = router;

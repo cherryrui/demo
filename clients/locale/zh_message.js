@@ -460,6 +460,8 @@ const zh_CN = {
     "supplier.condition_four": "供应商应根据要求提供其财务报表、产品质量检测报告等进一步的证明文件",
     "agent.condition_one": "贵公司需要一个合法的营业执照和一个独立法人，在该地区有良好的声誉和良好的声誉。",
     "agent.condition_two": "只有允许公司在合同授权范围内销售，拥有成熟的团队和服务能力，如果您有任何问题，请与我们联系。",
+    "suupplier.levelone.products.category":"供应商一级分类",
+    "suupplier.leveltwo.products.category":"供应商二级分类",
     "systemmessage.empty.message": "清空留言",
     "product.detail.model": "型号",
     "product.detail.material": "材质",
