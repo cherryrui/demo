@@ -45,14 +45,31 @@ class PostWant extends React.Component {
 	}
 	constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			create_time : '',
+		}
 	}
 	componentDidMount() {
 		this.postwant.scrollIntoView();
 	}
-	handleSubmit = () => {
-
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.props.form.validateFieldsAndScroll((err, values) =>{
+			if(!err){
+				console.log(values)
+				let param = values;
+				param.time = this.state.create_time;
+				console.log(param);
+			}
+		})
 	}
+	onChanges = (date, dateString) =>{
+		console.log(date, dateString)
+		this.setState({
+			create_time:dateString
+		})
+	} 
+
 
 	render() {
 		const {
@@ -130,10 +147,10 @@ class PostWant extends React.Component {
 			        >
 			          {getFieldDecorator('time', {
 			            rules: [{
-			              rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+			              type: 'object', required: true, message: 'Please select time!'
 			            }],
 			          })(
-			             <DatePicker className={css.want_input}/>
+			             <DatePicker onChange={this.onChanges} className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem
@@ -197,7 +214,7 @@ class PostWant extends React.Component {
 
                     </FormItem>
                     <FormItem style={{ paddingLeft:120}} {...tailFormItemLayout}>
-                        <Button type="primary"  className={appcss.button_radius}>
+                        <Button type="primary" htmlType="submit" className={appcss.button_radius}>
                               {formatMessage({id: 'app.save'})}
                         </Button>
 
