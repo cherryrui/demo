@@ -51,6 +51,7 @@ class PersonAddress extends React.Component {
             title: "cart.address.title",
             address: {},
             telCode: [],
+            citys:'',
         };
         this.select_address = [];
         this.formatMessage = this.props.intl.formatMessage;
@@ -138,6 +139,7 @@ class PersonAddress extends React.Component {
     }
 
     handleEditAddress = (address) => {
+        console.log(address)
         let title = '',
             addr;
         if (address.addressId) {
@@ -155,6 +157,7 @@ class PersonAddress extends React.Component {
         this.select_address = [];
         this.setState({
             address: addr,
+            citys:address.city,
             title: title,
             visible: true,
         }, () => {
@@ -178,6 +181,7 @@ class PersonAddress extends React.Component {
                     loading: true
                 })
                 let param = values;
+                console.log(param)
                 console.log(this.select_address, this.state.address)
                 if (this.select_address.length > 0) {
                     param.country = this.select_address[0].label;
@@ -193,7 +197,7 @@ class PersonAddress extends React.Component {
                     param.countryId = this.state.address.countryId;
                     param.province = this.state.address.province;
                     param.provinceId = this.state.address.provinceId;
-                    param.city = this.state.address.city;
+                    param.city = this.state.citys;
                     param.cityId = this.state.address.cityId;
                     param.district = this.state.address.district;
                     param.districtId = this.state.address.districtId;
@@ -206,6 +210,7 @@ class PersonAddress extends React.Component {
                 })
                 if (this.state.address.addressId) {
                     param.addressId = this.state.address.addressId;
+                    console.log(param)
                     axios.post('/user/update-address.json', param).then(res => {
                         console.log(res.data)
                         if (res.data.isSucc) {
@@ -214,6 +219,10 @@ class PersonAddress extends React.Component {
                                 visible: false,
                             })
                             this.getAddressList();
+                        }else{
+                            message.error({
+                                reason:res.data.messgae
+                            })
                         }
 
                     })
@@ -227,6 +236,10 @@ class PersonAddress extends React.Component {
                                 visible: false,
                             });
                             this.getAddressList();
+                        }else{
+                            message.error({
+                                reason:res.data.messgae
+                            })
                         }
                     })
                 }
