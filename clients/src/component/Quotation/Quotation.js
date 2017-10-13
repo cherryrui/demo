@@ -55,10 +55,11 @@ class Quotation extends React.Component {
 				profits: 0,
 				invoiceType: 1, //发票类型
 				totalQuantity: 0,
+				participant: {},
 			},
 			width: "80%", //模态框宽度
 		}
-		this.user = JSON.parse(sessionStorage.user);
+		this.user = sessionStorage.user ? JSON.parse(sessionStorage.user) : null;
 		this.formatMessage = this.props.intl.formatMessage;
 		this.columns = [{
 			title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
@@ -114,7 +115,10 @@ class Quotation extends React.Component {
 		}, ]
 	}
 	componentWillMount() {
-		if (this.props.params.id) {
+		console.log(sessionStorage.quotation);
+		if (!sessionStorage.user) {
+			this.props.history.pushState(null, "/");
+		} else if (this.props.params.id) {
 			axios.get(`/quotation/get-quotation-byid.json?id=${this.props.params.id}`).then(res => {
 				this.setState({
 					quotation: res.data.quotation,
@@ -146,8 +150,7 @@ class Quotation extends React.Component {
 				quotation: data
 			})
 		} else {
-			message.error("");
-			this.props.history.pushState(null, "/");
+			this.props.history.pushState(null, "page/cart");
 		}
 	}
 	getProfile(products) {

@@ -4,9 +4,9 @@
   font-size: 16px;
   .table_address{
     display: flex;
-    justify-content: center;
-align-items: center;
-
+    .address_detail{
+      text-align: start;
+    }
     .delivery{
       background:$color-green;
       height: 20px !important;

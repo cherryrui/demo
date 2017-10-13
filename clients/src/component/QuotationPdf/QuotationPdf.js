@@ -33,7 +33,7 @@ class QuotationPdf extends React.Component {
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
             width: "38%",
-            render: (record) => <Link to={"page/product-detail/"+record.productId} className={css.table_product}>
+            render: (record) => <p className={css.table_product}>
                 <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
                 <div className={css.info}>
                     <p className={css.name}>{record.productName}</p>
@@ -49,7 +49,7 @@ class QuotationPdf extends React.Component {
                         <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
                         ：{record.productNo}</p>
                 </div>
-            </Link>
+            </p>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
             className: css.table_col,
@@ -74,111 +74,72 @@ class QuotationPdf extends React.Component {
 
     }
     componentWillMount() {
+        if (sessionStorage.user) {
+            axios.get('/quotation/get-quotation-byid.json?id=' + this.props.params.id).then(res => {
+                let select = {};
+                if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
+                    select = JSON.parse(res.data.result.quotationOrder.exportOption);
+                }
+                if (select.plat_price) {
+                    this.columns.push({
+                        title: <FormattedMessage id="quotation.platform.price" defaultMessage="我的购物车"/>,
+                        className: css.table_col,
+                        dataIndex: 'productPrice',
+                        key: 'productPrice',
+                        render: (text) => <span className={css.table_price}>${text}</span>
+                    })
+                    this.columns.push({
+                        title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+                        className: css.table_col,
+                        dataIndex: 'totalMoney',
+                        key: 'totalMoney',
+                        render: (text) => <span className={css.table_price}>${text}</span>
 
-        axios.get('/quotation/get-quotation-byid.json?id=' + this.props.params.id).then(res => {
-            let select = {};
-            if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
-                select = JSON.parse(res.data.result.quotationOrder.exportOption);
-            }
-            if (select.plat_price) {
-                this.columns.push({
-                    title: <FormattedMessage id="quotation.platform.price" defaultMessage="我的购物车"/>,
-                    className: css.table_col,
-                    dataIndex: 'productPrice',
-                    key: 'productPrice',
-                    render: (text) => <span className={css.table_price}>${text}</span>
+                    }, );
+                } else {
+                    this.columns.push({
+                        title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+                        className: css.table_col,
+                        dataIndex: 'totalMoney',
+                        key: 'totalMoney',
+                        render: (text) => <span className={css.table_price}>${text}</span>
+
+                    }, );
+                }
+                let quotation = res.data.result;
+                quotation.productList.map(item => {
+                    item.coverUrl = item.productUrl;
                 })
-                this.columns.push({
-                    title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-                    className: css.table_col,
-                    dataIndex: 'totalMoney',
-                    key: 'totalMoney',
-                    render: (text) => <span className={css.table_price}>${text}</span>
-
-                }, );
-            } else {
-                this.columns.push({
-                    title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-                    className: css.table_col,
-                    dataIndex: 'totalMoney',
-                    key: 'totalMoney',
-                    render: (text) => <span className={css.table_price}>${text}</span>
-
-                }, );
-            }
-            let quotation = res.data.result;
-            quotation.productList.map(item => {
-                item.coverUrl = item.productUrl;
+                this.setState({
+                    quotation: quotation,
+                    select: select
+                })
             })
-            this.setState({
-                quotation: quotation,
-                select: select
-            })
-        })
+        } else {
+            this.props.history.pushState(null, "login");
+        }
     }
 
     componentDidMount() {
         this.quotation_pdf.scrollIntoView();
     }
     exportPDF = () => {
-        let content = document.getElementById("content");
-        var w = content.clientWidth;
-        var h = content.clientHeight;
-        //要将 canvas 的宽高设置成容器宽高的 2 倍
-        var canvas = document.createElement("canvas");
-        canvas.width = w * 2;
-        canvas.height = h * 2;
-        canvas.style.width = w + "px";
-        canvas.style.height = h + "px";
-        var context = canvas.getContext("2d");
-        //然后将画布缩放，将图像放大两倍画到画布上
-        context.scale(2, 2);
-
-        html2canvas(document.getElementById("content"), {
-            onrendered: (canvas) => {
-                console.log(canvas);
-                var contentWidth = canvas.width;
-                var contentHeight = canvas.height;
-
-                //一页pdf显示html页面生成的canvas高度;
-                var pageHeight = contentWidth / 592.28 * 841.89;
-                //未生成pdf的html页面高度
-                var leftHeight = contentHeight;
-                //页面偏移
-                var position = 0;
-                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-                var imgWidth = 595.28;
-                var imgHeight = 592.28 / contentWidth * contentHeight;
-
-                var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-                var pdf = new jsPDF('', 'pt', 'a4');
-
-                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-                //当内容未超过pdf一页显示的范围，无需分页
-                console.log(leftHeight, pageHeight);
-                if (leftHeight < pageHeight) {
-                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-                } else {
-                    while (leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-                        leftHeight -= pageHeight;
-                        position -= 841.89;
-                        //避免添加空白页
-                        if (leftHeight > 0) {
-                            pdf.addPage();
-                        }
-                    }
-                }
-                pdf.save('content.pdf');
-                this.setState({
-                    visible: false,
-                })
+        var element = document.getElementById('content');
+        html2pdf(element, {
+            filename: this.state.quotation.quotationOrder.quotationSubject + '.pdf',
+            image: {
+                type: 'png',
+                quality: 0.5
             },
-            tainttest: true, //检测每张图片都已经加载完
-            logging: false, //日志开关，发布的时候记得改成false
-            background: '#FFFFFF',
-            useCORS: true,
+            html2canvas: {
+                dpi: 192,
+                letterRendering: true
+            },
+            jsPDF: {
+                unit: 'in',
+                format: 'letter',
+                orientation: 'portrait'
+            }
         });
     }
 

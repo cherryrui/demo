@@ -72,6 +72,7 @@ class ConfirmOrder extends React.Component {
             loading: false, //正在提交订单
             telCode: [],
         };
+        this.user = JSON.parse(sessionStorage.user);
         this.select_address = [];
         this.formatMessage = this.props.intl.formatMessage;
         this.colums_show = [{
@@ -94,9 +95,7 @@ class ConfirmOrder extends React.Component {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
             width: "100px",
             className: css.table_col,
-            dataIndex: 'price',
-            key: 'price',
-            render: (text) => <span className={css.table_price}>${text.toFixed(2)}</span>
+            render: (record) => <span className={css.table_price}>${this.user.userIdentity==1?record.priceSupplier.toFixed(2):record.price.toFixed(2)}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "100px",

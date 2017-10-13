@@ -41,11 +41,11 @@ router
 			result = res.data;
 			result.order = result.result;
 		})
-		if (result.isSucc) {
-			await axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
-				result.result = res.data.result;
-			})
-		}
+
+		await axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
+			result.result = res.data.result;
+		})
+
 		ctx.body = result;
 	})
 	.get('/get-pay-way.json', async(ctx, next) => {

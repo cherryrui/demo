@@ -6,7 +6,7 @@ import axios from 'axios';
 import css from './PersonAddress.scss';
 import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
-
+import CusModal from '../Public/CusModal/CusModal.js';
 import {
     Link
 } from 'react-router';
@@ -27,7 +27,6 @@ import {
     Radio,
     Breadcrumb,
     message,
-    Modal,
     Cascader,
     Form
 } from 'antd';
@@ -47,28 +46,19 @@ class PersonAddress extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            address_options:[],
-            address_list:[],
-            /*my_address: [{
-                id: 1,
-                name: "张三",
-                tel: 12344566778,
-                city: "北京",
-                address: "xxxxxxxxxxxxxxxx",
-
-            }, {
-                id: 2,
-                name: "张三",
-                tel: 12344566778,
-                city: "北京",
-                address: "xxxxxxxxxxxx",
-
-            }, ],*/
+            options: [],
+            address_list: [],
             title: "cart.address.title",
             address: {},
             telCode: [],
         };
         this.select_address = [];
+        this.formatMessage = this.props.intl.formatMessage;
+        let {
+            intl: {
+                formatMessage
+            }
+        } = this.props;
         this.colums_show = [{
             title: <FormattedMessage id="cart.delivery.name" defaultMessage=" 收货人"/>,
             className: css.table_col,
@@ -80,24 +70,25 @@ class PersonAddress extends React.Component {
             className: css.table_col,
             width: "18%",
             className: css.table_col,
-            render: (record) =><span className={css.table_tel}>{record.phoneDc+' '+record.phone}{console.log(record)} </span>
+            render: (record) => <span className={css.table_tel}>{record.phoneDc+' '+record.phone}</span>
         }, {
             title: <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址 "/>,
             className: css.table_col,
             width: "50%",
             className: css.table_col,
             render: (record) => <span className={css.table_address}>
-                    <p>{record.country+' '+record.province+record.city+record.district}</p>
-                    <p className={css.delivery}type="primary">
+                    <p className={css.address_detail}>{locale=="en"?record.address+","+record.district+","+record.city+","+record.province+","+record.country
+                    :record.country+' '+record.province+" "+record.city+" "+record.district+" "+ record.address}</p>
+                    {record.isDefault?<p className={css.delivery} type="primary">
                         <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址 "/>
-                    </p>
+                    </p>:""}
                 </span>
         }, {
             title: <FormattedMessage id="cart.operation" defaultMessage="操作"/>,
             className: css.table_col,
             width: "12%",
             className: css.table_col,
-            render: (record) => <span className={css.table_operation}>{console.log(record)}
+            render: (record) => <span className={css.table_operation}>
                   <a><Icon
                       onClick={this.handleEditAddress.bind(this,record)}
                       onmouseover="show('item')"
@@ -113,7 +104,6 @@ class PersonAddress extends React.Component {
                 address_list: res.data.result,
                 select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
             })
-            console.log(this.state.address_list)
         })
     }
     componentWillMount() {
@@ -121,9 +111,8 @@ class PersonAddress extends React.Component {
         axios.get('/user/get-city-by-parent.json').then(res => {
             console.log('get-city-parent:', JSON.parse(res.data.address.result));
             let address = this.convertData(JSON.parse(res.data.address.result));
-            console.log(address);
             this.setState({
-                address_option: address,
+                options: address,
             })
         })
         axios.get('/user/get-tel-code.json').then(res => {
@@ -135,23 +124,22 @@ class PersonAddress extends React.Component {
         })
     }
     convertData(data) {
-            data.map(item => {
-                item.value = item.v;
-                item.label = item.n;
-                item.children = item.s;
-                if (item.children && item.children.length > 0) {
-                    this.convertData(item.children);
-                } else {
-                    return data;
-                }
-            })
-            return data;
-        }
+        data.map(item => {
+            item.value = item.v;
+            item.label = item.n;
+            item.children = item.s;
+            if (item.children && item.children.length > 0) {
+                this.convertData(item.children);
+            } else {
+                return data;
+            }
+        })
+        return data;
+    }
 
     handleEditAddress = (address) => {
         let title = '',
             addr;
-            console.log('address:', address);
         if (address.addressId) {
             addr = JSON.parse(JSON.stringify(address));
             addr.city = [];
@@ -184,12 +172,14 @@ class PersonAddress extends React.Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) =>{
-            console.log(values)
-            console.log(this.select_address)
-            if(!err){
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                this.setState({
+                    loading: true
+                })
                 let param = values;
-                if(this.select_address.length>0){
+                console.log(this.select_address, this.state.address)
+                if (this.select_address.length > 0) {
                     param.country = this.select_address[0].label;
                     param.countryId = this.select_address[0].value;
                     param.province = this.select_address.length > 1 ? this.select_address[1].label : "";
@@ -198,7 +188,7 @@ class PersonAddress extends React.Component {
                     param.cityId = this.select_address.length > 2 ? this.select_address[2].value : 0;
                     param.district = this.select_address.length > 3 ? this.select_address[3].label : "";
                     param.districtId = this.select_address.length > 3 ? this.select_address[3].value : 0;
-                }else{
+                } else if (this.state.address.addressId) {
                     param.country = this.state.address.country;
                     param.countryId = this.state.address.countryId;
                     param.province = this.state.address.province;
@@ -208,9 +198,7 @@ class PersonAddress extends React.Component {
                     param.district = this.state.address.district;
                     param.districtId = this.state.address.districtId;
                 }
-                param.isDefault = values.default ? 1 : 0;
-                param.phone = values.tel;
-                param.companyName = values.company_name;
+                param.isDefault = values.isDefault ? 1 : 0;
                 this.state.telCode.map(item => {
                     if (item.id == param.phoneDcId) {
                         param.phoneDc = item.districtCode
@@ -222,6 +210,7 @@ class PersonAddress extends React.Component {
                         console.log(res.data)
                         if (res.data.isSucc) {
                             this.setState({
+                                loading: false,
                                 visible: false,
                             })
                             this.getAddressList();
@@ -234,6 +223,7 @@ class PersonAddress extends React.Component {
                         console.log('add-useraddress:', res.data);
                         if (res.data.isSucc) {
                             this.setState({
+                                loading: false,
                                 visible: false,
                             });
                             this.getAddressList();
@@ -241,23 +231,22 @@ class PersonAddress extends React.Component {
                     })
                 }
             }
-        })
-
+        });
     }
     handleDeladdress = (id) => {
         console.log(id);
         let param = {
-            ids:id
+            ids: id
         }
-        axios.post('/user/del-address-byids',param).then(res => {
+        axios.post('/user/del-address-byids', param).then(res => {
             console.log(res.data)
-            if(res.data.isSucc){
+            if (res.data.isSucc) {
                 this.getAddressList();
-            }else{
+            } else {
                 message.error({
-                            reason: res.data.message
-                        })
-                }
+                    reason: res.data.message
+                })
+            }
         })
     }
     changeAddress = (value, selectedOptions) => {
@@ -304,12 +293,14 @@ class PersonAddress extends React.Component {
                 },
             },
         };
-        let {
-            intl: {
-                formatMessage
-            }
-        } = this.props;
+
         const prefixSelector = getFieldDecorator('phoneDcId', {
+            rules: [{
+                required: true,
+                message: this.formatMessage({
+                    id: 'cart.address.name'
+                })
+            }],
             initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : null,
         })(
             <Select style={{ width: 60 }}>
@@ -324,106 +315,97 @@ class PersonAddress extends React.Component {
 
             </div>
             <div>
-                     <Table
-                pagination={false}
-                rowKey="id"
-                bordered
-                columns={this.colums_show}
-                dataSource={this.state.address_list} />
+                <Table
+                    pagination={false}
+                    rowKey="addressId"
+                    bordered
+                    columns={this.colums_show}
+                    dataSource={this.state.address_list} />
             </div>
             <div className={css.delivery_new}>
                 <Button className={appcss.button_theme}type="primary" onClick={this.handleEditAddress}>
                     <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址 "/>
                 </Button>
-
             </div>
-            <div>
-                <Modal className={css.address_modal}
-                    title={formatMessage({id: this.state.title})}
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
-                    footer={null}
-                >
-        <Form onSubmit={this.handleSubmit} className={css.address_form}>
-                        <FormItem 
-                            label={formatMessage({id: 'cart.delivery.name'})}
+            <CusModal width="650"
+                title={this.formatMessage({id: this.state.title})}
+                visible={this.state.visible}
+                closeModal={this.handleCancel}
+            >
+                <Form className={css.modify_address} onSubmit={this.handleSubmit}>
+                    <FormItem
                         {...formItemLayout}
-                        >
-                        {getFieldDecorator ('name', {
+                        label={this.formatMessage({id: 'cart.delivery.name'})}
+                    >
+                        {getFieldDecorator('name', {
                             initialValue: this.state.address.name,
-                            rules: [{ required: true, message: formatMessage({id: 'cart.address.name'}), whitespace: true }],
+                            rules: [{ required: true, message: this.formatMessage({id: 'cart.address.name'}), whitespace: true }],
                         })(
-                            <Input className={css.address_input}/>
+                            <Input  className={css.address_input}/>
                         )}
-                        </FormItem>
-                        <FormItem
+                    </FormItem>
+                    <FormItem
                         {...formItemLayout}
-                            label={formatMessage({id: 'post.company_name'})}
-                        >
-                        {getFieldDecorator('company_name', {
+                        label={this.formatMessage({id: 'post.company_name'})}
+                    >
+                        {getFieldDecorator('companyName', {
                             initialValue: this.state.address.companyName,
                         })(
-                            <Input className={css.address_input}/>
+                            <Input  className={css.address_input}/>
                         )}
-                        </FormItem>
-                        <FormItem
+                    </FormItem>
+                    <FormItem
                         {...formItemLayout}
-                            label={formatMessage({id: 'cart.delivery.city'})}
-                        >{console.log(this.state.address.city)}
+                        label={this.formatMessage({id: 'cart.delivery.city'})}
+                    >
                         {getFieldDecorator('city', {
                             initialValue: this.state.address.city?this.state.address.city:[],
-                            rules: [{ type: 'array', required: true, message: formatMessage({id: 'cart.cart'}) }],
+                            rules: [{ type: 'array', required: true, message: this.formatMessage({id: 'cart.delivery.city'}) }],
                         })(
-                            <Cascader 
-                            options={this.state.address_option} 
-                            onChange={this.changeAddress}
-                            className={css.address_input}/>
-                            
+                            <Cascader  className={css.address_input}
+                                options={this.state.options}
+                                onChange={this.changeAddress}
+                            />
                         )}
-                        </FormItem>
-                        <FormItem
+                    </FormItem>
+                    <FormItem
                           {...formItemLayout}
-                            label={formatMessage({id: 'cart.delivery.address'})}
-                        >
+                        label={this.formatMessage({id: 'cart.delivery.address'})}
+                    >
                         {getFieldDecorator('address', {
                             initialValue: this.state.address.address,
-                            rules: [{ required: true, message: formatMessage({id: 'cart.address.address'}) }],
+                            rules: [{ required: true, message: this.formatMessage({id: 'cart.address.address'}) }],
                         })(
-                            <Input className={css.address_input}/>
+                            <Input  className={css.address_input}/>
                         )}
-                        </FormItem>
-                        <FormItem
+                    </FormItem>
+                    <FormItem
                         {...formItemLayout}
-                            label={formatMessage({id: 'cart.delivery.tel'})}
-                        >
-                        {getFieldDecorator('tel', {
+                        label={this.formatMessage({id: 'cart.delivery.tel'})}
+                    >
+                        {getFieldDecorator('phone', {
                             initialValue: this.state.address.phone,
-                            rules: [{ required: true, message: formatMessage({id: 'cart.address.tel'}) }],
+                            rules: [{ required: true, message: this.formatMessage({id: 'cart.address.tel'}) }],
                         })(
-                            <Input  addonBefore={prefixSelector} className={css.address_input_tel}/>
+                            <Input addonBefore={prefixSelector}  className={css.address_input_tel}/>
                         )}
-                        </FormItem>
-                        <FormItem {...tailFormItemLayout} style={{ marginBottom:8}}>
-                        {getFieldDecorator('default', {
+                    </FormItem>
+                    <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+                        {getFieldDecorator('isDefault', {
                             valuePropName: 'checked',
-                            initialValue: this.state.address.default==1?true:false,
+                            initialValue: this.state.address.isDefault==1?true:false,
                         })(
-                            <Checkbox className={css.address_checkbox}>{formatMessage({id: 'cart.address.default'})}</Checkbox>
+                            <Checkbox>{this.formatMessage({id: 'cart.address.default'})}</Checkbox>
                         )}
-                        </FormItem>
-                        <FormItem {...tailFormItemLayout} style={{ marginBottom:4}}>
-                            <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{formatMessage({id: 'app.cancel'})}</Button>
-                            <Button type="primary" className={css.submit} htmlType="submit">{formatMessage({id: 'app.ok'})}</Button>
-                        </FormItem>
-                    </Form>
-                </Modal>
-
-            </div>
-
+                    </FormItem>
+                    <FormItem {...tailFormItemLayout}style={{ marginBottom:14}}>
+                        <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
+                        <Button type="primary" className={css.submit} loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                    </FormItem>
+                </Form>
+            </CusModal>
         </div>
     }
-
 }
 PersonAddress = Form.create()(PersonAddress);
 export default injectIntl(PersonAddress);

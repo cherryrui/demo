@@ -51,6 +51,7 @@ class CartList extends React.Component {
             select_all: false,
             sum: 0,
         }
+        this.user = JSON.parse(sessionStorage.user)
         this.formatMessage = this.props.intl.formatMessage;
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
@@ -413,9 +414,9 @@ class CartList extends React.Component {
                         />
                         ：<span className={css.total_money}>${this.state.sum.toFixed(2)}</span>
                     </p>
-                    <p className={css.quotation} onClick={this.goQuotation.bind(this)}>
+                    {this.user.userIdentity==1?<p className={css.quotation} onClick={this.goQuotation.bind(this)}>
                         <FormattedMessage id="quotation.generate" defaultMessage="我的购物车"/>
-                    </p>
+                    </p>:""}
                     <p className={css.calculate} onClick={this.handleCart}>
                         <FormattedMessage id="cart.calu" defaultMessage="我的购物车"/>
                     </p>
