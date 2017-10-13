@@ -17,4 +17,20 @@
 }
 .form{
 	margin-top: 65px;
+  .clink_here{
+    color: $color-blue;
+    text-decoration:underline;
+    font-style:italic;
+    font-weight: bold;
+  }
+  .want_input{
+    width: 400px !important;
+    height: 36px !important;
+   border-radius: 2px !important;
+    input{ height: 36px !important;
+      border-radius: 2px !important;
+
+    }
+
+  }
 }

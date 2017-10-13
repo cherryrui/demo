@@ -16,11 +16,28 @@ import {
 	Input,
 	Button,
 	Checkbox,
+    Upload,
 	Breadcrumb,
 	DatePicker
 } from 'antd';
 const FormItem = Form.Item;
-
+const props = {
+    name: 'file',
+    action: '//jsonplaceholder.typicode.com/posts/',
+    headers: {
+        authorization: 'authorization-text',
+    },
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
 class PostWant extends React.Component {
 
 	static propTypes = {
@@ -48,13 +65,27 @@ class PostWant extends React.Component {
 		} = this.props.form;
 		let formItemLayout = {
 			labelCol: {
-				span: 4,
-				offset: 6,
+				span: 3,
+				offset: 5,
 			},
 			wrapperCol: {
 				span: 8,
 			},
 		};
+        const tailFormItemLayout = {
+
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                    offset: 0,
+                },
+                sm: {
+                    span: 14,
+                    offset: 8,
+
+                },
+            },
+        };
 		return <div className={appcss.body} ref={(postwant)=>{this.postwant=postwant}}>
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
@@ -81,79 +112,96 @@ class PostWant extends React.Component {
             	<Form onSubmit={this.handleSubmit}>
 			        <FormItem
 			          {...formItemLayout}
-			          label={formatMessage({id: 'app.login'})}
-			          hasFeedback
+			          label={formatMessage({id: 'quotation.company.name'})}
+
 			        >
-			          {getFieldDecorator('email', {
-			            rules: [{
-			              type: 'email', message: 'The input is not valid E-mail!',
-			            }, {
-			              required: true, message: 'Please input your E-mail!',
+			          {getFieldDecorator('company_name', {
+			            rules: [ {
+			              required: true, message: 'agent.enter.company',
 			            }],
 			          })(
-			            <Input />
+			            <Input className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem
 			          {...formItemLayout}
-			          label={formatMessage({id: 'app.login'})}
+			          label={formatMessage({id: 'quotation.create_time'})}
 			          hasFeedback
 			        >
-			          {getFieldDecorator('email', {
+			          {getFieldDecorator('time', {
 			            rules: [{
-			              type: 'email', message: 'The input is not valid E-mail!',
-			            }, {
 			              rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 			            }],
 			          })(
-			             <DatePicker />
+			             <DatePicker className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem
 			          {...formItemLayout}
-			          label={formatMessage({id: 'app.login'})}
-			          hasFeedback
+			          label={formatMessage({id: 'post.linkman'})}
+
 			        >
-			          {getFieldDecorator('email', {
+			          {getFieldDecorator('linkman', {
 			            rules: [{
-			              type: 'email', message: 'The input is not valid E-mail!',
-			            }, {
-			              required: true, message: 'Please input your E-mail!',
+			              required: true, message: 'Please enter the contact person',
 			            }],
 			          })(
-			            <Input />
+			            <Input className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem
 			          {...formItemLayout}
-			          label={formatMessage({id: 'app.login'})}
-			          hasFeedback
+			          label={formatMessage({id: 'post.email'})}
+
 			        >
 			          {getFieldDecorator('email', {
 			            rules: [{
-			              type: 'email', message: 'The input is not valid E-mail!',
-			            }, {
-			              required: true, message: 'Please input your E-mail!',
+			              required: true, message: 'register.email.warn',
 			            }],
 			          })(
-			            <Input />
+			            <Input className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem
 			          {...formItemLayout}
-			          label={formatMessage({id: 'app.login'})}
-			          hasFeedback
+			          label={formatMessage({id: 'quotation.contact.tel'})}
+
 			        >
-			          {getFieldDecorator('email', {
-			            rules: [{
-			              type: 'email', message: 'The input is not valid E-mail!',
-			            }, {
-			              required: true, message: 'Please input your E-mail!',
+			          {getFieldDecorator('phone', {
+			            rules: [ {
+			              required: true, message: 'register.tel.warn',
 			            }],
 			          })(
-			            <Input />
+			            <Input className={css.want_input}/>
 			          )}
 			        </FormItem>
+                    <FormItem style={{ marginBottom:10}}
+			          {...formItemLayout}
+                        label={formatMessage({id: 'post.upload'})}
+
+                    >
+			          {getFieldDecorator('upload', {
+
+                      })(
+                          <Upload {...props}>
+                              <Button  className={appcss.button_theme}  style={{ width:120}}>
+                                 {formatMessage({id: 'post.select.file'})}
+                              </Button>
+                          </Upload>
+
+
+                      )}
+                    </FormItem>
+                    <FormItem {...tailFormItemLayout}>
+                          <FormattedMessage id="post.fill.again" defaultMessage="上传" values={{click:<span className={css.clink_here}>clink here</span>}}/>
+
+                    </FormItem>
+                    <FormItem style={{ paddingLeft:120}} {...tailFormItemLayout}>
+                        <Button type="primary"  className={appcss.button_radius}>
+                              {formatMessage({id: 'app.save'})}
+                        </Button>
+
+                    </FormItem>
         		</Form>
 
             </div>

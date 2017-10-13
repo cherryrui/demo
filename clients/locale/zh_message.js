@@ -465,7 +465,18 @@ const zh_CN = {
     "product.detail.material": "材质",
     "mine.product.instruct_weight": "重量",
     "app.view.order": "查看订单",
-    "app.bank.imformation": "银行信息"
-
+    "app.bank.imformation": "银行信息",
+    "app.account.security": "   账户安全",
+    "app.like": "  猜你喜欢",
+    "app.products": "产品",
+    "app.demand.management": "需求管理",
+    "app.requirements": "需求",
+    "app.processing": "需求管理",
+    "app.processed": "需求",
+    "app.goods": "商品",
+    "quotation.all_quotation": "全部报价",
+    "post.linkman.info":"请输入联系人",
+    "post.select.file":"选择文件",
+    "post.fill.again":"嗨，请 {click} 这里下载我们的表格，填好再上传"
 }
 export default zh_CN;

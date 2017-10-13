@@ -95,7 +95,7 @@ const en_US = {
     "roduct.no_product": "There is no such product for the time being",
     "post.company_name": "Company name",
     "post.linkman": "linkman",
-    "post.email": "eamil",
+    "post.email": "E-mail",
     "post.tel": "tel",
     "post.ps": "please download excel table",
     "post.upload": "Upload File",
@@ -466,5 +466,17 @@ const en_US = {
     "quotation.param": "Please fill in the quotation sheet",
     "quotation.message": "The price list is successful and the preview is as follows",
     "product.no_product": "There is no such product",
+    "app.account.security": "   account security",
+    "app.like": "Guess you like",
+    "app.products": "products",
+    "app.demand.management": "Demand management",
+    "app.requirements": "Requirements",
+    "app.processing": "Processing",
+    "app.processed": "Processed",
+    "app.goods": "Goods",
+    "quotation.all_quotation": "All quotation",
+   "post.linkman.info":"Please enter the contact person" ,
+    "post.select.file":"Select file",
+    "post.fill.again":"Hi,Please{click} to download our form and fill it out"
 }
 export default en_US;

@@ -23,6 +23,9 @@ import {
 } from 'antd';
 
 class PersonCenter extends React.Component {
+    jump = (e) => {
+        this.props.history.pushState(null, "page/mine/system-message")
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -85,7 +88,7 @@ class PersonCenter extends React.Component {
                 <div className={css.user_message}>
                     <div className={css.user_message_title}>
                         <FormattedMessage id="mine.my.message" defaultMessage="分类"/>
-                        <p className={css.message_more}>
+                        <p className={css.message_more} onClick={this.jump}>
                             <FormattedMessage id="app.more" defaultMessage="分类" />
                         </p>
                     </div>
@@ -106,7 +109,8 @@ class PersonCenter extends React.Component {
                 <div className={css.order_content}>
                     {operator.order_menu.map(item=>{
                         return <div className={css.order_item}>
-                            <Avatar className={css.icon} icon={item.icon} />
+
+                            <img src={item.icon}/>
                             <div>
                                 <p>
                                     <FormattedMessage id={item.value_id} defaultMessage="分类"/>
@@ -125,7 +129,7 @@ class PersonCenter extends React.Component {
                     <div className={css.demand_content}>
                         {operator.demand_menu.map(item=>{
                             return <div className={css.order_item}>
-                                <Avatar className={css.icon} icon={item.icon} />
+                                <img src={item.icon}/>
                                 <div>
                                     <p>
                                         <FormattedMessage id={item.value_id} defaultMessage="分类"/>
@@ -143,12 +147,13 @@ class PersonCenter extends React.Component {
                     <div className={css.favorite_content}>
                         {operator.favorite_menu.map(item=>{
                             return <div className={css.order_item}>
-                                <Avatar className={css.icon} icon={item.icon} />
+
+                                <img src={item.icon}/>
                                 <div>
                                     <p>
                                         <FormattedMessage id={item.value_id} defaultMessage="分类"/>
                                     </p>
-                                    <p className={css.order_num}>30</p>
+                                    <p className={css.order_num} >30</p>
                                 </div>
                             </div>
                         })}
@@ -162,7 +167,7 @@ class PersonCenter extends React.Component {
                     <div className={css.quotation_content}>
                         {operator.quotation_menu.map(item=>{
                             return <div className={css.order_item}>
-                                <Avatar className={css.icon} icon={item.icon} />
+                                <img src={item.icon}/>
                                 <div>
                                     <p>
                                         <FormattedMessage id={item.value_id} defaultMessage="分类"/>
@@ -186,7 +191,8 @@ class PersonCenter extends React.Component {
                     <div className={css.management_content}>
                     {operator.management_menu.map(item=>{
                         return <div className={css.order_item}>
-                            <Avatar className={css.icon} icon={item.icon} />
+
+                            <img src={item.icon}/>
                             <div>
                                 <p>
                                     <FormattedMessage id={item.value_id} defaultMessage="分类"/>
