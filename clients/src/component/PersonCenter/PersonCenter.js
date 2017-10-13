@@ -16,6 +16,9 @@ import {
 } from 'react-intl';
 import {
     Button,
+    Icon,
+    Progress,
+    Pagination,
     Avatar
 } from 'antd';
 
@@ -23,7 +26,9 @@ class PersonCenter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {},
+            user: {
+                type: 2, //用户类型，1：供应商，2：代理商 3：个人
+            },
             message_list: [],
             products: [],
             brands: [],
@@ -33,13 +38,13 @@ class PersonCenter extends React.Component {
     }
     componentWillMount() {
         if (sessionStorage.user) {
-            this.state.user = JSON.parse(sessionStorage.user);
+            /*this.state.user = JSON.parse(sessionStorage.user);*/
             axios.get("/user/get-recent-message.json").then(res_m => {
                 axios.get('/product/get-like-product.json').then(res_P => {
                     axios.get('/brand/get-like-brand.json').then(res_b => {
                         this.setState({
                             message_list: res_m.data.message,
-                            products: res_P.data.products,
+
                             brands: res_b.data.brands
                         })
                     })
@@ -51,25 +56,38 @@ class PersonCenter extends React.Component {
     }
 
     render() {
-
+        console.log(this.state.user.type,this.state.user.type==1)
         return <div class={css.center}>
             <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person" defaultMessage="分类"/>
             </div>
             <div className={css.user}>
                 <div className={css.user_info}>
-                    <Avatar size="large" icon="user" />
+                    <Avatar size="large" icon="user" className={css.user_avatar}/>
                     <div className={css.user_name}>
-                        <p>{this.state.user.name}</p>
-                        <p></p>
+                        <p  style={{ fontSize:18,fontWeight:"bold"}}>
+                             {this.state.user.name}dddddddd
+                             <Icon type="user"  className={css.name_icon}/></p>
+                        <p>
+                            <Icon type="safety" className={css.member_icon}/>
+                            fvvdddddd
+                        </p>
+                        <p>
+                            <FormattedMessage id="app.account.security" defaultMessage="分类"/>:
+                            <div style={{ width: 100,paddingLeft:5}}>
+
+                                <Progress type="line" percent={50} format={() => 'middle'}  strokeWidth={10} strokeHeigth={12} status="active" style={{ color: "#ff9a2c"}} />
+
+                            </div>
+                        </p>
                     </div>
                 </div>
                 <div className={css.user_message}>
                     <div className={css.user_message_title}>
                         <FormattedMessage id="mine.my.message" defaultMessage="分类"/>
-                        <Button type="primary" size="small">
-                            <FormattedMessage id="app.more" defaultMessage="分类"/>
-                        </Button>
+                        <p className={css.message_more}>
+                            <FormattedMessage id="app.more" defaultMessage="分类" />
+                        </p>
                     </div>
                     {this.state.message_list.map(item=>{
                         return <div className={css.user_message_item}>
@@ -102,7 +120,7 @@ class PersonCenter extends React.Component {
             <div style={{display: "flex"}}>
                 <div className={css.demand}>
                     <p className={css.title_item}>
-                        <FormattedMessage id="mine.order" defaultMessage="分类"/>
+                        <FormattedMessage id="app.demand.management" defaultMessage="分类"/>
                     </p>
                     <div className={css.demand_content}>
                         {operator.demand_menu.map(item=>{
@@ -135,27 +153,89 @@ class PersonCenter extends React.Component {
                             </div>
                         })}
                     </div>
-                </div>               
-            </div>
-            <div className={css.like}>
-                <div className={css.like_title}>
-                    <FormattedMessage id="mine.my.message" defaultMessage="分类"/>
-                    <Button type="primary" size="small">
-                        <FormattedMessage id="app.more" defaultMessage="分类"/>
-                    </Button>    
                 </div>
-                <div className={css.like_content}>
-                    <div className={css.like_product}>
-                        {this.state.products.map(item=>{
-                            return <Product no_price product={item} className={css.like_item}/>
+                {this.state.user.type==2?
+                <div className={css.quotation}>
+                    <p className={css.title_item}>
+                        <FormattedMessage id="quotation.quotation" defaultMessage="分类"/>
+                    </p>
+                    <div className={css.quotation_content}>
+                        {operator.quotation_menu.map(item=>{
+                            return <div className={css.order_item}>
+                                <Avatar className={css.icon} icon={item.icon} />
+                                <div>
+                                    <p>
+                                        <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                    </p>
+                                    <p className={css.order_num}>30</p>
+                                </div>
+                            </div>
                         })}
                     </div>
-                    <div className={css.like_brand}>
-                        {this.state.brands.map(item=>{
-                            return <Brand brand={item} className={css.like_item}/>
-                        })}
-                    </div>  
+                </div>
+                    :this.state.user.type==1?
+                    <div></div>
+                    :this.state.user.type==3?
+                    <div></div>:""
+                    }
+            </div>
+            {this.state.user.type==1?<div className={css.management}>
+                    <p className={css.title_item}>
+                        <FormattedMessage id="mine.order" defaultMessage="分类"/>
+                    </p>
+                    <div className={css.management_content}>
+                    {operator.management_menu.map(item=>{
+                        return <div className={css.order_item}>
+                            <Avatar className={css.icon} icon={item.icon} />
+                            <div>
+                                <p>
+                                    <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                </p>
+                                <p className={css.order_num}>30</p>
+                            </div>
+                        </div>
+                    })}
+                    </div>
+                </div>
+                :this.state.user.type==2?
+                <div></div>
+                :this.state.user.type==3?
+            <div></div>:""
+                }
+            <div className={css.like_title}>
+                <FormattedMessage id="app.like" defaultMessage="分类"/>
+
+            </div>
+            <div className={css.like}>
+                <div className={css.like_content}>
+                    <div className={css.like_product}>
+                        <div className={css.product_title}>
+                            <FormattedMessage id="app.products" defaultMessage="分类"/>
+                            <Pagination simple defaultCurrent={2} total={50} />
+                        </div>
+                        <div  className={css.product_list}>
+                            {this.state.products.map(item=>{
+                                return <Product no_price product={item} className={css.like_item}/>
+                            })}
+                        </div>
+                    </div>
+
                 </div>                 
+            </div>
+            <div className={css.like}>
+                <div className={css.like_content}>
+                    <div className={css.like_brand}>
+                        <div className={css.brand_title}>
+                            <FormattedMessage id="app.products" defaultMessage="分类"/>
+                            <Pagination simple defaultCurrent={2} total={50} />
+                        </div>
+                        <div  className={css.brand_list}>
+                                    {this.state.brands.map(item=>{
+                                        return <Brand brand={item} className={css.like_item}/>
+                                    })}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     }

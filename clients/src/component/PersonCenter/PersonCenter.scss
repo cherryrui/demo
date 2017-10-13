@@ -2,57 +2,110 @@
 .user{
 	display: flex;
 	.user_info{
-		width: 60%;
+      width: 445px;
 		background: $color-light-blue;
 		display: flex;
     	align-items: center;
-    	padding: 0px 20px;
+      padding: 30px 0px 30px 20px;
+      height: 130px;
 	}
+  .user_avatar{
+    width: 76px;
+    height: 76px;
+    line-height: 76px;
+    border-radius: 38px;
+
+  }
 	.user_name{
-		margin-left: 20px;
+      margin-left: 20px;
+      height: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      div[class="ant-progress-bg"]{
+          background-color: $font-orange !important;
+        }
+      div[class="ant-progress-inner"]{
+        background-color: $border-color !important;
+      }
+      p{
+
+        display: flex;
+        line-height: 14px;
+        height: 14px;
+        .user_text{
+          font-size: 18px !important;
+        }
+       .name_icon{
+         color: $color-orange;
+         padding-left: 5px;
+         font-size: 14px;
+
+       }
+        .member_icon{
+          color: $color-blue;
+          padding-right: 5px;
+          font-size: 14px;
+        }
+      }
 	}
 	.user_message{
-		width: 38%;
-    	margin-left: 2%;
+      width: 395px;
+    	margin-left: 20px;
     	border: 1px solid $border-color;
     	padding: 10px;
+      height: 130px;
+      overflow: hidden
 	}
 	.user_message_title{
 		display: flex;
     	justify-content: space-between;
     	border-bottom: 1px solid #eee;
-    	font-size: 16px;
+    	font-size: 14px;
     	font-weight: bold;
     	padding-bottom: 3px;
+      margin-bottom: 10px;
 	}
+  .message_more{
+    color: $font-orange !important;
+    font-weight: 400;
+  }
 	.user_message_item{
 		overflow: hidden;
 	    display: -webkit-box;
 	    -webkit-line-clamp: 1;
 	    -webkit-box-orient: vertical;
 	    word-break: break-all;
-	    height: 35px;
-	    text-align: left;
-	    padding: 10px 0;
+      height: 14px;
+      text-align: left;
+      margin-bottom: 15px;
+      font-size: 14px;
+      overflow: hidden;
+      line-height: 14px;
+      width: 375px;
 	    i{
 	    	color: $color-red
 	    }
 	}
 }
 .title_item{
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: bold;
 	padding-bottom: 10px;
 }
 %item{
-	background: $color-grey;
-	padding: 20px;
+	background:#ffffff;
+  padding: 10px 20px 10px 20px;
 	margin-top: 20px;
+  width: 860px;
+  border: 1px solid $border-color;
 }
 %content{
 	background: white;
-	padding: 20px;
+
 	display: flex;
+  padding-top: 10px;
+border-top: 1px solid $border-color;
 }
 .order{
 	@extend %item;
@@ -62,17 +115,22 @@
 	.order_item{
 	    flex-grow: 1;
     	flex-shrink: 0;
-    	padding: 30px 0;
+
     	display: flex;
     	align-items: center;
+      flex-direction: column;
+
+      height: 90px;
+      justify-content: space-between;
+      text-align: center;
 	}
 	.icon{
-		margin: 0 50px;
+
 	}
 	.order_num{
 		color: $color-orange;
     	font-weight: bolder;
-    	font-size: 30px;
+    	font-size: 18px;
 	}
 }
 .demand{
@@ -96,30 +154,96 @@
 		color: $font-color;
 	}
 }
+.quotation{
+  @extend %item;
+  width: 19%;
+  margin-left: 2%
+}
+.quotation_content{
+  @extend .order_content;
+  .order_num{
+    color: $font-color;
+  }
+}
+.management{
+  @extend %item;
+}
+.management_content{
+  @extend %content;
+}
+  .order_item{
+    flex-grow: 1;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    height: 90px;
+    justify-content: space-between;
+    text-align: center;
+    .order_num{
+
+      font-weight: bolder;
+      font-size: 18px;
+    }
+  }
 .like{
-	@extend %item;
+  background:#ffffff;
+  padding: 10px 20px 10px 20px;
+  margin-top: 10px;
+  width: 860px;
+  border: 1px solid $border-color;
+
 }
 .like_title{
 	display: flex;
 	justify-content: space-between;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: bold;
-	padding-bottom: 10px;
+  width: 860px;
+  height: 36px;
+  line-height: 36px;
+  background: #dddddd;
+  margin-top: 20px;
+  padding-left: 20px;
 }
 .like_content{
 	.like_product{
 		display: flex;
     	background: white;
-    	border-bottom: $border-color 1px dashed;
+
+      margin-bottom: 10px;
+      .product_title{
+        display: flex;
+        padding-top: 10px;
+        width: 100%;
+        justify-content: space-between;
+      }
 	}
+
 	.like_brand{
-		display: flex;
+
     	background: white;
+      .brand_title{
+        display: flex;
+
+        padding-top: 10px;
+        width: 100%;
+        justify-content: space-between;
+      }
 	}
+  .brand_list{
+    display: flex;
+  }
+  .product_list{
+    display: flex;
+  }
 	.like_item{
 		width: 19%;
     	margin: 10px 0.5%;
     	padding: 10px;
-	}
+      border: 1px solid $border-color;
 
+  }
 }
