@@ -17,12 +17,16 @@ import {
 import {
     Button,
     Icon,
+    Tooltip,
     Progress,
     Pagination,
     Avatar
 } from 'antd';
 
 class PersonCenter extends React.Component {
+    jump = (e) => {
+        this.props.history.pushState(null, "page/mine/system-message")
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -54,7 +58,14 @@ class PersonCenter extends React.Component {
             window.location.href = '/#/login'
         }
     }
-
+    handleMenu = (key, url) => {
+        console.log(key, url);
+        this.setState({
+            select: key
+        });
+        if (url)
+            this.props.history.pushState(null, url);
+    }
     render() {
         console.log(this.state.user.type,this.state.user.type==1)
         return <div class={css.center}>
@@ -85,7 +96,7 @@ class PersonCenter extends React.Component {
                 <div className={css.user_message}>
                     <div className={css.user_message_title}>
                         <FormattedMessage id="mine.my.message" defaultMessage="分类"/>
-                        <p className={css.message_more}>
+                        <p className={css.message_more} onClick={this.jump}>
                             <FormattedMessage id="app.more" defaultMessage="分类" />
                         </p>
                     </div>
@@ -105,14 +116,19 @@ class PersonCenter extends React.Component {
                 </p>
                 <div className={css.order_content}>
                     {operator.order_menu.map(item=>{
-                        return <div className={css.order_item}>
-                            <Avatar className={css.icon} icon={item.icon} />
-                            <div>
-                                <p>
+                        return <div className={css.order_item}
+                        onClick={this.handleMenu.bind(this,item.key,item.url)}
+                        >
+                            <img src={item.icon}/>
+                            <Tooltip placement="top"
+                                arrowPointAtCenter
+                                title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                            >
+                                <p className={css.order_text}>
                                     <FormattedMessage id={item.value_id} defaultMessage="分类"/>
                                 </p>
-                                <p className={css.order_num}>30</p>
-                            </div>
+                            </Tooltip>
+                            <p className={css.order_num}>30</p>
                         </div>
                     })}
                 </div>    
@@ -124,14 +140,19 @@ class PersonCenter extends React.Component {
                     </p>
                     <div className={css.demand_content}>
                         {operator.demand_menu.map(item=>{
-                            return <div className={css.order_item}>
-                                <Avatar className={css.icon} icon={item.icon} />
-                                <div>
-                                    <p>
-                                        <FormattedMessage id={item.value_id} defaultMessage="分类"/>
-                                    </p>
+                            return <div className={css.order_item}
+                                onClick={this.handleMenu.bind(this,item.key,item.url)}
+                            >
+                                <img src={item.icon}/>
+                                <Tooltip placement="top"
+                                        arrowPointAtCenter
+                                        title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                                >
+                                        <p className={css.order_text}>
+                                            <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                        </p>
+                                 </Tooltip>
                                     <p className={css.order_num}>30</p>
-                                </div>
                             </div>
                     })}
                     </div>                    
@@ -142,14 +163,19 @@ class PersonCenter extends React.Component {
                     </p>
                     <div className={css.favorite_content}>
                         {operator.favorite_menu.map(item=>{
-                            return <div className={css.order_item}>
-                                <Avatar className={css.icon} icon={item.icon} />
-                                <div>
-                                    <p>
-                                        <FormattedMessage id={item.value_id} defaultMessage="分类"/>
-                                    </p>
-                                    <p className={css.order_num}>30</p>
-                                </div>
+                            return <div className={css.order_item}
+                                onClick={this.handleMenu.bind(this,item.key,item.url)}
+                            >
+                                <img src={item.icon}/>
+                                <Tooltip placement="top"
+                                    arrowPointAtCenter
+                                    title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                                >
+                                        <p className={css.order_text}>
+                                            <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                        </p>
+                                </Tooltip>
+                                    <p className={css.order_num} >30</p>
                             </div>
                         })}
                     </div>
@@ -161,14 +187,20 @@ class PersonCenter extends React.Component {
                     </p>
                     <div className={css.quotation_content}>
                         {operator.quotation_menu.map(item=>{
-                            return <div className={css.order_item}>
-                                <Avatar className={css.icon} icon={item.icon} />
-                                <div>
-                                    <p>
-                                        <FormattedMessage id={item.value_id} defaultMessage="分类"/>
-                                    </p>
+                            return <div className={css.order_item}
+                                onClick={this.handleMenu.bind(this,item.key,item.url)}
+                            >
+                                <img src={item.icon}/>
+                                <Tooltip placement="top"
+                                    arrowPointAtCenter
+                                    title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                                >
+                                        <p className={css.order_text}>
+                                            <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                        </p>
+                                </Tooltip>
                                     <p className={css.order_num}>30</p>
-                                </div>
+
                             </div>
                         })}
                     </div>
@@ -181,18 +213,24 @@ class PersonCenter extends React.Component {
             </div>
             {this.state.user.type==1?<div className={css.management}>
                     <p className={css.title_item}>
-                        <FormattedMessage id="mine.order" defaultMessage="分类"/>
+                        <FormattedMessage id="mine.product.management" defaultMessage="分类"/>
                     </p>
                     <div className={css.management_content}>
                     {operator.management_menu.map(item=>{
-                        return <div className={css.order_item}>
-                            <Avatar className={css.icon} icon={item.icon} />
-                            <div>
-                                <p>
-                                    <FormattedMessage id={item.value_id} defaultMessage="分类"/>
-                                </p>
+                        return <div className={css.order_item}
+                            onClick={this.handleMenu.bind(this,item.key,item.url)}
+                        >
+                            <img src={item.icon}/>
+                            <Tooltip placement="top"
+                                arrowPointAtCenter
+                                title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                            >
+                                    <p className={css.order_text}>
+                                        <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                    </p>
+                            </Tooltip>
                                 <p className={css.order_num}>30</p>
-                            </div>
+
                         </div>
                     })}
                     </div>
