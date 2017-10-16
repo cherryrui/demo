@@ -99,27 +99,27 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.post('/del-address-byids',async(ctx, body) =>{
+	.post('/del-address-byids', async(ctx, body) => {
 		let id = ctx.request.body,
-            result;
-            console.log(id)
-            let param = {
-            	addressIds:id.ids
-            };
-        if (ctx.cookie.get("token")) {
-            axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-            await axios.post(url + "/auth/userAddress/deleteAddress", querystring.stringify(
-                param
-            )).then(res => {
-                result = res.data
-            })
-        } else {
-            result = {
-                isSucc: false,
-                code: 104
-            }
-        }
-        ctx.body = result;
+			result;
+		console.log(id)
+		let param = {
+			addressIds: id.ids
+		};
+		if (ctx.cookie.get("token")) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/userAddress/deleteAddress", querystring.stringify(
+				param
+			)).then(res => {
+				result = res.data
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
 	})
 	.post('/repassword.json', async(ctx) => {
 		let result = null;
@@ -191,33 +191,39 @@ router.get('/get-user.json', async(ctx, next) => {
 		});
 		ctx.body = true;
 	})
-    .post('/become-agent.json', async(ctx, next) => {
-        let param = ctx.request.body,
-            result;
-        if (ctx.cookie.get('token')) {
-            axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-        await axios.post(url + "/auth/usertoAgent/userApplyAgent", querystring.stringify(param)).then(res => {
-            console.log(200 + "user", res.data)
-            result = res.data;
-        })
-        } else {
-            result = {
-                isSucc: false,
-                code: 104
-            }
-        }
-        ctx.body = result;
-    })
+	.post('/become-agent.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/usertoAgent/userApplyAgent", querystring.stringify(param)).then(res => {
+				console.log(200 + "user", res.data)
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 	.get('/reset-pwd.json', async(ctx) => {
 
 		ctx.body = true;
 	})
-	.post('/supplier-register.json',async (ctx) =>{
+	.post('/become-supplier.json', async(ctx) => {
 		let result = null;
 		let param = ctx.request.body;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		await axios.post(url+'/auth/usertosupplier/userApplySupplier',querystring.stringify(param)).then(res =>{
-			console.log(res.data);
+		await axios.post(url + '/auth/usertosupplier/userApplySupplier', querystring.stringify(param)).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.get('/get-transport-way.json', async(ctx, next) => {
+		let result;
+		await axios.get(url + '/transport/queryTransportWayList').then(res => {
 			result = res.data;
 		})
 		ctx.body = result;

@@ -38,30 +38,6 @@
   width: 150px;
 
 }
-.upload{
-  display: flex;
-  .uploader_div{
-    margin-right: 20px;
-    div[class="ant-upload-list-item ant-upload-list-item-done"]{
-        width: 150px;
-        height: 110px;
-    }
-    div[class="ant-upload ant-upload-select ant-upload-select-picture-card"]{
-      width: 150px;
-      height: 110px;
-    }
-    .upload_icon{
-      i{
-        font-size: 40px;
-        margin-top: 14px;
-        display: inline-flex;
-      }
-    }
-  }
-  .side{
-    text-align: center;
-  }
-}
 .agent_input{
    width: 400px  !important;
    border-radius: 2px !important;

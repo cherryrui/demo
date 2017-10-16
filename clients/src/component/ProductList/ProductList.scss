@@ -39,9 +39,8 @@
    }
 }
 .product_right{
-  width: 220px;
+  @extend .product;
   margin-right: 0px;
-  margin-bottom: 30px;
 }
 
 .product_no{

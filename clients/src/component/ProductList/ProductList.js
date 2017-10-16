@@ -185,18 +185,18 @@ class ProductList extends React.Component {
      * @return {[type]}      [description]
      */
     onSelect = (name, key) => {
-        console.log(name, key);
         if (name == "cid") {
             this.setState({
-                cid: key
+                cid: key,
+                current: 1,
             }, () => {
-                console.log(this.state.cid)
                 this.getProduct();
                 this.getBrand();
             })
         } else {
             this.setState({
-                bid: key
+                bid: key,
+                current: 1,
             }, () => {
                 this.getProduct();
             })

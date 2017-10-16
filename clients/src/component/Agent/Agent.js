@@ -92,7 +92,8 @@ class Agent extends React.Component {
         })
         return data;
     }
-    beforeUpload = (file) => {
+
+    /*beforeUpload = (file) => {
         const isJPG = file.type === 'image/jpeg';
         if (!isJPG) {
             message.error('You can only upload JPG file!');
@@ -102,7 +103,7 @@ class Agent extends React.Component {
             message.error('Image must smaller than 2MB!');
         }
         return isJPG && isLt2M;
-    }
+    }*/
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -373,8 +374,8 @@ class Agent extends React.Component {
                     <p className={css.credentials}>
                         {this.formatMessage({id: 'agent.upload.credentials'})}
                     </p>
-                    <div className={css.upload}>
-                        <div className={css.uploader_div}>
+                    <div className={appcss.upload}>
+                        <div className={appcss.uploader_div}>
                             <Upload 
                                 name="file"
                                 action={Util.url+"/tool/upload"}
@@ -385,15 +386,15 @@ class Agent extends React.Component {
                                 accept="image/*"
                                 multiple
                               >
-                                {this.state.front_show ? null :<span className={css.upload_icon}>
+                                {this.state.front_show ? null :<span className={appcss.upload_icon}>
                                     <i class="iconfont icon-jiahao"></i>
                                   </span>}
                             </Upload>
-                            <p className={css.side}>
+                            <p className={appcss.side}>
                                 {this.formatMessage({id: 'agent.front'})}
                             </p>
                         </div>
-                        <div className={css.uploader_div}>
+                        <div className={appcss.uploader_div}>
                             <Upload 
                                 name="file"
                                 action={Util.url+"/tool/upload"}
@@ -405,12 +406,12 @@ class Agent extends React.Component {
                                 multiple
                               >
                                 {this.state.back_show ? null :
-                                  <span className={css.upload_icon}>
+                                  <span className={appcss.upload_icon}>
                                     <i class="iconfont icon-jiahao"></i>
                                   </span>
                                 }
                             </Upload>
-                            <p className={css.side}>
+                            <p className={appcss.side}>
                                 {this.formatMessage({id: 'agent.back'})}
                             </p>
                         </div>
