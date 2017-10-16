@@ -42,6 +42,7 @@ class OrderList extends React.Component {
             pageSize: 10, //每页数量
             visible: false,
             current: 0,
+            order_status: operator.order_status,
         };
         this.formatMessage = this.props.intl.formatMessage;
         this.colums_show = [{
@@ -103,7 +104,7 @@ class OrderList extends React.Component {
                         <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                     </Link>
                     <p>
-                        <Button size="small" style={{width:70,fontSize:14,border:"none"}} type="primary">
+                        <Button onClick={this.handleClick.bind(this,record)} size="small" style={{width:70,fontSize:14,border:"none"}} type="primary">
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
                         </Button>
                     </p>
@@ -111,6 +112,9 @@ class OrderList extends React.Component {
             }
 
         ];
+    }
+    handleClick = (record) => {
+        this.props.history.pushState(null, "page/cart/2/" + record.orderId)
     }
 
     goTop = () => {
@@ -128,6 +132,23 @@ class OrderList extends React.Component {
 
     componentWillMount() {
         this.searchOrder();
+        axios.post('/order/get-order-status-num.json', {}).then(res => {
+            let order_status = operator.order_status,
+                total = 0;
+            order_status.map(item => {
+                item.count = 0;
+                res.data.result.map(order => {
+                    if (order.orderStatus == item.value) {
+                        item.count = order.total;
+                        total += order.total;
+                    }
+                })
+            })
+            order_status[0].count = total;
+            this.setState({
+                order_status: order_status
+            })
+        })
     }
 
     /**
@@ -210,7 +231,7 @@ class OrderList extends React.Component {
                  />
             </div>
             <div className={css.card_container}>
-                <TabBar className={css.tabtar} hiddenTest tabs={operator.order_status} current={this.state.current} 
+                <TabBar className={css.tabtar} hiddenTest tabs={this.state.order_status} current={this.state.current} 
                             handleBar={this.handleBar.bind(this)}
                         />
                 <Table

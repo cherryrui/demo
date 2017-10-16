@@ -6,26 +6,22 @@ export default {
 	}, {
 		icon: "../img/DYC-23.png",
 		value: 1,
-		key: "orderlist.unpay"
+		key: "orderlist.unconfirm.unpay"
 	}, , {
 		icon: "../img/DYC-24.png",
 		value: 2,
-		key: "orderlist.instal.unpay"
+		key: "orderlist.unconfirm.payed"
 	}, {
 		icon: "../img/DYC-25.png",
 		value: 3,
-		key: "orderlist.instal.unpay"
+		key: "orderlist.confirmed.unpay"
 	}, {
 		icon: "../img/DYC-26.png",
 		value: 4,
-		key: "orderlist.need.pay"
+		key: "orderlist.confirmed.instal.unpay"
 	}, , {
 		icon: "../img/DYC-27.png",
 		value: 5,
-		key: "orderlist.need.pay"
-	}, , {
-		icon: "../img/DYC-28.png",
-		value: 6,
-		key: "orderlist.need.pay"
+		key: "orderlist.instal.unpay"
 	}, ]
 }

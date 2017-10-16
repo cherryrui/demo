@@ -54,15 +54,29 @@ class Cart extends React.Component {
                 })
             } else if (this.props.params.step == 2 && this.props.params.orderId) {
                 axios.post('/order/get-order-money.json', {
-                    orderId: this.state.order.orderId
+                    orderId: this.props.params.orderId
                 }).then(res => {
-
+                    if (res.data.code == 104) {
+                        this.setState({
+                            visible: true,
+                        })
+                    } else if (res.data.isSucc) {
+                        this.setState({
+                            order: {
+                                orderId: this.props.params.orderId,
+                                orderTotalMoney: res.data.result.money,
+                            },
+                            step: 2,
+                        })
+                    } else {
+                        message.error(res.data.message);
+                    }
                 })
             } else {
                 this.props.history.pushState(null, "/");
             }
         }
-
+        document.body.scrollTop = 0
     }
     handleStep = (step, data) => {
         if (this.state.step == 0) {

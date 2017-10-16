@@ -31,6 +31,9 @@ class SuccessfulApplication extends React.Component {
         super(props);
         this.type = Number(this.props.params.type)
     }
+    componentDidMount() {
+        document.body.scrollTop = 0
+    }
     render() {
         let {
             intl: {

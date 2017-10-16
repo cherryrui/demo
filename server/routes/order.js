@@ -106,6 +106,38 @@ router
 		}
 		ctx.body = result;
 	})
+	.post('/get-order-money.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/order/queryOrderPayMoeny", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/get-order-status-num.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/order/queryUserOrderEveryStatusTotal", {}).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 
 
 module.exports = router;

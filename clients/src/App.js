@@ -22,11 +22,13 @@ import Home from './component/Home/Home.js';
 
 import PersonCenter from './component/PersonCenter/PersonCenter.js';
 import CusModal from './component/Public/CusModal/CusModal.js';
-
-
+import orderAction from './action/orderAction.js';
+import operator from './component/OrderList/operator.js';
 import {
-    Provider
+    Provider,
+    connect
 } from 'react-redux';
+
 import {
     FormattedMessage,
     addLocaleData,
@@ -210,47 +212,23 @@ const QuotationPdf = (location, cb) => {
     }, 'quotationPdf')
 }
 
+@connect(state => ({
+    order: state.order
+}), orderAction)
 class App extends React.Component {
+    static propTypes = {
+        getOrderNum: React.PropTypes.func.isRequired
+    }
     constructor(props) {
         super(props);
         this.state = {
+            visible: false,
             user: sessionStorage.user ? JSON.parse(sessionStorage.user) : null,
             /*antd_loacl: null,
             locale: 'zh',
             message: zh_message,*/
         };
         this.formatMessage = this.props.intl.formatMessage;
-        this.order_status = [{
-            key: 0,
-            message: "app.all",
-            default_message: "所有",
-            icon: "eitd",
-            num: 0
-        }, {
-            key: 1,
-            message: "app.pay",
-            default_message: "待付款",
-            icon: "eitd",
-            num: 0
-        }, {
-            key: 2,
-            message: "app.send",
-            default_message: "待发货",
-            icon: "eitd",
-            num: 0
-        }, {
-            key: 3,
-            message: "app.receiver",
-            default_message: "待收货",
-            icon: "eitd",
-            num: 0
-        }, {
-            key: 4,
-            message: "app.complete",
-            default_message: "已完成",
-            icon: "eitd",
-            num: 0
-        }, ];
     }
     componentWillMount() {
         if (sessionStorage.user) {
@@ -258,14 +236,9 @@ class App extends React.Component {
                 user: JSON.parse(sessionStorage.user),
             })
         }
-        /*else if (localStorage.uid) {
-            axios.get(`/user/get-user.json?id=${localStorage.uid}`).then(res => {
-                sessionStorage.setItem('user', JSON.stringify(res.data.user))
-                this.setState({
-                    user: res.data.user
-                })
-            })
-        }*/
+        this.props.getOrderNum().then(res => {
+            console.log(res, res.data);
+        });
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
@@ -276,17 +249,12 @@ class App extends React.Component {
             })
         }
     }
-
-
     handleChange = () => {
         if (appLocale.locale == 'zh') {
             window.location.href = "/#" + this.props.location.pathname
         } else {
             window.location.href = "/cn#" + this.props.location.pathname
         }
-    }
-    state = {
-        visible: false
     }
     showModal = () => {
         this.setState({
@@ -311,19 +279,32 @@ class App extends React.Component {
     }
 
     render() {
+        let orderStatus = [];
+        console.log(this.props.order);
+        if (this.props.order.result.length > 0) {
+            orderStatus = JSON.parse(JSON.stringify(operator.order_status));
+            orderStatus.map(item => {
+                this.props.order.result.map(order => {
+                    item.count = 0;
+                    if (item.value == order.orderStatus) {
+                        item.count = order.total;
+                    }
+                })
+            })
+        }
+
+        console.log(this.props);
         let {
             intl: {
                 formatMessage
             }
         } = this.props;
-
-        console.log(appLocale);
         let order_menu = (<Menu>
-        {this.order_status.map(item=>{
+        {orderStatus.map(item=>{
             return <Menu.Item>
-                <Badge count={item.num}>
-                    <a href="#" className="head-example">
-                        <FormattedMessage id={item.message} defaultMessage={item.default_message}/>
+                <Badge count={item.count}>
+                    <a href="page/mine/order-list" className="head-example">
+                        <FormattedMessage id={item.key} defaultMessage="订单状态"/>
                     </a>
                 </Badge>
 

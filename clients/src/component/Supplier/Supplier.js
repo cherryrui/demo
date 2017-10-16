@@ -197,7 +197,15 @@ class Supplier extends React.Component {
                     })
                     values.LevelOneProductCategorys = values.LevelOneProductCategorys.join(",");
                     values.LevelTwoProductCategorys = values.LevelTwoProductCategorys.join(",");
-                    values.transportWay = values.transportWay.join(",");
+                    let value = JSON.parse(JSON.stringify(values.transportWay));
+                    values.transportWay = [];
+
+                    value.map(item => {
+                        values.transportWay.push({
+                            id: item + ""
+                        })
+                    })
+                    values.transportWay = JSON.stringify(values.transportWay);
                     values.businessLicense = this.img_front;
                     values.businessLicenseB = this.img_back;
                     axios.post('/user/become-supplier.json', values).then(res => {
