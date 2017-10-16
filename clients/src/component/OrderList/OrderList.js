@@ -76,7 +76,7 @@ class OrderList extends React.Component {
                 className: css.table_col,
                 render: (text) => <div>
                     <p>{moment(text).format('YYYY-MM-DD ')}</p>
-                    <p>{moment(text).format(' hh:MM:ss')}</p>
+                    <p>{moment(text).format(' HH:MM:ss')}</p>
                 </div>
             }, {
                 title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,
@@ -218,7 +218,6 @@ class OrderList extends React.Component {
                     rowKey="orderId"
                     columns={this.colums_show}
                     dataSource={this.state.orders}
-                    scroll={{y: 100}}
                 />
             </div>
             <div className={css.Pagination}> 

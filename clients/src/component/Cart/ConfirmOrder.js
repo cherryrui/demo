@@ -264,11 +264,11 @@ class ConfirmOrder extends React.Component {
             addr;
         if (address.addressId) {
             addr = address;
-            addr.city = [];
-            addr.city.push(address.countryId);
-            addr.city.push(address.provinceId);
-            addr.city.push(address.cityId);
-            addr.city.push(address.districtId);
+            addr.citys = [];
+            addr.citys.push(address.countryId);
+            addr.citys.push(address.provinceId);
+            addr.citys.push(address.cityId);
+            addr.citys.push(address.districtId);
             title = "cart.address.title";
         } else {
             title = "cart.delivery.new";
@@ -343,7 +343,6 @@ class ConfirmOrder extends React.Component {
                 if (this.state.address.addressId) {
                     param.addressId = this.state.address.addressId;
                     axios.post('/user/update-address.json', param).then(res => {
-                        console.log(res.data)
                         if (res.data.isSucc) {
                             this.setState({
                                 loading: false,
@@ -570,8 +569,8 @@ class ConfirmOrder extends React.Component {
                         {...formItemLayout}
                         label={this.formatMessage({id: 'cart.delivery.city'})}
                     >
-                        {getFieldDecorator('city', {
-                            initialValue: this.state.address.city?this.state.address.city:[],
+                        {getFieldDecorator('citys', {
+                            initialValue: this.state.address.citys?this.state.address.citys:[],
                             rules: [{ type: 'array', required: true, message: this.formatMessage({id: 'cart.delivery.city'}) }],
                         })(
                             <Cascader  className={css.address_input}

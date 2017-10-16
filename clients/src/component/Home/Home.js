@@ -307,10 +307,8 @@ class Home extends React.Component {
                     </p>
                 </div>
             </div>
-            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
+            <LoginModal reload visible={this.state.visible} closeModal={this.handleCancel}/>
         </div>
-
-
     }
 }
 Home = injectIntl(Home);

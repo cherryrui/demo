@@ -49,6 +49,14 @@ class Cart extends React.Component {
                 this.setState({
                     step: 1,
                     products: products
+                }, () => {
+                    sessionStorage.removeItem(products);
+                })
+            } else if (this.props.params.step == 2 && this.props.params.orderId) {
+                axios.post('/order/get-order-money.json', {
+                    orderId: this.state.order.orderId
+                }).then(res => {
+
                 })
             } else {
                 this.props.history.pushState(null, "/");

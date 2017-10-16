@@ -1,16 +1,11 @@
 /**
- * Created by WF on 2017/9/6.
- */
-import appcss from './App.scss';
-
-/**
  * faye 对象数组排序
  * @param key 对象属性
  * @param desc false正序 true倒序
  * @returns {Function}
  */
 let keySort = function(key, desc) {
-    return function(a,b){
+    return function(a, b) {
         return desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
     }
 };
@@ -21,14 +16,14 @@ let keySort = function(key, desc) {
  * @param ShowLabel
  * @param attrs
  */
-let json2pdf = function(JSONData, ReportTitle, ShowLabel,attrs){
+let json2pdf = function(JSONData, ReportTitle, ShowLabel, attrs) {
     var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
     var CSV = ReportTitle + escape('\r\n');
     if (ShowLabel) {
         var row = "";
         for (var index in arrData[0]) {
-            for (let a in attrs){
-                if(index == a){
+            for (let a in attrs) {
+                if (index == a) {
                     row += attrs[a] + ',';
                 }
             }
@@ -39,8 +34,8 @@ let json2pdf = function(JSONData, ReportTitle, ShowLabel,attrs){
     for (var i = 0; i < arrData.length; i++) {
         var row = "";
         for (var index in arrData[i]) {
-            for (let a in attrs){
-                if(index == a){
+            for (let a in attrs) {
+                if (index == a) {
                     row += '"' + arrData[i][index] + '",';
                 }
             }
@@ -52,7 +47,7 @@ let json2pdf = function(JSONData, ReportTitle, ShowLabel,attrs){
         alert("Invalid data");
         return;
     }
-    var fileName = ReportTitle.replace(/ /g,"_");
+    var fileName = ReportTitle.replace(/ /g, "_");
     var uri = 'data:text/pdf;charset=utf-8,' + CSV;
     var link = document.createElement("a");
     link.href = uri;
@@ -92,14 +87,14 @@ let digitUppercase = function(n) {
         s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
     }
     return head + s.replace(/(零.)*零元/, '元')
-            .replace(/(零.)+/g, '零')
-            .replace(/^整$/, '零元整');
+        .replace(/(零.)+/g, '零')
+        .replace(/^整$/, '零元整');
 };
 /**
  * faye 打印
  * @param text innerHtml
  */
-let print = function (text) {
+let print = function(text) {
     let html = "<link rel='stylesheet' href='/css/bundle.css' /><link rel='stylesheet' href='/lib/antd.min.css' />" +
         "<link rel='stylesheet' href='/lib/print.css' media='print'/><style>.prePrint{display: block;float: right;}</style>" +
         "<div class='print' style='text-align: right;padding: 10px 52px 40px 0;'>" +
@@ -111,39 +106,40 @@ let print = function (text) {
 /***
  * faye 数字保留2位小数点并格式化
  */
-let fmoney = function(money,digit){
+let fmoney = function(money, digit) {
     money = parseFloat(money)
     money = money.toFixed(digit);
-    if(null == money ){
+    if (null == money) {
         return "";
     }
-    money = money +"";
+    money = money + "";
     var array = money.split(".");
     var s = array[0];
     var r = "";
-    var m = s.substring(0,1);
-    if('-' == m){
+    var m = s.substring(0, 1);
+    if ('-' == m) {
         s = s.substring(1);
-    }else {
+    } else {
         m = "";
     }
     var f = s.split("").reverse();
-    for(var i = 0; i < f.length; i++){
+    for (var i = 0; i < f.length; i++) {
         r += f[i] + ((i + 1) % 3 == 0 && (i + 1) != f.length ? "," : "");
     }
     var after = "";
-    if(array.length > 1){
+    if (array.length > 1) {
         after = array[1];
-        if(after.length > digit){
-            after =after.substring(0,digit);
+        if (after.length > digit) {
+            after = after.substring(0, digit);
         }
     }
-    return m + r.split("").reverse().join("") + (array.length>1?"."+ after:"");
+    return m + r.split("").reverse().join("") + (array.length > 1 ? "." + after : "");
 };
+let url = "http://192.168.1.113";
 export default {
     keySort: keySort,
-    json2CSV: json2CSV,
     digitUppercase: digitUppercase,
     print: print,
     fmoney: fmoney,
+    url: url,
 };

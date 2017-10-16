@@ -191,6 +191,23 @@ router.get('/get-user.json', async(ctx, next) => {
 		});
 		ctx.body = true;
 	})
+    .post('/become-agent.json', async(ctx, next) => {
+        let param = ctx.request.body,
+            result;
+        if (ctx.cookie.get('token')) {
+            axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+        await axios.post(url + "/auth/usertoAgent/userApplyAgent", querystring.stringify(param)).then(res => {
+            console.log(200 + "user", res.data)
+            result = res.data;
+        })
+        } else {
+            result = {
+                isSucc: false,
+                code: 104
+            }
+        }
+        ctx.body = result;
+    })
 	.get('/reset-pwd.json', async(ctx) => {
 
 		ctx.body = true;

@@ -48,6 +48,7 @@ class OrderDetails extends React.Component {
         this.state = {
             order: {},
             product: [],
+            stageList: [],
             visible: false,
         };
         this.colums_show = [{
@@ -111,7 +112,16 @@ class OrderDetails extends React.Component {
                     item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
                     item.coverUrl = item.productImgUrl;
                 })
+                let stageList = res.data.result.OrderPaymentStageList;
+                let flag = true;
+                stageList.map(item => {
+                    if (item.payStatus == 1 && flag) {
+                        item.payStatus = 0; //当前应付款
+                        flag = false;
+                    }
+                })
                 this.setState({
+                    stageList: stageList,
                     order: res.data.result.order,
                     product: product
                 })
@@ -124,6 +134,8 @@ class OrderDetails extends React.Component {
     handleClick = (type) => {
         if (type == 1) {
             this.props.history.pushState(null, "page/mine/order-list");
+        } else {
+            this.props.history.pushState(null, "page/cart/2/" + this.state.order.orderId)
         }
     }
     handlePayMode = (name, key) => {
@@ -134,12 +146,12 @@ class OrderDetails extends React.Component {
         })
     }
     handleCancel = (item) => {
-        console.log(item);
         this.setState({
             visible: false
         })
     }
     render() {
+        console.log(this.state.stageList);
         return <div className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
@@ -177,7 +189,7 @@ class OrderDetails extends React.Component {
                     </p>
                     <p className={css.item_cont}>
                         <span className={css.item_name}><FormattedMessage  id="orderlist.order.time" defaultMessage="时间"/>：</span>
-                        <span>{moment(this.state.order.createTime).format('YYYY-MM-DD hh:mm:ss')}</span>
+                        <span>{moment(this.state.order.createTime).format('YYYY-MM-DD HH:mm:ss')}</span>
                     </p>
                     <p className={css.item_cont}>
                         <span className={css.item_name}><FormattedMessage id="cart.delivery.mode" defaultMessage="提货方式"/>：</span>
@@ -209,6 +221,7 @@ class OrderDetails extends React.Component {
                     rowKey="productId"
                     bordered
                     columns={this.colums_show}
+                    scroll={{y: 600}}
                     dataSource={this.state.product} />
             </div>
             <div className={css.order_sum}>
@@ -225,16 +238,36 @@ class OrderDetails extends React.Component {
                     <p className={css.order_sum_orange}>$&nbsp;{this.state.order.totalMoney}</p>
                 </div>
             </div>
+            {this.state.stageList.length>0?this.state.stageList.map(item=>{
+                return <div className={item.payStatus==0?css.detail_stage_list_active:css.detail_stage_list}>
+                    <p className={item.payStatus==0?css.stage_item_title_active:css.stage_item_title}>{item.stageSort==1?<FormattedMessage id="cart.advance.payment" defaultMessage="付款"/>
+                        :<FormattedMessage id="order.detail.stage" values={{cur: item.stageSort-1,sum:this.state.stageList.length-1}} defaultMessage=" 期数"/>}
+                    </p>
+                    <p className={css.stage_item_body}>
+                        <FormattedMessage id="orderdetails.principal" defaultMessage="本金"/>：
+                        <span className={item.payStatus>0?css.stage_item_body_font:css.stage_item_body_font_active}>${item.amount}</span>
+                        <FormattedMessage id="orderdetails.interest" defaultMessage="利息"/>
+                        <span className={item.payStatus>0?css.stage_item_body_font:css.stage_item_body_font_active}>${item.interest}</span>
+                        {item.stageSort>1?<FormattedMessage id="orderdetails.pay.date" defaultMessage="还款日期"/>:""}
+                        {item.stageSort>1?<span className={item.payStatus>0?css.stage_item_body_font:css.stage_item_body_font_active}>{moment(item.predictPayTime).format("YYYY-MM-DD")}</span>:""}
+                    </p>
+                    {item.payStatus==1?<FormattedMessage id="orderdetails.unpay" defaultMessage="未还"/>
+                    :item.payStatus==0?<p className={css.stage_item_right}>
+                        <FormattedMessage id="orderdetails.total" defaultMessage="利息"/>：
+                        <span className={css.stage_item_total}>${item.total}</span></p>
+                    :<FormattedMessage id="orderdetails.payed" defaultMessage=""/>}
+                </div>
+                }):""}
             <div className={css.pay_footer}>
                 <a className={css.preview}><FormattedMessage id="orderdetails.preview" defaultMessage="预览贸易合同"/></a>
                 <Button size="large" onClick={this.handleClick.bind(this,1)} type="primary" className={css.button_order}>
                     <FormattedMessage  id="orderdetails.return" defaultMessage="返回"/>
                 </Button>
-                <Button size="large" type="primary" className={css.button_order}>
+                <Button size="large" onClick={this.handleClick.bind(this,2)} type="primary" className={css.button_order}>
                     <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
                 </Button>
             </div>
-            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>  
+            <LoginModal reload visible={this.state.visible} closeModal={this.handleCancel}/>  
         </div>
     }
 }

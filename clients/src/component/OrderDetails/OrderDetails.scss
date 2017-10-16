@@ -101,9 +101,54 @@ padding-top:20px;
   }
   .button_order{
     margin-left:10px;
-   display: block;
+    display: block;
     width: 150px;
     height: 50px;
     line-height:50px ;
   }
 }
+.detail_stage_list{
+  display: flex;
+  margin: 10px 0;
+  color: $border-color;
+  align-items: center;
+  padding-right: 20px;
+  
+}
+.detail_stage_list_active{
+  @extend .detail_stage_list;
+  color: $font-color;
+}
+.stage_item_title{
+    width: 140px;
+    text-align: center;
+    height: 36px;
+    line-height: 36px;
+    margin-right: 20px;
+  }
+  .stage_item_title_active{
+    @extend .stage_item_title;
+    background: $color-orange;
+    color: white;
+  }
+  .stage_item_body{
+    flex-grow: 1;
+  }
+  .stage_item_body_font{
+      padding: 0px 10px 20px;
+  }
+  .stage_item_body_font_active{
+    padding: 0px 10px 20px;
+    color: $color-orange;
+
+  }
+  .stage_item_right{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .stage_item_total{
+    font-size: 16px;
+    font-weight: bold;
+    color: $color-orange;
+    padding-left: 10px;
+  }

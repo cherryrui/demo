@@ -19,10 +19,10 @@ import {
 
 class SuccessfulApplication extends React.Component {
     agent = (a) => {
-        this.props.history.pushState(null, "page/mine/agent");
+        this.props.history.pushState(null, "page/mine");
     }
     supplier = (s) => {
-        this.props.history.pushState(null, "page/mine/supplier");
+        this.props.history.pushState(null, "page/mine");
     }
     static propTypes = {
         intl: intlShape.isRequired

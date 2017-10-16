@@ -52,7 +52,7 @@ class LoginModal extends React.Component {
 						message.success(this.formatMessage({
 							id: 'login.login.success'
 						}));
-						parent.location.reload();
+						this.props.reload ? parent.location.reload() : "";
 						this.props.closeModal ? this.props.closeModal() : ""
 					} else {
 						message.error(this.formatMessage({

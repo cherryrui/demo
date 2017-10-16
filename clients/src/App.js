@@ -445,7 +445,7 @@ ReactDOM.render(
                             <Route path="product-detail/:id(/:name)" getComponent={ProductDetail}/>
                             <Route path="brand-detail/:id" getComponent={BrandDetail}/>
                             <Route path="post-want" getComponent={PostWant}/>
-                            <Route path="cart(/:step)" getComponent={Cart}/>
+                            <Route path="cart(/:step)(/:orderId)" getComponent={Cart}/>
                             <Route path="quotation(/:id)" getComponent={Quotation}/>
                             <Route path="quotation-pdf/:id" getComponent={QuotationPdf}/>
                             <Route path="about" getComponent={About}>
