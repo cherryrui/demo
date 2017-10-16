@@ -491,6 +491,9 @@ const zh_CN = {
     "app.proval": "已上架",
     "app.provaling": "审核中",
     "app.not.provaled": "审核没通过",
-    "app.not.review": "没有审核 "
+    "app.not.review": "没有审核 ",
+    "app.company.logo": "公司logo ",
+    "app.img.size": "图片大小：200px*200px ",
+    "app.img.format": "图片格式：jpg.jpeg.gif.png.bmp "
 }
 export default zh_CN;

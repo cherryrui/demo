@@ -336,7 +336,7 @@ class Agent extends React.Component {
                         label={this.formatMessage({id: 'certif.company.region'})}
                 >
                     {getFieldDecorator('residence', {
-                        rules: [{ type: 'array', required: true, message: 'agent.select.region'
+                        rules: [{ type: 'array', required: true, message: this.formatMessage({id:'agent.select.region'}),
                     }],
                     })(
                         <Cascader options={this.state.options} className={css.agent_input}/>
@@ -357,7 +357,7 @@ class Agent extends React.Component {
                         label={this.formatMessage({id: 'quotation.url'})}
                 >
                     {getFieldDecorator('website', {
-                        rules: [{ required: true, message: this.formatMessage({id: 'agent.enter.detailed_address'}),
+                        rules: [{ required: true, message: this.formatMessage({id: 'certif.company.website_warn'}),
                         }],
                     })(
                         <AutoComplete className={css.agent_input}

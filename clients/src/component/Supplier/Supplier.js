@@ -404,7 +404,7 @@ class Supplier extends React.Component {
                 >
                     {getFieldDecorator('website', {
                          rules: [{
-                            required: true, message: this.formatMessage({id: 'quotation.url'}),
+                            required: true, message: this.formatMessage({id: 'certif.company.website_warn'}),
                         }],
                     })(
                         <AutoComplete className={css.supplier_input}
@@ -421,7 +421,7 @@ class Supplier extends React.Component {
                 >
                     {getFieldDecorator('contactPerson', {
                         rules: [{
-                            required: true, message: this.formatMessage({id: 'quotation.contact.name'}),
+                            required: true, message: this.formatMessage({id: 'post.linkman.info'}),
                         }],
                     })(
                         <Input className={css.supplier_input}/>
@@ -455,7 +455,7 @@ class Supplier extends React.Component {
                         label={this.formatMessage({id: 'certif.company.region'})}
                 >
                     {getFieldDecorator('residence', {
-                        rules: [{ type: 'array', required: true, message: 'agent.select.region'
+                        rules: [{ type: 'array', required: true, message: this.formatMessage({id:'agent.select.region'}),
                     }],
                     })(
                         <Cascader options={this.state.options} className={css.supplier_input}/>
@@ -472,9 +472,9 @@ class Supplier extends React.Component {
                         <Input className={css.supplier_input}/>
                     )}
                 </FormItem>
-                <FormItem
+                <FormItem  style={{display:"flex"}}
                     {...formItemLayout}
-                    label={this.formatMessage({id: 'agent.detailed.address'})}
+                    label={this.formatMessage({id: 'app.company.logo'})}
                 >
                     {getFieldDecorator('logoList', {
                         valuePropName: 'fileList',
@@ -496,8 +496,10 @@ class Supplier extends React.Component {
                                   </span>}
                             </Upload>
                     )}
-                        <FormattedMessage id="agent.enter.detailed_address" defaultMessage="agent.enter.detailed_address"/>
-                        <FormattedMessage id="agent.enter.detailed_address" defaultMessage="agent.enter.detailed_address"/>
+                    <div className={css.img_text}>
+                        <p><FormattedMessage id="app.img.size" defaultMessage="app.img.size"/></p>
+                       <p> <FormattedMessage id="app.img.format" defaultMessage="app.img.format"/></p>
+                    </div>
                 </FormItem>
                 {this.state.category.map((item,index)=>{
                     return <FormItem
@@ -505,7 +507,7 @@ class Supplier extends React.Component {
                         label={this.formatMessage({id: 'app.category'})+(index+1)}
                     >
                         {getFieldDecorator('category'+index, {
-                            rules: [{ type: 'array', required: true, message: 'agent.select.region'
+                            rules: [{ type: 'array', required: true, message: this.formatMessage({id:'mine.product.category_warn'}),
                                 }],
                         })(
                             <Cascader 
@@ -516,10 +518,10 @@ class Supplier extends React.Component {
                             />
                         )}
                         {index==0?<Tooltip title={this.formatMessage({id:'mine.product.add_category'})}>
-                                <Button icon="plus" onClick={this.handleCategory.bind(this,-1)}/>
+                                <Button icon="plus" onClick={this.handleCategory.bind(this,-1)} className={css.jiahao}/>
                             </Tooltip>
                             :<Tooltip title={this.formatMessage({id:'mine.product.del_category'})}>
-                                <Button icon="minus" onClick={this.handleCategory.bind(this,index)}/>
+                                <Button icon="minus" onClick={this.handleCategory.bind(this,index)} className={css.jiahao}/>
                             </Tooltip>}
                     </FormItem>
                 })}

@@ -25,6 +25,7 @@
   }
 }
 .suplier_logo{
+  float: left;
   div[class="ant-upload-list-item ant-upload-list-item-done"]{
         width: 150px;
         height: 110px;
@@ -47,11 +48,20 @@
         margin-top: 14px;
         display: inline-flex;
       }
+
     }
+}
+.img_text{
+  margin-top: 65px;
+  p{
+    line-height: 24px;
+    height: 24px;
+  }
 }
 .supplier_form{
   padding-top:20px ;
   padding-bottom: 10px;
+
 .retrun{
   background-color: $button-green;
   border-color: $button-green;
@@ -69,10 +79,20 @@
 
   border-radius: 2px;
 }
+  .jiahao{
+    margin-left:10px;
+    border-radius: 2px !important;
+    height: 36px  !important;
+    width: 36px  !important;
+    margin-top: -21px;
+    background: $color-blue;
+    color: #ffffff;
+  }
 .supplier_input{
   width: 400px  !important;
   border-radius: 2px !important;
   height: 36px;
+
   input{
     height: 36px !important;
     border-radius: 2px !important;

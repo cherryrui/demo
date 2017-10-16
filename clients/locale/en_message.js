@@ -407,7 +407,7 @@ const en_US = {
     "repwd.config.pwd": "Confirm password",
     "certif.company.name_warn": "Please enter the company name",
     "certif.company.website": "公司官网",
-    "certif.company.website_warn": "请输入公司官网",
+    "certif.company.website_warn": "Please enter the company website",
     "certif.company.nature": "公司性质",
     "certif.company.industry": "行业分类",
     "certif.company.nature_warn": "请选择公司主营",
@@ -448,7 +448,7 @@ const en_US = {
     "supplier.port": "Transport to the port",
     "supplier.warehouse.China": "warehouse China",
     "supplier.warehouses.abroad": "warehouses abroad",
-    "supplier.main.products": "main.products",
+    "supplier.main.products": "main products",
     "app.success": "Submitted successfully",
     "supplier.need.conditions": "Suppliers need to have the conditions",
     "supplier.development": "With the rapid development of the construction retail industry, the demand of consumers is more diversified and the demand is increasing rapidly. In order to share the development of building materials industry, we hope to work hand in hand with you.",
@@ -490,6 +490,9 @@ const en_US = {
     "app.proval": "proval",
     "app.provaling":"provaling",
     "app.not.provaled":"not provaled",
-    "app.not.review":"not review"
+    "app.not.review":"not review",
+    "app.company.logo": "Company logo",
+    "app.img.size": "Image size:200px*200px ",
+    "app.img.format": "Image format:jpg.jpeg.gif.png.bmp "
 }
 export default en_US;
