@@ -62,7 +62,7 @@ class Home extends React.Component {
             url: "/"
         }, {
             key: 2,
-            message_id: "app.brand",
+            message_id: "quotation.brand",
             default_message: "供应商",
             url: "/page/brand-list"
         }, {

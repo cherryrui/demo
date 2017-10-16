@@ -295,7 +295,7 @@ const en_US = {
     "about.contact.email": "Contact email",
     "about.headquarter.adress": "Headquarter adress",
     "quotation.logo": "logo",
-    "quotation.brand": "brand",
+    "quotation.brand": "Supplier",
     "quotation.url": "Website",
     "quotation.quotation": "Quotation",
     "quotation.no": "No.",
