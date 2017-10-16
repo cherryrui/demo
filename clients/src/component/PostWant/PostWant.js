@@ -18,6 +18,7 @@ import {
 	Checkbox,
     Upload,
 	Breadcrumb,
+    message,
 	DatePicker
 } from 'antd';
 const FormItem = Form.Item;
@@ -48,6 +49,7 @@ class PostWant extends React.Component {
 		this.state = {
 			create_time : '',
 		}
+        this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentDidMount() {
 		this.postwant.scrollIntoView();
@@ -134,7 +136,7 @@ class PostWant extends React.Component {
 			        >
 			          {getFieldDecorator('company_name', {
 			            rules: [ {
-			              required: true, message: 'agent.enter.company',
+			              required: true, message: this.formatMessage({id:'agent.enter.company'}),
 			            }],
 			          })(
 			            <Input className={css.want_input}/>
@@ -147,7 +149,7 @@ class PostWant extends React.Component {
 			        >
 			          {getFieldDecorator('time', {
 			            rules: [{
-			              type: 'object', required: true, message: 'Please select time!'
+			              type: 'object', required: true, message:this.formatMessage({ id:'app.select.time'}),
 			            }],
 			          })(
 			             <DatePicker onChange={this.onChanges} className={css.want_input}/>
@@ -160,7 +162,7 @@ class PostWant extends React.Component {
 			        >
 			          {getFieldDecorator('linkman', {
 			            rules: [{
-			              required: true, message: 'Please enter the contact person',
+			              required: true, message:this.formatMessage({ id:'post.linkman.info'}),
 			            }],
 			          })(
 			            <Input className={css.want_input}/>
@@ -173,7 +175,7 @@ class PostWant extends React.Component {
 			        >
 			          {getFieldDecorator('email', {
 			            rules: [{
-			              required: true, message: 'register.email.warn',
+			              required: true, message:this.formatMessage( {id:'register.email.warn'}),
 			            }],
 			          })(
 			            <Input className={css.want_input}/>
@@ -186,7 +188,7 @@ class PostWant extends React.Component {
 			        >
 			          {getFieldDecorator('phone', {
 			            rules: [ {
-			              required: true, message: 'register.tel.warn',
+			              required: true, message:this.formatMessage({ id:'register.tel.warn'}),
 			            }],
 			          })(
 			            <Input className={css.want_input}/>

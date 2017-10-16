@@ -493,6 +493,7 @@ const en_US = {
     "app.not.review":"not review",
     "app.company.logo": "Company logo",
     "app.img.size": "Image size:200px*200px ",
-    "app.img.format": "Image format:jpg.jpeg.gif.png.bmp "
+    "app.img.format": "Image format:jpg.jpeg.gif.png.bmp ",
+    "app.select.time": "Please select time"
 }
 export default en_US;

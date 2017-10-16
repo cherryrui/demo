@@ -494,6 +494,7 @@ const zh_CN = {
     "app.not.review": "没有审核 ",
     "app.company.logo": "公司logo ",
     "app.img.size": "图片大小：200px*200px ",
-    "app.img.format": "图片格式：jpg.jpeg.gif.png.bmp "
+    "app.img.format": "图片格式：jpg.jpeg.gif.png.bmp ",
+    "app.select.time": "请选择时间 "
 }
 export default zh_CN;
