@@ -327,7 +327,7 @@ class QuotationPdf extends React.Component {
                         </p>
                     </div>
                     <div className={css.quo_footer_right}>
-                        <img src="../img/yin.jpg"/>
+                        <img src="../img/yin.png"/>
                     </div>
                 </div>
             </div>

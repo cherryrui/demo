@@ -41,12 +41,19 @@ class Main extends React.Component {
     }
     componentWillMount() {
         axios.get('/api/get-main-data.json').then(res => {
-            /*console.log('main.js:',res.data)*/
             this.setState({
                 brand: res.data.brand.result,
                 category: res.data.category.result
             })
         })
+    }
+    handleClick = (name) => {
+        //设置定时器
+        let top = document.getElementById(name).offsetTop;
+        if (top > 0) {
+            top = top - 130;
+        }
+        document.documentElement.scrollTop = document.body.scrollTop = top;
     }
 
     render() {
@@ -61,9 +68,8 @@ class Main extends React.Component {
                 className={css.slider_play}
             >
                 <div><img className={css.slider_img} src='../img/autoSlide.jpg'/></div>
-                <div><img className={css.slider_img} src='../img/autoSlide.jpg'/></div>
-                <div><img className={css.slider_img} src='../img/autoSlide.jpg'/></div>
-                <div><img className={css.slider_img} src='../img/autoSlide.jpg'/></div>
+                <div><img className={css.slider_img} src='../img/banner1.jpg'/></div>
+                <div><img className={css.slider_img} src='../img/banner2.jpg'/></div>
             </Slider>
             
             <div className={css.icon}>
@@ -143,36 +149,24 @@ class Main extends React.Component {
             </div>
             {this.state.category.length>0?<Category category={this.state.category}/>:""}
             <div className={css.fixed_right}>
-                <a href="#home">
-                    <p className={css.fixed_item}>
-                        <i class="iconfont icon-dingbu"></i>
-                    </p>
-                </a>
-                <a href="#dingzhi">
-                    <p className={css.fixed_item} >
-                        <i class="iconfont icon-dingzhi"></i>
-                    </p>
-                </a>
-                <a href="#suppliers">
-                    <p className={css.fixed_item}>
-                        <i class="iconfont icon-DYC-14"></i>
-                    </p>
-                </a>
-                <a href="#category_0">
-                    <p className={css.fixed_item_grey}>
-                        <i class="iconfont icon-DYC-13"></i>
-                    </p>
-                </a>
-                <a href="#category_1">
-                    <p className={css.fixed_item_grey}>
-                        <i class="iconfont icon-DYC-15"></i>
-                    </p>
-                </a>
-                <a href="#category_2">
-                    <p className={css.fixed_item_grey}>
-                        <i class="iconfont icon-DYC-11"></i>
-                    </p>
-                </a>
+                <p className={css.fixed_item} onClick={this.handleClick.bind(this,"home")}>
+                    <i class="iconfont icon-dingbu"></i>
+                </p>
+                <p className={css.fixed_item} onClick={this.handleClick.bind(this,"dingzhi")}>
+                    <i class="iconfont icon-dingzhi"></i>
+                </p>
+                <p className={css.fixed_item} onClick={this.handleClick.bind(this,"suppliers")}>
+                    <i class="iconfont icon-DYC-14"></i>
+                </p>
+                <p className={css.fixed_item_grey} onClick={this.handleClick.bind(this,"category_0")}>
+                    <i class="iconfont icon-DYC-13"></i>
+                </p>
+                <p className={css.fixed_item_grey} onClick={this.handleClick.bind(this,"category_1")}>
+                    <i class="iconfont icon-DYC-15"></i>
+                </p>
+                <p className={css.fixed_item_grey} onClick={this.handleClick.bind(this,"category_2")}>
+                    <i class="iconfont icon-DYC-11"></i>
+                </p>
             </div>
         </div>
     }

@@ -2,9 +2,7 @@
  * Created by WF on 2017/9/4.
  */
 let initialState = {
-	order: {
-		result: []
-	}
+	result: [],
 };
 
 export default (state = initialState, action) => {

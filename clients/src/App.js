@@ -224,9 +224,6 @@ class App extends React.Component {
         this.state = {
             visible: false,
             user: sessionStorage.user ? JSON.parse(sessionStorage.user) : null,
-            /*antd_loacl: null,
-            locale: 'zh',
-            message: zh_message,*/
         };
         this.formatMessage = this.props.intl.formatMessage;
     }
@@ -236,9 +233,9 @@ class App extends React.Component {
                 user: JSON.parse(sessionStorage.user),
             })
         }
-        this.props.getOrderNum().then(res => {
-            console.log(res, res.data);
-        });
+        if (this.state.user) {
+            this.props.getOrderNum();
+        }
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
@@ -279,21 +276,21 @@ class App extends React.Component {
     }
 
     render() {
-        let orderStatus = [];
-        console.log(this.props.order);
+        console.log(operator.order_status, this.props.order, this.props.order.result);
+        let orderStatus = [],
+            sum = 0;
         if (this.props.order.result.length > 0) {
             orderStatus = JSON.parse(JSON.stringify(operator.order_status));
             orderStatus.map(item => {
                 this.props.order.result.map(order => {
-                    item.count = 0;
+                    console.log(item, order);
                     if (item.value == order.orderStatus) {
                         item.count = order.total;
+                        sum += order.total;
                     }
                 })
             })
         }
-
-        console.log(this.props);
         let {
             intl: {
                 formatMessage
@@ -301,14 +298,14 @@ class App extends React.Component {
         } = this.props;
         let order_menu = (<Menu>
         {orderStatus.map(item=>{
-            return <Menu.Item>
+            return item.value>0?<Menu.Item>
                 <Badge count={item.count}>
                     <a href="page/mine/order-list" className="head-example">
                         <FormattedMessage id={item.key} defaultMessage="订单状态"/>
                     </a>
                 </Badge>
 
-            </Menu.Item>
+            </Menu.Item>:""
         })}
         </Menu>)
         return <div className={css.main} >
@@ -324,8 +321,10 @@ class App extends React.Component {
                             </Link><Link style={{color:"white"}} to="register">
                                 /<FormattedMessage id="login.registor" defaultMessage="注册"/>
                             </Link></div>}
-                            {this.state.user?<Dropdown overlay={order_menu}>
-                                <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
+                            {this.state.user?<Dropdown overlay={order_menu} placement="bottomRight">
+                                <Badge count={sum} overflowCount={99}>
+                                    <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
+                                </Badge>
                             </Dropdown>:""}
                             {this.state.user?<p className={css.item}>
                                 <FormattedMessage id="app.message" defaultMessage="消息"/>
