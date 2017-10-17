@@ -12,7 +12,7 @@ router.get('/get-title-data.json', async(ctx, next) => {
 		let categorys = null,
 			carts = [];
 		await axios.get(url + '/index/queryLevelOneProductCategoryList').then(res => {
-			console.log(11111111111111111111,res.data);
+			console.log(11111111111111111111, res.data);
 			categorys = res.data;
 		});
 		ctx.body = {
@@ -26,29 +26,26 @@ router.get('/get-title-data.json', async(ctx, next) => {
 			category = [];
 		try {
 			await axios.get(url + '/index/queryProductCategoryList').then(res => {
-				console.log(86, res.data);
 				category = res.data;
 			});
 			await axios.get(url + '/index/querySupplierList').then(res => {
 				console.log(res.data);
 				brand = res.data;
 			});
-		} catch (e) {
-			console.log(94, e);
-		}
+		} catch (e) {}
 		ctx.body = {
 			category: category,
 			brand: brand
 		};
 	})
 	/**
-	*首页需求管理接口
-	*
-	**/
-	.post('/demand-controller.json',async (ctx) =>{
+	 *首页需求管理接口
+	 *
+	 **/
+	.post('/demand-controller.json', async(ctx) => {
 		let result,
 			param = ctx.request.body;
-		await axios.post(url+'/auth/demand/insertDemand',querystring.stringify(param)).then(res => {
+		await axios.post(url + '/auth/demand/insertDemand', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;

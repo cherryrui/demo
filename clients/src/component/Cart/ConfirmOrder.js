@@ -87,7 +87,7 @@ class ConfirmOrder extends React.Component {
             render: (record) => <div>
                 {record.selectSpecs?record.selectSpecs.map((item,index)=>{
                     return <div>
-                        <p>{item.specName}:{item.specVal[0].specValue}</p>
+                        <p>{item.specName}：{item.specVal[0].specValue}</p>
                     </div>
                 }):""}
             </div>
@@ -95,7 +95,7 @@ class ConfirmOrder extends React.Component {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
             width: "100px",
             className: css.table_col,
-            render: (record) => <span className={css.table_price}>${this.user.userIdentity==1?record.priceSupplier.toFixed(2):record.price.toFixed(2)}</span>
+            render: (record) => <span className={css.table_price}>${record.price.toFixed(2)}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "100px",

@@ -28,7 +28,6 @@
   .item{
     height: 240px;
     width: 150px;
-    margin-bottom: 35px;
     margin-right: 40px;
   }
   .right_item{
@@ -36,6 +35,9 @@
     width: 150px;
     margin-bottom: 35px;
     margin-right: none !important;
+  }
+  img{
+    height: 150px;
   }
 }
 .footer{

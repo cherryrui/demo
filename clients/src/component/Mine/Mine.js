@@ -26,7 +26,7 @@ class Mine extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {},
+            user: sessionStorage.user ? JSON.parse(sessionStorage.user) : "",
             select: 0,
         }
     }
@@ -35,18 +35,16 @@ class Mine extends React.Component {
             this.props.history.pushState(null, '/login');
         }
     }
-    componentDidMount() {
-        console.log("componentDidMount");
-    }
+    componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
         if (!sessionStorage.user) {
             this.props.history.pushState(null, '/login');
+        } else {
+            this.state.user = JSON.parse(sessionStorage.user);
         }
     }
 
-    handleClick = (e) => {
-        //console.log('click ', e);
-    }
+    handleClick = (e) => {}
     handleMenu = (key, url) => {
         console.log(key, url);
         this.setState({
@@ -57,11 +55,12 @@ class Mine extends React.Component {
     }
 
     render() {
-        //console.log(operator.menu,this.props.children);
+        let menu = operator.menu;
+        if (this.state.user.userIdentity == 0) {}
         return <div className={`${appcss.body} ${css.body}`}>
             <div className={css.menu}>
             {operator.menu.map(menu=> {
-                return <div>
+                return menu.code.indexOf(this.state.user.userIdentity)>-1?<div>
                     {menu.list.length>0?<p className={css.menu_title_show}>
                         <FormattedMessage id={menu.name} defaultMessage="分类"/>       
                     </p>:<p className={this.state.select == menu.key?css.menu_active:css.menu_title} onClick={this.handleMenu.bind(this,menu.key,menu.url)} >
@@ -76,7 +75,7 @@ class Mine extends React.Component {
 
                         </p>
                     })}
-                </div>
+                </div>:""
             })}
             </div>
             <div className={css.content}>

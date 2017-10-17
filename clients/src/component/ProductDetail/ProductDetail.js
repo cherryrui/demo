@@ -70,7 +70,9 @@ class ProductDetail extends React.Component {
             prices: [],
             packInfo: {},
             disabled: false,
-        }
+        };
+        this.formatMessage = this.props.intl.formatMessage;
+
     }
 
     componentWillMount() {
@@ -95,16 +97,20 @@ class ProductDetail extends React.Component {
                 let product = res.data.result.productAndSupplier;
                 product.imgs = res.data.result.imgs;
                 product.productNum = product.moq;
+                let specs = res.data.result.specs;
+                specs.map(item => {
+                    item.productSpecs = JSON.parse(item.productSpecs);
+                })
                 this.setState({
                     product: product,
                     curImg: res.data.result.imgs.length > 0 ? res.data.result.imgs[0].imgUrl : "",
                     productInfo: res.data.result.productInfo,
                     properties: res.data.result.properties,
-                    specs: res.data.result.specs,
+                    specs: specs,
                     packInfo: res.data.result.packInfo,
                 })
             } else {
-
+                message.error(res.dada.message);
             }
 
         })
@@ -163,6 +169,7 @@ class ProductDetail extends React.Component {
                         }))
                     } else {
                         let product = this.state.product;
+                        product.id = -1;
                         product.coverUrl = product.productImg;
                         let selectSpecs = [];
                         console.log(this.state.specs);
@@ -173,8 +180,8 @@ class ProductDetail extends React.Component {
                                 type: item.type,
                                 specVal: [],
                             };
-                            item.specVal.map(attr => {
-                                if (item.select_value == attr.valid) {
+                            item.productSpecs.specValue.map(attr => {
+                                if (item.select_value == attr.valId) {
                                     spec.specVal.push(attr);
                                 }
                             })
@@ -287,6 +294,7 @@ class ProductDetail extends React.Component {
     }
 
     render() {
+        console.log(this.state.specs);
         const {
             intl: {
                 formatMessage
@@ -312,7 +320,7 @@ class ProductDetail extends React.Component {
             <div className={css.header}>
                 <div className={css.main_img}>
                     <div className={css.cus_img}>
-                        <img className={css.img_main} src={this.state.curImg+"@320w_320h_1e_1c.png"}/>
+                        <img className={css.img_main} src={this.state.curImg?this.state.curImg+"@320w_320h_1e_1c.png":"../img/no_picture.jpg"}/>
                     </div>
                     <div className={css.product_img}>
                          {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
@@ -367,8 +375,8 @@ class ProductDetail extends React.Component {
                             return <div key={item.id} className={css.item}>
                             <p className={css.title}>{item.specName}</p>
                             <div className={css.spec_content}> 
-                                {item.specVal.map(attr=>{
-                                    return <p className={item.select_value==attr.valid?css.content_active:css.content_item} onClick={this.handleAttr.bind(this,index,attr.valid)}>{attr.specValue}</p>
+                                {item.productSpecs.specValue.map(attr=>{
+                                    return <p className={item.select_value==attr.valId?css.content_active:css.content_item} onClick={this.handleAttr.bind(this,index,attr.valId)}>{attr.specValue}</p>
                                 })}
                                 
                             </div>

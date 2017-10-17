@@ -6,9 +6,11 @@ let initialState = {
 };
 
 export default (state = initialState, action) => {
-	console.log(state, action);
 	switch (action.type) {
 		case 'GET_ORDER_STATUS_NUM_FULFILLED':
+			return action.payload.data;
+		case 'COMMIT_CART_FULFILLED':
+			console.log("order 13", action, state);
 			return action.payload.data;
 		default:
 			return state;

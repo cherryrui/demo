@@ -9,6 +9,8 @@ import axios from 'axios';
 import operator from './operator.js';
 import Brand from '../Public/Brand/Brand.js';
 import Product from '../Public/Product/Product.js';
+import operator_order from '../OrderList/operator.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 import {
     FormattedMessage,
     injectIntl,
@@ -20,9 +22,9 @@ import {
     Tooltip,
     Progress,
     Pagination,
-    Avatar
+    Avatar,
+    message
 } from 'antd';
-
 class PersonCenter extends React.Component {
     jump = (e) => {
         this.props.history.pushState(null, "page/mine/system-message")
@@ -30,30 +32,74 @@ class PersonCenter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {
-                type: 2, //用户类型，1：供应商，2：代理商 3：个人
-            },
+            user: "",
             message_list: [],
             products: [],
             brands: [],
+            orderList: [],
+            demandList: [],
+            collectList: [],
+            visible: false,
+            product_page: 1,
+            brand_page: 2,
 
         }
 
     }
     componentWillMount() {
         if (sessionStorage.user) {
-            /*this.state.user = JSON.parse(sessionStorage.user);*/
-            axios.get("/user/get-recent-message.json").then(res_m => {
-                axios.get('/product/get-like-product.json').then(res_P => {
-                    axios.get('/brand/get-like-brand.json').then(res_b => {
-                        this.setState({
-                            message_list: res_m.data.message,
-
-                            brands: res_b.data.brands
+            this.state.user = JSON.parse(sessionStorage.user);
+            let orderList = JSON.parse(JSON.stringify(operator_order.order_status)),
+                demandList = JSON.parse(JSON.stringify(operator.demand_menu)),
+                collectList = JSON.parse(JSON.stringify(operator.favorite_menu));
+            axios.post('/user/get-center-num.json', {}).then(res => {
+                if (res.data.code == 104) {
+                    this.setState({
+                        visible: true
+                    })
+                } else if (res.data.isSucc) {
+                    let sum = 0;
+                    orderList.map(item => {
+                        res.data.order.map(order => {
+                            if (item.value == order.orderStatus) {
+                                item.count = order.total;
+                                sum += order.total;
+                            }
                         })
                     })
-                })
-            })
+                    orderList[0].count = sum;
+                    sum = 0;
+                    demandList.map(item => {
+                        res.data.demand.map(demand => {
+                            if (item.key == demand.demandStatus) {
+                                sum += demand.total;
+                                item.count = demand.total;
+                            }
+                        })
+                    })
+                    demandList[0].count = sum;
+                    sum = 0;
+                    collectList.map(item => {
+                        res.data.collect.map(demand => {
+                            if (item.key == demand.demandStatus) {
+                                sum += demand.total;
+                                item.count = demand.total;
+                            }
+                        })
+                    })
+                    collectList[0].count = sum;
+                    this.setState({
+                        orderList: orderList,
+                        demandList: demandList,
+                        collectList: collectList,
+                        brands: res.data.brand,
+                        products: res.data.product,
+                    })
+                } else {
+                    message.error(res.data.message);
+                }
+            });
+
         } else {
             window.location.href = '/#/login'
         }
@@ -66,8 +112,18 @@ class PersonCenter extends React.Component {
         if (url)
             this.props.history.pushState(null, url);
     }
+    handleCancel = () => {
+        this.setState({
+
+        })
+    }
+    handleChange = (name, page) => {
+        console.log(name, page);
+        let param = {};
+        param[name] = page;
+        this.setState(param);
+    }
     render() {
-        console.log(this.state.user.type,this.state.user.type==1)
         return <div class={css.center}>
             <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person" defaultMessage="分类"/>
@@ -77,18 +133,16 @@ class PersonCenter extends React.Component {
                     <Avatar size="large" icon="user" className={css.user_avatar}/>
                     <div className={css.user_name}>
                         <p  style={{ fontSize:18,fontWeight:"bold"}}>
-                             {this.state.user.name}dddddddd
+                             {this.state.user.userName}
                              <Icon type="user"  className={css.name_icon}/></p>
                         <p>
                             <Icon type="safety" className={css.member_icon}/>
-                            fvvdddddd
+                            Regular member
                         </p>
                         <p>
                             <FormattedMessage id="app.account.security" defaultMessage="分类"/>:
                             <div style={{ width: 100,paddingLeft:5}}>
-
                                 <Progress type="line" percent={50} format={() => 'middle'}  strokeWidth={10} strokeHeigth={12} status="active" style={{ color: "#ff9a2c"}} />
-
                             </div>
                         </p>
                     </div>
@@ -115,20 +169,20 @@ class PersonCenter extends React.Component {
                     <FormattedMessage id="mine.order" defaultMessage="分类"/>
                 </p>
                 <div className={css.order_content}>
-                    {operator.order_menu.map(item=>{
+                    {this.state.orderList.map(item=>{
                         return <div className={css.order_item}
                         onClick={this.handleMenu.bind(this,item.key,item.url)}
                         >
                             <img src={item.icon}/>
                             <Tooltip placement="top"
                                 arrowPointAtCenter
-                                title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                                title={<FormattedMessage id={item.key} defaultMessage="分类"/>}
                             >
                                 <p className={css.order_text}>
-                                    <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                    <FormattedMessage id={item.key} defaultMessage="分类"/>
                                 </p>
                             </Tooltip>
-                            <p className={css.order_num}>30</p>
+                            <p className={css.order_num}>{item.count}</p>
                         </div>
                     })}
                 </div>    
@@ -139,20 +193,20 @@ class PersonCenter extends React.Component {
                         <FormattedMessage id="app.demand.management" defaultMessage="分类"/>
                     </p>
                     <div className={css.demand_content}>
-                        {operator.demand_menu.map(item=>{
+                        {this.state.demandList.map(item=>{
                             return <div className={css.order_item}
                                 onClick={this.handleMenu.bind(this,item.key,item.url)}
                             >
                                 <img src={item.icon}/>
                                 <Tooltip placement="top"
-                                        arrowPointAtCenter
-                                        title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
+                                    arrowPointAtCenter
+                                    title={<FormattedMessage id={item.value_id} defaultMessage="分类"/>}
                                 >
-                                        <p className={css.order_text}>
-                                            <FormattedMessage id={item.value_id} defaultMessage="分类"/>
-                                        </p>
+                                    <p className={css.order_text}>
+                                        <FormattedMessage id={item.value_id} defaultMessage="分类"/>
+                                    </p>
                                  </Tooltip>
-                                    <p className={css.order_num}>30</p>
+                                    <p className={css.order_num}>{item.count}</p>
                             </div>
                     })}
                     </div>                    
@@ -162,7 +216,7 @@ class PersonCenter extends React.Component {
                         <FormattedMessage id="mine.favorite" defaultMessage="分类"/>
                     </p>
                     <div className={css.favorite_content}>
-                        {operator.favorite_menu.map(item=>{
+                        {this.state.collectList.map(item=>{
                             return <div className={css.order_item}
                                 onClick={this.handleMenu.bind(this,item.key,item.url)}
                             >
@@ -175,12 +229,12 @@ class PersonCenter extends React.Component {
                                             <FormattedMessage id={item.value_id} defaultMessage="分类"/>
                                         </p>
                                 </Tooltip>
-                                    <p className={css.order_num} >30</p>
+                                    <p className={css.order_num} >{item.count}</p>
                             </div>
                         })}
                     </div>
                 </div>
-                {this.state.user.type==2?
+                {this.state.user.userIdentity==1?
                 <div className={css.quotation}>
                     <p className={css.title_item}>
                         <FormattedMessage id="quotation.quotation" defaultMessage="分类"/>
@@ -204,18 +258,13 @@ class PersonCenter extends React.Component {
                             </div>
                         })}
                     </div>
-                </div>
-                    :this.state.user.type==1?
-                    <div></div>
-                    :this.state.user.type==3?
-                    <div></div>:""
-                    }
+                </div>:""}
             </div>
-            {this.state.user.type==1?<div className={css.management}>
-                    <p className={css.title_item}>
-                        <FormattedMessage id="mine.product.management" defaultMessage="分类"/>
-                    </p>
-                    <div className={css.management_content}>
+            {this.state.user.userIdentity==2?<div className={css.management}>
+                <p className={css.title_item}>
+                    <FormattedMessage id="mine.product.management" defaultMessage="分类"/>
+                </p>
+                <div className={css.management_content}>
                     {operator.management_menu.map(item=>{
                         return <div className={css.order_item}
                             onClick={this.handleMenu.bind(this,item.key,item.url)}
@@ -229,17 +278,11 @@ class PersonCenter extends React.Component {
                                         <FormattedMessage id={item.value_id} defaultMessage="分类"/>
                                     </p>
                             </Tooltip>
-                                <p className={css.order_num}>30</p>
-
+                            <p className={css.order_num}>30</p>
                         </div>
                     })}
-                    </div>
                 </div>
-                :this.state.user.type==2?
-                <div></div>
-                :this.state.user.type==3?
-            <div></div>:""
-                }
+            </div>:""}
             <div className={css.like_title}>
                 <FormattedMessage id="app.like" defaultMessage="分类"/>
 
@@ -249,11 +292,11 @@ class PersonCenter extends React.Component {
                     <div className={css.like_product}>
                         <div className={css.product_title}>
                             <FormattedMessage id="app.products" defaultMessage="分类"/>
-                            <Pagination simple defaultCurrent={2} total={50} />
+                            <Pagination simple defaultCurrent={1} defaultPageSize={5} total={this.state.products.length} onChange={this.handleChange.bind(this,"product_page")}/>
                         </div>
                         <div  className={css.product_list}>
-                            {this.state.products.map(item=>{
-                                return <Product no_price product={item} className={css.like_item}/>
+                            {this.state.products.map((item,index)=>{
+                                return index>=(this.state.product_page-1)*5 && index<this.state.product_page*5?<Product product={item} className={css.like_item}/>:""
                             })}
                         </div>
                     </div>
@@ -264,17 +307,18 @@ class PersonCenter extends React.Component {
                 <div className={css.like_content}>
                     <div className={css.like_brand}>
                         <div className={css.brand_title}>
-                            <FormattedMessage id="app.products" defaultMessage="分类"/>
-                            <Pagination simple defaultCurrent={2} total={50} />
+                            <FormattedMessage id="app.supplier" defaultMessage="分类"/>
+                            <Pagination simple defaultCurrent={1} defaultPageSize={5} total={this.state.brands.length} onChange={this.handleChange.bind(this,"brand_page")}/>
                         </div>
                         <div  className={css.brand_list}>
-                                    {this.state.brands.map(item=>{
-                                        return <Brand brand={item} className={css.like_item}/>
-                                    })}
+                            {this.state.brands.map((item,index)=>{
+                                return index>=(this.state.brand_page-1)*5 && index<this.state.brand_page*5?<Brand brand={item} showStar className={css.like_item}/>:""
+                            })}
                         </div>
                     </div>
                 </div>
             </div>
+            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/> 
         </div>
     }
 }

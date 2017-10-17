@@ -228,4 +228,41 @@ router.get('/get-user.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
+	.post('/get-center-num.json', async(ctx, next) => {
+		let result = {};
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			try {
+				await axios.post(url + "/auth/demand/queryEveryStatusTotal", {}).then(res => {
+					result = res.data;
+					result.demand = res.data.result
+					console.log(238, result);
+				})
+				await axios.post(url + "/auth/order/queryUserOrderEveryStatusTotal", {}).then(res => {
+					result.order = res.data.result;
+					console.log(243, result);
+				})
+				await axios.post(url + "/auth/collect/queryCollectCategoryTotal", {}).then(res => {
+					result.collect = res.data.result;
+					console.log(247, result);
+				})
+				await axios.get(url + "/auth/supplier/queryRandomProductList").then(res => {
+					result.brand = res.data.result;
+					console.log(251, result);
+				})
+				await axios.get(url + "/auth/product/queryRandomProductList").then(res => {
+					result.product = res.data.result;
+					console.log(255, result);
+				})
+			} catch (e) {
+				console.log(254, e);
+			}
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 module.exports = router;

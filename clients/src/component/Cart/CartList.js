@@ -344,9 +344,6 @@ class CartList extends React.Component {
             })
             sessionStorage.setItem('quotation', JSON.stringify(quotation));
             this.props.goLink("/page/quotation")
-                /* window.location.href = "/#/page/quotation";
-                 console.log(this.props.history, this.state, this.props);*/
-                /*this.props.history.pushState(null, "page/quotation");*/
         } else {
             message.warning(this.formatMessage({
                 id: 'cart.select.product'

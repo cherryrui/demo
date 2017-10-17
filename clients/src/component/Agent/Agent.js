@@ -93,17 +93,6 @@ class Agent extends React.Component {
         return data;
     }
 
-    /*beforeUpload = (file) => {
-        const isJPG = file.type === 'image/jpeg';
-        if (!isJPG) {
-            message.error('You can only upload JPG file!');
-        }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        return isJPG && isLt2M;
-    }*/
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -278,21 +267,6 @@ class Agent extends React.Component {
                         }],
                     })(
                         <Input className={css.agent_input}/>
-                    )}
-                </FormItem>
-                <FormItem className={css.input_left}
-                    {...formItemLayout}
-                        label={this.formatMessage({id: 'agent.type'})}
-                >
-                    {getFieldDecorator('type',{
-                      rules: [{
-                            required: true, message: this.formatMessage({id: 'agent.type'}),
-                        }],
-                    })(
-                        <RadioGroup>
-                            <Radio value={0}  className={css.agent_checkbox}>{this.formatMessage({id: 'agent.company'})}</Radio>
-                            <Radio value={1}>{this.formatMessage({id: 'agent.store'})}</Radio>
-                        </RadioGroup>
                     )}
                 </FormItem>
                 <FormItem

@@ -13,13 +13,12 @@ let initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'GET_SHOPPING_CART_FULFILLED':
-            return action.payload.data;
+        return action.payload.data;
         case 'ADD_CART_FULFILLED':
             return action.payload.data;
         case 'DELETE_CART_FULFILLED':
             return action.payload.data;
         case 'COMMIT_CART_FULFILLED':
-            console.log(action, state);
             return action.payload.data;
         default:
             return state;

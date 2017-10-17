@@ -294,10 +294,7 @@ border-top: 1px solid $border-color;
 }
 .like_content{
 	.like_product{
-		display: flex;
     	background: white;
-
-      margin-bottom: 10px;
       .product_title{
         display: flex;
         padding-top: 10px;
@@ -317,7 +314,6 @@ border-top: 1px solid $border-color;
 	}
 
 	.like_brand{
-
     	background: white;
       .brand_title{
         display: flex;
@@ -345,12 +341,16 @@ border-top: 1px solid $border-color;
   }
   .product_list{
     display: flex;
+    img{
+      width: 152px;
+      height: 152px;
+      margin: 0;
+    }
   }
 	.like_item{
-		width: 19%;
-    	margin: 10px 0.5%;
-    	padding: 10px;
-      border: 1px solid $border-color;
+		  width: 156px;
+    	margin: 10px 5px;
+      border: 1px solid $border-color!important;
 
   }
 }

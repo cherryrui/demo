@@ -33,7 +33,7 @@ class Brand extends React.Component {
             </div>
             <Link to={"page/brand-detail/" + this.props.brand.sid}>
                 <div className={css.custom_image}>
-                    <img alt="example" src={this.props.brand.imgUrl} />
+                    <img alt="example" src={this.props.brand.imgUrl?this.props.brand.imgUrl+"@150w_150h_1e_1c.png":"../img/no_picture.jpg"} />
                 </div>
 
                 <p className={css.name}>{this.props.brand.supplierName}</p>

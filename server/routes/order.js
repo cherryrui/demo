@@ -41,7 +41,9 @@ router
 			result = res.data;
 			result.order = result.result;
 		})
-
+		await axios.post(url + "/auth/order/queryUserOrderEveryStatusTotal", {}).then(res => {
+			result.order_status = res.data.result;
+		})
 		await axios.post(url + '/auth/head/queryShopCarTotal').then(res => {
 			result.result = res.data.result;
 		})
@@ -129,6 +131,23 @@ router
 			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 			await axios.post(url + "/auth/order/queryUserOrderEveryStatusTotal", {}).then(res => {
 				result = res.data;
+				result.order_status = result.result;
+				delete result.result;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post("/get-demand-list-num.json", async(ctx, next) => {
+		let result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/demand/queryEveryStatusTotal", {}).then(res => {
+				result = res.data
 			})
 		} else {
 			result = {

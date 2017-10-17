@@ -49,7 +49,12 @@ class Main extends React.Component {
     }
     handleClick = (name) => {
         //设置定时器
-        let top = document.getElementById(name).offsetTop;
+        let element = document.getElementById(name);
+        console.log(element);
+        let top = 0;
+        if (element) {
+            top = element.offsetTop;
+        }
         if (top > 0) {
             top = top - 130;
         }

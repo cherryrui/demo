@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import css from './PostWant.scss';
 import appcss from '../../App.scss';
+import Util from '../../Util.js';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -16,32 +17,14 @@ import {
 	Input,
 	Button,
 	Checkbox,
-    Upload,
+	Upload,
 	Breadcrumb,
-    message,
+	message,
 	DatePicker,
 	Radio,
 } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const props = {
-    name: 'file',
-    action: '//jsonplaceholder.typicode.com/posts/',
-    headers: {
-        authorization: 'authorization-text',
-    },
-    onChange(info) {
-
-        if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
 class PostWant extends React.Component {
 
 	static propTypes = {
@@ -50,45 +33,61 @@ class PostWant extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			create_time : '',
-			demandWay : 1,
+			create_time: '',
+			demandWay: 1,
 		}
-        this.formatMessage = this.props.intl.formatMessage;
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentDidMount() {
 		this.postwant.scrollIntoView();
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.props.form.validateFieldsAndScroll((err, values) =>{
-			if(!err){
-				console.log(values)
+		this.props.form.validateFieldsAndScroll((err, values) => {
+			if (!err) {
 				let param = values;
 				param.time = this.state.create_time;
 				param.demandWay = this.state.demandWay;
-				console.log(param);
-				axios.post('api/demand-controller.json',param).then( res =>{
-					if(res.data.isSucc){
+				param.uploadFileUrl = [];
+				values.file.map(item => {
+					param.uploadFileUrl.push(item.response.url);
+				})
+				param.uploadFileUrl = JSON.stringify(param.uploadFileUrl);
+				delete param.file;
+				axios.post('api/demand-controller.json', param).then(res => {
+					if (res.data.isSucc) {
 						this.props.history.pushState(null, "/");
-					}else{
+					} else {
 						message.error({
-							reason:res.data.message
+							reason: res.data.message
 						})
 					}
 				})
 			}
 		})
 	}
-	onChanges = (date, dateString) =>{
+	onChanges = (date, dateString) => {
 		console.log(date, dateString)
 		this.setState({
-			create_time:dateString
+			create_time: dateString
 		})
-	} 
-	onChangedemandWay = (e) =>{
+	}
+	onChangedemandWay = (e) => {
 		this.setState({
-			demandWay:e.target.value,
+			demandWay: e.target.value,
 		})
+	}
+	normFile = (e) => {
+		console.log(e);
+		if (!this.state.img_logo) {
+			this.setState({
+				img_logo: true
+			})
+		}
+		if (Array.isArray(e)) {
+			return e;
+		}
+		return e && e.fileList;
 	}
 
 	render() {
@@ -109,20 +108,20 @@ class PostWant extends React.Component {
 				span: 8,
 			},
 		};
-        const tailFormItemLayout = {
+		const tailFormItemLayout = {
 
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 14,
-                    offset: 8,
+			wrapperCol: {
+				xs: {
+					span: 24,
+					offset: 0,
+				},
+				sm: {
+					span: 14,
+					offset: 8,
 
-                },
-            },
-        };
+				},
+			},
+		};
 		return <div className={appcss.body} ref={(postwant)=>{this.postwant=postwant}}>
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
@@ -217,34 +216,43 @@ class PostWant extends React.Component {
 			          	label={formatMessage({id: 'post.demand_way'})}
 			         >
 			        	<RadioGroup onChange={this.onChangedemandWay} value={this.state.demandWay}>
-				        <Radio value={1}>图片</Radio>
-				        <Radio value={2}>文本</Radio>
+				        <Radio value={1}>
+				        	<FormattedMessage id="post.want.img" defaultMessage=""/>
+				        </Radio>
+				        <Radio value={2}>
+				        	<FormattedMessage id="post.want.file" defaultMessage=""/>
+				        </Radio>
 				      </RadioGroup>
 			        </FormItem>
-                    <FormItem style={{ marginBottom:10}}
-			          {...formItemLayout}
-                        label={formatMessage({id: 'post.upload'})}
-
-                    >
-			          {getFieldDecorator('upload', {
-
-                      })(
-                          <Upload {...props}>
-                              <Button  className={appcss.button_theme}  style={{ width:120}}>
-                                 {formatMessage({id: 'post.select.file'})}
+                    <FormItem  style={{display:"flex"}}
+                    	{...formItemLayout}
+                    	label={this.formatMessage({id: 'post.upload'})}
+                	>
+                    	{getFieldDecorator('file', {
+	                        valuePropName: 'fileList',
+	                        getValueFromEvent: this.normFile,
+	                        rules: [{ type:"array", required: true, message: this.formatMessage({id: 'post.upload'}),
+	                            }],
+                        })(
+                            <Upload 
+                                name="file"
+                                action={Util.url+"/tool/upload"}
+                                onRemove={this.removeFile}
+                                multiple
+                              >
+                                <Button  className={appcss.button_theme}  style={{ width:120}}>
+                                 {this.formatMessage({id: 'post.select.file'})}
                               </Button>
-                          </Upload>
-
-
-                      )}
-                    </FormItem>
+                            </Upload>
+                    	)}
+                	</FormItem>
                     <FormItem {...tailFormItemLayout}>
                           <FormattedMessage id="post.fill.again" defaultMessage="上传" values={{click:<span className={css.clink_here}>clink here</span>}}/>
 
                     </FormItem>
                     <FormItem style={{ paddingLeft:120}} {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit" className={appcss.button_radius}>
-                              {formatMessage({id: 'app.save'})}
+                              {this.formatMessage({id: 'app.save'})}
                         </Button>
 
                     </FormItem>

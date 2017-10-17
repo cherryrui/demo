@@ -285,7 +285,7 @@ class QuotationPdf extends React.Component {
                 </div>
                 <Table
                     pagination={false}
-                    rowKey={record => ""+record.productId+record.itemId}
+                    rowKey={record => ""+record.productId+record.productSpecification}
                     bordered
                     columns={this.columns}
                     dataSource={this.state.quotation.productList} />

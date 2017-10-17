@@ -137,7 +137,7 @@ class OrderList extends React.Component {
                 total = 0;
             order_status.map(item => {
                 item.count = 0;
-                res.data.result.map(order => {
+                res.data.order_status.map(order => {
                     if (order.orderStatus == item.value) {
                         item.count = order.total;
                         total += order.total;

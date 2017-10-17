@@ -192,7 +192,8 @@ const zh_CN = {
     "mine.person": "个人中心",
     "mine.person.data": "基本信息",
     "mine.person.address": "收货地址",
-    "mine.person.account": "账户等级",
+    "mine.person.requirement": "需求列表",
+    "mine.person.account": "账户安全",
     "mine.order": "订单中心",
     "mine.order.all": "订单列表",
     "mine.message": "消息中心",
@@ -496,6 +497,8 @@ const zh_CN = {
     "app.company.logo": "公司logo ",
     "app.img.size": "图片大小：200px*200px ",
     "app.img.format": "图片格式：jpg.jpeg.gif.png.bmp ",
-    "app.select.time": "请选择时间 "
+    "app.select.time": "请选择时间 ",
+    "post.want.img": "图片",
+    "post.want.file": "文件",
 }
 export default zh_CN;

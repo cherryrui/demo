@@ -493,7 +493,7 @@ class Supplier extends React.Component {
                             <Upload 
                                 name="file"
                                 action={Util.url+"/tool/upload"}
-                                listType="picture-card"
+            listType = "picture-card"
                                 onRemove={this.removePic.bind(this,"img_logo")}
                                 accept="image/*"
                                 multiple

@@ -182,6 +182,7 @@ const en_US = {
     "mine.person": "Member Center",
     "mine.person.data": "Personal Data",
     "mine.person.address": "My address",
+    "mine.person.requirement": "List of requirements",
     "mine.person.account": "Account security",
     "mine.order": "Order Center",
     "mine.order.all": "All order",
@@ -485,16 +486,18 @@ const en_US = {
     "app.processed": "Processed",
     "app.goods": "Goods",
     "quotation.all_quotation": "All quotation",
-   "post.linkman.info":"Please enter the contact person" ,
-    "post.select.file":"Select file",
-    "post.fill.again":"Hi,Please {click} to download our form and fill it out",
+    "post.linkman.info": "Please enter the contact person",
+    "post.select.file": "Select file",
+    "post.fill.again": "Hi,Please {click} to download our form and fill it out",
     "app.proval": "proval",
-    "app.provaling":"provaling",
-    "app.not.provaled":"not provaled",
-    "app.not.review":"not review",
+    "app.provaling": "provaling",
+    "app.not.provaled": "not provaled",
+    "app.not.review": "not review",
     "app.company.logo": "Company logo",
     "app.img.size": "Image size:200px*200px ",
     "app.img.format": "Image format:jpg.jpeg.gif.png.bmp ",
-    "app.select.time": "Please select time"
+    "app.select.time": "Please select time",
+    "post.want.img": "picture",
+    "post.want.file": "file"
 }
 export default en_US;

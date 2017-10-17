@@ -187,6 +187,7 @@ class Home extends React.Component {
     }
 
     render() {
+        console.log(this.props.cart);
         let cart_menu = (
             <Menu>
                 <Menu.Item className={css.cart_product_title}>

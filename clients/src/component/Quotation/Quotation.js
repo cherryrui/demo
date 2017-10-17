@@ -115,7 +115,6 @@ class Quotation extends React.Component {
 		}, ]
 	}
 	componentWillMount() {
-		console.log(sessionStorage.quotation);
 		if (!sessionStorage.user) {
 			this.props.history.pushState(null, "/");
 		} else if (this.props.params.id) {
@@ -173,7 +172,6 @@ class Quotation extends React.Component {
 		this.quotation.scrollIntoView();
 	}
 	handleNum = (record, name, value) => {
-		console.log(record, name, value)
 		let data = this.state.quotation;
 		let sum = 0,
 			num = 0,
@@ -243,9 +241,6 @@ class Quotation extends React.Component {
 	}
 	exportPDF = () => {
 		this.exportQuotation();
-		/*	this.setState({
-				visible: true,
-			}, this.exportQuotation)*/
 	}
 	exportQuotation = () => {
 

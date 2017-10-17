@@ -239,12 +239,15 @@ class App extends React.Component {
     }
     componentDidMount() {}
     componentDidUpdate(prevProps, prevState) {
-        console.log("sdsadasd");
         if (sessionStorage.user && !this.state.user) {
+            this.props.getOrderNum();
             this.setState({
                 user: JSON.parse(sessionStorage.user),
             })
         }
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
     }
     handleChange = () => {
         if (appLocale.locale == 'zh') {
@@ -276,14 +279,13 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(operator.order_status, this.props.order, this.props.order.result);
+        console.log(this.props.order);
         let orderStatus = [],
             sum = 0;
-        if (this.props.order.result.length > 0) {
+        if (this.props.order.order_status && this.props.order.order_status.length > 0) {
             orderStatus = JSON.parse(JSON.stringify(operator.order_status));
             orderStatus.map(item => {
-                this.props.order.result.map(order => {
-                    console.log(item, order);
+                this.props.order.order_status.map(order => {
                     if (item.value == order.orderStatus) {
                         item.count = order.total;
                         sum += order.total;
