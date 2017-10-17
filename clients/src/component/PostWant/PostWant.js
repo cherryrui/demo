@@ -68,7 +68,13 @@ class PostWant extends React.Component {
 				param.demandWay = this.state.demandWay;
 				console.log(param);
 				axios.post('api/demand-controller.json',param).then( res =>{
-					console.log(res.data);
+					if(res.data.isSucc){
+						this.props.history.pushState(null, "/");
+					}else{
+						message.error({
+							reason:res.data.message
+						})
+					}
 				})
 			}
 		})

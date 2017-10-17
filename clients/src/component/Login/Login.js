@@ -66,7 +66,8 @@ class Login extends React.Component {
         });
     };
     handleClick = () => {
-        window.location.href = "/#/register"
+       /* window.location.href = "/#/register"*/
+       this.props.history.pushState(null, "/register");
     };
 
     render() {
