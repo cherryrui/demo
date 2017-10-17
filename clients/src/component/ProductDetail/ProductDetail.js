@@ -143,8 +143,8 @@ class ProductDetail extends React.Component {
 
     };
     handleNum = (value) => {
-        if (value < 0) {
-            value = 0;
+        if (value < this.state.product.moq) {
+            value = this.state.product.moq;
         } else if (value > this.state.product.inventory) {
             value = this.state.product.inventory;
         }
@@ -176,7 +176,7 @@ class ProductDetail extends React.Component {
             })
             if (flag) {
                 if (type == 1) {
-                    if (this.state.product.inventory < this.state.product.productNum) {
+                    if (this.state.product.inventory < this.state.product.productNum || this.state.product.productNum < this.state.product.moq) {
                         message.error(this.formatMessage({
                             id: "product.detail.inventory.no"
                         }))

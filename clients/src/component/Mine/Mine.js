@@ -31,16 +31,36 @@ class Mine extends React.Component {
         }
     }
     componentWillMount() {
+        console.log("componentWillMount");
         if (!sessionStorage.user) {
             this.props.history.pushState(null, '/login');
         }
+        this.getPremiss();
     }
-    componentDidMount() {}
+    getPremiss = () => {
+        let path = this.props.location.pathname;
+        if (path == "/page/mine/agent" || path == "/page/mine/supplier") {
+            console.log(path, this.state.user.userIdentity > 0);
+            if (this.state.user.userIdentity > 0 || this.state.user.agent || this.state.supplier) {
+                this.props.history.pushState(null, 'page/mine');
+            }
+        }
+        operator.menu.map(item => {
+            item.list.map(sub => {
+                if (sub.url === path) {
+                    if (item.code.indexOf(this.state.user.userIdentity) == -1) {
+                        this.props.history.pushState(null, 'page/mine');
+                    }
+                }
+            })
+        })
+    }
     componentDidUpdate(prevProps, prevState) {
         if (!sessionStorage.user) {
             this.props.history.pushState(null, '/login');
         } else {
             this.state.user = JSON.parse(sessionStorage.user);
+            this.getPremiss();
         }
     }
 
@@ -55,7 +75,6 @@ class Mine extends React.Component {
     }
 
     render() {
-        console.log(this.state.user);
         let menu = JSON.parse(JSON.stringify(operator.menu));
         if (this.state.user.userIdentity == 0 && !this.state.user.agent && !this.state.supplier) {
             menu.push({
