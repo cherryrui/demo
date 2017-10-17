@@ -19,9 +19,11 @@ import {
     Upload,
 	Breadcrumb,
     message,
-	DatePicker
+	DatePicker,
+	Radio,
 } from 'antd';
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 const props = {
     name: 'file',
     action: '//jsonplaceholder.typicode.com/posts/',
@@ -29,6 +31,7 @@ const props = {
         authorization: 'authorization-text',
     },
     onChange(info) {
+
         if (info.file.status !== 'uploading') {
             console.log(info.file, info.fileList);
         }
@@ -48,6 +51,7 @@ class PostWant extends React.Component {
 		super(props);
 		this.state = {
 			create_time : '',
+			demandWay : 1,
 		}
         this.formatMessage = this.props.intl.formatMessage;
 	}
@@ -61,7 +65,11 @@ class PostWant extends React.Component {
 				console.log(values)
 				let param = values;
 				param.time = this.state.create_time;
+				param.demandWay = this.state.demandWay;
 				console.log(param);
+				axios.post('api/demand-controller.json',param).then( res =>{
+					console.log(res.data);
+				})
 			}
 		})
 	}
@@ -71,7 +79,11 @@ class PostWant extends React.Component {
 			create_time:dateString
 		})
 	} 
-
+	onChangedemandWay = (e) =>{
+		this.setState({
+			demandWay:e.target.value,
+		})
+	}
 
 	render() {
 		const {
@@ -193,6 +205,15 @@ class PostWant extends React.Component {
 			          })(
 			            <Input className={css.want_input}/>
 			          )}
+			        </FormItem>
+			        <FormItem
+			        	{...formItemLayout}
+			          	label={formatMessage({id: 'post.demand_way'})}
+			         >
+			        	<RadioGroup onChange={this.onChangedemandWay} value={this.state.demandWay}>
+				        <Radio value={1}>图片</Radio>
+				        <Radio value={2}>文本</Radio>
+				      </RadioGroup>
 			        </FormItem>
                     <FormItem style={{ marginBottom:10}}
 			          {...formItemLayout}

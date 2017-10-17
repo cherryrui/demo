@@ -104,6 +104,7 @@ const zh_CN = {
     "post.ps": "请下载表格模板填写采购清单",
     "post.upload": "上传表格",
     "post.click": "点击这里",
+    "post.demand_way": "需求方式",
     "cart.cart": "我的购物车",
     "cart.confirm.order": "确认订单",
     "cart.pay": "支付",

@@ -41,4 +41,16 @@ router.get('/get-title-data.json', async(ctx, next) => {
 			brand: brand
 		};
 	})
+	/**
+	*首页需求管理接口
+	*
+	**/
+	.post('/demand-controller.json',async (ctx) =>{
+		let result,
+			param = ctx.request.body;
+		await axios.post(url+'/auth/demand/insertDemand',querystring.stringify(param)).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 module.exports = router;

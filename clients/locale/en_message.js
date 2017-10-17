@@ -100,6 +100,7 @@ const en_US = {
     "post.ps": "please download excel table",
     "post.upload": "Upload File",
     "post.click": "Click here",
+    "post.demand_way": "demandWay",
     "cart.cart": "My Cart",
     "cart.confirm.order": "Confirm Order",
     "cart.pay": "Pay",
