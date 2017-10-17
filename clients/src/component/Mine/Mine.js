@@ -55,11 +55,28 @@ class Mine extends React.Component {
     }
 
     render() {
-        let menu = operator.menu;
-        if (this.state.user.userIdentity == 0) {}
+        console.log(this.state.user);
+        let menu = JSON.parse(JSON.stringify(operator.menu));
+        if (this.state.user.userIdentity == 0 && !this.state.user.agent && !this.state.supplier) {
+            menu.push({
+                name: "mine.agent",
+                code: [0],
+                key: 7000,
+                url: 'page/mine/agent',
+                list: []
+            })
+            menu.push({
+                name: "mine.supplier",
+                code: [0],
+                key: 8000,
+                url: 'page/mine/supplier',
+                list: []
+            })
+        }
+        console.log(menu);
         return <div className={`${appcss.body} ${css.body}`}>
             <div className={css.menu}>
-            {operator.menu.map(menu=> {
+            {menu.map(menu=> {
                 return menu.code.indexOf(this.state.user.userIdentity)>-1?<div>
                     {menu.list.length>0?<p className={css.menu_title_show}>
                         <FormattedMessage id={menu.name} defaultMessage="分类"/>       

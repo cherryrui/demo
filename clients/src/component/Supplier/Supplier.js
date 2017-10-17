@@ -214,6 +214,9 @@ class Supplier extends React.Component {
                                 visible: true
                             })
                         } else if (res.data.isSucc) {
+                            let user = JSON.parse(sessionStorage.user);
+                            user.supplier = {};
+                            sessionStorage.setItem('user', JSON.stringify(user));
                             this.props.history.pushState(null, "page/mine/successful-application/2");
                         } else {
                             message.error({

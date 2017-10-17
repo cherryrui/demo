@@ -46,12 +46,6 @@ class Login extends React.Component {
                     console.log('xxxx:', res);
                     console.log(res.status);
                     if (res.data.isSucc) {
-                        /*if (values.remember) {
-                            localStorage.setItem('uid', res.data.result.uid);
-                            console.log('uid', res.data.result.uid);
-                        } else {
-                            localStorage.setItem('uid', null);
-                        }*/
                         sessionStorage.setItem('user', JSON.stringify(res.data.result));
                         this.props.history.pushState(null, "/");
                     } else {
@@ -66,8 +60,8 @@ class Login extends React.Component {
         });
     };
     handleClick = () => {
-       /* window.location.href = "/#/register"*/
-       this.props.history.pushState(null, "/register");
+        /* window.location.href = "/#/register"*/
+        this.props.history.pushState(null, "/register");
     };
 
     render() {

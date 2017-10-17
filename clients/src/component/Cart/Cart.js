@@ -50,7 +50,7 @@ class Cart extends React.Component {
                     step: 1,
                     products: products
                 }, () => {
-                    sessionStorage.removeItem(products);
+                    sessionStorage.removeItem("products");
                 })
             } else if (this.props.params.step == 2 && this.props.params.orderId) {
                 axios.post('/order/get-order-money.json', {

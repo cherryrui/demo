@@ -302,9 +302,9 @@ class App extends React.Component {
         {orderStatus.map(item=>{
             return item.value>0?<Menu.Item>
                 <Badge count={item.count}>
-                    <a href="page/mine/order-list" className="head-example">
+                    <Link to="page/mine/order-list" className="head-example">
                         <FormattedMessage id={item.key} defaultMessage="订单状态"/>
-                    </a>
+                    </Link>
                 </Badge>
 
             </Menu.Item>:""

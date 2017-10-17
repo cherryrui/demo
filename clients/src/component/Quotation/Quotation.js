@@ -126,6 +126,7 @@ class Quotation extends React.Component {
 
 		} else if (sessionStorage.quotation) {
 			let quotation = JSON.parse(sessionStorage.quotation);
+			sessionStorage.removeItem("quotation");
 			let data = this.state.quotation;
 			data.products = quotation.products;
 			data.totalSalePrice = quotation.sale_price.toFixed(2);

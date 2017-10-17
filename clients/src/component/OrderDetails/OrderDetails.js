@@ -63,7 +63,7 @@ class OrderDetails extends React.Component {
                 render: (record) => <div>
                 {record.productSpecification?record.productSpecification.map((item,index)=>{
                     return <div>
-                        {item.name}
+                        {item.specName}：{item.specVal[0].specValue}
                     </div>
                 }):""}
                 </div>
@@ -108,9 +108,12 @@ class OrderDetails extends React.Component {
             } else if (res.data.isSucc) {
                 let product = res.data.result.orderProduct;
                 product.map(item => {
-                    item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
-                    item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+                    if (item.productBrand) {
+                        item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
+                        item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+                    }
                     item.coverUrl = item.productImgUrl;
+                    item.productSpecification = JSON.parse(item.productSpecification)
                 })
                 let stageList = res.data.result.OrderPaymentStageList;
                 let flag = true;
@@ -151,7 +154,6 @@ class OrderDetails extends React.Component {
         })
     }
     render() {
-        console.log(this.state.stageList);
         return <div className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">

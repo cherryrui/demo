@@ -98,14 +98,27 @@ class ProductDetail extends React.Component {
                 product.imgs = res.data.result.imgs;
                 product.productNum = product.moq;
                 let specs = res.data.result.specs;
+                let properties = res.data.result.properties;
                 specs.map(item => {
                     item.productSpecs = JSON.parse(item.productSpecs);
                 })
+                if (product.propertyCustom) {
+                    let custom = JSON.parse(product.propertyCustom);
+                    for (let key in custom) {
+                        console.log(key, custom[key])
+                        properties.push({
+                            propertyName: key,
+                            propertyVal: [{
+                                propertyValue: custom[key]
+                            }]
+                        })
+                    }
+                }
                 this.setState({
                     product: product,
                     curImg: res.data.result.imgs.length > 0 ? res.data.result.imgs[0].imgUrl : "",
                     productInfo: res.data.result.productInfo,
-                    properties: res.data.result.properties,
+                    properties: properties,
                     specs: specs,
                     packInfo: res.data.result.packInfo,
                 })
