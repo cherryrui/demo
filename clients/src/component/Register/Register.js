@@ -192,10 +192,10 @@ class Register extends React.Component {
                             }]
                         })(
                             <Radio.Group >
-                                <Radio.Button value={0}className={css.reqister_radio_one}>
+                                <Radio.Button value={1}className={css.reqister_radio_one}>
                                     <FormattedMessage id="persondata.indivdual.user" defaultMessage="个人用户"/>
                                 </Radio.Button>
-                                <Radio.Button value={1} className={css.reqister_radio_two}>
+                                <Radio.Button value={2} className={css.reqister_radio_two}>
                                     <FormattedMessage id="persondata.enterprise.user" defaultMessage="企业用户"/>
                                 </Radio.Button>
                             </Radio.Group>
