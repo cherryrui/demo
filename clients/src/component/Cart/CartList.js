@@ -179,8 +179,8 @@ class CartList extends React.Component {
                     item.productNum = item.productNum + num;
                 }
             }
-            if (item.productNum <= 0) {
-                item.productNum = 1;
+            if (item.productNum <= item.moq) {
+                item.productNum = item.moq;
             }
             if (this.state.selectedRowKeys.indexOf(item.id) > -1) {
                 sum += item.productNum * item.price;

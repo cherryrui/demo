@@ -54,8 +54,8 @@ class Agent extends React.Component {
             autoCompleteResult: [],
             options: [],
             telCode: [],
-            front_show: false,
-            back_show: false,
+            img_front: false,
+            img_back: false,
             visible: false,
             previewVisble: false,
         }
@@ -157,35 +157,26 @@ class Agent extends React.Component {
     handleChange = (name, info) => {
         console.log(name, info);
         if (info.file.status == 'uploading') {
-            if (name == "img_front" && !this.state.front_show) {
-                this.setState({
-                    front_show: true,
-                })
-            } else if (name == "img_back" && !this.state.back_show) {
-                this.setState({
-                    back_show: true,
-                })
-            }
+            let param = {};
+            param[name] = true;
+            this.setState(param);
         }
         if (info.file.status === 'done') {
+            info.fileList[0].thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
+            info.file.thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
             this[name] = info.file.response.url;
+            let param = {};
+            param[name] = true;
+            this.setState(param);
         } else if (info.file.status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     }
-    removePic = (name, file) => {
-        console.log(name, file, this.state.front_show);
-        if (name == "img_front" && this.state.front_show) {
-            this.setState({
-                front_show: false,
-            })
-            this.img_front = null;
-        } else if (name == "img_back" && this.state.back_show) {
-            this.setState({
-                back_show: false,
-            })
-            this.img_back = null;
-        }
+    removePic = (name) => {
+        this[name] = null;
+        let param = {};
+        param[name] = false;
+        this.setState(param);
     }
     previewImg = (name) => {
         this.setState({
@@ -362,7 +353,7 @@ class Agent extends React.Component {
                                 accept="image/*"
                                 multiple
                               >
-                                {this.state.front_show ? null :<span className={appcss.upload_icon}>
+                                {this.state.img_front ? null :<span className={appcss.upload_icon}>
                                     <i class="iconfont icon-jiahao"></i>
                                   </span>}
                             </Upload>
@@ -381,7 +372,7 @@ class Agent extends React.Component {
                                 accept="image/*"
                                 multiple
                               >
-                                {this.state.back_show ? null :
+                                {this.state.img_back ? null :
                                   <span className={appcss.upload_icon}>
                                     <i class="iconfont icon-jiahao"></i>
                                   </span>
@@ -422,7 +413,7 @@ class Agent extends React.Component {
             </Form>
         </div>
         <CusModal visible={this.state.previewVisble} closeModal={this.handleCancel.bind(this,"previewVisble")}>
-            <img alt="example" style={{ width: '100%' }} src={this.state.previewImg}/>
+            <img alt="example" style={{ width: '100%' }} src={this.state.previewImg+ "@380w_380h_1e_1c.png"}/>
         </CusModal>
         <LoginModal visible={this.state.visible} closeModal={this.handleCancel.bind(this,"visible")}/> 
     </div>

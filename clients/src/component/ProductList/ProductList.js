@@ -30,15 +30,11 @@ import Sort from '../Public/Sort/Sort.js';
 import Product from '../Public/Product/Product.js';
 import operator from './operator.js';
 import CusPagination from '../Public/CusPagination/CusPagination.js';
-
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 /**
  * 产品列表页面，根据分类，查询产品
  */
 class ProductList extends React.Component {
-    static propTypes = {
-
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -53,6 +49,7 @@ class ProductList extends React.Component {
             pageSize: 12,
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
+            visible: false,
         }
         this.categoryName = "分类名称";
         this.info = this.props.params.info;
@@ -250,6 +247,11 @@ class ProductList extends React.Component {
         this.state.pageSize = pageSize;
         this.getProduct();
     }
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        })
+    }
     render() {
         return <div ref={(product_list)=>this.product_list=product_list} className={appcss.body}>
             <div className={appcss.navigate}>
@@ -317,6 +319,7 @@ class ProductList extends React.Component {
             :<div className={css.product_no}>
                 <FormattedMessage id='product.no_product' defaultMessage="暂无搜索到商品"/>
             </div>}
+             <LoginModal visible={this.state.visible} reload closeModal={this.handleCancel}/>
         </div>
     }
 }

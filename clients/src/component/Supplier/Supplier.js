@@ -139,7 +139,12 @@ class Supplier extends React.Component {
             this.setState(param);
         }
         if (info.file.status === 'done') {
+            info.fileList[0].thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
+            info.file.thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
             this[name] = info.file.response.url;
+            let param = {};
+            param[name] = true;
+            this.setState(param);
         } else if (info.file.status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
@@ -158,6 +163,9 @@ class Supplier extends React.Component {
         }
         if (e.file.status == "done") {
             this.img_logo = e.file.response.url;
+            e.fileList[0].thumbUrl = e.file.response.url + "@132w_92h_1e_1c.png";
+            e.file.thumbUrl = e.file.response.url + "@132w_92h_1e_1c.png";
+
         }
         if (Array.isArray(e)) {
             return e;
@@ -644,7 +652,7 @@ class Supplier extends React.Component {
             </Form>
         </div>
         <CusModal visible={this.state.previewVisble} closeModal={this.handleCancel.bind(this,"previewVisble")}>
-            <img alt="example" style={{ width: '100%' }} src={this.state.previewImg}/>
+            <img alt="example" style={{ width: '100%' }} src={this.state.previewImg+ "@380w_380h_1e_1c.png"}/>
         </CusModal>
         <LoginModal visible={this.state.visible} closeModal={this.handleCancel.bind(this,"visible")}/> 
     </div>
