@@ -22,7 +22,8 @@ import {
     Input,
     Cascader,
     Form,
-    Select
+    Select,
+    message
 } from 'antd';
 
 const Option = Select.Option;
@@ -76,6 +77,67 @@ class PersonData extends React.Component {
     handleClick = () => {
         if (this.state.edit) {
             console.log(this.state.user);
+            let param = {
+                realName:this.state.user.realName,
+                email:this.state.user.email,
+                country:this.state.user.region[0],
+                province:this.state.user.region[1],
+                city:this.state.user.region[2],
+                district:this.state.user.region[3],
+                address:this.state.user.address
+            };
+            axios.post('/user/updateUser.json',param).then(res=>{
+                console.log(res.data);
+                if(res.data.isSucc){
+                    message.success(
+                        res.data.message
+                    );
+                    console.log(this.state.user.realName)
+                    let users = {
+                        address:this.state.user.address,
+                        agent:this.state.user.agent,
+                        authImgs:this.state.user.authImgs,
+                        city:this.state.user.city,
+                        companyName:this.state.user.companyName,
+                        country:this.state.user.country,
+                        district:this.state.user.district,
+                        email:this.state.user.email,
+                        industry:this.state.user.industry,
+                        isAuthentication:this.state.user.isAuthentication,
+                        lastip:this.state.user.lastip,
+                        lasttime:this.state.user.lasttime,
+                        nature:this.state.user.nature,
+                        province:this.state.user.province,
+                        realName:this.state.user.realName,
+                        region:this.state.user.region,
+                        regip:this.state.user.regip,
+                        regtime:this.state.user.regtime,
+                        remark:this.state.user.remark,
+                        status:this.state.user.status,
+                        supplier:this.state.user.supplier,
+                        tel:this.state.user.tel,
+                        token:this.state.user.token,
+                        uid:this.state.user.uid,
+                        userIdentity:this.state.user.userIdentity,
+                        userName:this.state.user.userName,
+                        userType:this.state.user.userType,
+                        websiteUrl:this.state.user.websiteUrl
+                    };
+                    console.log(users)
+                    this.setState({
+                        user:users
+                    },()=>{
+                        console.log(this.state.user)
+                        sessionStorage.setItem('user', JSON.stringify(this.state.user));
+                        /*this.props.location.reload();*/
+                        location.reload() ;
+                    })
+                }else{
+                    message.error(
+                        reason:res.data.message
+                    )
+                }
+            })
         } else {
             this.setState({
                 edit: true,
