@@ -158,6 +158,7 @@ const en_US = {
     "cart.see.order": "Check",
     "cart.pay.way": "please select pay mode",
     "cart.select.product": "Please select product",
+    "cart.pay.warn": "Please select pay mode",
     "quotation.sale.price": "Sale Price",
     "quotation.platform.price": "Platform price",
     "quotation.agency.price": "Agency price",

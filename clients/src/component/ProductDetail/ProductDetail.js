@@ -450,7 +450,7 @@ class ProductDetail extends React.Component {
                             handleBar={this.handleChange}
                         />
                         <div className={css.container_body}>
-                        {this.state.current==1?<Information data={this.state.productInfo}/>
+                        {this.state.current==1?<Information data={this.state.productInfo} properties={this.state.properties}/>
                             :this.state.current==2?<Specification data={this.state.properties}/>
                             :this.state.current==3?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
                             :this.state.current==4?<Review data={this.state.reviews}/>
@@ -468,6 +468,7 @@ class Information extends React.Component {
     render() {
         console.log(this.props.data)
         return <div>
+            <Specification data={this.props.properties}/>
             {this.props.data.length>0?this.props.data.map(item=> {
                 return <div>
                     <p className={css.info_title}>{item.introduceName}</p>
@@ -556,25 +557,24 @@ class Specification extends React.Component {
     }
 
     render() {
-        console.log(this.props.data);
-        return this.props.data && this.props.data.length > 0 ? <div className={css.productdetail_teble}>
-            <div className={css.title}>
+        return this.props.data && this.props.data.length > 0 ? <div >
+            <div className={css.info_title}>
                 <FormattedMessage id="mine.product.param" defaultMessage=""/>
             </div>
-            {this.props.data.map(item=>{
-                return <div className={css.row}>
-                <p className={css.row_title}>
-                    {item.propertyName}
-                </p>
-                <p className={css.row_body}>{item.propertyVal.map(property=>{
-                    return <span>{property.propertyValue}</span>
+            <div className={css.info_body}>
+                {this.props.data.map(item=>{
+                    return <div className={css.info_table}>
+                    <p className={css.info_table_title}>
+                        {item.propertyName}：
+                    </p>
+                    <p className={css.info_content}>{item.propertyVal.map(property=>{
+                        return <span>{property.propertyValue}</span>
+                    })}
+                    </p>
+                </div>
                 })}
-                </p>
             </div>
-            })}
-        </div> : <div className={css.no_data}> 
-                <FormattedMessage id="product.no_spec" defaultMessage="暂无介绍信息"/>
-            </div>
+        </div> : <div></div>
     }
 }
 

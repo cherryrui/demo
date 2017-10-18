@@ -139,7 +139,7 @@ const zh_CN = {
     "cart.delivery.home": "送货上门",
     "cart.remark": "备注",
     "cart.order.total": "订单总金额",
-    "cart_pay_warn": "请先选择支付方式",
+    "cart.pay.warn": "请先选择支付方式",
     "cart.discount": "折扣",
     "cart.profits": "利润",
     "cart.shipping.cost": "邮费",

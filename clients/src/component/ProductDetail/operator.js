@@ -3,9 +3,6 @@ export default {
 		key: "product.detail.information",
 		value: 1,
 	}, {
-		key: "product.detail.specification",
-		value: 2,
-	}, {
 		key: "product.detail.package",
 		value: 3,
 	}, {

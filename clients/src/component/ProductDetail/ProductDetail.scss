@@ -333,3 +333,24 @@
 	font-weight: bold;
 	line-height: 38px;
 }
+.info_body{
+	margin: 20px;
+    border-bottom: 1px solid $border-color;
+}
+.info_table{
+	display: flex;
+    border-top: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+    height: 36px;
+    line-height: 36px;
+	.info_table_title{
+		border-right: 1px solid $border-color;
+		width: 25%;
+    	text-align: right;
+    	padding-right: 20px;
+	}
+	.info_content{
+		padding-left: 20px;
+	}
+}

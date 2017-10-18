@@ -198,10 +198,11 @@
 	display: flex;
 
 	.item{
-		padding: 10px 30px;
+		  padding: 10px 30px;
     	background: $back-ground-shallow-grey;
     	border-radius: 2px;
     	margin-right: 30px;
+      cursor: pointer;
 
 	}
 	.active{
@@ -218,6 +219,7 @@
     border-radius: 2px;
     margin-right: 30px;
     border: 1px solid #ddd;
+    cursor: pointer;
   }
   .active{
     @extend .item;

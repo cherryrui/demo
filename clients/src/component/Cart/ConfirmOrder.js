@@ -154,6 +154,7 @@ class ConfirmOrder extends React.Component {
             if (res.data.isSucc) {
                 let order = this.state.order;
                 order.advance_mode = 0;
+                order.sum_interest = 0;
                 if (res.data.result.length == 0) {
                     order.stageId = -1;
                 } else {
@@ -168,32 +169,42 @@ class ConfirmOrder extends React.Component {
         })
     }
     convertData(data) {
-            data.map(item => {
-                item.value = item.v;
-                item.label = item.n;
-                item.children = item.s;
-                if (item.children && item.children.length > 0) {
-                    this.convertData(item.children);
-                } else {
-                    return data;
-                }
-            })
-            return data;
-        }
-        /**
-         * 保存订单相关信息
-         * @param  {[type]} name [description]
-         * @param  {[type]} mode [description]
-         * @return {[type]}      [description]
-         */
+        data.map(item => {
+            item.value = item.v;
+            item.label = item.n;
+            item.children = item.s;
+            if (item.children && item.children.length > 0) {
+                this.convertData(item.children);
+            } else {
+                return data;
+            }
+        })
+        return data;
+    }
+
+    /**
+     * 保存订单相关信息
+     * @param  {[type]} name [description]
+     * @param  {[type]} mode [description]
+     * @return {[type]}      [description]
+     */
     handlePayMode = (name, mode) => {
         let order = this.state.order;
         if (name === 'note') {
             order[name] = mode.target.value
+        } else if (name == "stageId") {
+            order[name] = mode.stageId
+            order.sum_interest = (parseFloat(order.sum) * (1 - mode.firstMoney) * mode.interestRate).toFixed(2);
+        } else if (name == "advance_mode") {
+            order[name] = mode;
+            order.stageId = 0;
+            order.sum_interest = 0;
         } else {
-            order[name] = mode
+            order[name] = mode;
         }
-        this.setState(order: order);
+        this.setState({
+            order: order
+        });
         if (name == "pay_mode") {
             this.getPayDetail();
         }
@@ -250,7 +261,7 @@ class ConfirmOrder extends React.Component {
             })
         } else {
             message.error(this.formatMessage({
-                id: "cart_pay_warn"
+                id: "cart.pay.warn"
             }))
         }
 
@@ -374,6 +385,7 @@ class ConfirmOrder extends React.Component {
     }
 
     render() {
+        console.log(this.state.order)
         const {
             getFieldDecorator
         } = this.props.form;
@@ -448,7 +460,7 @@ class ConfirmOrder extends React.Component {
             <div className={css.confirm_pay} ref={(pay_mode)=>{this.pay_mode=pay_mode}}>
                 <div className={css.confirm_mode}>
                 {this.state.pay_mode_list.map(item=>{
-                    return <p className={this.state.pay_mode==item.payModelId?css.active:css.item}
+                    return <p className={this.state.order.pay_mode==item.payModelId?css.active:css.item}
                         onClick={this.handlePayMode.bind(this,"pay_mode",item.payModelId)}>
                         {item.payModelName}
                     </p>
@@ -471,7 +483,7 @@ class ConfirmOrder extends React.Component {
                                 {this.state.order.advance_mode==item.firstMoney?<div className={css.advance_pay}>
                                     {item.paymentModelStages.map(pay=>{
                                         return <p className={this.state.order.stageId==pay.stageId?css.active:css.item}
-                                            onClick={this.handlePayMode.bind(this,"stageId",pay.stageId)}>
+                                            onClick={this.handlePayMode.bind(this,"stageId",pay)}>
                                             <FormattedMessage id="orderlist.pay.payment" values={{stageNum: pay.stageNum}} defaultMessage=""/>&nbsp;&nbsp;&nbsp;&nbsp;
                                             <FormattedMessage tagName='a' id="cart.pay.day" defaultMessage="3期"
                                                 values={{
@@ -513,9 +525,13 @@ class ConfirmOrder extends React.Component {
                     <p >$&nbsp;{this.state.order.sum}</p>
                 </div>
 
-                <div>{console.log(this.state)}
+                <div>
                     <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
                     <p >$&nbsp;{this.state.delivery_mode == 1 ? "0.00" : this.state.order.postage.toFixed(2)}</p>
+                </div>
+                <div>
+                    <FormattedMessage id="orderdetails.interest" defaultMessage="邮费"/>:
+                    <p >$&nbsp;{this.state.order.sum_interest}</p>
                 </div>
                 <div>
                     <FormattedMessage id="cart.grand" defaultMessage="总金额"/>:

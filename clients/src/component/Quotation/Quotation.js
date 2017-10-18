@@ -183,10 +183,9 @@ class Quotation extends React.Component {
 					console.log(value, value.target.value);
 					let price = value.target.value.substr(1);
 					price = price.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-					console.log(price);
-					item[name] = price ? price : 0;
+					item[name] = price && !isNaN(price) ? price : 0;
 				} else {
-					item[name] = parseFloat(item[name]) + value;
+					item[name] = (parseFloat(item[name]) + value) > 0 ? parseFloat(item[name]) + value : 0;
 				}
 			}
 			item.productNum = item.productNum > 1 ? item.productNum : 1;
