@@ -141,7 +141,7 @@ class BrandDetail extends React.Component {
             	</div>
             	<div className={css.info}>
             		<div className={css.title}>
-            			{this.state.brand.supplierName}
+            			<p  className={css.title_Name}>{this.state.brand.supplierName}</p>
             			<p className={css.collect}>
             				<Icon className={true?css.active:css.icon} type="star" />
             				<FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
