@@ -7,6 +7,7 @@ import css from './Supplier.scss';
 import appcss from '../../App.scss';
 import Util from '../../Util.js';
 import LoginModal from '../Public/LoginModal/LoginModal.js';
+import CusModal from '../Public/CusModal/CusModal.js';
 import {
     Link
 } from 'react-router';
@@ -149,6 +150,15 @@ class Supplier extends React.Component {
                 img_logo: true
             })
         }
+        if (e.file.status == "removed") {
+            this.setState({
+                img_logo: false,
+            })
+            this.img_logo = null;
+        }
+        if (e.file.status == "done") {
+            this.img_logo = e.file.response.url;
+        }
         if (Array.isArray(e)) {
             return e;
         }
@@ -177,16 +187,13 @@ class Supplier extends React.Component {
     }
 
     handleTransport = (checkedValues) => {
-        console.log('checked = ', checkedValues);
         return checkedValues;
     }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
-            console.log(values)
             if (!err) {
                 if (this.img_front && this.img_back) {
-                    console.log('Received values of form: ', values, this.state.category);
                     values.imgUrl = values.logoList[0].response.url;
                     values.country = values.residence[0];
                     values.province = values.residence[1];
@@ -227,11 +234,11 @@ class Supplier extends React.Component {
                             })
                         }
                     })
+                } else {
+                    message.error(this.formatMessage({
+                        id: "agent.upload.credentials"
+                    }))
                 }
-            } else {
-                message.error(this.formatMessage({
-                    id: "agent.upload.credentials"
-                }))
             }
         });
     }
@@ -500,7 +507,6 @@ class Supplier extends React.Component {
                                 name="file"
                                 action={Util.url+"/tool/upload"}
                                 listType = "picture-card"
-                                onRemove={this.removePic.bind(this,"img_logo")}
                                 onPreview = {this.previewImg.bind(this,"img_logo")}
                                 accept="image/*"
                                 multiple
@@ -637,6 +643,9 @@ class Supplier extends React.Component {
                 </FormItem>
             </Form>
         </div>
+        <CusModal visible={this.state.previewVisble} closeModal={this.handleCancel.bind(this,"previewVisble")}>
+            <img alt="example" style={{ width: '100%' }} src={this.state.previewImg}/>
+        </CusModal>
         <LoginModal visible={this.state.visible} closeModal={this.handleCancel.bind(this,"visible")}/> 
     </div>
     }

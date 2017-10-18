@@ -415,10 +415,12 @@ class ProductDetail extends React.Component {
                 </div>
                 {this.state.product.supplierId?<div className={css.right}>
                     <div className={css.right_content}>
-                        <p className={css.custom_img}>
-                            <img src={this.state.product.supplierImg+"@350w_350h_1e_1c.png"}/>
-                        </p>
-                        <p className={css.name}>{this.state.product.supplierName}</p>
+                        <Link to={"/page/brand-detail/"+this.state.product.supplierId}>
+                            <p className={css.custom_img}>
+                                <img src={this.state.product.supplierImg+"@350w_350h_1e_1c.png"}/>
+                            </p>
+                            <p className={css.name}>{this.state.product.supplierName}</p>
+                        </Link>
                         <p className={css.foot}>
                             <FormattedMessage id="brand.product.rate" defaultMessage="评分"/>&nbsp;&nbsp;
                             <Rate className={css.rating} allowHalf defaultValue={this.state.product.supplierLevel} disabled />

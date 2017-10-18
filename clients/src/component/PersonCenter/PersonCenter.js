@@ -114,7 +114,7 @@ class PersonCenter extends React.Component {
     }
     handleCancel = () => {
         this.setState({
-
+            visible: false
         })
     }
     handleChange = (name, page) => {

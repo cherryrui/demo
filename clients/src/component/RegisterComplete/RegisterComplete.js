@@ -22,11 +22,11 @@ import {
 class RegisterComplete extends React.Component {
 
     handleClick = (type) => {
-        window.location.href = "/#/page"
+        this.props.history.pushState(null, "/");
     };
 
-    handleCertification = () =>{
-        window.location.href = "/#/page/mine"
+    handleCertification = () => {
+        this.props.history.pushState(null, "page/mine/person-data");
     }
 
 

@@ -75,28 +75,10 @@ class Mine extends React.Component {
     }
 
     render() {
-        let menu = JSON.parse(JSON.stringify(operator.menu));
-        if (this.state.user.userIdentity == 0 && !this.state.user.agent && !this.state.supplier) {
-            menu.push({
-                name: "mine.agent",
-                code: [0],
-                key: 7000,
-                url: 'page/mine/agent',
-                list: []
-            })
-            menu.push({
-                name: "mine.supplier",
-                code: [0],
-                key: 8000,
-                url: 'page/mine/supplier',
-                list: []
-            })
-        }
-        console.log(menu);
         return <div className={`${appcss.body} ${css.body}`}>
             <div className={css.menu}>
-            {menu.map(menu=> {
-                return menu.code.indexOf(this.state.user.userIdentity)>-1?<div>
+            {operator.menu.map(menu=> {
+                return menu.code.indexOf(this.state.user.userIdentity)>-1&&((menu.key!==7000&&menu.key!==8000)||(this.state.user.userIdentity == 0 && !this.state.user.agent && !this.state.user.supplier))?<div>
                     {menu.list.length>0?<p className={css.menu_title_show}>
                         <FormattedMessage id={menu.name} defaultMessage="分类"/>       
                     </p>:<p className={this.state.select == menu.key?css.menu_active:css.menu_title} onClick={this.handleMenu.bind(this,menu.key,menu.url)} >

@@ -6,7 +6,7 @@ import axios from 'axios';
 import css from './PersonData.scss';
 import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
-
+import Util from '../../Util.js';
 import {
     Link
 } from 'react-router';
@@ -18,7 +18,6 @@ import {
 import {
     Upload,
     Icon,
-    Avatar,
     Button,
     Input,
     Cascader,
@@ -84,6 +83,18 @@ class PersonData extends React.Component {
             })
         }
     }
+    handlePicture = (info) => {
+        console.log(info);
+        if (info.file.status === 'done') {
+            let user = this.state.user;
+            user.authImgs = info.file.response.url;
+            this.setState({
+                user: user,
+            })
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
     render() {
         const {
             getFieldDecorator
@@ -104,12 +115,14 @@ class PersonData extends React.Component {
                 <div className={css.basic_left}>
                     <Upload
                         className={css.basic_upload}
-                        name="avatar"
+                        name="file"
                         showUploadList={false}
-                        action="//jsonplaceholder.typicode.com/posts/"
-                        onChange={this.handleChange}
+                        onPreview = {this.previewImg}
+                        action={Util.url+"/tool/upload"}
+                        multiple
+                        onChange={this.handlePicture}
                     >
-                        <Avatar src={this.state.user.authImgs?this.state.user.authImgs:"../img/user_header.png"} alt="" className="avatar" />
+                        <img src={this.state.user.authImgs?this.state.user.authImgs:"../img/user_header.png"} />
                     </Upload>
                 </div>
                 <div className={css.basic_right}>

@@ -80,5 +80,17 @@ export default {
             title: "mine.favorite.brand",
             url: "/page/mine/favorite/2"
         }]
+    }, {
+        name: "mine.agent",
+        code: [0],
+        key: 7000,
+        url: 'page/mine/agent',
+        list: []
+    }, {
+        name: "mine.supplier",
+        code: [0],
+        key: 8000,
+        url: 'page/mine/supplier',
+        list: []
     }]
 }

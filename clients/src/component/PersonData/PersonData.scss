@@ -4,6 +4,7 @@
    background: $theme-color;
    font-weight: bold;
    padding: 10px 20px;
+   color: white;
 }
 .basic_body{
   display: flex;
@@ -24,6 +25,9 @@
   }
   img{
     width: 110px;
+    border: 1px solid $border-color;
+    border-radius: 50%;
+    cursor: pointer;
   }
 }
 .info{
