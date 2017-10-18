@@ -24,7 +24,6 @@ import {
     Cascader,
     Form,
     Select
-
 } from 'antd';
 
 const Option = Select.Option;
@@ -96,51 +95,43 @@ class PersonData extends React.Component {
         } = this.props;
         return <div>
             <div className={basecss.child_title}>
-                <FormattedMessage id="mine.person.data" defaultMessage="分类"/>
+                <FormattedMessage id="mine.person.data" defaultMessage="分类" />
             </div>
-            <div className={css.cont}>
-                <div className={css.avatar}>
-                    <Avatar className={css.avatar_img} src={this.state.user.authImgs?this.state.user.authImgs:"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"} />
+            <p className={css.main_title}>
+                <FormattedMessage id="persondata.basic.information" defaultMessage=""/>
+            </p>
+            <div className={css.basic_body}>
+                <div className={css.basic_left}>
+                    <Upload
+                        className={css.basic_upload}
+                        name="avatar"
+                        showUploadList={false}
+                        action="//jsonplaceholder.typicode.com/posts/"
+                        onChange={this.handleChange}
+                    >
+                        <Avatar src={this.state.user.authImgs?this.state.user.authImgs:"../img/user_header.png"} alt="" className="avatar" />
+                    </Upload>
                 </div>
-                <p  className={css.info}>
-                    <span className={css.title}>
-                        <FormattedMessage  className={css.title} id="persondata.user.style" defaultMessage="类型"/>：
-                    </span>
-                    {this.state.user.userType==1? <span
-                        className={css.text}>{formatMessage({id: 'persondata.enterprise.user'})}
-                    </span>
-                    :<span
-                        className={css.text}>{formatMessage({id: 'indivdual.user'})}
-                    </span>}
-                </p>
-                <p  className={css.info}>
-                    <span className={css.title}>
-                        <FormattedMessage  id="persondata.account.number" defaultMessage="账户"/>：
-                    </span>
-                    <span className={css.text}>{this.state.user.userName}</span>
-                </p>
-                <p className={css.info}>
-                    <span className={css.title}>
-                        <FormattedMessage  id="persondata.certification" defaultMessage="认证"/>：
-                    </span>
-                    {this.state.user.isAuthentication==0?<span className={css.text}>
-                        <span  className={css.text_certification}>
-                            {formatMessage({id: 'persondata.go.certification'})}
+                <div className={css.basic_right}>
+                    <p className={css.info}>
+                        <span className={css.title}>
+                            <FormattedMessage  className={css.title} id="persondata.user.style" defaultMessage="类型"/>：
                         </span>
-                        <Button type="primary" className={css.button_certification}>
-                                <FormattedMessage  id="persondata.certification" defaultMessage="认证"/>
-                        </Button>
-                    </span>
-                    :this.state.user.isAuthentication==1?<span
-                         className={css.text} style={{ color: '#ffa300' }}>
-                        {formatMessage({id: 'persondata.under.review'})}
-                    </span>
-                    :this.state.user.isAuthentication==2?<span
-                         className={css.text}>
-                         {formatMessage({id: 'persondata.certificationed'})}
-                    </span>:""
-                    }
-                </p>
+                        <span className={css.text}>{this.state.user.userType==1?formatMessage({id: 'persondata.indivdual.user'}):formatMessage({id: 'persondata.enterprise.user'})}</span>
+                    </p>
+                    <p className={css.info}>
+                        <span className={css.title}>
+                            <FormattedMessage  id="persondata.account.number" defaultMessage="账户"/>：
+                        </span>
+                        <span className={css.text}>{this.state.user.uid}</span>
+                    </p>
+                    <p className={css.info}>
+                        <span className={css.title}>
+                            <FormattedMessage  id="persondata.account.number" defaultMessage="账户"/>：
+                        </span>
+                        <span className={css.text}>{this.state.user.userName}</span>
+                    </p>
+                
                 <p  className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="quotation.contact.tel" defaultMessage="电话"/>：
@@ -157,21 +148,17 @@ class PersonData extends React.Component {
                             defaultValue={this.state.user.email}
                         />
                     </span>
-                    :<span className={css.text}>{this.state.user.email}
-                    </span>
+                    :<span className={css.text}>{this.state.user.email}</span>
                     }
                 </p>
-                {this.state.edit?
-                <p className={css.info}>
+                {this.state.edit?<p className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="certif.company.region" defaultMessage="城市"/>：
                     </span>
                     <span className={css.text}>
                         <Cascader style={{ width: '100%'}} options={this.state.options} onChange={this.handleRegion}/>
                     </span>
-                </p>:
-                <p></p>
-                }
+                </p>:""}
                 <p className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="persondata.contact.address" defaultMessage="联系地址"/>：
@@ -184,7 +171,7 @@ class PersonData extends React.Component {
                         />
                     </span>
                     :<span className={css.text}>
-                        {locale=="en"?this.state.user.address+","
+                        {!this.state.user.country?"":locale=="en"?this.state.user.address+","
                         +this.state.user.district+","
                         +this.state.user.city+","
                         +this.state.user.province+","
@@ -208,9 +195,7 @@ class PersonData extends React.Component {
                             onChange={this.handleChange.bind(this,"realName")}
                         />
                     </span>:
-                     <span className={css.text}>
-                         {this.state.user.realName}
-                     </span>
+                     <span className={css.text}>{this.state.user.realName}</span>
                     }
                 </p>
                 <p className = {css.info}>
@@ -229,17 +214,39 @@ class PersonData extends React.Component {
                     </span>
                     }
                 </p>
+                </div>:""}
+                <Button type="primary" className={css.button_modifye} onClick={this.handleClick}>
+                    <FormattedMessage id={this.state.button_name}defaultMessage=""/>
+                </Button>
                 </div>
-                :this.state.user.userType == 2 ?
-                <div></div>:""
-                }
-                <p className={css.button_person}>
-                    <span className={css.title}></span>
-                    <Button type="primary" className={css.button_modifye} onClick={this.handleClick}>
-                        <FormattedMessage id={this.state.button_name}defaultMessage=""/>
-                    </Button>
-                </p>
             </div>
+            <p className={css.main_title}>
+                <FormattedMessage id="persondata.Authentication" defaultMessage="" />
+            </p>
+            <p className={css.auth_body}>
+                <span className={css.title}>
+                    {this.state.user.userType==1?<FormattedMessage id="persondata.personal.certification" defaultMessage=""/>
+                    :<FormattedMessage  id="persondata.enterprise.certification" defaultMessage="认证"/>
+                    }：
+                </span>
+                {this.state.user.isAuthentication==0?<span className={css.text}>
+                    <span  className={css.text_certification}>
+                        {formatMessage({id: 'persondata.certification'})}
+                    </span>
+                    <Button type="primary" className={css.button_certification}>
+                            <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
+                    </Button>
+                </span>
+                :this.state.user.isAuthentication==1?<span
+                     className={css.text} style={{ color: '#ffa300' }}>
+                    {formatMessage({id: 'persondata.under.review'})}
+                </span>
+                :this.state.user.isAuthentication==2?<span
+                     className={css.text}>
+                     {formatMessage({id: 'persondata.certificationed'})}
+                </span>:""
+                }
+            </p>
         </div>
     }
 

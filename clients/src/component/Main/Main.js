@@ -221,7 +221,7 @@ class Category extends React.Component {
                 </div>
                 {item.suppliers.length>0?
                 <div className={css.right}>
-                    <Link to={"page/brand-detail/"+item.suppliers.sid}>
+                    <Link to={"page/brand-detail/"+item.suppliers[0].sid}>
                         <img className={css.right_img} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
                         <p className={css.right_title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
                         <p className={css.right_content}>

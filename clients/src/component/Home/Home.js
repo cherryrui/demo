@@ -161,7 +161,7 @@ class Home extends React.Component {
                     this.handleShow(false);
 
                 }
-            }, 3000);
+            }, 1000);
         }
 
         if (e == "cate_enter") {

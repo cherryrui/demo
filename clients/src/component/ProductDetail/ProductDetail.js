@@ -165,7 +165,6 @@ class ProductDetail extends React.Component {
         console.log(key);
     };
     handleAddCart = (type) => {
-        console.log(109, "handleAddCart", this.state.product)
         if (sessionStorage.user) {
             let flag = true;
             this.state.specs.map(item => {
@@ -406,13 +405,9 @@ class ProductDetail extends React.Component {
                         </p>
                         <div className={css.bottom_right}>
                             <Button disabled={this.state.disabled} className={appcss.button_green} onClick={this.handleAddCart.bind(this,1)}>
-                                <Icon type="shopping-cart" />
-                                &nbsp;&nbsp;
                                 <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
                             </Button>
                             <Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
-                                <Icon type="shopping-cart" />
-                                &nbsp;&nbsp;
                                 <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
                             </Button>
                         </div>
@@ -571,7 +566,7 @@ class Specification extends React.Component {
                 <p className={css.row_title}>
                     {item.propertyName}
                 </p>
-                <p>{item.propertyVal.map(property=>{
+                <p className={css.row_body}>{item.propertyVal.map(property=>{
                     return <span>{property.propertyValue}</span>
                 })}
                 </p>
@@ -597,37 +592,37 @@ class PackageDetail extends React.Component {
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_length" defaultMessage=""/>
                 </p>
-                <p>{this.props.data.len}&nbsp;&nbsp;{this.props.data.lenUnit}</p>
+                <p className={css.row_body}>{this.props.data.len}&nbsp;&nbsp;{this.props.data.lenUnit}</p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_width" defaultMessage=""/>
                 </p>
-                <p> {this.props.data.width}&nbsp;&nbsp;{this.props.data.widthUnit}</p>
+                <p className={css.row_body}> {this.props.data.width}&nbsp;&nbsp;{this.props.data.widthUnit}</p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_height" defaultMessage=""/>
                 </p>
-                <p> {this.props.data.height}&nbsp;&nbsp;{this.props.data.heightUnit}</p>
+                <p className={css.row_body}> {this.props.data.height}&nbsp;&nbsp;{this.props.data.heightUnit}</p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_weight" defaultMessage=""/>
                 </p>
-                <p>{this.props.data.weight}&nbsp;&nbsp;{this.props.data.weightUnit} </p>
+                <p className={css.row_body}>{this.props.data.weight}&nbsp;&nbsp;{this.props.data.weightUnit} </p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_pack" defaultMessage=""/>
                 </p>
-                <p>{this.props.data.specInfo}&nbsp;&nbsp;{this.props.data.specMeteringUnit}/{this.props.data.specVolumeUnit} </p>
+                <p className={css.row_body}>{this.props.data.specInfo}&nbsp;&nbsp;{this.props.data.specMeteringUnit}/{this.props.data.specVolumeUnit} </p>
             </div>
             <div className={css.row}>
                 <p className={css.row_title}>
                     <FormattedMessage id="mine.product.instruct_special" defaultMessage=""/>
                 </p>
-                <p>
+                <p className={css.row_body}>
                     {this.props.data.type?JSON.parse(this.props.data.type).map(item=>{
                         return <span>{item.name}&nbsp;&nbsp;</span>
                     }):""}
@@ -638,7 +633,7 @@ class PackageDetail extends React.Component {
                     <p className={css.row_title}>
                         {item.name}    
                     </p>
-                    <p>
+                    <p className={css.row_body}>
                         {item.content}&nbsp;{item.unit}
                     </p>
                 </div>
@@ -647,7 +642,7 @@ class PackageDetail extends React.Component {
                 <p className={css.row_title}>
                     <FormattedMessage id="cart.remark" defaultMessage=""/>
                 </p>
-                <p>{this.props.data.remark}</p>
+                <p className={css.row_body}>{this.props.data.remark}</p>
             </div>
         </div>
     }

@@ -144,7 +144,6 @@ class Supplier extends React.Component {
         }
     }
     normFile = (e) => {
-        console.log(e);
         if (!this.state.img_logo) {
             this.setState({
                 img_logo: true
@@ -156,10 +155,14 @@ class Supplier extends React.Component {
         return e && e.fileList;
     }
     removePic = (name, file) => {
-        let param = {}
-        param[name] = false;
-        this.setState(param);
-        this[name] = null;
+        if (name == "img_logo") {
+
+        } else {
+            let param = {}
+            param[name] = false;
+            this.setState(param);
+            this[name] = null;
+        }
     }
     previewImg = (name) => {
         this.setState({
@@ -496,8 +499,9 @@ class Supplier extends React.Component {
                             <Upload 
                                 name="file"
                                 action={Util.url+"/tool/upload"}
-            listType = "picture-card"
+                                listType = "picture-card"
                                 onRemove={this.removePic.bind(this,"img_logo")}
+                                onPreview = {this.previewImg.bind(this,"img_logo")}
                                 accept="image/*"
                                 multiple
                                 className={css.suplier_logo}

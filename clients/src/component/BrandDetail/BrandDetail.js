@@ -42,7 +42,6 @@ class BrandDetail extends React.Component {
 
 		axios.get(`/category/get-brand-category.json?supplierId=${this.props.params.id}`).then(re => {
 			axios.get(`/brand/get-brand-byid.json?supplierId=${this.props.params.id}`).then(res => {
-
 				this.setState({
 						category: re.data.result,
 						brand: res.data.result,
@@ -62,16 +61,15 @@ class BrandDetail extends React.Component {
 	 */
 	getProduct = () => {
 		let params = {
-			bandId: this.state.brand.sid,
+			supplierId: this.state.brand.sid,
 			categoryId: this.state.cid,
-			searchKey: this.state.search,
 			pageSize: this.state.pageSize,
 			pageNo: this.state.current,
 			sortType: this.state.sortType,
 			orderType: this.state.orderType
 		}
 		console.log(params)
-		axios.post('/product/search-product.json', params).then(res => {
+		axios.post('/product/get-brand-product.json', params).then(res => {
 			console.log(res.data)
 			this.setState({
 				products: res.data.result.list,

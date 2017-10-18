@@ -56,6 +56,22 @@ router.get('/get-category.json', async(ctx, next) => {
 		ctx.body = result
 
 	})
+	.post('/get-brand-product.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result = {};
+		try {
+			await axios.post(url + "/product/queryProductBySupplier", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} catch (e) {
+			console.log(e);
+			result = {
+				isSucc: false,
+				message: "请求失败！"
+			}
+		}
+		ctx.body = result
+	})
 	.get('/get-product-byId.json', async(ctx, next) => {
 		let result = {},
 			id = ctx.query.id;
