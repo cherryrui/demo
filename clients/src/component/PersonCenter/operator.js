@@ -16,13 +16,13 @@ export default {
         count: 0
     }, ],
     favorite_menu: [{
-        key: "all",
+        key: 1,
         value_id: "app.goods",
         icon: "../img/MF-1.png",
         url: "/page/mine/favorite/1",
         count: 0,
     }, {
-        key: "all",
+        key: 2,
         value_id: "app.supplier",
         icon: "../img/MF-2.png",
         url: "/page/mine/favorite/2",

@@ -12,7 +12,6 @@ router.get('/get-title-data.json', async(ctx, next) => {
 		let categorys = null,
 			carts = [];
 		await axios.get(url + '/index/queryLevelOneProductCategoryList').then(res => {
-			console.log(11111111111111111111, res.data);
 			categorys = res.data;
 		});
 		ctx.body = {
@@ -48,6 +47,22 @@ router.get('/get-title-data.json', async(ctx, next) => {
 		await axios.post(url + '/auth/demand/insertDemand', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
+		ctx.body = result;
+	})
+	.post('/set-star.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/collect/insertCollect", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
 		ctx.body = result;
 	})
 module.exports = router;

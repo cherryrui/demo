@@ -52,7 +52,8 @@ const zh_CN = {
     "sort.sale": "销量",
     "home.recent.add": "最近新增产品",
     "home.recent.go": "去购物车",
-
+    "collect.success": "收藏成功",
+    "collect.successed": "已收藏",
     "login.remember": "记住密码",
     "login.forget": "忘记密码？",
     "login.login": "登录",

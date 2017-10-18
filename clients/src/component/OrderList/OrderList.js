@@ -77,7 +77,7 @@ class OrderList extends React.Component {
                 className: css.table_col,
                 render: (text) => <div>
                     <p>{moment(text).format('YYYY-MM-DD ')}</p>
-                    <p>{moment(text).format(' HH:MM:ss')}</p>
+                    <p>{moment(text).format(' HH:mm:ss')}</p>
                 </div>
             }, {
                 title: <FormattedMessage id="orderlist.order.status" defaultMessage="状态"/>,

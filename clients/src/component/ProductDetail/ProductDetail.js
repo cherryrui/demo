@@ -72,7 +72,6 @@ class ProductDetail extends React.Component {
             disabled: false,
         };
         this.formatMessage = this.props.intl.formatMessage;
-
     }
 
     componentWillMount() {
@@ -227,37 +226,6 @@ class ProductDetail extends React.Component {
             })
         }
     }
-    handleSubmit = (e) => {
-        let {
-            intl: {
-                formatMessage
-            }
-        } = this.props;
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-                axios.post('/user/login.json', values).then(res => {
-                    if (res.data.status) {
-                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                        message.success(formatMessage({
-                            id: 'login.login.success'
-                        }))
-                        this.setState({
-                            visible: false
-                        })
-                    } else {
-                        console.log("51", res.data.result)
-                        message.error(formatMessage({
-                            id: 'login.login.fail'
-                        }, {
-                            reason: res.data.result
-                        }))
-                    }
-                })
-            }
-        });
-    }
     handleAttr = (index, value) => {
         let specs = this.state.specs;
         specs[index].select_value = value;
@@ -304,6 +272,35 @@ class ProductDetail extends React.Component {
             visible: false
         })
     }
+    handleStar = () => {
+        if (sessionStorage.user) {
+            let param = {
+                objectType: 1,
+                objectId: this.state.product.productId,
+            }
+            axios.post('/api/set-star.json', param).then(res => {
+                if (res.data.code == 104) {
+                    this.setState({
+                        visible: false
+                    })
+                } else if (res.data.isSucc) {
+                    message.success(this.formatMessage({
+                        id: "collect.success"
+                    }));
+                } else if (res.data.code == 122) {
+                    message.warn(this.formatMessage({
+                        id: "collect.successed"
+                    }));
+                } else {
+                    message.error(res.data.message);
+                }
+            })
+        } else {
+            this.setState({
+                visible: true
+            })
+        }
+    }
 
     render() {
         console.log(this.state.specs);
@@ -336,7 +333,8 @@ class ProductDetail extends React.Component {
                     </div>
                     <div className={css.product_img}>
                          {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
-                             return <img key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} onClick={this.changeImg.bind(this, index)}/>
+                             return <img onMouseEnter={this.changeImg.bind(this, index)} key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} 
+                             onClick={this.changeImg.bind(this, index)}/>
                          }):""}
                     </div>
                 </div>
@@ -360,12 +358,12 @@ class ProductDetail extends React.Component {
                                 :
                             </span>
                             &nbsp;&nbsp;{this.state.product.saleVolume}&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span className={css.bold}>
+                            <span className={css.bold} >
                                 <FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
                                 :
                             </span>
                             &nbsp;&nbsp;
-                            <Icon type="star" />
+                            <Icon type="star" onClick={this.handleStar}/>
                         </p>
                     </div>
                     <div className={css.item}>
@@ -462,7 +460,7 @@ class ProductDetail extends React.Component {
                     </div>
                 </div>
             </div>
-            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
+            <LoginModal visible={this.state.visible} reload closeModal={this.handleCancel}/>
         </div>
     }
 }

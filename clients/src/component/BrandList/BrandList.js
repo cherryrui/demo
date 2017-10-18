@@ -133,7 +133,8 @@ class BrandList extends React.Component {
      */
     onSelect = (item) => {
         this.setState({
-            cid: item
+            cid: item,
+            current: 1
         }, () => {
             this.getBrand();
         })

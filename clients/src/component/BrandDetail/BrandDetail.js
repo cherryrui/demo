@@ -2,19 +2,23 @@ import React from 'react';
 import appcss from '../../App.scss';
 import css from './BrandDetail.scss';
 import CusPagination from '../Public/CusPagination/CusPagination.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 import operator from './operator.js'
 import axios from 'axios';
 import {
 	Breadcrumb,
 	Pagination,
 	Icon,
-	Rate
+	Rate,
+	message
 } from 'antd';
 import {
 	Link
 } from 'react-router';
 import {
-	FormattedMessage
+	FormattedMessage,
+	injectIntl,
+	intlShape
 } from 'react-intl';
 
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
@@ -36,7 +40,9 @@ class BrandDetail extends React.Component {
 			sortType: 0, //排序名称
 			orderType: "", //排序方式，倒序，
 			cid: 0,
+			visible: false,
 		}
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {
 
@@ -88,20 +94,61 @@ class BrandDetail extends React.Component {
 			this.getProduct()
 		})
 	}
-	handleStar = (index) => {
-		let products = this.state.products
-		if (products[index].star) {
-			products[index].star = false;
+	handleStar = (type, index) => {
+		if (sessionStorage.user) {
+			let param = {
+				objectType: type,
+				objectId: type == 1 ? this.state.products[index].productId : this.state.brand.sid,
+			}
+			axios.post('/api/set-star.json', param).then(res => {
+				if (res.data.code == 104) {
+					this.setState({
+						visible: false
+					})
+				} else if (res.data.isSucc) {
+					message.success(this.formatMessage({
+						id: "collect.success"
+					}));
+					if (type == 1) {
+						let products = this.state.products
+						if (products[index].star) {
+							products[index].star = false;
+						} else {
+							products[index].star = true;
+						}
+						this.setState({
+							products: products
+						});
+					}
+				} else if (res.data.code == 122) {
+					message.warn(this.formatMessage({
+						id: "collect.successed"
+					}));
+					if (type == 1) {
+						let products = this.state.products
+						if (products[index].star) {
+							products[index].star = false;
+						} else {
+							products[index].star = true;
+						}
+						this.setState({
+							products: products
+						});
+					}
+				} else {
+					message.error(res.data.message);
+				}
+			})
 		} else {
-			products[index].star = true;
+			this.setState({
+				visible: true
+			})
 		}
-		this.setState({
-			products: products
-		});
 	}
 	onSelect = (item) => {
 		this.setState({
-			cid: item
+			cid: item,
+			current: 1,
 		}, () => {
 			this.getProduct();
 		})
@@ -142,7 +189,7 @@ class BrandDetail extends React.Component {
             	<div className={css.info}>
             		<div className={css.title}>
             			<p  className={css.title_Name}>{this.state.brand.supplierName}</p>
-            			<p className={css.collect}>
+            			<p className={css.collect} onClick={this.handleStar.bind(this,2)}>
             				<Icon className={true?css.active:css.icon} type="star" />
             				<FormattedMessage id="product.detail.collect" defaultMessage="收藏"/>
             			</p>
@@ -172,7 +219,7 @@ class BrandDetail extends React.Component {
                                 handleSort={this.handleSort.bind(this,item.key)}/>
                         })}
                 </div>
-                <div className={css.right}>{console.log(this.state.total)}
+                <div className={css.right}>
                     <FormattedMessage id="brand.product.sum" defaultMessage="总计"
                         values={{total:(this.state.total==0?"0":this.state.total)}}
                     />&nbsp;&nbsp;&nbsp;&nbsp;
@@ -181,11 +228,13 @@ class BrandDetail extends React.Component {
             </div>
             <div className={css.product_list}>
                 {this.state.products.map((item,index)=>{
-                    return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,index)} addCart/>
+                    return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,1,index)} addCart/>
                 })}
             </div>
             <CusPagination onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
+			<LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
 		</div>
 	}
 }
+BrandDetail = injectIntl(BrandDetail);
 export default BrandDetail;

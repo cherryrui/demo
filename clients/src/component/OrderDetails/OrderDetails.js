@@ -205,7 +205,7 @@ class OrderDetails extends React.Component {
                     </p>
                     {this.state.order.stageNum?<div className={css.item_cont}>
                         <FormattedMessage id="cart.advance" values={{firstMoney:this.state.order.downPay*100,lastMoney:(100-this.state.order.downPay*100)}} defaultMessage="分期"/>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;   
-                        <FormattedMessage id="orderlist.pay.payment" values={{stageNum: this.state.order.stageNum}} defaultMessage=""/>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <FormattedMessage id="orderlist.pay.payment" values={{stageNum: this.state.order.stageNum-1}} defaultMessage=""/>&nbsp;&nbsp;&nbsp;&nbsp;
                         <p className={css.install_money}>
                             <FormattedMessage id="cart.pay.day" values={{principal: (this.state.order.totalMoney*(1-this.state.order.downPay)/this.state.order.stageNum).toFixed(2) ,interest: (this.state.order.totalMoney*(1-this.state.order.downPay)/this.state.order.stageNum*this.state.order.interestRate).toFixed(2)}} defaultMessage=""/>
                         </p>

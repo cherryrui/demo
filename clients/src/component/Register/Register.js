@@ -58,7 +58,6 @@ class Register extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('RePassword success: ', values);
                 axios.post('/user/register.json', values).then(res => {
                     console.log('2222', JSON.stringify(res));
                     if (res.data.isSucc) {
@@ -66,16 +65,14 @@ class Register extends React.Component {
                             id: 'regcomplt.regcomplt.Registeredsuccessfully'
                         }));
                         let param = {
-                            userName:values.name,
-                            password:values.password
+                            userName: values.name,
+                            password: values.password
                         };
                         axios.post('/user/login.json', param).then(res => {
-                            /*console.log('xxxx:', res);
-                            console.log(res.status);*/
                             if (res.data.isSucc) {
                                 sessionStorage.setItem('user', JSON.stringify(res.data.result));
                                 /*this.props.history.pushState(null, "/");*/
-                                window.location.href = "/#/register-complete";
+                                this.props.history.pushState(null, "/register-complete");
                             } else {
                                 message.error(formatMessage({
                                     id: 'login.login.fail'
@@ -84,7 +81,7 @@ class Register extends React.Component {
                                 }))
                             }
                         })
-                       
+
                     } else {
                         message.error(formatMessage({
                             id: 'register.failed'

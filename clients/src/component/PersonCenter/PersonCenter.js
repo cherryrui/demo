@@ -81,7 +81,7 @@ class PersonCenter extends React.Component {
                     sum = 0;
                     collectList.map(item => {
                         res.data.collect.map(demand => {
-                            if (item.key == demand.demandStatus) {
+                            if (item.key == demand.type) {
                                 sum += demand.total;
                                 item.count = demand.total;
                             }
@@ -101,7 +101,7 @@ class PersonCenter extends React.Component {
             });
 
         } else {
-            window.location.href = '/#/login'
+            this.props.history.pushState(null, 'login');
         }
     }
     handleMenu = (key, url) => {

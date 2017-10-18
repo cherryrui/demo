@@ -202,16 +202,18 @@ class Category extends React.Component {
                         <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>
                     </div>
                     <div className={css.left_content}>
-                    {item.levleTwoProductCategory.map(cate=>{
-                        return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
-                            <p className={css.cate}>{cate.categoryName}</p>
-                        </Link>
-                    })}
-                    <div className={css.brand_button}>
-                        <Link  to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
-                            <FormattedMessage id="app.more" defaultMessage="更多"/>
-                        </Link>
-                    </div>
+                        <div>
+                            {item.levleTwoProductCategory.map(cate=>{
+                                return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
+                                    <p className={css.cate}>{cate.categoryName}</p>
+                                </Link>
+                            })}
+                        </div>
+                        <div className={css.brand_button}>
+                            <Link  to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
+                                <FormattedMessage id="app.more" defaultMessage="更多"/>
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className={css.middle}>

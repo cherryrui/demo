@@ -33,7 +33,7 @@ import Steps from '../Public/Steps/Steps.js';
 import operator from './operator.js';
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
@@ -308,7 +308,7 @@ class SetPwd extends React.Component {
 class SetSuccess extends React.Component {
 
     handleClick = () => {
-        window.location.href = "/#/login"
+        this.props.history.pushState(null, "/login");
     }
     render() {
         return <div className={css.reset_success}>

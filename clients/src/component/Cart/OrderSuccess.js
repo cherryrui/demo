@@ -22,7 +22,7 @@ class OrderSuccess extends React.Component {
         this.props.handleStep ? this.props.handleStep(-3) : ""
     }
     handleBackToOrder = (e) => {
-        window.location.href = "/#/page/order-details/" + this.props.order.orderId
+        this.props.goLink ? this.props.goLink("page/order-details/" + this.props.order.orderId) : "";
     }
 
     render() {

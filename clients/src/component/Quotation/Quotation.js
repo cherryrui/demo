@@ -183,9 +183,10 @@ class Quotation extends React.Component {
 					console.log(value, value.target.value);
 					let price = value.target.value.substr(1);
 					price = price.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-					item[name] = price;
+					console.log(price);
+					item[name] = price ? price : 0;
 				} else {
-					item[name] = item[name] + value;
+					item[name] = parseFloat(item[name]) + value;
 				}
 			}
 			item.productNum = item.productNum > 1 ? item.productNum : 1;

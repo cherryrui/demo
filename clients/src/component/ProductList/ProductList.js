@@ -22,9 +22,9 @@ import {
     Card,
     Rate,
     Row,
-    Col
+    Col,
+    message
 } from 'antd';
-
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 import Product from '../Public/Product/Product.js';
@@ -166,16 +166,51 @@ class ProductList extends React.Component {
         })
     }
     handleStar = (index) => {
-        let products = this.state.products
-        if (products[index].star) {
-            products[index].star = false;
+        if (sessionStorage.user) {
+            let param = {
+                objectType: 1,
+                objectId: this.state.products[index].productId,
+            }
+            axios.post('/api/set-star.json', param).then(res => {
+                if (res.data.code == 104) {
+                    this.setState({
+                        visible: false
+                    })
+                } else if (res.data.isSucc) {
+                    message.success(this.formatMessage({
+                        id: "collect.success"
+                    }));
+                    let products = this.state.products
+                    if (products[index].star) {
+                        products[index].star = false;
+                    } else {
+                        products[index].star = true;
+                    }
+                    this.setState({
+                        products: products
+                    });
+                } else if (res.data.code == 122) {
+                    message.warn(this.formatMessage({
+                        id: "collect.successed"
+                    }));
+                    let products = this.state.products
+                    if (products[index].star) {
+                        products[index].star = false;
+                    } else {
+                        products[index].star = true;
+                    }
+                    this.setState({
+                        products: products
+                    });
+                } else {
+                    message.error(res.data.message);
+                }
+            })
         } else {
-            products[index].star = true;
+            this.setState({
+                visible: true
+            })
         }
-        this.setState({
-            products: products
-        });
-
     }
 
     /**

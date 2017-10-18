@@ -197,7 +197,7 @@ class Home extends React.Component {
                     return <Menu.Item>
                         <div className={css.cart_product}>
                             <Link  to={"page/product-detail/" + item.productId}>
-                                <img src={item.coverUrl}/>
+                                <img src={item.coverUrl+"@50w_50h_1e_1c.png"}/>
                             </Link>
                             <div className={css.product_info}>
                                 <p className={css.product_name}>{item.productName}</p>

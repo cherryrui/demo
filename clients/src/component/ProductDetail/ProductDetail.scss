@@ -62,6 +62,10 @@
 		text-align: right;
     	font-size: 14px;
 		padding: 58px 20px 20px 0;
+		i{
+			cursor: pointer;
+			color: $color-orange;
+		}
 	}
 	.bold{
     	font-weight: bold;
@@ -103,7 +107,6 @@
 		.bottom_right{
 			display: flex;
     		flex-grow: 1;
-    		justify-content: flex-end;
     		button{
     			margin-left: 20px;
     		}
@@ -168,6 +171,12 @@
 		width: 60px;
 		height: 60px;
 		margin: 5px 10px 5px 0px;
+		cursor: pointer;
+	}
+	.img:hover{
+		border: 1px solid $border-color;
+		border-radius: 2px;
+		padding: 5px;
 	}
 	.active{
 		@extend .img;

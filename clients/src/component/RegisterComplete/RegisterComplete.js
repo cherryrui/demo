@@ -17,7 +17,9 @@ import {
     Button,
     Icon
 } from 'antd';
-
+import {
+    Link
+} from 'react-router';
 
 class RegisterComplete extends React.Component {
 
@@ -34,7 +36,7 @@ class RegisterComplete extends React.Component {
         return (
             <div className={css.body}>
                 <div className={css.title}>
-                    <p className={css.logo}>LOGO</p>
+                    <Link to="/" className={css.logo}> LOGO </Link>
                     <p className={css.title_text}>
                         <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
                     </p>

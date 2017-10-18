@@ -1,8 +1,8 @@
 @import "../../themes.scss";
 .body{
   padding-top: 40px;
-  min-height: 600px;
-  margin: 0 10%;
+  width: 1100px;
+  margin: auto;
   min-height: 600px;
 }
 .title{
@@ -14,6 +14,8 @@
   .logo{
     font-size: 40px;
     font-weight: bold;
+    color: $theme-color;
+    cursor: pointer;
   }
   .title_text{
     font-size: 20px;

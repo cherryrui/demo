@@ -43,8 +43,6 @@ class Login extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 axios.post('/user/login.json', values).then(res => {
-                    console.log('xxxx:', res);
-                    console.log(res.status);
                     if (res.data.isSucc) {
                         sessionStorage.setItem('user', JSON.stringify(res.data.result));
                         this.props.history.pushState(null, "/");
