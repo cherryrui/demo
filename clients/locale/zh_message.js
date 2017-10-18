@@ -504,5 +504,6 @@ const zh_CN = {
     "app.select.time": "请选择时间 ",
     "post.want.img": "图片",
     "post.want.file": "文件",
+    "post.company.logo": "请输入公司logo"
 }
 export default zh_CN;

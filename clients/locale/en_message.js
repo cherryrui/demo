@@ -502,6 +502,7 @@ const en_US = {
     "app.img.format": "Image format:jpg.jpeg.gif.png.bmp ",
     "app.select.time": "Please select time",
     "post.want.img": "picture",
-    "post.want.file": "file"
+    "post.want.file": "file",
+    "post.company.logo": "Please enter the company logo"
 }
 export default en_US;

@@ -500,7 +500,7 @@ class Supplier extends React.Component {
                     {getFieldDecorator('logoList', {
                         valuePropName: 'fileList',
                         getValueFromEvent: this.normFile,
-                        rules: [{ type:"array", required: true, message: this.formatMessage({id: 'agent.enter.detailed_address'}),
+                        rules: [{ type:"array", required: true, message: this.formatMessage({id: 'post.company.logo'}),
                             }],
                         })(
                             <Upload 
