@@ -18,15 +18,14 @@ import {
 	Pagination,
 	Tooltip,
 	Checkbox,
-	Icon
-
+	Icon,
+	message
 } from 'antd'
 
 class Favorite extends React.Component {
 	static propTypes = {
 		intl: intlShape.isRequired,
 	}
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -36,9 +35,12 @@ class Favorite extends React.Component {
 			data: [],
 			total: 0,
 			pageNo: 1,
-			pageSize: 12,
+			pageSize: Number(this.props.params.type) == 1 ? 12 : 15,
 			indeterminate: false,
+			select_id: -1,
+			pageSizeOptions: ["15", "20", "25"]
 		}
+		this.formatMessage = this.props.intl.formatMessage;
 		this.type = Number(this.props.params.type); //1：收藏商品，2：收藏供应商
 	}
 	componentWillMount() {
@@ -47,8 +49,13 @@ class Favorite extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if (Number(nextProps.params.type) !== this.type) {
 			this.type = Number(nextProps.params.type);
+			this.state.pageSize = this.type == 1 ? 12 : 15;
 			this.initPage();
 		}
+	}
+	handleType = () => {
+		this.type = this.type == 1 ? 2 : 1;
+		this.initPage();
 	}
 	initPage = () => {
 		axios.post('/category/get-favorite-category.json', {
@@ -101,7 +108,7 @@ class Favorite extends React.Component {
 		let data = this.state.data;
 		let select_data = [];
 		data.map(item => {
-			if (item.id == key) {
+			if (item.collectId == key.collectId) {
 				if (item.checked) {
 					item.checked = false;
 				} else {
@@ -109,7 +116,7 @@ class Favorite extends React.Component {
 				}
 			}
 			if (item.checked) {
-				select_data.push(item.id);
+				select_data.push(item.collectId);
 			}
 		})
 		let indeterminate = false;
@@ -122,21 +129,30 @@ class Favorite extends React.Component {
 			indeterminate: indeterminate
 		})
 	}
-	deleteData = () => {
-		if (this.state.select_data.length > 0) {
-			let url = this.state.type == 1 ? "/product/delete-favorite-products.json" : "/product/delete-favorite-products.json";
-			axios.post(url, this.state.select_data).then(res => {
-				this.getData();
-			})
+	handleDelete = (key) => {
+		console.log(key, this.state.select_data);
+		let param = {
+			collectIds: [],
+		};
+		if (!isNaN(key)) {
+			param.collectIds.push(key);
+		} else if (this.state.select_data.length > 0) {
+			param.collectIds = this.state.select_data;
 		} else {
-			const {
-				intl: {
-					formatMessage
-				}
-			} = this.props;
-			message.warning(formatMessage({
+			message.warning(this.formatMessage({
 				id: 'cart.select.product'
 			}))
+		}
+		if (param.collectIds.length > 0) {
+			param.collectIds = param.collectIds.join(",");
+			axios.post('/user/delete-favorite.json', param).then(res => {
+				if (res.data.isSucc) {
+					this.state.select_data = [];
+					this.getData();
+				} else {
+					message.error(res.data.message);
+				}
+			})
 		}
 	}
 	handleChange = (e) => {
@@ -145,7 +161,7 @@ class Favorite extends React.Component {
 		data.map(item => {
 			if (e.target.checked) {
 				item.checked = true;
-				select_data.push(item.id);
+				select_data.push(item.collectId);
 			} else {
 				item.checked = false;
 			}
@@ -157,14 +173,18 @@ class Favorite extends React.Component {
 		})
 	}
 	handleChangePage = (page, pageSize) => {
-		this.state.pageNo = pageNo;
+		this.state.pageNo = page;
 		this.state.pageSize = pageSize;
 		this.getData();
 	}
-
-
+	handleFooter = (index) => {
+		if (index >= -1 && this.state.select_id != -1) {
+			this.setState({
+				select_id: index,
+			})
+		}
+	}
 	render() {
-		console.log(this.state.total);
 		const {
 			intl: {
 				formatMessage
@@ -173,8 +193,14 @@ class Favorite extends React.Component {
 
 		return <div>
 			 <div className={basecss.child_title}>
-                <FormattedMessage id={this.type==1?"mine.favorite.product":"mine.favorite.brand"} 
-                defaultMessage="分类"/>
+			 	<p onClick={this.handleType}>
+                	<FormattedMessage id={this.type==1?"mine.favorite.product":"mine.favorite.brand"} 
+                	defaultMessage="分类"/>
+                </p>
+                <p onClick={this.handleType}>
+                	<FormattedMessage id={this.type==2?"mine.favorite.product":"mine.favorite.brand"} 
+                	defaultMessage="分类"/>
+                </p>
             </div>
             {this.state.category.length>0?<div className={css.select_category}>
             	<div className={css.select_title}>
@@ -186,35 +212,42 @@ class Favorite extends React.Component {
             		})}
             	</div>
             </div>:""}
-            <div className={css.data_list}>
+            <div className={css.data_list} onMouseLeave={this.handleFooter.bind(this, -1)}>
 	            {this.state.data.map((item,index)=>{
-	            	return this.type==1?<Product 
+	            	return <div onMouseEnter={this.handleFooter.bind(this, index)} className={this.type==1?css.list_product_item:css.list_brand_item}>
+	            	{this.type==1?<Product 
 	            		product={item} 
 	            		className={(index+1)%4==0?css.data_item_right:css.data_item} 
 	            		check
 	            		onCheck={this.handleCheck}
 	            		/>
 	            		:<Brand brand={item} 
-	            			className={(index+1)%4==0?css.brand_item_right:css.brand_item} 
+	            			className={(index+1)%5==0?css.brand_item_right:css.brand_item} 
 	            			check
 	            			showStar
 	            			onCheck={this.handleCheck}
-	            		/>
+	            		/>}
+	            		{this.type==1 && this.state.select_id==index?<div onClick={this.handleDelete.bind(this,item.collectId)} className={(index+1)%4==0?css.footer_right:css.product_footer}>
+	            			<Icon type="delete"/>
+	            		</div>:this.type==2&&this.state.select_id==index?
+	            		<div onClick={this.handleDelete.bind(this,item.collectId)} className={(index+1)%5==0?css.footer_right:css.brand_footer}>
+	            			<Icon type="delete"/>
+	            		</div>:""}
+	            	</div>
 	            })}
-            </div>
+            </div> 
             <div className={css.footer}>
-                <p className={css.left}>
+				<p className={css.left}>
                     <Checkbox onChange={this.handleChange} checked={this.state.select_data.length==this.state.data.length?true:false} indeterminate={this.state.indeterminate}>
                         <FormattedMessage id="order.status.all" defaultMessage="all"/>
                     </Checkbox>
 					<Tooltip title={formatMessage({id: 'cart.delete.all'})}>
-                        <Icon type="delete" onClick={this.deleteData} />
+                        <Icon type="delete" onClick={this.handleDelete} />
                     </Tooltip> 
-                </p>
-                <CusPagination onChange={this.handleChangePage} total={this.state.total} onShowSizeChange={this.handleChangePage} />
-        	</div>
+                </p> 
+                <Pagination defaultCurrent={1} onChange={this.handleChangePage} pageSize={this.state.pageSize} total={this.state.total} />
+			</div> 
 		</div>
-
 	}
 }
 export default injectIntl(Favorite);

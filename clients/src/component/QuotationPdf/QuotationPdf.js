@@ -54,7 +54,7 @@ class QuotationPdf extends React.Component {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
             className: css.table_col,
             render: (record) => <div>
-                {record.selectSpecs?record.selectSpecs.map((item,index)=>{
+                {record.productSpecification?record.productSpecification.map((item,index)=>{
                     return <p>{item.specName}:{item.specVal[0].specValue}</p>
                 }):""}
             </div>
@@ -109,6 +109,7 @@ class QuotationPdf extends React.Component {
                 quotation.productList.map(item => {
                     item.coverUrl = item.productUrl;
                     item.productBrand = JSON.parse(item.productBrand);
+                    item.productSpecification = JSON.parse(item.productSpecification);
                 })
                 this.setState({
                     quotation: quotation,
@@ -133,7 +134,8 @@ class QuotationPdf extends React.Component {
             },
             html2canvas: {
                 dpi: 192,
-                letterRendering: true
+                letterRendering: true,
+                useCORS: true,
             },
             jsPDF: {
                 unit: 'in',

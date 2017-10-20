@@ -2,19 +2,46 @@
 .data_list{
 	display: flex;
 	flex-wrap: wrap;
+  margin-top: 20px;
     %item{
-      margin: 20px 0px 20px 10px;
       border: 1px solid $border-color !important;
       span[class="ant-checkbox"]{
         vertical-align: super;
       }
+      label[class="ant-checkbox-wrapper"]{
+        display: flex;
+      }
     }
     %item_right{
-      margin: 20px 0px;
+      margin: 0px;
       @extend %item;
+    }
+    %footer_icon{
+      position: relative;
+      top: -24px;
+      background: rgba(46,43,46,0.6);
+      height: 24px;
+      text-align: center;
+      color: white;
+      cursor: pointer;
+      i:hover{
+        color: $theme-color;
+      }
+    }
+    .footer_right{
+      @extend %footer_icon;
+    }
+    .product_footer{
+      @extend %footer_icon;
+      margin-right: 20px;
+    }
+    .brand_footer{
+      @extend %footer_icon;
+      margin-right: 10px;
     }
     .data_item{
       width: 200px;
+      margin-right: 20px;
       @extend %item;
     }
     .data_item_right{
@@ -23,6 +50,7 @@
     }
     .brand_item{
       width: 164px;
+      margin-right: 10px;
       @extend %item;
     }
     .brand_item_right{
@@ -30,11 +58,20 @@
       @extend %item_right;
     }
 }
+.list_product_item{
+    height: 257px;
+    margin-bottom: 20px;
+}
+.list_brand_item{
+    height: 233px;
+    margin-bottom: 20px;
+}
 .select_category{
   display: flex;
   .select_title{
     width: 100px;
     background: $theme-color;
+    color: white;
     font-weight: bold;
     flex-shrink: 0;
     display: flex;
@@ -70,9 +107,19 @@
 	display: flex;
     justify-content: space-between;
     padding: 10px;
+    align-items: center;
     .left{
     	display: flex;
     	align-items: center;
     	font-size: 16px;
+      span{
+        vertical-align: baseline;
+      }
+      i{
+        cursor: pointer;
+      }
+    }
+    .page{
+      margin-top: 0px;
     }
 }

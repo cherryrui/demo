@@ -146,7 +146,6 @@ class ProductList extends React.Component {
                 }));
             }
         })
-
     }
 
     /**
@@ -241,12 +240,14 @@ class ProductList extends React.Component {
         this.state.current = current;
         this.state.pageSize = pageSize;
         this.getProduct();
+        this.product_list.scrollIntoView();
     }
     handleChange = (page, pageSize) => {
         console.log(page, pageSize);
         this.state.current = page;
         this.state.pageSize = pageSize;
         this.getProduct();
+        this.product_list.scrollIntoView();
     }
     handleCancel = () => {
         this.setState({

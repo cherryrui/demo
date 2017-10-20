@@ -20,16 +20,18 @@ import {
 class Brand extends React.Component {
 
     onChange = () => {
-        this.props.onCheck ? this.props.onCheck(this.props.brand.id) : "";
+        this.props.onCheck ? this.props.onCheck(this.props.brand) : "";
     }
 
     render() {
         return <Card className={this.props.className} style={this.props.style} bordered={false} bodyStyle={{padding: "0"}}>
             <div className={css.icon}>
+                <p className={css.left_icon}>
+                    <i class="iconfont icon-DYC-1"></i>
+                    <i class="iconfont icon-DYC-"></i>
+                </p>
                 {this.props.check ? <Checkbox checked={this.props.brand.checked ? true : false} onChange={this.onChange}>
                 </Checkbox> : ""}
-                <span className={`${appcss.custom_icon} ${this.props.brand.rz ? css.icon_rz_active : css.icon_rz}`}/>
-                <span className={`${appcss.custom_icon} ${this.props.brand.hz ? css.icon_hz_active : css.icon_hz}`}/>
             </div>
             <Link to={"page/brand-detail/" + this.props.brand.sid}>
                 <div className={css.custom_image}>

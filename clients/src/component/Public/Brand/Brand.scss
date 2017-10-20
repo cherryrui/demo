@@ -3,6 +3,16 @@
   display: flex;
   align-items: flex-start;
   position: absolute;
+  justify-content: space-between;
+  width: 100%;
+  .left_icon{
+    flex-grow: 1;
+    display: flex;
+    i{
+      margin-right: 5px;
+      font-size: 18px;
+    }
+  }
 }
 .custom_image{
     img{

@@ -271,8 +271,23 @@ router.get('/get-user.json', async(ctx, next) => {
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		await axios.post(url + '/auth/user/updateUser', querystring.stringify(param)).then(res => {
 			result = res.data;
-			console.log(result)
 		})
+		ctx.body = result;
+	})
+	.post('/delete-favorite.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/collect/deleteCollects", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
 		ctx.body = result;
 	})
 module.exports = router;
