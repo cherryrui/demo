@@ -41,7 +41,7 @@
   line-height: 30px;
   padding-left: 20px;
   padding-right: 20px;
-   background: $color-light-blue;
+   background: $color-light;
 }
 .quotation_item_body{
   display: flex;
@@ -67,20 +67,20 @@
   }
   .item_sale{
       @extend .title_sale;
-      color: $color-cheng;
+      color: $color-orange;
 
       border-right: 1px solid $border-color;
   }
   .item_agent{
       @extend .title_agent;
-      color: $color-cheng;
+      color: $color-orange;
 
       border-right: 1px solid $border-color;
   }
   .item_profit{
       @extend .title_profit;
 
-      color:$color-cheng;
+      color:$color-orange;
   }
 }
 .quotation_item_footer{

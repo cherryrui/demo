@@ -245,7 +245,9 @@ class Favorite extends React.Component {
                         <Icon type="delete" onClick={this.handleDelete} />
                     </Tooltip> 
                 </p> 
-                <Pagination defaultCurrent={1} onChange={this.handleChangePage} pageSize={this.state.pageSize} total={this.state.total} />
+                <Pagination onChange={this.handleChangePage} 
+                	pageSize={this.state.pageSize} 
+                	total={this.state.total} />
 			</div> 
 		</div>
 	}

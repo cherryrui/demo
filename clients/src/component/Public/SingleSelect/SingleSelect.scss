@@ -1,7 +1,7 @@
 @import "../../../themes";
 .body{
   display: flex;
-  border: 1px solid $back-ground-grey;
+  border: 1px solid $border-color;
   margin-bottom: 10px;
   .left{
     background: $theme-color;

@@ -1,17 +1,16 @@
 /**
  * Created by WF on 2017/8/16.
  */
-$theme-color: #2f5ea2;
-$back-ground-grey: #878787;
-$color-grey: #eeeff3;
-$color-light-blue: #e9f3fc;
-$color-green: #06cdbe;
-$color-orange: #ffa300;
-$color-red: #e23c0a;
-$color-deep-grey: #636363;
+$theme-color: #ffc70d;
+$background-color: #f7f7f7;
+$bar-color:#2e2b2e;
 
+$color-grey: #2e2b2e;
+$color-red: #ff9a2c;
+$color-green: #06cdbe;
+$color-orange: #f7472f;
 $color-blue: #3285ea;
-$color-cheng: #f7472f;
+$color-light: #fffaee;
 
 $font-orange: #ff9a2c;
 
@@ -21,15 +20,17 @@ $button-grey-active: #878787;
 $button-orange: $color-orange;
 $button-orange-active: $color-orange;
 
-$button-green: #06cdbe;
-$button-green-active: #05aea1;
 
-$button-blue: $theme-color;
+$button-blue: $color-blue;
 $button-blue-active: #034381;
 
-$font-color: #636363;
+$font-color: #2e2b2e;
 $border-color: #c4c4c4;
 
 $color-step: #06cdbe;
-$back-ground-shallow-grey:#edeff2
+$back-ground-shallow-grey:#edeff2;
 
+
+$button-green: #06cdbe;
+$button-green-active: #05aea1;
+$color-deep-grey: #636363;
