@@ -17,8 +17,6 @@ module.exports = () => {
 		"btn-primary-color": "#2e2b2e",
 		"btn-primary-bg": "#ffc70d",
 		"text-color": "#2e2b2e",
-		"btn-danger-color": "#fff",
-		"btn-danger-bg": "#2e2b2e",
 		"form-item-margin-bottom": "10px",
 		"table-selected-row-bg": "#fffaee",
 		"table-row-hover-bg": "#fffaee",

@@ -111,19 +111,13 @@
     background: #122337;
 }
 %button{
-    padding: 10px 20px;
+    padding: 0px 15px;
     color: white !important;
     border-radius: 2px !important;
     display: inline-block;
     cursor: pointer;
 }
-.button_theme{
-  @extend %button;
-    background-color: $button-blue !important;
-    border-color: $button-blue !important;
-  border-radius: 2px !important;
 
-}
 .quit_modal{
    padding: 10px;
 }
@@ -134,10 +128,18 @@
     margin: 0px 10px;
   }
 }
+.button_theme{
+  @extend %button;
+    background-color: $theme-color !important;
+    border-color: $theme-color !important;
+    border-radius: 2px !important;
+}
 .button_theme:hover{
-    background-color: $button-blue-active !important;
-    border-color: $button-blue-active !important;
-    @extend %button;
+   box-shadow: 0 1px 5px $theme-color;
+}
+.button_theme:active{
+    background-color: #e2a20a !important;
+    border-color: #e2a20a !important;
 }
 .button_radius{
   @extend %button;
@@ -150,23 +152,29 @@
   border-radius: 30px  !important;
   background-color: $button-blue-active !important;
 }
-.button_green{
+.button_black{
     @extend %button;
-    background-color: $button-green !important;
-    border-color: $button-green !important;
+    background-color: $button-black !important;
+    border-color: $button-black !important;
 }
-.button_green:hover{
-    background-color: $button-green-active !important;
-    border-color: $button-green-active !important;
+.button_black:hover{
+    box-shadow: 0 1px 5px $button-black;
 }
-.button_orange{
+.button_black:active{
+    background-color: $button-black-active !important;
+    border-color: $button-black-active !important;
+}
+.button_blue{
     @extend %button;
     background-color: $button-orange !important;
     border-color: $button-orange !important;
 }
-.button_orange:hover{
-    background-color: $button-orange-active !important;
-    border-color: $button-orange-active !important;
+.button_blue:hover{
+    box-shadow: 0 1px 5px $button-blue;
+}
+.button_blue:active{
+    background-color: $button-blue-active !important;
+    border-color: $button-blue-active !important;
 }
 .upload{
   display: flex;

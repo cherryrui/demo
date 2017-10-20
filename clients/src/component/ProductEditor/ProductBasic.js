@@ -414,6 +414,8 @@ class ProductBasic extends React.Component {
                          </Button>
                     </FormItem>
                 </Form>
+                <Button type="primary">Primary</Button>
+                <Button type="danger">Danger</Button>
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
                 	<img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
             	</Modal>
