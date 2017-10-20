@@ -15,7 +15,7 @@ class TabBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 0,
+			current: this.props.current ? this.props.current : 0,
 		}
 
 	}

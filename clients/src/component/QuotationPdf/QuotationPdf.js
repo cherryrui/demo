@@ -37,14 +37,14 @@ class QuotationPdf extends React.Component {
                 <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
                 <div className={css.info}>
                     <p className={css.name}>{record.productName}</p>
-                    <p>
+                    {this.state.select.brand?<p>
                         <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>：
-                        {locale=="en"?record.brandNameEn:record.brandNameCn}
-                    </p>
-                    {this.props.hiddenMoq?"":<p>
+                        {locale=="en"?record.productBrand.brandNameEn:record.productBrand.brandNameCn}
+                    </p>:""}
+                    <p>
                         <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
-                        ：{record.moq}
-                    </p>}
+                        ：{record.minBuyQuantity}
+                    </p>
                     <p>
                         <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
                         ：{record.productNo}</p>
@@ -69,7 +69,6 @@ class QuotationPdf extends React.Component {
             dataIndex: 'salePrice',
             key: 'salePrice',
             render: (text) => <span className={css.table_price}>${text}</span>
-
         }];
 
     }
@@ -109,6 +108,7 @@ class QuotationPdf extends React.Component {
                 let quotation = res.data.result;
                 quotation.productList.map(item => {
                     item.coverUrl = item.productUrl;
+                    item.productBrand = JSON.parse(item.productBrand);
                 })
                 this.setState({
                     quotation: quotation,
@@ -157,8 +157,7 @@ class QuotationPdf extends React.Component {
             <div className={css.quotation_pdf} id="content">
                 <div className={css.title}>
                     <p className={css.logo}>
-                        {this.state.quotation.quotationOrder && this.state.quotation.quotationOrder.logo?"LOGO":""}
-                    LOGO
+                        {this.state.select.logo?"LOGO":""}
                     </p>
                     <div>
                         <p className={css.title_item}>
@@ -334,5 +333,4 @@ class QuotationPdf extends React.Component {
 		</div>
     }
 }
-
 export default QuotationPdf;

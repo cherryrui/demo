@@ -74,7 +74,6 @@ class BrandDetail extends React.Component {
 			sortType: this.state.sortType,
 			orderType: this.state.orderType
 		}
-		console.log(params)
 		axios.post('/product/get-brand-product.json', params).then(res => {
 			console.log(res.data)
 			this.setState({
@@ -82,6 +81,7 @@ class BrandDetail extends React.Component {
 				total: res.data.result.allRow,
 				totalPage: res.data.result.totalPage
 			})
+			this.brand_detail.scrollIntoView(true);
 		})
 
 	}

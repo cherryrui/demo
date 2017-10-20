@@ -114,6 +114,7 @@ class ProductList extends React.Component {
                     reason: res.data.message
                 }));
             }
+            this.product_list.scrollIntoView();
         })
 
     }

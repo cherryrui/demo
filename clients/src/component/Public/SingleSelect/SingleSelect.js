@@ -35,7 +35,6 @@ class SingleSelect extends React.Component {
     componentDidUpdate() {
         if (this.length != this.props.data.length) {
             this.length = this.props.data.length;
-            /*console.log(this.length, this.props.data.length)*/
             this.getShowIndex();
         }
     }

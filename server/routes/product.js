@@ -171,44 +171,21 @@ router.get('/get-category.json', async(ctx, next) => {
 
 		ctx.body = result
 	})
-	.get('/get-favorite-product.json', async(ctx, next) => {
-		let products = [],
-			total = 99;
-		products = [{
-			id: 1,
-			name: "a撒大声地萨达大大大打算打打大萨达萨达奥术大师的撒旦是 第三个发的滚动个地方股份第三个",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 2,
-			name: "dsds",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 3,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 4,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 5,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, {
-			id: 6,
-			name: "NSK deep groove ball bearing 6204 zzc3 BH NS7S6",
-			price: 2132,
-			img: '../img/product.jpg'
-		}, ];
-		ctx.body = {
-			products: products,
-			total: total
+	.post('/get-favorite-product.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/collect/queryCollectProductList", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
 		}
+		ctx.body = result;
 	})
 	.post('/save-product-basic.json', async(ctx, next) => {
 		ctx.body = {

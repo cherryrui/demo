@@ -51,7 +51,7 @@ class PersonAddress extends React.Component {
             title: "cart.address.title",
             address: {},
             telCode: [],
-            citys:'',
+            citys: '',
         };
         this.select_address = [];
         this.formatMessage = this.props.intl.formatMessage;
@@ -101,10 +101,16 @@ class PersonAddress extends React.Component {
     }
     getAddressList = () => {
         axios.get('/user/get-address-list.json').then(res => {
-            this.setState({
-                address_list: res.data.result,
-                select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
-            })
+            if (res.data.isSucc) {
+                this.setState({
+                    address_list: res.data.result,
+                    select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
+                })
+            } else if (res.data.code == 104) {
+                this.props.handleVisible ? this.props.handleVisible(true) : "";
+            } else {
+                message.error(res.data.message);
+            }
         })
     }
     componentWillMount() {
@@ -157,7 +163,7 @@ class PersonAddress extends React.Component {
         this.select_address = [];
         this.setState({
             address: addr,
-            citys:address.city,
+            citys: address.city,
             title: title,
             visible: true,
         }, () => {
@@ -176,6 +182,7 @@ class PersonAddress extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            console.log(err, values);
             if (!err) {
                 this.setState({
                     loading: true
@@ -210,7 +217,6 @@ class PersonAddress extends React.Component {
                 })
                 if (this.state.address.addressId) {
                     param.addressId = this.state.address.addressId;
-                    console.log(param)
                     axios.post('/user/update-address.json', param).then(res => {
                         console.log(res.data)
                         if (res.data.isSucc) {
@@ -219,9 +225,11 @@ class PersonAddress extends React.Component {
                                 visible: false,
                             })
                             this.getAddressList();
-                        }else{
+                        } else if (res.data.code == 104) {
+                            this.props.handleVisible ? this.props.handleVisible() : "";
+                        } else {
                             message.error({
-                                reason:res.data.messgae
+                                reason: res.data.messgae
                             })
                         }
 
@@ -236,9 +244,11 @@ class PersonAddress extends React.Component {
                                 visible: false,
                             });
                             this.getAddressList();
-                        }else{
+                        } else if (res.data.code == 104) {
+                            this.props.handleVisible ? this.props.handleVisible() : "";
+                        } else {
                             message.error({
-                                reason:res.data.messgae
+                                reason: res.data.messgae
                             })
                         }
                     })
@@ -255,6 +265,8 @@ class PersonAddress extends React.Component {
             console.log(res.data)
             if (res.data.isSucc) {
                 this.getAddressList();
+            } else if (res.data.code == 104) {
+                this.props.handleVisible ? this.props.handleVisible() : "";
             } else {
                 message.error({
                     reason: res.data.message
@@ -271,7 +283,6 @@ class PersonAddress extends React.Component {
             address: {},
         })
     }
-
     render() {
         const {
             getFieldDecorator
@@ -309,14 +320,11 @@ class PersonAddress extends React.Component {
 
         const prefixSelector = getFieldDecorator('phoneDcId', {
             rules: [{
-                required: true,
-                message: this.formatMessage({
-                    id: 'cart.address.name'
-                })
+                validator: this.checkPhone
             }],
-            initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : null,
+            initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : this.state.telCode.length > 0 ? this.state.telCode[0].id : "",
         })(
-            <Select style={{ width: 60 }}>
+            <Select style={{ width: 100 }}>
             {this.state.telCode.map(item=>{
                 return <Option value={item.id}>{item.districtCode}</Option>
             })}

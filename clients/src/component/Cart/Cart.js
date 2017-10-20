@@ -11,6 +11,7 @@ import CartList from './CartList.js';
 import ConfirmOrder from './ConfirmOrder.js';
 import PayOrder from './PayOrder.js';
 import OrderSuccess from './OrderSuccess.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js'
 import {
     Link
 } from 'react-router';
@@ -34,7 +35,9 @@ class Cart extends React.Component {
         this.state = {
             products: [],
             step: 0,
-            order: {}
+            order: {},
+            visible: false,
+            reload: false,
         }
 
     }
@@ -93,6 +96,17 @@ class Cart extends React.Component {
     goLink = (url) => {
         this.props.history.pushState(null, url);
     }
+    handleVisible = (status) => {
+        this.setState({
+            visible: true,
+            reload: status == true ? true : false
+        })
+    }
+    handleCancel = () => {
+        this.setState({
+            visible: false
+        })
+    }
 
     render() {
         return <div className={appcss.body} ref={(cart)=>this.cart=cart}>
@@ -115,15 +129,21 @@ class Cart extends React.Component {
             </div>
             {this.state.step==0?<CartList
                 goLink={this.goLink}
+                handleVisible={this.handleVisible}
                 handleStep={this.handleStep}/>
                 :this.state.step==1?<ConfirmOrder
+                    handleVisible={this.handleVisible}
                     products={this.state.products}
                     handleStep={this.handleStep}
                 />
-                :this.state.step==2?<PayOrder handleStep={this.handleStep} order={this.state.order}/>
+                :this.state.step==2?<PayOrder 
+                    handleStep={this.handleStep} 
+                    handleVisible={this.handleVisible}
+                    order={this.state.order}/>
                 :this.state.step==3?<OrderSuccess handleStep={this.handleStep} 
                     goLink={this.goLink} order={this.state.order}/>
                 :""}
+            <LoginModal visible={this.state.visible} reload={this.state.reload} closeModal={this.handleCancel}/>
         </div>
     }
 }

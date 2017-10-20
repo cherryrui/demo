@@ -116,16 +116,24 @@ class OrderDetails extends React.Component {
                     item.productSpecification = JSON.parse(item.productSpecification)
                 })
                 let stageList = res.data.result.OrderPaymentStageList;
-                let flag = true;
+                let flag = true,
+                    total_interst = 0,
+                    total = 0;
                 stageList.map(item => {
                     if (item.payStatus == 1 && flag) {
                         item.payStatus = 0; //当前应付款
                         flag = false;
                     }
+                    total_interst += item.interest;
                 })
+                let order = res.data.result.order;
+                total = order.totalMoney + total_interst;
+                order.total_interst = total_interst.toFixed(2);
+                order.grand_total = (total + (this.state.order.postage ? parseFloat(this.state.order.postage) : 0)).toFixed(2);
+
                 this.setState({
                     stageList: stageList,
-                    order: res.data.result.order,
+                    order: order,
                     product: product
                 })
             } else {
@@ -154,6 +162,7 @@ class OrderDetails extends React.Component {
         })
     }
     render() {
+        console.log(this.state.order);
         return <div className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
@@ -236,8 +245,12 @@ class OrderDetails extends React.Component {
                     <p >$&nbsp;{this.state.order.postage?this.state.order.postage:0}</p>
                 </div>
                 <div>
+                    <FormattedMessage id="orderdetails.interest" defaultMessage="邮费"/>:
+                    <p >$&nbsp;{this.state.order.total_interst}</p>
+                </div>
+                <div>
                     <FormattedMessage id="cart.grand" defaultMessage="总金额"/>:
-                    <p className={css.order_sum_orange}>$&nbsp;{this.state.order.totalMoney}</p>
+                    <p className={css.order_sum_orange}>$&nbsp;{this.state.order.grand_total}</p>
                 </div>
             </div>
             {this.state.stageList.length>0?this.state.stageList.map(item=>{

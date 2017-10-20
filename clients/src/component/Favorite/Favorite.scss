@@ -1,11 +1,70 @@
+@import '../../themes.scss';
 .data_list{
 	display: flex;
 	flex-wrap: wrap;
-    .data_item{
-      width: 24%;
-      margin: 10px 0.5%;
-      border: 1px solid #e9e9e9 !important;
+    %item{
+      margin: 20px 0px 20px 10px;
+      border: 1px solid $border-color !important;
+      span[class="ant-checkbox"]{
+        vertical-align: super;
+      }
     }
+    %item_right{
+      margin: 20px 0px;
+      @extend %item;
+    }
+    .data_item{
+      width: 200px;
+      @extend %item;
+    }
+    .data_item_right{
+      width: 200px;
+      @extend %item_right;
+    }
+    .brand_item{
+      width: 164px;
+      @extend %item;
+    }
+    .brand_item_right{
+      width: 164px;
+      @extend %item_right;
+    }
+}
+.select_category{
+  display: flex;
+  .select_title{
+    width: 100px;
+    background: $theme-color;
+    font-weight: bold;
+    flex-shrink: 0;
+    display: flex;
+    span{
+      display: block;
+      margin: auto;
+    }
+  }
+  .select_body{
+    display: flex;
+    border: 1px solid $border-color;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    max-height: 85px;
+    overflow: auto;
+  }
+  .select_item{
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .select_item:hover{
+    text-decoration: underline;
+    color: $theme-color;
+  }
+  .select_active{
+    @extend .select_item;
+    text-decoration: underline;
+    color: $theme-color;
+  }
 }
 .footer{
 	display: flex;

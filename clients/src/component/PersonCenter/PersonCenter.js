@@ -10,7 +10,6 @@ import operator from './operator.js';
 import Brand from '../Public/Brand/Brand.js';
 import Product from '../Public/Product/Product.js';
 import operator_order from '../OrderList/operator.js';
-import LoginModal from '../Public/LoginModal/LoginModal.js';
 import {
     FormattedMessage,
     injectIntl,
@@ -26,9 +25,6 @@ import {
     message
 } from 'antd';
 class PersonCenter extends React.Component {
-    jump = (e) => {
-        this.props.history.pushState(null, "page/mine/system-message")
-    }
     constructor(props) {
         super(props);
         this.state = {
@@ -49,60 +45,64 @@ class PersonCenter extends React.Component {
     componentWillMount() {
         if (sessionStorage.user) {
             this.state.user = JSON.parse(sessionStorage.user);
-            let orderList = JSON.parse(JSON.stringify(operator_order.order_status)),
-                demandList = JSON.parse(JSON.stringify(operator.demand_menu)),
-                collectList = JSON.parse(JSON.stringify(operator.favorite_menu));
-            axios.post('/user/get-center-num.json', {}).then(res => {
-                if (res.data.code == 104) {
-                    this.setState({
-                        visible: true
-                    })
-                } else if (res.data.isSucc) {
-                    let sum = 0;
-                    orderList.map(item => {
-                        res.data.order.map(order => {
-                            if (item.value == order.orderStatus) {
-                                item.count = order.total;
-                                sum += order.total;
-                            }
-                        })
-                    })
-                    orderList[0].count = sum;
-                    sum = 0;
-                    demandList.map(item => {
-                        res.data.demand.map(demand => {
-                            if (item.key == demand.demandStatus) {
-                                sum += demand.total;
-                                item.count = demand.total;
-                            }
-                        })
-                    })
-                    demandList[0].count = sum;
-                    sum = 0;
-                    collectList.map(item => {
-                        res.data.collect.map(demand => {
-                            if (item.key == demand.type) {
-                                sum += demand.total;
-                                item.count = demand.total;
-                            }
-                        })
-                    })
-                    collectList[0].count = sum;
-                    this.setState({
-                        orderList: orderList,
-                        demandList: demandList,
-                        collectList: collectList,
-                        brands: res.data.brand,
-                        products: res.data.product,
-                    })
-                } else {
-                    message.error(res.data.message);
-                }
-            });
-
+            this.getData();
         } else {
             this.props.history.pushState(null, 'login');
         }
+    }
+
+    jump = (e) => {
+        this.props.history.pushState(null, "page/mine/system-message")
+    }
+    getData = () => {
+        let orderList = JSON.parse(JSON.stringify(operator_order.order_status)),
+            demandList = JSON.parse(JSON.stringify(operator.demand_menu)),
+            collectList = JSON.parse(JSON.stringify(operator.favorite_menu));
+        axios.post('/user/get-center-num.json', {}).then(res => {
+            if (res.data.code == 104) {
+                this.props.handleVisible ? this.props.handleVisible(true) : "";
+            } else if (res.data.isSucc) {
+                let sum = 0;
+                orderList.map(item => {
+                    res.data.order.map(order => {
+                        if (item.value == order.orderStatus) {
+                            item.count = order.total;
+                            sum += order.total;
+                        }
+                    })
+                })
+                orderList[0].count = sum;
+                sum = 0;
+                demandList.map(item => {
+                    res.data.demand.map(demand => {
+                        if (item.key == demand.demandStatus) {
+                            sum += demand.total;
+                            item.count = demand.total;
+                        }
+                    })
+                })
+                demandList[0].count = sum;
+                sum = 0;
+                collectList.map(item => {
+                    res.data.collect.map(demand => {
+                        if (item.key == demand.type) {
+                            sum += demand.total;
+                            item.count = demand.total;
+                        }
+                    })
+                })
+                collectList[0].count = sum;
+                this.setState({
+                    orderList: orderList,
+                    demandList: demandList,
+                    collectList: collectList,
+                    brands: res.data.brand,
+                    products: res.data.product,
+                })
+            } else {
+                message.error(res.data.message);
+            }
+        });
     }
     handleMenu = (key, url) => {
         console.log(key, url);
@@ -112,13 +112,7 @@ class PersonCenter extends React.Component {
         if (url)
             this.props.history.pushState(null, url);
     }
-    handleCancel = () => {
-        this.setState({
-            visible: false
-        })
-    }
     handleChange = (name, page) => {
-        console.log(name, page);
         let param = {};
         param[name] = page;
         this.setState(param);
@@ -318,7 +312,6 @@ class PersonCenter extends React.Component {
                     </div>
                 </div>
             </div>
-            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/> 
         </div>
     }
 }

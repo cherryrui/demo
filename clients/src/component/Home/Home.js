@@ -267,7 +267,7 @@ class Home extends React.Component {
                         <p className={css.drop_icon}><Icon type="caret-up" /></p>
                         {this.state.categorys.map(item=>{
                             return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
-                            {item.categoryName}
+                            <img src={item.iconUrl+"@18w_18h_1e_1c.png"}/>{item.categoryName}
                             </p>
                         })}
                     </div>

@@ -17,10 +17,7 @@ import zh from 'react-intl/locale-data/zh.js';
 import enUS from 'antd/lib/locale-provider/en_US.js';
 import zh_message from '../locale/zh_message';
 import en_message from '../locale/en_message';
-import Main from './component/Main/Main.js';
-import Home from './component/Home/Home.js';
 
-import PersonCenter from './component/PersonCenter/PersonCenter.js';
 import CusModal from './component/Public/CusModal/CusModal.js';
 import orderAction from './action/orderAction.js';
 import operator from './component/OrderList/operator.js';
@@ -211,7 +208,31 @@ const QuotationPdf = (location, cb) => {
         cb(null, require('./component/QuotationPdf/QuotationPdf.js').default)
     }, 'quotationPdf')
 }
-
+const Requirements = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Requirement/Requirement.js').default)
+    }, 'requirements')
+}
+const AccountSecurity = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/AccountSecurity/AccountSecurity.js').default)
+    }, 'accountsecurity')
+}
+const Main = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Main/Main.js').default)
+    }, 'main')
+}
+const Home = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/Home/Home.js').default)
+    }, 'home')
+}
+const PersonCenter = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/PersonCenter/PersonCenter.js').default)
+    }, 'personcenter')
+}
 @connect(state => ({
     order: state.order
 }), orderAction)
@@ -302,7 +323,7 @@ class App extends React.Component {
         {orderStatus.map(item=>{
             return item.value>0?<Menu.Item>
                 <Badge count={item.count}>
-                    <Link to="page/mine/order-list" className="head-example">
+                    <Link to={"page/mine/order-list/"+item.value} className="head-example">
                         <FormattedMessage id={item.key} defaultMessage="订单状态"/>
                     </Link>
                 </Badge>
@@ -419,8 +440,8 @@ ReactDOM.render(
                 <Router history={hashHistory}>
                     <Route path="/" component={App}>
                         <IndexRedirect to="/page" />
-                        <Route path="page" component={Home}>
-                            <IndexRoute component={Main}/>
+                        <Route path="page" getComponent={Home}>
+                            <IndexRoute getComponent={Main}/>
                             <Route path="category-list/:id/:name" getComponent={CategoryList}/>
                             <Route path="brand-list" getComponent={BrandList}/>
                             <Route path="product-list/:info(/:name)" getComponent={ProductList}/>
@@ -435,10 +456,10 @@ ReactDOM.render(
                             <Route path="news" getComponent={News}/>
                             <Route path="order-details/:id" getComponent={OrderDetails}/>
                             <Route path="mine" getComponent={Mine}>
-                                <IndexRoute component={PersonCenter}/>
+                                <IndexRoute getComponent={PersonCenter}/>
                                 <Route path="message" getComponent={Message}/>
                                 <Route path="system-message" getComponent={SystemMessage}/>
-                                <Route path="order-list" getComponent={OrderList}/>
+                                <Route path="order-list(/:type)" getComponent={OrderList}/>
                                 <Route path="favorite/:type" getComponent={Favorite}/>
                                 <Route path="quotation-list" getComponent={QuotationList}/>
                                 <Route path="product-editor" getComponent={ProductEditor}/>
@@ -449,6 +470,8 @@ ReactDOM.render(
                                 <Route path="successful-application/:type" getComponent={SuccessfulApplication}/>
                                 <Route path="supplier" getComponent={Supplier}/>
                                 <Route path="certification" getComponent={Certification}/>
+                                <Route path="account" getComponent={AccountSecurity}/>
+                                <Route path="requirement" getComponent={Requirements}/>
                             </Route>
                         </Route>
                         <Route path="login" getComponent={Login}/>

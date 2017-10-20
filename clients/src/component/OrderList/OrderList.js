@@ -26,7 +26,6 @@ import {
     intlShape
 } from 'react-intl';
 const Search = Input.Search;
-import LoginModal from '../Public/LoginModal/LoginModal.js';
 import TabBar from '../Public/TabBar/TabBar.js';
 
 class OrderList extends React.Component {
@@ -41,7 +40,7 @@ class OrderList extends React.Component {
             pageNo: 1, //当前页码
             pageSize: 10, //每页数量
             visible: false,
-            current: 0,
+            current: this.props.params.type && !isNaN(this.props.params.type) ? Number(this.props.params.type) : 0,
             order_status: operator.order_status,
         };
         this.formatMessage = this.props.intl.formatMessage;
@@ -116,20 +115,6 @@ class OrderList extends React.Component {
     handleClick = (record) => {
         this.props.history.pushState(null, "page/cart/2/" + record.orderId)
     }
-
-    goTop = () => {
-        //设置定时器
-        let timer = setInterval(() => {
-            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
-            var speed = Math.floor(-osTop / 6); //速度随距离动态变化，越来越小
-            document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
-            let isTop = true;
-            if (osTop == 0) {
-                clearInterval(timer); //回到顶部时关闭定时器
-            }
-        }, 30)
-    }
-
     componentWillMount() {
         this.searchOrder();
         axios.post('/order/get-order-status-num.json', {}).then(res => {
@@ -169,11 +154,9 @@ class OrderList extends React.Component {
         }
         axios.post('/order/get-user-order.json', param).then(res => {
             if (res.data.code == 104) {
-                this.setState({
-                    visible: true
-                })
+                this.props.handleVisible ? this.props.handleVisible(true) : "";
             } else if (res.data.isSucc) {
-                this.goTop();
+                this.props.goTop();
                 this.setState({
                     orders: res.data.result.list,
                     total: res.data.result.allRow,
@@ -249,7 +232,6 @@ class OrderList extends React.Component {
                     current={this.state.pageNo}
                     total={this.state.total} />
             </div>
-            <LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>  
         </div>
     }
 }

@@ -8,6 +8,7 @@ import axios from 'axios';
 import Product from '../Public/Product/Product.js';
 import Brand from '../Public/Brand/Brand.js';
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -30,51 +31,70 @@ class Favorite extends React.Component {
 		super(props);
 		this.state = {
 			category: [],
-			category_id: 0,
+			cid: 0,
 			select_data: [],
 			data: [],
-			total: 50,
-			current: 1,
+			total: 0,
+			pageNo: 1,
+			pageSize: 12,
 			indeterminate: false,
-			type: this.props.params.type, //1：收藏商品，2：收藏供应商
-
 		}
+		this.type = Number(this.props.params.type); //1：收藏商品，2：收藏供应商
 	}
 	componentWillMount() {
-		axios.get('/category/get-favorite-category.json').then(res => {
-			this.setState({
-				category: res.data.category
-			})
+		this.initPage();
+	}
+	componentWillReceiveProps(nextProps) {
+		if (Number(nextProps.params.type) !== this.type) {
+			this.type = Number(nextProps.params.type);
+			this.initPage();
+		}
+	}
+	initPage = () => {
+		axios.post('/category/get-favorite-category.json', {
+			type: this.type
+		}).then(res => {
+			if (res.data.isSucc) {
+				this.setState({
+					category: res.data.result
+				})
+			} else if (res.data.code == 104) {
+				console.log("code == 10400", this.props.handleVisible);
+				this.props.handleVisible ? this.props.handleVisible(true) : "";
+			} else {
+				message.error(res.data.message);
+			}
 		})
 		this.getData();
 	}
 	getData() {
-		if (this.state.type == 1) {
-			this.getProducts();
-		} else {
-			this.getBrands();
+		let param = {
+			categoryId: this.state.cid ? this.state.cid : 0,
+			pageSize: this.state.pageSize,
+			pageNo: this.state.pageNo,
 		}
-	}
-	getProducts = () => {
-		axios.get(`/product/get-favorite-product.json?cid=
-			${this.state.category_id}&page=${this.state.current}`).then(res => {
-			this.setState({
-				data: res.data.products,
-				total: res.data.total
-			})
+		let url = "";
+		if (this.type == 1) {
+			url = '/product/get-favorite-product.json';
+		} else {
+			url = "/brand/get-favorite-brand.json";
+		}
+		axios.post(url, param).then(res => {
+			if (res.data.isSucc) {
+				this.setState({
+					data: res.data.result.list,
+					total: res.data.result.allRow
+				})
+			} else if (res.data.code == 104) {
+				this.props.handleVisible ? this.props.handleVisible(true) : "";
+			} else {
+				message.error(res.data.message);
+			}
 		})
-	}
-	getBrands = () => {
-		axios.get(`/brand/get-favorite-brand.json?cid=
-			${this.state.category_id}&page=${this.state.current}`).then(res => {
-			this.setState({
-				data: res.data.brand,
-				total: res.data.total
-			})
-		})
+		this.props.goTop();
 	}
 	onSelect = (key) => {
-		this.state.category_id = key.id;
+		this.state.cid = key;
 		this.getData();
 	}
 	handleCheck = (key) => {
@@ -136,13 +156,15 @@ class Favorite extends React.Component {
 			indeterminate: false
 		})
 	}
-	handlePage = (page, pageSize) => {
-		this.state.current = page;
+	handleChangePage = (page, pageSize) => {
+		this.state.pageNo = pageNo;
+		this.state.pageSize = pageSize;
 		this.getData();
 	}
 
 
 	render() {
+		console.log(this.state.total);
 		const {
 			intl: {
 				formatMessage
@@ -151,26 +173,31 @@ class Favorite extends React.Component {
 
 		return <div>
 			 <div className={basecss.child_title}>
-                <FormattedMessage id={this.state.type==1?"mine.favorite.product":"mine.favorite.brand"} 
+                <FormattedMessage id={this.type==1?"mine.favorite.product":"mine.favorite.brand"} 
                 defaultMessage="分类"/>
             </div>
-            {this.state.category.length>0?<SingleSelect
-                all
-                data={this.state.category}
-                onSelect={this.onSelect.bind(this)}
-                title={<FormattedMessage id="app.category" defaultMessage="所有分类"/>}
-            />:""}
+            {this.state.category.length>0?<div className={css.select_category}>
+            	<div className={css.select_title}>
+            		<FormattedMessage id="app.category" defaultMessage=""/>
+            	</div>
+            	<div className={css.select_body}>
+            		{this.state.category.map(item=>{
+            			return <p className={this.state.cid==item.categoryId?css.select_active:css.select_item} onClick={this.onSelect.bind(this,item.categoryId)}>{item.categoryName}{item.total>0?"("+item.total+")":""}</p>
+            		})}
+            	</div>
+            </div>:""}
             <div className={css.data_list}>
-	            {this.state.data.map(item=>{
-	            	return this.state.type==1?<Product 
+	            {this.state.data.map((item,index)=>{
+	            	return this.type==1?<Product 
 	            		product={item} 
-	            		className={css.data_item} 
+	            		className={(index+1)%4==0?css.data_item_right:css.data_item} 
 	            		check
 	            		onCheck={this.handleCheck}
 	            		/>
 	            		:<Brand brand={item} 
-	            			className={css.data_item} 
+	            			className={(index+1)%4==0?css.brand_item_right:css.brand_item} 
 	            			check
+	            			showStar
 	            			onCheck={this.handleCheck}
 	            		/>
 	            })}
@@ -184,8 +211,8 @@ class Favorite extends React.Component {
                         <Icon type="delete" onClick={this.deleteData} />
                     </Tooltip> 
                 </p>
-                <Pagination defaultCurrent={1} total={this.state.total} onChange={this.handlePage} />
-            </div>
+                <CusPagination onChange={this.handleChangePage} total={this.state.total} onShowSizeChange={this.handleChangePage} />
+        	</div>
 		</div>
 
 	}

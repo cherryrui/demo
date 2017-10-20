@@ -188,7 +188,7 @@ class Quotation extends React.Component {
 					item[name] = (parseFloat(item[name]) + value) > 0 ? parseFloat(item[name]) + value : 0;
 				}
 			}
-			item.productNum = item.productNum > 1 ? item.productNum : 1;
+			item.productNum = item.productNum > item.moq ? item.productNum : item.moq;
 			sum += item.salePrice * item.productNum;
 			num += item.productNum;
 			profit += (item.salePrice - item.priceSupplier) * item.productNum;

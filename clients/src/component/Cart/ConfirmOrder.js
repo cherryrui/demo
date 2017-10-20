@@ -71,6 +71,7 @@ class ConfirmOrder extends React.Component {
             title: "cart.address.title", //地址信息模态框title
             loading: false, //正在提交订单
             telCode: [],
+            logo_visible: false,
         };
         this.user = JSON.parse(sessionStorage.user);
         this.select_address = [];
@@ -115,7 +116,6 @@ class ConfirmOrder extends React.Component {
         this.getAddressList();
         let sum = 0,
             order = this.state.order;
-        console.log(this.props.products);
         this.props.products.map(item => {
             sum += item.price * item.productNum;
         })
@@ -125,7 +125,6 @@ class ConfirmOrder extends React.Component {
         order.sum = order.sum.toFixed(2);
         order.total = order.total.toFixed(2);
         axios.get('/user/get-city-by-parent.json').then(res => {
-            console.log('get-city-parent:', JSON.parse(res.data.address.result));
             let address = this.convertData(JSON.parse(res.data.address.result));
             console.log(address);
             this.setState({
@@ -134,7 +133,6 @@ class ConfirmOrder extends React.Component {
             })
         })
         axios.get('/order/get-pay-mode.json').then(res => {
-            console.log(137, res.data)
             this.setState({
                 pay_mode_list: res.data.result
             })
@@ -252,8 +250,9 @@ class ConfirmOrder extends React.Component {
                     loading: false,
                 })
                 if (res.value.data.isSucc) {
-                    sessionStorage.removeItem("products");
                     this.props.handleStep ? this.props.handleStep(1, res.value.data.order) : '';
+                } else if (res.data.code == 104) {
+                    this.props.handleVisible ? this.props.handleVisible() : "";
                 } else {
                     message.error(res.value.data.message);
                 }
@@ -297,10 +296,16 @@ class ConfirmOrder extends React.Component {
     getAddressList = () => {
         console.log("get-address-list.json")
         axios.get('/user/get-address-list.json').then(res => {
-            this.setState({
-                address_list: res.data.result,
-                select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
-            })
+            if (res.data.isSucc) {
+                this.setState({
+                    address_list: res.data.result,
+                    select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
+                })
+            } else if (res.data.code == 104) {
+                this.props.handleVisible ? this.props.handleVisible(true) : "";
+            } else {
+                message.error(res.data.message);
+            }
         })
     }
     handleAddress = (key) => {
@@ -360,19 +365,40 @@ class ConfirmOrder extends React.Component {
                                 visible: false,
                             })
                             this.getAddressList();
+                        } else if (res.data.code == 104) {
+                            this.setState({
+                                loading: false,
+                                visible: false,
+                            })
+                            this.props.handleVisible ? this.props.handleVisible() : "";
+                        } else {
+                            this.setState({
+                                loading: false,
+                            })
+                            message.error(res.data.message);
                         }
 
                     })
 
                 } else {
                     axios.post('/user/add-user-address.json', param).then(res => {
-                        console.log('add-useraddress:', res.data);
                         if (res.data.isSucc) {
                             this.setState({
                                 loading: false,
                                 visible: false,
-                            });
+                            })
                             this.getAddressList();
+                        } else if (res.data.code == 104) {
+                            this.setState({
+                                loading: false,
+                                visible: false,
+                            })
+                            this.props.handleVisible ? this.props.handleVisible() : "";
+                        } else {
+                            this.setState({
+                                loading: false,
+                            })
+                            message.error(res.data.message);
                         }
                     })
                 }
@@ -404,7 +430,7 @@ class ConfirmOrder extends React.Component {
             },
         };
         const prefixSelector = getFieldDecorator('phoneDcId', {
-            initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : null,
+            initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : this.state.telCode.length > 0 ? this.state.telCode[0].id : "",
         })(
             <Select style={{ width: 60 }}>
             {this.state.telCode.map(item=>{
@@ -535,7 +561,7 @@ class ConfirmOrder extends React.Component {
                 </div>
                 <div>
                     <FormattedMessage id="cart.grand" defaultMessage="总金额"/>:
-                    <p className={css.order_sum_orange}>$&nbsp;{this.state.order.total}</p>
+                    <p className={css.order_sum_orange}>$&nbsp;{(parseFloat(this.state.order.total)+(this.state.order.postage?parseFloat(this.state.order.postage):0)+(this.state.order.sum_interest?parseFloat(this.state.order.sum_interest):0)).toFixed(2)}</p>
                 </div>
             </div>
             <div className={css.order_footer}>
@@ -557,7 +583,7 @@ class ConfirmOrder extends React.Component {
             <CusModal width="650"
                 title={this.formatMessage({id: this.state.title})}
                 visible={this.state.visible}
-                closeModal={this.handleCancel}
+                closeModal={this.handleCancel.bind(this,"visible")}
             >
                 <Form className={css.modify_address} onSubmit={this.handleSubmit}>
                     <FormItem

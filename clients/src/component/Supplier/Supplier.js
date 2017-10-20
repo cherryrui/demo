@@ -6,7 +6,6 @@ import React from 'react';
 import css from './Supplier.scss';
 import appcss from '../../App.scss';
 import Util from '../../Util.js';
-import LoginModal from '../Public/LoginModal/LoginModal.js';
 import CusModal from '../Public/CusModal/CusModal.js';
 import {
     Link
@@ -228,9 +227,7 @@ class Supplier extends React.Component {
                     values.businessLicenseB = this.img_back;
                     axios.post('/user/become-supplier.json', values).then(res => {
                         if (res.data.code == 104) {
-                            this.setState({
-                                visible: true
-                            })
+                            this.props.handleVisible ? this.props.handleVisible() : "";
                         } else if (res.data.isSucc) {
                             let user = JSON.parse(sessionStorage.user);
                             user.supplier = {};
@@ -654,7 +651,6 @@ class Supplier extends React.Component {
         <CusModal visible={this.state.previewVisble} closeModal={this.handleCancel.bind(this,"previewVisble")}>
             <img alt="example" style={{ width: '100%' }} src={this.state.previewImg+ "@380w_380h_1e_1c.png"}/>
         </CusModal>
-        <LoginModal visible={this.state.visible} closeModal={this.handleCancel.bind(this,"visible")}/> 
     </div>
     }
 }

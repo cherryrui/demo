@@ -133,6 +133,11 @@
       height: 40px;
       display: flex;
       align-items: center;
+      img{
+        width: 18px;
+        height: 18px;
+        margin-right: 20px;
+      }
     }
     .drop_item:hover{
       background: #122337;

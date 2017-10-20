@@ -126,16 +126,14 @@ class CartList extends React.Component {
                     data: res.data.result.list,
                     loading: false
                 })
+            } else if (res.data.code == 104) {
+                this.props.handleVisible ? this.props.handleVisible(true) : "";
             } else {
-                if (res.data.code == 104) {
-                    this.props.goLink("/login");
-                } else {
-                    message.error(this.formatMessage({
-                        id: "request.fail"
-                    }, {
-                        reason: res.data.message
-                    }))
-                }
+                message.error(this.formatMessage({
+                    id: "request.fail"
+                }, {
+                    reason: res.data.message
+                }))
             }
         })
     }
@@ -224,7 +222,6 @@ class CartList extends React.Component {
                 })
             })
             this.props.handleStep ? this.props.handleStep(1, products) : "";
-
         } else {
             message.warning(this.formatMessage({
                 id: 'cart.select.product'
@@ -306,6 +303,8 @@ class CartList extends React.Component {
                     })
                 )
 
+            } else if (res.value.data.code == 104) {
+                this.props.handleVisible ? this.props.handleVisible() : "";
             } else {
                 message.error(this.formatMessage({
                     id: "request.fail"
@@ -378,8 +377,6 @@ class CartList extends React.Component {
                 formatMessage
             }
         } = this.props;
-
-
         return <div className={css.cart_list}>
             <Table
                 rowSelection={{

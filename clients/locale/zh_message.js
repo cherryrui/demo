@@ -161,6 +161,7 @@ const zh_CN = {
     "cart.address.city": "请输入送达城市",
     "cart.address.address": "请输入送达详细地址",
     "cart.address.tel": "请输入收货人联系电话",
+    "cart.address.tel.code": "请输入电话区号",
     "cart.address.default": "设置为默认地址",
     "cart.see.order": "查看",
     "cart.pay.way": "请选择支付方式",

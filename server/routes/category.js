@@ -3,7 +3,7 @@ const axios = require('axios');
 const {
 	url,
 } = require('../config/index');
-
+var querystring = require('querystring');
 /**
  * 获取所有一级分类
  * type: 0:所有分类，1：所有一级分类，2：某级分类的所有下级分类
@@ -40,36 +40,33 @@ router.get('/get-category.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
-	.get('/get-favorite-category.json', async(ctx, next) => {
-		let category = [];
-		category = [{
-			id: 1,
-			name: "Category name"
-		}, {
-			id: 2,
-			name: "Category name"
-		}, {
-			id: 3,
-			name: "Category name"
-		}, {
-			id: 4,
-			name: "Category name"
-		}, {
-			id: 5,
-			name: "Category name"
-		}, {
-			id: 6,
-			name: "Category name"
-		}, {
-			id: 7,
-			name: "Category name"
-		}, {
-			id: 8,
-			name: "Category name"
-		}, ]
-		ctx.body = {
-			category: category
+	/**
+	 * 获取收藏的分类，1：产品，2：供应商
+	 * @param  {[type]} '/get-favorite-category.json' [description]
+	 * @param  {[type]} async(ctx,                    next          [description]
+	 * @return {[type]}                               [description]
+	 */
+	.post('/get-favorite-category.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			let uri = url;
+			if (param.type == 1) {
+				uri += "/auth/collect/queryCollectProductCategoryTotal";
+			} else {
+				uri += "/auth/collect/queryCollectSupplierCategoryTotal";
+			}
+			await axios.post(uri, querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
 		}
+		ctx.body = result;
 	})
 	.get('/get-agent-category.json', async(ctx, next) => {
 		let result = null;

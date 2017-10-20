@@ -78,7 +78,7 @@ class BrandList extends React.Component {
                     totalPage: res.data.result.totalPage
                 })
             }
-
+            this.brand_list.scrollIntoView();
         })
     }
     componentDidMount() {

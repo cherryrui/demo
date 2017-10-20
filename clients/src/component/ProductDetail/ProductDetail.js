@@ -211,7 +211,17 @@ class ProductDetail extends React.Component {
                     this.specify.style.border = "none";
                     this.specify.style.padding = "0";
                     this.props.addCart(param).then(res => {
-                        message.success("成功加入购物车")
+                        if (res.value.data.isSucc) {
+                            message.success(this.formatMessage({
+                                id: "add.cart.success"
+                            }))
+                        } else if (res.value.data.code == 104) {
+                            this.setState({
+                                visible: true,
+                            })
+                        } else {
+                            message.error(res.data.message);
+                        }
                     });
                 }
             } else {

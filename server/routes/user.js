@@ -265,12 +265,11 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.post('/updateUser.json',async (ctx)=>{
+	.post('/updateUser.json', async(ctx) => {
 		let result,
-		    param = ctx.request.body;
-		    console.log(param)
+			param = ctx.request.body;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-		await axios.post(url+'/auth/user/updateUser',querystring.stringify(param)).then(res=>{
+		await axios.post(url + '/auth/user/updateUser', querystring.stringify(param)).then(res => {
 			result = res.data;
 			console.log(result)
 		})

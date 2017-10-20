@@ -17,11 +17,11 @@ export default {
         }, {
             key: 1003,
             title: "mine.person.requirement",
-            url: "/page/mine/person-data"
+            url: "/page/mine/requirement"
         }, {
             key: 1004,
             title: "mine.person.account",
-            url: "/page/mine/person-data"
+            url: "/page/mine/account"
         }, ]
     }, {
         name: "mine.product.management",

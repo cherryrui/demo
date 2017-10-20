@@ -60,6 +60,8 @@ class PayOrder extends React.Component {
             axios.post('/order/pay-order.json', param).then(res => {
                 if (res.data.isSucc) {
                     this.props.handleStep ? this.props.handleStep(1) : "";
+                } else if (res.data.code == 104) {
+                    this.props.handleVisible ? this.props.handleVisible() : "";
                 } else {
                     message.error(res.data.message)
                 }
@@ -106,11 +108,6 @@ class PayOrder extends React.Component {
             </div>
 
             <div className={css.pay_footer}>
-        {
-            /*<Button size="large" type="primary" onClick={this.handleBacks} className={css.button_before}>
-                                <FormattedMessage id="app.before" defaultMessage="支付"/>
-                            </Button>*/
-        }
                 <Button size="large" type="primary" onClick={this.handlePay} className={css.button_pay}>
                     <FormattedMessage id="cart.pay" defaultMessage="支付"/>
                 </Button>

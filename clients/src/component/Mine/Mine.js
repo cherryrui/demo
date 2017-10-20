@@ -6,6 +6,7 @@ import appcss from '../../App.scss';
 import css from './Mine.scss';
 import axios from 'axios';
 import operator from './operator.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js'
 import {
     Link
 } from 'react-router';
@@ -28,6 +29,8 @@ class Mine extends React.Component {
         this.state = {
             user: sessionStorage.user ? JSON.parse(sessionStorage.user) : "",
             select: 0,
+            visible: false,
+            reload: false,
         }
     }
     componentWillMount() {
@@ -36,6 +39,18 @@ class Mine extends React.Component {
             this.props.history.pushState(null, '/login');
         }
         this.getPremiss();
+    }
+    goTop = () => {
+        //设置定时器
+        let timer = setInterval(() => {
+            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var speed = Math.floor(-osTop / 6); //速度随距离动态变化，越来越小
+            document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
+            let isTop = true;
+            if (osTop == 0) {
+                clearInterval(timer); //回到顶部时关闭定时器
+            }
+        }, 30)
     }
     getPremiss = () => {
         let path = this.props.location.pathname;
@@ -73,6 +88,17 @@ class Mine extends React.Component {
         if (url)
             this.props.history.pushState(null, url);
     }
+    handleVisible = (status) => {
+        this.setState({
+            visible: true,
+            reload: status == true ? true : false
+        })
+    }
+    handleCancel = () => {
+        this.setState({
+            visible: false
+        })
+    }
 
     render() {
         return <div className={`${appcss.body} ${css.body}`}>
@@ -97,8 +123,11 @@ class Mine extends React.Component {
             })}
             </div>
             <div className={css.content}>
-            {this.state.user ? this.props.children : ''}
+                {this.state.user ? this.props.children && React.cloneElement(this.props.children, {handleVisible: this.handleVisible.bind(this),
+                    goTop:this.goTop.bind(this), 
+                    user: this.state.user}) : ''}
             </div>
+            <LoginModal visible={this.state.visible} reload={this.state.reload} closeModal={this.handleCancel}/>
         </div>
     }
 }
