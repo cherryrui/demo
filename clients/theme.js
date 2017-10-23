@@ -22,6 +22,8 @@ module.exports = () => {
 		"table-row-hover-bg": "#fffaee",
 		"table-padding-vertical": "10px",
 		"table-padding-horizontal": "10px",
-		"rate-star-color": "#ffc70d"
+		"rate-star-color": "#ffc70d",
+		"border-color-base": "#c4c4c4"
+		"border-color-split": "#c4c4c4"
 	}
 };

@@ -66,7 +66,7 @@ class ProductEditor extends React.Component {
 
 
 	render() {
-		return <div ref={(product_edit)=>{this.product_edit = product_edit}}>
+		return <div ref={(product_edit)=>{this.product_edit = product_edit}} className={appcss.body}>
 			<div className={basecss.child_title}>
 				<FormattedMessage id="mine.product.upload" defaultMessage="上传产品"/> 
 			</div>

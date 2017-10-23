@@ -364,7 +364,7 @@ class App extends React.Component {
                     </div>
                     {
                         this.props.children && React.cloneElement(this.props.children)
-                    }               
+                    }             
                     <div className={css.footer}>
                         <div className={css.footer_first}>
                             <div className={css.foot}>
@@ -462,7 +462,6 @@ ReactDOM.render(
                                 <Route path="order-list(/:type)" getComponent={OrderList}/>
                                 <Route path="favorite/:type" getComponent={Favorite}/>
                                 <Route path="quotation-list" getComponent={QuotationList}/>
-                                <Route path="product-editor" getComponent={ProductEditor}/>
                                 <Route path="agent-product" getComponent={AgentProduct}/>
                                 <Route path="person-address" getComponent={PersonAddress}/>
                                 <Route path="person-data" getComponent={PersonData}/>
@@ -473,6 +472,7 @@ ReactDOM.render(
                                 <Route path="account" getComponent={AccountSecurity}/>
                                 <Route path="requirement" getComponent={Requirements}/>
                             </Route>
+                            <Route path="product-editor" getComponent={ProductEditor}/>
                         </Route>
                         <Route path="login" getComponent={Login}/>
                         <Route path="register" getComponent={Register}/>

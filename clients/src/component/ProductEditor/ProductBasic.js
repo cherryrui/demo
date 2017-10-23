@@ -263,7 +263,7 @@ class ProductBasic extends React.Component {
                             initialValue: this.state.product.name,
                             rules: [{ required: true, message: formatMessage({id: 'mine.product.name_warn'}), whitespace: true }],
                          })(
-							<Input size="large" />
+							<Input size="default" />
                         )}
                     </FormItem>
                     <FormItem
@@ -277,7 +277,7 @@ class ProductBasic extends React.Component {
                             	message: formatMessage({id: 'mine.product.brand_warn'}),
                             }],
                         })(
-                            <Select placeholder={formatMessage({id: 'mine.product.brand_warn'})}>
+                            <Select size="default" placeholder={formatMessage({id: 'mine.product.brand_warn'})}>
                                 {this.state.brands.map(item => {
                                     return <Option value={item.id}>{item.name}</Option>
                                 })}
@@ -315,7 +315,7 @@ class ProductBasic extends React.Component {
                             }],
                             initialValue: this.state.product.unit
                         })(
-                            <Select placeholder={formatMessage({id: 'mine.product.unit_warn'})}>
+                            <Select size="default" placeholder={formatMessage({id: 'mine.product.unit_warn'})}>
                                 {operator.unit_list.map(item => {
                                     return <Option value={item.value}>
                                     	<FormattedMessage id={item.key} defaultMessage={item.value}/>
@@ -331,7 +331,7 @@ class ProductBasic extends React.Component {
                         {getFieldDecorator('moq', {
                             initialValue: this.state.product.moq?this.state.product.moq:1,
                          })(
-							<InputNumber precision={0} style={{width: '100%'}} size="large" />
+							<InputNumber size="default" precision={0} style={{width: '100%'}} />
                         )}
                     </FormItem>
                     <FormItem
@@ -341,7 +341,7 @@ class ProductBasic extends React.Component {
                         {getFieldDecorator('factory_price', {
                             initialValue: this.state.product.name,
                          })(
-							<InputNumber style={{width: '100%'}} precision={2} size="large" />
+							<InputNumber size="default" style={{width: '100%'}} precision={2} />
                         )}
                     </FormItem>
                     <FormItem
@@ -351,7 +351,7 @@ class ProductBasic extends React.Component {
                         {getFieldDecorator('inventory', {
                             initialValue: this.state.product.inventory,
                          })(
-							<InputNumber precision={0} style={{width: '100%'}} size="large" />
+							<InputNumber size="default" precision={0} style={{width: '100%'}} />
                         )}
                     </FormItem>
                     <FormItem
@@ -405,24 +405,93 @@ class ProductBasic extends React.Component {
                     </FormItem>
                     <FormItem {...tailFormItemLayout}>
                          <Button 
-                         	size='large' 
                          	type="primary" 
                          	htmlType="submit"
+                         	size="default"
                          	loading={this.state.loading}
                          >
                          	{formatMessage({id: 'app.ok'})}
                          </Button>
                     </FormItem>
                 </Form>
-                <Button type="primary">Primary</Button>
-                <Button type="danger">Danger</Button>
+                <CategorySelect/>
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
                 	<img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
             	</Modal>
 		</div>
 	}
 }
+class CategorySelect extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			options: [
+				[],
+				[],
+				[]
+			],
+			select_options: [
+				[],
+				[],
+				[]
+			],
+		}
+	}
+	componentWillMount() {
+		axios.get('/category/get-agent-category.json').then(res => {
+			let options = this.state.options;
+			if (res.data.isSucc) {
+				options[0] = res.data.result;
+				this.setState({
+					options: options,
+				})
+			} else {
+				message.error(res.data.message);
+			}
+		})
+	}
+	onChange = (index, cid) => {
+		console.log(index, cid)
+		let select_options = this.state.select_options;
+		if (select_options[index].indexOf(cid) == -1) {
+			select_options[index].push(cid);
 
+			//获取2级分类
+			if (index == 0) {
+				axios.get('/category/get-two-category.json?cid=' + cid).then(res => {
+					if (res.data.isSucc) {
+						let options = select_options[index + 1].concat(res.data.result);
+						options[index + 1] = options;
+						this.setState({
+							options: options
+						})
+						console.log(select_options);
+					} else {
+						message.error(res.data.message);
+					}
+				})
+			} else {
+
+			}
+		}
+		console.log(select_options);
+	}
+
+	render() {
+		console.log(this.state.options);
+		return <div className={css.basic_category_list}>
+			{this.state.options.map((item,index)=>{
+				return <div className={css.base_category_item}>
+					{item.map(category=>{
+						return <p>
+							<Checkbox onChange={this.onChange.bind(this,index,category.categoryId)}>{category.categoryName}</Checkbox>
+						</p>
+					})}
+				</div>
+			})}
+		</div>
+	}
+}
 ProductBasic = Form.create()(ProductBasic);
 ProductBasic = injectIntl(ProductBasic);
 export default ProductBasic;
