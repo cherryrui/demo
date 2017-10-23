@@ -165,8 +165,8 @@
 }
 .button_blue{
     @extend %button;
-    background-color: $button-orange !important;
-    border-color: $button-orange !important;
+    background-color: $button-blue !important;
+    border-color: $button-blue !important;
 }
 .button_blue:hover{
     box-shadow: 0 1px 5px $button-blue;
@@ -174,6 +174,9 @@
 .button_blue:active{
     background-color: $button-blue-active !important;
     border-color: $button-blue-active !important;
+}
+.form_input{
+  width: 400px !important;
 }
 .upload{
   display: flex;

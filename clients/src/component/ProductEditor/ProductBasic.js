@@ -1,8 +1,9 @@
 import React from 'react';
 import css from './ProductEditor.scss';
+import appcss from '../../App.scss';
 import axios from 'axios';
 import operator from './operator.js';
-import lrz from 'lrz';
+import moment from 'moment';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -21,7 +22,8 @@ import {
 	Cascader,
 	Modal,
 	Radio,
-	Tooltip
+	Tooltip,
+	Spin
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -31,39 +33,45 @@ class ProductBasic extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			product: {
-				category: [{
-					id: 1,
-					category_id: []
-				}]
-			},
-			brands: [],
+			product: {},
 			category: [],
+			brands: [],
+			category: [{
+				id: 1,
+				category_id: []
+			}],
+			unit: [],
+			categoryList: [],
 			fileList: [],
 			previewVisible: false,
 			loading: false,
 
 		}
+		this.formatMessage = this.props.intl.formatMessage;
+		this.timeout = null;
 	}
 
 	componentWillMount() {
-		axios.get('/brand/get-agent-brand.json').then(res => {
-			axios.get('/category/get-agent-category.json').then(resp => {
-				let category = resp.data.category;
-				category.map(item => {
-					item.value = item.id;
-					item.label = item.name;
-					item.isLeaf = false;
-				})
-				this.setState({
-					brands: res.data.brand,
-					category: resp.data.category,
-					product: this.props.product.id ? this.props.product : this.state.product
+		axios.get('/category/get-agent-category.json').then(category => {
+			axios.get('/product/get-product-unit.json').then(unit => {
+				axios.post('/brand/get-product-brand.json', {}).then(brands => {
+					let categoryList = category.data.result;
+					categoryList.map(item => {
+						item.value = item.categoryId;
+						item.label = item.categoryName;
+						item.isLeaf = false;
+					})
+					this.setState({
+						categoryList: categoryList,
+						unit: unit.data.result,
+						brands: brands.data.result.list,
+						product: this.props.product.id ? this.props.product : this.state.product
+					})
 				})
 			})
-
 		})
 	}
+
 	normFile = (info) => {
 		console.log('Upload event:', info);
 		if (info.file && info.file.status == "uploading") {
@@ -93,6 +101,7 @@ class ProductBasic extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
+				console.log(values);
 				this.setState({
 					loading: true
 				})
@@ -152,6 +161,10 @@ class ProductBasic extends React.Component {
 			this.props.handleSteps ? this.props.handleSteps(1, product) : ""
 		})
 	}
+	onChange = (index, value, options) => {
+		this.state.category[index].category_id = value;
+		this.state.category[index].category_name = options
+	}
 
 	removePic = (file) => {
 		console.log(file)
@@ -171,30 +184,19 @@ class ProductBasic extends React.Component {
 	}
 
 	/**
-	 * 保存所选择的分类id
-	 * @param  {[type]} value           [description]
-	 * @param  {[type]} selectedOptions [description]
-	 * @return {[type]}                 [description]
-	 */
-	onChange = (index, value, options) => {
-		this.state.product.category[index].category_id = value;
-		this.state.product.category[index].category_name = options
-	}
-
-	/**
 	 * 删除或者添加产品分类
 	 */
 	handleCategory = (index) => {
-		let product = this.state.product;
+		let category = this.state.category;
 		if (index == -1) {
-			product.category.push({
-				id: product.category[product.category.length - 1].id + 1,
+			category.push({
+				id: category[category.length - 1].id + 1,
 			});
 		} else {
-			product.category.splice(index, 1);
+			category.splice(index, 1);
 		}
 		this.setState({
-			product: product
+			category: category
 		})
 	}
 
@@ -206,24 +208,30 @@ class ProductBasic extends React.Component {
 	loadData = (selectedOptions) => {
 		console.log(selectedOptions);
 		const targetOption = selectedOptions[selectedOptions.length - 1];
-		axios.get(`/category/get-category.json?type=${3}&id=${targetOption.id}`).then(res => {
-			let category = res.data.categorys;
-			category.map(item => {
-				item.value = item.id;
-				item.label = item.name;
-				item.isLeaf = true;
-			})
+		let url = selectedOptions.length == 1 ? "/category/get-two-category.json?cid=" : "/category/get-category.json?pid=";
+		axios.get(url + targetOption.categoryId).then(res => {
 			targetOption.loading = false;
-			targetOption.children = category;
-			console.log(this.state.product)
+			let children = res.data.result
+			children.map(item => {
+				item.label = item.categoryName;
+				item.value = item.categoryId;
+				item.isLeaf = selectedOptions.length > 1 ? true : false;
+			})
+			targetOption.children = children;
 			this.setState({
-				product: this.state.product,
-			});
+				categoryList: [...this.state.categoryList],
+			})
 		})
 	}
-
+	handleNo = () => {
+		this.props.form.setFieldsValue({
+			no: "P" + moment().format("YYYYMMDDHHMMSS"),
+		});
+	}
+	checkBrand = (rule, value, callback) => {
+		console.log(rule, value, callback);
+	}
 	render() {
-		console.log(this.state.product)
 		const {
 			intl: {
 				formatMessage
@@ -263,48 +271,57 @@ class ProductBasic extends React.Component {
                             initialValue: this.state.product.name,
                             rules: [{ required: true, message: formatMessage({id: 'mine.product.name_warn'}), whitespace: true }],
                          })(
-							<Input size="default" />
+							<Input className={appcss.form_input}/>
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label={formatMessage({id: 'app.brand'})}
+                        label={formatMessage({id: 'mine.product.No'})}
                     >
-                        {getFieldDecorator('brand_id', {
-                            initialValue: this.state.product.brand_id,
-                            rules: [{ 
-                            	required: true, 
-                            	message: formatMessage({id: 'mine.product.brand_warn'}),
-                            }],
+                        {getFieldDecorator('no', {
+                            initialValue: this.state.product.name,
+                            rules: [{ required: true, message: formatMessage({id: 'mine.product.No'}), whitespace: true }],
+                         })(
+							<Input style={{width:"260px"}} />
+                        )}
+                        <Button style={{marginLeft:"10px",width: "130px"}} className={appcss.button_blue} onClick={this.handleNo}>
+                        	<FormattedMessage id="mine.product.auto" defaultMessage=""/>
+                        </Button>
+                    </FormItem>
+                    <FormItem 
+                    	{...formItemLayout}
+                    	label={formatMessage({id: 'orderdetails.brand'})}
+                    >
+                        {getFieldDecorator('brand', {
+							rules: [{ validator: this.checkBrand }],
+                            initialValue: this.state.product.brand
                         })(
-                            <Select size="default" placeholder={formatMessage({id: 'mine.product.brand_warn'})}>
-                                {this.state.brands.map(item => {
-                                    return <Option value={item.id}>{item.name}</Option>
-                                })}
-                            </Select>
+                        	<SearchInput/>
                         )}
                     </FormItem>
-                    {this.state.product.category.map((item,index)=>{
-                    	return <FormItem
-                        	{...formItemLayout}
-                        	label={formatMessage({id: 'app.category'})+(index+1)}
-                    	>
-                    		<div className={css.basic_category}>
-	                    		<Cascader 
-	                                options={this.state.category}
+                    {this.state.category.map((item,index)=>{
+	                    return <FormItem
+	                        {...formItemLayout}
+	                        label={this.formatMessage({id: 'app.category'})+(index+1)}
+	                    >
+	                        {getFieldDecorator('category'+index, {
+	                            rules: [{ type: 'array', required: true, message: this.formatMessage({id:'mine.product.category_warn'}),}],
+	                        })(
+	                            <Cascader 
+	                            	className={appcss.form_input}
+	                                options={this.state.categoryList}
 	                                loadData={this.loadData}
 	                                onChange={this.onChange.bind(this,index)}
 	                            />
-	                            {index==0?<Tooltip title={formatMessage({id:'mine.product.add_category'})}>
-	    							<Button icon="plus" onClick={this.handleCategory.bind(this,-1)}/>
-	  							</Tooltip>
-								:<Tooltip title={formatMessage({id:'mine.product.del_category'})}>
-	    							<Button icon="minus" onClick={this.handleCategory.bind(this,index)}/>
-	  							</Tooltip>}
-  							</div>
-                   		</FormItem>
-                    })}
-                    
+	                        )}
+	                        {index==0?<Tooltip title={this.formatMessage({id:'mine.product.add_category'})}>
+	                                <Button className={appcss.button_blue} style={{marginLeft:"10px"}} icon="plus" onClick={this.handleCategory.bind(this,-1)}/>
+	                            </Tooltip>
+	                            :<Tooltip title={this.formatMessage({id:'mine.product.del_category'})}>
+	                                <Button className={appcss.button_blue} style={{marginLeft:"10px"}} icon="minus" onClick={this.handleCategory.bind(this,index)}/>
+	                            </Tooltip>}
+	                    </FormItem>
+                	})}
                     <FormItem 
                     	{...formItemLayout}
                     	label={formatMessage({id: 'mine.product.unit'})}
@@ -315,11 +332,10 @@ class ProductBasic extends React.Component {
                             }],
                             initialValue: this.state.product.unit
                         })(
-                            <Select size="default" placeholder={formatMessage({id: 'mine.product.unit_warn'})}>
-                                {operator.unit_list.map(item => {
-                                    return <Option value={item.value}>
-                                    	<FormattedMessage id={item.key} defaultMessage={item.value}/>
-                                    </Option>
+                            <Select className={appcss.form_input}
+                            placeholder={formatMessage({id: 'mine.product.unit_warn'})}>
+                                {this.state.unit.map(item => {
+                                    return <Option value={item.uId}>{item.unitName}</Option>
                                 })}
                             </Select>
                         )}
@@ -329,9 +345,12 @@ class ProductBasic extends React.Component {
                         label={formatMessage({id: 'product.detail.MOQ'})}
                     >
                         {getFieldDecorator('moq', {
+                        	 rules: [{
+                                required: true, message: formatMessage({id: 'product.detail.MOQ'}),
+                            }],
                             initialValue: this.state.product.moq?this.state.product.moq:1,
                          })(
-							<InputNumber size="default" precision={0} style={{width: '100%'}} />
+							<InputNumber className={appcss.form_input} precision={0} style={{width: '100%'}} />
                         )}
                     </FormItem>
                     <FormItem
@@ -340,8 +359,11 @@ class ProductBasic extends React.Component {
                     >
                         {getFieldDecorator('factory_price', {
                             initialValue: this.state.product.name,
+                             rules: [{
+                                required: true, message: formatMessage({id: 'mine.product.factory_price'}),
+                            }],
                          })(
-							<InputNumber size="default" style={{width: '100%'}} precision={2} />
+							<InputNumber className={appcss.form_input}  style={{width: '100%'}} precision={2} />
                         )}
                     </FormItem>
                     <FormItem
@@ -350,146 +372,132 @@ class ProductBasic extends React.Component {
                     >
                         {getFieldDecorator('inventory', {
                             initialValue: this.state.product.inventory,
-                         })(
-							<InputNumber size="default" precision={0} style={{width: '100%'}} />
-                        )}
-                    </FormItem>
-                    <FormItem
-			          {...formItemLayout}
-			          label={formatMessage({id: 'mine.product.picture'})}
-			          style={{marginBottom: 0}}
-			        >
-			          {getFieldDecorator('files', {
-			            valuePropName: 'fileList',
-			            getValueFromEvent: this.normFile,
-			            initialValue: this.state.product.files,
-			            rules: [{ 
-			            	type: 'array', 
-			            	required: true, 
-			            	message: formatMessage({id: 'mine.product.picture_warn'}) }],
-			          })(
-				            <Upload 
-				            	name="img"
-				            	customRequest={this.normFile}
-								onPreview = {this.previewImg}
-				            	listType="picture-card"
-				            	onRemove={this.removePic}
-				            	accept="image/*"
-				            >
-				              {this.state.fileList.length >= 4 ? null : <div className={css.upload}>
-	        							<Icon type="plus" />
-	        							<div className="ant-upload-text">Upload</div>
-	      							</div>}
-				            </Upload>
-			          )}
-			        </FormItem>
-			         <FormItem 
-			         	{...tailFormItemLayout}
-			         	style={{marginBottom: 0}}
-			         >
-			         {getFieldDecorator('set_default', {
-                            rules: [{
-                                required: true, message: formatMessage({id: 'mine.product.picture_warn'}),
+                             rules: [{
+                                required: true, message: formatMessage({id: 'product.detail.inventory'}),
                             }],
-                            initialValue: this.state.product.is_default?this.state.product.is_default:0
-                        })(
-			         		<RadioGroup >
-        						{this.state.fileList.map((item,index)=>{
-		                         	return <Radio value={index} className={css.set_default}>
-		                         		{formatMessage({id: 'mine.product.set_default'})}
-		                         	</Radio>
-	                         	})}
-      						</RadioGroup>
-      					)}     
-                         
+                         })(
+							<InputNumber className={appcss.form_input}  precision={0} style={{width: '100%'}} />
+                        )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout}>
                          <Button 
                          	type="primary" 
                          	htmlType="submit"
-                         	size="default"
                          	loading={this.state.loading}
+                         	style={{minWidth:"100px"}}
                          >
                          	{formatMessage({id: 'app.ok'})}
                          </Button>
                     </FormItem>
                 </Form>
-                <CategorySelect/>
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
                 	<img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
             	</Modal>
 		</div>
 	}
 }
-class CategorySelect extends React.Component {
+
+class SearchInput extends React.Component {
 	constructor(props) {
 		super(props);
+		this.value = this.props.value || {};
 		this.state = {
-			options: [
-				[],
-				[],
-				[]
-			],
-			select_options: [
-				[],
-				[],
-				[]
-			],
+			value: 0,
+			label: "",
+			data: []
+		};
+		this.timeout = null;
+		this.currentValue = "";
+	}
+	componentWillReceiveProps(nextProps) {
+		// Should be a controlled component.
+		if ('value' in nextProps) {
+			const value = nextProps.value;
+			this.setState(value);
 		}
 	}
-	componentWillMount() {
-		axios.get('/category/get-agent-category.json').then(res => {
-			let options = this.state.options;
+	fetch = (value) => {
+		if (this.timeout) {
+			clearTimeout(this.timeout);
+			this.timeout = null;
+		}
+		this.timeout = setTimeout(this.getBrand(value), 300);
+	}
+	getBrand = (value) => {
+		console.log("getBrand")
+		let param = {
+			brandName: value
+		}
+		this.currentValue = value;
+		console.log(this.currentValue);
+		axios.post('/brand/get-product-brand.json', param).then(res => {
 			if (res.data.isSucc) {
-				options[0] = res.data.result;
-				this.setState({
-					options: options,
-				})
-			} else {
-				message.error(res.data.message);
+				console.log(this.currentValue, value);
+				if (this.currentValue === value) {
+					this.setState({
+						data: res.data.result.list
+					})
+				}
 			}
-		})
+		});
 	}
-	onChange = (index, cid) => {
-		console.log(index, cid)
-		let select_options = this.state.select_options;
-		if (select_options[index].indexOf(cid) == -1) {
-			select_options[index].push(cid);
-
-			//获取2级分类
-			if (index == 0) {
-				axios.get('/category/get-two-category.json?cid=' + cid).then(res => {
-					if (res.data.isSucc) {
-						let options = select_options[index + 1].concat(res.data.result);
-						options[index + 1] = options;
-						this.setState({
-							options: options
-						})
-						console.log(select_options);
-					} else {
-						message.error(res.data.message);
-					}
-				})
-			} else {
-
-			}
+	handleChange = (value) => {
+		console.log(value, isNaN(value))
+		let brand_id = 0,
+			label = "";
+		if (isNaN(value)) {
+			label = value;
+			this.setState({
+				label: value,
+				value: 0,
+			})
+			this.fetch(value);
+		} else {
+			this.state.data.map(item => {
+				if (item.bid == value) {
+					label = locale == "en" ? item.brandNameEn : item.brandNameCn;
+					value = value;
+					this.setState({
+						value: value,
+						label: label,
+					})
+				}
+			})
 		}
-		console.log(select_options);
+		this.triggerChange({
+			value: value,
+			label: label
+
+		});
 	}
 
+	triggerChange = (changedValue) => {
+		console.log("triggerChange====" + changedValue);
+		// Should provide an event to pass value to Form.
+		const onChange = this.props.onChange;
+		if (onChange) {
+			onChange(Object.assign({}, this.state, changedValue));
+		}
+	}
 	render() {
-		console.log(this.state.options);
-		return <div className={css.basic_category_list}>
-			{this.state.options.map((item,index)=>{
-				return <div className={css.base_category_item}>
-					{item.map(category=>{
-						return <p>
-							<Checkbox onChange={this.onChange.bind(this,index,category.categoryId)}>{category.categoryName}</Checkbox>
-						</p>
-					})}
-				</div>
-			})}
-		</div>
+		const options = this.state.data.map(d => <Option key={d.bid}>{locale=="en"?d.brandNameEn:d.brandNameCn}</Option>);
+		return (
+			<Select
+				size="large"
+		        mode="combobox"
+		        value={this.state.label}
+		        className={appcss.form_input}
+        		placeholder={this.props.placeholder}
+        		notFoundContent=""
+        		style={this.props.style}
+        		defaultActiveFirstOption={false}
+        		showArrow={false}
+        		filterOption={false}
+        		onChange={this.handleChange}
+      		>
+	        	{options}
+	      	</Select>
+		);
 	}
 }
 ProductBasic = Form.create()(ProductBasic);

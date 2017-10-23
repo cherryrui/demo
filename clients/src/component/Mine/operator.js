@@ -34,7 +34,7 @@ export default {
         }, {
             key: 2002,
             title: "mine.product.upload",
-            url: "/page/mine/product-editor"
+            url: "/page/product-editor"
         }]
     }, {
         name: "mine.order",

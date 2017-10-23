@@ -213,12 +213,15 @@ const en_US = {
     "mine.product.upload": "Upload Product",
     "mine.product.list": "Product List",
     "mine.product.management": "Product manager",
+    "mine.product.auto": "autogeneration",
 
     "mine.product.basic": "Basic information",
+    "mine.product.picture": "Product guidance",
     "mine.product.attributes": "product attributes",
     "mine.product.param": "apecification parameters",
     "mine.product.introduction": "product introduction",
     "mine.product.packaging": "packaging instructions",
+    "mine.product.transport": "Transport requirement",
 
     "mine.product.name": "Product name",
     "mine.product.No": "Art.No.",

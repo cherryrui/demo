@@ -6,23 +6,33 @@ export default {
 		icon: ""
 	}, {
 		key: 2,
+		title: "mine.product.picture",
+		default_message: "产品引导图",
+		icon: ""
+	}, {
+		key: 3,
 		title: "mine.product.attributes",
 		default_message: "产品属性",
 		icon: ""
 	}, {
-		key: 3,
+		key: 4,
 		title: "mine.product.param",
 		default_message: "产品规格",
 		icon: ""
 	}, {
-		key: 4,
+		key: 5,
 		title: "mine.product.introduction",
 		default_message: "产品介绍",
 		icon: ""
 	}, {
-		key: 5,
+		key: 6,
 		title: "mine.product.packaging",
 		default_message: "包装参数",
+		icon: ""
+	}, {
+		key: 7,
+		title: "mine.product.transport",
+		default_message: "运输要求",
 		icon: ""
 	}],
 	unit_list: [{

@@ -157,6 +157,16 @@
 		width: 260px;
 		height: 280px;
 		overflow: auto;
-
+		flex-shrink: 0;
+    	border: 1px solid $border-color;
+    	label[class="ant-checkbox-wrapper"]{
+    		line-height: 28px;
+    	}
+    	p{
+			line-height: 28px;
+    	}
 	}
+}
+.button_blue{
+	background: red;
 }

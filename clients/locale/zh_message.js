@@ -222,10 +222,12 @@ const zh_CN = {
     "mine.product.management": "产品管理",
 
     "mine.product.basic": "基础信息",
+    "mine.product.picture": "产品引导图",
     "mine.product.attributes": "产品属性",
     "mine.product.param": "产品规格",
     "mine.product.introduction": "产品介绍",
     "mine.product.packaging": "包装参数",
+    "mine.product.transport": "运输要求",
 
     "mine.product.name": "产品名称",
     "mine.product.No": "产品编号",
@@ -234,9 +236,10 @@ const zh_CN = {
     "mine.product.picture": "产品图片",
     "mine.product.upload_img": "上传图片",
     "mine.product.set_default": "设为主图",
+    "mine.product.auto": "自动生成",
 
     "mine.product.name_warn": "请输入产品名称",
-    "mine.product.brand_warn": "请选择供应商",
+    "mine.product.brand_warn": "请选择品牌",
     "mine.product.category_warn": "请选择产品分类",
     "mine.product.unit_warn": "请选择产品单位",
     "mine.product.moq_warn": "请输入产品起购量",

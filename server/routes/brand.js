@@ -48,12 +48,13 @@ router.get('/get-recommend-brand.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.get('/get-agent-brand.json', async(ctx, next) => {
-		let uid = ctx.cookie.get('uid');
-		let brand = [];
-
-		ctx.body = {
-			brand: brand
-		}
+	.post('/get-product-brand.json', async(ctx, next) => {
+		let result;
+		let param = ctx.request.body;
+		await axios.post(url + "/brand/queryBrandList", querystring.stringify(param)).then(res => {
+			console.log(55, res.data);
+			result = res.data;
+		})
+		ctx.body = result
 	})
 module.exports = router;
