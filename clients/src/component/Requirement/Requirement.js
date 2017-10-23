@@ -6,6 +6,7 @@ import axios from 'axios';
 import css from './Requirement.scss';
 import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
+import moment from 'moment';
 
 import {
     Link
@@ -26,7 +27,8 @@ import {
     Input,
     Menu,
     Dropdown,
-    Form
+    Form,
+    Pagination
     } from 'antd';
 const Step = Steps.Step;
 const Option = Select.Option;
@@ -37,32 +39,6 @@ const {
     } = Input;
 
 
-const data = [{
-    key: '1',
-    name: "F G ",
-    timeday: "2017-05-05",
-    time: "08:05:00",
-    status: 1,
-}, {
-    key: '2',
-    name: "xxxxxxx ",
-    timeday: "2017-05-05",
-    time: "08:05:00",
-    status: 1,
-}, {
-    key: '3',
-    name: "F G ",
-    timeday: "2017-05-05",
-    time: "08:05:00",
-    status: 1,
-}, {
-    key: '4',
-    name: "F G ",
-    timeday: "2017-05-05",
-    time: "08:05:00",
-    status: 1,
-}];
-
 
 class Requirement extends React.Component {
     handleChange = (value) =>{
@@ -71,14 +47,28 @@ class Requirement extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
     }
+    handleMenuClick = (item) =>{
+        console.log(item.key);
+        this.setState({
+            status:parseInt(item.key),
+        },()=>{
+            this.getRequmentList();
+        })
+    }
+    handlePage = (page, pageSize) => {
+        console.log(page)
+        this.state.current = page;
+        this.getRequmentList();
+    }
     constructor(props) {
         super(props);
 
         this.state = {
-            name: "F G ",
-            time: "g",
-            status: 1,
-            requirement:data,
+            requirement:[],
+            status:"",
+            total:0,
+            pageSize:1,
+            current:0,
         };
         let {
             intl: {
@@ -88,38 +78,42 @@ class Requirement extends React.Component {
         this.formatMessage = this.props.intl.formatMessage;
 
         const menu = (
-            <Menu>
-                <Menu.Item>
-                    <a target="_blank" rel="noopener noreferrer" href="">
+            <Menu onClick={this.handleMenuClick}>
+                <Menu.Item key="0">
+                    <a target="_blank" rel="noopener noreferrer" >
             { this.formatMessage({id:"app.processing"})}
                     </a>
                 </Menu.Item>
-                <Menu.Item>
-                    <a target="_blank" rel="noopener noreferrer" href="">
+                <Menu.Item key="1">
+                    <a target="_blank" rel="noopener noreferrer" >
             { this.formatMessage({id:"app.processed"})}
+                        </a>
+                </Menu.Item>
+                <Menu.Item key="-1">
+                    <a target="_blank" rel="noopener noreferrer" >
+            { this.formatMessage({id:"app.refused"})}
                         </a>
                 </Menu.Item>
             </Menu>
         );
         this.colums_show = [{
-            title: <FormattedMessage id="post.company_name" defaultMessage=" 收货人"/>,
+            title: <FormattedMessage id="post.demandNo" defaultMessage=" 需求编号"/>,
             className: css.table_col,
             width: "40%",
             className: css.table_col,
-            render: (record) =><span className={css.table_namne}>{record.name}</span>
+            render: (record) =><span className={css.table_namne}>{record.demandNo}</span>
         }, {
             title: <FormattedMessage id="orderlist.order.time" defaultMessage="联系电话 "/>,
             className: css.table_col,
             width: "20%",
             className: css.table_col,
             render: (record) => <div className={css.time_text}>
-                <p>{record.timeday}</p>
-                <p>{record.time}</p>
+                <p>{moment(record.createTime).format('YYYY-MM-DD hh:mm:ss')}</p>
             </div>
         }, {
             title: <div>
                        <Dropdown overlay={menu}>
-                              <a className="ant-dropdown-link" href="#" style={{color:"#2e2b2e"}}>
+                              <a className="ant-dropdown-link" style={{color:"#2e2b2e"}}>
                                     <FormattedMessage id="orderlist.order.status" defaultMessage="收货地址 "/>
                                     <Icon type="down" />
                               </a>
@@ -129,7 +123,7 @@ class Requirement extends React.Component {
             width: "15%",
             className: css.table_col,
             render: (record) => <span className={css.table_namne}>
-                       <Icon type="file-text" />
+                    {record.demandStatus=="-1"?<Icon type="close" />:(record.demandStatus=="1"?<Icon type="check" />:<Icon type="clock-circle-o" />)}
             </span>
         }, {
             title: <FormattedMessage id="cart.operation" defaultMessage="操作"/>,
@@ -144,6 +138,44 @@ class Requirement extends React.Component {
 
             </span>
         }, ]
+    }
+
+    componentWillMount() {
+        this.getRequmentList();
+    }
+    getRequmentList = () =>{
+        console.log(this.state.status)
+        let param = {
+            pageNo:this.state.current,
+            pageSize:this.state.pageSize,
+            demandStatus: this.state.status ? this.state.status : ""
+        };
+        console.log(param)
+        axios.post('/user/get-requirement-list.json',param).then(res=>{
+            console.log(res.data)
+            if(res.data.isSucc){
+                console.log(res.data.result)
+                this.setState({
+                    requirement:res.data.result.list,
+                    total:res.data.result.allRow,
+                })
+            }else{
+                message.error(res.data.message)
+            }
+        })
+    }
+    getRequirementbystatus = () =>{
+        axios.post('/user/get-requirement-byststus.json').then(res=>{
+            console.log(res.data)
+            if(res.data.isSucc){
+                console.log(res.data.result)
+                this.setState({
+                    requirement:res.data.result,
+                })
+            }else{
+                message.error(res.data.message)
+            }
+        })
     }
 
     render() {
@@ -165,6 +197,9 @@ class Requirement extends React.Component {
                     bordered
                     columns={this.colums_show}
                     dataSource={this.state.requirement}/>
+            </div>
+            <div className={css.footer}>{console.log(this.state.total)}
+                <Pagination defaultCurrent={1} total={this.state.total} onChange={this.handlePage} />
             </div>
         </div>
     }

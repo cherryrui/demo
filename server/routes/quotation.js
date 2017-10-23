@@ -4,14 +4,17 @@ var querystring = require('querystring');
 const {
 	url,
 } = require('../config/index');
-router.get('/get-quotation.json', async(ctx, next) => {
-		let quotations = [],
-			total = 1;
-		quotations = []
-		ctx.body = {
-			quotation: quotations,
-			total: total
-		}
+router.post('/get-quotation.json', async(ctx, next) => {
+	let result = null,
+		param = ctx.request.body;
+		/*console.log(param)*/
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		await axios.post(url+'/auth/quotation/queryQuotationOrderList',querystring.stringify(param)).then(res=>{
+			console.log(res.data)
+			result = res.data;
+		});
+		ctx.body = result;
+		
 	})
 	.get('/get-quotation-byid.json', async(ctx, next) => {
 		let id = ctx.query.id;

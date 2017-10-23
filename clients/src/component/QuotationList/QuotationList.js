@@ -35,6 +35,7 @@ class QuotationList extends React.Component {
 		this.state = {
 			data: [],
 			current: 1,
+			pageSize:10,
 			info: "",
 			total: 0,
 			quotation: {},
@@ -47,11 +48,22 @@ class QuotationList extends React.Component {
 		this.getQuotation();
 	}
 	getQuotation() {
-		axios.get(`/quotation/get-quotation.json?page=${this.state.current}&info=${this.state.info}`).then(res => {
-			this.setState({
-				data: res.data.quotation,
-				total: res.data.total
-			})
+		let param = {
+			pageNo : this.state.current,
+			pageSize:this.state.pageSize
+		};
+		console.log(param)
+		axios.post(`/quotation/get-quotation.json`,param).then(res => {
+			console.log(res.data)
+			if(res.data.isSucc){
+				this.setState({
+					data: res.data.result.list,
+					total: res.data.result.allRow
+				})
+			}else{
+				message.error(res.data.message);
+			}
+			
 		})
 	}
 
@@ -83,6 +95,7 @@ class QuotationList extends React.Component {
 	 * @return {[type]}      [description]
 	 */
 	create_order = (item) => {
+		console.log(item)
 		this.setState({
 			loading: true
 		})
@@ -153,10 +166,12 @@ class QuotationList extends React.Component {
 		})
 	}
 	handlePage = (page, pageSize) => {
+		console.log(page)
 		this.state.current = page;
 		this.getQuotation();
 	}
 	handleDelete = (id) => {
+		console.log(id)
 		axios.get(`/quotation/delete-quotation.json?id=${id}`).then(res => {
 			this.getQuotation();
 		})
@@ -201,11 +216,11 @@ class QuotationList extends React.Component {
             		<div className={css.quotation_item_title}>
             			<p>
             				<FormattedMessage id="quotation.no" defaultMessage="报价单编号"/>
-                			:{item.id}
+                			:{item.quotationNo}
             			</p>
             			<p>
             				<FormattedMessage id="quotation.create_time" defaultMessage="创建时间"/>
-                			:{moment(item.create_time).format('YYYY-MM-DD hh:mm:ss')}
+                			:{moment(item.createTime).format('YYYY-MM-DD hh:mm:ss')}
             			</p>
             		</div>
             		<div className={css.quotation_item_body}>
@@ -215,40 +230,40 @@ class QuotationList extends React.Component {
 
             				<div>
 	            				<FormattedMessage id="quotation.subject" defaultMessage="报价单名称"/>
-	            				:{item.subject}
+	            				:{item.quotationSubject}
             				</div>
             				
             			</p>
 		            	<p className={css.item_num}>
-		            		{item.num}
+		            		{item.totalQuantity}
 		            	</p>
 		            	<p className={css.item_sale}>
-		            		${item.sale_total}
+		            		${item.totalSalePrice}
 		            	</p>
 		            	<p className={css.item_agent}>
-		            		${item.agent_total}
+		            		${item.totalSalePrice-item.profits}
 		            	</p>
 		            	<p className={css.item_profit}>
-		            		${item.sale_total-item.agent_total}
+		            		${item.profits}
 		            	</p>
             		</div>
             		<div className={css.quotation_item_footer}>
-            			<p className={css.item_icon} onClick={this.handleDelete.bind(this,item.id)}>
+            			<p className={css.item_icon} onClick={this.handleDelete.bind(this,item.quotationId)}>
             				<Icon type="delete" />&nbsp;&nbsp;
             				<FormattedMessage id="cart.delete" defaultMessage="删除"/>
 	            	
             			</p>
-            			<Link className={css.item_icon} to={'page/quotation/'+item.id}>
-            				<Icon type="eye-o" />&nbsp;&nbsp;
+            			<Link className={css.item_icon} to={'page/quotation/'+item.quotationId}>
+            				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;
             				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
             			</Link>
-            			<Button type="primary" className={appcss.button_orange} onClick={this.onlineShow.bind(this,item)}>
+            			<Button type="primary" style={{background:"#3285ea",color:"white",border:"none"}} onClick={this.onlineShow.bind(this,item)}>
             				<FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
 	            		</Button>
-	            		<Button type="primary" loading={this.state.loading} className={appcss.button_green} onClick={this.create_order.bind(this,item)}>
+	            		<Button type="primary" style={{background:"#ff9a2c",color:"white",border:"none"}} loading={this.state.loading} className={appcss.button_green} onClick={this.create_order.bind(this,item)}>
             				<FormattedMessage id="mine.quotation.create_order" defaultMessage="生成订单"/>
 	            		</Button>
-	            		<Button type="primary" onClick={this.export.bind(this,item)}>
+	            		<Button type="primary" style={{background:"#2e2b2e",color:"white",border:"none"}} onClick={this.export.bind(this,item)}>
             				<FormattedMessage id="quotation.export" defaultMessage="导出"/>
 	            		</Button>
             		</div>

@@ -3,9 +3,10 @@
 	display: flex;
     font-size: 14px;
     font-weight: bold;
-    background: $color-grey;
+    background: #1b1b26;
   height: 40px;
   line-height: 40px;
+  color: white;
 
 }
 .title_info{
@@ -41,7 +42,7 @@
   line-height: 30px;
   padding-left: 20px;
   padding-right: 20px;
-   background: $color-light;
+   background: $theme-color;
 }
 .quotation_item_body{
   display: flex;
@@ -95,13 +96,23 @@
   }
   .item_icon{
       margin-right: 10px;
+      color: black;
       cursor: pointer;
       span{
-          color: $theme-color;
+          color: $color-blue;
       }
   }
 }
 .footer{
   text-align: right;
   margin-top: 20px;
+}
+.button_blue{
+  background-color: $color-blue;
+}
+.button_black{
+  background-color: $bar-color;
+}
+.button_orange{
+  background-color: $color-red;
 }

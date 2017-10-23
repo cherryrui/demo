@@ -290,4 +290,14 @@ router.get('/get-user.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
+	.post('/get-requirement-list.json',async (ctx) =>{
+		let result = null,
+			param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/demand/queryDemandListById',querystring.stringify(param)).then(res =>{
+			
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 module.exports = router;
