@@ -1,0 +1,43 @@
+@import '../../themes.scss';
+.account{
+  display: flex;
+  background:#ffffff;
+  padding:20px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border:1px solid $border-color;
+  .account_title {
+    display: flex;
+    align-items: center;
+    .account_icon{
+      font-size: 28px !important;
+      font-weight: 500;
+      color: $color-red;
+
+    }
+    .frown_icon{
+      font-size: 28px !important;
+      font-weight: 500;
+      color: $button-blue-active;
+  }
+    .account_text{
+      font-size: 18px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-weight: bold;
+    }
+    .account_red{
+      color: $color-orange;
+    }
+
+  .account_grey{
+    color:$border-color;
+  }
+  }
+  .modify{
+    color: $color-red;
+  }
+  .validation{
+    color: $color-blue !important;
+  }
+}
