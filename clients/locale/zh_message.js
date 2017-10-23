@@ -508,7 +508,13 @@ const zh_CN = {
     "app.select.time": "请选择时间 ",
     "post.want.img": "图片",
     "post.want.file": "文件",
-    "post.company.logo": "请输入公司logo",
-    "product.detail.inventory.no": "缺货，不能买"
+   "post.company.logo": "请输入公司logo",
+    "product.detail.inventory.no": "缺货，不能买",
+    "app.login.password": "登陆密码",
+    "app.phone.verification": "手机验证",
+    "app.email.verification": "邮箱验证",
+    "app.login.password_info": "网络危险，请重新修改登录密码",
+    "app.phone.verified_info": "你已经验证过，手机号码",
+    "app.email.verifi_info": "邮箱认证，可以用于登录"
 }
 export default zh_CN;

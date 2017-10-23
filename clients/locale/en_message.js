@@ -511,6 +511,12 @@ const en_US = {
     "app.select.time": "Please select time",
     "post.want.img": "picture",
     "post.want.file": "file",
-    "post.company.logo": "Please enter the company logo"
+    "post.company.logo": "Please enter the company logo",
+    "app.login.password": "login password",
+    "app.phone.verification": "Phone verification",
+    "app.email.verification": "Email verification",
+    "app.login.password_info": "Network exception, please change login password again",
+    "app.phone.verified_info": "You've already checked your phone number",
+    "app.email.verifi_info": "Email authentication can be used for login"
 }
 export default en_US;
