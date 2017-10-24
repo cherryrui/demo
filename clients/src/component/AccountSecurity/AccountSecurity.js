@@ -4,26 +4,26 @@ import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
 import axios from 'axios';
 import {
-	FormattedMessage,
+    FormattedMessage,
     injectIntl
 } from 'react-intl';
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     Icon,
     Button,
     message
-    } from 'antd';
+} from 'antd';
 class AccountSecurity extends React.Component {
     constructor(props) {
         super(props);
         this.formatMessage = this.props.intl.formatMessage;
     }
 
-	render() {
+    render() {
 
-		return <div>
+        return <div>
                     <div className={basecss.child_title}>
                         { this.formatMessage({id:"mine.person.account"})}
                     </div>
@@ -46,7 +46,7 @@ class AccountSecurity extends React.Component {
                     <p className={css.account_grey}> { this.formatMessage({id:"app.phone.verified_info"})}</p>
                 </div>
                 <div className={css.modify}>
-                    <Link >
+                    <Link to={"page/mine/phone-verifi"}>
                                        { this.formatMessage({id:"persondata.modify"})}
                     </Link>
                 </div>
@@ -58,13 +58,13 @@ class AccountSecurity extends React.Component {
                     <p className={css.account_grey}> { this.formatMessage({id:"app.email.verifi_info"})}</p>
                 </div>
                 <div>
-                    <Link  className={css.validation}>
+                    <Link to={"page/mine/phone-verifi"} className={css.validation}>
                                        { this.formatMessage({id:"repwd.authen"})}
                     </Link>
                 </div>
             </div>
             </div>
-	}
+    }
 }
 
 

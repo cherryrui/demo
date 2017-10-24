@@ -107,7 +107,7 @@ class ChangePassword extends React.Component {
     };
     return <div>
             <div className={basecss.child_title}>
-                        { this.formatMessage({id:"mine.person.account"})}
+                        { this.formatMessage({id:"app.login.password"})}
             </div>
             <div className={css.account_from}>
                 <Form onSubmit={this.handleSubmit}>
