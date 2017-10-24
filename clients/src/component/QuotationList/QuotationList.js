@@ -42,7 +42,8 @@ class QuotationList extends React.Component {
 			visible: false,
 			loading: false,
 			width: "80%"
-		}
+		};
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {
 		this.getQuotation();
@@ -89,6 +90,10 @@ class QuotationList extends React.Component {
 
 		}, this.exportQuotation)
 	}
+
+	getProductListById = () =>{
+
+	}
 	/**
 	 * 根据当前选择报价单生成订单
 	 * @param  {[type]} item [description]
@@ -96,16 +101,44 @@ class QuotationList extends React.Component {
 	 */
 	create_order = (item) => {
 		console.log(item)
-		this.setState({
-			loading: true
-		})
-		axios.post('/order/create_order.json', this.state.quotation).then(res => {
-			this.setState({
-				loading: false
-			})
-			message.sucess(formatMessage({
-				id: 'mine.quotation.order_success'
-			}))
+		let user = JSON.parse(sessionStorage.getItem('user'));
+		let param = {
+			userId : user.uid,
+			quotationId : item.quotationId
+		};
+		axios.post('/quotation/get-productlist-byId.json',param).then(res =>{
+			console.log(res.data);
+			if(res.data.isSucc){
+				let productlist = res.data.result.productList;
+				let productarr = {};
+				let productarrys = [];
+				productlist.map(item=>{
+					productarr.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+					productarr.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
+					productarr.coverUrl = item.productUrl;
+					productarr.id = null;
+					productarr.itemId = null;
+					productarr.itemNo = null;
+					productarr.itemPrice = null;
+					productarr.itemPriceSupplier = null;
+					productarr.moq = 1;
+					productarr.price = item.productPrice;
+					productarr.priceSupplier = item.salePrice;
+					productarr.productId = item.productId;
+					productarr.productName = item.productName;
+					productarr.productNo = item.productNo;
+					productarr.productNum = item.productNum;
+					productarr.specs = JSON.parse(item.productSpecification);
+					productarrys.push(productarr);
+				})
+				let products = productarrys;
+				console.log(products);
+				sessionStorage.setItem("products", JSON.stringify(products));
+				this.props.history.pushState(null, "/page/cart/1");
+			}else{
+
+			}
+			
 		})
 
 	}
@@ -173,7 +206,15 @@ class QuotationList extends React.Component {
 	handleDelete = (id) => {
 		console.log(id)
 		axios.get(`/quotation/delete-quotation.json?id=${id}`).then(res => {
-			this.getQuotation();
+			if(res.data.isSucc){
+				message.success(this.formatMessage({
+					id: 'cart.delete_warn'
+				}))
+				this.getQuotation();
+				/*this.props.history.pushState(null, "/page/mine/quotation-list");*/
+			}else{
+				message.error(res.data.message);
+			}
 		})
 	}
 

@@ -68,7 +68,7 @@ class Requirement extends React.Component {
             status:"",
             total:0,
             pageSize:1,
-            current:0,
+            current:1,
         };
         let {
             intl: {
@@ -152,7 +152,7 @@ class Requirement extends React.Component {
         };
         console.log(param)
         axios.post('/user/get-requirement-list.json',param).then(res=>{
-            console.log(res.data)
+            /*console.log(res.data)*/
             if(res.data.isSucc){
                 console.log(res.data.result)
                 this.setState({
@@ -166,7 +166,7 @@ class Requirement extends React.Component {
     }
     getRequirementbystatus = () =>{
         axios.post('/user/get-requirement-byststus.json').then(res=>{
-            console.log(res.data)
+            /*console.log(res.data)*/
             if(res.data.isSucc){
                 console.log(res.data.result)
                 this.setState({
@@ -198,8 +198,8 @@ class Requirement extends React.Component {
                     columns={this.colums_show}
                     dataSource={this.state.requirement}/>
             </div>
-            <div className={css.footer}>{console.log(this.state.total)}
-                <Pagination defaultCurrent={1} total={this.state.total} onChange={this.handlePage} />
+            <div className={css.footer}>
+                <Pagination pageSize={this.state.pageSize} total={this.state.total} onChange={this.handlePage} />
             </div>
         </div>
     }
