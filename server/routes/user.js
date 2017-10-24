@@ -122,18 +122,12 @@ router.get('/get-user.json', async(ctx, next) => {
 		ctx.body = result;
 	})
 	.post('/repassword.json', async(ctx) => {
-		let result = null;
-		if (newPwd) {
-			result = {
-				rc: 200,
-				Data: newPwd
-			};
-		} else {
-			result = {
-				rc: 202,
-				Data: 'resetpassword failed!'
-			}
-		}
+		let result = null,
+			param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/modifyPwd',querystring.stringify(param)).then(res =>{
+			result = res.data;
+		})
 		ctx.body = result;
 	})
 	.post('/register.json', async(ctx) => {
