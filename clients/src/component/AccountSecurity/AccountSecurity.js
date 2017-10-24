@@ -25,7 +25,7 @@ class AccountSecurity extends React.Component {
 
 		return <div>
                     <div className={basecss.child_title}>
-                        { this.formatMessage({id:"mine.person.requirement"})}
+                        { this.formatMessage({id:"mine.person.account"})}
                     </div>
                     <div className={css.account}>
                             <div  className={css.account_title}>
@@ -34,7 +34,7 @@ class AccountSecurity extends React.Component {
                                     <p className={css.account_red}> { this.formatMessage({id:"app.login.password_info"})}</p>
                             </div>
                             <div className={css.modify}>
-                                    <Link >
+                                    <Link to={"page/mine/change-password"}>
                                        { this.formatMessage({id:"persondata.modify"})}
                                     </Link>
                             </div>

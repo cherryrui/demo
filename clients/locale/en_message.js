@@ -520,6 +520,7 @@ const en_US = {
     "app.email.verification": "Email verification",
     "app.login.password_info": "Network exception, please change login password again",
     "app.phone.verified_info": "You've already checked your phone number",
-    "app.email.verifi_info": "Email authentication can be used for login"
+    "app.email.verifi_info": "Email authentication can be used for login",
+    "original.password":"original password"
 }
 export default en_US;

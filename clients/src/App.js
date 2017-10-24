@@ -218,6 +218,11 @@ const AccountSecurity = (location, cb) => {
         cb(null, require('./component/AccountSecurity/AccountSecurity.js').default)
     }, 'accountsecurity')
 }
+const ChangePassword= (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/ChangePassword/ChangePassword.js').default)
+    }, 'change-password')
+}
 const Main = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/Main/Main.js').default)
@@ -471,6 +476,7 @@ ReactDOM.render(
                                 <Route path="certification" getComponent={Certification}/>
                                 <Route path="account" getComponent={AccountSecurity}/>
                                 <Route path="requirement" getComponent={Requirements}/>
+                                <Route path="change-password" getComponent={ChangePassword}/>
                             </Route>
                             <Route path="product-editor" getComponent={ProductEditor}/>
                         </Route>

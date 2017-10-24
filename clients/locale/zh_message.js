@@ -518,6 +518,7 @@ const zh_CN = {
     "app.email.verification": "邮箱验证",
     "app.login.password_info": "网络危险，请重新修改登录密码",
     "app.phone.verified_info": "你已经验证过，手机号码",
-    "app.email.verifi_info": "邮箱认证，可以用于登录"
+    "app.email.verifi_info": "邮箱认证，可以用于登录",
+    "original.password":"初始密码"
 }
 export default zh_CN;
