@@ -45,7 +45,7 @@ const zh_CN = {
     "app.cancel": "取消",
     "app.before": "上一步",
     "app.save": "保存",
-    "app.refused":"已拒绝",
+    "app.refused": "已拒绝",
     "app.product_category": "产品分类",
     "sort.comp": "综合",
     "sort.new": "新品",
@@ -107,7 +107,7 @@ const zh_CN = {
     "post.upload": "上传表格",
     "post.click": "点击这里",
     "post.demand_way": "需求方式",
-    "post.demandNo":"需求编号",
+    "post.demandNo": "需求编号",
     "cart.cart": "我的购物车",
     "cart.confirm.order": "确认订单",
     "cart.pay": "支付",
@@ -511,7 +511,7 @@ const zh_CN = {
     "app.select.time": "请选择时间 ",
     "post.want.img": "图片",
     "post.want.file": "文件",
-   "post.company.logo": "请输入公司logo",
+    "post.company.logo": "请输入公司logo",
     "product.detail.inventory.no": "缺货，不能买",
     "app.login.password": "登陆密码",
     "app.phone.verification": "手机验证",
@@ -519,6 +519,9 @@ const zh_CN = {
     "app.login.password_info": "网络危险，请重新修改登录密码",
     "app.phone.verified_info": "你已经验证过，手机号码",
     "app.email.verifi_info": "邮箱认证，可以用于登录",
-    "original.password":"初始密码"
+    "original.password": "初始密码",
+    "enter.original.password": "请输入初始密码",
+    "phone.verification.code": "手机验证码"
+
 }
 export default zh_CN;

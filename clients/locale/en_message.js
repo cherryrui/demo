@@ -46,7 +46,7 @@ const en_US = {
     "app.cancel": "cancel",
     "app.before": "Last Step",
     "app.save": "Save",
-    "app.refused":"refused",
+    "app.refused": "refused",
     "app.product_category": "Product Category",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
@@ -105,7 +105,7 @@ const en_US = {
     "post.upload": "Upload File",
     "post.click": "Click here",
     "post.demand_way": "demandWay",
-    "post.demandNo":"DemandNo",
+    "post.demandNo": "DemandNo",
     "cart.cart": "My Cart",
     "cart.confirm.order": "Confirm Order",
     "cart.pay": "Pay",
@@ -412,7 +412,7 @@ const en_US = {
     "repwd.check.pwd_warn": "The two input passwords do not match",
     "repwd.authen": "validation",
     "reset.success.info": "Password reset success!",
-    "repwd.get_code": "Get the verification code",
+    "repwd.get_code": "Get verification code",
     "authen.authen.Obtainverification": "Access to verify",
     "authen.authen.Everificationcode": "Email verification code",
     "authen.authen.nextstep": "next step",
@@ -521,6 +521,8 @@ const en_US = {
     "app.login.password_info": "Network exception, please change login password again",
     "app.phone.verified_info": "You've already checked your phone number",
     "app.email.verifi_info": "Email authentication can be used for login",
-    "original.password":"original password"
+    "original.password": "original password",
+    "enter.original.password": "Please enter your initial password",
+    "phone.verification.code": "Moblile phone verification code"
 }
 export default en_US;
