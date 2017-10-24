@@ -7,6 +7,7 @@ import css from './PersonData.scss';
 import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
 import Util from '../../Util.js';
+import CusModal from '../Public/CusModal/CusModal.js';
 import {
     Link
 } from 'react-router';
@@ -23,12 +24,25 @@ import {
     Cascader,
     Form,
     Select,
+    Checkbox,
     message
 } from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 class PersonData extends React.Component {
+    state = {
+        loading: false,
+        visible: false,
+    }
+    handleCertification = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
     static propTypes = {
         intl: intlShape.isRequired
     };
@@ -41,6 +55,12 @@ class PersonData extends React.Component {
             user: JSON.parse(sessionStorage.user),
             options: [],
         };
+        let {
+            intl: {
+                formatMessage
+                }
+            } = this.props;
+        this.formatMessage = this.props.intl.formatMessage;
     }
     componentWillMount() {
         axios.get('/user/get-city-by-parent.json').then(res => {
@@ -156,6 +176,30 @@ class PersonData extends React.Component {
                 formatMessage
             }
         } = this.props;
+        const { visible, loading } = this.state;
+        let formItemLayout = {
+            labelCol: {
+                span: 3,
+                offset: 5,
+            },
+            wrapperCol: {
+                span: 8,
+            },
+        };
+        const tailFormItemLayout = {
+
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                    offset: 0,
+                },
+                sm: {
+                    span: 14,
+                    offset: 8,
+
+                },
+            },
+        };
         return <div>
             <div className={basecss.child_title}>
                 <FormattedMessage id="mine.person.data" defaultMessage="分类" />
@@ -283,9 +327,17 @@ class PersonData extends React.Component {
                     <span  className={css.text_certification}>
                         {formatMessage({id: 'persondata.certification'})}
                     </span>
-                    <Button type="primary" className={css.button_certification}>
+                    <Button type="primary" className={css.button_certification} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
+                    <CusModal width="650"
+                        title= { this.formatMessage({id:"app.processing"})}
+                        visible={visible}
+                        closeModal={this.handleCancel}
+                    >
+
+
+                    </CusModal>
                 </span>
                 :this.state.user.isAuthentication==1?<span
                      className={css.text} style={{ color: '#ffa300' }}>
