@@ -221,6 +221,7 @@ class CartList extends React.Component {
                     }
                 })
             })
+            console.log(products);
             this.props.handleStep ? this.props.handleStep(1, products) : "";
         } else {
             message.warning(this.formatMessage({

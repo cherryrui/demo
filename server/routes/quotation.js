@@ -45,5 +45,24 @@ router.post('/get-quotation.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
+	.get('/delete-quotation.json', async ctx => {
+		let result = null,
+			id = ctx.request.query.id;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/quotation/deleteQuotationOrder',querystring.stringify({quotationIds:id})).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.post('/get-productlist-byId.json',async ctx=>{
+		let result = null,
+			param = ctx.request.body;
+			console.log(param)
+		await axios.post(url+'/quotation/queryQuotationById',querystring.stringify(param)).then(res =>{
+			result = res.data;
+			console.log(result)
+		})
+		ctx.body = result;
+	})
 
 module.exports = router;
