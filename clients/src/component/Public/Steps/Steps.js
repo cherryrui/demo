@@ -7,15 +7,18 @@ import {
 class Steps extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			current: this.props.current ? this.props.current : 0,
+	}
+	handleClick = (index) => {
+		console.log(index);
+		if (this.props.current > index) {
+			this.props.changeStep ? this.props.changeStep(index) : ""
 		}
 	}
 	render() {
 		let current = this.props.current ? this.props.current : 0;
 		return <div className={`${this.props.className} ${css.body}`} style={this.props.style}>
 			{this.props.steps.map((item,index)=>{
-				return <p className={css.steps_item}>
+				return <p className={css.steps_item} onClick={this.handleClick.bind(this,index)}>
 					<p className={current<index?css.icon:css.icon_active}>
 						<p className={index==0?css.no_show:current==index?css.active:css.normal}></p>
 						<span className={current<index?css.step:css.step_active}>{index+1}</span>

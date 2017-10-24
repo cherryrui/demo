@@ -41,6 +41,7 @@
 .icon_active{
     @extend .icon;
     margin-top: -3px;
+    cursor: pointer;
     .step_active{
         background: #ffc70d;
         width: 36px;

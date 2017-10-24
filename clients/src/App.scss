@@ -2,6 +2,12 @@
 .main{
   background: $background-color;
 }
+button{
+  min-width: 120px;
+}
+div[class="ant-row ant-form-item"]{
+      margin-bottom: 10px;
+}
 .index{
   height: 100%;
   font-size: 14px;

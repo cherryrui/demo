@@ -31,7 +31,7 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 4,
+			current: 0,
 			product: {
 				productId: 76
 			},
@@ -81,6 +81,9 @@ class ProductEditor extends React.Component {
 			visible: true
 		})
 	}
+	changeStep = (step) => {
+		console.log(step);
+	}
 
 
 	render() {
@@ -97,7 +100,7 @@ class ProductEditor extends React.Component {
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
-			<Steps steps={operator.steps} current={this.state.current}/>
+			<Steps steps={operator.steps} changeStep={this.changeStep} current={this.state.current}/>
 			<div className={css.body}>
 				{this.state.current==0?<ProductBasic product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:this.state.current==1?<ProductPicture product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
