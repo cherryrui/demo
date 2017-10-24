@@ -89,10 +89,14 @@
   padding: 10px;
 }
 .navigate{
-  padding: 10px 0;
-  color: $theme-color;
+    padding-left: 20px;
+    height: 36px;
+    color: #2e2b2e;
+    background: white;
+    line-height: 36px;
+    margin-bottom: 20px;
   span{
-    color: $theme-color;
+    color: $font-color;
     font-size: 16px;
     font-weight: normal;
   }

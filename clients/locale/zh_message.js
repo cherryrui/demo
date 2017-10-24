@@ -237,6 +237,9 @@ const zh_CN = {
     "mine.product.upload_img": "上传图片",
     "mine.product.set_default": "设为主图",
     "mine.product.auto": "自动生成",
+    "mine.product.choose.attr": "选择属性",
+
+    "mine.product.search": "请输入品牌名称进行搜索",
 
     "mine.product.name_warn": "请输入产品名称",
     "mine.product.brand_warn": "请选择品牌",

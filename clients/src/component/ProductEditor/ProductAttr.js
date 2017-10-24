@@ -2,7 +2,6 @@ import React from 'react';
 import css from './ProductEditor.scss';
 import appcss from '../../App.scss';
 import axios from 'axios';
-import lrz from 'lrz';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -41,28 +40,27 @@ class ProductAttr extends React.Component {
 	}
 	componentWillMount() {
 		console.log(this.props.product);
-		//根据产品id获取其所有的属性
-		axios.get(`/product/get-product-attr.json?pid=${this.props.product.id}`).then(res => {
-			let category = res.data.category;
-			category[0].is_show = true;
-			if (this.props.product.category && this.props.product.category.length > 0) {
-				this.props.product.category.map(item => {
-					category.map(cate => {
-						if (item.id == cate.id) {
-							item.attr.map(at => {
-								cate.attr.map(att => {
-									if (at.id == att.id) {
-										att.value = at.value
-									}
-								})
-							})
-						}
+		let param = {
+			productId: 76
+		}
+		axios.post('/product/get-product-attr.json', param).then(res => {
+			if (res.data.isSucc) {
+				let category = res.data.result.all;
+				let select = res.data.result.select;
+				category.map(item => {
+					item.property.map(property => {
+						select.map(select_p => {
+							if (property.propertyId == select_p.propertyId) {
+								property.select = select_p.propertyValId;
+							}
+						})
+
 					})
 				})
+				this.setState({
+					category
+				})
 			}
-			this.setState({
-				category: res.data.category
-			})
 		})
 	}
 
@@ -125,6 +123,7 @@ class ProductAttr extends React.Component {
 
 
 	render() {
+		console.log(this.state.category);
 		const {
 			intl: {
 				formatMessage
@@ -132,65 +131,66 @@ class ProductAttr extends React.Component {
 		} = this.props;
 
 		return <div className={css.product_attr}>
-			{this.state.category.map((item,index)=>{
+			{this.state.category.map((item, index) => {
 				return <div className={css.product_attr_list}>
 					<div className={css.product_category}>
 						<p className={css.category_left}>
 							<FormattedMessage id="app.category" defaultMessage="分类"/>&nbsp;:  
 						</p>
 						<p className={css.category_right}>
-							{item.name.map((cate,len)=>{
-								return <p>
-									{cate}{len==item.name.length-1?"":">>"}
-								</p>
-							})}
+							{item.categoryName}
 						</p>
 					</div>
 					{item.is_show?<div>
-					{item.attr.map((attr,attr_index)=>{
-						return <div className={css.product_attr_item}>
-							<p className={css.attr_item_left}>
-								{attr.name}&nbsp;
-							</p>
-							<Input placeholder={formatMessage({id: 'mine.product.attr_value_warn'})} 
-									value={attr.value} 
-									onChange={this.handleChange.bind(this,1,index,attr_index)}/>
-						</div>
-					})}
-					{index==0?<div className={css.product_add_title}>
-						<p className={css.add_left}>
-							<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>&nbsp;  
-						</p>
-						<Tooltip title={formatMessage({id: 'mine.product.attr_add'})}>
-							<Button icon="plus" onClick={this.handleAttr.bind(this,-1)}/>
-						</Tooltip>
+						{item.property.map((attr,attr_index)=>{
+							return <div className={css.category_attr}>
+								<div className={css.category_left}>
+									<FormattedMessage id="mine.product.choose.attr" defaultMessage=""/>:
+								</div>
+								<div className={css.categoty_attr_list}>
+									<p className={css.category_attr_title}>
+										{attr.propertyName}:
+									</p>
+									<RadioGroup className={css.category_attr_body} onChange={this.onChange} value={attr.select}>
+										{attr.propertyVals.map(pVal=>{
+											return <Radio value={pVal.valId}>{pVal.propertyValue}</Radio>
+										})}
+								     </RadioGroup>
+								</div>
+							</div>
+						})}
 					</div>:""}
-					{index==0?this.state.new_attr.map((item,attr_index)=>{
-						return <div>
-							<div className={css.product_attr_item}>
-								<p className={css.attr_item_left}>
-									<FormattedMessage id="mine.product.attr_name" defaultMessage="属性名称"/>&nbsp;:  
-								</p>
-					
-								<Input placeholder={formatMessage({id: 'mine.product.attr_name_warn'})} 
-									onChange={this.handleChange.bind(this,0,attr_index,'name')}/>
-								<Tooltip title={formatMessage({id: 'mine.product.attr_delete'})}>
-									<Button icon="minus" onClick={this.handleAttr.bind(this,attr_index)}/>
-								</Tooltip>
-							</div>
-							<div className={css.product_attr_item}>
-								<p className={css.attr_item_left}>
-									<FormattedMessage id="mine.product.attr_value" defaultMessage="属性值"/>&nbsp;:  
-								</p>
-								<Input placeholder={formatMessage({id: 'mine.product.attr_value_warn'})} 
-								onChange={this.handleChange.bind(this,0,attr_index,'value')}/>
-							</div>
-						</div>
-					}):""}
-				</div>:""}
-				<p className={css.category_icon} onClick={this.handleShow.bind(this,index)}>
-					{item.is_show?<Icon type="up" />:<Icon type="down" />}
+					<p className={css.category_icon} onClick={this.handleShow.bind(this,index)}>
+						{item.is_show?<Icon type="up" />:<Icon type="down" />}
+					</p>
+				</div>})}
+			<div className={css.product_add_title}>
+				<p className={css.category_left}>
+					<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>: 
 				</p>
+				<Tooltip title={formatMessage({id: 'mine.product.attr_add'})}>
+					<Button className={appcss.button_blue} icon="plus" onClick={this.handleAttr.bind(this,-1)}/>
+				</Tooltip>
+			</div>
+			{this.state.new_attr.map((item,attr_index)=>{
+				return <div className={css.product_custom}>
+					<div className={css.product_attr_item}>
+						<p className={css.category_left}>
+							<FormattedMessage id="mine.product.attr_name" defaultMessage="属性名称"/>&nbsp;:  
+						</p>
+						<Input placeholder={formatMessage({id: 'mine.product.attr_name_warn'})} 
+							onChange={this.handleChange.bind(this,0,attr_index,'name')}/>
+					</div>
+					<div className={css.product_attr_item}>
+						<p className={css.product_attr_item_title}>
+							<FormattedMessage id="mine.product.attr_value" defaultMessage="属性值"/>&nbsp;:  
+						</p>
+						<Input placeholder={formatMessage({id: 'mine.product.attr_value_warn'})} 
+						onChange={this.handleChange.bind(this,0,attr_index,'value')}/>
+					</div>
+					<Tooltip title={formatMessage({id: 'mine.product.attr_delete'})}>
+						<Button className={appcss.button_blue} icon="minus" onClick={this.handleAttr.bind(this,attr_index)}/>
+					</Tooltip>
 				</div>
 			})}
 			<div className={css.product_footer}>

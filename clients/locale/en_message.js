@@ -214,6 +214,8 @@ const en_US = {
     "mine.product.list": "Product List",
     "mine.product.management": "Product manager",
     "mine.product.auto": "autogeneration",
+    "mine.product.choose.attr": "Choose attribute",
+    "mine.product.search": "please input brand name to search",
 
     "mine.product.basic": "Basic information",
     "mine.product.picture": "Product guidance",

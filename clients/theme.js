@@ -5,11 +5,11 @@ module.exports = () => {
 	return {
 		'primary-color': '#ffc70d',
 		'link-color': '#ff9a2c',
-		'input-height-base': '28px',
+		'input-height-base': '36px',
 		'input-height-lg': '36px',
 		'input-height-sm': '20px',
 		'font-size-base': '14px',
-		'btn-height-base': '28px',
+		'btn-height-base': '36px',
 		'btn-height-lg': '36px',
 		'btn-height-sm': '20px',
 		"table-header-bg": "#ffc70d",

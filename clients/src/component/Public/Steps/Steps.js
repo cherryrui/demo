@@ -16,7 +16,7 @@ class Steps extends React.Component {
 		return <div className={`${this.props.className} ${css.body}`} style={this.props.style}>
 			{this.props.steps.map((item,index)=>{
 				return <p className={css.steps_item}>
-					<p className={css.icon}>
+					<p className={current<index?css.icon:css.icon_active}>
 						<p className={index==0?css.no_show:current==index?css.active:css.normal}></p>
 						<span className={current<index?css.step:css.step_active}>{index+1}</span>
 						<p className={index==this.props.steps.length-1?css.no_show:current==0?css.normal:current-1==index?css.active:css.normal}></p>

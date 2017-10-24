@@ -193,11 +193,11 @@ class ProductSpec extends React.Component {
 				</div>
 			})}
 			<div className={css.product_footer}>
-				<Button type='primary' className={appcss.button_green} onClick={this.backStep}>
-					<FormattedMessage id="app.before" defaultMessage="上一步"/>  
+				<Button type="primary">
+					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
-				<Button type='primary' loading={this.state.loading} onClick={this.handleSave}>
-					<FormattedMessage id="app.save" defaultMessage="保存"/> 
+				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
+					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>
 			</div>
 		</div>

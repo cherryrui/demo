@@ -4,12 +4,7 @@ const {
 	url
 } = require('../config/index');
 var querystring = require('querystring');
-/**
- * 根据二级分类id，获取三级分类列表
- * @param  {[type]} '/get-category.json' [description]
- * @param  {[type]} async(ctx,           next          [description]
- * @return {[type]}                      [description]
- */
+
 router.get('/get-category.json', async(ctx, next) => {
 		let cid = ctx.query.cid,
 			result = [];
@@ -89,50 +84,6 @@ router.get('/get-category.json', async(ctx, next) => {
 	.get('/get-product-info-byid.json', async(ctx, next) => {
 		let product = {},
 			id = ctx.query.id;
-		product = {
-			id: 1,
-			price: 200,
-			name: "年底萨达撒大萨达撒",
-			moq: 1,
-			unit: "台",
-			sales: 2000,
-			imgs: ["../img/product.jpg", "../img/product.jpg", "../img/product.jpg", "../img/product.jpg"],
-			brand_id: 1,
-			attr: [{
-				id: 1,
-				name: "颜色",
-				value: [{
-					id: 1,
-					value: "红色"
-				}, {
-					id: 2,
-					value: "蓝色"
-				}, {
-					id: 3,
-					value: "绿色"
-				}]
-			}, {
-				id: 2,
-				name: "尺寸",
-				value: [{
-					id: 1,
-					value: "23"
-				}, {
-					id: 2,
-					value: "24"
-				}, {
-					id: 3,
-					value: "25"
-				}]
-			}, ],
-			category: [{
-				id: 1,
-				category_id: [1, 1]
-			}, {
-				id: 2,
-				category_id: [1, 1]
-			}],
-		}
 		ctx.body = {
 			product: product
 		}
@@ -192,6 +143,40 @@ router.get('/get-category.json', async(ctx, next) => {
 			id: 1,
 		}
 	})
+	.post('/add-product-basic.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProduct", querystring.stringify(param)).then(res => {
+				/*console.log(69, res.data)*/
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/save-product-imgs.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProductImages", querystring.stringify(param)).then(res => {
+				/*console.log(69, res.data)*/
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 	.get('/get-product-specif.json', async(ctx, next) => {
 		let specif = [];
 		specif = [{
@@ -247,44 +232,13 @@ router.get('/get-category.json', async(ctx, next) => {
 
 //或者产品属性
 //
-.get('/get-product-attr.json', async(ctx, next) => {
-		let pid = ctx.query.pid;
-		let category = [];
-		category = [{
-			id: 1,
-			name: ["分类1", "分类2", "分类3"],
-			attr: [{
-				id: 1,
-				name: "属性1"
-			}, {
-				id: 2,
-				name: "属性2"
-			}, ]
-		}, {
-			id: 2,
-			name: ["分类1", "分类2", "分类3"],
-			attr: [{
-				id: 1,
-				name: "属性1"
-			}, {
-				id: 2,
-				name: "属性2"
-			}, ]
-		}, {
-			id: 3,
-			name: ["分类1", "分类2", "分类3"],
-			attr: [{
-				id: 1,
-				name: "属性1"
-			}, {
-				id: 2,
-				name: "属性2"
-			}, ]
-		}]
-
-		ctx.body = {
-			category: category
-		}
+.post('/get-product-attr.json', async(ctx, next) => {
+		let productId = ctx.request.body.productId,
+			result;
+		await axios.get(url + '/property/queryProductPropertyByCategory/' + productId).then(res => {
+			result = res.data;
+		})
+		ctx.body = result
 	})
 	/**
 	 * 上传产品的属性信息，attr：已有属性，new_attr：自定义属性
