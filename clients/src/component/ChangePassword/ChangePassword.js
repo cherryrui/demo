@@ -34,14 +34,15 @@ class ChangePassword extends React.Component {
   }
   handlePassword = () => {
     this.setState({
-      visible: true,
+      visible: false,
     });
   }
   handleOk = (e) => {
-    console.log(e);
+    /*console.log(e);*/
     this.setState({
       visible: false,
     });
+    this.props.history.pushState(null, "/page/mine/account");
   }
   handleCancel = () => {
     this.setState({
@@ -54,6 +55,36 @@ class ChangePassword extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        if(values.password == values.re_password){
+            let param = {
+              originalPwd:values.original_password,
+              password:values.password
+            };
+            axios.post('/user/repassword.json',param).then(res=>{
+              console.log(res.data);
+              if(res.data.isSucc){
+                message.success(this.formatMessage({
+                  id:"reset.success.info"
+                }));
+                this.setState({
+                  visible:true
+                })
+                /*this.props.history.pushState(null, "/page/mine/account");*/
+              }else if(res.data.code == 104){
+                this.setState({
+                    user: JSON.parse(sessionStorage.user),
+                }) 
+                this.props.handleVisible ? this.props.handleVisible() : "";              
+              }else{
+                message.error(res.data.message);
+              }
+            })
+        }else{
+          message.error(this.formatMessage({
+            id:"repwd.check.pwd_warn"
+          }))
+        }
+        
       }
     });
   }
@@ -111,69 +142,63 @@ class ChangePassword extends React.Component {
             </div>
             <div className={css.account_from}>
                 <Form onSubmit={this.handleSubmit}>
-                    <FormItem
-
-
-			          {...formItemLayout}
+                  <FormItem
+			                 {...formItemLayout}
                         label={formatMessage({id: 'original.password'})}
-
-                    >
-			          {getFieldDecorator('original_password', {
+                  >
+			                  {getFieldDecorator('original_password', {
                           rules: [ {
                               required: true, message: this.formatMessage({id:'enter.original.password'}),
                           }],
-                      })(
-                          <Input className={appcss.form_input} type='password'/>
-                      )}
+                        })(
+                            <Input className={appcss.form_input} type='password'/>
+                         )}
                     </FormItem>
 
                     <FormItem
-			          {...formItemLayout}
+			                  {...formItemLayout}
                         label={formatMessage({id: 'repwd.new.pwd'})}
-
                     >
-			          {getFieldDecorator('password', {
+			                   {getFieldDecorator('password', {
                           rules: [{
                               required: true, message:this.formatMessage({ id:'register.password.warn'}),
                           }],
-                      })(
+                        })(
                           <Input  type='password' className={appcss.form_input}/>
-                      )}
+                        )}
                     </FormItem>
                     <FormItem
-			          {...formItemLayout}
+			                 {...formItemLayout}
                         label={formatMessage({id: 'repwd.config.pwd'})}
-
                     >
-			          {getFieldDecorator('re_password', {
+			                 {getFieldDecorator('re_password', {
                           rules: [{
                               required: true, message:this.formatMessage( {id:'register.re_password.warn'}),
                           }],
-                      })(
+                        })(
                           <Input type='password' className={appcss.form_input}/>
-                      )}
+                        )}
                     </FormItem>
                     <FormItem
-			          {...formItemLayout}
-                        label={formatMessage({id: 'phone.verification.code'})}
-
+			                   {...formItemLayout}
+                          label={formatMessage({id: 'phone.verification.code'})}
                     >
-                    <Row gutter={8}>
-                         <Col span={11}>   
-      			                 {getFieldDecorator('phone', {
-                                rules: [ {
-                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
-                                }],
-                            })(
-                                <Input  className={css.phone_input} />                            
-                            )}
-                            </Col>
-                            <Col span={12}>
-                                 <Button className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
-                                        {this.formatMessage({id: 'repwd.get_code'})}
-                                  </Button>
-                            </Col>
-                          </Row>
+                          <Row gutter={8}>
+                               <Col span={11}>   
+            			                 {getFieldDecorator('phone', {
+                                      rules: [ {
+                                          required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
+                                      }],
+                                  })(
+                                      <Input  className={css.phone_input} />                            
+                                  )}
+                                </Col>
+                                <Col span={12}>
+                                       <Button className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
+                                              {this.formatMessage({id: 'repwd.get_code'})}
+                                        </Button>
+                                  </Col>
+                                </Row>
                     </FormItem>
 
 
@@ -185,26 +210,26 @@ class ChangePassword extends React.Component {
                             onClick={this.handlePassword} 
                             style={{marginLeft: 10,width:120}} htmlType="submit">
                                   {this.formatMessage({id: 'app.save'})}
-                        </Button>                        <CusModal width="450"
-                    
+                        </Button>                
+                        <CusModal width="450"
                             visible={this.state.visible}
                             closeModal={this.handleCancel}
-                             onOk={this.handleOk}
-                    >
-                          <div className={css.success}>
-                              <div className={css.success_info}>
-                                  <Icon className={css.success_icon} type="smile-o"  /> 
-                                  <p>{this.formatMessage({id: 'reset.success.info'})}</p>
-                              </div>
-                              
-                              <Button  
-                                  className={appcss.button_black}
-                                  style={{width:120,height:36}}
-                                  onClick={this.handleOk} >
-                                 {this.formatMessage({id: 'app.ok'})}
-                              </Button>
-                          </div>
-                    </CusModal> 
+                            onOk={this.handleOk}
+                        >
+                            <div className={css.success}>
+                                <div className={css.success_info}>
+                                    <Icon className={css.success_icon} type="smile-o"  /> 
+                                    <p>{this.formatMessage({id: 'reset.success.info'})}</p>
+                                </div>
+                                
+                                <Button  
+                                    className={appcss.button_black}
+                                    style={{width:120,height:36}}
+                                    onClick={this.handleOk} >
+                                   {this.formatMessage({id: 'app.ok'})}
+                                </Button>
+                            </div>
+                        </CusModal> 
                     </FormItem>
                 </Form>
             </div>

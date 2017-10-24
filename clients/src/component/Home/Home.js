@@ -149,7 +149,7 @@ class Home extends React.Component {
     }
     onMouse = (e) => {
         if (e == "enter") {
-            console.log(this.timer);
+            /*console.log(this.timer);*/
             if (this.timer) {
                 clearTimeout(this.timer);
             }
@@ -179,7 +179,7 @@ class Home extends React.Component {
         let param = [];
         param.push(id);
         axios.post('/cart/delete-cart.json', param).then(res => {
-            console.log(res.data);
+            /*console.log(res.data);*/
             if (res.data.isSucc) {
                 this.props.getShoppingCart();
             }
@@ -187,7 +187,7 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log(this.props.cart);
+        /*console.log(this.props.cart);*/
         let cart_menu = (
             <Menu>
                 <Menu.Item className={css.cart_product_title}>
