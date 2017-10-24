@@ -223,6 +223,11 @@ const ChangePassword= (location, cb) => {
         cb(null, require('./component/ChangePassword/ChangePassword.js').default)
     }, 'change-password')
 }
+const PhoneVerifi= (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/PhoneVerifi/PhoneVerifi.js').default)
+    }, 'phone-verifi')
+}
 const Main = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/Main/Main.js').default)
@@ -273,7 +278,7 @@ class App extends React.Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        /*console.log(nextProps);*/
+        console.log(nextProps);
     }
     handleChange = () => {
         if (appLocale.locale == 'zh') {
@@ -305,7 +310,7 @@ class App extends React.Component {
     }
 
     render() {
-        /*console.log(this.props.order);*/
+        console.log(this.props.order);
         let orderStatus = [],
             sum = 0;
         if (this.props.order.order_status && this.props.order.order_status.length > 0) {
@@ -477,6 +482,7 @@ ReactDOM.render(
                                 <Route path="account" getComponent={AccountSecurity}/>
                                 <Route path="requirement" getComponent={Requirements}/>
                                 <Route path="change-password" getComponent={ChangePassword}/>
+                                <Route path="phone-verifi" getComponent={PhoneVerifi}/>
                             </Route>
                             <Route path="product-editor" getComponent={ProductEditor}/>
                         </Route>

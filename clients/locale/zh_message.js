@@ -524,7 +524,13 @@ const zh_CN = {
     "app.email.verifi_info": "邮箱认证，可以用于登录",
     "original.password": "初始密码",
     "enter.original.password": "请输入初始密码",
-    "phone.verification.code": "手机验证码"
+    "phone.verification.code": "手机验证码",
+    "moblie.phone": "手机",
+    "verification.mode": "验证方式",
+    "verification.mode.select": "请选择验证方式",
+    "new.number": "新号码",
+    "enter.new.number": "请输入新手机号码",
+    "phone.verifi. success": "手机验证成功"
 
 }
 export default zh_CN;

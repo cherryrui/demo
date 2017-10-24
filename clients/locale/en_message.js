@@ -525,6 +525,12 @@ const en_US = {
     "app.email.verifi_info": "Email authentication can be used for login",
     "original.password": "original password",
     "enter.original.password": "Please enter your initial password",
-    "phone.verification.code": "Moblile phone verification code"
+    "phone.verification.code": "Moblile phone verification code",
+    "moblie.phone": "Moblie phone",
+    "verification.mode": "Verification Mode",
+    "new.number": "new number",
+    "enter.new.number": "Please enter the new phone number",
+    "phone.verifi. success": "Mobile phone verification success",
+    "verification.mode.select": "Select the authentication method",
 }
 export default en_US;
