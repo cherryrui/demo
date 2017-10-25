@@ -52,7 +52,8 @@
 	.user_message{
       width: 395px;
     	margin-left: 20px;
-    	border: 1px solid $border-color;
+    
+      background:#ffffff;
     	padding: 10px;
       height: 130px;
       overflow: hidden
@@ -99,7 +100,7 @@
   padding: 10px 20px 10px 20px;
 	margin-top: 20px;
   width: 860px;
-  border: 1px solid $border-color;
+ 
 }
 %content{
 	background: white;
@@ -277,7 +278,7 @@ border-top: 1px solid $border-color;
   padding: 10px 20px 10px 20px;
   margin-top: 10px;
   width: 860px;
-  border: 1px solid $border-color;
+ 
 
 }
 .like_title{
@@ -350,7 +351,7 @@ border-top: 1px solid $border-color;
 	.like_item{
 		  width: 156px;
     	margin: 10px 5px;
-      border: 1px solid $border-color!important;
+   
 
   }
 }
