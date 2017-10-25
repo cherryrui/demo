@@ -25,9 +25,11 @@ import {
     Form,
     Select,
     Checkbox,
-    message
+    message,
+    Radio
 } from 'antd';
-
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
 class PersonData extends React.Component {
@@ -46,6 +48,9 @@ class PersonData extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired
     };
+    onRadioChange = (e) =>{
+        console.log(`radio checked:${e.target.value}`);
+    } 
 
     constructor(props) {
         super(props);
@@ -165,6 +170,48 @@ class PersonData extends React.Component {
 
         } else if (info.file.status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+    handleChangeUp = (name, info) => {
+        console.log(name, info)
+        if (info.file.status == 'uploading') {
+            let param = {};
+            param[name] = true;
+            this.setState(param);
+        }
+        if (info.file.status === 'done') {
+            info.fileList[0].thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
+            info.file.thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
+            this[name] = info.file.response.url;
+            let param = {};
+            param[name] = true;
+            this.setState(param);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                console.log(values);
+            }
+        });
+    }
+    previewImg = (name) => {
+        this.setState({
+            previewImg: this[name],
+            previewVisble: true,
+        })
+    }
+    removePic = (name, file) => {
+        if (name == "img_logo") {
+
+        } else {
+            let param = {}
+            param[name] = false;
+            this.setState(param);
+            this[name] = null;
         }
     }
     render() {
@@ -335,6 +382,121 @@ class PersonData extends React.Component {
                         visible={visible}
                         closeModal={this.handleCancel}
                     >
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'persondata.real.name'})}
+                            >
+                                {getFieldDecorator('relnames', {
+                                    rules:[{required:true, message:this.formatMessage({id:'app.input.relname'})}]
+                                })(
+                                    <Input className={css.text}/>
+                                )}   
+                            </FormItem>
+                        
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'certif.certif.type'})}
+                            >
+                                {getFieldDecorator('certifications', {
+                                    rules:[{required:true, message:this.formatMessage({id:'app.input.certification'})}]
+                                })(
+                                    <RadioGroup onChange={this.onRadioChange} defaultValue="1">
+                                        <RadioButton value="1">{this.formatMessage({id:"certif.certif.card"})}</RadioButton>
+                                        <RadioButton value="2">{this.formatMessage({id:"certif.certif.green_card"})}</RadioButton>
+                                    </RadioGroup>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'certif.certif.card_number'})}
+                            >
+                                {getFieldDecorator('cardnumber', {
+                                    rules:[{required:true, message:this.formatMessage({id:'app.input.cardnumber'})}]
+                                })(
+                                    <Input className={css.text}/>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                wrapperCol={{ span: 12, offset: 6 }}
+                            >
+                                <p className={css.credentials} >
+                                    {this.formatMessage({id:'agent.upload.credentials'})}
+                                </p>
+                                <div className={appcss.upload}>
+                                    <div className={appcss.uploader_div}>
+                                        <Upload
+                                            name="file"
+                                            action={Util.url+"/tool/upload"}
+                                            onChange={this.handleChangeUp.bind(this,"img_front")}
+                                            onPreview={this.previewImg.bind(this,"img_front")}
+                                            listType="picture-card"
+                                            onRemove={this.removePic.bind(this,"img_front")}
+                                            accept="image/*"
+                                            multiple
+                                        >
+                                            {this.state.img_front ? null : <span className={appcss.upload_icon}>
+                                                <i class="iconfont icon-jiahao"></i>
+                                            </span>}
+                                        </Upload>
+                                        <p className={appcss.side}>
+                                            {this.formatMessage({id: 'agent.front'})}
+                                        </p>
+                                    </div>
+                                    <div className={appcss.uploader_div}>
+                                        <Upload 
+                                            name="file"
+                                            action={Util.url+"/tool/upload"}
+                                            onChange={this.handleChangeUp.bind(this,"img_back")}
+                                            onPreview = {this.previewImg.bind(this,"img_back")}
+                                            listType="picture-card"
+                                            onRemove={this.removePic.bind(this,"img_back")}
+                                            accept="image/*"
+                                            multiple
+                                        >
+                                            {this.state.img_back ? null :<span className={appcss.upload_icon}>
+                                                <i class="iconfont icon-jiahao"></i>
+                                            </span>}
+                                        </Upload>
+                                        <p className={appcss.side}>
+                                            {this.formatMessage({id: 'agent.back'})}
+                                        </p>
+                                    </div>
+                                </div>
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'app.idaddress'})}
+                            >
+                                {getFieldDecorator('idaddress', {
+                                    rules:[{required:true, message:this.formatMessage({id:'app.input.idaddress'})}]
+                                })(
+                                    <Input className={css.text}/>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'register.notes'})}
+                            >
+                                {getFieldDecorator('agreenotes', {
+                                    rules:[{required:true, message:this.formatMessage({id:'app.input.agreenotes'})}]
+                                })(
+                                    <Checkbox onChange={this.onChangeCheck}>Checkbox</Checkbox>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...tailFormItemLayout}
+                                label={this.formatMessage({id:'perau.perau.save'})}
+                            >
+                                <Button type="primary" className={css.submit}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
+                            </FormItem>
+
+                        </Form>
 
 
                     </CusModal>
