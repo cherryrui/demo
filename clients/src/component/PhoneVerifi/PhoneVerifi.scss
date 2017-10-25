@@ -1,0 +1,31 @@
+@import "../../themes";
+.content{
+	    padding-top: 50px;
+    padding-bottom: 100px;
+	background: #ffffff;
+}
+.ship_from{
+
+ padding-top: 50px;
+}
+.verifi_input{
+	height: 36px;
+	wisth:240px;
+
+}
+.reset_success{
+	padding-top: 50px;
+	 display: flex;
+    flex-direction: column;
+    align-items: center;
+     padding-bottom: 30px;
+     .suc_content{
+     	display: flex; 
+    align-items: center;
+    font-size: 24px;
+    color: $theme-color;
+    justify-content: center;
+    padding-top: 50px;
+        padding-bottom: 40px;
+     }
+}

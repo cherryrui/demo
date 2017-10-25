@@ -38,6 +38,22 @@
     	background: $color-step;
     }
 }
+.icon_active{
+    @extend .icon;
+    margin-top: -3px;
+    cursor: pointer;
+    .step_active{
+        background: #ffc70d;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        border: white solid 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $font-color;
+    }
+}
 .title{
 	text-align: center;
 	color: $font-color;

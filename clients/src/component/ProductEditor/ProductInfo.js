@@ -2,7 +2,6 @@ import React from 'react';
 import css from './ProductEditor.scss';
 import appcss from '../../App.scss';
 import axios from 'axios';
-import lrz from 'lrz';
 import TextEditor from '../Public/TextEditor/TextEditor.js';
 
 import {
@@ -147,17 +146,41 @@ class ProductInfo extends React.Component {
 		console.log(this.state.select_modal)
 
 		return <div className={css.product_attr}>
+			
+            <div className={css.product_footer}>
+				<Button type="primary">
+					<FormattedMessage id="app.before" defaultMessage=""/>
+				</Button>
+				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
+					<FormattedMessage id="app.save" defaultMessage=""/>
+				</Button>
+			</div>
+			<Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+            </Modal>
+		</div>
+	}
+}
+class Info extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			select_mode: 1
+		}
+	}
+	render() {
+		return <div>
 			<div className={css.product_info_item}>
 				<p className={css.info_item_left}>
 					<FormattedMessage id="mine.product.info_select" defaultMessage="选择类别"/>&nbsp;:
 				</p>
 				<Select style={{ width: 200 }} onChange={this.handleModel}>
-					{this.state.modal.map((item,index)=>{
+					{this.props.modal.map((item,index)=>{
 						return <Option value={index}>{item.name}</Option>
 					})}
     			</Select>
 			</div>
-			{this.state.select_modal.id?
+			{this.state.select_modal?
 			<div className={css.product_info_item}>
 				<p className={css.info_item_left}>
 					<FormattedMessage id="mine.product.upload_img" defaultMessage="分类"/>&nbsp;:
@@ -177,26 +200,14 @@ class ProductInfo extends React.Component {
 						</div>
 					</div>
 		        </Upload>
-			</div>:""}
-			{this.state.select_modal.id?<div className={`${css.product_info_item} ${css.product_descrip}`}>
+			</div>:<div className={`${css.product_info_item} ${css.product_descrip}`}>
 				<p className={css.info_item_left}>
 					<FormattedMessage id="mine.product.info_descript" defaultMessage="分类"/>&nbsp;:
 				</p>
 				<TextEditor 
 			  		value={this.state.select_modal.text}
                 	onChange={this.handleChange} />
-			</div>:""}
-            <div className={css.product_footer}>
-				<Button type='primary' className={appcss.button_green} onClick={this.backStep}>
-					<FormattedMessage id="app.before" defaultMessage="上一步"/>  
-				</Button>
-				<Button type='primary' loading={this.state.loading} onClick={this.handleSave}>
-					<FormattedMessage id="app.save" defaultMessage="保存"/> 
-				</Button>
-			</div>
-			<Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
-                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-            </Modal>
+			</div>}
 		</div>
 	}
 }

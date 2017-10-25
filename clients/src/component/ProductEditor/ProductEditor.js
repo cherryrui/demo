@@ -5,17 +5,24 @@ import appcss from '../../App.scss';
 import operator from './operator.js';
 import Steps from '../Public/Steps/Steps.js';
 import ProductBasic from './ProductBasic.js';
+import ProductPicture from './ProductPicture.js';
 import ProductAttr from './ProductAttr.js';
 import ProductSpec from './ProductSpec.js';
 import ProductInfo from './ProductInfo.js';
 import ProductInstruct from './ProductInstruct.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js'
 import axios from 'axios';
-import lrz from 'lrz';
 import {
 	FormattedMessage,
 	injectIntl,
 	intlShape
 } from 'react-intl';
+import {
+	Link
+} from 'react-router';
+import {
+	Breadcrumb
+} from 'antd';
 
 class ProductEditor extends React.Component {
 	static propTypes = {
@@ -25,7 +32,11 @@ class ProductEditor extends React.Component {
 		super(props);
 		this.state = {
 			current: 0,
-			product: {}
+			product: {
+				productId: 76
+			},
+			visible: false,
+			reload: false,
 		}
 	}
 
@@ -40,20 +51,17 @@ class ProductEditor extends React.Component {
 	 */
 	handleSteps = (step, product) => {
 		if (step == -1) {
-			axios.get(`/product/get-product-info-byid.json?id=${this.state.product.id}`).then(res => {
-				this.setState({
-					current: this.state.current + step,
-					product: res.data.product
-				})
+			this.setState({
+				current: this.state.current + step,
+				product: product
 			})
 		} else {
 			let next = this.state.current + step;
-			if (this.state.current == 0) {
-				this.state.product = product
-			}
 			if (next > operator.steps.length - 1) {
 				next = 0;
 				this.state.product = {};
+			} else {
+				this.state.product = product
 			}
 			this.setState({
 				current: next,
@@ -63,24 +71,48 @@ class ProductEditor extends React.Component {
 		}
 
 	}
+	handleCancel = () => {
+		this.setState({
+			visible: false
+		})
+	}
+	handleLogin = () => {
+		this.setState({
+			visible: true
+		})
+	}
+	changeStep = (step) => {
+		console.log(step);
+	}
 
 
 	render() {
 		return <div ref={(product_edit)=>{this.product_edit = product_edit}} className={appcss.body}>
-			<div className={basecss.child_title}>
-				<FormattedMessage id="mine.product.upload" defaultMessage="上传产品"/> 
-			</div>
-			<Steps steps={operator.steps} current={this.state.current}/>
+			<div className={appcss.navigate}>
+                <Breadcrumb separator=">>" style={{marginBottom: "10px"}}>
+                    <Breadcrumb.Item >
+                        <Link to='page/mine'>
+                            <FormattedMessage id="mine.person" defaultMessage="首页"/>
+                        </Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <FormattedMessage id="mine.product.upload" defaultMessage="供应商"/>
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+            </div>
+			<Steps steps={operator.steps} changeStep={this.changeStep} current={this.state.current}/>
 			<div className={css.body}>
-				{this.state.current==0?<ProductBasic product={this.state.product} handleSteps={this.handleSteps}/>
-				:this.state.current==1?<ProductAttr product={this.state.product} handleSteps={this.handleSteps}/>
-				:this.state.current==2?<ProductSpec product={this.state.product} handleSteps={this.handleSteps}/>
-				:this.state.current==3?<ProductInfo product={this.state.product} handleSteps={this.handleSteps}/>
-				:this.state.current==4?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps}/>
+				{this.state.current==0?<ProductBasic product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==1?<ProductPicture product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==2?<ProductAttr product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==3?<ProductSpec product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==4?<ProductInfo product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==5?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==6?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:""
 			}	
 			</div>
-			
+			<LoginModal visible={this.state.visible} reload={this.state.reload} closeModal={this.handleCancel}/>
 		</div>
 	}
 

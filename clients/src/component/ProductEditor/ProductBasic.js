@@ -101,49 +101,38 @@ class ProductBasic extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
-				console.log(values);
 				this.setState({
 					loading: true
 				})
-				let img_path = [],
-					img_more = [];
-				console.log('Received values of form: ', values);
-				if (values.files.length > 0) {
-					values.files.map((item, index) => {
-						if (item.url.indexOf("blob:") > -1) {
-							lrz(item.originFileObj).then(res => {
-									//处理成功会执行
-									res.realTp = res.origin.name.split('.')[res.origin.name.split('.').length - 1];
-									console.log(398, index, this.state.fileList.length);
-									/*if (index < this.state.fileList.length) {
-										res.type = 1;
-									}*/
-									axios.post('/img/save-product-img.json', res).then(res => {
-										img_path.push(res.data.path);
-										img_more.push(res.data.fileName);
-										if (img_path.length == this.state.fileList.length) {
-											let product = values;
-											this.submitProduct(product)
-										}
-									})
-								})
-								.catch(err => {
-									// 处理失败会执行
-									console.log("失败", err)
-								})
-								.always(() => {
-									// 不管是成功失败，都会执行
-								});
-						} else {
-							img_path.push(item.path);
-							img_more.push(item.url);
-							if (img_path.length == values.files.length) {
-								let product = values;
-								this.submitProduct(product)
-							}
+				console.log('Received values of form: ', values, this.state.category);
+				values.brand ? values.brandId = values.brand.value : "";
+				let category = [],
+					productCategorys = "[";
+				this.state.category.map(item => {
+					item.category_id.map(cate => {
+						if (category.indexOf(cate) == -1) {
+							category.push(cate);
+							productCategorys += cate + "],[";
 						}
 					})
-				}
+				})
+				console.log(category, productCategorys);
+				productCategorys = productCategorys.substr(0, productCategorys.length - 2);
+				values.productCategorys = productCategorys;
+				axios.post('/product/add-product-basic.json', values).then(res => {
+					this.setState({
+						loading: false
+					})
+					if (res.data.isSucc) {
+						let product = values;
+						product.productId = res.data.result.productId;
+						this.props.handleSteps ? this.props.handleSteps(1, product) : ""
+					} else if (res.data.code == 104) {
+						this.props.login ? this.props.login() : ""
+					} else {
+						message.error(res.data.message);
+					}
+				})
 			}
 		});
 	}
@@ -225,11 +214,8 @@ class ProductBasic extends React.Component {
 	}
 	handleNo = () => {
 		this.props.form.setFieldsValue({
-			no: "P" + moment().format("YYYYMMDDHHMMSS"),
+			productNumber: "P" + moment().format("YYYYMMDDHHMMSS"),
 		});
-	}
-	checkBrand = (rule, value, callback) => {
-		console.log(rule, value, callback);
 	}
 	render() {
 		const {
@@ -267,7 +253,7 @@ class ProductBasic extends React.Component {
                         {...formItemLayout}
                         label={formatMessage({id: 'mine.product.name'})}
                     >
-                        {getFieldDecorator('name', {
+                        {getFieldDecorator('productName', {
                             initialValue: this.state.product.name,
                             rules: [{ required: true, message: formatMessage({id: 'mine.product.name_warn'}), whitespace: true }],
                          })(
@@ -278,7 +264,7 @@ class ProductBasic extends React.Component {
                         {...formItemLayout}
                         label={formatMessage({id: 'mine.product.No'})}
                     >
-                        {getFieldDecorator('no', {
+                        {getFieldDecorator('productNumber', {
                             initialValue: this.state.product.name,
                             rules: [{ required: true, message: formatMessage({id: 'mine.product.No'}), whitespace: true }],
                          })(
@@ -293,10 +279,9 @@ class ProductBasic extends React.Component {
                     	label={formatMessage({id: 'orderdetails.brand'})}
                     >
                         {getFieldDecorator('brand', {
-							rules: [{ validator: this.checkBrand }],
                             initialValue: this.state.product.brand
                         })(
-                        	<SearchInput/>
+                        	<SearchInput placeholder={this.formatMessage({id:"mine.product.search"})}/>
                         )}
                     </FormItem>
                     {this.state.category.map((item,index)=>{
@@ -326,7 +311,7 @@ class ProductBasic extends React.Component {
                     	{...formItemLayout}
                     	label={formatMessage({id: 'mine.product.unit'})}
                     >
-                        {getFieldDecorator('unit', {
+                        {getFieldDecorator('unitId', {
                             rules: [{
                                 required: true, message: formatMessage({id: 'mine.product.unit_warn'}),
                             }],
@@ -344,7 +329,7 @@ class ProductBasic extends React.Component {
                         {...formItemLayout}
                         label={formatMessage({id: 'product.detail.MOQ'})}
                     >
-                        {getFieldDecorator('moq', {
+                        {getFieldDecorator('minBuyQuantity', {
                         	 rules: [{
                                 required: true, message: formatMessage({id: 'product.detail.MOQ'}),
                             }],
@@ -357,13 +342,13 @@ class ProductBasic extends React.Component {
                         {...formItemLayout}
                         label={formatMessage({id: 'mine.product.factory_price'})}
                     >
-                        {getFieldDecorator('factory_price', {
+                        {getFieldDecorator('priceSupplier', {
                             initialValue: this.state.product.name,
                              rules: [{
                                 required: true, message: formatMessage({id: 'mine.product.factory_price'}),
                             }],
                          })(
-							<InputNumber className={appcss.form_input}  style={{width: '100%'}} precision={2} />
+							<InputNumber className={appcss.form_input} min={0}  style={{width: '100%'}} precision={2} />
                         )}
                     </FormItem>
                     <FormItem
@@ -376,7 +361,7 @@ class ProductBasic extends React.Component {
                                 required: true, message: formatMessage({id: 'product.detail.inventory'}),
                             }],
                          })(
-							<InputNumber className={appcss.form_input}  precision={0} style={{width: '100%'}} />
+							<InputNumber className={appcss.form_input} min={0} precision={0} style={{width: '100%'}} />
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout}>
@@ -409,6 +394,15 @@ class SearchInput extends React.Component {
 		this.timeout = null;
 		this.currentValue = "";
 	}
+	componentWillMount() {
+		if (this.props.value) {
+			this.setState({
+				value: this.props.value.value ? this.props.value.value : 0,
+				label: this.props.value.label ? this.props.value.label : 0
+			})
+		}
+		this.getBrand();
+	}
 	componentWillReceiveProps(nextProps) {
 		// Should be a controlled component.
 		if ('value' in nextProps) {
@@ -424,18 +418,18 @@ class SearchInput extends React.Component {
 		this.timeout = setTimeout(this.getBrand(value), 300);
 	}
 	getBrand = (value) => {
-		console.log("getBrand")
 		let param = {
 			brandName: value
 		}
 		this.currentValue = value;
-		console.log(this.currentValue);
 		axios.post('/brand/get-product-brand.json', param).then(res => {
 			if (res.data.isSucc) {
 				console.log(this.currentValue, value);
 				if (this.currentValue === value) {
 					this.setState({
-						data: res.data.result.list
+						data: res.data.result.list,
+						label: res.data.result.allRow == 0 ? "" : value,
+						value: 0
 					})
 				}
 			}
@@ -445,7 +439,7 @@ class SearchInput extends React.Component {
 		console.log(value, isNaN(value))
 		let brand_id = 0,
 			label = "";
-		if (isNaN(value)) {
+		if (isNaN(value) || !value) {
 			label = value;
 			this.setState({
 				label: value,
@@ -467,16 +461,19 @@ class SearchInput extends React.Component {
 		this.triggerChange({
 			value: value,
 			label: label
-
 		});
 	}
 
 	triggerChange = (changedValue) => {
-		console.log("triggerChange====" + changedValue);
 		// Should provide an event to pass value to Form.
+		console.log(changedValue, changedValue.value);
 		const onChange = this.props.onChange;
 		if (onChange) {
-			onChange(Object.assign({}, this.state, changedValue));
+			let value = {
+				value: isNaN(changedValue.value) ? 0 : Number(changedValue.value),
+				label: changedValue.label,
+			}
+			onChange(Object.assign({}, value));
 		}
 	}
 	render() {
@@ -488,7 +485,7 @@ class SearchInput extends React.Component {
 		        value={this.state.label}
 		        className={appcss.form_input}
         		placeholder={this.props.placeholder}
-        		notFoundContent=""
+        		notFoundContent="没有该品牌"
         		style={this.props.style}
         		defaultActiveFirstOption={false}
         		showArrow={false}

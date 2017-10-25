@@ -243,6 +243,9 @@ const zh_CN = {
     "mine.product.upload_img": "上传图片",
     "mine.product.set_default": "设为主图",
     "mine.product.auto": "自动生成",
+    "mine.product.choose.attr": "选择属性",
+
+    "mine.product.search": "请输入品牌名称进行搜索",
 
     "mine.product.name_warn": "请输入产品名称",
     "mine.product.brand_warn": "请选择品牌",
@@ -528,7 +531,13 @@ const zh_CN = {
     "app.email.verifi_info": "邮箱认证，可以用于登录",
     "original.password": "初始密码",
     "enter.original.password": "请输入初始密码",
-    "phone.verification.code": "手机验证码"
+    "phone.verification.code": "手机验证码",
+    "moblie.phone": "手机",
+    "verification.mode": "验证方式",
+    "verification.mode.select": "请选择验证方式",
+    "new.number": "新号码",
+    "enter.new.number": "请输入新手机号码",
+    "phone.verifi. success": "手机验证成功"
 
 }
 export default zh_CN;
