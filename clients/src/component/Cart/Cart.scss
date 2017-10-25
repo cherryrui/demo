@@ -10,9 +10,64 @@
 }
 .steps{
 	padding: 30px 10%;
+	div[class="ant-steps-head-inner"]{
+		border-color: $color-grey !important;
+		background-color: $color-grey !important;
+		height: 30px;
+		width: 30px;
+		color: white;
+	}
+	div[class="ant-steps-title"]{
+		font-size: 20px;
+	}
+	div[class="ant-steps-item ant-steps-status-process"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		div[class="ant-steps-title"]{
+			color: $color-green !important;
+			font-size: 20px;
+		}
+	}
+	div[class="ant-steps-item ant-steps-status-finish"]{
+		div[class="ant-steps-head-inner"]{
+			border-color: $color-green !important;
+			background-color: $color-green !important;
+			font-size: 20px;
+		}
+		span[class="ant-steps-icon anticon anticon-check"]{
+			color: white !important;
+			font-size: 20px;
+		}
+	}
 }
 .table_product{
-	
+	display: flex;
+	img{
+		border: 1px solid $border-color;
+		flex-shrink: 0;
+		width: 100px;
+		height: 100px;
+	}
+	.info{
+      padding-left: 10px;
+      height: 100px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      .name{
+      	overflow: hidden;
+    	display: -webkit-box;
+    	-webkit-line-clamp: 1;
+    	-webkit-box-orient: vertical;
+   	 	word-break: break-all;
+    	height: 18px;
+      }
+	}
 }
 .cart_list{
 	th{
@@ -62,57 +117,6 @@
     	align-items: center;
 	}
 }
-
-
-  .modify_address{
-    padding-top: 24px;
-    .address_input{
-      height: 36px;
-      width: 400px;
-      border-radius: 2px;
-
-      input{
-        border-radius: 2px !important;
-        height: 36px;
-      }
-
-    }
-    .address_input_tel{
-      width: 340px !important;
-      border-radius: 2px !important;
-      height:36px;
-      input{
-        border-radius: 2px !important;
-        height: 36px;
-
-      }
-
-    }
-    .cancel{
-      background-color: $button-green;
-      border-color: $button-green;
-      margin-right: 20px;
-      border-radius: 2px;
-      width:120px;
-    }
-    .cancel:hover{
-      background-color: $button-green-active;
-      border-color: $button-green-active;
-    }
-    .submit{
-      width:120px;
-      border-radius: 2px ;
-      background-color:$button-blue;
-    }
-    .submit:hover{
-      width:120px;
-      border-radius: 2px ;
-      background-color:$button-blue-active;
-    }
-
-  }
-
-
 .left{
 	margin-left: 10px;
 	flex-grow: 1;
@@ -163,9 +167,6 @@
     padding: 20px 0 10px 0;
     display: flex;
     justify-content: space-between;
-    p{
-    	cursor: pointer;
-    }
 }
 %confirm_body{
 	border: 1px solid #eee;
@@ -196,35 +197,17 @@
 }
 .confirm_mode{
 	display: flex;
-
 	.item{
-		  padding: 10px 30px;
-    	background: $back-ground-shallow-grey;
-    	border-radius: 2px;
+		padding: 10px 30px;
+    	background: #eee;
+    	border-radius: 3px;
     	margin-right: 30px;
-      cursor: pointer;
-
+    	margin-bottom: 20px;
 	}
 	.active{
 		@extend .item;
 		border: 2px solid $theme-color;
-
 	}
-}
-.confirm_mode_delivery{
-  display: flex;
-  .item{
-    padding: 10px 30px;
-    background: #ffffff;
-    border-radius: 2px;
-    margin-right: 30px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-  }
-  .active{
-    @extend .item;
-    border: 2px solid $theme-color;
-  }
 }
 .radio{
 	padding: 10px 0;
@@ -237,9 +220,6 @@
     	width: 40%;
     	border: 1px solid $color-grey;
     	margin: 10px;
-      a{
-       color: $color-red;
-      }
 	}
 	.active{
 		@extend .item;
@@ -313,7 +293,7 @@
 		border: 1px solid $border-color;
 		padding: 15px 16px 0px 16px;
 		display: flex;
-      width:840px;
+      width:740px;
       margin: auto;
       justify-content: space-between;
 
@@ -424,11 +404,4 @@ background:  $button-green;
 .cancel:hover{
 	background-color: $button-green-active;
 	border-color: $button-green-active;
-}
-.pointer{
-  cursor: pointer;
-}
-.remark_test{
-  height: 6px;
-  border-radius: 2px;
 }

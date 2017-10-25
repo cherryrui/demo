@@ -47,13 +47,13 @@
   padding: 25px 70px;
 }
 .category{
-  border: 1px solid $border-color;
+ 
 }
 .category_item{
   display: flex;
-  border-bottom: 40px solid $theme-color;
+  border-bottom: 40px solid $bar-color;
   .left{
-    background-color: $color-grey;
+    background-color: $item-color;
     width: 170px;
     flex-shrink: 0;
     .cate_title{
@@ -96,7 +96,7 @@
     }
   }
   .right{
-    border-left: 1px solid $border-color;
+    background: $item-color;
     width: 220px;
     flex-shrink: 0;
   }
@@ -165,7 +165,7 @@
 .icon{
   text-align: center;
   font-size: 30px;
-  color: $theme-color;
+  color: $color-grey;
   padding: 10px 0;
   i{
     font-size: 40px;
@@ -176,7 +176,7 @@
   font-size: 30px;
   font-weight: bold;
   padding-bottom: 25px;
-  color: $theme-color;
+  color:$color-grey;
   i{
     font-size: 40px;
     margin-right: 10px;
@@ -205,7 +205,7 @@
   }
 }
 .text_left{
-  background-color: $color-grey;
+  background-color: #ffffff;
   height: 164px;
   margin-bottom: 30px;
   display: flex;
