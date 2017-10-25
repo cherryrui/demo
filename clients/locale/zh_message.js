@@ -47,12 +47,12 @@ const zh_CN = {
     "app.save": "保存",
     "app.refused": "已拒绝",
     "app.product_category": "产品分类",
-    "app.input.relname":"请输入真实姓名",
-    "app.input.certification":"请选择验证类型",
-    "app.input.cardnumber":"请输入证件号",
-    "app.idaddress":"证件地址",
-    "app.input.idaddress":"请输入证件地址",
-    "app.input.agreenotes":"请同意条款",
+    "app.input.relname": "请输入真实姓名",
+    "app.input.certification": "请选择验证类型",
+    "app.input.cardnumber": "请输入证件号",
+    "app.idaddress": "证件地址",
+    "app.input.idaddress": "请输入证件地址",
+    "app.input.agreenotes": "请同意条款",
     "sort.comp": "综合",
     "sort.new": "新品",
     "sort.price": "价格",
@@ -375,7 +375,7 @@ const zh_CN = {
     "persondata.go.certification": "去认证",
     "persondata.basic.information": "基础信息",
     "persondata.Authentication": "认证",
-    "persondata.type.certification":"认证类型",
+    "persondata.type.certification": "认证类型",
     "persondata.modify": "修改",
     "persondata.under.review": "正在审查",
     "persondata.indivdual.user": "个人用户",
@@ -537,7 +537,8 @@ const zh_CN = {
     "verification.mode.select": "请选择验证方式",
     "new.number": "新号码",
     "enter.new.number": "请输入新手机号码",
-    "phone.verifi. success": "手机验证成功"
-
+    "phone.verifi.success": "验证成功",
+    "Change.mobile.phone": "更改手机号码",
+    "modify.success": "修改成功"
 }
 export default zh_CN;

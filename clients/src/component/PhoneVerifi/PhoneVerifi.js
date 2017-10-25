@@ -11,7 +11,8 @@ import operator from './operator.js';
 
 import {
 	FormattedMessage,
-	injectIntl
+	injectIntl,
+	intlShape
 } from 'react-intl';
 import {
 	Link
@@ -33,10 +34,18 @@ import {
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 class PhoneVerifi extends React.Component {
+	static propTypes = {
+		intl: intlShape.isRequired
+	};
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			step: 0,
+			verifi_modl: 1, //1手机验证，2邮箱验证
+			phone: 12432434,
+			email: 224,
+
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
@@ -54,12 +63,21 @@ class PhoneVerifi extends React.Component {
 		} = this.props;
 		return <div  className={css.phone_verifi}>
 		            <div className={basecss.child_title}>
-		                        { this.formatMessage({id:"app.phone.verification"})}
+		                        {this.state.verifi_modl==1?this.formatMessage({id:"app.phone.verification"})
+		                        :this.formatMessage({id:"app.email.verification"})
+		                    	}
 		            </div>
 		            <div className={css.content}>
+		            		{ <Steps className={css.steps} 
+		            			steps={this.state.verifi_modl==1?operator.steps:operator.steps_email} 
+			current = {
+				this.state.step
+			}
+			/>
+		}
 
-		                    <Steps className={css.steps} steps={operator.steps} current={this.state.step}/>
 		                    {this.state.step==0?<Authentication handleSteps={this.handleSteps}/>
+
 		                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps}/>
 		                    :this.state.step==2?<SetSuccess/>
 		                    :""}
@@ -80,9 +98,14 @@ class Authentication extends React.Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			loading: false,
 			time: 0,
+			verifi_modl: 1, //认证类型：1验证手机，2验证邮箱
+			code_modl: 1, //接收方式：1选择手机接收验证码，2选择邮箱收验证码
+			phone: 12432434,
+			email: 224,
 			disabled: false
 		}
 		this.formatMessage = this.props.intl.formatMessage;
@@ -113,14 +136,7 @@ class Authentication extends React.Component {
 
 
 	render() {
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
-		const {
-			getFieldDecorator
-		} = this.props.form;
+
 		let formItemLayout = {
 			labelCol: {
 				xs: {
@@ -154,13 +170,20 @@ class Authentication extends React.Component {
 				},
 			},
 		};
-
+		const {
+			intl: {
+				formatMessage
+			}
+		} = this.props;
+		const {
+			getFieldDecorator
+		} = this.props.form;
 		return <div className={css.ship_from}>
        
 		                <Form onSubmit={this.handleSubmit}>              
 		                    <FormItem
 					          {...formItemLayout}
-		                        label={formatMessage({id: 'verification.mode'})}
+		                        label={this.formatMessage({id: 'verification.mode'})}
 
 		                    >
 					    	    {getFieldDecorator('verification_mode', {
@@ -181,18 +204,20 @@ class Authentication extends React.Component {
 		                    </FormItem>
 		                    <FormItem
 					          {...formItemLayout}
-		                        label={formatMessage({id: 'app.phone.verification'})}
+		                        label={this.state.code_modl==1?this.formatMessage({id: 'moblie.phone'})
+		                    		  :this.formatMessage({id: 'post.email'})
+		                    		}
 
 		                    >
 					          {getFieldDecorator('moblie_phone', {
 		                         
 		                      })(
-		                         <p>dffffffffffffffffff</p>
+		                         <p>{this.state.code_modl==1?this.state.phone:this.state.email}</p>
 		                      )}
 		                    </FormItem>
 		                    <FormItem
 					          {...formItemLayout}
-		                        label={formatMessage({id: 'register.register.verification'})}
+		                        label={this.formatMessage({id: 'register.register.verification'})}
 
 		                    >
 		                    <Row gutter={8}>
@@ -231,6 +256,11 @@ class Authentication extends React.Component {
 class SetPwd extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			verifi_modl: 1, //1手机验证，2邮箱验证
+			phone: 12432434,
+			email: 224,
+		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
@@ -258,14 +288,8 @@ class SetPwd extends React.Component {
 
 
 	render() {
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
-		const {
-			getFieldDecorator
-		} = this.props.form;
+
+
 		let formItemLayout = {
 			labelCol: {
 				xs: {
@@ -299,27 +323,36 @@ class SetPwd extends React.Component {
 				},
 			},
 		};
-
+		const {
+			getFieldDecorator
+		} = this.props.form;
 		return <div className={css.ship_from}>
        
 		                <Form onSubmit={this.handleSubmit}>              
 		                  
 		                    <FormItem
 						          {...formItemLayout}
-			                        label={formatMessage({id: 'new.number'})}
-
+						            label={this.state.verifi_modl==1?this.formatMessage({id: 'new.number'})
+									 :this.formatMessage({id:'post.email'})			                      	
+									}
 			                    >
-						          {getFieldDecorator('re_password', {
-			                          rules: [{
-			                              required: true, message:this.formatMessage( {id:'register.re_password.warn'}),
-			                          }],
-			                      })(
-			                          <Input   className={appcss.form_input}/>
-			                      )}
+			                    {this.state.verifi_modl==1?
+							          getFieldDecorator('verifi_email', {
+				                          rules: [{
+				                              required: true, message:this.formatMessage( {id:'register.verifivation.warn'}),
+				                          }],
+				                      })(
+
+				                      	 <Input className={appcss.form_input}/>
+						   
+				                      )
+									: <p>{this.state.email}</p>
+								}
+
                    			 </FormItem>
 		                    <FormItem
 					          	{...formItemLayout}
-		                        label={formatMessage({id: 'register.register.verification'})}
+		                        label={this.formatMessage({id: 'register.register.verification'})}
 		                    >
 		                    	<Row gutter={8}>
 		                         	<Col span={11}>   
@@ -343,8 +376,11 @@ class SetPwd extends React.Component {
 		                    <FormItem  {...tailFormItemLayout}>
 		                        <Button  type="primary" 
 		                       			 htmlType="submit" 
-		                       		   	 className={appcss.button_black} style={{width:240}}>
-		                             	 {this.formatMessage({id: 'perau.perau.save'})}
+		                       		   	 className={this.state.verifi_modl==1?appcss.button_black:appcss.button_theme}
+		                       		   	 style={{width:240}}>		                		   	 
+		                             	 {this.state.verifi_modl==1?this.formatMessage({id: 'perau.perau.save'})
+		                             	 :this.formatMessage({id: 'authen.authen.nextstep'})
+		                             	}
 		                        </Button>
 		                                       
 		                    </FormItem>
@@ -358,6 +394,13 @@ class SetPwd extends React.Component {
 class SetSuccess extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+
+			verifi_modl: 1, //1手机验证，2邮箱验证
+			phone: 12432434,
+			email: 224,
+
+		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
@@ -373,8 +416,11 @@ class SetSuccess extends React.Component {
 		} = this.props;
 		return <div className={css.reset_success}>
 		<div className={css.suc_content}>
-                <Icon type="smile-o" />&nbsp;&nbsp;&nbsp;&nbsp;
-                <FormattedMessage id="phone.verifi. success" defaultMessage="密码重置成功！"/>
+                <Icon type="smile-o" />&nbsp;&nbsp;&nbsp;
+                {this.state.verifi_modl==1?this.formatMessage({id: 'modify.success'})
+                :this.formatMessage({id: 'phone.verifi.success'})
+            }
+                
             </div>
             <Button type="primary" onClick={this.handleClick} className={appcss.button_theme} style={{width:240}}>
                 <FormattedMessage id="orderdetails.return" defaultMessage="去登录"/>
