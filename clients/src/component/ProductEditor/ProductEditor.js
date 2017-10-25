@@ -10,6 +10,7 @@ import ProductAttr from './ProductAttr.js';
 import ProductSpec from './ProductSpec.js';
 import ProductInfo from './ProductInfo.js';
 import ProductInstruct from './ProductInstruct.js';
+import ProductTransport from './ProductTransport.js';
 import LoginModal from '../Public/LoginModal/LoginModal.js'
 import axios from 'axios';
 import {
@@ -31,7 +32,7 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 0,
+			current: 6,
 			product: {
 				productId: 76
 			},
@@ -108,7 +109,7 @@ class ProductEditor extends React.Component {
 				:this.state.current==3?<ProductSpec product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:this.state.current==4?<ProductInfo product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:this.state.current==5?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==6?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.current==6?<ProductTransport product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:""
 			}	
 			</div>

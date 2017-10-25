@@ -15,7 +15,7 @@
 }
 %item{
 	display: flex;
-	margin: 15px 0;
+	margin: 10px 0;
     font-size: 16px;
 }
 %left{
@@ -30,7 +30,7 @@
 	}
 }
 .product_attr{
-	margin: 10px 0;
+	margin-top: -20px;
 }
 .categoty_attr_list{
 	width: 680px;
@@ -53,7 +53,7 @@
 	margin-bottom: 20px;
 }
 .product_attr_list{
-	margin-bottom: 20px;
+	border-bottom: 20px solid $background-color;
 }
 .category_icon{
 	text-align: center;
@@ -99,6 +99,7 @@
 }
 .product_add_title{
 	@extend %item;
+	margin-top: 20px;
 }
 
 .product_footer{
@@ -131,15 +132,60 @@
     align-items: center;
     margin: 10px 0;
     .info_item_left{
-		width: 15%;
-		margin-right: 2%;
+		width: 380px;
+		margin-right: 10px;
 		text-align: right;
 		flex-shrink: 0;
     }
 }
+.product_info_upload{
+	@extend .product_info_item;
+	align-items: flex-start;
+	margin:20px 0;
+	.info_upload{
+		div[class="ant-upload-list-item ant-upload-list-item-done"]{
+	        width: 150px;
+	        height: 150px;
+    	}
+	    div[class="ant-upload ant-upload-select ant-upload-select-picture-card"]{
+	      width: 150px;
+	      height: 150px;
+	    }
+	    div[class="ant-upload-list-item ant-upload-list-item-uploading ant-upload-animate-inline-enter ant-upload-animate-inline-enter-active"]{
+	      width: 150px;
+	      height: 150px;
+	    }
+	    div[class="ant-upload-list-item ant-upload-list-item-error"]{
+	    	width: 150px;
+	      	height: 150px;
+	    }
+	    div[class="ant-upload-list-item ant-upload-list-item-uploading"]{
+	      width: 150px;
+	      height: 150px;
+	    }
+	}
+}
+.upload_icon{
+	i{
+	    font-size: 40px;
+	    margin-top: 30px;
+	    display: inline-flex;
+	}
+}
 .product_descrip{
-	align-items: baseline;
-	margin-bottom: 20px;
+	.info_item_left{
+		width: 380px;
+		margin-right: 10px;
+		text-align: right;
+		margin-bottom: 10px;
+    }
+    .text_editor{
+    	margin-left: 255px;
+    	margin-bottom: 20px;
+    }
+	button{
+		min-width: 0px;
+	}
 }
 .product_instruct{
 	margin: 0px 20%;
@@ -214,4 +260,19 @@
     		width: 112px;
     	}
     }
+}
+.product_info{
+	margin-top: 20px;
+}
+
+.product_transport{
+	.product_transport_item{
+		display: flex;
+		margin: 10px;
+	}
+	.product_transport_item_left{
+		width: 360px;
+    	margin-right: 10px;
+    	text-align: right;
+	}
 }

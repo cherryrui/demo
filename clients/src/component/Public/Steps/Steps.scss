@@ -12,7 +12,7 @@
     align-items: center;
     margin-bottom: 10px;
     .normal{
-    	border-bottom: 0.5px solid $border-color;
+    	border-bottom: 1px solid $border-color;
     	flex-grow: 1;
     }
     .no_show{
@@ -52,6 +52,7 @@
         justify-content: center;
         align-items: center;
         color: $font-color;
+        box-shadow: 0 1px 5px $shadow-color;
     }
 }
 .title{

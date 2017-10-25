@@ -300,10 +300,10 @@ class ProductBasic extends React.Component {
 	                            />
 	                        )}
 	                        {index==0?<Tooltip title={this.formatMessage({id:'mine.product.add_category'})}>
-	                                <Button className={appcss.button_blue} style={{marginLeft:"10px"}} icon="plus" onClick={this.handleCategory.bind(this,-1)}/>
+	                                <Button className={appcss.button_blue} style={{marginLeft:"10px",minWidth:"36px"}} icon="plus" onClick={this.handleCategory.bind(this,-1)}/>
 	                            </Tooltip>
 	                            :<Tooltip title={this.formatMessage({id:'mine.product.del_category'})}>
-	                                <Button className={appcss.button_blue} style={{marginLeft:"10px"}} icon="minus" onClick={this.handleCategory.bind(this,index)}/>
+	                                <Button  className={appcss.button_blue} style={{marginLeft:"10px",minWidth:"36px"}} icon="minus" onClick={this.handleCategory.bind(this,index)}/>
 	                            </Tooltip>}
 	                    </FormItem>
                 	})}

@@ -179,36 +179,6 @@ router.get('/get-category.json', async(ctx, next) => {
 	})
 	.get('/get-product-specif.json', async(ctx, next) => {
 		let specif = [];
-		specif = [{
-			id: 1,
-			name: "颜色",
-			value: [{
-				id: 1,
-				value: "红色"
-			}, {
-				id: 2,
-				value: "绿色"
-			}, {
-				id: 3,
-				value: "蓝色"
-			}, ]
-		}, {
-			id: 2,
-			name: "尺码",
-			value: [{
-				id: 1,
-				value: "25"
-			}, {
-				id: 2,
-				value: "26"
-			}, {
-				id: 3,
-				value: "27"
-			}, {
-				id: 4,
-				value: "28"
-			}, ]
-		}]
 		ctx.body = {
 			specif: specif
 		}
@@ -235,7 +205,7 @@ router.get('/get-category.json', async(ctx, next) => {
 .post('/get-product-attr.json', async(ctx, next) => {
 		let productId = ctx.request.body.productId,
 			result;
-		await axios.get(url + '/property/queryProductPropertyByCategory/' + productId).then(res => {
+		await axios.get(url + '/product/queryProductPropertyByCategory/' + productId).then(res => {
 			result = res.data;
 		})
 		ctx.body = result
@@ -244,8 +214,20 @@ router.get('/get-category.json', async(ctx, next) => {
 	 * 上传产品的属性信息，attr：已有属性，new_attr：自定义属性
 	 */
 	.post('/save-product-attr.json', async(ctx, next) => {
-		let param = ctx.request.body;
-		ctx.body = true;
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProductProperties", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
 	})
 	.post('/save-product-spec.json', async(ctx, next) => {
 		let param = ctx.request.body;
@@ -253,19 +235,7 @@ router.get('/get-category.json', async(ctx, next) => {
 	})
 	.get('/get-product-info-modal.json', async(ctx, next) => {
 		let modal = [];
-		modal = [{
-			id: 1,
-			name: "模块1"
-		}, {
-			id: 2,
-			name: "模块2"
-		}, {
-			id: 3,
-			name: "模块3"
-		}, {
-			id: 4,
-			name: "模块4"
-		}, ]
+
 		ctx.body = {
 			modal: modal
 		}

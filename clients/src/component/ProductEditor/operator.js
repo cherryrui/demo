@@ -35,16 +35,42 @@ export default {
 		default_message: "运输要求",
 		icon: ""
 	}],
-	unit_list: [{
-		key: "mine.product.unit_tai",
-		value: "台"
+	introduceType: [{
+		key: 1,
+		is_select: false,
+		value: "product.edite.descrip",
 	}, {
-		key: "mine.product.unit_jian",
-		value: "件"
+		key: 2,
+		is_select: false,
+		value: "product.edite.feature",
 	}, {
-		key: "mine.product.unit_xiang",
-		value: "箱"
+		key: 3,
+		is_select: false,
+		value: "product.edite.paramter",
+	}, {
+		key: 4,
+		is_select: false,
+		value: "product.edite.attention",
+	}, {
+		key: 5,
+		is_select: false,
+		value: "product.edite.application",
+	}, {
+		key: 6,
+		is_select: false,
+		value: "product.edite.details",
+	}, {
+		key: 7,
+		is_select: false,
+		value: "product.edite.size",
 	}, ],
+	contentType: [{
+		key: 1,
+		value: "product.edite.picture",
+	}, {
+		key: 2,
+		value: "product.edite.text",
+	}],
 	product_ins: [{
 		key: "length",
 		name: "mine.product.instruct_length",
@@ -92,6 +118,16 @@ export default {
 		key: "other",
 		name: "mine.product.instruct_other",
 		type: 3,
+	}],
+	transport: [{
+		key: 1,
+		value: "product.edite.transport.width"
+	}, {
+		key: 2,
+		value: "product.edite.transport.length"
+	}, {
+		key: 3,
+		value: "product.edite.transport.height"
 	}]
 
 }

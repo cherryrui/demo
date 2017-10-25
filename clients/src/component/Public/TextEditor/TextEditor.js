@@ -42,8 +42,7 @@ class TextEditor extends React.Component {
 				}, {
 					'indent': '+1'
 				}],
-
-				['link', 'image', 'video'],
+				['link', 'image'],
 				['clean']
 			]
 		};
@@ -65,7 +64,7 @@ class TextEditor extends React.Component {
 		this.setState({
 			editorHtml: html
 		});
-		this.props.onChange ? this.props.onChange(html) : "";
+		this.props.onChange ? this.props.onChange(this.props.index, html) : "";
 	}
 
 	render() {

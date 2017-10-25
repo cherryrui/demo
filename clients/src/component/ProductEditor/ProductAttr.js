@@ -29,9 +29,7 @@ class ProductAttr extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			new_attr: [{
-				id: 1
-			}],
+			customProperty: [],
 			category: [], //产品分类对应的属性
 			loading: false,
 			is_show: false,
@@ -39,14 +37,15 @@ class ProductAttr extends React.Component {
 		}
 	}
 	componentWillMount() {
-		console.log(this.props.product);
 		let param = {
 			productId: 76
 		}
 		axios.post('/product/get-product-attr.json', param).then(res => {
 			if (res.data.isSucc) {
-				let category = res.data.result.all;
-				let select = res.data.result.select;
+				let category = res.data.result.allProperty;
+				let select = res.data.result.selectProperty;
+				let customProperty = JSON.parse(res.data.result.customProperty);
+				customProperty.length == 0 ? customProperty.push({}) : "";
 				category.map(item => {
 					item.property.map(property => {
 						select.map(select_p => {
@@ -58,61 +57,87 @@ class ProductAttr extends React.Component {
 					})
 				})
 				this.setState({
-					category
+					category,
+					customProperty
 				})
 			}
 		})
 	}
 
 	handleAttr = (index) => {
-		let new_attr = this.state.new_attr;
+		let customProperty = this.state.customProperty;
 		if (index == -1) {
-			new_attr.push({
-				id: new_attr.length > 0 ? new_attr[new_attr.length - 1].id + 1 : 1
-			})
+			customProperty.push({})
 		} else {
-			new_attr.splice(index, 1);
+			customProperty.splice(index, 1);
 		}
 		this.setState({
-			new_attr: new_attr
+			customProperty
 		})
 	}
 
 	handleChange = (type, index, index_attr, e) => {
-		console.log(type, index, index_attr, e)
-			//为产品属性赋值
+		//为产品属性赋值
 		if (type == 1) {
 			let category = this.state.category;
-			category[index].attr[index_attr].value = e.target.value;
+			category[index].property[index_attr].select = e.target.value;
 			this.setState({
 				category: category
 			})
 		} else { //自定义属性
-			this.state.new_attr[index][index_attr] = e.target.value;
+			this.state.customProperty[index][index_attr] = e.target.value;
 		}
 	}
 	backStep = () => {
 		this.props.handleSteps ? this.props.handleSteps(-1) : ""
 	}
 	handleSave = () => {
-		console.log("handleSave");
 		this.setState({
 			loading: true
 		})
 		let param = {
-			id: this.props.product.id,
-			category: this.state.category,
-			new_attr: this.state.new_attr,
+			productId: this.props.product.productId,
+			propertyValIds: [],
+			customAttrNames: [],
+			customAttrVals: [],
 		}
+		console.log(this.state.customProperty);
+		this.state.category.map(item => {
+			item.property.map(property => {
+				if (property.select) {
+					param.propertyValIds.push(property.select);
+				}
+			})
+		})
+		this.state.customProperty.map(item => {
+			if (item.attrName && item.attrVal) {
+				param.customAttrNames.push(item.attrName);
+				param.customAttrVals.push(item.attrVal);
+			}
+		})
+		param.propertyValIds = param.propertyValIds.join(",");
+		param.customAttrNames = param.customAttrNames.join(",");
+		param.customAttrVals = param.customAttrVals.join(",");
 		axios.post('/product/save-product-attr.json', param).then(res => {
-			let pro = this.props.product;
-			pro.attr = res.data.attr;
 			this.setState({
 				loading: false
 			})
-			this.props.handleSteps ? this.props.handleSteps(1, pro) : ""
+			if (res.data.isSucc) {
+				let product = res.data.result;
+				this.props.handleSteps ? this.props.handleSteps(1, product) : ""
+			} else if (res.data.code == 104) {
+				this.props.login ? this.props.login() : ""
+			} else {
+				message.error(res.data.message);
+			}
 		})
 	}
+
+	/**
+	 * 控制分类的属性显示与隐藏
+	 * @param  {[type]} index [description]
+	 * @return {[type]}       [description]
+	 */
 	handleShow = (index) => {
 		let category = this.state.category;
 		category[index].is_show = !category[index].is_show;
@@ -120,7 +145,6 @@ class ProductAttr extends React.Component {
 			category: category
 		})
 	}
-
 
 	render() {
 		console.log(this.state.category);
@@ -151,7 +175,7 @@ class ProductAttr extends React.Component {
 									<p className={css.category_attr_title}>
 										{attr.propertyName}:
 									</p>
-									<RadioGroup className={css.category_attr_body} onChange={this.onChange} value={attr.select}>
+									<RadioGroup className={css.category_attr_body} onChange={this.handleChange.bind(this,1,index,attr_index)} value={attr.select}>
 										{attr.propertyVals.map(pVal=>{
 											return <Radio value={pVal.valId}>{pVal.propertyValue}</Radio>
 										})}
@@ -160,45 +184,47 @@ class ProductAttr extends React.Component {
 							</div>
 						})}
 					</div>:""}
-					<p className={css.category_icon} onClick={this.handleShow.bind(this,index)}>
+					{item.property&&item.property.length>0?<p className={css.category_icon} onClick={this.handleShow.bind(this,index)}>
 						{item.is_show?<Icon type="up" />:<Icon type="down" />}
-					</p>
+					</p>:""}
 				</div>})}
 			<div className={css.product_add_title}>
 				<p className={css.category_left}>
 					<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>: 
 				</p>
-				<Tooltip title={formatMessage({id: 'mine.product.attr_add'})}>
-					<Button className={appcss.button_blue} icon="plus" onClick={this.handleAttr.bind(this,-1)}/>
-				</Tooltip>
+				
+				<Button className={appcss.button_blue} onClick={this.handleAttr.bind(this,-1)}>
+					{formatMessage({id: 'mine.product.attr_add'})}
+				</Button>
+				
 			</div>
-			{this.state.new_attr.map((item,attr_index)=>{
+			{this.state.customProperty.map((item,attr_index)=>{
 				return <div className={css.product_custom}>
 					<div className={css.product_attr_item}>
 						<p className={css.category_left}>
 							<FormattedMessage id="mine.product.attr_name" defaultMessage="属性名称"/>&nbsp;:  
 						</p>
 						<Input placeholder={formatMessage({id: 'mine.product.attr_name_warn'})} 
-							onChange={this.handleChange.bind(this,0,attr_index,'name')}/>
+							defaultValue={item.attrName} onChange={this.handleChange.bind(this,0,attr_index,'attrName')}/>
 					</div>
 					<div className={css.product_attr_item}>
 						<p className={css.product_attr_item_title}>
 							<FormattedMessage id="mine.product.attr_value" defaultMessage="属性值"/>&nbsp;:  
 						</p>
 						<Input placeholder={formatMessage({id: 'mine.product.attr_value_warn'})} 
-						onChange={this.handleChange.bind(this,0,attr_index,'value')}/>
+						defaultValue={item.attrVal} onChange={this.handleChange.bind(this,0,attr_index,'attrVal')}/>
 					</div>
 					<Tooltip title={formatMessage({id: 'mine.product.attr_delete'})}>
-						<Button className={appcss.button_blue} icon="minus" onClick={this.handleAttr.bind(this,attr_index)}/>
+						<Button style={{minWidth:"36px"}} className={appcss.button_blue} icon="minus" onClick={this.handleAttr.bind(this,attr_index)}/>
 					</Tooltip>
 				</div>
 			})}
 			<div className={css.product_footer}>
-				<Button type='primary' className={appcss.button_green} onClick={this.backStep}>
-					<FormattedMessage id="app.before" defaultMessage="上一步"/>  
+				<Button type="primary">
+					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
-				<Button type='primary' loading={this.state.loading} onClick={this.handleSave}>
-					<FormattedMessage id="app.save" defaultMessage="上一步"/> 
+				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
+					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>
 			</div>
 		</div>

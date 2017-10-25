@@ -3,7 +3,9 @@ import css from './ProductEditor.scss';
 import appcss from '../../App.scss';
 import axios from 'axios';
 import TextEditor from '../Public/TextEditor/TextEditor.js';
-
+import operator from './operator.js';
+import Util from '../../Util.js';
+import CusModal from '../Public/CusModal/CusModal.js';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -15,9 +17,12 @@ import {
 	Upload,
 	Icon,
 	Modal,
-	message
+	message,
+	Radio,
+	Tooltip
 } from 'antd';
 const Option = Select.Option;
+const RadioGroup = Radio.Group;
 
 class ProductInfo extends React.Component {
 
@@ -30,16 +35,32 @@ class ProductInfo extends React.Component {
 			previewVisible: false,
 			select_modal: {},
 			loading: false, //保存按钮的加载中
+			product_info: [{
+				contentType: 1,
+			}],
+			introduceType: JSON.parse(JSON.stringify(operator.introduceType)),
 		}
-		this.deleteImgList = []
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 
 	componentWillMount() {
-		axios.get('/product/get-product-info-modal.json').then(res => {
-			this.setState({
-				modal: res.data.modal
-			})
-		})
+
+	}
+
+	handlePicture = (index, info) => {
+		let fileList = info.fileList;
+		fileList = fileList.map((file) => {
+			if (file.response) {
+				// Component will show file.url as link
+				file.url = file.response.url + "@150w_150h_1e_1c.png";
+			}
+			return file;
+		});
+		let product_info = this.state.product_info;
+		product_info[index].fileList = fileList;
+		this.setState({
+			product_info
+		});
 	}
 
 	/**
@@ -47,62 +68,46 @@ class ProductInfo extends React.Component {
 	 * @param  {[type]} value [description]
 	 * @return {[type]}       [description]
 	 */
-	handleChange = (value) => {
-		this.state.select_modal.text = value;
-	}
-
-	/**
-	 * 本地保存上传图片
-	 * @param  {[type]} info [description]
-	 * @return {[type]}      [description]
-	 */
-	normFile = (info) => {
-			info.file.thumb = URL.createObjectURL(info.file);
-			info.file.url = URL.createObjectURL(info.file);
-			info.file.status = 'done';
-			this.state.addFlag = true;
-			let select_modal = this.state.select_modal;
-			select_modal.fileList.push(info.file);
-			this.setState({
-				select_modal: select_modal
-			});
-		}
-		/**
-		 * 删除图片，若该图片是本地未上传图片，则直接删除，若是已上传图片，需要删除服务器存储的图片
-		 * @param  {[type]} file [description]
-		 * @return {[type]}      [description]
-		 */
-	removePic = (file) => {
-		let select_modal = this.state.select_modal;
-		// console.log(file);
-		select_modal.files.splice(select_modal.files.indexOf(file), 1);
-
-		if (file.url.indexOf('blob:http:') == -1) {
-			this.deleteImgList.push(file.url);
-		}
+	handleText = (index, value) => {
+		console.log(index, value);
+		let product_info = this.state.product_info;
+		product_info[index].contentText = value;
 		this.setState({
-			select_modal: select_modal
-		});
+			product_info
+		})
 	}
+
+
 	previewImg = (file) => {
 		// console.log(file);
-		let url = file.url.replace("x80", "x320");
 		this.setState({
-			previewImage: url || file.thumbUrl,
+			previewImage: file.url,
 			previewVisible: true,
 		});
 	}
 	handleCancel = () => {
 		this.setState({
-			previewVisible: true,
+			previewVisible: false,
 		});
 	}
-	handleModel = (index) => {
-		let modal = this.state.modal[index];
-		modal.fileList = modal.fileList ? modal.fileList : [];
-		modal.text = modal.text ? modal.text : "";
+	handleModel = (index, name, e) => {
+		let product_info = this.state.product_info;
+
+		let introduceType = this.state.introduceType;
+		if (name == "introduceType") {
+			introduceType.map(item => {
+				if (item.key == e) {
+					item.is_select = true;
+				}
+				if (item.key == product_info[index].introduceType) {
+					item.is_select = false;
+				}
+			})
+		}
+		product_info[index][name] = isNaN(e) ? e.target.value : e;
 		this.setState({
-			select_modal: modal,
+			product_info,
+			introduceType
 		})
 	}
 
@@ -112,15 +117,29 @@ class ProductInfo extends React.Component {
 	handleSave = () => {
 		this.setState({
 			loading: true
-		})
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
+		});
+
 		let param = {
-			id: this.props.pid,
-			modal: []
+				id: this.props.product.productId,
+				modal: []
+			},
+			flag = true;
+		console.log(this.state.product_info);
+		this.state.product_info.map(item => {
+
+			if (item.contentType == 2 && !item.contentText) {
+				flag = false;
+			}
+			if (item.contentType == 1 && (!item.fileList || item.fileList.length == 0)) {
+				flag = false;
+			}
+		})
+		if (flag) {
+
+		} else {
+			message.error(this.formatMessage({
+				id: "product.edite.complete.info"
+			}))
 		}
 		this.state.modal.map(item => {
 			if (item.text && item.text.length > 0 || item.fileList && item.fileList.length > 0) {
@@ -141,73 +160,104 @@ class ProductInfo extends React.Component {
 
 		})
 	}
+	handleInfo = (index) => {
+		let product_info = this.state.product_info;
+		if (index > -1) {
+			product_info.splice(index, 1)
+		} else {
+
+			product_info.push({
+				contentType: 1,
+			})
+		}
+		this.setState({
+			product_info
+		});
+	}
 
 	render() {
-		console.log(this.state.select_modal)
-
 		return <div className={css.product_attr}>
-			
+			{this.state.product_info.map((item,index)=>{
+				return <div className={css.product_info}>
+					<div className={css.product_info_item}>
+						<p className={css.info_item_left}>
+							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
+							<FormattedMessage id="product.edite.introduce.type" defaultMessage="选择类别"/>：
+						</p>
+						<Select placeholder={this.formatMessage({id:"mine.product.info_select"})} 
+							style={{ width: "180px" }} 
+							onChange={this.handleModel.bind(this,index,"introduceType")}>
+							{this.state.introduceType.map((type)=>{
+								return <Option disabled={!type.is_select|| type.key== item.introduceType?false:true}value={type.key}>{this.formatMessage({id:type.value})}</Option>
+							})}
+		    			</Select>
+		    			{index>0?<Tooltip title={this.formatMessage({id: 'cart.delete'})}>
+							<Button style={{minWidth:"36px",marginLeft: "10px"}} className={appcss.button_blue} icon="minus" onClick={this.handleInfo.bind(this,index)}/>
+						</Tooltip>:""}
+					</div>
+					<div className={css.product_info_item}>
+						<p className={css.info_item_left}>
+							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
+							<FormattedMessage id="product.edite.content.type" defaultMessage="内容模式"/>：
+						</p>
+						<RadioGroup onChange={this.handleModel.bind(this,index,"contentType")} defaultValue={1}>
+		        			{operator.contentType.map((item)=>{
+								return <Radio value={item.key}>
+								{this.formatMessage({id:item.value})}</Radio>
+							})}
+		      			</RadioGroup>
+					</div>
+					{item.contentType==1?
+					<div className={css.product_info_upload}>
+						<p className={css.info_item_left}>
+							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
+							<FormattedMessage id="mine.product.upload_img" defaultMessage="分类"/>：
+						</p>
+						<Upload 
+			            	name="file"
+							multiple
+		                    action={Util.url+"/tool/upload"}
+		                    accept="image/*"
+		                    onChange={this.handlePicture.bind(this,index)}
+			            	listType="picture-card"
+			            	onPreview={this.previewImg}
+			            	onRemove={this.removePic}
+			            	className={css.info_upload}
+			            	fileList={item.fileList}
+			            >
+				            <span className={css.upload_icon}>
+		                        <i class="iconfont icon-jiahao"></i>
+		                    </span>
+				        </Upload>
+					</div>:<div className={css.product_descrip}>
+					<p className={css.info_item_left}>
+						<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
+						<FormattedMessage id="mine.product.info_descript" defaultMessage="分类"/>：
+					</p>
+					<TextEditor 
+						className={css.text_editor}
+				  		value={item.contentText}
+				  		index={index}
+	                	onChange={this.handleText.bind(this)} />
+	                <p className={css.text_editor}>
+	                	<FormattedMessage id="product.edite.recommend" defaultMessage=""/>
+	                </p>
+				</div>}
+			</div>})}
             <div className={css.product_footer}>
 				<Button type="primary">
 					<FormattedMessage id="app.before" defaultMessage=""/>
+				</Button>
+				<Button type="primary" className={appcss.button_blue} onClick={this.handleInfo.bind(this,-1)}>
+					<FormattedMessage id="mine.product.add" defaultMessage=""/>
 				</Button>
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>
 			</div>
-			<Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
-                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-            </Modal>
-		</div>
-	}
-}
-class Info extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			select_mode: 1
-		}
-	}
-	render() {
-		return <div>
-			<div className={css.product_info_item}>
-				<p className={css.info_item_left}>
-					<FormattedMessage id="mine.product.info_select" defaultMessage="选择类别"/>&nbsp;:
-				</p>
-				<Select style={{ width: 200 }} onChange={this.handleModel}>
-					{this.props.modal.map((item,index)=>{
-						return <Option value={index}>{item.name}</Option>
-					})}
-    			</Select>
-			</div>
-			{this.state.select_modal?
-			<div className={css.product_info_item}>
-				<p className={css.info_item_left}>
-					<FormattedMessage id="mine.product.upload_img" defaultMessage="分类"/>&nbsp;:
-				</p>
-				<Upload 
-	            	name="img"
-	            	customRequest={this.normFile}
-					onPreview = {this.previewImg}
-	            	listType="picture-card"
-	            	onRemove={this.removePic}
-	            	fileList={this.state.select_modal.fileList}
-	            >
-		            <div className={css.upload}>
-						<Icon type="plus" />
-						<div className="ant-upload-text">
-							<FormattedMessage id="mine.product.upload_img" defaultMessage="分类"/>
-						</div>
-					</div>
-		        </Upload>
-			</div>:<div className={`${css.product_info_item} ${css.product_descrip}`}>
-				<p className={css.info_item_left}>
-					<FormattedMessage id="mine.product.info_descript" defaultMessage="分类"/>&nbsp;:
-				</p>
-				<TextEditor 
-			  		value={this.state.select_modal.text}
-                	onChange={this.handleChange} />
-			</div>}
+			<CusModal visible={this.state.previewVisble} closeModal={this.handleCancel.bind(this,"previewVisble")}>
+            	<img alt="example" style={{ width: '100%' }} src={this.state.previewImg+ "@380w_380h_1e_1c.png"}/>
+        	</CusModal>
 		</div>
 	}
 }

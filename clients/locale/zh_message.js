@@ -244,6 +244,9 @@ const zh_CN = {
     "mine.product.set_default": "设为主图",
     "mine.product.auto": "自动生成",
     "mine.product.choose.attr": "选择属性",
+    "product.edite.transport.width": "超宽",
+    "product.edite.transport.length": "超长",
+    "product.edite.transport.height": "超高",
 
     "mine.product.search": "请输入品牌名称进行搜索",
 
@@ -255,7 +258,19 @@ const zh_CN = {
     "mine.product.price_warn": "请输入产品出厂价",
     "mine.product.inventory_warn": "请输入产品库存",
     "mine.product.picture_warn": "请上传商品图片",
-
+    "product.edite.descrip": "产品描述",
+    "product.edite.feature": "产品特点",
+    "product.edite.paramter": "技术参数",
+    "product.edite.attention": "注意事项",
+    "product.edite.application": "产品应用",
+    "product.edite.details": "产品细节",
+    "product.edite.size": "产品尺寸",
+    "product.edite.introduce.type": "描述类别",
+    "product.edite.content.type": "内容格式",
+    "product.edite.text": "文本",
+    "product.edite.picture": "图片",
+    "product.edite.complete.info": "请完善相关信息",
+    "product.edite.recommend": "建议上传宽度750px，大小不超过2M的图片",
 
     "mine.product.unit_tai": "台",
     "mine.product.unit_jian": "件",
@@ -275,6 +290,7 @@ const zh_CN = {
     "mine.product.save_fail": "保存失败，请尝试再次保存",
     "mine.product.add_category": "添加分类",
     "mine.product.del_category": "删除分类",
+    "mine.product.add": "新增",
 
     "mine.product.instruct_length": "长",
     "mine.product.instruct_width": "宽",
