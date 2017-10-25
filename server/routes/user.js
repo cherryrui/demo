@@ -294,4 +294,31 @@ router.get('/get-user.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
+	/**
+	*企业认证接口
+	*
+	**/
+	.post('/enterpriser.json',async ctx =>{
+		let result,
+			param=ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/certificateCompany',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		console.log(result);
+		ctx.body = result;
+	})
+	/**
+	*个人认证
+	**/
+	.post('/person-cerification.json',async ctx=>{
+		let result,
+			param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/certificatePerson',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		console.log(result);
+		ctx.body = result;
+	})
 module.exports = router;

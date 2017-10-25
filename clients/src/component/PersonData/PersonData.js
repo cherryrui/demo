@@ -32,10 +32,38 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
+const natureList = [
+    {
+        natureid:'1',
+        naturename:'互联网'
+    },
+    {
+        natureid:'2',
+        naturename:'金融'
+    },
+    {
+        natureid:'3',
+        naturename:'房地产'
+    }
+];
 class PersonData extends React.Component {
     state = {
         loading: false,
         visible: false,
+            }
+    handleSelectNature = (value) =>{
+        console.log(`selected ${value}`);
+        this.setState({
+            natureid:parseInt(value.key),
+            companyNatureName:value.label
+        })
+    }
+    handleSelectIndu = (value) =>{
+        console.log(`selected ${value}`);
+        this.setState({
+            industryid:parseInt(value.key),
+            industryName:value.label
+        })
     }
     handleCertification = () => {
         this.setState({
@@ -50,15 +78,31 @@ class PersonData extends React.Component {
     };
     onRadioChange = (e) =>{
         console.log(`radio checked:${e.target.value}`);
+        if(e.target.value == '1'){
+            this.setState({
+                certificateTypeId:parseInt(e.target.value),
+                certificateTypeName:'IDCard'
+            })
+        }else if(e.target.value == '2'){
+            this.setState({
+                certificateTypeId:parseInt(e.target.value),
+                certificateTypeName:'GreenCard'
+            })
+        }
+        
     } 
-
-    constructor(props) {
+    onChangeCheck  = (e) =>{
+        console.log(`radio checked:${e.target.checked}`);
+    }
+    constructor(props) {    
         super(props);
         this.state = {
             edit: false,
             button_name: "persondata.modify",
             user: JSON.parse(sessionStorage.user),
             options: [],
+            check:0,
+            naturelist:natureList,
         };
         let {
             intl: {
@@ -98,7 +142,7 @@ class PersonData extends React.Component {
         this.state.user.provinceName = selectedOptions[1].label;
         this.state.user.cityName = selectedOptions[2].label;
         this.state.user.districtName = selectedOptions[3].label;
-
+        console.log(this.state.user)
     }
     handleChange = (name, e) => {
         this.state.user[name] = e.target.value;
@@ -184,17 +228,82 @@ class PersonData extends React.Component {
             info.file.thumbUrl = info.file.response.url + "@132w_92h_1e_1c.png";
             this[name] = info.file.response.url;
             let param = {};
-            param[name] = true;
+            param[name] = info.file.response.url;
             this.setState(param);
         } else if (info.file.status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
+        console.log(this.state)
     }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
+            console.log(values);
+            let param;
+            let imgurls = JSON.stringify([{
+                url:this.state.img_front
+            },{
+                url:this.state.img_back
+            }]);
             if (!err) {
-                console.log(values);
+                if(this.state.user.userType==1){
+                    param = {
+                        realName:values.relnames,
+                        certificateTypeId:this.state.certificateTypeId,
+                        certificateTypeName:this.state.certificateTypeName,
+                        certificateNo:values.cardnumber,
+                        certificateAddress:values.idaddress,
+                        imgUrl:imgurls
+                    };
+                    axios.post('/user/person-cerification.json',param).then(res=>{
+                        if(res.data.isSucc){
+                            console.log(res.data)
+                            message.success(this.formatMessage({id:'app.success'}));
+                            location.reload() ;
+                        }else if(res.data.code == 104){
+                            this.setState({
+                                user: JSON.parse(sessionStorage.user),
+                            }) 
+                            this.props.handleVisible ? this.props.handleVisible() : "";  
+                        }else{
+                            message.error(res.data.message);
+                        }
+                    })
+                }else if(this.state.user.userType==2){
+                    param = {
+                        companyName:values.companynames,
+                        companyWebsite:values.company_websites,
+                        companyNatureName:this.state.companyNatureName,
+                        industryName:this.state.industryName,
+                        country:this.state.user.country,
+                        countryName:this.state.user.countryName,
+                        province:this.state.user.province,
+                        provinceName:this.state.user.provinceName,
+                        city:this.state.user.city,
+                        cityName:this.state.user.cityName,
+                        district:this.state.user.district,
+                        districtName:this.state.user.districtName,
+                        address:values.contact_addresses,
+                        imgUrl:imgurls,
+                        companyNatureId:this.state.natureid,
+                        industryId:this.state.industryid
+                    }
+                    console.log(param)
+                    axios.post('/user/enterpriser.json',param).then(res=>{
+                        if(res.data.isSucc){
+                            console.log(res.data)
+                            message.success(this.formatMessage({id:'app.success'}));
+                            location.reload() ;
+                        }else if(res.data.code == 104){
+                            this.setState({
+                                user: JSON.parse(sessionStorage.user),
+                            }) 
+                            this.props.handleVisible ? this.props.handleVisible() : "";              
+                        }else{
+                            message.error(res.data.message);
+                        }
+                    })
+                }
             }
         });
     }
@@ -230,7 +339,7 @@ class PersonData extends React.Component {
                     span: 24
                 },
                 sm: {
-                    span: 6
+                    span: 7
                 },
             },
             wrapperCol: {
@@ -238,7 +347,7 @@ class PersonData extends React.Component {
                     span: 24
                 },
                 sm: {
-                    span: 14
+                    span:14
                 },
             },
         };
@@ -377,14 +486,14 @@ class PersonData extends React.Component {
                     :<FormattedMessage  id="persondata.enterprise.certification" defaultMessage="认证"/>
                     }：
                 </span>
-                {this.state.user.isAuthentication==0?<span className={css.text}>
+                {this.state.user.status==0?(this.state.user.userType==1?<span className={css.text}>
                     <span  className={css.text_certification}>
                         {formatMessage({id: 'persondata.certification'})}
                     </span>
                     <Button type="primary" className={css.button_certification} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
-                    <CusModal width="650"
+                    <CusModal width="800" scroll={{y: 700}}
                         title= { this.formatMessage({id:"app.processing"})}
                         visible={visible}
                         closeModal={this.handleCancel}
@@ -397,7 +506,7 @@ class PersonData extends React.Component {
                                 {getFieldDecorator('relnames', {
                                     rules:[{required:true, message:this.formatMessage({id:'app.input.relname'})}]
                                 })(
-                                    <Input className={css.text}/>
+                                    <Input className={appcss.form_input}/>
                                 )}   
                             </FormItem>
                         
@@ -422,12 +531,12 @@ class PersonData extends React.Component {
                                 {getFieldDecorator('cardnumber', {
                                     rules:[{required:true, message:this.formatMessage({id:'app.input.cardnumber'})}]
                                 })(
-                                    <Input className={css.text}/>
+                                    <Input className={appcss.form_input}/>
                                 )}   
                             </FormItem>
 
                             <FormItem
-                                wrapperCol={{ span: 12, offset: 6 }}
+                                wrapperCol={{ span: 12, offset: 7 }}
                             >
                                 <p className={css.credentials} >
                                     {this.formatMessage({id:'agent.upload.credentials'})}
@@ -481,24 +590,22 @@ class PersonData extends React.Component {
                                 {getFieldDecorator('idaddress', {
                                     rules:[{required:true, message:this.formatMessage({id:'app.input.idaddress'})}]
                                 })(
-                                    <Input className={css.text}/>
+                                    <Input className={appcss.form_input}/>
                                 )}   
                             </FormItem>
 
                             <FormItem
-                                {...formItemLayout}
-                                label={this.formatMessage({id:'register.notes'})}
+                                wrapperCol={{ span: 12, offset: 7 }}
                             >
                                 {getFieldDecorator('agreenotes', {
                                     rules:[{required:true, message:this.formatMessage({id:'app.input.agreenotes'})}]
                                 })(
-                                    <Checkbox onChange={this.onChangeCheck}>Checkbox</Checkbox>
+                                    <Checkbox onChange={this.onChangeCheck}>{this.formatMessage({id:'register.notes'})}</Checkbox>
                                 )}   
                             </FormItem>
 
                             <FormItem
-                                {...tailFormItemLayout}
-                                label={this.formatMessage({id:'perau.perau.save'})}
+                                wrapperCol={{ span: 12, offset: 7 }}
                             >
                                 <Button type="primary" className={css.submit}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
                             </FormItem>
@@ -507,12 +614,175 @@ class PersonData extends React.Component {
 
 
                     </CusModal>
-                </span>
-                :this.state.user.isAuthentication==1?<span
+                </span>:
+                <span className={css.text}>
+                    <span  className={css.text_certification}>
+                        {formatMessage({id: 'persondata.certification'})}
+                    </span>
+                    <Button type="primary" className={css.button_certification} onClick={this.handleCertification}>
+                            <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
+                    </Button>
+                    <CusModal width="800" scroll={{y: 700}}
+                        title= { this.formatMessage({id:"app.processing"})}
+                        visible={visible}
+                        closeModal={this.handleCancel}
+                    >
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'post.company_name'})}
+                            >
+                                {getFieldDecorator('companynames', {
+                                    rules:[{required:true, message:this.formatMessage({id:'certif.company.name_warn'})}]
+                                })(
+                                    <Input className={appcss.form_input}/>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'certif.company.website'})}
+                            >
+                                {getFieldDecorator('company_websites', {
+                                    rules:[{required:true, message:this.formatMessage({id:'certif.company.website_warn'})}]
+                                })(
+                                    <Input className={appcss.form_input}/>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'certif.company.nature'})}
+                            >
+                                {getFieldDecorator('company_natures', {
+                                    rules:[{required:true, message:this.formatMessage({id:'certif.company.nature_warn'})}]
+                                })(
+                                    
+                                    <Select labelInValue onChange={this.handleSelectNature} className={appcss.form_input}>
+                                        <Option value="1">Jack</Option>
+                                        <Option value="2">Lucy</Option>
+                                        <Option value="3">Disabled</Option>
+                                        <Option value="4">yiminghe</Option>
+                                    </Select>
+                                )}   
+                            </FormItem>
+                                
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'certif.company.industry'})}
+                            >
+                                {getFieldDecorator('company_industrys', {
+                                    rules:[{required:true, message:this.formatMessage({id:'certif.company.industry_warn'})}]
+                                })(
+                                    <Select labelInValue onChange={this.handleSelectIndu} className={appcss.form_input}>
+                                        <Option value="1">Jack</Option>
+                                        <Option value="2">Lucy</Option>
+                                        <Option value="3">Disabled</Option>
+                                        <Option value="4">yiminghe</Option>
+                                    </Select>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'certif.company.region'})}
+                            >
+                                {getFieldDecorator('regionss', {
+                                    initialValue: this.state.user.region?this.state.user.region:[],
+                                    rules:[{type: 'array',required:true, message:this.formatMessage({id:'agent.select.region'})}]
+                                })(
+                                    <span className={appcss.form_input}>
+                                        <Cascader style={{ width: '100%'}} options={this.state.options} onChange={this.handleRegion}/>
+                                    </span>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label={this.formatMessage({id:'persondata.contact.address'})}
+                            >
+                                {getFieldDecorator('contact_addresses', {
+                                    rules:[{required:true, message:this.formatMessage({id:'agent.enter.detailed_address'})}]
+                                })(
+                                    <Input className={appcss.form_input}/>
+                                )}   
+                            </FormItem>               
+
+
+                            <FormItem
+                                wrapperCol={{ span: 12, offset: 7 }}
+                            >
+                                <p className={css.credentials} >
+                                    {this.formatMessage({id:'agent.upload.credentials'})}
+                                </p>
+                                <div className={appcss.upload}>
+                                    <div className={appcss.uploader_div}>
+                                        <Upload
+                                            name="file"
+                                            action={Util.url+"/tool/upload"}
+                                            onChange={this.handleChangeUp.bind(this,"img_front")}
+                                            onPreview={this.previewImg.bind(this,"img_front")}
+                                            listType="picture-card"
+                                            onRemove={this.removePic.bind(this,"img_front")}
+                                            accept="image/*"
+                                            multiple
+                                        >
+                                            {this.state.img_front ? null : <span className={appcss.upload_icon}>
+                                                <i class="iconfont icon-jiahao"></i>
+                                            </span>}
+                                        </Upload>
+                                        <p className={appcss.side}>
+                                            {this.formatMessage({id: 'agent.front'})}
+                                        </p>
+                                    </div>
+                                    <div className={appcss.uploader_div}>
+                                        <Upload 
+                                            name="file"
+                                            action={Util.url+"/tool/upload"}
+                                            onChange={this.handleChangeUp.bind(this,"img_back")}
+                                            onPreview = {this.previewImg.bind(this,"img_back")}
+                                            listType="picture-card"
+                                            onRemove={this.removePic.bind(this,"img_back")}
+                                            accept="image/*"
+                                            multiple
+                                        >
+                                            {this.state.img_back ? null :<span className={appcss.upload_icon}>
+                                                <i class="iconfont icon-jiahao"></i>
+                                            </span>}
+                                        </Upload>
+                                        <p className={appcss.side}>
+                                            {this.formatMessage({id: 'agent.back'})}
+                                        </p>
+                                    </div>
+                                </div>
+                            </FormItem>
+
+                            <FormItem
+                                wrapperCol={{ span: 12, offset: 7 }}
+                            >
+                                {getFieldDecorator('agreenotes', {
+                                    rules:[{ required:true,message:this.formatMessage({id:'app.input.agreenotes'})}]
+                                })(
+                                    <Checkbox onChange={this.onChangeCheck}>{this.formatMessage({id:'register.notes'})}</Checkbox>
+                                )}   
+                            </FormItem>
+
+                            <FormItem
+                                wrapperCol={{ span: 12, offset: 7 }}
+                            >
+                                <Button type="primary" className={css.submit}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
+                            </FormItem>
+
+                        </Form>
+
+
+                    </CusModal>
+                </span>)
+                :this.state.user.status==-1?<span
                      className={css.text} style={{ color: '#ffa300' }}>
                     {formatMessage({id: 'persondata.under.review'})}
                 </span>
-                :this.state.user.isAuthentication==2?<span
+                :this.state.user.status==1?<span
                      className={css.text}>
                      {formatMessage({id: 'persondata.certificationed'})}
                 </span>:""
