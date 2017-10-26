@@ -7,7 +7,7 @@
   z-index: 80;
   .header_content{
     display: flex;
-    padding-top: 70px;
+    padding-top: 60px;
     width: 1100px;
     margin: 0 auto;
     background: $background-color;
@@ -17,6 +17,7 @@
     flex-grow: 1;
     align-items: center;
   }
+  
   .logo{
       color: $theme-color;
       font-size: 40px;
@@ -31,6 +32,19 @@
       color: $font-color;
     }
   }
+   .title_category{
+     width: 220px !important;
+    text-align: center !important;
+    background: #2e2b2e !important;
+    color: #ffc70d !important;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+     border-top-left-radius: 5px !important;
+     border-top-right-radius: 5px !important;
+
+    }
   .active {
     @extend .title;
     color: $theme-color;
@@ -41,6 +55,7 @@
       margin-left: 10px;
       height: 42px;
       margin-top: -4px;
+       border-radius: 30px;
     }
   }
 }

@@ -64,6 +64,7 @@ div[class="ant-row ant-form-item"]{
 }
 .footer_first{
   background: $bar-color;
+      border-bottom: 1px solid $border-color;
 }
 .foot{
   padding: 38px 0px;
@@ -90,7 +91,7 @@ div[class="ant-row ant-form-item"]{
 .bottom{
   text-align: center;
   color: #ffffff;
-  background: #122337;
+  background:$bar-color;
   font-size: 14px;
   padding: 10px;
 }
@@ -117,7 +118,7 @@ div[class="ant-row ant-form-item"]{
     width: 100%;
     z-index: 99;
     top: 0;
-    background: #122337;
+    background: $bar-color;
 }
 %button{
     padding: 0px 15px;
@@ -152,14 +153,16 @@ div[class="ant-row ant-form-item"]{
 }
 .button_radius{
   @extend %button;
-  width: 200px  !important;
+
+  border-color: $theme-color !important;
   border-radius: 30px  !important;
 }
 .button_radius:hover{
-  @extend %button;
-  width: 200px  !important;
-  border-radius: 30px  !important;
-  background-color: $button-blue-active !important;
+  box-shadow: 0 1px 5px $theme-color;
+}
+.button_radius:active{
+  background-color: #e2a20a !important;
+  border-color: #e2a20a !important;
 }
 .button_black{
     @extend %button;
