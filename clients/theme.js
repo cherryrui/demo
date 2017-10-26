@@ -4,7 +4,10 @@
 module.exports = () => {
 	return {
 		'primary-color': '#ffc70d',
-		'link-color': '#ff9a2c',
+		'link-color': '#2e2b2e',
+		'link-hover-color': '#ff9a2c',
+		'link-active-color': '#ff9a2c',
+		'link-hover-decoration': 'underline',
 		'input-height-base': '36px',
 		'input-height-lg': '36px',
 		'input-height-sm': '20px',

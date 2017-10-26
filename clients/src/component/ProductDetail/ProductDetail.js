@@ -199,7 +199,9 @@ class ProductDetail extends React.Component {
                             selectSpecs.push(spec);
                         })
                         product.selectSpecs = selectSpecs;
-                        sessionStorage.setItem("products", JSON.stringify(product));
+                        let products = [];
+                        products.push(product);
+                        sessionStorage.setItem("products", JSON.stringify(products));
                         this.props.history.pushState(null, "page/cart/1");
                     }
                 } else {

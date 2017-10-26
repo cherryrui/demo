@@ -109,8 +109,8 @@ class Quotation extends React.Component {
 			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
 			width: "110px",
 			className: css.table_col,
-			dataIndex: 'priceSupplier',
-			key: 'priceSupplier',
+			dataIndex: 'agentPrice',
+			key: 'agentPrice',
 			render: (text) => <span className={css.table_price}>${text}</span>
 		}, ]
 	}
@@ -119,8 +119,20 @@ class Quotation extends React.Component {
 			this.props.history.pushState(null, "/");
 		} else if (this.props.params.id) {
 			axios.get(`/quotation/get-quotation-byid.json?id=${this.props.params.id}`).then(res => {
+				console.log(res.data.result);
+				let quotation = res.data.result.quotationOrder;
+				res.data.result.productList.map(item => {
+					item.moq = item.minBuyQuantity;
+					item.price = item.productPrice;
+					item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+					item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
+					item.selectSpecs = JSON.parse(item.productSpecification)
+				})
+				quotation.exportOption = JSON.parse(quotation.exportOption);
+				quotation.products = res.data.result.productList;
+				quotation.participant = res.data.result.participant;
 				this.setState({
-					quotation: res.data.quotation,
+					quotation: quotation
 				})
 			})
 
@@ -130,7 +142,7 @@ class Quotation extends React.Component {
 			let data = this.state.quotation;
 			data.products = quotation.products;
 			data.totalSalePrice = quotation.sale_price.toFixed(2);
-			data.profits = quotation.profit.toFixed(2);
+			data.profits = quotation.profit ? quotation.profit.toFixed(2) : quotation.profit;
 			data.totalQuantity = quotation.sum_num;
 			data.participant = {
 				ageCompanyName: this.user.companyName,
@@ -232,8 +244,12 @@ class Quotation extends React.Component {
 		});
 	}
 	handlePrint = (key, e) => {
-		this.state.quotation.exportOption = this.state.quotation.exportOption ? this.state.quotation.exportOption : {};
-		this.state.quotation.exportOption[key] = e.target.checked;
+		let quotation = this.state.quotation;
+		quotation.exportOption = quotation.exportOption ? quotation.exportOption : {};
+		quotation.exportOption[key] = e.target.checked;
+		this.setState({
+			quotation
+		})
 	}
 	onlineShow = () => {
 		this.setState({
@@ -333,7 +349,7 @@ class Quotation extends React.Component {
 		return <div className={appcss.body} ref={(quotation)=>this.quotation=quotation}>
 		<div  className={css.qutation}>
             <div className={`${appcss.navigate} ${css.qutation_title}`}>
-            	{this.state.quotation.id?<Breadcrumb separator=">>">
+            	{this.state.quotation.quotationId?<Breadcrumb separator=">>">
                     <Breadcrumb.Item >
                         <Link to="page/mine">
                             <FormattedMessage id="mine.person" defaultMessage="个人中心"/>
@@ -361,7 +377,7 @@ class Quotation extends React.Component {
             </div>
             <Table
                 pagination={false}
-                rowKey="id"
+                rowKey={record => record.id||record.quotationProductId}
                 bordered
                 columns={this.columns}
                 dataSource={this.state.quotation.products} />
@@ -502,7 +518,7 @@ class Quotation extends React.Component {
 	            </p>
 	            <div>
 	            	{operator.quot_title.map(item=>{
-	            		return <Checkbox
+	            		return <Checkbox checked={this.state.quotation.exportOption&&this.state.quotation.exportOption[item.value]?true:false}
 	            			onChange={this.handlePrint.bind(this,item.value)}>
 	            			<FormattedMessage id={item.key} defaultMessage="分类"/>
 	            		</Checkbox>
@@ -515,23 +531,6 @@ class Quotation extends React.Component {
                 	:<FormattedMessage id="quotation.generate" defaultMessage="生成报价单"/>}
                 </p>
 	        </div>
-            <Modal
-                width={this.state.width}
-                title={<ModalHeader width={this.state.width}
-                    setWidth={this.handleState}
-                    export={this.exportQuotation}
-                    title={this.formatMessage({
-                        id: 'quotation.online'
-                    })}/>}
-                visible={this.state.visible}
-                footer={null}
-                onCancel={this.handleCancel}
-            >
-                <div id="content">
-                    <QuotationPdf quotation={this.state.quotation}/>
-                </div>
-            </Modal>
-	       
 		</div>
 	</div>
 	}
