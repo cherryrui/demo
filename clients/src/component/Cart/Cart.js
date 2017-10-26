@@ -48,7 +48,7 @@ class Cart extends React.Component {
         if (this.props.params.step) {
             if (this.props.params.step == 1 && sessionStorage.products) {
                 let products = [];
-                products.push(JSON.parse(sessionStorage.products));
+                products = JSON.parse(sessionStorage.products);
                 this.setState({
                     step: 1,
                     products: products

@@ -35,7 +35,7 @@ class QuotationList extends React.Component {
 		this.state = {
 			data: [],
 			current: 1,
-			pageSize:10,
+			pageSize: 10,
 			info: "",
 			total: 0,
 			quotation: {},
@@ -47,24 +47,24 @@ class QuotationList extends React.Component {
 	}
 	componentWillMount() {
 		this.getQuotation();
+		this.props.goTop ? this.props.goTop() : "";
 	}
 	getQuotation() {
 		let param = {
-			pageNo : this.state.current,
-			pageSize:this.state.pageSize
+			pageNo: this.state.current,
+			pageSize: this.state.pageSize
 		};
-		console.log(param)
-		axios.post(`/quotation/get-quotation.json`,param).then(res => {
+		axios.post(`/quotation/get-quotation.json`, param).then(res => {
 			console.log(res.data)
-			if(res.data.isSucc){
+			if (res.data.isSucc) {
 				this.setState({
 					data: res.data.result.list,
 					total: res.data.result.allRow
 				})
-			}else{
+			} else {
 				message.error(res.data.message);
 			}
-			
+
 		})
 	}
 
@@ -91,54 +91,34 @@ class QuotationList extends React.Component {
 		}, this.exportQuotation)
 	}
 
-	getProductListById = () =>{
+	getProductListById = () => {
 
-	}
-	/**
-	 * 根据当前选择报价单生成订单
-	 * @param  {[type]} item [description]
-	 * @return {[type]}      [description]
-	 */
+		}
+		/**
+		 * 根据当前选择报价单生成订单
+		 * @param  {[type]} item [description]
+		 * @return {[type]}      [description]
+		 */
 	create_order = (item) => {
-		console.log(item)
-		let user = JSON.parse(sessionStorage.getItem('user'));
-		let param = {
-			userId : user.uid,
-			quotationId : item.quotationId
-		};
-		axios.post('/quotation/get-productlist-byId.json',param).then(res =>{
+		axios.get('/quotation/get-quotation-byid.json?id=' + item.quotationId).then(res => {
 			console.log(res.data);
-			if(res.data.isSucc){
+			if (res.data.isSucc) {
 				let productlist = res.data.result.productList;
-				let productarr = {};
-				let productarrys = [];
-				productlist.map(item=>{
-					productarr.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
-					productarr.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
-					productarr.coverUrl = item.productUrl;
-					productarr.id = null;
-					productarr.itemId = null;
-					productarr.itemNo = null;
-					productarr.itemPrice = null;
-					productarr.itemPriceSupplier = null;
-					productarr.moq = 1;
-					productarr.price = item.productPrice;
-					productarr.priceSupplier = item.salePrice;
-					productarr.productId = item.productId;
-					productarr.productName = item.productName;
-					productarr.productNo = item.productNo;
-					productarr.productNum = item.productNum;
-					productarr.specs = JSON.parse(item.productSpecification);
-					productarrys.push(productarr);
+				productlist.map(item => {
+					item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+					item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
+					item.coverUrl = item.productUrl;
+					item.moq = item.minBuyQuantity;
+					item.id = item.quotationProductId;
+					item.price = item.agentPrice;
+					item.selectSpecs = JSON.parse(item.productSpecification);
 				})
-				let products = productarrys;
-				console.log(products);
-				sessionStorage.setItem("products", JSON.stringify(products));
+				sessionStorage.setItem("products", JSON.stringify(productlist));
 				this.props.history.pushState(null, "/page/cart/1");
-			}else{
+			} else {
 
 			}
-			
+
 		})
 
 	}
@@ -206,13 +186,13 @@ class QuotationList extends React.Component {
 	handleDelete = (id) => {
 		console.log(id)
 		axios.get(`/quotation/delete-quotation.json?id=${id}`).then(res => {
-			if(res.data.isSucc){
+			if (res.data.isSucc) {
 				message.success(this.formatMessage({
 					id: 'cart.delete_warn'
 				}))
 				this.getQuotation();
 				/*this.props.history.pushState(null, "/page/mine/quotation-list");*/
-			}else{
+			} else {
 				message.error(res.data.message);
 			}
 		})
@@ -224,7 +204,7 @@ class QuotationList extends React.Component {
 				formatMessage
 			}
 		} = this.props;
-		return <div>
+		return <div className={css.quotation_list}>
 			<div className={basecss.child_title}>
                 <FormattedMessage id="mine.quotation.list" defaultMessage="分类"/>
                 <Search
@@ -266,9 +246,7 @@ class QuotationList extends React.Component {
             		</div>
             		<div className={css.quotation_item_body}>
             			<p className={css.item_info}>
-
             					<img src={item.img}/>
-
             				<div>
 	            				<FormattedMessage id="quotation.subject" defaultMessage="报价单名称"/>
 	            				:{item.quotationSubject}
@@ -298,13 +276,20 @@ class QuotationList extends React.Component {
             				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;
             				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
             			</Link>
-            			<Button type="primary" style={{background:"#3285ea",color:"white",border:"none"}} onClick={this.onlineShow.bind(this,item)}>
+            			<Button type="primary" 
+            				className={appcss.button_blue}
+            				onClick={this.onlineShow.bind(this,item)}>
             				<FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
 	            		</Button>
-	            		<Button type="primary" style={{background:"#ff9a2c",color:"white",border:"none"}} loading={this.state.loading} className={appcss.button_green} onClick={this.create_order.bind(this,item)}>
+	            		<Button type="primary"  
+	            			loading={this.state.loading} 
+	            			className={appcss.button_orange} 
+	            			onClick={this.create_order.bind(this,item)}>
             				<FormattedMessage id="mine.quotation.create_order" defaultMessage="生成订单"/>
 	            		</Button>
-	            		<Button type="primary" style={{background:"#2e2b2e",color:"white",border:"none"}} onClick={this.export.bind(this,item)}>
+	            		<Button 
+	            			className={appcss.button_black}
+	            			type="primary" onClick={this.export.bind(this,item)}>
             				<FormattedMessage id="quotation.export" defaultMessage="导出"/>
 	            		</Button>
             		</div>

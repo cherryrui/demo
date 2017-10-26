@@ -121,11 +121,14 @@ div[class="ant-row ant-form-item"]{
     background: $bar-color;
 }
 %button{
-    padding: 0px 15px;
+    min-width: 120px;
+    height: 36px;
     color: white !important;
     border-radius: 2px !important;
     display: inline-block;
     cursor: pointer;
+    text-align: center;
+    line-height: 36px;
 }
 
 .quit_modal{

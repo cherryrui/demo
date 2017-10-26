@@ -319,9 +319,6 @@ class PersonAddress extends React.Component {
         };
 
         const prefixSelector = getFieldDecorator('phoneDcId', {
-            rules: [{
-                validator: this.checkPhone
-            }],
             initialValue: this.state.address.phoneDcId ? this.state.address.phoneDcId : this.state.telCode.length > 0 ? this.state.telCode[0].id : "",
         })(
             <Select style={{ width: 100 }}>

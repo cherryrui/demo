@@ -71,7 +71,7 @@ class CartList extends React.Component {
                                 return <Option value={att.id}>{att.name}</Option>
                             })}
                         </Select>
-                    </div>:<p>{item.specName}:{item.specVal[0].specValue}</p>
+                    </div>:<p>{item.specName}：{item.specVal[0].specValue}</p>
                 }):""}
             </div>
         }, {

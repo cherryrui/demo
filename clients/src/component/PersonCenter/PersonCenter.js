@@ -38,6 +38,7 @@ class PersonCenter extends React.Component {
             visible: false,
             product_page: 1,
             brand_page: 2,
+            quotation_total: 0,
 
         }
 
@@ -103,9 +104,24 @@ class PersonCenter extends React.Component {
                 message.error(res.data.message);
             }
         });
+        //代理商 获取报价单总数
+        if (this.state.user.userIdentity == 1) {
+            axios.post('/user/get-quotation-sum.json', {}).then(res => {
+                if (res.data.code == 104) {
+                    this.props.handleVisible ? this.props.handleVisible(true) : "";
+                } else if (res.data.isSucc) {
+                    this.setState({
+                        quotation_total: res.data.result,
+                    })
+                } else {
+                    message.error(res.data.message);
+                }
+            })
+        } else if (this.state.user.userIdentity == 2) { //供应商，获取产品总数
+
+        }
     }
     handleMenu = (key, url) => {
-        console.log(key, url);
         this.setState({
             select: key
         });
@@ -247,7 +263,7 @@ class PersonCenter extends React.Component {
                                             <FormattedMessage id={item.value_id} defaultMessage="分类"/>
                                         </p>
                                 </Tooltip>
-                                    <p className={css.order_num}>30</p>
+                                    <p className={css.order_num}>{this.state.quotation_total}</p>
 
                             </div>
                         })}

@@ -258,7 +258,7 @@ class ProductDetail extends React.Component {
                     product.itemPrice = res.data.result.price;
                     product.inventory = res.data.result.inventory;
                     product.priceDiscounts = res.data.result.priceDiscounts;
-                    product.itemId = res.data.result.itemid;
+                    product.itemId = res.data.result.itemId;
                     this.setState({
                         product: product,
                         specs: specs,

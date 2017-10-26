@@ -101,6 +101,7 @@ const zh_CN = {
     "product.detail.month": "最近月",
     "product.detail.three": "三个月",
     "product.detail.six": "六个月",
+    "add.cart.success": "成功加入购物车",
     "product.no_price": "暂无价格波动",
     "product.no_product": "暂无该类产品",
     "product.no_spec": "暂无相关信息",

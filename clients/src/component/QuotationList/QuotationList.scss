@@ -1,4 +1,5 @@
 @import "../../themes.scss";
+
 .quotation_title{
 	display: flex;
     font-size: 14px;
@@ -34,6 +35,7 @@
 	border: 1px solid $border-color;
 	line-height: 100px;
   margin-top: 10px;
+  background: white;
 }
 .quotation_item_title{
 	display: flex;

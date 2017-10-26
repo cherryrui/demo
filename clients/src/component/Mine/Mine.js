@@ -22,7 +22,6 @@ import {
 } from 'antd';
 const SubMenu = Menu.SubMenu;
 
-
 class Mine extends React.Component {
     constructor(props) {
         super(props);

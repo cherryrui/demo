@@ -96,7 +96,7 @@ class ConfirmOrder extends React.Component {
             title: <FormattedMessage id="cart.price" defaultMessage="我的购物车"/>,
             width: "100px",
             className: css.table_col,
-            render: (record) => <span className={css.table_price}>${record.price.toFixed(2)}</span>
+            render: (record) => <span className={css.table_price}>${record.price}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "100px",
@@ -119,6 +119,7 @@ class ConfirmOrder extends React.Component {
         this.props.products.map(item => {
             sum += item.price * item.productNum;
         })
+        console.log(this.props.products, sum);
         order.sum = sum;
         order.postage = 0;
         order.total = order.sum + order.postage;
@@ -126,7 +127,6 @@ class ConfirmOrder extends React.Component {
         order.total = order.total.toFixed(2);
         axios.get('/user/get-city-by-parent.json').then(res => {
             let address = this.convertData(JSON.parse(res.data.address.result));
-            console.log(address);
             this.setState({
                 options: address,
                 order: order
@@ -411,7 +411,7 @@ class ConfirmOrder extends React.Component {
     }
 
     render() {
-        console.log(this.state.order)
+        console.log(this.state.order, this.props.products)
         const {
             getFieldDecorator
         } = this.props.form;
