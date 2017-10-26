@@ -196,48 +196,56 @@ class Category extends React.Component {
     render() {
         return <div className={css.category}>
         {this.props.category.map((item,index)=>{
-            return <div className={css.category_item} id={"category_"+index}>
-                <div className={css.left}>
-                    <div className={css.cate_title} >
-                        <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>
-                    </div>
-                    <div className={css.left_content}>
-                        <div>
-                            {item.levleTwoProductCategory.map(cate=>{
-                                return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
-                                    <p className={css.cate}>{cate.categoryName}</p>
+            return <div id={"category_"+index}>
+                <div className={css.category_top}>
+                        <p>Aotu Park</p>
+                </div>
+                <div className={css.category_item} >
+                    <div className={css.left}>
+                        <div className={css.cate_title} >
+                            <img src={item.iconUrl+"@18w_18h_1e_1c.png"}/>
+                        </div>
+                        <div className={css.left_content}>
+                            <div>
+                                {item.levleTwoProductCategory.map(cate=>{
+                                    return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
+                                        <p className={css.cate}>{cate.categoryName}</p>
+                                    </Link>
+                                })}
+                            </div>
+                            <div className={css.brand_button}>
+                                <Link  to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
+                                    <FormattedMessage id="app.more" defaultMessage="更多"/>
                                 </Link>
-                            })}
+                            </div>
                         </div>
-                        <div className={css.brand_button}>
-                            <Link  to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
-                                <FormattedMessage id="app.more" defaultMessage="更多"/>
-                            </Link>
+                        <div className={css.cate_title} >
+                            <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>
                         </div>
                     </div>
-                </div>
-                <div className={css.middle}>
-                    {item.products.map((goods,index)=>{
-                        return <Product className={css.product}  product={goods}/>
-                    })}
-                </div>
-                {item.suppliers.length>0?
-                <div className={css.right}>
-                    <Link to={"page/brand-detail/"+item.suppliers[0].sid}>
-                        <img className={css.right_img} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
-                        <p className={css.right_title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
-                        <p className={css.right_content}>
-                            <div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} />
-                        </p>
-                    </Link>
-                    <div className={css.right_brand}>
-                        {item.suppliers.map((brand,index)=>{
-                            return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
-                                <img className={css.right_img_item} src={brand.imgUrl+"@70w_70h_1e_1c.png"}/>
-                            </Link>:"")
+                    <div className={css.middle}>
+                        {item.products.map((goods,index)=>{
+                            return <Product className={css.product}  product={goods}/>
                         })}
                     </div>
-                </div>:""}
+                    {item.suppliers.length>0?
+                    <div className={css.right}>
+                        <Link to={"page/brand-detail/"+item.suppliers[0].sid}>
+                            <img className={css.right_img} src={item.suppliers[0].imgUrl+"@280w_280h_1e_1c.png"}/>
+                            <p className={css.right_title} style={{paddingBottom: 0}}>{item.suppliers[0].supplierName}</p>
+                            <p className={css.right_content}>
+                                <div dangerouslySetInnerHTML={{__html: item.suppliers[0].introduction}} />
+                            </p>
+                        </Link>
+                        <div className={css.right_brand}>
+                            {item.suppliers.map((brand,index)=>{
+                                return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
+                                    <img className={css.right_img_item} src={brand.imgUrl+"@70w_70h_1e_1c.png"}/>
+                                </Link>:"")
+                            })}
+                        </div>
+                    </div>:""}
+                </div>
             </div>
         })}
         </div>
