@@ -1,6 +1,6 @@
 @import "../../themes.scss";
 .body{
-	padding-top: 40px;
+	padding-top: 120px;
   min-height: 445px;
 }
 .logo{
@@ -42,6 +42,7 @@
     line-height: 20px;
     padding-bottom: 10px;
    display: block;
+   margin-bottom: 5px;
   }
 
   .remember{
@@ -63,7 +64,7 @@
     border:none;
   }
   .button_registor{
-    background:$button-green;
+    background:$color-blue;
     border:none;
     width: 100%;
     border-radius: 2px;
@@ -71,6 +72,6 @@
   }
   .button_registor:hover{
 
-    background-color: $button-green-active;
+    background-color: $button-blue-active;
   }
 }

@@ -72,7 +72,7 @@ class Login extends React.Component {
             getFieldDecorator
         } = this.props.form;
         return <div className={css.body}>
-            <Link to="/" className={css.logo}>LOGO</Link>
+         
             <div className={css.form} style={{background: `url("../img/login_bg.png")`}}>
                 <Form onSubmit={this.handleSubmit} className={css.login_form}>
                     <FormItem>
