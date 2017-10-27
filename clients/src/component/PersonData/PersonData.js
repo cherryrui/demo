@@ -32,37 +32,33 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
-const natureList = [
-    {
-        natureid:'1',
-        naturename:'互联网'
-    },
-    {
-        natureid:'2',
-        naturename:'金融'
-    },
-    {
-        natureid:'3',
-        naturename:'房地产'
-    }
-];
+const natureList = [{
+    natureid: '1',
+    naturename: '互联网'
+}, {
+    natureid: '2',
+    naturename: '金融'
+}, {
+    natureid: '3',
+    naturename: '房地产'
+}];
 class PersonData extends React.Component {
     state = {
         loading: false,
         visible: false,
-            }
-    handleSelectNature = (value) =>{
+    }
+    handleSelectNature = (value) => {
         console.log(`selected ${value}`);
         this.setState({
-            natureid:parseInt(value.key),
-            companyNatureName:value.label
+            natureid: parseInt(value.key),
+            companyNatureName: value.label
         })
     }
-    handleSelectIndu = (value) =>{
+    handleSelectIndu = (value) => {
         console.log(`selected ${value}`);
         this.setState({
-            industryid:parseInt(value.key),
-            industryName:value.label
+            industryid: parseInt(value.key),
+            industryName: value.label
         })
     }
     handleCertification = () => {
@@ -71,44 +67,47 @@ class PersonData extends React.Component {
         });
     }
     handleCancel = () => {
-        this.setState({ visible: false });
+        this.setState({
+            visible: false
+        });
     }
     static propTypes = {
         intl: intlShape.isRequired
     };
-    onRadioChange = (e) =>{
+    onRadioChange = (e) => {
         console.log(`radio checked:${e.target.value}`);
-        if(e.target.value == '1'){
+        if (e.target.value == '1') {
             this.setState({
-                certificateTypeId:parseInt(e.target.value),
-                certificateTypeName:'IDCard'
+                certificateTypeId: parseInt(e.target.value),
+                certificateTypeName: 'IDCard'
             })
-        }else if(e.target.value == '2'){
+        } else if (e.target.value == '2') {
             this.setState({
-                certificateTypeId:parseInt(e.target.value),
-                certificateTypeName:'GreenCard'
+                certificateTypeId: parseInt(e.target.value),
+                certificateTypeName: 'GreenCard'
             })
         }
-        
-    } 
-    onChangeCheck  = (e) =>{
+
+    }
+    onChangeCheck = (e) => {
         console.log(`radio checked:${e.target.checked}`);
     }
-    constructor(props) {    
+    constructor(props) {
         super(props);
         this.state = {
             edit: false,
             button_name: "persondata.modify",
             user: JSON.parse(sessionStorage.user),
             options: [],
-            check:0,
-            naturelist:natureList,
+            check: 0,
+            naturelist: natureList,
+            becoming: 4, //1代理商,2供应理商
         };
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         this.formatMessage = this.props.intl.formatMessage;
     }
     componentWillMount() {
@@ -241,65 +240,69 @@ class PersonData extends React.Component {
             console.log(values);
             let param;
             let imgurls = JSON.stringify([{
-                url:this.state.img_front
-            },{
-                url:this.state.img_back
+                url: this.state.img_front
+            }, {
+                url: this.state.img_back
             }]);
             if (!err) {
-                if(this.state.user.userType==1){
+                if (this.state.user.userType == 1) {
                     param = {
-                        realName:values.relnames,
-                        certificateTypeId:this.state.certificateTypeId,
-                        certificateTypeName:this.state.certificateTypeName,
-                        certificateNo:values.cardnumber,
-                        certificateAddress:values.idaddress,
-                        imgUrl:imgurls
+                        realName: values.relnames,
+                        certificateTypeId: this.state.certificateTypeId,
+                        certificateTypeName: this.state.certificateTypeName,
+                        certificateNo: values.cardnumber,
+                        certificateAddress: values.idaddress,
+                        imgUrl: imgurls
                     };
-                    axios.post('/user/person-cerification.json',param).then(res=>{
-                        if(res.data.isSucc){
+                    axios.post('/user/person-cerification.json', param).then(res => {
+                        if (res.data.isSucc) {
                             console.log(res.data)
-                            message.success(this.formatMessage({id:'app.success'}));
-                            location.reload() ;
-                        }else if(res.data.code == 104){
+                            message.success(this.formatMessage({
+                                id: 'app.success'
+                            }));
+                            location.reload();
+                        } else if (res.data.code == 104) {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
-                            }) 
-                            this.props.handleVisible ? this.props.handleVisible() : "";  
-                        }else{
+                            })
+                            this.props.handleVisible ? this.props.handleVisible() : "";
+                        } else {
                             message.error(res.data.message);
                         }
                     })
-                }else if(this.state.user.userType==2){
+                } else if (this.state.user.userType == 2) {
                     param = {
-                        companyName:values.companynames,
-                        companyWebsite:values.company_websites,
-                        companyNatureName:this.state.companyNatureName,
-                        industryName:this.state.industryName,
-                        country:this.state.user.country,
-                        countryName:this.state.user.countryName,
-                        province:this.state.user.province,
-                        provinceName:this.state.user.provinceName,
-                        city:this.state.user.city,
-                        cityName:this.state.user.cityName,
-                        district:this.state.user.district,
-                        districtName:this.state.user.districtName,
-                        address:values.contact_addresses,
-                        imgUrl:imgurls,
-                        companyNatureId:this.state.natureid,
-                        industryId:this.state.industryid
+                        companyName: values.companynames,
+                        companyWebsite: values.company_websites,
+                        companyNatureName: this.state.companyNatureName,
+                        industryName: this.state.industryName,
+                        country: this.state.user.country,
+                        countryName: this.state.user.countryName,
+                        province: this.state.user.province,
+                        provinceName: this.state.user.provinceName,
+                        city: this.state.user.city,
+                        cityName: this.state.user.cityName,
+                        district: this.state.user.district,
+                        districtName: this.state.user.districtName,
+                        address: values.contact_addresses,
+                        imgUrl: imgurls,
+                        companyNatureId: this.state.natureid,
+                        industryId: this.state.industryid
                     }
                     console.log(param)
-                    axios.post('/user/enterpriser.json',param).then(res=>{
-                        if(res.data.isSucc){
+                    axios.post('/user/enterpriser.json', param).then(res => {
+                        if (res.data.isSucc) {
                             console.log(res.data)
-                            message.success(this.formatMessage({id:'app.success'}));
-                            location.reload() ;
-                        }else if(res.data.code == 104){
+                            message.success(this.formatMessage({
+                                id: 'app.success'
+                            }));
+                            location.reload();
+                        } else if (res.data.code == 104) {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
-                            }) 
-                            this.props.handleVisible ? this.props.handleVisible() : "";              
-                        }else{
+                            })
+                            this.props.handleVisible ? this.props.handleVisible() : "";
+                        } else {
                             message.error(res.data.message);
                         }
                     })
@@ -332,7 +335,10 @@ class PersonData extends React.Component {
                 formatMessage
             }
         } = this.props;
-        const { visible, loading } = this.state;
+        const {
+            visible,
+            loading
+        } = this.state;
         const formItemLayout = {
             labelCol: {
                 xs: {
@@ -347,7 +353,7 @@ class PersonData extends React.Component {
                     span: 24
                 },
                 sm: {
-                    span:14
+                    span: 14
                 },
             },
         };
@@ -409,7 +415,32 @@ class PersonData extends React.Component {
                         <FormattedMessage  id="quotation.contact.tel" defaultMessage="电话"/>：
                     </span>
                     <span className={css.text}>{this.state.user.tel}</span>
-                </p>
+                </p>       
+            {this.state.becoming ==3||this.state.becoming ==4?
+                <div>
+                         <p  className={css.info}>
+                                <span className={css.title}>
+                                    <FormattedMessage  id="post.company_name" defaultMessage="公司名字"/>：
+                                </span>
+                                <span className={css.text}>{this.state.user.tel}</span>
+                         </p> 
+
+                        <p  className={css.info}>
+                                <span className={css.title}>
+                                    <FormattedMessage  id="post.linkman" defaultMessage="联系人"/>：
+                                </span>
+                                <span className={css.text}>{this.state.user.tel}</span>
+                         </p>
+                        <p  className={css.info}>
+                                <span className={css.title}>
+                                    <FormattedMessage  id="quotation.url" defaultMessage="网址"/>：
+                                </span>
+                                <span className={css.text}>{this.state.user.tel}</span>
+                         </p>
+                </div>:""
+            }
+         
+               
                 <p  className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="quotation.contact.email" defaultMessage="邮箱"/>：
@@ -472,6 +503,22 @@ class PersonData extends React.Component {
                     }
                 </p>
                 </div>:""}
+                   {this.state.becoming == 4?
+                <div>
+                     <p  className={css.info}>
+                        <span className={css.title}>
+                              <FormattedMessage  id="app.product_category" defaultMessage="网址"/>：
+                        </span>
+                        <span className={css.text}>{this.state.user.tel}</span>
+                    </p>
+                     <p className={css.info}>
+                         <span className={css.title}>
+                               <FormattedMessage  id="supplier.main.products" defaultMessage="主营产品"/>：
+                        </span>
+                        <span className={css.text}>{this.state.user.tel}</span>                    
+                    </p>
+                </div>:""
+            }
                 <Button type="primary" className={css.button_modifye} onClick={this.handleClick}>
                     <FormattedMessage id={this.state.button_name} defaultMessage=""/>
                 </Button>
