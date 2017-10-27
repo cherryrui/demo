@@ -33,16 +33,18 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+const user = JSON.parse(sessionStorage.getItem("user"));
 class PhoneVerifi extends React.Component {
 	static propTypes = {
 		intl: intlShape.isRequired
 	};
 	constructor(props) {
 		super(props);
-
+		console.log(this.props.params)
 		this.state = {
-			step: 0,
-			verifi_modl: 1, //1手机验证，2邮箱验证
+			step: this.props.params.type == 1?(user.tel?0:1):(user.email?0:1), 
+			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
+			user:user,
 			phone: 12432434,
 			email: 224,
 
@@ -76,7 +78,7 @@ class PhoneVerifi extends React.Component {
 			/>
 		}
 
-		                    {this.state.step==0?<Authentication handleSteps={this.handleSteps}/>
+		                    {this.state.step==0?<Authentication handleSteps={this.handleSteps} type={this.state.verifi_modl}/>
 
 		                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps}/>
 		                    :this.state.step==2?<SetSuccess/>
@@ -98,11 +100,11 @@ class Authentication extends React.Component {
 
 	constructor(props) {
 		super(props);
-
+		console.log(this.props.type)
 		this.state = {
 			loading: false,
 			time: 0,
-			verifi_modl: 1, //认证类型：1验证手机，2验证邮箱
+			verifi_modl: this.props.type, //认证类型：1验证手机，2验证邮箱
 			code_modl: 1, //接收方式：1选择手机接收验证码，2选择邮箱收验证码
 			phone: 12432434,
 			email: 224,
@@ -181,30 +183,10 @@ class Authentication extends React.Component {
 		return <div className={css.ship_from}>
        
 		                <Form onSubmit={this.handleSubmit}>              
+		                    
 		                    <FormItem
 					          {...formItemLayout}
-		                        label={this.formatMessage({id: 'verification.mode'})}
-
-		                    >
-					    	    {getFieldDecorator('verification_mode', {
-		                          rules: [{
-		                              required: true, message:this.formatMessage({ id:'verification.mode.select'}),
-		                          }],
-		                      })(
-		                          <RadioGroup onChange={this.onChange} >
-								        <Radio 
-									        value={1}>  
-									        {this.formatMessage({id: 'moblie.phone'})}
-								        </Radio>
-									        <Radio value={2} style={{paddingLeft:40}}> 
-									         {this.formatMessage({id: 'post.email'})}
-								        </Radio>		      
-								      </RadioGroup>
-		                      )}
-		                    </FormItem>
-		                    <FormItem
-					          {...formItemLayout}
-		                        label={this.state.code_modl==1?this.formatMessage({id: 'moblie.phone'})
+		                        label={this.state.verifi_modl==1?this.formatMessage({id: 'moblie.phone'})
 		                    		  :this.formatMessage({id: 'post.email'})
 		                    		}
 
@@ -212,7 +194,7 @@ class Authentication extends React.Component {
 					          {getFieldDecorator('moblie_phone', {
 		                         
 		                      })(
-		                         <p>{this.state.code_modl==1?this.state.phone:this.state.email}</p>
+		                         <p>{this.state.verifi_modl==1?user.tel:user.email}</p>
 		                      )}
 		                    </FormItem>
 		                    <FormItem
@@ -257,7 +239,7 @@ class SetPwd extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			verifi_modl: 1, //1手机验证，2邮箱验证
+			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
 			phone: 12432434,
 			email: 224,
 		}

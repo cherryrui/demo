@@ -490,7 +490,7 @@ ReactDOM.render(
                                 <Route path="account" getComponent={AccountSecurity}/>
                                 <Route path="requirement" getComponent={Requirements}/>
                                 <Route path="change-password" getComponent={ChangePassword}/>
-                                <Route path="phone-verifi" getComponent={PhoneVerifi}/>
+                                <Route path="phone-verifi/:type" getComponent={PhoneVerifi}/>
                             </Route>
                             <Route path="product-editor" getComponent={ProductEditor}/>
                         </Route>

@@ -446,6 +446,7 @@ const zh_CN = {
     "repwd.authen": "验证",
     "reset.success.info": "密码重置成功！",
     "repwd.get_code": "获取验证码",
+    "repwd.get_code_error": "验证码错误",
     "authen.authen.Obtainverification": "获取验证",
     "authen.authen.Everificationcode": "邮箱验证码",
     "authen.authen.nextstep": "下一步",

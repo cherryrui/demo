@@ -416,26 +416,26 @@ class PersonData extends React.Component {
                     </span>
                     <span className={css.text}>{this.state.user.tel}</span>
                 </p>       
-            {this.state.becoming ==3||this.state.becoming ==4?
+            {this.state.user.agent || this.state.user.supplier ?
                 <div>
                          <p  className={css.info}>
                                 <span className={css.title}>
                                     <FormattedMessage  id="post.company_name" defaultMessage="公司名字"/>：
                                 </span>
-                                <span className={css.text}>{this.state.user.tel}</span>
+                                <span className={css.text}>{this.state.user.companyName}</span>
                          </p> 
 
                         <p  className={css.info}>
                                 <span className={css.title}>
                                     <FormattedMessage  id="post.linkman" defaultMessage="联系人"/>：
                                 </span>
-                                <span className={css.text}>{this.state.user.tel}</span>
+                                <span className={css.text}>{this.state.user.agent?this.state.user.agent.contactPerson:this.state.user.supplier.contactPerson}</span>
                          </p>
                         <p  className={css.info}>
                                 <span className={css.title}>
                                     <FormattedMessage  id="quotation.url" defaultMessage="网址"/>：
                                 </span>
-                                <span className={css.text}>{this.state.user.tel}</span>
+                                <span className={css.text}>{this.state.user.websiteUrl}</span>
                          </p>
                 </div>:""
             }
@@ -503,19 +503,19 @@ class PersonData extends React.Component {
                     }
                 </p>
                 </div>:""}
-                   {this.state.becoming == 4?
+                   {this.state.user.supplier?
                 <div>
                      <p  className={css.info}>
                         <span className={css.title}>
-                              <FormattedMessage  id="app.product_category" defaultMessage="网址"/>：
+                              <FormattedMessage  id="app.product_category" defaultMessage="产品分类"/>：
                         </span>
-                        <span className={css.text}>{this.state.user.tel}</span>
+                        <span className={css.text}>{this.state.user.supplier.supplierName}</span>
                     </p>
                      <p className={css.info}>
                          <span className={css.title}>
-                               <FormattedMessage  id="supplier.main.products" defaultMessage="主营产品"/>：
+                               <FormattedMessage  id="supplier.main.products" defaultMessage="公司简介"/>：
                         </span>
-                        <span className={css.text}>{this.state.user.tel}</span>                    
+                        <span className={css.text}><div dangerouslySetInnerHTML={{__html: this.state.user.supplier.introduction}} /></span>                    
                     </p>
                 </div>:""
             }

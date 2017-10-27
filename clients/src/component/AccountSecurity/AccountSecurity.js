@@ -46,7 +46,7 @@ class AccountSecurity extends React.Component {
                     <p className={css.account_grey}> { this.formatMessage({id:"app.phone.verified_info"})}</p>
                 </div>
                 <div className={css.modify}>
-                    <Link to={"page/mine/phone-verifi"}>
+                    <Link to={"page/mine/phone-verifi/1"}>
                                        { this.formatMessage({id:"persondata.modify"})}
                     </Link>
                 </div>
@@ -58,7 +58,7 @@ class AccountSecurity extends React.Component {
                     <p className={css.account_grey}> { this.formatMessage({id:"app.email.verifi_info"})}</p>
                 </div>
                 <div>
-                    <Link to={"page/mine/phone-verifi"} className={css.validation}>
+                    <Link to={"page/mine/phone-verifi/2"} className={css.validation}>
                                        { this.formatMessage({id:"repwd.authen"})}
                     </Link>
                 </div>
