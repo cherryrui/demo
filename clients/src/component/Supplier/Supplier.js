@@ -508,7 +508,7 @@ class Supplier extends React.Component {
                 {this.state.category.map((item,index)=>{
                     return <FormItem
                         {...formItemLayout}
-                        label={this.formatMessage({id: 'app.category'})+(index+1)}
+                        label={this.formatMessage({id: 'supplier.main.products'})+(index+1)}
                     >
                         {getFieldDecorator('category'+index, {
                             rules: [{ type: 'array', required: true, message: this.formatMessage({id:'mine.product.category_warn'}),

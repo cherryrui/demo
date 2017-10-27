@@ -57,9 +57,14 @@
 }
 .title{
 	text-align: center;
+    cursor: pointer;
 	color: $font-color;
 }
+.title_now{
+    @extend .title;
+    color: $color-step;
+}
 .title_active{
-	text-align: center;
-	color: $color-step;
+	@extend .title;
+	color: $font-color;
 }

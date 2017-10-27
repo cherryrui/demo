@@ -277,6 +277,8 @@ const zh_CN = {
     "mine.product.unit_jian": "件",
     "mine.product.unit_xiang": "箱",
 
+    "mine.product.art.no": "货品号",
+
     "mine.product.custom_attr": "自定义属性",
     "mine.product.attr_name": "属性名称",
     "mine.product.attr_value": "属性值",
@@ -296,6 +298,7 @@ const zh_CN = {
     "mine.product.instruct_length": "长",
     "mine.product.instruct_width": "宽",
     "mine.product.instruct_height": "高",
+    "mine.product.instruct_weight": "重",
     "mine.product.instruct_pack": "包装规格",
     "mine.product.instruct_special": "特性",
     "mine.product.instruct_other": "其他",
@@ -500,6 +503,7 @@ const zh_CN = {
     "supplier.warehouse.China": "到国内指定仓库",
     "supplier.warehouses.abroad": "到国外指定仓库",
     "supplier.main.products": "主营产品",
+    "supplier.main.information": "简介",
     "app.success": "提交成功",
     "supplier.need.conditions": "供应商需要具备的条件",
     "supplier.development": "随着建筑零售行业的飞速发展，消费者的需求也更加多元化，需求量迅猛增长。为了共享建材行业发展的成果，我们希望与您携手前进。",

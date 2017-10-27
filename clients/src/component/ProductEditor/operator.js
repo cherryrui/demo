@@ -74,59 +74,89 @@ export default {
 	product_ins: [{
 		key: "length",
 		name: "mine.product.instruct_length",
+		unit_key: "长度",
 		type: 0,
-		unit: ["mm", "cm", "m"]
+		select_unit: 0,
+		unit_name: "lengthUnit",
+		unit_name_id: "lengthUnitId",
+		unit: [],
 	}, {
 		key: "width",
 		name: "mine.product.instruct_width",
 		type: 0,
-		unit: ["mm", "cm", "m"]
+		select_unit: 0,
+		unit_key: "长度",
+		unit_name: "widthUnit",
+		unit_name_id: "widthUnitId",
+		unit: []
 	}, {
 		key: "height",
 		name: "mine.product.instruct_height",
 		type: 0,
-		unit: ["mm", "cm", "m"]
+		select_unit: 0,
+		unit_key: "长度",
+		unit_name: "heightUnit",
+		unit_name_id: "heightUnitId",
+		unit: []
 	}, {
-		key: "pack",
+		key: "weight",
+		name: "mine.product.instruct_Weight",
+		type: 0,
+		select_unit: 0,
+		unit_key: "重量",
+		unit_name: "weightUnit",
+		unit_name_id: "weightUnitId",
+		unit: []
+	}, {
+		key: "specInfo",
 		name: "mine.product.instruct_pack",
 		type: 1,
-		unit: [{
-			id: 1,
-			value: ["mm", "cm", "m"]
-		}, {
-			id: 2,
-			value: ["mm", "cm", "m"]
-		}]
+		select_unit: [],
+		unit_key: "长度,重量,质量",
+		unit_key_2: "包装规格",
+		unit_name: ["specMeteringUnit", "specVolumeUnit"],
+		unit_name_id: ["specMeteringUnitId", "specVolumeUnitId"],
+		unit: []
 	}, {
 		key: "special",
 		name: "mine.product.instruct_special",
 		type: 2,
+		select_unit: 0,
+		unit_name_id: "types",
+		unit_name: "typeNames",
 		unit: [{
 			key: 1,
+			value: "易碎",
 			name: "mine.product.special_fragile"
 		}, {
 			key: 2,
+			value: "粉尘",
 			name: "mine.product.special_dust"
 		}, {
 			key: 3,
+			value: "液体",
 			name: "mine.product.special_liquid"
 		}, {
 			key: 4,
+			value: "腐蚀",
 			name: "mine.product.special_corrosion"
 		}]
 	}, {
-		key: "other",
+		key: "remark",
 		name: "mine.product.instruct_other",
 		type: 3,
 	}],
 	transport: [{
 		key: 1,
+		name: "超宽",
 		value: "product.edite.transport.width"
 	}, {
 		key: 2,
+		name: "超长",
 		value: "product.edite.transport.length"
 	}, {
 		key: 3,
+		name: "超高",
 		value: "product.edite.transport.height"
 	}]
 

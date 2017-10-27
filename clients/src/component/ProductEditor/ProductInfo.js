@@ -69,7 +69,6 @@ class ProductInfo extends React.Component {
 	 * @return {[type]}       [description]
 	 */
 	handleText = (index, value) => {
-		console.log(index, value);
 		let product_info = this.state.product_info;
 		product_info[index].contentText = value;
 		this.setState({
@@ -90,27 +89,40 @@ class ProductInfo extends React.Component {
 			previewVisible: false,
 		});
 	}
-	handleModel = (index, name, e) => {
+	handleIntroduceType = (index, e) => {
 		let product_info = this.state.product_info;
-
 		let introduceType = this.state.introduceType;
-		if (name == "introduceType") {
-			introduceType.map(item => {
-				if (item.key == e) {
-					item.is_select = true;
-				}
-				if (item.key == product_info[index].introduceType) {
-					item.is_select = false;
-				}
-			})
-		}
-		product_info[index][name] = isNaN(e) ? e.target.value : e;
+		introduceType.map(item => {
+			if (item.key == e) {
+				item.is_select = true;
+				product_info[index].introduceName = this.formatMessage({
+					id: item.value
+				});
+			}
+			if (item.key == product_info[index].introduceType) {
+				item.is_select = false;
+			}
+		})
+
+		product_info[index].introduceType = e;
 		this.setState({
 			product_info,
 			introduceType
 		})
 	}
 
+	handleContentType = (index, e) => {
+		let product_info = this.state.product_info;
+		if (Number(e.target.value) == 1) {
+			product_info[index].content = [];
+		} else {
+			delete product_info[index].fileList;
+		}
+		product_info[index].contentType = e.target.value;
+		this.setState({
+			product_info
+		})
+	}
 	backStep = () => {
 		this.props.handleSteps ? this.props.handleSteps(-1) : "";
 	}
@@ -118,54 +130,66 @@ class ProductInfo extends React.Component {
 		this.setState({
 			loading: true
 		});
-
-		let param = {
-				id: this.props.product.productId,
-				modal: []
-			},
+		let productIntroductArray = [],
 			flag = true;
-		console.log(this.state.product_info);
 		this.state.product_info.map(item => {
-
-			if (item.contentType == 2 && !item.contentText) {
-				flag = false;
-			}
-			if (item.contentType == 1 && (!item.fileList || item.fileList.length == 0)) {
-				flag = false;
+			let param = {}
+			if (item.introduceType) {
+				if (item.contentType == 1) {
+					if (!item.fileList || item.fileList.length == 0) {
+						flag = false;
+						return;
+					} else {
+						param.content = [];
+						item.fileList.map(file => {
+							param.content.push(file.response.url);
+						})
+						param.content = param.content.join(",");
+					}
+				} else if (!item.contentText) {
+					flag = false;
+				} else {
+					param.content = item.contentText;
+				}
+				if (flag) {
+					param.productId = this.props.product.productId;
+					param.introduceType = item.introduceType;
+					param.contentType = item.contentType;
+					param.introduceName = item.introduceName;
+					productIntroductArray.push(param);
+				}
+			} else {
+				flag = false
 			}
 		})
+		console.log(productIntroductArray)
+		let param = {
+			productIntroductArray: JSON.stringify(productIntroductArray),
+		};
 		if (flag) {
-
+			axios.post('/product/save-product-info.json', param).then(res => {
+				this.setState({
+					loading: false
+				})
+				if (res.data) {
+					this.props.handleSteps ? this.props.handleSteps(1) : "";
+				} else {
+					message.error(this.formatMessage({
+						id: "mine.product.save_fail"
+					}))
+				}
+			})
 		} else {
 			message.error(this.formatMessage({
 				id: "product.edite.complete.info"
 			}))
 		}
-		this.state.modal.map(item => {
-			if (item.text && item.text.length > 0 || item.fileList && item.fileList.length > 0) {
-				param.modal.push(item);
-			}
-		})
-		axios.post('/product/save-product-info.json', param).then(res => {
-			this.setState({
-				loading: false
-			})
-			if (res.data) {
-				this.props.handleSteps ? this.props.handleSteps(1) : "";
-			} else {
-				message.error(formatMessage({
-					id: "mine.product.save_fail"
-				}))
-			}
-
-		})
 	}
 	handleInfo = (index) => {
 		let product_info = this.state.product_info;
 		if (index > -1) {
 			product_info.splice(index, 1)
 		} else {
-
 			product_info.push({
 				contentType: 1,
 			})
@@ -186,7 +210,7 @@ class ProductInfo extends React.Component {
 						</p>
 						<Select placeholder={this.formatMessage({id:"mine.product.info_select"})} 
 							style={{ width: "180px" }} 
-							onChange={this.handleModel.bind(this,index,"introduceType")}>
+							onChange={this.handleIntroduceType.bind(this,index)}>
 							{this.state.introduceType.map((type)=>{
 								return <Option disabled={!type.is_select|| type.key== item.introduceType?false:true}value={type.key}>{this.formatMessage({id:type.value})}</Option>
 							})}
@@ -200,7 +224,7 @@ class ProductInfo extends React.Component {
 							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
 							<FormattedMessage id="product.edite.content.type" defaultMessage="内容模式"/>：
 						</p>
-						<RadioGroup onChange={this.handleModel.bind(this,index,"contentType")} defaultValue={1}>
+						<RadioGroup onChange={this.handleContentType.bind(this,index)} defaultValue={1}>
 		        			{operator.contentType.map((item)=>{
 								return <Radio value={item.key}>
 								{this.formatMessage({id:item.value})}</Radio>

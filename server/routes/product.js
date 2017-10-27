@@ -79,7 +79,6 @@ router.get('/get-category.json', async(ctx, next) => {
 
 		}
 		ctx.body = result;
-
 	})
 	.get('/get-product-info-byid.json', async(ctx, next) => {
 		let product = {},
@@ -177,11 +176,53 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.get('/get-product-specif.json', async(ctx, next) => {
-		let specif = [];
-		ctx.body = {
-			specif: specif
+	.post('/save-transport.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProductTransportation", querystring.stringify(param)).then(res => {
+				/*console.log(69, res.data)*/
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
 		}
+		ctx.body = result;
+	})
+	.post('/save-product-info.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProductIntroduct", querystring.stringify(param)).then(res => {
+				/*console.log(69, res.data)*/
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/get-product-specif.json', async(ctx, next) => {
+		let result, pid = ctx.request.body.pid;
+		await axios.get(url + "/product/queryProductSpecDetails/" + pid).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.get('/get-instruct-unit.json', async(ctx, next) => {
+		let result;
+		await axios.post(url + "/unit/queryUnitTypeAndUnit", {}).then(res => {
+			result = res.data;
+		})
+		ctx.body = result;
 	})
 	/**
 	 * 获取代理商产品
@@ -241,8 +282,20 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 	})
 	.post('/save-product-instrct.json', async(ctx, next) => {
-		let param = ctx.request.body;
-		ctx.body = true;
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProductPacking", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
 	})
 	.get('/get-product-unit.json', async(ctx, next) => {
 		let result;

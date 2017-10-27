@@ -22,27 +22,41 @@ class ProductTransport extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			requires: [],
+			transport: {
+				explains: [],
+				transportationExplain: "",
+			}
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	handleChange = (key, e) => {
-		let requires = this.state.requires;
+		let transport = this.state.transport;
 		if (e.target.checked) {
-			requires.push(key);
+			transport.explains.push(key);
 		} else {
-			requires.map((item, index) => {
+			transport.explains.map((item, index) => {
 				if (item == key) {
-					requires.splice(index, 1);
+					transport.explains.splice(index, 1);
 				}
 			})
 		}
 		this.setState({
-			requires
+			transport
+		})
+	}
+	handleText = (e) => {
+		this.state.transport.transportationExplain = e.target.value
+	}
+	handleSave = () => {
+		this.state.transport.explains = this.state.transport.explains.join(",");
+		this.state.transport.productId = this.props.product.productId;
+		axios.post('/product/save-transport.json', this.state.transport).then(res => {
+			console.log(res.data);
 		})
 	}
 
 	render() {
+		console.log(this.state.transport);
 		return <div className={css.product_transport}>
 			<div className={css.product_transport_item}>
 				<p className={css.product_transport_item_left}>
@@ -50,7 +64,8 @@ class ProductTransport extends React.Component {
 				</p>
 				<div>
 					{operator.transport.map(item=>{
-						return <Checkbox onChange={this.handleChange.bind(this,item.key)} >{this.formatMessage({id:item.value})}</Checkbox>
+						return <Checkbox checked={this.state.transport.explains.indexOf(item.name)>-1?true:false} 
+						onChange={this.handleChange.bind(this,item.name)} >{this.formatMessage({id:item.value})}</Checkbox>
 					})}
 				</div>
 			</div>
@@ -58,7 +73,7 @@ class ProductTransport extends React.Component {
 				<p className={css.product_transport_item_left}>
 					<FormattedMessage id="mine.product.transport" defaultMessage=""/>：
 				</p>
-				<TextArea style={{width:"465px"}} onChange={this.handleChange.bind(this)}  rows={4} />
+				<TextArea  defaultValue={this.state.transport.transportationExplain} style={{width:"465px"}} onChange={this.handleText.bind(this)}  rows={4} />
 			</div>
 			<div className={css.product_footer}>
 				<Button type="primary">
