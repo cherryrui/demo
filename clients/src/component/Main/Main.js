@@ -219,7 +219,7 @@ class Category extends React.Component {
                                 </Link>
                             </div>
                         </div>
-                        <div className={css.cate_title} >
+                        <div className={css.cate_bottom} >
                             <img style={{width:"100%"}} src={item.levleOneProductCategory.imgUrl+"@170w_140h_1e_1c.png"}/>
                         </div>
                     </div>

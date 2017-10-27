@@ -12,48 +12,51 @@ div[class="ant-row ant-form-item"]{
   height: 100%;
   font-size: 14px;
 }
-.head{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 1100px;
-  margin: 0 auto;
-  height: 40px;
-  sup{
-    left: 24px;
-  }
- .item{
-   margin-left: 35px;
-   color: #ffffff;
-   cursor: pointer;
- }
-  .item2{
-    margin-right: 35px;
-    color: #ffffff;
-    float: left;
-    cursor: pointer;
-  }
-  .item1{
-    margin-right: 0px;
-    color: #ffffff;
-    float: left;
-  }
-  .modalcontent{
-    text-align: center;
-  }
-  .language{
-    font-size: 14px;
-    div[class="ant-select-selection
-            ant-select-selection--single"]{
-        border: none !important;
-        color: white;
-        border-radius: 0;
-        background: transparent;
+.app_head{
+    display: flex;
+     width: 1100px;
+    margin: 0 auto;
+    height: 54px;
+    justify-content: space-between;
+  .head{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;   
+    height: 54px;
+    sup{
+      left: 24px;
+    }
+   .item{
+     margin-left: 35px;
+     color: #ffffff;
+     cursor: pointer;
+   }
+    .item2{
+      margin-right: 35px;
+      color: #ffffff;
+      float: left;
+      cursor: pointer;
+    }
+    .item1{
+      margin-right: 0px;
+      color: #ffffff;
+      float: left;
+    }
+    .modalcontent{
+      text-align: center;
+    }
+    .language{
+      font-size: 14px;
+      div[class="ant-select-selection
+              ant-select-selection--single"]{
+          border: none !important;
+          color: white;
+          border-radius: 0;
+          background: transparent;
+      }
     }
   }
-}
-
-.seat{
+}.seat{
   height: 114px;
 }
 .body{
@@ -109,9 +112,12 @@ div[class="ant-row ant-form-item"]{
   }
 }
 .logo{
-  padding: 20px;
+      cursor: pointer;
   color: $theme-color;
   font-weight: 400;
+      margin-right: 660px;
+    font-size: 30px;
+    font-weight: bold;
 }
 .fixed_title{
     position: fixed;

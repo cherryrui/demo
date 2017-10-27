@@ -2,10 +2,16 @@
 .product{
 	border: none !important;
 	.custom_image{
-		text-align: center;
+		    text-align: center;
+    width: 180px;
+    height: 180px;
+    line-height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img{
         width: 120px;
-        margin: 10px auto;
+        height:120px;
     }
 	}
 	.name{
@@ -16,7 +22,7 @@
       word-break: break-all;
       padding: 0px 15px;
       color: $font-color;
-      height: 42px;
+      height: 38px;
 	}
 	.item{
 		padding: 10px 15px;

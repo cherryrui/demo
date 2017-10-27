@@ -10,11 +10,11 @@
     border: none;
     color: $font-color;
     width:230px;
-    height:245px;
+    height:255px;
     img{
       display: inline-block;
-      width:80px;
-      height:80px;
+      width:70px;
+      height:70px;
     }
   }
   i[class="anticon anticon-left-circle-o slick-arrow slick-prev"]{
@@ -62,7 +62,7 @@
   display: flex;
 
   padding-top:10px;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
  
   .left{
     background-color: $item-color;
@@ -297,9 +297,21 @@
 }
 .left_content{
     display: flex;
-    height: 374px;
+    height: 290px;
     flex-direction: column;
     justify-content: space-between;
+}
+.cate_bottom{
+  height: 165px;
+  width:165px;
+   display: flex;
+       justify-content: center;
+    align-items: center;
+  img{
+  height: 130px;
+  width:130px!important;
+
+}
 }
 .cards{
     margin-left: 0px;

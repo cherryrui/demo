@@ -218,12 +218,12 @@ const AccountSecurity = (location, cb) => {
         cb(null, require('./component/AccountSecurity/AccountSecurity.js').default)
     }, 'accountsecurity')
 }
-const ChangePassword= (location, cb) => {
+const ChangePassword = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/ChangePassword/ChangePassword.js').default)
     }, 'change-password')
 }
-const PhoneVerifi= (location, cb) => {
+const PhoneVerifi = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./component/PhoneVerifi/PhoneVerifi.js').default)
     }, 'phone-verifi')
@@ -279,6 +279,9 @@ class App extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         console.log(nextProps);
+    }
+    goHome = () => {
+        this.props.history.pushState(null, "/");
     }
     handleChange = () => {
         if (appLocale.locale == 'zh') {
@@ -343,33 +346,38 @@ class App extends React.Component {
         </Menu>)
         return <div className={css.main} >
                     <div className={css.fixed_title}>
-                        <div className={css.head}>
-                            {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}/</Link>
-                                <p onClick={this.showModal} className={css.item2}>
-                                    <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
-                                </p>
+                        <div className={css.app_head}>
+                            <div>
+                                <p onClick={this.goHome} className={css.logo}>LOGO</p>
                             </div>
-                            :<div><Link className={css.item} to="login">
-                                <FormattedMessage id="login.login" defaultMessage="登录"/>
-                            </Link><Link style={{color:"white"}} to="register">
-                                /<FormattedMessage id="login.registor" defaultMessage="注册"/>
-                            </Link></div>}
-                            {this.state.user?<Dropdown overlay={order_menu} placement="bottomRight">
-                                <Badge count={sum} overflowCount={99}>
-                                    <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
-                                </Badge>
-                            </Dropdown>:""}
-                            {this.state.user?<p className={css.item}>
-                                <FormattedMessage id="app.message" defaultMessage="消息"/>
-                            </p>:""}
-                            <Dropdown overlay={<Menu onClick={this.handleChange}><Menu.Item>
-                                        <FormattedMessage id="app.language.en" defaultMessage="en"/>
-                                    </Menu.Item>
-                                </Menu>}>
-                                <p className={css.item}>
-                                    <FormattedMessage id="app.language.zh" defaultMessage="zh"/>
-                                <Icon type="down" /></p>
-                            </Dropdown>
+                            <div className={css.head}>                           
+                                {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}/</Link>
+                                    <p onClick={this.showModal} className={css.item2}>
+                                        <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
+                                    </p>
+                                </div>
+                                :<div><Link className={css.item} to="login">
+                                    <FormattedMessage id="login.login" defaultMessage="登录"/>
+                                </Link><Link style={{color:"white"}} to="register">
+                                    /<FormattedMessage id="login.registor" defaultMessage="注册"/>
+                                </Link></div>}
+                                {this.state.user?<Dropdown overlay={order_menu} placement="bottomRight">
+                                    <Badge count={sum} overflowCount={99}>
+                                        <p className={css.item}><FormattedMessage id="app.order" defaultMessage="我的订单"/> <Icon type="down" /></p>
+                                    </Badge>
+                                </Dropdown>:""}
+                                {this.state.user?<p className={css.item}>
+                                    <FormattedMessage id="app.message" defaultMessage="消息"/>
+                                </p>:""}
+                                <Dropdown overlay={<Menu onClick={this.handleChange}><Menu.Item>
+                                            <FormattedMessage id="app.language.en" defaultMessage="en"/>
+                                        </Menu.Item>
+                                    </Menu>}>
+                                    <p className={css.item}>
+                                        <FormattedMessage id="app.language.zh" defaultMessage="zh"/>
+                                    <Icon type="down" /></p>
+                                </Dropdown>
+                            </div>
                         </div>
                     </div>
                     {
