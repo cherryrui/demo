@@ -375,7 +375,13 @@ class ProductDetail extends React.Component {
                                 :
                             </span>
                             &nbsp;&nbsp;
-                            <Icon type="star" onClick={this.handleStar}/>
+                            <Icon type="star" onClick={this.handleStar}/>   &nbsp;&nbsp;
+                           <Icon className={css.contact_blue} type="customer-service" />
+                             <span> 
+                              &nbsp;&nbsp;
+                               <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
+                               
+                            </span>
                         </p>
                     </div>
                     <div className={css.item}>
@@ -423,7 +429,13 @@ class ProductDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-                {this.state.product.supplierId?<div className={css.right}>
+               
+            </div>
+
+            <div className={css.body}>
+                <div className={css.product_list}>
+        {
+            this.state.product.supplierId ? <div className={css.supplier}>
                     <div className={css.right_content}>
                         <Link to={"/page/brand-detail/"+this.state.product.supplierId}>
                             <p className={css.custom_img}>
@@ -436,17 +448,9 @@ class ProductDetail extends React.Component {
                             <Rate className={css.rating} allowHalf defaultValue={this.state.product.supplierLevel} disabled />
                             <span>{this.state.product.supplierLevel}</span>
                         </p>
-                        <div className={css.contact}>
-                            <Icon type="customer-service" />
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
-                        </div>
+                       
                     </div>
                 </div>:""}
-            </div>
-
-            <div className={css.body}>
-                <div className={css.product_list}>
                     <div className={css.list_content}>
                         <p className={css.product_list_title}>
                             <FormattedMessage id='product.like' defaultMessage="相似产品"/>

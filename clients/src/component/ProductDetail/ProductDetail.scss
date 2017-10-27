@@ -32,7 +32,7 @@
 		}
 	}
 	.product_price{
-		background: $color-grey;
+		background: $item-color;
 		display: flex;
 		justify-content: space-between;
 		.price_info{
@@ -61,7 +61,8 @@
 	.sales{
 		text-align: right;
     	font-size: 14px;
-		padding: 58px 20px 20px 0;
+		line-height: 98px;
+    	padding-right: 20px;
 		i{
 			cursor: pointer;
 			color: $color-orange;
@@ -69,6 +70,9 @@
 	}
 	.bold{
     	font-weight: bold;
+    }
+    .contact_blue{
+    	color: $color-blue;
     }
 	.item{
 		display: flex;
@@ -126,7 +130,8 @@
 		.right_content{
 			border: 1px solid $border-color;
 			padding: 10px;
-			height: 350px;
+			height: 295px;
+			margin-bottom: 10px;
 		}
 		.custom_img{
 			width: 150px;
@@ -190,22 +195,46 @@
 	margin-top: 20px;
 }
 .product_list_title{
-	background: $color-grey;
+	background: $theme-color;
     text-align: center;
     font-weight: bold;
     padding: 10px 0;
+    margin-bottom:10px;
 }
 .product_list{
 	margin-right: 40px; 
 	flex-shrink: 0;
-	width: 220px;
+	width: 180px;
+}
+.supplier{
+	width: 180px;
+		flex-shrink: 0;
+		text-align: center;
+		background-color: $item-color;
+		margin-bottom: 10px;
+		.right_content{
+			
+			padding: 10px;
+			height: 295px;
+		}
+		.custom_img{
+			width: 150px;
+			height: 150px;
+		}
+		img{
+			width: 100%
+		}
+		.name{
+			margin: 15px auto;
+			font-size: 15px;
+			font-weight: bold;
+		}
 }
 .list_content{
-	border: 1px solid $border-color;
+	
 }
 .product{
-	width: 90%;
-    margin: 10px 5%;
+	    margin-bottom: 10px;
 }
 .info{
 	flex-grow: 1;
@@ -312,7 +341,7 @@
     line-height: 40px;
     .row_title{
       width: 30%;
-      background:$color-grey;
+      background:$back-ground-shallow-grey;
       border-right: 1px solid $border-color;
 	  text-align: center;
     }

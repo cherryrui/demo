@@ -453,29 +453,7 @@ class Supplier extends React.Component {
                         <Input className={css.supplier_input}/>
                     )}
                 </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label={this.formatMessage({id: 'post.email'})}
-                >
-                    {getFieldDecorator('email', {
-                        rules: [{
-                            required: true, 
-                            message: this.formatMessage({id: 'register.email.warn'}),
-                        }],
-                    })(
-                        <Input className={css.supplier_input}/>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label={this.formatMessage({id: 'quotation.contact.tel'})}
-                >
-                    {getFieldDecorator('contactPhone', {
-                        rules: [{ required: true, message: this.formatMessage({id: 'register.tel.warn'}),}],
-                    })(
-                        <Input className={css.supplier_input}/>
-                    )}
-                </FormItem>
+                
                 <FormItem
                     {...formItemLayout}
                         label={this.formatMessage({id: 'certif.company.region'})}

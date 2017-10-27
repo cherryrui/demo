@@ -35,6 +35,10 @@ class Product extends React.Component {
 
     render() {
         return <Card className={`${css.product} ${this.props.className}`} bodyStyle={{ padding: 0 }}>
+        {this.props.addCart ? <div className={css.footer}>
+                <p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>
+               
+            </div>:""}
             {this.props.check?<Checkbox checked={this.props.product.checked?true:false}onChange={this.onChange}></Checkbox>:""}
             <Link to={"page/product-detail/"+this.props.product.productId}>
                 <div className={css.custom_image}>
@@ -50,14 +54,7 @@ class Product extends React.Component {
                     </span>
                 </p>}
             </Link>
-            {this.props.addCart ? <div className={css.footer}>
-                <p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>
-                <p className={css.add_cart}>
-                    <Link to={"/page/product-detail/"+this.props.product.productId}>
-                        <FormattedMessage id="product.detail.see" defaultMessage="加入购物车"/>
-                    </Link>
-                </p>
-            </div>:""}
+            
         </Card>
     }
 }

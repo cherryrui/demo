@@ -44,6 +44,7 @@ class Register extends React.Component {
         this.state = {
             loading: false,
             time: 0,
+            verification_mode: 1, //1手机验证.2邮箱验证
             disabled: false
         }
         this.formatMessage = this.props.intl.formatMessage;
@@ -212,7 +213,26 @@ class Register extends React.Component {
                             <Input  className={css.reqister_input}/>
                         )}
                         </FormItem>
-
+                         <FormItem {...formItemLayout}
+                            label={formatMessage({id: 'verification.mode'})}
+                        >
+                        {getFieldDecorator('tp',{
+                            rules:[{
+                                required:true,
+                                message:formatMessage({id:'verification.mode.select'})
+                            }]
+                        })(
+                            <Radio.Group >
+                                <Radio.Button value={1}className={css.reqister_radio_one}>
+                                    <FormattedMessage id="moblie.phone" defaultMessage="个人用户"/>
+                                </Radio.Button>
+                                <Radio.Button value={2} className={css.reqister_radio_two}>
+                                    <FormattedMessage id="post.email" defaultMessage="企业用户"/>
+                                </Radio.Button>
+                            </Radio.Group>
+                        )}
+                        </FormItem>
+                    {this.verification_mode==1?
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'post.email'})}
                         >
@@ -225,7 +245,7 @@ class Register extends React.Component {
                             <Input ref={(email)=>{this.email=email}} className={css.reqister_input}/>
                         )}
                         </FormItem>
-
+                         :   
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'cart.delivery.tel'})}
                         >
@@ -238,7 +258,7 @@ class Register extends React.Component {
                             <Input ref={(tel)=>{this.tel=tel}} className={css.reqister_input}/>
                         )}
                         </FormItem>
-
+                    }
                         {/*<FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.verification'})}
                         >

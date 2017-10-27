@@ -186,7 +186,7 @@ class BrandList extends React.Component {
             </div>
             <div className={css.brand}>
             {this.state.brand.map((item,index)=>{
-                return <Brand brand={item} showStar className={(index+1)%6==0?css.right_item:css.item}/>
+                return <Brand brand={item} showStar className={(index+1)%5==0?css.right_item:css.item}/>
             })}
             </div>
             <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />

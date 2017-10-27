@@ -4,7 +4,7 @@
   justify-content: space-between;
   padding: 10px;
   font-size: 14px;
-  background: $color-grey;
+  background: $item-color;
   .left{
     display: flex;
   }
@@ -26,18 +26,20 @@
   flex-wrap: wrap;
   margin-top: 20px;
   .item{
-    height: 240px;
-    width: 150px;
-    margin-right: 40px;
+    height: 295px;
+    width: 204px;
+    margin-right: 20px;
   }
   .right_item{
-    height: 240px;
-    width: 150px;
-    margin-bottom: 35px;
+   height: 295px;
+    width: 204px;
+    margin-bottom: 20px;
     margin-right: none !important;
   }
   img{
-    height: 150px;
+    height: 150px !important;
+    width:150px !important;
+
   }
 }
 .footer{
