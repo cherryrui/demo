@@ -65,14 +65,14 @@
     	padding-right: 20px;
 		i{
 			cursor: pointer;
-			color: $color-orange;
+			color: $theme-color;
 		}
 	}
 	.bold{
     	font-weight: bold;
     }
     .contact_blue{
-    	color: $color-blue;
+    	color: $color-blue !important;
     }
 	.item{
 		display: flex;

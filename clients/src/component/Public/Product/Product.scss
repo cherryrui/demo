@@ -45,7 +45,7 @@
 		}
 		.icon{
     		font-size: 20px;
-    		background: #122337;
+    		background: $bar-color;
     		color: white;
     		padding: 5px 10px;
     		text-align: center;
@@ -55,7 +55,7 @@
 		}
 		.icon_active{
 			@extend .icon;
-			color: $color-orange;
+			color: $theme-color;
 		}
 		.add_cart{
 			background-color: $theme-color;
