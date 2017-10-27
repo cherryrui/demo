@@ -32,7 +32,8 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 6,
+			current: 5,
+			now: 5,
 			product: {
 				productId: 76
 			},
@@ -53,11 +54,12 @@ class ProductEditor extends React.Component {
 	handleSteps = (step, product) => {
 		if (step == -1) {
 			this.setState({
-				current: this.state.current + step,
+				current: this.state.now + step,
+				now: this.state.now + step,
 				product: product
 			})
 		} else {
-			let next = this.state.current + step;
+			let next = this.state.now + step;
 			if (next > operator.steps.length - 1) {
 				next = 0;
 				this.state.product = {};
@@ -66,6 +68,7 @@ class ProductEditor extends React.Component {
 			}
 			this.setState({
 				current: next,
+				now: next,
 			}, () => {
 				document.body.scrollTop = 0
 			})
@@ -83,10 +86,10 @@ class ProductEditor extends React.Component {
 		})
 	}
 	changeStep = (step) => {
-		console.log(step);
+		this.setState({
+			now: step
+		})
 	}
-
-
 	render() {
 		return <div ref={(product_edit)=>{this.product_edit = product_edit}} className={appcss.body}>
 			<div className={appcss.navigate}>
@@ -101,15 +104,15 @@ class ProductEditor extends React.Component {
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
-			<Steps steps={operator.steps} changeStep={this.changeStep} current={this.state.current}/>
+			<Steps steps={operator.steps} now={this.state.now} changeStep={this.changeStep} current={this.state.current}/>
 			<div className={css.body}>
-				{this.state.current==0?<ProductBasic product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==1?<ProductPicture product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==2?<ProductAttr product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==3?<ProductSpec product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==4?<ProductInfo product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==5?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.current==6?<ProductTransport product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				{this.state.now==0?<ProductBasic product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==1?<ProductPicture product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==2?<ProductAttr product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==3?<ProductSpec product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==4?<ProductInfo product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==5?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==6?<ProductTransport product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:""
 			}	
 			</div>

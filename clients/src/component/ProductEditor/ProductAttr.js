@@ -42,7 +42,7 @@ class ProductAttr extends React.Component {
 		}
 		axios.post('/product/get-product-attr.json', param).then(res => {
 			if (res.data.isSucc) {
-				let category = res.data.result.allProperty;
+				let category = res.data.result.category;
 				let select = res.data.result.selectProperty;
 				let customProperty = JSON.parse(res.data.result.customProperty);
 				customProperty.length == 0 ? customProperty.push({}) : "";

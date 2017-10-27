@@ -266,6 +266,8 @@ const en_US = {
     "mine.product.unit_tai": "台",
     "mine.product.unit_jian": "件",
     "mine.product.unit_xiang": "箱",
+
+    "mine.product.art.no": "Art.No.",
     "product.edite.transport.width": "Ultra wide",
     "product.edite.transport.length": "Very long",
     "product.edite.transport.height": "Superelevation",
@@ -493,6 +495,7 @@ const en_US = {
     "supplier.warehouse.China": "warehouse China",
     "supplier.warehouses.abroad": "warehouses abroad",
     "supplier.main.products": "main products",
+    "supplier.main.information": "Introduction",
     "app.success": "Submitted successfully",
     "supplier.need.conditions": "Suppliers need to have the conditions",
     "supplier.development": "With the rapid development of the construction retail industry, the demand of consumers is more diversified and the demand is increasing rapidly. In order to share the development of building materials industry, we hope to work hand in hand with you.",

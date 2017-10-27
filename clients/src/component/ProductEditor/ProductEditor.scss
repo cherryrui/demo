@@ -109,22 +109,60 @@
 	}
 }
 .product_spec{
-	margin: 10px 10%;
-	.product_apec_item{
-		display: flex;
-		margin-bottom: 10px;
+	padding: 20px 75px;
+	.spec_item_title{
+		background: $background-color;
+		padding: 8px 20px;
+		font-weight: bold;
 	}
-	.apec_item_left{
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		margin-right: 20px;
+	.spec_item_body{
+		padding: 20px;
+		label{
+			margin-right: 60px;
+		}
 	}
-	.spec_item_right{
+	.product_spec_select_title{
 		display: flex;
+    	background: $bar-color;
+    	color: white;
+    	height: 30px;
+    	line-height: 30px;
 	}
-	.right_item{
-		margin-right: 10px;
+	%select_item{
+    	flex-grow: 1;
+    	text-align: center;
+	}
+	.product_spec_select_title_item{
+		@extend %select_item;
+	}
+	.product_spec_select_body{
+		display: flex;
+		border-bottom: 1px solid $border-color; 
+		border-left: 1px solid $border-color; 
+		border-right: 1px solid $border-color; 
+		background: $background-color;	
+		input{
+			height: 25px;
+			margin: 5px 10%;
+    		width: 80%;
+    		text-align: center;
+		}
+	}
+	.product_spec_select_body_item{
+		border-right: 1px solid $border-color; 
+		text-align: center;
+		height: 36px;
+    	line-height: 36px;
+	}
+	.product_spec_select_title_no{
+		@extend %select_item;
+		width: 200px;
+		flex-grow: 0;
+	}
+	.product_spec_select_body_no{
+		@extend .product_spec_select_title_no;
+		height: 36px;
+    	line-height: 36px;
 	}
 }
 .product_info_item{
@@ -188,30 +226,31 @@
 	}
 }
 .product_instruct{
-	margin: 0px 20%;
+	.instuct_item{
+		display: flex;
+	    margin: 20px 0;
+	    align-items: center;
+	    .instuctitem_left{
+	    	width: 360px;
+			margin-right: 10px;
+			text-align: right;
+			flex-shrink: 0;
+	    }
+	    .instuctitem_right{
+	    	display: flex;
+	    	.instuctitem_right_input{
+	    		width: 270px;
+	    		margin-right: 20px;
+	    	}
+	    	.left_item{
+	    		display: flex;
+	    		align-items: center;
+	    	}
+	    	
+	    }
+	}
 }
-.instuct_item{
-	display: flex;
-    margin: 10px 0;
-    align-items: center;
-    .instuctitem_left{
-    	width: 15%;
-		margin-right: 2%;
-		text-align: right;
-		flex-shrink: 0;
-    }
-    .instuctitem_right{
-    	display: flex;
-    	input{
-    		margin-right: 20px;
-    	}
-    	.left_item{
-    		display: flex;
-    		align-items: center;
-    	}
-    	
-    }
-}
+
 .product_picture{
 	.picture_title{
 		display: flex;

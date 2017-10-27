@@ -71,27 +71,6 @@ class ProductBasic extends React.Component {
 			})
 		})
 	}
-
-	normFile = (info) => {
-		console.log('Upload event:', info);
-		if (info.file && info.file.status == "uploading") {
-			info.file.url = URL.createObjectURL(info.file.originFileObj);
-			info.file.status = 'done';
-		}
-		if (Array.isArray(info)) {
-			return info;
-		}
-		if (info.fileList) {
-			info.fileList.map(item => {
-				item.status = "done"
-			})
-			this.setState({
-				fileList: info.fileList
-			})
-		}
-		return info && info.fileList;
-	}
-
 	/**
 	 * 提交基础信息
 	 * @param  {[type]} e [description]
