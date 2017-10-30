@@ -417,8 +417,8 @@ class PersonAddress extends React.Component {
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout}style={{ marginBottom:14}}>
-                        <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
-                        <Button type="primary" className={css.submit} loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                        <Button type="primary"  style={{ marginRight:10}} className={appcss.button_theme} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
+                        <Button type="primary" className={appcss.button_black} loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                     </FormItem>
                 </Form>
             </CusModal>

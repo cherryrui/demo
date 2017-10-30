@@ -16,7 +16,7 @@
       line-height: 30px;
      display: flex;
      .install_money{
-      color: $color-red;
+      color: $color-orange;
      }
       .item_name{
         font-size: 14px;
@@ -26,7 +26,7 @@
 
       }
       .status{
-        color: $color-orange;
+        color: $theme-color;
       }
       .pay_day{
         padding-left: 10px;
@@ -64,13 +64,13 @@
 }
 
 .table_price{
-  color: $color-red;
+  color:$color-orange;
   font-size: 16px;
   font-weight: 700;
 
 }
 .order_sum {
-  background: #eeeff3;
+  background:$item-color;
   padding: 10px;
   text-align: right;
   margin: 20px 0;
@@ -81,7 +81,7 @@
 
   }
   .order_sum_orange{
-    color: $color-red;
+    color: $color-orange;
     font-size: 16px;
     font-weight: 700;
   }
@@ -112,11 +112,13 @@ padding-top:20px;
   color: $border-color;
   align-items: center;
   padding-right: 20px;
+  background-color: $item-color;
   
 }
 .detail_stage_list_active{
   @extend .detail_stage_list;
   color: $font-color;
+  background-color: $item-color;
 }
 .stage_item_title{
     width: 140px;
@@ -127,7 +129,7 @@ padding-top:20px;
   }
   .stage_item_title_active{
     @extend .stage_item_title;
-    background: $color-orange;
+    background: $color-red;
     color: white;
   }
   .stage_item_body{

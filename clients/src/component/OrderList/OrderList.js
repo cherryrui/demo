@@ -214,7 +214,7 @@ class OrderList extends React.Component {
                  />
             </div>
             <div className={css.card_container}>
-                <TabBar className={css.tabtar} hiddenTest tabs={this.state.order_status} current={this.state.current} 
+                <TabBar style={{  backgroundColor:"#f7f7f7"}} className={css.tabtar} hiddenTest tabs={this.state.order_status} current={this.state.current} 
                             handleBar={this.handleBar.bind(this)}
                         />
                 <Table

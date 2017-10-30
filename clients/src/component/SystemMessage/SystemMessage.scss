@@ -19,14 +19,12 @@
     .title_right{
       font-size: 14px;
 
-      color:$theme-color ;
+      color:$bar-color ;
 
     }
   }
   .consulting_content{
-    border-top:1px solid #ddd;
-    border-left:1px solid #ddd;
-    border-right:1px solid #ddd;
+    background-color: $item-color;
 
 
     .consulting_list{
@@ -103,7 +101,7 @@
     padding-top: 20px;
 
     .empty_message{
-      color: $theme-color;
+      color: $color-grey;
       font-weight: 500;
 
     }

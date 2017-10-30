@@ -6,13 +6,18 @@
   border: 1px solid $border-color;
   table{
     border-collapse: collapse;
+    background-color: $item-color;
   }
   td{
     border-bottom: 1px dashed #e9e9e9 !important;
     border-collapse: collapse!important;
   }
+  th{
+   background-color:$color-light !important;
+  }
 }
 .tabtar{
+    background-color:$color-light !important;
   img{
     width: 20px;
     height: 20px;
@@ -86,7 +91,7 @@
   font-size: 18px;
   .operation_text{
     display: block;
-    color: $theme-color;
+    color: $color-blue;
     padding-bottom: 5px;
     font-weight: 500;
     i{

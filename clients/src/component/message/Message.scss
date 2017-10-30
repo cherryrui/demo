@@ -24,9 +24,7 @@
     }
   }
   .consulting_content{
-      border-top:1px solid #ddd;
-      border-left:1px solid #ddd;
-      border-right:1px solid #ddd;
+      background-color: $item-color;
 
 
       .consulting_list{
@@ -137,13 +135,13 @@
         align-content: flex-start;
         padding: 10px;
         .icon{
-          color: $color-orange;
+          color:$color-red;
           font-size: 30px;
           margin-top: -3px;
 
         }
         .icon_a{
-          background: $color-green;
+          background: $color-blue;
           color: white;
           border-radius: 50%;
           width: 30px;
@@ -178,7 +176,7 @@
     padding-top: 20px;
 
     .empty_message{
-      color: $theme-color;
+      color: $color-grey;
       font-weight: 500;
 
     }

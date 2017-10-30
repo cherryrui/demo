@@ -7,11 +7,12 @@
   }
   tbody[class="ant-table-tbody"]{
     font-size: 12px !important;
+    background-color: $item-color;
   }
   thead[class="ant-table-thead"]{
   }
   th{
-    background:$back-ground-shallow-grey !important;
+  
     color: $font-color !important;
     border-right: none !important;
   }
