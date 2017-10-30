@@ -487,44 +487,46 @@ class Quotation extends React.Component {
 	            	</p>
             	</div>
             </div>
-            <p className={`${css.item} ${css.padd_20_w}`}>
-            	<p className={css.title}>
-            		<span style={{color: "red",fontSize:"16px"}}>*&nbsp;</span>
-	            	<FormattedMessage id="quotation.subject" defaultMessage="报价单主题"/>:
-	            </p>
-	            <Input size='large' value={this.state.quotation.quotationSubject} onChange={this.handleInfo.bind(this,0,"quotationSubject")} />
-	        </p>
-	        <p className={`${css.item} ${css.padd_20}`}>
-	            <p className={css.title}>
-	            	<FormattedMessage id="quotation.invoice" defaultMessage="分类"/>:
-	            </p>
-				<RadioGroup onChange={this.handleInfo.bind(this,0,"invoiceType")} value={this.state.quotation.invoiceType}>
-			        {operator.invoice_type.map(item=>{
-	            		return <Radio value={item.id}>
-	            			<FormattedMessage id={item.key} defaultMessage={item.value}/>
-	            		</Radio>
-	            	})}
-			    </RadioGroup>
-	        </p>
-	        <p className={`${css.item} ${css.remark}`}>
-	            <p className={css.title}>
-	            	<FormattedMessage id="cart.remark" defaultMessage="备注"/>:
-	            </p>
-	            <TextArea value={this.state.quotation.remark} onChange={this.handleInfo.bind(this,0,"remark")} rows={2} />
-	        </p>
-	        <p className={`${css.item} ${css.export}`}>
-	            <p className={css.title}>
-	            	<FormattedMessage id="quotation.export.option" defaultMessage="分类"/>:
-	            </p>
-	            <div>
-	            	{operator.quot_title.map(item=>{
-	            		return <Checkbox checked={this.state.quotation.exportOption&&this.state.quotation.exportOption[item.value]?true:false}
-	            			onChange={this.handlePrint.bind(this,item.value)}>
-	            			<FormattedMessage id={item.key} defaultMessage="分类"/>
-	            		</Checkbox>
-	            	})}
-	            </div>
-	        </p>
+            <div className={css.item_info}>
+                <p className={`${css.item} ${css.padd_20_w}`}>
+                   <p className={css.title}>
+                       <span style={{color: "red",fontSize:"16px"}}>*&nbsp;</span>
+                       <FormattedMessage id="quotation.subject" defaultMessage="报价单主题"/>:
+                    </p>
+                    <Input size='large' value={this.state.quotation.quotationSubject} onChange={this.handleInfo.bind(this,0,"quotationSubject")} />
+                </p>
+                <p className={`${css.item} ${css.padd_20}`}>
+                    <p className={css.title}>
+                       <FormattedMessage id="quotation.invoice" defaultMessage="分类"/>:
+                    </p>
+                    <RadioGroup onChange={this.handleInfo.bind(this,0,"invoiceType")} value={this.state.quotation.invoiceType}>
+                        {operator.invoice_type.map(item=>{
+                           return <Radio value={item.id}>
+                               <FormattedMessage id={item.key} defaultMessage={item.value}/>
+                           </Radio>
+                       })}
+                    </RadioGroup>
+                </p>
+                <p className={`${css.item} ${css.remark}`}>
+                    <p className={css.title}>
+                       <FormattedMessage id="cart.remark" defaultMessage="备注"/>:
+                    </p>
+                    <TextArea value={this.state.quotation.remark} onChange={this.handleInfo.bind(this,0,"remark")} rows={2} />
+                </p>
+                <p className={`${css.item} ${css.export}`}>
+                    <p className={css.title}>
+                       <FormattedMessage id="quotation.export.option" defaultMessage="分类"/>:
+                    </p>
+                    <div>
+                       {operator.quot_title.map(item=>{
+                           return <Checkbox checked={this.state.quotation.exportOption&&this.state.quotation.exportOption[item.value]?true:false}
+                               onChange={this.handlePrint.bind(this,item.value)}>
+                               <FormattedMessage id={item.key} defaultMessage="分类"/>
+                           </Checkbox>
+                       })}
+                    </div>
+                </p>
+            </div>
 	        <div className={css.footer}>
                 <p className={appcss.button_theme} onClick={this.saveQuotation}>
                 	{this.state.quotation.id?<FormattedMessage id="quotation.save" defaultMessage="保存报价单"/>

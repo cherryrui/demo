@@ -30,8 +30,9 @@
   }
   .order_sum{
     padding: 20px 10px;
-    background: $back-ground-shallow-grey;
+    background: $item-color;
     font-size:14px ;
+    margin-top: 10px;
     .sum_item{
       text-align: right;
       display: flex;
@@ -47,22 +48,23 @@
     .sum_price{
       width: 150px;
       margin-left: 10px;
-      color: $color-red;
+      color: $color-orange;
     }
     .sum_profit{
       width: 150px;
       margin-left: 10px;
-      color: $color-green;
+      color: $color-red;
     }
   }
   .infomation{
     display: flex;
-    margin-top: 20px;
-    background: $back-ground-shallow-grey;
+    margin-top: 10px;
+    background: $bar-color;
     font-size: 14px;
     font-weight: bold;
     height:36px;
     border-top: 1px solid #e5e5e5;
+    color: #ffffff;
   }
   .right{
     line-height: 36px;
@@ -77,7 +79,8 @@
   }
   .info_write{
     display: flex;
-    border: 1px solid $border-color;
+  
+  background-color: $item-color;
     border-top: none;
     margin-bottom: 10px;
   }
@@ -120,6 +123,9 @@
       border-radius: 0px;
     }
   }
+  .item_info{
+    background-color:$item-color;
+  padding:20px 40px 50px 0px;}
   .padd_20{
     padding: 10px 20px;
     label[class="ant-radio-wrapper ant-radio-wrapper-checked"]{
@@ -146,7 +152,7 @@
     }
   }
   .export{
-    border: 1px solid $border-color;
+   
     padding: 20px;
     label[class="ant-steps-title"]{
       margin-right: 32px;

@@ -572,10 +572,10 @@ class ConfirmOrder extends React.Component {
                         <FormattedMessage id="cart.advance.payment" defaultMessage="首期金额"/>:
                         <span className={css.footer_orange}>$&nbsp;{(this.state.order.sum*this.state.order.advance_mode).toFixed(2)}</span>
                     </p>:""}
-                    <Button type='primary' size="large" className={css.button_green} onClick={this.handleStep.bind(this,-1)}>
+                    <Button type='primary' size="large" className={appcss.button_theme} onClick={this.handleStep.bind(this,-1)}>
                         <FormattedMessage id="app.before" defaultMessage="上一步"/>
                     </Button>
-                    <Button type='primary' loading={this.state.loading} size="large" className={css.button_theme} onClick={this.handlePay}>
+                    <Button type='primary' loading={this.state.loading} size="large" className={appcss.button_black} onClick={this.handlePay}>
                         <FormattedMessage id="cart.submit" defaultMessage="提交订单"/>
                     </Button>
                 </div>
@@ -652,8 +652,8 @@ class ConfirmOrder extends React.Component {
                         )}
                     </FormItem>
                     <FormItem {...tailFormItemLayout}style={{ marginBottom:14}}>
-                        <Button type="primary" className={css.cancel} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
-                        <Button type="primary" className={css.submit} loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                        <Button style={{ marginRight: 10 }} type="primary" className={appcss.button_theme} onClick={this.handleCancel}>{this.formatMessage({id: 'app.cancel'})}</Button>
+                        <Button type="primary" className={appcss.button_black} loading={this.state.loading} htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                     </FormItem>
                 </Form>
             </CusModal>

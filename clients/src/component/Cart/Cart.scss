@@ -38,7 +38,7 @@
 	margin: 0 20px;
 }
 .table_price{
-	color: $color-red;
+	color: $color-orange;
 	font-weight: bold;
 }
 .table_col{
@@ -56,7 +56,7 @@
 	align-items: center;
 	font-size: 16px;
 	margin-top: 20px;
-	background: $color-grey;
+	background: $item-color;
 	label{
 		display: flex;
     	align-items: center;
@@ -129,10 +129,10 @@
 }
 .total{
 	padding: 20px;
-	background: $color-grey;
+	background: $item-color;
 
 	.total_money{
-		color: $color-red;
+		color: $color-orange;
 		font-weight: bolder;
 	}
 }
@@ -145,17 +145,17 @@
 }
 .quotation{
 	@extend %button;
-    background: $color-green;
+    background: $theme-color;
 }
 .quotation:hover{
-	background: $button-green-active
+	  box-shadow: 0 1px 5px $theme-color;
 }
 .calculate{
 	@extend %button;
-    background: $theme-color;
+    background: $bar-color;
 }
 .calculate:hover{
-	background: $button-blue-active;
+	 background-color: $button-black-active !important;
 }
 .confirm_title{
 	font-size: 16px;
@@ -170,6 +170,7 @@
 %confirm_body{
 	border: 1px solid #eee;
     padding: 20px;
+    background-color: $item-color;
 }
 .confirm_address{
 	@extend %confirm_body;
@@ -207,7 +208,7 @@
 	}
 	.active{
 		@extend .item;
-		border: 2px solid $theme-color;
+		border: 2px solid $color-grey;
 
 	}
 }
@@ -223,7 +224,7 @@
   }
   .active{
     @extend .item;
-    border: 2px solid $theme-color;
+    border: 2px solid $color-grey;
   }
 }
 .radio{
@@ -235,7 +236,7 @@
 	.item{
 		padding: 10px 5px;
     	width: 40%;
-    	border: 1px solid $color-grey;
+    	border: 1px solid $border-color;
     	margin: 10px;
       a{
        color: $color-red;
@@ -243,11 +244,11 @@
 	}
 	.active{
 		@extend .item;
-		border: 2px solid $theme-color;
+		border: 2px solid $color-grey;
 	}
 }
 .order_sum{
-	background: $color-grey;
+	background: $item-color;
     padding: 10px;
     text-align: right;
     margin: 20px 0;
@@ -257,7 +258,7 @@
     	width: 100px;
     }
     .order_sum_orange{
-		color: $color-red;
+		color: $color-orange;
 		font-size: 16px;
     }
 }
@@ -283,7 +284,7 @@
 		    border-color: $button-green-active ;
 		}
     	.footer_orange{
-    		color: $color-red;
+    		color:$color-orange;
     		font-size: 16px;
     	}
     }
@@ -292,7 +293,7 @@
 .pay_mode{
 
 	.pay_title{
-		color: $color-orange;
+		color:$theme-color;
 		font-size: 20px;
 		font-weight: bold;
 		text-align: center;
@@ -306,7 +307,8 @@
 	.pay_last{
 		text-align: center;
 		font-size: 14px;
-		padding-top: 40px;
+		padding-top: 20px;
+    padding-bottom: 20px;
 
 	}
 	.payments{
@@ -316,6 +318,7 @@
       width:740px;
       margin: auto;
       justify-content: space-between;
+      background-color: $item-color;
 
       .payments_left{
         display: flex;
@@ -335,7 +338,7 @@
         .total_text{
           font-size:24px;
           font-weight:700;
-          color:$color-red ;
+          color:$color-orange;
         }
       }
 	}
@@ -355,20 +358,20 @@ background:  $button-green;
 .button_pay{
     margin: 20px;
     padding: 0px 30px;
-  background: $button-blue;
+  background: $bar-color;
   border: none;
   border-radius: 2px;
   width: 190px;
   height:50px;
   line-height:50px;
+  color: #ffffff;
   }
   .button_before:hover{
     background-color: $button-green-active;
 
   }
   .button_pay:hover{
-    background-color: $button-blue-active;
-
+      background-color: $button-black-active !important;
   }
 .return_cart{
 	background:  $button-green;
@@ -393,7 +396,7 @@ background:  $button-green;
   .button_pay{
     margin: 20px;
     padding: 0px 30px;
-    background: $button-blue;
+    background: $bar-color;
     border: none;
     border-radius: 2px;
     width: 190px;
@@ -405,7 +408,7 @@ background:  $button-green;
 
   }
   .button_pay:hover{
-    background-color: $button-blue-active;
+    background-color: $button-black-active;
 
   }
   .return_cart{

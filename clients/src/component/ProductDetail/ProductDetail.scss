@@ -44,12 +44,12 @@
 		}
 		.price{
 			font-size: 34px;
-			color: $color-red;
+			color: $color-orange;
 			font-weight: bold;
 			padding: 0px 10px;
 		}
 		.off{
-			background: $color-orange;
+			background: $theme-color;
 		    margin-left: 10px;
 		    padding: 0px 10px;
 		    border-radius: 18px;

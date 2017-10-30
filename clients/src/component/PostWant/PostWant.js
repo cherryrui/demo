@@ -240,7 +240,7 @@ class PostWant extends React.Component {
                                 onRemove={this.removeFile}
                                 multiple
                               >
-                                <Button  className={appcss.button_theme}  style={{ width:120}}>
+                                <Button  className={appcss.button_black}  style={{ width:120}}>
                                  {this.formatMessage({id: 'post.select.file'})}
                               </Button>
                             </Upload>
@@ -251,7 +251,7 @@ class PostWant extends React.Component {
 
                     </FormItem>
                     <FormItem style={{ paddingLeft:120}} {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit" className={appcss.button_radius}>
+                        <Button style={{ width:200}}type="primary" htmlType="submit" className={appcss.button_radius}>
                               {this.formatMessage({id: 'app.save'})}
                         </Button>
 

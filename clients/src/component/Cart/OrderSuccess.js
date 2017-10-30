@@ -36,10 +36,10 @@ class OrderSuccess extends React.Component {
                 <FormattedMessage id="cart.pay.success" defaultMessage="订单提交成功"/>
             </p>
             <div className={css.pay_success}>
-                <Button size="large" type="primary" onClick={this.handleBackToCart} className={css.button_before}>
+                <Button size="large"  style={{ marginRight: 10 }} type="primary" onClick={this.handleBackToCart} className={appcss.button_theme}>
                     <FormattedMessage id="cart.return.cart" defaultMessage="返回购物车"/>
                 </Button>
-                <Button size="large" type="primary" onClick={this.handleBackToOrder} className={css.button_pay}>
+                <Button size="large" type="primary" onClick={this.handleBackToOrder} className={appcss.button_black}>
                     <FormattedMessage id="app.view.order" defaultMessage="查看订单"/>
                 </Button>
             </div>
