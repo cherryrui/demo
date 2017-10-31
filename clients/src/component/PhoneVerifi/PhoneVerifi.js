@@ -42,7 +42,7 @@ class PhoneVerifi extends React.Component {
 		super(props);
 		console.log(this.props.params)
 		this.state = {
-			step: this.props.params.type == 1?(user.tel?0:1):(user.email?0:1), 
+			step: parseInt(this.props.params.type) == 1?(user.tel?0:1):(user.email?0:1), 
 			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
 			user:user,
 			phone: 12432434,
@@ -64,7 +64,7 @@ class PhoneVerifi extends React.Component {
 			}
 		} = this.props;
 		return <div  className={css.phone_verifi}>
-		            <div className={basecss.child_title}>
+		            <div className={basecss.child_title}>{console.log(this.state.step,this.props.params.type,user.tel)}
 		                        {this.state.verifi_modl==1?this.formatMessage({id:"app.phone.verification"})
 		                        :this.formatMessage({id:"app.email.verification"})
 		                    	}
@@ -80,8 +80,8 @@ class PhoneVerifi extends React.Component {
 
 		                    {this.state.step==0?<Authentication handleSteps={this.handleSteps} type={this.state.verifi_modl}/>
 
-		                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps}/>
-		                    :this.state.step==2?<SetSuccess/>
+		                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps} type={this.state.verifi_modl} />
+		                    :this.state.step==2?<SetSuccess type={this.state.verifi_modl}/>
 		                    :""}
 		            </div>		           
        			</div>
@@ -134,7 +134,21 @@ class Authentication extends React.Component {
 				})
 			}
 		})
-	};
+	}
+
+	getVerifiCode = () =>{
+		if(this.phoneoremail.props.value){
+			if(this.state.verifi_modl == 1){
+
+			}else{
+				let email = this.phoneoremail.props.value;
+				let type = this.state.verifi_modl;
+			}
+		}else{
+			message.error(this.formatMessage({id:'authen.authen.account_warn'}))
+		}
+		
+	}
 
 
 	render() {
@@ -204,16 +218,16 @@ class Authentication extends React.Component {
 		                    >
 		                    <Row gutter={8}>
 		                         <Col span={11}>   
-		      			                 {getFieldDecorator('phone', {
+		      			                 {getFieldDecorator('phoneoremail', {
 		                                rules: [ {
 		                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
 		                                }],
 		                            })(
-											<Input  className={css.verifi_input} />
+											<Input ref={(phoneoremail)=>{this.phoneoremail=phoneoremail}} className={css.verifi_input} />
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
+		                                 <Button onClick={this.getVerifiCode} className={appcss.button_blue}  style={{width:155,height:36,marginLeft: 15}}>
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
 		                                  </Button>
 		                            </Col>
@@ -238,8 +252,9 @@ class Authentication extends React.Component {
 class SetPwd extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log(this.props)
 		this.state = {
-			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
+			verifi_modl: this.props.type, //1手机验证，2邮箱验证
 			phone: 12432434,
 			email: 224,
 		}
@@ -319,16 +334,25 @@ class SetPwd extends React.Component {
 									}
 			                    >
 			                    {this.state.verifi_modl==1?
-							          getFieldDecorator('verifi_email', {
+							          getFieldDecorator('verifi_phone', {
 				                          rules: [{
-				                              required: true, message:this.formatMessage( {id:'register.verifivation.warn'}),
+				                              required: true, message:this.formatMessage( {id:'register.tel.warn'}),
 				                          }],
 				                      })(
 
 				                      	 <Input className={appcss.form_input}/>
 						   
 				                      )
-									: <p>{this.state.email}</p>
+									: 
+									getFieldDecorator('verifi_email', {
+				                          rules: [{
+				                              required: true, message:this.formatMessage( {id:'register.email.warn'}),
+				                          }],
+				                      })(
+
+				                      	 <Input className={appcss.form_input}/>
+						   
+				                      )
 								}
 
                    			 </FormItem>
@@ -378,7 +402,7 @@ class SetSuccess extends React.Component {
 		super(props);
 		this.state = {
 
-			verifi_modl: 1, //1手机验证，2邮箱验证
+			verifi_modl: this.props.type, //1手机验证，2邮箱验证
 			phone: 12432434,
 			email: 224,
 

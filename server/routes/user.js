@@ -132,14 +132,8 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.post('/register.json', async(ctx) => {
 		let result = null;
-		let data = ctx.request.body;
-		const param = {
-			userName: data.name,
-			password: data.password,
-			email: data.email,
-			tel: data.tel,
-			userType: data.tp
-		};
+		let param = ctx.request.body;
+		console.log(param)
 		await axios.post(url + '/register', querystring.stringify(param)).then(res => {
 			console.log(res.data);
 			result = res.data;
@@ -176,14 +170,17 @@ router.get('/get-user.json', async(ctx, next) => {
 	})
 	.get('/sendcode.json', async(ctx) => {
 		let result = null;
-		const emails = '947863843@qq.com';
-		const send = await SendEmail.send({
-			emails
-		}).then(res => {
-			const data = JSON.stringify(res);
-			console.log(data);
-		});
-		ctx.body = true;
+		const email = ctx.request.query.account;
+		const type = ctx.request.query.type;//1手机验证  2邮箱验证
+		if(type==1){
+			result = {isSucc:false};
+		}else{
+			await axios.post(url+'/email',querystring.stringify({email:email})).then(res=>{
+				result = res.data;
+			})
+		}
+		
+		ctx.body = result;
 	})
 	.post('/become-agent.json', async(ctx, next) => {
 		let param = ctx.request.body,

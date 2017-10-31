@@ -55,6 +55,7 @@ const en_US = {
     "app.input.idaddress": "Please input id address",
     "app.input.agreenotes": "Please agree the rules",
     "app.verification.error": "The Type of verification is null",
+    "app.binding":"To bind",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
     "sort.price": "Price",

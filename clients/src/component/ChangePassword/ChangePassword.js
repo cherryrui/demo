@@ -180,8 +180,20 @@ class ChangePassword extends React.Component {
                         )}
                     </FormItem>
                     <FormItem
+                       {...formItemLayout}
+                        label={formatMessage({id: 'authen.authen.tel/email'})}
+                    >
+                       {getFieldDecorator('phoneOremail', {
+                          rules: [{
+                              required: true, message:this.formatMessage( {id:'authen.authen.account_warn'}),
+                          }],
+                        })(
+                          <Input type='password' className={appcss.form_input}/>
+                        )}
+                    </FormItem>
+                    <FormItem
 			                   {...formItemLayout}
-                          label={formatMessage({id: 'phone.verification.code'})}
+                          label={formatMessage({id: 'register.register.verification'})}
                     >
                           <Row gutter={8}>
                                <Col span={11}>   

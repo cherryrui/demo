@@ -53,6 +53,8 @@ const zh_CN = {
     "app.idaddress": "证件地址",
     "app.input.idaddress": "请输入证件地址",
     "app.input.agreenotes": "请同意条款",
+    "app.verification.error": "验证类型为空",
+    "app.binding":"去绑定",
     "sort.comp": "综合",
     "sort.new": "新品",
     "sort.price": "价格",

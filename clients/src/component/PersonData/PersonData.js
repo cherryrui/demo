@@ -102,6 +102,7 @@ class PersonData extends React.Component {
             check: 0,
             naturelist: natureList,
             becoming: 4, //1代理商,2供应理商
+            user:JSON.parse(sessionStorage.getItem("user")),
         };
         let {
             intl: {
@@ -326,6 +327,13 @@ class PersonData extends React.Component {
             this[name] = null;
         }
     }
+
+    handleTobind = (e) =>{
+        console.log(e)
+        this.props.history.pushState(null, `/page/mine/phone-verifi/${e}`);
+    }
+
+
     render() {
         const {
             getFieldDecorator
@@ -414,7 +422,10 @@ class PersonData extends React.Component {
                     <span className={css.title}>
                         <FormattedMessage  id="quotation.contact.tel" defaultMessage="电话"/>：
                     </span>
-                    <span className={css.text}>{this.state.user.tel}</span>
+                    {this.state.user.tel?<span className={css.text}>{this.state.user.tel}</span>
+                        : <Button type="primary" onClick={this.handleTobind.bind(this,1)} className={css.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
+                    }
+                    
                 </p>       
             {this.state.user.agent || this.state.user.supplier ?
                 <div>
@@ -445,15 +456,9 @@ class PersonData extends React.Component {
                     <span className={css.title}>
                         <FormattedMessage  id="quotation.contact.email" defaultMessage="邮箱"/>：
                     </span>
-                    {this.state.edit?<span className={css.text}>
-                        <Input
-                            style={{ width: '100%' }}
-                            defaultValue={this.state.user.email}
-                            onChange={this.handleChange.bind(this,"email")}
-                        />
-                    </span>
-                    :<span className={css.text}>{this.state.user.email}</span>
-                    }
+                    {this.state.user.email?<span className={css.text}>{this.state.user.email}</span>
+                        :<Button type="primary" onClick={this.handleTobind.bind(this,2)}  className={css.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
+                    } 
                 </p>
                 {this.state.edit?<p className={css.info}>
                     <span className={css.title}>
