@@ -29,6 +29,15 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 class ChangePassword extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading:false,
+      disabled:false,
+      time:0,
+    };
+    this.formatMessage = this.props.intl.formatMessage;
+  }
   state = {
     visible: false
   }
@@ -89,10 +98,55 @@ class ChangePassword extends React.Component {
     });
   }
 
-  constructor(props) {
-    super(props);
-    this.formatMessage = this.props.intl.formatMessage;
+  regEmail = (email) =>{
+    let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
+    return(reg.test(email));
+  } 
+
+  getVericode = () =>{
+    let phoneOremail = this.phoneOremail.props.value;
+    if(phoneOremail){
+      console.log(this.regEmail(phoneOremail));
+      this.setState({
+                    loading: false,
+                    time: 60,
+                    disabled: true
+                })
+      this.timer = window.setInterval(() => {
+                    /*console.log(this.state.time);*/
+          if (this.state.time - 1 >= 0) {
+            this.setState({
+                 time: this.state.time - 1,
+                 disabled: true
+            })
+          } else {
+            this.setState({
+                time: 0,
+                disabled: false
+              })
+              window.clearInterval(this.timer)
+          }          
+      }, 1000)
+      if(this.regEmail(phoneOremail)){
+          let email = phoneOremail;
+          let type = 1;
+          console.log(222222222);
+          axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
+            if(res.data.isSucc){
+              console.log(res.data);
+            }else{
+              message.error(res.data.message);
+            }
+          })
+      }else{
+
+      }
+    }else{
+      message.error(this.formatMessage({id:'authen.authen.account_warn'}));
+    }
   }
+
+  
 
   render() {
     const {
@@ -188,7 +242,7 @@ class ChangePassword extends React.Component {
                               required: true, message:this.formatMessage( {id:'authen.authen.account_warn'}),
                           }],
                         })(
-                          <Input type='password' className={appcss.form_input}/>
+                          <Input ref={(phoneOremail)=>{this.phoneOremail=phoneOremail}} className={appcss.form_input}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -206,8 +260,9 @@ class ChangePassword extends React.Component {
                                   )}
                                 </Col>
                                 <Col span={12}>
-                                       <Button className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
+                                       <Button disabled={this.state.disabled} loading={this.state.loading} onClick={this.getVericode} className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
                                               {this.formatMessage({id: 'repwd.get_code'})}
+                                              {this.state.time?("("+this.state.time+")"):""}
                                         </Button>
                                   </Col>
                                 </Row>

@@ -42,7 +42,7 @@ class PhoneVerifi extends React.Component {
 		super(props);
 		console.log(this.props.params)
 		this.state = {
-			step: parseInt(this.props.params.type) == 1?(user.tel?0:1):(user.email?0:1), 
+			step: 2,//parseInt(this.props.params.type) == 1?(user.tel?0:1):(user.email?0:1), 
 			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
 			user:user,
 			phone: 12432434,
@@ -50,6 +50,10 @@ class PhoneVerifi extends React.Component {
 
 		}
 		this.formatMessage = this.props.intl.formatMessage;
+	}
+
+	handleJump = (url) =>{
+		this.props.history.pushState(null, url);
 	}
 
 	handleSteps = (step) => {
@@ -72,16 +76,14 @@ class PhoneVerifi extends React.Component {
 		            <div className={css.content}>
 		            		{ <Steps className={css.steps} 
 		            			steps={this.state.verifi_modl==1?operator.steps:operator.steps_email} 
-			current = {
-				this.state.step
-			}
-			/>
-		}
+								current = {this.state.step}
+							  />
+							}		
 
 		                    {this.state.step==0?<Authentication handleSteps={this.handleSteps} type={this.state.verifi_modl}/>
 
 		                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps} type={this.state.verifi_modl} />
-		                    :this.state.step==2?<SetSuccess type={this.state.verifi_modl}/>
+		                    :this.state.step==2?<SetSuccess type={this.state.verifi_modl} handleJump={this.handleJump}/>
 		                    :""}
 		            </div>		           
        			</div>
@@ -290,6 +292,8 @@ class SetPwd extends React.Component {
 			verifi_modl: this.props.type, //1手机验证，2邮箱验证
 			phone: 12432434,
 			email: 224,
+			loading:false,
+			disabled:false,
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
@@ -301,12 +305,12 @@ class SetPwd extends React.Component {
 
 			}else{
 				let param = {
-					email:values.verifi_phone_email,
-					check:values.verifi_code
+					email:values.verifi_email,
+					emailCode:values.verifi_code
 				};
 				axios.post('user/verifi_email.json',param).then(res=>{
 					if(res.data.isSucc){
-
+						this.props.handleSteps ? this.props.handleSteps(1) : '';
 					}else{
 						message.error(res.data.message);
 					}
@@ -317,7 +321,9 @@ class SetPwd extends React.Component {
 	}
 
 	getVerifiCode = () =>{
-		if(this.verifi_phone_email.props.value){
+		/*console.log(this.verifi_email.props.value)
+		console.log(this.props.form.getFieldsValue())*/
+		if(this.verifi_email.props.value || this.verifi_phone.props.value){
 			this.setState({
                     loading: false,
                     time: 60,
@@ -341,7 +347,7 @@ class SetPwd extends React.Component {
 			if(this.state.verifi_modl == 1){
 
 			}else{
-				let email = this.verifi_phone_email.props.value;
+				let email = this.verifi_email.props.value;
 				let type = this.state.verifi_modl;
 				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
 					if(res.data.isSucc){
@@ -408,23 +414,23 @@ class SetPwd extends React.Component {
 									}
 			                    >
 			                    {this.state.verifi_modl==1?
-							          getFieldDecorator('verifi_phone_email', {
+							          getFieldDecorator('verifi_phone', {
 				                          rules: [{
 				                              required: true, message:this.formatMessage( {id:'register.tel.warn'}),
 				                          }],
 				                      })(
 
-				                      	 <Input ref={(verifi_phone_email)=>{this.verifi_phone_email=verifi_phone_email}} className={appcss.form_input}/>
+				                      	 <Input ref={(verifi_phone)=>{this.verifi_phone=verifi_phone}} className={appcss.form_input}/>
 						   
 				                      )
 									: 
-									getFieldDecorator('verifi_code', {
+									getFieldDecorator('verifi_email', {
 				                          rules: [{
 				                              required: true, message:this.formatMessage( {id:'register.email.warn'}),
 				                          }],
 				                      })(
 
-				                      	 <Input className={appcss.form_input}/>
+				                      	 <Input ref={(verifi_email)=>{this.verifi_email=verifi_email}} className={appcss.form_input}/>
 						   
 				                      )
 								}
@@ -436,17 +442,18 @@ class SetPwd extends React.Component {
 		                    >
 		                    	<Row gutter={8}>
 		                         	<Col span={11}>   
-		      			                 {getFieldDecorator('phone', {
+		      			                 {getFieldDecorator('verifi_code', {
 		                                rules: [ {
 		                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
 		                                }],
 		                            })(
-											<Input ref={(phone)=>{this.phone=phone}} className={css.verifi_input} />
+											<Input className={css.verifi_input} />
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
+		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
+		                                        {this.state.time?("("+this.state.time+")"):""}
 		                                  </Button>
 		                            </Col>
 		                          </Row>
@@ -472,6 +479,9 @@ class SetPwd extends React.Component {
 }
 
 class SetSuccess extends React.Component {
+	static propTypes = {
+        intl: intlShape.isRequired
+    };
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -485,7 +495,19 @@ class SetSuccess extends React.Component {
 	}
 
 	handleClick = () => {
-		this.props.history.pushState(null, "/login");
+		axios.get('user/get-userinfo-byuid.json').then(res=>{
+			console.log(res.data)
+			if(res.data.isSucc){
+				localStorage.clear();
+        		sessionStorage.clear();
+        		sessionStorage.setItem('user', JSON.stringify(res.data.result));
+        		this.props.handleJump("/page/mine/account");
+        		/*this.props.history.pushState(null, "/page/mine/account");*/
+			}else{
+				message.error(res.data.message)
+			}
+		})
+		
 	}
 
 	render() {

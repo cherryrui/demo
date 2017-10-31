@@ -433,7 +433,7 @@ class PersonData extends React.Component {
                                 <span className={css.title}>
                                     <FormattedMessage  id="post.company_name" defaultMessage="公司名字"/>：
                                 </span>
-                                <span className={css.text}>{this.state.user.companyName}</span>
+                                <span className={css.text}>{this.state.user.agent?this.state.user.agent.agentName:this.state.user.supplier.supplierName}</span>
                          </p> 
 
                         <p  className={css.info}>
@@ -446,7 +446,7 @@ class PersonData extends React.Component {
                                 <span className={css.title}>
                                     <FormattedMessage  id="quotation.url" defaultMessage="网址"/>：
                                 </span>
-                                <span className={css.text}>{this.state.user.websiteUrl}</span>
+                                <span className={css.text}>{this.state.user.agent?this.state.user.agent.website:this.state.user.supplier.website}</span>
                          </p>
                 </div>:""
             }

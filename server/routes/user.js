@@ -13,19 +13,21 @@ var querystring = require('querystring');
 
 axios.defaults.headers.common['authorization'] = "";
 
-router.get('/get-user.json', async(ctx, next) => {
-		let id = ctx.query.id;
+router.get('/get-userinfo-byuid.json', async(ctx, next) => {
+		let result = null;
+		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+		console.log(ctx.cookie.get('token'));
+		await axios.post(url+'/auth/user/getUser').then(res=>{
+			if(res.data.isSucc){
+				console.log(res.data);
+				/*ctx.cookie.set('uid', res.data.result.uid);
+				ctx.cookie.set('token', res.data.result.token);*/
+				result = res.data;
+			}
+		})
+		ctx.body = result;
 
-		console.log(4, id);
-		let user = {
-			id: 1,
-			name: "张三"
-		}
-		ctx.cookie.set('uid', user.id);
-		ctx.cookie.set('token', user.token);
-		ctx.body = {
-			user: user,
-		}
+		
 	})
 	.post('/login.json', async(ctx, next) => {
 		let result = null;
@@ -190,6 +192,15 @@ router.get('/get-user.json', async(ctx, next) => {
 			result = res.data;
 		})
 		/*console.log(result)*/
+		ctx.body = result;
+	})
+	.post('/verifi_email.json',async ctx=>{
+		let result = null,
+			param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/identificationEmail',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		});
 		ctx.body = result;
 	})
 	.post('/become-agent.json', async(ctx, next) => {
