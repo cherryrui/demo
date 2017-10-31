@@ -1,0 +1,131 @@
+@import "../../themes";
+.product_name{
+	font-size: 18px;
+	font-weight: bold;
+}
+.process{
+	width:100px;
+	height: 18px;
+	line-height: 18px;
+	display: block;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	background-color: $color-red;
+	border-radius: 2px;
+	color: #ffffff;
+
+}
+.title_bg{
+
+	height: 36px;
+    background-color: #ffc70d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+   
+    .edit_bg{
+    	width: 60px;
+    	height: 36px;
+    	background-color: $bar-color;
+    	color: #ffffff;
+    	cursor: pointer;
+    	line-height: 36px;
+    	text-align: center;
+    }
+}
+.mainfigure{	
+	padding:10px;
+	display: flex;
+
+	.main_img{
+	width: 160px;
+	height: 160px;
+	margin-right: 10px;	
+ 	border:1px solid $border-color;
+	img{
+	width: 160px;
+	height: 160px;
+	}
+	}
+}
+.detail_table{
+	background-color: $item-color;
+	padding:10px;
+	margin-bottom: 20px;
+
+	.table_top{
+	border: none;
+    height: 1px;   
+    display: block;
+    border-bottom: 1px solid #c4c4c4;
+	}
+	.table_only_row{
+		 padding-left: 30px;
+		 border-bottom: 1px solid #c4c4c4;
+    	 border-left: 1px solid #c4c4c4;
+    	 border-right: 1px solid #c4c4c4;
+    	 height: 27px;
+    	line-height: 27px;
+	}
+	.table_row{
+		display: flex;
+    border-bottom: 1px solid #c4c4c4;
+    border-left: 1px solid #c4c4c4;
+    border-right: 1px solid #c4c4c4;
+    height: 27px;
+    line-height: 27px;
+    .table_left{
+    	width: 420px;
+    	
+    	border-right: 1px solid #c4c4c4;
+    	 padding-right: 250px; 
+     text-align: right;
+    }
+     .table_right{
+     	width: 420px;
+    	padding-left: 30px;
+	}
+	.table_left_5{
+    	width: 420px;
+    	padding-left: 30px;
+    	border-right: 1px solid #c4c4c4;	   
+ 	    display: flex;
+ 	    .specifucation_name{
+
+ 	    	padding-right: 20px;
+ 	    }
+    }
+     .table_right_5{
+     	width: 420px;
+    	padding-left: 30px;
+    	 display: flex;
+    	  .specifucation_name{
+
+ 	    	padding-right: 20px;
+ 	    }
+	}
+	.table_middle{
+		width: 210px;
+    	padding-left: 30px;
+    	border-right: 1px solid #c4c4c4;
+	}
+	.table_m_right{
+		width: 210px;
+  	   padding-left: 30px;
+	}
+    .table_left_2{
+    	width: 200px;
+    	padding-left: 30px;
+    	border-right: 1px solid #c4c4c4;
+    	text-align: right;
+    padding-right: 60px;
+    }
+     .table_right_2{
+     	width: 640px;
+     	padding-left: 30px;
+ 	}
+
+	}
+}

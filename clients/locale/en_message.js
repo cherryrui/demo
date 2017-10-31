@@ -55,7 +55,7 @@ const en_US = {
     "app.input.idaddress": "Please input id address",
     "app.input.agreenotes": "Please agree the rules",
     "app.verification.error": "The Type of verification is null",
-    "app.binding":"To bind",
+    "app.binding": "To bind",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
     "sort.price": "Price",
@@ -567,6 +567,7 @@ const en_US = {
     "phone.verifi.success": "verification success",
     "verification.mode.select": "Select the authentication method",
     "Change.mobile.phone": "Change of mobile phone number",
-    "modify.success": "Modify Success"
+    "modify.success": "Modify Success",
+    "supplier.category": "category",
 }
 export default en_US;
