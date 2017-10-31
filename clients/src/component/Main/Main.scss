@@ -268,7 +268,7 @@
   margin: 20px 0 40px;
   text-align: center;
   a{
-    color: $color-grey;
+    color: $font-color;
     margin: 20px;
     padding: 10px 30px!important;
     background-color: $theme-color !important;
@@ -276,7 +276,6 @@
     border-radius: 18px!important;
   }
   a:hover{
-    color: white;
     box-shadow: 0 0 10px $theme-color;
   }
 }

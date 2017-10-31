@@ -243,6 +243,11 @@ const PersonCenter = (location, cb) => {
         cb(null, require('./component/PersonCenter/PersonCenter.js').default)
     }, 'personcenter')
 }
+const ProductEditeDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./component/ProductEditeDetail/ProductEditeDetail.js').default)
+    }, 'edite-detail')
+}
 @connect(state => ({
     order: state.order
 }), orderAction)
@@ -491,8 +496,9 @@ ReactDOM.render(
                                 <Route path="requirement" getComponent={Requirements}/>
                                 <Route path="change-password" getComponent={ChangePassword}/>
                                 <Route path="phone-verifi/:type" getComponent={PhoneVerifi}/>
+                                <Route path="/product-detail/:id" getComponent={ProductEditeDetail}/>
                             </Route>
-                            <Route path="product-editor" getComponent={ProductEditor}/>
+                            <Route path="product-editor(/:id)" getComponent={ProductEditor}/>
                         </Route>
                         <Route path="login" getComponent={Login}/>
                         <Route path="register" getComponent={Register}/>

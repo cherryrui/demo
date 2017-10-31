@@ -80,12 +80,21 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.get('/get-product-info-byid.json', async(ctx, next) => {
-		let product = {},
-			id = ctx.query.id;
-		ctx.body = {
-			product: product
+	.post('/get-product-info-byid.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getProduct?productId=" + param.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
 		}
+		ctx.body = result;
 	})
 	.post('/get-attr-price.json', async(ctx, next) => {
 		let param = ctx.request.body,
@@ -210,6 +219,39 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
+	.post('/save-product-spec.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/addProductSpec/", querystring.stringify(param)).then(res => {
+				/*console.log(69, res.data)*/
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/get-product-basic.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getProduct?productId=" + ctx.request.body.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 	.post('/get-product-specif.json', async(ctx, next) => {
 		let result, pid = ctx.request.body.pid;
 		await axios.get(url + "/product/queryProductSpecDetails/" + pid).then(res => {
@@ -222,6 +264,38 @@ router.get('/get-category.json', async(ctx, next) => {
 		await axios.post(url + "/unit/queryUnitTypeAndUnit", {}).then(res => {
 			result = res.data;
 		})
+		ctx.body = result;
+	})
+	.post('/get-product-pack.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getProductPack?productId=" + param.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/get-product-spec.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getProductSpecs?productId" + param.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
 		ctx.body = result;
 	})
 	/**

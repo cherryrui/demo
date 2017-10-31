@@ -172,7 +172,7 @@ class ProductInfo extends React.Component {
 					loading: false
 				})
 				if (res.data) {
-					this.props.handleSteps ? this.props.handleSteps(1) : "";
+					this.props.handleSteps ? this.props.handleSteps(1, res.data.result) : "";
 				} else {
 					message.error(this.formatMessage({
 						id: "mine.product.save_fail"

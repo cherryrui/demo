@@ -88,6 +88,44 @@ class ProductInstruct extends React.Component {
 				message.error(res.data.message);
 			}
 		})
+		let param = {
+			pid: this.props.product.productId
+		}
+		axios.post('/product/get-product-pack.json', param).then(res => {
+			if (res.data.isSucc) {
+				let instrct = res.data.result;
+				let product_ins = this.state.product_ins;
+				let customProperty = [];
+				product_ins.map(item => {
+					if (item.type == 0) {
+						item.select_unit = instrct[item.unit_name_id];
+					} else if (item.type == 1) {
+						item.select_unit = [];
+						item.unit_name_id.map(unit => {
+							item.select_unit.push(instrct[unit])
+						})
+					}
+				})
+				let type = JSON.parse(instrct.type);
+				instrct.types = [];
+				instrct.typeNames = [];
+				type.map(item => {
+					instrct.types.push(Number(item.id));
+					instrct.typeNames.push(item.name);
+				})
+				customProperty = JSON.parse(res.data.result.customProperty)
+				this.setState({
+					instrct,
+					product_ins,
+					customProperty
+
+				})
+			} else if (res.data.code == 104) {
+				this.props.login ? this.props.login(true) : "";
+			} else {
+				message.error(res.data.message);
+			}
+		})
 	}
 	handleChange = (name, value) => {
 		let instrct = this.state.instrct;
@@ -197,7 +235,7 @@ class ProductInstruct extends React.Component {
 				loading: false
 			})
 			if (res.data.isSucc) {
-				this.handleSteps(1)
+				this.handleSteps(1, res.data.result)
 			} else if (res.data.code == 104) {
 				this.props.login ? this.props.login() : ""
 			} else {
@@ -229,6 +267,7 @@ class ProductInstruct extends React.Component {
 		});
 	}
 	render() {
+		console.log(this.state.instrct);
 		return <div className={css.product_instruct}>
 			{this.state.product_ins.map((item,index)=>{
 				return <div className={css.instuct_item}style={{alignItems:item.type==3?"flex-start":"center"}}>
@@ -236,7 +275,7 @@ class ProductInstruct extends React.Component {
 						<FormattedMessage id={item.name} defaultMessage="自定义属性"/>&nbsp;: 
 					</p>
 					{item.type==0?<div className={css.instuctitem_right}>
-						<InputNumber className={css.instuctitem_right_input} onChange={this.handleChange.bind(this,item.key)}/>
+						<InputNumber value={this.state.instrct[item.key]} className={css.instuctitem_right_input} onChange={this.handleChange.bind(this,item.key)}/>
 						<Select value={item.select_unit} style={{ width: 80 }} 
 						onChange={this.handleSpec.bind(this,1,index)}>
 							{item.unit.map(unit=>{
@@ -245,7 +284,7 @@ class ProductInstruct extends React.Component {
 						</Select>
 					</div>
 					:item.type==1?<div className={css.instuctitem_right}>
-						<InputNumber className={css.instuctitem_right_input} onChange={this.handleChange.bind(this,item.key)}/>
+						<InputNumber value={this.state.instrct[item.key]} className={css.instuctitem_right_input} onChange={this.handleChange.bind(this,item.key)}/>
 						{item.unit.map((unit,unit_index)=>{
 							return <div className={css.left_item}>
 								<Select value={item.select_unit&&item.select_unit.length>1?item.select_unit[unit_index]:0} 
@@ -261,12 +300,12 @@ class ProductInstruct extends React.Component {
 					</div>
 					:item.type==2?<div>
 							{item.unit.map(unit=>{
-								return <Checkbox onChange={this.handleCheck.bind(this,unit.key,unit.value)}>
+								return <Checkbox checked={this.state.instrct.types.indexOf(unit.key)>-1?true:false} onChange={this.handleCheck.bind(this,unit.key,unit.value)}>
 									<FormattedMessage id={unit.name} defaultMessage="产品特性"/>
 								</Checkbox>
 							})}
 						</div>
-					:item.type==3?<TextArea style={{width:"460px"}} onChange={this.handleChange.bind(this,item.key)}  rows={4} />
+					:item.type==3?<TextArea value={this.state.instrct[item.key]} style={{width:"460px"}} onChange={this.handleChange.bind(this,item.key)}  rows={4} />
 					:""}
 				</div>
 			})}
@@ -285,14 +324,14 @@ class ProductInstruct extends React.Component {
 							<FormattedMessage id="mine.product.attr_name" defaultMessage="属性名称"/>：  
 						</p>
 						<Input style={{width:"120px"}} placeholder={this.formatMessage({id: 'mine.product.attr_name_warn'})} 
-							defaultValue={item.attrName} onChange={this.handleChangeSpec.bind(this,attr_index,'attrName')}/>
+							defaultValue={item.name} onChange={this.handleChangeSpec.bind(this,attr_index,'name')}/>
 					</div>
 					<div className={css.product_attr_item}>
 						<p className={css.product_attr_item_title}>
 							<FormattedMessage id="mine.product.attr_value" defaultMessage="属性值"/>&nbsp;:  
 						</p>
 						<Input style={{width:"120px"}} placeholder={this.formatMessage({id: 'mine.product.attr_value_warn'})} 
-						defaultValue={item.attrVal} onChange={this.handleChangeSpec.bind(this,attr_index,'attrVal')}/>
+						defaultValue={item.content} onChange={this.handleChangeSpec.bind(this,attr_index,'content')}/>
 					</div>
 					<Select defaultValue={item.attrUnit?item.attrUnit:this.state.unit_list[0].unitId} style={{ width: 80,marginRight: 10 }} 
 						onChange={this.handleChangeSpec.bind(this,attr_index,'attrUnit')}>

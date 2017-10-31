@@ -235,6 +235,7 @@ const zh_CN = {
     "mine.product.introduction": "产品介绍",
     "mine.product.packaging": "包装参数",
     "mine.product.transport": "运输要求",
+    "mine.product.edit": "编辑",
 
     "mine.product.name": "产品名称",
     "mine.product.No": "产品编号",
@@ -278,6 +279,10 @@ const zh_CN = {
     "mine.product.unit_xiang": "箱",
 
     "mine.product.art.no": "货品号",
+    "mine.product.spec.price_warn": "请填写商品出厂价",
+    "mine.product.spec.inv_warn": "请填写商品库存",
+    "mine.product.spec.item_warn": "请生成商品货品号",
+    "mine.product.spec.spec_warn": "请选择产品规格值",
 
     "mine.product.custom_attr": "自定义属性",
     "mine.product.attr_name": "属性名称",

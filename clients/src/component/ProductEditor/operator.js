@@ -72,7 +72,7 @@ export default {
 		value: "product.edite.text",
 	}],
 	product_ins: [{
-		key: "length",
+		key: "len",
 		name: "mine.product.instruct_length",
 		unit_key: "长度",
 		type: 0,

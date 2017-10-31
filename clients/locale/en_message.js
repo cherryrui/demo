@@ -234,6 +234,7 @@ const en_US = {
     "mine.product.packaging": "packaging instructions",
     "mine.product.transport": "Transport requirement",
     "mine.product.add": "Add",
+    "mine.product.edit": "Edit",
     "mine.product.name": "Product name",
     "mine.product.No": "Art.No.",
     "mine.product.unit": "unit",
@@ -242,6 +243,10 @@ const en_US = {
     "mine.product.upload_img": "Upload pictures",
     "mine.product.set_default": "Set Default",
 
+    "mine.product.spec.price_warn": "Please input Ex-factory price",
+    "mine.product.spec.inv_warn": "Please input product inventory",
+    "mine.product.spec.item_warn": "Please create product Art.No.",
+    "mine.product.spec.spec_warn": "Please select product special",
     "mine.product.name_warn": "please input product name",
     "mine.product.brand_warn": "please select brand ",
     "mine.product.category_warn": "please select product category",

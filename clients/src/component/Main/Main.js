@@ -66,6 +66,7 @@ class Main extends React.Component {
             <Slider
                 dots={true}
                 autoplay
+                arrows={false}
                 infinite={true}
                 slidesToShow={1}
                 slidesToScroll={1}

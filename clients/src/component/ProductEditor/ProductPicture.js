@@ -135,10 +135,7 @@ class ProductPicture extends React.Component {
 					loading: false
 				})
 				if (res.data.isSucc) {
-					let product = this.props.product;
-					product.defaultImgUrl = param.defaultImgUrl;
-					product.imgesUrl = param.imgesUrl;
-					this.props.handleSteps ? this.props.handleSteps(1, product) : ""
+					this.props.handleSteps ? this.props.handleSteps(1, res.data.result) : ""
 				} else if (res.data.code == 104) {
 					this.props.login ? this.props.login() : ""
 				} else {

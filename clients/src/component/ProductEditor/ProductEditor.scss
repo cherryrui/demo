@@ -119,6 +119,7 @@
 		padding: 20px;
 		label{
 			margin-right: 60px;
+			line-height: 30px;
 		}
 	}
 	.product_spec_select_title{
@@ -163,6 +164,10 @@
 		@extend .product_spec_select_title_no;
 		height: 36px;
     	line-height: 36px;
+    	span{
+    		color:$color-blue;
+    		cursor: pointer;
+    	}
 	}
 }
 .product_info_item{

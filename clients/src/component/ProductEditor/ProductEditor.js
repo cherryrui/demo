@@ -34,9 +34,9 @@ class ProductEditor extends React.Component {
 		this.state = {
 			current: 5,
 			now: 5,
-			product: {
-				productId: 76
-			},
+			product: props.params.id ? {
+				productId: props.params.id
+			} : null,
 			visible: false,
 			reload: false,
 		}
@@ -80,9 +80,10 @@ class ProductEditor extends React.Component {
 			visible: false
 		})
 	}
-	handleLogin = () => {
+	handleLogin = (status) => {
 		this.setState({
-			visible: true
+			visible: true,
+			reload: status ? true : false
 		})
 	}
 	changeStep = (step) => {
@@ -91,6 +92,7 @@ class ProductEditor extends React.Component {
 		})
 	}
 	render() {
+		console.log(this.state.product);
 		return <div ref={(product_edit)=>{this.product_edit = product_edit}} className={appcss.body}>
 			<div className={appcss.navigate}>
                 <Breadcrumb separator=">>" style={{marginBottom: "10px"}}>

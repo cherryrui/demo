@@ -38,7 +38,7 @@ class ProductAttr extends React.Component {
 	}
 	componentWillMount() {
 		let param = {
-			productId: 76
+			productId: this.props.product.productId
 		}
 		axios.post('/product/get-product-attr.json', param).then(res => {
 			if (res.data.isSucc) {

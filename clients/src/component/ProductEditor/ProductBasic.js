@@ -45,7 +45,6 @@ class ProductBasic extends React.Component {
 			fileList: [],
 			previewVisible: false,
 			loading: false,
-
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 		this.timeout = null;
@@ -65,12 +64,31 @@ class ProductBasic extends React.Component {
 						categoryList: categoryList,
 						unit: unit.data.result,
 						brands: brands.data.result.list,
-						product: this.props.product.id ? this.props.product : this.state.product
 					})
 				})
 			})
 		})
+		if (this.props.product && this.props.product.productId) {
+			let param = {
+				pid: this.props.product.productId
+			}
+			axios.post('/product/get-product-basic.json', param).then(res => {
+				if (res.data.isSucc) {
+					let product = res.data.result.product;
+					product.brand = {
+						value: product.brandId,
+						label: "dsad",
+					}
+					this.setState({
+						product: res.data.result.product
+					})
+				} else if (res.data.code == 104) {
+					this.props.login ? this.props.login(true) : "";
+				}
+			})
+		}
 	}
+
 	/**
 	 * 提交基础信息
 	 * @param  {[type]} e [description]
@@ -83,7 +101,6 @@ class ProductBasic extends React.Component {
 				this.setState({
 					loading: true
 				})
-				console.log('Received values of form: ', values, this.state.category);
 				values.brand ? values.brandId = values.brand.value : "";
 				let category = [],
 					productCategorys = "[";
@@ -95,17 +112,20 @@ class ProductBasic extends React.Component {
 						}
 					})
 				})
-				console.log(category, productCategorys);
 				productCategorys = productCategorys.substr(0, productCategorys.length - 2);
 				values.productCategorys = productCategorys;
-				axios.post('/product/add-product-basic.json', values).then(res => {
+				let url = "";
+				if (this.state.product) {
+					url = "";
+				} else {
+					url = '/product/add-product-basic.json';
+				}
+				axios.post(url, values).then(res => {
 					this.setState({
 						loading: false
 					})
 					if (res.data.isSucc) {
-						let product = values;
-						product.productId = res.data.result.productId;
-						this.props.handleSteps ? this.props.handleSteps(1, product) : ""
+						this.props.handleSteps ? this.props.handleSteps(1, res.data.result) : ""
 					} else if (res.data.code == 104) {
 						this.props.login ? this.props.login() : ""
 					} else {
@@ -197,6 +217,7 @@ class ProductBasic extends React.Component {
 		});
 	}
 	render() {
+		console.log(this.state.product);
 		const {
 			intl: {
 				formatMessage
@@ -233,7 +254,7 @@ class ProductBasic extends React.Component {
                         label={formatMessage({id: 'mine.product.name'})}
                     >
                         {getFieldDecorator('productName', {
-                            initialValue: this.state.product.name,
+                            initialValue: this.state.product.productName,
                             rules: [{ required: true, message: formatMessage({id: 'mine.product.name_warn'}), whitespace: true }],
                          })(
 							<Input className={appcss.form_input}/>
@@ -244,7 +265,7 @@ class ProductBasic extends React.Component {
                         label={formatMessage({id: 'mine.product.No'})}
                     >
                         {getFieldDecorator('productNumber', {
-                            initialValue: this.state.product.name,
+                            initialValue: this.state.product.productNumber,
                             rules: [{ required: true, message: formatMessage({id: 'mine.product.No'}), whitespace: true }],
                          })(
 							<Input style={{width:"260px"}} />
@@ -294,7 +315,7 @@ class ProductBasic extends React.Component {
                             rules: [{
                                 required: true, message: formatMessage({id: 'mine.product.unit_warn'}),
                             }],
-                            initialValue: this.state.product.unit
+                            initialValue: this.state.product.unitId
                         })(
                             <Select className={appcss.form_input}
                             placeholder={formatMessage({id: 'mine.product.unit_warn'})}>
@@ -322,7 +343,7 @@ class ProductBasic extends React.Component {
                         label={formatMessage({id: 'mine.product.factory_price'})}
                     >
                         {getFieldDecorator('priceSupplier', {
-                            initialValue: this.state.product.name,
+                            initialValue: this.state.product.priceSupplier,
                              rules: [{
                                 required: true, message: formatMessage({id: 'mine.product.factory_price'}),
                             }],
