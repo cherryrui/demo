@@ -182,6 +182,16 @@ router.get('/get-user.json', async(ctx, next) => {
 		
 		ctx.body = result;
 	})
+	.post('/emailcheck.json',async ctx=>{
+		let result = null,
+			param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/testEmail',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		/*console.log(result)*/
+		ctx.body = result;
+	})
 	.post('/become-agent.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;

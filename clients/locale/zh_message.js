@@ -393,6 +393,7 @@ const zh_CN = {
     "orderdetails.order.details": "订单详情",
     "persondata.user.style": "用户类型",
     "persondata.account.number": "账号",
+    "persondata.account":"账户",
     "persondata.real.name": "真实姓名",
     "persondata.department.position": "职位",
     "persondata.certification": "未认证",

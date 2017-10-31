@@ -480,15 +480,7 @@ class PersonData extends React.Component {
                         />
                     </span>
                     :<span className={css.text}>
-                        {!this.state.user.countryName?"":locale=="en"?this.state.user.address+","
-                        +this.state.user.districtName+","
-                        +this.state.user.cityName+","
-                        +this.state.user.provinceName+","
-                        +this.state.user.countryName:this.state.user.countryName+","
-                        +this.state.user.provinceName+","
-                        +this.state.user.cityName+","
-                        +this.state.user.districtName+","
-                        +this.state.user.address+","}
+                        {this.state.user.address}
                     </span>
                     }
                 </p>
@@ -509,12 +501,17 @@ class PersonData extends React.Component {
                 </p>
                 </div>:""}
                    {this.state.user.supplier?
-                <div>
-                     <p  className={css.info}>
-                        <span className={css.title}>
+                <div className={css.category_div}>
+                     <p  >
+                        <p className={css.category_titile}>
                               <FormattedMessage  id="app.product_category" defaultMessage="产品分类"/>：
-                        </span>
-                        <span className={css.text}>{this.state.user.supplier.supplierName}</span>
+                        </p>
+                        {this.state.user.supplier.productCategory?
+                            this.state.user.supplier.productCategory.map(item=>{
+                                return <p className={css.category_text}><span style={{width:"40%",float:"left"}}>{item.levelonename}</span><span style={{width:"60%",float:"left"}}>{item.leveltwoname}</span></p>
+                            })
+                            :''
+                        }
                     </p>
                      <p className={css.info}>
                          <span className={css.title}>

@@ -117,32 +117,64 @@ class Authentication extends React.Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
+			console.log(values)
 			if (!err) {
-				if (this.timer) {
-					window.clearInterval(this.timer)
+				if(this.state.verifi_modl==1){
+
+				}else{
+					let email = user.email,
+						check = values.phoneoremailcheck;
+						let param = {
+							email:email,
+							emailCode:check
+						};
+					axios.post('/user/emailcheck.json',param).then(res=>{
+						if(res.data.isSucc){
+							console.log(res.data)
+							this.props.handleSteps ? this.props.handleSteps(1) : '';
+						}else{
+							message.error(res.data);
+						}
+					})
 				}
-				axios.post('/user/authentication.json', values).then(res => {
-					if (res.data.status) {
-						this.props.handleSteps ? this.props.handleSteps(1) : '';
-					} else {
-						message.error(this.formatMessage({
-							id: 'repassword.fail'
-						}, {
-							reason: res.data.result
-						}))
-					}
-				})
 			}
 		})
 	}
 
 	getVerifiCode = () =>{
-		if(this.phoneoremail.props.value){
+		if(user.tel || user.email){
+			this.setState({
+                    loading: false,
+                    time: 60,
+                    disabled: true
+                })
+			this.timer = window.setInterval(() => {
+                    /*console.log(this.state.time);*/
+                    if (this.state.time - 1 >= 0) {
+                        this.setState({
+                            time: this.state.time - 1,
+                            disabled: true
+                        })
+                    } else {
+                        this.setState({
+                            time: 0,
+                            disabled: false
+                        })
+                        window.clearInterval(this.timer)
+                    }
+                }, 1000)
 			if(this.state.verifi_modl == 1){
 
 			}else{
-				let email = this.phoneoremail.props.value;
+				let email = user.email;
 				let type = this.state.verifi_modl;
+				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
+					if(res.data.isSucc){
+						console.log(res.data);
+					}else{
+						message.error(res.data.message);
+					}
+				})
 			}
 		}else{
 			message.error(this.formatMessage({id:'authen.authen.account_warn'}))
@@ -205,7 +237,7 @@ class Authentication extends React.Component {
 		                    		}
 
 		                    >
-					          {getFieldDecorator('moblie_phone', {
+					          {getFieldDecorator('phone_email', {
 		                         
 		                      })(
 		                         <p>{this.state.verifi_modl==1?user.tel:user.email}</p>
@@ -218,7 +250,7 @@ class Authentication extends React.Component {
 		                    >
 		                    <Row gutter={8}>
 		                         <Col span={11}>   
-		      			                 {getFieldDecorator('phoneoremail', {
+		      			                 {getFieldDecorator('phoneoremailcheck', {
 		                                rules: [ {
 		                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
 		                                }],
@@ -227,8 +259,9 @@ class Authentication extends React.Component {
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button onClick={this.getVerifiCode} className={appcss.button_blue}  style={{width:155,height:36,marginLeft: 15}}>
+		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue}  style={{width:155,height:36,marginLeft: 15}}>
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
+		                                        {this.state.time?("("+this.state.time+")"):""}
 		                                  </Button>
 		                            </Col>
 		                          </Row>
@@ -264,24 +297,65 @@ class SetPwd extends React.Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				if (this.timer) {
-					window.clearInterval(this.timer)
-				}
-				axios.post('/user/authentication.json', values).then(res => {
-					if (res.data.status) {
-						this.props.handleSteps ? this.props.handleSteps(1) : '';
-					} else {
-						message.error(this.formatMessage({
-							id: 'repassword.fail'
-						}, {
-							reason: res.data.result
-						}))
+			if(this.state.verifi_modl==1){
+
+			}else{
+				let param = {
+					email:values.verifi_phone_email,
+					check:values.verifi_code
+				};
+				axios.post('user/verifi_email.json',param).then(res=>{
+					if(res.data.isSucc){
+
+					}else{
+						message.error(res.data.message);
 					}
 				})
 			}
+			
 		})
-	};
+	}
+
+	getVerifiCode = () =>{
+		if(this.verifi_phone_email.props.value){
+			this.setState({
+                    loading: false,
+                    time: 60,
+                    disabled: true
+                })
+			this.timer = window.setInterval(() => {
+                    /*console.log(this.state.time);*/
+                    if (this.state.time - 1 >= 0) {
+                        this.setState({
+                            time: this.state.time - 1,
+                            disabled: true
+                        })
+                    } else {
+                        this.setState({
+                            time: 0,
+                            disabled: false
+                        })
+                        window.clearInterval(this.timer)
+                    }
+                }, 1000)
+			if(this.state.verifi_modl == 1){
+
+			}else{
+				let email = this.verifi_phone_email.props.value;
+				let type = this.state.verifi_modl;
+				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
+					if(res.data.isSucc){
+						console.log(res.data);
+					}else{
+						message.error(res.data.message);
+					}
+				})
+			}
+		}else{
+			message.error(this.formatMessage({id:'authen.authen.account_warn'}))
+		}
+		
+	}
 
 
 	render() {
@@ -334,17 +408,17 @@ class SetPwd extends React.Component {
 									}
 			                    >
 			                    {this.state.verifi_modl==1?
-							          getFieldDecorator('verifi_phone', {
+							          getFieldDecorator('verifi_phone_email', {
 				                          rules: [{
 				                              required: true, message:this.formatMessage( {id:'register.tel.warn'}),
 				                          }],
 				                      })(
 
-				                      	 <Input className={appcss.form_input}/>
+				                      	 <Input ref={(verifi_phone_email)=>{this.verifi_phone_email=verifi_phone_email}} className={appcss.form_input}/>
 						   
 				                      )
 									: 
-									getFieldDecorator('verifi_email', {
+									getFieldDecorator('verifi_code', {
 				                          rules: [{
 				                              required: true, message:this.formatMessage( {id:'register.email.warn'}),
 				                          }],
@@ -367,7 +441,7 @@ class SetPwd extends React.Component {
 		                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
 		                                }],
 		                            })(
-											<Input  className={css.verifi_input} />
+											<Input ref={(phone)=>{this.phone=phone}} className={css.verifi_input} />
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
