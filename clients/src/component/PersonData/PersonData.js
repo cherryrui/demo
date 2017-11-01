@@ -261,7 +261,19 @@ class PersonData extends React.Component {
                             message.success(this.formatMessage({
                                 id: 'app.success'
                             }));
-                            location.reload();
+                            axios.get('user/get-userinfo-byuid.json').then(res=>{
+                                console.log(res.data)
+                                if(res.data.isSucc){
+                                    localStorage.clear();
+                                    sessionStorage.clear();
+                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                    location.reload();
+                                    /*this.props.history.pushState(null, "/page/mine/account");*/
+                                }else{
+                                    message.error(res.data.message)
+                                }
+                            })
+                           /* location.reload();*/
                         } else if (res.data.code == 104) {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
@@ -297,7 +309,19 @@ class PersonData extends React.Component {
                             message.success(this.formatMessage({
                                 id: 'app.success'
                             }));
-                            location.reload();
+                            axios.get('user/get-userinfo-byuid.json').then(res=>{
+                                console.log(res.data)
+                                if(res.data.isSucc){
+                                    localStorage.clear();
+                                    sessionStorage.clear();
+                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                    location.reload();
+                                    /*this.props.history.pushState(null, "/page/mine/account");*/
+                                }else{
+                                    message.error(res.data.message)
+                                }
+                            })
+                            
                         } else if (res.data.code == 104) {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),

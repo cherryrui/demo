@@ -42,7 +42,7 @@ class PhoneVerifi extends React.Component {
 		super(props);
 		console.log(this.props.params)
 		this.state = {
-			step: 2,//parseInt(this.props.params.type) == 1?(user.tel?0:1):(user.email?0:1), 
+			step: parseInt(this.props.params.type) == 1?(user.tel?0:1):(user.email?0:1), 
 			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
 			user:user,
 			phone: 12432434,
