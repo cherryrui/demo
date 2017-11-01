@@ -38,6 +38,7 @@ class ProductSpec extends React.Component {
 			specs_list: [],
 			select_category: 0,
 		}
+		this.oldCategoryId = null;
 		this.formatMessage = this.props.intl.formatMessage;
 
 	}
@@ -53,6 +54,7 @@ class ProductSpec extends React.Component {
 					let product_spec = [];
 					let specs_list = [];
 					if (res.data.result.selectCategory) {
+						this.oldCategoryId = res.data.result.selectCategory.categoryId;
 						category.map((item, index) => {
 							if (item.categoryId == res.data.result.selectCategory.categoryId) {
 								product_spec = item.spec;
@@ -67,16 +69,42 @@ class ProductSpec extends React.Component {
 						product_spec.map(spec => {
 							if (spec.specId == item.specId) {
 								spec.selectSpec = [];
+								spec.select = [];
 								specs.specValue.map(it => {
 									spec.selectSpec.push({
 										specVal: it.valId,
 										specName: it.specValue
-									})
+									});
+									spec.select.push(it.valId);
 								})
 							}
 						})
 					})
-					specs_list = res.data.result.itemInfo ? res.data.result.itemInfo : []
+					if (res.data.result.itemInfo) {
+						res.data.result.itemInfo.map(item => {
+							let product = JSON.parse(JSON.stringify(item));
+							product.spec = [];
+							product_spec.map(spec => {
+								item.specInfo.map(info => {
+									if (spec.specId == Number(info.specId)) {
+										console.log(info, info.specValId, info.specVal)
+										product.spec.push({
+											specName: info.specVal,
+											specVal: Number(info.specValId),
+										})
+									}
+								})
+							})
+							specs_list.push(product);
+
+						})
+					}
+					specs_list.map(item => {
+						item.specInfo.map(spec => {
+							spec.specName = spec.specVal;
+							spec.specVal = Number(spec.specValId);
+						})
+					})
 					this.setState({
 						category,
 						product_spec,
@@ -106,15 +134,18 @@ class ProductSpec extends React.Component {
 		if (e.target.checked) {
 			if (!product_spec[index].selectSpec) {
 				product_spec[index].selectSpec = [];
+				product_spec[index].select = [];
 			}
 			product_spec[index].selectSpec.push({
 				specVal: key,
 				specName: name
 			});
+			product_spec[index].select.push(key);
 		} else {
 			product_spec[index].selectSpec.map((item, select) => {
 				if (item.specVal == key) {
 					product_spec[index].selectSpec.splice(select, 1);
+					product_spec[index].select.splice(select, 1);
 				}
 			})
 		}
@@ -122,14 +153,12 @@ class ProductSpec extends React.Component {
 		product_spec.map((item, index_spec) => {
 			if (item.selectSpec) {
 				let spec = JSON.parse(JSON.stringify(specs_list));
-				console.log(spec);
 				if (spec.length == 0) {
-					console.log(item.selectSpec)
 					item.selectSpec.map(select_spec => {
 						let product = {
-							specInfo: new Array(product_spec.length),
+							spec: new Array(product_spec.length),
 						};
-						product.specInfo[index_spec] = select_spec;
+						product.spec[index_spec] = select_spec;
 						specs_list.push(JSON.parse(JSON.stringify(product)));
 					})
 				} else {
@@ -137,8 +166,7 @@ class ProductSpec extends React.Component {
 					spec.map(product => {
 						item.selectSpec.map(select_spec => {
 							let product_old = JSON.parse(JSON.stringify(product));
-							console.log(product_old, select_spec);
-							product_old.specInfo[index_spec] = select_spec;
+							product_old.spec[index_spec] = select_spec;
 							specs_list.push(product_old);
 						})
 					})
@@ -147,17 +175,18 @@ class ProductSpec extends React.Component {
 		})
 		specs_list.map(list => {
 			this.state.specs_list.map(item => {
-				if (item.specInfo && list.specInfo) {
+				if (item.spec && list.spec) {
 					let flag = true;
 					for (let i = 0; i < product_spec.length; i++) {
-						if (!(item.specInfo[i] && list.specInfo[i] && (item.specInfo[i].specVal == list.specInfo[i].specVal))) {
+						if (!(item.spec[i] && list.spec[i] && (item.spec[i].specVal == list.spec[i].specVal))) {
 							flag = false;
 						}
 					}
 					if (flag) {
-						list.priceSuppliers = item.priceSuppliers;
-						list.inventorys = item.inventorys;
-						list.itemNumbers = item.itemNumbers;
+						list.priceSupplier = item.priceSupplier;
+						list.inventory = item.inventory;
+						list.itemNumber = item.itemNumber;
+						list.itemId = item.itemId;
 					}
 				}
 			})
@@ -170,7 +199,7 @@ class ProductSpec extends React.Component {
 	handleProduct = (index, name, e) => {
 		console.log(index, name, e.target.value);
 		let specs_list = this.state.specs_list;
-		if (name === "priceSuppliers") {
+		if (name === "priceSupplier") {
 			let price = e.target.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
 			specs_list[index][name] = price && !isNaN(price) ? price : 0;
 		} else {
@@ -182,10 +211,14 @@ class ProductSpec extends React.Component {
 		});
 	}
 	handleSave = () => {
-
-		console.log(this.state.specs_list);
-		if (this.state.specs_list.length == 0) {
+		this.setState({
+			loading: true
+		})
+		if (this.state.specs_list.length == 0 && this.state.category[this.state.select_category].categoryId == this.oldCategoryId) {
 			this.props.handleSteps ? this.props.handleSteps(1) : "";
+			this.setState({
+				loading: false
+			})
 		} else {
 			let param = {
 				specIds: [],
@@ -202,40 +235,48 @@ class ProductSpec extends React.Component {
 					if (sp && sp.specVal) {
 						spec.push(sp.specVal);
 					} else {
+						if (flag) {
+							message.error(this.formatMessage({
+								id: "mine.product.spec.spec_warn"
+							}))
+						}
 						flag = false;
-						message.error(this.formatMessage({
-							id: "mine.product.spec.spec_warn"
-						}))
 						return;
 					}
 				})
 				spec = spec.join("-");
 				param.specValIds.push(spec);
-				if (item.priceSuppliers) {
-					param.priceSuppliers.push(item.priceSuppliers);
+				if (item.priceSupplier) {
+					param.priceSuppliers.push(item.priceSupplier);
 				} else {
+					if (flag) {
+						message.error(this.formatMessage({
+							id: "mine.product.spec.price_warn"
+						}))
+					}
 					flag = false;
-					message.error(this.formatMessage({
-						id: "mine.product.spec.price_warn"
-					}))
 				}
-				if (item.inventorys || item.inventorys == 0) {
-					param.inventorys.push(item.inventorys);
+				if (item.inventory || item.inventory == 0) {
+					param.inventorys.push(item.inventory);
 				} else {
+					if (flag) {
+						message.error(this.formatMessage({
+							id: "mine.product.spec.inv_warn"
+						}))
+					}
 					flag = false;
-					message.error(this.formatMessage({
-						id: "mine.product.spec.inv_warn"
-					}))
 				}
-				if (item.itemNumbers || item.itemNumbers == 0) {
-					param.itemNumbers.push(item.itemNumbers);
+				if (item.itemNumber || item.itemNumber == 0) {
+					param.itemNumbers.push(item.itemNumber);
 				} else {
+					if (flag) {
+						message.error(this.formatMessage({
+							id: "mine.product.spec.item_warn"
+						}))
+					}
 					flag = false;
-					message.error(this.formatMessage({
-						id: "mine.product.spec.item_warn"
-					}))
 				}
-				param.itemIds.push(item.itemIds ? item.itemIds : "-")
+				param.itemIds.push(item.itemId ? item.itemId : "-")
 			})
 			if (flag) {
 				param.specValIds = param.specValIds.join(",");
@@ -248,10 +289,14 @@ class ProductSpec extends React.Component {
 				param.itemIds = param.itemIds.join(",");
 				param.specIds = param.specIds.join(",");
 				param.productId = this.props.product.productId;
-				param.categoryId = this.state.select_category;
-				param.oldCategoryId = this.props.product.oldCategoryId ? this.props.product.oldCategoryId : null
+				param.categoryId = this.state.category[this.state.select_category].categoryId;
+				param.oldCategoryId = this.oldCategoryId ? this.oldCategoryId : null
+				console.log(param);
 				axios.post('/product/save-product-spec.json', param).then(res => {
 					console.log(res.data);
+					this.setState({
+						loading: false
+					})
 					if (res.data.isSucc) {
 						this.props.handleSteps ? this.props.handleSteps(1, res.data.result) : ""
 					} else if (res.data.code == 104) {
@@ -260,12 +305,16 @@ class ProductSpec extends React.Component {
 						message.error(res.data.message);
 					}
 				})
+			} else {
+				this.setState({
+					loading: false
+				})
 			}
 		}
 	}
 	handleAuto = (index) => {
 		let specs_list = this.state.specs_list;
-		specs_list[index].itemNumbers = "P" + moment().format("YYYYMMDDHHMMSS") + "-" + index;
+		specs_list[index].itemNumber = "P" + moment().format("YYYYMMDDHHMMSS") + "-" + index;
 		this.setState({
 			specs_list
 		})
@@ -274,6 +323,7 @@ class ProductSpec extends React.Component {
 		this.props.handleSteps ? this.props.handleSteps(-1) : ""
 	}
 	render() {
+		console.log(this.state.select_category, this.state.product_spec, this.state.specs_list)
 		return <div className={css.product_spec}>
 			<p className={css.spec_item_title}>
 				<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>&nbsp;: 
@@ -288,7 +338,7 @@ class ProductSpec extends React.Component {
 					<p className={css.spec_item_title}>{item.specName}</p>
 					<p className={css.spec_item_body}>
 						{item.specVal.map(spec=>{
-							return  <Checkbox onChange={this.handleSpec.bind(this,index,spec.valId,spec.specValue)}>{spec.specValue}</Checkbox>
+							return  <Checkbox checked={item.select&&item.select.indexOf(spec.valId)>-1?true:false} onChange={this.handleSpec.bind(this,index,spec.valId,spec.specValue)}>{spec.specValue}</Checkbox>
 						})}
 					</p>
 				</div>
@@ -303,17 +353,17 @@ class ProductSpec extends React.Component {
 			</div>
 			{this.state.specs_list.length>0?this.state.specs_list.map((item,index)=>{
 				return <div className={css.product_spec_select_body}>
-					{item.specInfo.map(spec=>{
-						return <p style={{width: 750/(item.specInfo.length+2)}} className={css.product_spec_select_body_item}>{spec?spec.specName:""}</p>
+					{item.spec.map(spec=>{
+						return <p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>{spec?spec.specName:""}</p>
 					})}
-					<p style={{width: 750/(item.specInfo.length+2)}} className={css.product_spec_select_body_item}>
-						<Input value={item.priceSuppliers} onChange={this.handleProduct.bind(this,index,"priceSuppliers")}/>
+					<p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
+						<Input value={item.priceSupplier} onChange={this.handleProduct.bind(this,index,"priceSupplier")}/>
 					</p>
-					<p style={{width: 750/(item.specInfo.length+2)}} className={css.product_spec_select_body_item}>
-						<Input value={item.inventorys} onChange={this.handleProduct.bind(this,index,"inventorys")}/>
+					<p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
+						<Input value={item.inventory} onChange={this.handleProduct.bind(this,index,"inventory")}/>
 					</p>
 					<p className={css.product_spec_select_body_no}>
-						{item.itemNumbers?<i>{item.itemNumbers}</i>
+						{item.itemNumber?<i>{item.itemNumber}</i>
 						:<p onClick={this.handleAuto.bind(this,index)}>
 							<FormattedMessage id="mine.product.auto" defaultMessage=""/>
 						</p>}
@@ -324,7 +374,7 @@ class ProductSpec extends React.Component {
 				<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
-				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
+				<Button loading={this.state.loading} type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>
 			</div>

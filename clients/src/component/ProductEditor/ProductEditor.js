@@ -32,8 +32,8 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 6,
-			now: 6,
+			current: this.props.params.id ? 6 : 0,
+			now: this.props.params.id ? 6 : 0,
 			product: props.params.id ? {
 				productId: props.params.id
 			} : null,
@@ -55,9 +55,7 @@ class ProductEditor extends React.Component {
 		console.log(step, product)
 		if (step == -1) {
 			this.setState({
-				current: this.state.now + step,
 				now: this.state.now + step,
-				product: product
 			})
 		} else {
 			let next = this.state.now + step;

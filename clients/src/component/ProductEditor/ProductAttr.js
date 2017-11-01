@@ -35,6 +35,7 @@ class ProductAttr extends React.Component {
 			is_show: false,
 
 		}
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {
 		let param = {
@@ -65,6 +66,7 @@ class ProductAttr extends React.Component {
 	}
 
 	handleAttr = (index) => {
+		console.log(index);
 		let customProperty = this.state.customProperty;
 		if (index == -1) {
 			customProperty.push({})
@@ -85,7 +87,11 @@ class ProductAttr extends React.Component {
 				category: category
 			})
 		} else { //自定义属性
-			this.state.customProperty[index][index_attr] = e.target.value;
+			let customProperty = this.state.customProperty;
+			customProperty[index][index_attr] = e.target.value;
+			this.setState({
+				customProperty
+			})
 		}
 	}
 	backStep = () => {
@@ -146,13 +152,6 @@ class ProductAttr extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.category);
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
-
 		return <div className={css.product_attr}>
 			{this.state.category.map((item, index) => {
 				return <div className={css.product_attr_list}>
@@ -164,22 +163,20 @@ class ProductAttr extends React.Component {
 							{item.categoryName}
 						</p>
 					</div>
-					{item.is_show?<div>
+					{item.is_show?<div className={css.category_attr}>
+						<div className={css.category_left}>
+							<FormattedMessage id="mine.product.choose.attr" defaultMessage=""/>:
+						</div>
 						{item.property.map((attr,attr_index)=>{
-							return <div className={css.category_attr}>
-								<div className={css.category_left}>
-									<FormattedMessage id="mine.product.choose.attr" defaultMessage=""/>:
-								</div>
-								<div className={css.categoty_attr_list}>
-									<p className={css.category_attr_title}>
-										{attr.propertyName}:
-									</p>
-									<RadioGroup className={css.category_attr_body} onChange={this.handleChange.bind(this,1,index,attr_index)} value={attr.select}>
-										{attr.propertyVals.map(pVal=>{
-											return <Radio value={pVal.valId}>{pVal.propertyValue}</Radio>
-										})}
-								     </RadioGroup>
-								</div>
+							return <div className={css.categoty_attr_list}>
+								<p className={css.category_attr_title}>
+									{attr.propertyName}:
+								</p>
+								<RadioGroup className={css.category_attr_body} onChange={this.handleChange.bind(this,1,index,attr_index)} value={attr.select}>
+									{attr.propertyVals.map(pVal=>{
+										return <Radio value={pVal.valId}>{pVal.propertyValue}</Radio>
+									})}
+							    </RadioGroup>
 							</div>
 						})}
 					</div>:""}
@@ -193,7 +190,7 @@ class ProductAttr extends React.Component {
 				</p>
 				
 				<Button className={appcss.button_blue} onClick={this.handleAttr.bind(this,-1)}>
-					{formatMessage({id: 'mine.product.attr_add'})}
+					{this.formatMessage({id: 'mine.product.attr_add'})}
 				</Button>
 				
 			</div>
@@ -203,17 +200,17 @@ class ProductAttr extends React.Component {
 						<p className={css.category_left}>
 							<FormattedMessage id="mine.product.attr_name" defaultMessage="属性名称"/>&nbsp;:  
 						</p>
-						<Input placeholder={formatMessage({id: 'mine.product.attr_name_warn'})} 
-							defaultValue={item.attrName} onChange={this.handleChange.bind(this,0,attr_index,'attrName')}/>
+						<Input placeholder={this.formatMessage({id: 'mine.product.attr_name_warn'})} 
+							value={item.attrName} onChange={this.handleChange.bind(this,0,attr_index,'attrName')}/>
 					</div>
 					<div className={css.product_attr_item}>
 						<p className={css.product_attr_item_title}>
 							<FormattedMessage id="mine.product.attr_value" defaultMessage="属性值"/>&nbsp;:  
 						</p>
-						<Input placeholder={formatMessage({id: 'mine.product.attr_value_warn'})} 
-						defaultValue={item.attrVal} onChange={this.handleChange.bind(this,0,attr_index,'attrVal')}/>
+						<Input placeholder={this.formatMessage({id: 'mine.product.attr_value_warn'})} 
+						value={item.attrVal} onChange={this.handleChange.bind(this,0,attr_index,'attrVal')}/>
 					</div>
-					<Tooltip title={formatMessage({id: 'mine.product.attr_delete'})}>
+					<Tooltip title={this.formatMessage({id: 'mine.product.attr_delete'})}>
 						<Button style={{minWidth:"36px"}} className={appcss.button_blue} icon="minus" onClick={this.handleAttr.bind(this,attr_index)}/>
 					</Tooltip>
 				</div>

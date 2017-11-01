@@ -252,6 +252,22 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
+	.post('/get-product-imgs.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getProductImgs?productId=" + ctx.request.body.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 	.post('/get-product-specif.json', async(ctx, next) => {
 		let result, pid = ctx.request.body.pid;
 		await axios.get(url + "/product/queryProductSpecDetails/" + pid).then(res => {

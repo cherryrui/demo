@@ -295,11 +295,7 @@ class ProductBasic extends React.Component {
                     </FormItem>
                     <FormItem 
                     	{...formItemLayout}
-		label = {
-			formatMessage({
-				id: 'orderdetails.brand'
-			})
-		}
+						label={formatMessage({id: 'orderdetails.brand'})}
                     >
                         {getFieldDecorator('brand', {
                             initialValue: this.state.product.brand
@@ -340,6 +336,9 @@ class ProductBasic extends React.Component {
 	                            </Tooltip>}
 	                    </FormItem>
                 	})}
+                	{!this.props.product&&this.state.category.length>0?<p className={css.product_category_ps}>
+                		<FormattedMessage id="product.basic.category.ps" defaultMessage=""/>
+                	</p>:""}
                     <FormItem 
                     	{...formItemLayout}
                     	label={formatMessage({id: 'mine.product.unit'})}
@@ -366,7 +365,7 @@ class ProductBasic extends React.Component {
                         	 rules: [{
                                 required: true, message: formatMessage({id: 'product.detail.MOQ'}),
                             }],
-                            initialValue: this.state.product.moq?this.state.product.moq:1,
+                            initialValue: this.state.product.minBuyQuantity?this.state.product.minBuyQuantity:1,
                          })(
 							<InputNumber className={appcss.form_input} precision={0} style={{width: '100%'}} />
                         )}

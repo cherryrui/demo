@@ -29,6 +29,46 @@ class ProductPicture extends React.Component {
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
+	componentWillMount() {
+		let param = {
+			pid: this.props.product.productId
+		}
+		axios.post('/product/get-product-imgs.json', param).then(res => {
+			if (res.data.isSucc) {
+				let imgs = this.state.imgs,
+					fileList = [];
+				if (res.data.result.defaultImgUrl) {
+					imgs[0].img = res.data.result.defaultImgUrl;
+					fileList.push({
+						uid: '-1', // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+						status: 'done', // 状态有：uploading done error removed
+						url: res.data.result.defaultImgUrl + "@150w_150h_1e_1c.png",
+						response: {
+							url: res.data.result.defaultImgUrl
+						}, // 服务端响应内容
+					})
+				}
+				if (res.data.result.imgUrl) {
+					res.data.result.imgUrl.map((item, index) => {
+						imgs[index + 1].img = item.imgUrl;
+						fileList.push({
+							uid: '-1', // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+							status: 'done', // 状态有：uploading done error removed
+							url: item.imgUrl + "@150w_150h_1e_1c.png",
+							response: {
+								url: item.imgUrl
+							}, // 服务端响应内容
+						})
+					})
+				}
+				this.setState({
+					imgs: imgs,
+					fileList: fileList,
+					select: 0
+				})
+			}
+		})
+	}
 
 	/**
 	 * 上传图片，蒋图片加载到imgs中

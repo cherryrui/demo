@@ -226,7 +226,7 @@ const en_US = {
     "mine.product.auto": "autogeneration",
     "mine.product.choose.attr": "Choose attribute",
     "mine.product.search": "please input brand name to search",
-
+    "product.basic.category.ps": "After save the product, the save will not be modified!",
     "mine.product.basic": "Basic information",
     "mine.product.picture": "Product guidance",
     "mine.product.attributes": "product attributes",

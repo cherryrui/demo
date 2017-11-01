@@ -114,7 +114,6 @@ class ProductInstruct extends React.Component {
 						instrct.typeNames.push(item.name);
 					})
 					customProperty = JSON.parse(res.data.result.customProperty)
-					console.log(product_ins);
 					this.setState({
 						instrct,
 
@@ -164,7 +163,6 @@ class ProductInstruct extends React.Component {
 	 * @return {[type]}       [description]
 	 */
 	handleAttr = (index) => {
-		console.log(index, this.state.customProperty);
 		let customProperty = this.state.customProperty;
 		if (index == -1) {
 			customProperty.push({})
@@ -193,7 +191,7 @@ class ProductInstruct extends React.Component {
 		this.setState({
 			loading: true
 		})
-
+		let param = JSON.parse(JSON.stringify(this.state.instrct));
 		param.customAttrNames = [];
 		param.customAttrVals = [];
 		param.customAttrUnitIds = [];
@@ -208,7 +206,6 @@ class ProductInstruct extends React.Component {
 			}
 		})
 		if (flag) {
-			let param = JSON.parse(JSON.stringify(this.state.instrct));
 			this.state.product_ins.map(item => {
 				if (item.select_unit) {
 					if (item.type == 0) {
@@ -287,7 +284,6 @@ class ProductInstruct extends React.Component {
 		});
 	}
 	render() {
-		console.log(this.state.product_ins);
 		return <div className={css.product_instruct}>
 			{this.state.product_ins.map((item,index)=>{
 				return <div className={css.instuct_item}style={{alignItems:item.type==3?"flex-start":"center"}}>
@@ -353,7 +349,7 @@ class ProductInstruct extends React.Component {
 						<Input style={{width:"120px"}} placeholder={this.formatMessage({id: 'mine.product.attr_value_warn'})} 
 						value={item.content} onChange={this.handleChangeSpec.bind(this,attr_index,'content')}/>
 					</div>
-					<Select value={item.unitId?item.unit:this.state.unit_list[0].unitId} style={{ width: 80,marginRight: 10 }} 
+					<Select value={item.unitId?Number(item.unitId):this.state.unit_list[0].unitId} style={{ width: 80,marginRight: 10 }} 
 						onChange={this.handleChangeSpec.bind(this,attr_index,'unitId')}>
 							{this.state.unit_list.map(unit=>{
 								return <Option value={unit.unitId}>{unit.unitName}</Option>

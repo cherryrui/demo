@@ -275,6 +275,7 @@ const zh_CN = {
     "product.edite.picture": "图片",
     "product.edite.complete.info": "请完善相关信息",
     "product.edite.recommend": "建议上传宽度750px，大小不超过2M的图片",
+    "product.basic.category.ps": "产品分类一旦保存将不可修改!",
 
     "mine.product.unit_tai": "台",
     "mine.product.unit_jian": "件",
