@@ -51,7 +51,7 @@ class ProductInstruct extends React.Component {
 								item.unit = item.unit.concat(list.unit);
 							}
 						})
-						item.select_unit = item.unit[0].unitId;
+						item.select_unit = item.select_unit ? item.select_unit : item.unit[0].unitId;
 					} else if (item.type == 1) {
 						let first_unit = [],
 							second_unit = [];
@@ -71,9 +71,7 @@ class ProductInstruct extends React.Component {
 							id: 2,
 							value: second_unit
 						});
-						item.select_unit = [];
-						item.select_unit.push(first_unit[0].unitId);
-						item.select_unit.push(second_unit[0].unitId);
+						item.select_unit = item.select_unit ? item.select_unit : [first_unit[0].unitId, second_unit[0].unitId];
 					}
 
 				})
@@ -88,38 +86,41 @@ class ProductInstruct extends React.Component {
 				message.error(res.data.message);
 			}
 		})
+		console.log(this.props.product)
 		let param = {
 			pid: this.props.product.productId
 		}
 		axios.post('/product/get-product-pack.json', param).then(res => {
 			if (res.data.isSucc) {
-				let instrct = res.data.result;
-				let product_ins = this.state.product_ins;
-				let customProperty = [];
-				product_ins.map(item => {
-					if (item.type == 0) {
-						item.select_unit = instrct[item.unit_name_id];
-					} else if (item.type == 1) {
-						item.select_unit = [];
-						item.unit_name_id.map(unit => {
-							item.select_unit.push(instrct[unit])
-						})
-					}
-				})
-				let type = JSON.parse(instrct.type);
-				instrct.types = [];
-				instrct.typeNames = [];
-				type.map(item => {
-					instrct.types.push(Number(item.id));
-					instrct.typeNames.push(item.name);
-				})
-				customProperty = JSON.parse(res.data.result.customProperty)
-				this.setState({
-					instrct,
-					product_ins,
-					customProperty
+				if (res.data.result) {
+					let instrct = res.data.result;
+					let product_ins = this.state.product_ins;
+					let customProperty = [];
+					product_ins.map(item => {
+						if (item.type == 0) {
+							item.select_unit = instrct[item.unit_name_id];
+						} else if (item.type == 1) {
+							item.select_unit = [];
+							item.unit_name_id.map(unit => {
+								item.select_unit.push(instrct[unit])
+							})
+						}
+					})
+					let type = JSON.parse(instrct.type);
+					instrct.types = [];
+					instrct.typeNames = [];
+					type.map(item => {
+						instrct.types.push(Number(item.id));
+						instrct.typeNames.push(item.name);
+					})
+					customProperty = JSON.parse(res.data.result.customProperty)
+					console.log(product_ins);
+					this.setState({
+						instrct,
 
-				})
+						customProperty
+					})
+				}
 			} else if (res.data.code == 104) {
 				this.props.login ? this.props.login(true) : "";
 			} else {
@@ -163,6 +164,7 @@ class ProductInstruct extends React.Component {
 	 * @return {[type]}       [description]
 	 */
 	handleAttr = (index) => {
+		console.log(index, this.state.customProperty);
 		let customProperty = this.state.customProperty;
 		if (index == -1) {
 			customProperty.push({})
@@ -181,70 +183,87 @@ class ProductInstruct extends React.Component {
 	 * @return {[type]}       [description]
 	 */
 	handleChangeSpec = (index, name, e) => {
-		console.log(index, name, e);
-		this.state.customProperty[index][name] = isNaN(e) ? e.target.value : e;
-	}
-
-	handleSteps = (step) => {
-		this.props.handleSteps ? this.props.handleSteps(step) : "";
+		let customProperty = this.state.customProperty;
+		customProperty[index][name] = isNaN(e) ? e.target.value : e;
+		this.setState({
+			customProperty
+		})
 	}
 	handleSave = () => {
 		this.setState({
 			loading: true
 		})
-		let param = JSON.parse(JSON.stringify(this.state.instrct));
-		this.state.product_ins.map(item => {
-			if (item.select_unit) {
-				if (item.type == 0) {
-					item.unit.map(unit => {
-						if (item.select_unit == unit.unitId) {
-							param[item.unit_name] = unit.unitName;
-							param[item.unit_name_id] = unit.unitId;
-						}
-					})
-				} else if (item.type == 1) {
-					item.unit.map((list, index) => {
-						list.value.map(unit => {
-							if (item.select_unit[index] == unit.unitId) {
-								param[item.unit_name[index]] = unit.unitName;
-								param[item.unit_name_id[index]] = unit.unitId;
-							}
-						})
 
-					})
-
-				}
-			}
-		})
 		param.customAttrNames = [];
 		param.customAttrVals = [];
 		param.customAttrUnitIds = [];
+		let flag = true
 		this.state.customProperty.map(item => {
-			param.customAttrNames.push(item.attrName);
-			param.customAttrVals.push(item.attrVal);
-			param.customAttrUnitIds.push(item.attrUnit ? item.attrUnit : this.state.unit_list[0].unitId);
+			if (item.name && item.content) {
+				param.customAttrNames.push(item.name);
+				param.customAttrVals.push(item.content);
+				param.customAttrUnitIds.push(item.unitId ? item.unitId : this.state.unit_list[0].unitId);
+			} else {
+				flag = false;
+			}
 		})
-		param.customAttrNames = param.customAttrNames.join(",");
-		param.customAttrVals = param.customAttrVals.join(",");
-		param.customAttrUnitIds = param.customAttrUnitIds.join(",");
-		param.typeNames = param.typeNames.join(",");
-		param.types = param.types.join(",");
-		param.productId = this.props.product.productId;
-		axios.post('/product/save-product-instrct.json', param).then(res => {
+		if (flag) {
+			let param = JSON.parse(JSON.stringify(this.state.instrct));
+			this.state.product_ins.map(item => {
+				if (item.select_unit) {
+					if (item.type == 0) {
+						item.unit.map(unit => {
+							if (item.select_unit == unit.unitId) {
+								param[item.unit_name] = unit.unitName;
+								param[item.unit_name_id] = unit.unitId;
+							}
+						})
+					} else if (item.type == 1) {
+						item.unit.map((list, index) => {
+							list.value.map(unit => {
+								if (item.select_unit[index] == unit.unitId) {
+									param[item.unit_name[index]] = unit.unitName;
+									param[item.unit_name_id[index]] = unit.unitId;
+								}
+							})
+
+						})
+
+					}
+				}
+			})
+			param.customAttrNames = param.customAttrNames.join(",");
+			param.customAttrVals = param.customAttrVals.join(",");
+			param.customAttrUnitIds = param.customAttrUnitIds.join(",");
+			param.typeNames = param.typeNames.join(",");
+			param.types = param.types.join(",");
+			param.productId = this.props.product.productId;
+			axios.post('/product/save-product-instrct.json', param).then(res => {
+				this.setState({
+					loading: false
+				})
+				if (res.data.isSucc) {
+					this.props.handleSteps ? this.props.handleSteps(1, res.data.result) : ""
+				} else if (res.data.code == 104) {
+					this.props.login ? this.props.login() : ""
+				} else {
+					message.error(this.formatMessage({
+						id: "mine.product.save_fail"
+					}))
+				}
+			})
+		} else {
+			message.error(this.formatMessage({
+				id: "mine.product.attr_warn"
+			}));
 			this.setState({
 				loading: false
 			})
-			if (res.data.isSucc) {
-				this.handleSteps(1, res.data.result)
-			} else if (res.data.code == 104) {
-				this.props.login ? this.props.login() : ""
-			} else {
-				message.error(this.formatMessage({
-					id: "mine.product.save_fail"
-				}))
-			}
-		})
+		}
 
+	}
+	goBack = () => {
+		this.props.handleSteps ? this.props.handleSteps(-1) : ""
 	}
 
 	/**
@@ -256,6 +275,7 @@ class ProductInstruct extends React.Component {
 	 * @return {[type]}       [description]
 	 */
 	handleSpec = (type, index, value, e) => {
+		console.log(type, index, value, e);
 		let product_ins = this.state.product_ins;
 		if (type == 1) {
 			product_ins[index].select_unit = value;
@@ -267,7 +287,7 @@ class ProductInstruct extends React.Component {
 		});
 	}
 	render() {
-		console.log(this.state.instrct);
+		console.log(this.state.product_ins);
 		return <div className={css.product_instruct}>
 			{this.state.product_ins.map((item,index)=>{
 				return <div className={css.instuct_item}style={{alignItems:item.type==3?"flex-start":"center"}}>
@@ -324,17 +344,17 @@ class ProductInstruct extends React.Component {
 							<FormattedMessage id="mine.product.attr_name" defaultMessage="属性名称"/>：  
 						</p>
 						<Input style={{width:"120px"}} placeholder={this.formatMessage({id: 'mine.product.attr_name_warn'})} 
-							defaultValue={item.name} onChange={this.handleChangeSpec.bind(this,attr_index,'name')}/>
+							value={item.name} onChange={this.handleChangeSpec.bind(this,attr_index,'name')}/>
 					</div>
 					<div className={css.product_attr_item}>
 						<p className={css.product_attr_item_title}>
 							<FormattedMessage id="mine.product.attr_value" defaultMessage="属性值"/>&nbsp;:  
 						</p>
 						<Input style={{width:"120px"}} placeholder={this.formatMessage({id: 'mine.product.attr_value_warn'})} 
-						defaultValue={item.content} onChange={this.handleChangeSpec.bind(this,attr_index,'content')}/>
+						value={item.content} onChange={this.handleChangeSpec.bind(this,attr_index,'content')}/>
 					</div>
-					<Select defaultValue={item.attrUnit?item.attrUnit:this.state.unit_list[0].unitId} style={{ width: 80,marginRight: 10 }} 
-						onChange={this.handleChangeSpec.bind(this,attr_index,'attrUnit')}>
+					<Select value={item.unitId?item.unit:this.state.unit_list[0].unitId} style={{ width: 80,marginRight: 10 }} 
+						onChange={this.handleChangeSpec.bind(this,attr_index,'unitId')}>
 							{this.state.unit_list.map(unit=>{
 								return <Option value={unit.unitId}>{unit.unitName}</Option>
 							})}
@@ -346,7 +366,7 @@ class ProductInstruct extends React.Component {
 				</div>
 			})}
 			<div className={css.product_footer}>
-				<Button type="primary">
+				<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>

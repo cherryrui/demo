@@ -36,8 +36,8 @@ class ProductSpec extends React.Component {
 			loading: false,
 			select_spec: [],
 			specs_list: [],
+			select_category: 0,
 		}
-		this.select_category = {};
 		this.formatMessage = this.props.intl.formatMessage;
 
 	}
@@ -45,30 +45,60 @@ class ProductSpec extends React.Component {
 		let param = {
 			pid: this.props.product.productId
 		}
-		axios.post("/product/get-product-specif.json", param).then(res => {
-			console.log(res.data)
-			if (res.data.isSucc) {
-				let category = res.data.result.category;
-				let product_spec = category[0].spec;
-				res.data.result.selectSpecs.map(item => {
+		axios.post("/product/get-product-spec.json", param).then(res => {
+				console.log(res.data)
+				if (res.data.isSucc) {
+					let category = res.data.result.category;
+					let select_category = 0;
+					let product_spec = [];
+					let specs_list = [];
+					if (res.data.result.selectCategory) {
+						category.map((item, index) => {
+							if (item.categoryId == res.data.result.selectCategory.categoryId) {
+								product_spec = item.spec;
+								select_category = index;
+							}
+						})
+					} else {
+						product_spec = category[0].spec;
+					}
+					res.data.result.selectSpecs.map(item => {
+						let specs = JSON.parse(item.productSpecs);
+						product_spec.map(spec => {
+							if (spec.specId == item.specId) {
+								spec.selectSpec = [];
+								specs.specValue.map(it => {
+									spec.selectSpec.push({
+										specVal: it.valId,
+										specName: it.specValue
+									})
+								})
+							}
+						})
+					})
+					specs_list = res.data.result.itemInfo ? res.data.result.itemInfo : []
+					this.setState({
+						category,
+						product_spec,
+						select_category,
+						specs_list
+					})
+				} else {
 
-				})
-				this.setState({
-					category,
-					product_spec
-				})
-			} else {
-
-			}
-		})
+				}
+			})
+			/*axios.post('/product/get-product-spec.json', param).then(res => {
+				console.log(res.data.result)
+			})*/
 	}
 	handleChange = (e) => {
 		let product_spec = this.state.category[e.target.value].spec;
 		let specs_list = [];
-		this.select_category = this.state.category[e.target.value];
+		let select_category = e.target.value;
 		this.setState({
 			product_spec,
-			specs_list
+			specs_list,
+			select_category
 		})
 	}
 	handleSpec = (index, key, name, e) => {
@@ -97,9 +127,9 @@ class ProductSpec extends React.Component {
 					console.log(item.selectSpec)
 					item.selectSpec.map(select_spec => {
 						let product = {
-							spec: new Array(product_spec.length),
+							specInfo: new Array(product_spec.length),
 						};
-						product.spec[index_spec] = select_spec;
+						product.specInfo[index_spec] = select_spec;
 						specs_list.push(JSON.parse(JSON.stringify(product)));
 					})
 				} else {
@@ -108,7 +138,7 @@ class ProductSpec extends React.Component {
 						item.selectSpec.map(select_spec => {
 							let product_old = JSON.parse(JSON.stringify(product));
 							console.log(product_old, select_spec);
-							product_old.spec[index_spec] = select_spec;
+							product_old.specInfo[index_spec] = select_spec;
 							specs_list.push(product_old);
 						})
 					})
@@ -117,10 +147,10 @@ class ProductSpec extends React.Component {
 		})
 		specs_list.map(list => {
 			this.state.specs_list.map(item => {
-				if (item.spec && list.spec) {
+				if (item.specInfo && list.specInfo) {
 					let flag = true;
 					for (let i = 0; i < product_spec.length; i++) {
-						if (!(item.spec[i] && list.spec[i] && (item.spec[i].specVal == list.spec[i].specVal))) {
+						if (!(item.specInfo[i] && list.specInfo[i] && (item.specInfo[i].specVal == list.specInfo[i].specVal))) {
 							flag = false;
 						}
 					}
@@ -218,7 +248,7 @@ class ProductSpec extends React.Component {
 				param.itemIds = param.itemIds.join(",");
 				param.specIds = param.specIds.join(",");
 				param.productId = this.props.product.productId;
-				param.categoryId = this.select_category.categoryId;
+				param.categoryId = this.state.select_category;
 				param.oldCategoryId = this.props.product.oldCategoryId ? this.props.product.oldCategoryId : null
 				axios.post('/product/save-product-spec.json', param).then(res => {
 					console.log(res.data);
@@ -240,12 +270,15 @@ class ProductSpec extends React.Component {
 			specs_list
 		})
 	}
+	goBack = () => {
+		this.props.handleSteps ? this.props.handleSteps(-1) : ""
+	}
 	render() {
 		return <div className={css.product_spec}>
 			<p className={css.spec_item_title}>
 				<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>&nbsp;: 
 			</p>
-			<RadioGroup defaultValue={0} className={css.spec_item_body} onChange={this.handleChange}>
+			<RadioGroup value={this.state.select_category} className={css.spec_item_body} onChange={this.handleChange}>
 				{this.state.category.map((item,index)=>{
 					return <Radio value={index}>{item.categoryName}</Radio>
 				})}
@@ -270,13 +303,13 @@ class ProductSpec extends React.Component {
 			</div>
 			{this.state.specs_list.length>0?this.state.specs_list.map((item,index)=>{
 				return <div className={css.product_spec_select_body}>
-					{item.spec.map(spec=>{
-						return <p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>{spec?spec.specName:""}</p>
+					{item.specInfo.map(spec=>{
+						return <p style={{width: 750/(item.specInfo.length+2)}} className={css.product_spec_select_body_item}>{spec?spec.specName:""}</p>
 					})}
-					<p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
+					<p style={{width: 750/(item.specInfo.length+2)}} className={css.product_spec_select_body_item}>
 						<Input value={item.priceSuppliers} onChange={this.handleProduct.bind(this,index,"priceSuppliers")}/>
 					</p>
-					<p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
+					<p style={{width: 750/(item.specInfo.length+2)}} className={css.product_spec_select_body_item}>
 						<Input value={item.inventorys} onChange={this.handleProduct.bind(this,index,"inventorys")}/>
 					</p>
 					<p className={css.product_spec_select_body_no}>
@@ -288,7 +321,7 @@ class ProductSpec extends React.Component {
 				</div>
 			}):""}
 			<div className={css.product_footer} style={{marginTop: 20}}>
-				<Button type="primary">
+				<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>

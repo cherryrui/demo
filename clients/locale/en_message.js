@@ -243,7 +243,7 @@ const en_US = {
     "mine.product.picture": "Product picture",
     "mine.product.upload_img": "Upload pictures",
     "mine.product.set_default": "Set Default",
-
+    "mine.product.attr_warn": "please complete custom attributes parameters",
     "mine.product.spec.price_warn": "Please input Ex-factory price",
     "mine.product.spec.inv_warn": "Please input product inventory",
     "mine.product.spec.item_warn": "Please create product Art.No.",
@@ -371,7 +371,7 @@ const en_US = {
     "orderlist.order.info": "order info",
     "orderlist.order.money": "Total payable",
     "orderdetails.order.no": "Order No",
-    "orderdetails.brand": "品牌",
+    "orderdetails.brand": "brand",
     "orderdetails.art.no": "Art.No",
     "orderdetails.principal": "principal",
     "orderdetails.interest": "interest",

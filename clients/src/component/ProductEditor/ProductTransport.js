@@ -24,10 +24,36 @@ class ProductTransport extends React.Component {
 		this.state = {
 			transport: {
 				explains: [],
-				transportationExplain: "",
+				transportationOther: "",
 			}
 		}
 		this.formatMessage = this.props.intl.formatMessage;
+	}
+	componentWillMount() {
+		let param = {
+			pid: this.props.product.productId
+		}
+		axios.post('/product/get-product-transport.json', param).then(res => {
+			console.log(res.data);
+			if (res.data.isSucc) {
+
+				if (res.data.result) {
+					let transport = this.state.transport;
+					let transportationExplain = res.data.result.transportationExplain ? JSON.parse(res.data.result.transportationExplain) : "";
+					for (let key in transportationExplain) {
+						transport.explains.push(transportationExplain[key]);
+					}
+					transport.transportationOther = res.data.result.transportationOther;
+					this.setState({
+						transport
+					})
+				}
+			} else if (res.data.code == 104) {
+				this.props.login ? this.props.login(true) : "";
+			} else {
+				message.error(res.data.message);
+			}
+		})
 	}
 	handleChange = (key, e) => {
 		let transport = this.state.transport;
@@ -45,13 +71,26 @@ class ProductTransport extends React.Component {
 		})
 	}
 	handleText = (e) => {
-		this.state.transport.transportationExplain = e.target.value
+		let transport = this.state.transport;
+		transport.transportationOther = e.target.value;
+		this.setState({
+			transport
+		})
+	}
+	goBack = () => {
+		this.props.handleSteps ? this.props.handleSteps(-1) : "";
 	}
 	handleSave = () => {
 		this.state.transport.explains = this.state.transport.explains.join(",");
 		this.state.transport.productId = this.props.product.productId;
 		axios.post('/product/save-transport.json', this.state.transport).then(res => {
-			console.log(res.data);
+			if (res.data.isSucc) {
+				this.props.handleSteps ? this.props.handleSteps(1) : "";
+			} else if (res.data.code == 104) {
+				this.pros.login ? this.props.login() : "";
+			} else {
+				message.error(res.data.message);
+			}
 		})
 	}
 
@@ -73,10 +112,10 @@ class ProductTransport extends React.Component {
 				<p className={css.product_transport_item_left}>
 					<FormattedMessage id="mine.product.transport" defaultMessage=""/>：
 				</p>
-				<TextArea  defaultValue={this.state.transport.transportationExplain} style={{width:"465px"}} onChange={this.handleText.bind(this)}  rows={4} />
+				<TextArea  value={this.state.transport.transportationOther} style={{width:"465px"}} onChange={this.handleText.bind(this)}  rows={4} />
 			</div>
 			<div className={css.product_footer}>
-				<Button type="primary">
+				<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>

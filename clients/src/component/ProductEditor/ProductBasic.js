@@ -74,19 +74,38 @@ class ProductBasic extends React.Component {
 			}
 			axios.post('/product/get-product-basic.json', param).then(res => {
 				if (res.data.isSucc) {
-					let product = res.data.result.product;
+					let product = res.data.result.product,
+						category = [];
 					product.brand = {
 						value: product.brandId,
-						label: "dsad",
+						label: product.brandNameEn,
 					}
+					res.data.result.category.map((item, index) => {
+						if (item.parent && item.parent.parent) {
+							let cate = {
+								id: index + 1,
+								category_id: new Array(3),
+								category_name: new Array(3),
+							}
+							cate.category_id[2] = item.categoryId
+							cate.category_id[1] = item.parent.categoryId;
+							cate.category_id[0] = item.parent.parent.categoryId;
+							cate.category_name[2] = item.categoryName
+							cate.category_name[1] = item.parent.categoryName;
+							cate.category_name[0] = item.parent.parent.categoryName;
+							category.push(cate);
+						}
+					})
 					this.setState({
-						product: res.data.result.product
+						product: res.data.result.product,
+						category: category,
 					})
 				} else if (res.data.code == 104) {
 					this.props.login ? this.props.login(true) : "";
 				}
 			})
 		}
+
 	}
 
 	/**
@@ -115,7 +134,7 @@ class ProductBasic extends React.Component {
 				productCategorys = productCategorys.substr(0, productCategorys.length - 2);
 				values.productCategorys = productCategorys;
 				let url = "";
-				if (this.state.product) {
+				if (this.props.product && this.props.product.productId) {
 					url = "";
 				} else {
 					url = '/product/add-product-basic.json';
@@ -276,7 +295,11 @@ class ProductBasic extends React.Component {
                     </FormItem>
                     <FormItem 
                     	{...formItemLayout}
-                    	label={formatMessage({id: 'orderdetails.brand'})}
+		label = {
+			formatMessage({
+				id: 'orderdetails.brand'
+			})
+		}
                     >
                         {getFieldDecorator('brand', {
                             initialValue: this.state.product.brand
@@ -284,12 +307,22 @@ class ProductBasic extends React.Component {
                         	<SearchInput placeholder={this.formatMessage({id:"mine.product.search"})}/>
                         )}
                     </FormItem>
-                    {this.state.category.map((item,index)=>{
+                    {this.props.product&&this.props.product.productId?
+                    	<FormItem
+                        {...formItemLayout}
+                        label={this.formatMessage({id: 'app.category'})}
+                    >
+                    	{this.state.category.map(item=>{
+                    		return <p>{item.category_name?item.category_name.join("/"):""}</p>
+                    	})}
+                    </FormItem>
+                    :this.state.category.map((item,index)=>{
 	                    return <FormItem
 	                        {...formItemLayout}
 	                        label={this.formatMessage({id: 'app.category'})+(index+1)}
 	                    >
 	                        {getFieldDecorator('category'+index, {
+	                        	initialValue: item.category_id,
 	                            rules: [{ type: 'array', required: true, message: this.formatMessage({id:'mine.product.category_warn'}),}],
 	                        })(
 	                            <Cascader 

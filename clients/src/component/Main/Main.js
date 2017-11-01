@@ -199,7 +199,7 @@ class Category extends React.Component {
         {this.props.category.map((item,index)=>{
             return <div id={"category_"+index}>
                 <div className={css.category_top}>
-                        <p>Aotu Park</p>
+                    <p>{item.levleOneProductCategory.categoryName}</p>
                 </div>
                 <div className={css.category_item} >
                     <div className={css.left}>

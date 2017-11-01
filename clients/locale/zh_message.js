@@ -294,6 +294,7 @@ const zh_CN = {
     "mine.product.attr_value_warn": "请输入属性值",
     "mine.product.attr_add": "新增自定义属性",
     "mine.product.attr_delete": "删除此条自定义属性",
+    "mine.product.attr_warn": "请完成自定义属性相关信息",
 
     "mine.product.info_select": "选择详情类别",
     "mine.product.info_descript": "产品描述",

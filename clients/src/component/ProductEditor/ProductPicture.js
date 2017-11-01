@@ -144,6 +144,9 @@ class ProductPicture extends React.Component {
 			})
 		}
 	}
+	goBack = () => {
+		this.props.handleSteps ? this.props.handleSteps(-1) : ""
+	}
 
 	render() {
 		return <div className={css.product_picture}>
@@ -187,7 +190,7 @@ class ProductPicture extends React.Component {
 				</RadioGroup>
 			</div>
 			<div className={css.product_footer}>
-				<Button type="primary">
+				<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>

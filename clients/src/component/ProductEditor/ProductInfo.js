@@ -44,7 +44,42 @@ class ProductInfo extends React.Component {
 	}
 
 	componentWillMount() {
+		let param = {
+			pid: this.props.product.productId,
+		}
+		axios.post('/product/get-product-introduct.json', param).then(res => {
+			if (res.data.isSucc) {
+				let product_info = res.data.result;
+				let introduceType = this.state.introduceType;
+				product_info.map(item => {
+					introduceType[item.introduceType - 1].is_select = true;
+					if (item.contentType === 1) {
+						item.fileList = [];
+						item.content.split(",").map(img => {
+							let file = {
+								uid: '-1', // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+								status: 'done', // 状态有：uploading done error removed
+								url: img + "@150w_150h_1e_1c.png",
+								response: {
+									url: img
+								}, // 服务端响应内容
+							};
+							item.fileList.push(file);
+						})
+					} else {
+						item.contentText = item.content;
+					}
+				})
 
+				this.setState({
+					product_info
+				})
+			} else if (res.data.code == 104) {
+				this.props.login ? this.props.login(true) : ""
+			} else {
+				message.error(res.data.message);
+			}
+		})
 	}
 
 	handlePicture = (index, info) => {
@@ -69,6 +104,7 @@ class ProductInfo extends React.Component {
 	 * @return {[type]}       [description]
 	 */
 	handleText = (index, value) => {
+		console.log(index, value);
 		let product_info = this.state.product_info;
 		product_info[index].contentText = value;
 		this.setState({
@@ -171,12 +207,12 @@ class ProductInfo extends React.Component {
 				this.setState({
 					loading: false
 				})
-				if (res.data) {
+				if (res.data.isSucc) {
 					this.props.handleSteps ? this.props.handleSteps(1, res.data.result) : "";
+				} else if (res.data.code == 104) {
+					this.props.login ? this.props.login() : "";
 				} else {
-					message.error(this.formatMessage({
-						id: "mine.product.save_fail"
-					}))
+					message.error(res.data.message)
 				}
 			})
 		} else {
@@ -210,6 +246,7 @@ class ProductInfo extends React.Component {
 						</p>
 						<Select placeholder={this.formatMessage({id:"mine.product.info_select"})} 
 							style={{ width: "180px" }} 
+							value={item.introduceType}
 							onChange={this.handleIntroduceType.bind(this,index)}>
 							{this.state.introduceType.map((type)=>{
 								return <Option disabled={!type.is_select|| type.key== item.introduceType?false:true}value={type.key}>{this.formatMessage({id:type.value})}</Option>
@@ -224,7 +261,7 @@ class ProductInfo extends React.Component {
 							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
 							<FormattedMessage id="product.edite.content.type" defaultMessage="内容模式"/>：
 						</p>
-						<RadioGroup onChange={this.handleContentType.bind(this,index)} defaultValue={1}>
+						<RadioGroup onChange={this.handleContentType.bind(this,index)} defaultValue={item.contentType?item.contentType:1}>
 		        			{operator.contentType.map((item)=>{
 								return <Radio value={item.key}>
 								{this.formatMessage({id:item.value})}</Radio>
@@ -269,7 +306,7 @@ class ProductInfo extends React.Component {
 				</div>}
 			</div>})}
             <div className={css.product_footer}>
-				<Button type="primary">
+				<Button type="primary" onClick={this.backStep}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
 				<Button type="primary" className={appcss.button_blue} onClick={this.handleInfo.bind(this,-1)}>

@@ -32,8 +32,8 @@ class ProductEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			current: 5,
-			now: 5,
+			current: 6,
+			now: 6,
 			product: props.params.id ? {
 				productId: props.params.id
 			} : null,
@@ -52,6 +52,7 @@ class ProductEditor extends React.Component {
 	 * @param  {[type]} step 1:下一步，-1上一步
 	 */
 	handleSteps = (step, product) => {
+		console.log(step, product)
 		if (step == -1) {
 			this.setState({
 				current: this.state.now + step,
@@ -61,7 +62,7 @@ class ProductEditor extends React.Component {
 		} else {
 			let next = this.state.now + step;
 			if (next > operator.steps.length - 1) {
-				next = 0;
+				this.props.history.pushState(null, 'page/mine');
 				this.state.product = {};
 			} else {
 				this.state.product = product

@@ -352,9 +352,9 @@ class App extends React.Component {
         return <div className={css.main} >
                     <div className={css.fixed_title}>
                         <div className={css.app_head}>
-                            <div>
-                                <p onClick={this.goHome} className={css.logo}>LOGO</p>
-                            </div>
+                            
+                                <img src="../img/logo.png" onClick={this.goHome} className={css.logo}></img>
+                            
                             <div className={css.head}>                           
                                 {this.state.user?<div> <Link to="page/mine" className={css.item1}>{this.state.user.userName}/</Link>
                                     <p onClick={this.showModal} className={css.item2}>

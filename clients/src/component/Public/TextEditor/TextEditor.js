@@ -16,7 +16,7 @@ class TextEditor extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			editorHtml: ''
+			editorHtml: this.props.value ? this.props.value : ""
 		}
 		this.modules = {
 			toolbar: [
@@ -52,36 +52,28 @@ class TextEditor extends React.Component {
 			'list', 'bullet', 'indent',
 			'link', 'image',
 		]
+		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillReceiveProps(nextProps) {
-		//console.log(nextProps);
-		this.setState({
+		/*this.setState({
 			editorHtml: nextProps.value
-		})
+		})*/
 	}
 
 	handleChange = (html) => {
-		this.setState({
-			editorHtml: html
-		});
 		this.props.onChange ? this.props.onChange(this.props.index, html) : "";
 	}
 
 	render() {
-		const {
-			intl: {
-				formatMessage
-			}
-		} = this.props;
 		return (
 			<div className={this.props.className} style={this.props.style}>
 		        <ReactQuill 
 		          onChange={this.handleChange}
-		          value={this.state.editorHtml}
+		          value={this.props.value}
 		          modules={this.modules}
 		          formats={this.formats}
 		          bounds={'.app'}
-		          placeholder={this.props.placeholder?this.props.placeholder:formatMessage({id: 'mine.product.name'})}
+		          placeholder={this.props.placeholder?this.props.placeholder:this.formatMessage({id: 'mine.product.name'})}
 		         />
        </div>
 		)
