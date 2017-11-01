@@ -391,6 +391,19 @@ class App extends React.Component {
                     <div className={css.footer}>
                         <div className={css.footer_first}>
                             <div className={css.foot}>
+                             <div className={css.item}>
+                                    <p className={css.title}>
+                                    <img src="../img/logo.png" onClick={this.goHome} className={css.logo}></img>
+                                    </p>                                      
+                                    <p className={css.info}>  
+                                        <FormattedMessage id="app.service.hotline" defaultMessage="服务热线"/>:</p>
+                                    <p  style={{fontWeight:"bold",fontSize:18}} className={css.info}>00971-2-4765525 </p>                                  
+                                    <p className={css.info}>
+                                        <FormattedMessage id="app.working_time" defaultMessage="工作时间"/> :</p>
+                                    <p className={css.info}>
+                                        <FormattedMessage id="app.monday.sunday" defaultMessage="星期一到星期天"/>&npsp;&npsp;
+                                        09:00-18:00</p>                               
+                            </div>
                                 <div className={css.item}>
                                     <p className={css.title}>
                                         <FormattedMessage id="app.about" defaultMessage="关于我们"/></p>

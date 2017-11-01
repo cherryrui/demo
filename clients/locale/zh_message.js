@@ -54,7 +54,7 @@ const zh_CN = {
     "app.input.idaddress": "请输入证件地址",
     "app.input.agreenotes": "请同意条款",
     "app.verification.error": "验证类型为空",
-    "app.binding":"去绑定",
+    "app.binding": "去绑定",
     "sort.comp": "综合",
     "sort.new": "新品",
     "sort.price": "价格",
@@ -394,7 +394,7 @@ const zh_CN = {
     "orderdetails.order.details": "订单详情",
     "persondata.user.style": "用户类型",
     "persondata.account.number": "账号",
-    "persondata.account":"账户",
+    "persondata.account": "账户",
     "persondata.real.name": "真实姓名",
     "persondata.department.position": "职位",
     "persondata.certification": "未认证",
@@ -572,6 +572,11 @@ const zh_CN = {
     "Change.mobile.phone": "更改手机号码",
     "modify.success": "修改成功",
     "app.selling": "销售中",
-    "app.unsold": "下架"
+    "app.unsold": "下架",
+    "modify.success": "修改成功",
+    "app.selling": "销售中",
+    "app.working_time": "工作时间",
+    "app.monday.sunday": "星期一到星期天",
+    "app.service.hotline": "服务热线"
 }
 export default zh_CN;

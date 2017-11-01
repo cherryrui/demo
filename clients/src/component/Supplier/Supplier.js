@@ -621,8 +621,8 @@ class Supplier extends React.Component {
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" className={css.retrun}>{this.formatMessage({id: 'app.cancel'})}</Button>
-                    <Button type="primary" className={css.submit}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                    <Button type="primary" className={appcss.button_theme}>{this.formatMessage({id: 'app.cancel'})}</Button>
+                    <Button type="primary"  style={{ marginLeft: 20}} className={appcss.button_blac}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                 </FormItem>
             </Form>
         </div>

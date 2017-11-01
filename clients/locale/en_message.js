@@ -570,6 +570,9 @@ const en_US = {
     "modify.success": "Modify Success",
     "supplier.category": "category",
     "app.selling": "selling",
-    "app.unsold": "unsold"
+    "app.unsold": "unsold",
+    "app.working_time": "working time",
+    "app.monday.sunday": "Monday To Sunday",
+    "app.service.hotline": "Service hotline"
 }
 export default en_US;
