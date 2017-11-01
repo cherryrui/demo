@@ -63,14 +63,16 @@ class ChangePassword extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        /*console.log('Received values of form: ', values);*/
         if(values.password == values.re_password){
             let param = {
               originalPwd:values.original_password,
-              password:values.password
+              password:values.password,
+              emailOrphone:values.phoneOremail,
+              checkCode:values.veri_code
             };
             axios.post('/user/repassword.json',param).then(res=>{
-              console.log(res.data);
+              /*console.log(res.data);*/
               if(res.data.isSucc){
                 message.success(this.formatMessage({
                   id:"reset.success.info"
@@ -106,7 +108,7 @@ class ChangePassword extends React.Component {
   getVericode = () =>{
     let phoneOremail = this.phoneOremail.props.value;
     if(phoneOremail){
-      console.log(this.regEmail(phoneOremail));
+      /*console.log(this.regEmail(phoneOremail));*/
       this.setState({
                     loading: false,
                     time: 60,
@@ -129,8 +131,8 @@ class ChangePassword extends React.Component {
       }, 1000)
       if(this.regEmail(phoneOremail)){
           let email = phoneOremail;
-          let type = 1;
-          console.log(222222222);
+          let type = 2;
+         /* console.log(222222222);*/
           axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
             if(res.data.isSucc){
               console.log(res.data);
@@ -251,7 +253,7 @@ class ChangePassword extends React.Component {
                     >
                           <Row gutter={8}>
                                <Col span={11}>   
-            			                 {getFieldDecorator('phone', {
+            			                 {getFieldDecorator('veri_code', {
                                       rules: [ {
                                           required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
                                       }],
