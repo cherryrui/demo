@@ -2,6 +2,7 @@
 .product_name{
 	font-size: 18px;
 	font-weight: bold;
+    margin-bottom: 20px;
 }
 .process{
 	width:100px;
@@ -10,10 +11,33 @@
 	display: block;
 	text-align: center;
 	margin-bottom: 20px;
-	margin-top: 20px;
+	
 	background-color: $color-red;
 	border-radius: 2px;
 	color: #ffffff;
+
+}
+.selling{
+    width:100px;
+    height: 18px;
+    line-height: 18px;
+    display: block;
+    text-align: center;
+    margin-bottom: 20px; 
+    background-color: $color-blue;
+    border-radius: 2px;
+    color: #ffffff;
+}
+.unsold{
+    width:100px;
+    height: 18px;
+    line-height: 18px;
+    display: block;
+    text-align: center;
+    margin-bottom: 20px; 
+    background-color: $color-orange;
+    border-radius: 2px;
+    color: #ffffff;
 
 }
 .title_bg{
@@ -24,7 +48,15 @@
     justify-content: space-between;
     align-items: center;
     padding-left: 20px;
-   
+   .edit_greybg{
+    width: 60px;
+        height: 36px;
+        background-color: $border-color;
+        color: #ffffff;
+      
+        line-height: 36px;
+        text-align: center;
+   }
     .edit_bg{
     	width: 60px;
     	height: 36px;
@@ -49,6 +81,14 @@
 	height: 160px;
 	}
 	}
+}
+.detail_descrip{
+    background-color: $item-color;
+    padding:10px;
+    margin-bottom: 20px;
+    text-align: center;
+        overflow: auto;
+    height: 500px;
 }
 .detail_table{
 	background-color: $item-color;

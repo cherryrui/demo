@@ -570,6 +570,8 @@ const zh_CN = {
     "enter.new.number": "请输入新手机号码",
     "phone.verifi.success": "验证成功",
     "Change.mobile.phone": "更改手机号码",
-    "modify.success": "修改成功"
+    "modify.success": "修改成功",
+    "app.selling": "销售中",
+    "app.unsold": "下架"
 }
 export default zh_CN;

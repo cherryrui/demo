@@ -569,5 +569,7 @@ const en_US = {
     "Change.mobile.phone": "Change of mobile phone number",
     "modify.success": "Modify Success",
     "supplier.category": "category",
+    "app.selling": "selling",
+    "app.unsold": "unsold"
 }
 export default en_US;

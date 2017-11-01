@@ -20,6 +20,7 @@ class ProductEditeDetail extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			status: 5, //状态：1.审核中 2.售卖中 3下架 4审核不通过 5没有提交审核
 			product: {
 				imgs: [],
 				productName: "xxxxxxxxxxxxxxxxx",
@@ -45,10 +46,24 @@ class ProductEditeDetail extends React.Component {
 		return <div>
 			<p className={css.product_name}>
 			{this.state.product.productName}</p>
-			<p className={css.process}>
- 			{this.formatMessage({id: 'app.processing'})}
-			</p>
-
+			{this.state.status==1?
+				<p className={css.process}>
+	 			{this.formatMessage({id: 'app.processing'})}
+				</p>
+			:this.state.status==2?
+				<p className={css.selling}>
+	 			{this.formatMessage({id: 'app.selling'})}
+				</p>
+			:this.state.status==3?
+				<p className={css.unsold}>
+	 			{this.formatMessage({id: 'app.unsold'})}
+				</p>
+			:this.state.status==4?
+				<p className={css.unsold}>
+	 			{this.formatMessage({id: 'app.not.provaled'})}
+				</p>
+			:""		
+			}
 			<div>
 				{this.state.product.imgs.map(item=>{
 					return <div>
@@ -59,46 +74,53 @@ class ProductEditeDetail extends React.Component {
 			<div></div>
 			<div  className={css.title_bg}>
 				 {this.formatMessage({id: 'mine.person.data'})}
-				<p className={css.edit_bg}>
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
 					{this.formatMessage({id: 'mine.product.edit'})}					
 				</p>
 			</div>
 			<Mainfigure/>
 			<div  className={css.title_bg}>
 				 {this.formatMessage({id: 'mine.person.data'})}
-				<p className={css.edit_bg}>
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
 					{this.formatMessage({id: 'mine.product.edit'})}					
 				</p>
 			</div>
 			<Basic/>
 			<div  className={css.title_bg}>
 				 {this.formatMessage({id: 'cart.specifucation'})}
-				<p className={css.edit_bg}>
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
 					{this.formatMessage({id: 'mine.product.edit'})}					
 				</p>
 			</div>
 			<Specifucation/>
 			<div  className={css.title_bg}>
 				 {this.formatMessage({id: 'mine.product.param'})}
-				<p className={css.edit_bg}>
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
 					{this.formatMessage({id: 'mine.product.edit'})}					
 				</p>
 			</div>
 			<Param/>
 			<div  className={css.title_bg}>
 				 {this.formatMessage({id: 'product.detail.package'})}
-				<p className={css.edit_bg}>
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
 					{this.formatMessage({id: 'mine.product.edit'})}					
 				</p>
 			</div>	
 			<Package/>
 			<div  className={css.title_bg}>
 				 {this.formatMessage({id: 'mine.product.transport'})}
-				<p className={css.edit_bg}>
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
 					{this.formatMessage({id: 'mine.product.edit'})}					
 				</p>
 			</div>	
 			<Transport/>
+			<div  className={css.title_bg}>
+				 {this.formatMessage({id: 'product.edite.descrip'})}
+				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
+					{this.formatMessage({id: 'mine.product.edit'})}					
+				</p>
+			</div>
+			<Descrip/>	
 		</div>
 	}
 }
@@ -382,7 +404,7 @@ class Transport extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-
+			other: "XXXXXXXXXXXXX",
 		}
 
 		this.formatMessage = this.props.intl.formatMessage;
@@ -398,7 +420,8 @@ class Transport extends React.Component {
 							{this.formatMessage({id:'product.edite.transport.length'})}									
 					    </p>
 						<p className={css.table_only_row}>
-							{this.formatMessage({id:'mine.product.instruct_other'})}:xxxxxxxxxxxx								
+							{this.formatMessage({id:'mine.product.instruct_other'})}:
+							{this.state.other}								
 					    </p>
 					</div>
 			   </div>
@@ -417,16 +440,12 @@ class Descrip extends React.Component {
 	}
 	render() {
 		return <div>			
-					<div className={css.detail_table}>
-						<div className={css.table_top}></div>
-						<p className={css.table_only_row}>
-							{this.formatMessage({id:'product.edite.transport.length'})}/
-							{this.formatMessage({id:'product.edite.transport.length'})}									
-					    </p>
-						<p className={css.table_only_row}>
-							{this.formatMessage({id:'mine.product.instruct_other'})}:
-							{this.state.other}					
-					    </p>
+					<div className={css.detail_descrip}>
+						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
+						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
+						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
+						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
+						
 					</div>
 			   </div>
 	}
