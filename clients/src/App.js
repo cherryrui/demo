@@ -401,7 +401,7 @@ class App extends React.Component {
                                     <p className={css.info}>
                                         <FormattedMessage id="app.working_time" defaultMessage="工作时间"/> :</p>
                                     <p className={css.info}>
-                                        <FormattedMessage id="app.monday.sunday" defaultMessage="星期一到星期天"/>&npsp;&npsp;
+                                        <FormattedMessage id="app.monday.sunday" defaultMessage="星期一到星期天"/>&nbsp;&nbsp;
                                         09:00-18:00</p>                               
                             </div>
                                 <div className={css.item}>
