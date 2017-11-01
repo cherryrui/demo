@@ -114,41 +114,6 @@ class Authentication extends React.Component {
             }
         })
     };
-    handleCode = (e) => {
-        if (this.account.props.value) {
-            console.log(this.account)
-            this.setState({
-                loading: false
-            })
-            axios.get(`/user/sendcode.json?account=${this.account.props.value}`).then(res => {
-                this.setState({
-                    loading: false,
-                    time: 60,
-                    disabled: true
-                })
-                this.timer = window.setInterval(() => {
-                    console.log(this.state.time);
-                    if (this.state.time - 1 >= 0) {
-                        this.setState({
-                            time: this.state.time - 1,
-                            disabled: true
-                        })
-                    } else {
-                        this.setState({
-                            time: 0,
-                            disabled: false
-                        })
-                        window.clearInterval(this.timer)
-                    }
-                }, 1000)
-            })
-        } else {
-            message.warn(this.formatMessage({
-                id: "authen.authen.account_warn"
-            }))
-
-        }
-    }
 
 
     render() {
@@ -306,12 +271,16 @@ class SetPwd extends React.Component {
 }
 
 class SetSuccess extends React.Component {
+    constructor(props) {
+        super(props);
+        this.formatMessage = this.props.intl.formatMessage;
+    }
 
     handleClick = () => {
         this.props.history.pushState(null, "/login");
     }
     render() {
-        return <div className={css.reset_success}>
+        return <div className={css.ship_from}>
             <div className={css.suc_content}>
                 <Icon type="smile-o" />&nbsp;&nbsp;&nbsp;&nbsp;
                 <FormattedMessage id="reset.success.info" defaultMessage="密码重置成功！"/>
