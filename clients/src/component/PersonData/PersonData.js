@@ -102,7 +102,7 @@ class PersonData extends React.Component {
             check: 0,
             naturelist: natureList,
             becoming: 4, //1代理商,2供应理商
-            user:JSON.parse(sessionStorage.getItem("user")),
+            user: JSON.parse(sessionStorage.getItem("user")),
         };
         let {
             intl: {
@@ -261,19 +261,19 @@ class PersonData extends React.Component {
                             message.success(this.formatMessage({
                                 id: 'app.success'
                             }));
-                            axios.get('user/get-userinfo-byuid.json').then(res=>{
-                                console.log(res.data)
-                                if(res.data.isSucc){
-                                    localStorage.clear();
-                                    sessionStorage.clear();
-                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                                    location.reload();
-                                    /*this.props.history.pushState(null, "/page/mine/account");*/
-                                }else{
-                                    message.error(res.data.message)
-                                }
-                            })
-                           /* location.reload();*/
+                            axios.get('user/get-userinfo-byuid.json').then(res => {
+                                    console.log(res.data)
+                                    if (res.data.isSucc) {
+                                        localStorage.clear();
+                                        sessionStorage.clear();
+                                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                        location.reload();
+                                        /*this.props.history.pushState(null, "/page/mine/account");*/
+                                    } else {
+                                        message.error(res.data.message)
+                                    }
+                                })
+                                /* location.reload();*/
                         } else if (res.data.code == 104) {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
@@ -309,19 +309,19 @@ class PersonData extends React.Component {
                             message.success(this.formatMessage({
                                 id: 'app.success'
                             }));
-                            axios.get('user/get-userinfo-byuid.json').then(res=>{
+                            axios.get('user/get-userinfo-byuid.json').then(res => {
                                 console.log(res.data)
-                                if(res.data.isSucc){
+                                if (res.data.isSucc) {
                                     localStorage.clear();
                                     sessionStorage.clear();
                                     sessionStorage.setItem('user', JSON.stringify(res.data.result));
                                     location.reload();
                                     /*this.props.history.pushState(null, "/page/mine/account");*/
-                                }else{
+                                } else {
                                     message.error(res.data.message)
                                 }
                             })
-                            
+
                         } else if (res.data.code == 104) {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
@@ -352,7 +352,7 @@ class PersonData extends React.Component {
         }
     }
 
-    handleTobind = (e) =>{
+    handleTobind = (e) => {
         console.log(e)
         this.props.history.pushState(null, `/page/mine/phone-verifi/${e}`);
     }
@@ -481,7 +481,7 @@ class PersonData extends React.Component {
                         <FormattedMessage  id="quotation.contact.email" defaultMessage="邮箱"/>：
                     </span>
                     {this.state.user.email?<span className={css.text}>{this.state.user.email}</span>
-                        :<Button type="primary" onClick={this.handleTobind.bind(this,2)}  className={css.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
+                        :<Button type="primary" onClick={this.handleTobind.bind(this,2)}  className={appcss.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
                     } 
                 </p>
                 {this.state.edit?<p className={css.info}>
@@ -545,7 +545,7 @@ class PersonData extends React.Component {
                     </p>
                 </div>:""
             }
-                <Button type="primary" className={css.button_modifye} onClick={this.handleClick}>
+                <Button type="primary" className={appcss.button_black} style={{ marginLeft: 180}}onClick={this.handleClick}>
                     <FormattedMessage id={this.state.button_name} defaultMessage=""/>
                 </Button>
                 </div>
@@ -563,15 +563,15 @@ class PersonData extends React.Component {
                     <span  className={css.text_certification}>
                         {formatMessage({id: 'persondata.certification'})}
                     </span>
-                    <Button type="primary" className={css.button_certification} onClick={this.handleCertification}>
+                    <Button type="primary"  style={{ marginLeft: 20}}className={appcss.button_blue} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
                     <CusModal width="800" scroll={{y: 700}}
-                        title= { this.formatMessage({id:"app.processing"})}
+                        title= { this.formatMessage({id:"repwd.authen"})}
                         visible={visible}
                         closeModal={this.handleCancel}
                     >
-                        <Form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit} style={{ marginTop: 20}}>
                             <FormItem
                                 {...formItemLayout}
                                 label={this.formatMessage({id:'persondata.real.name'})}
@@ -680,7 +680,7 @@ class PersonData extends React.Component {
                             <FormItem
                                 wrapperCol={{ span: 12, offset: 7 }}
                             >
-                                <Button type="primary" className={css.submit}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
+                                <Button type="primary" className={appcss.button_black}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
                             </FormItem>
 
                         </Form>
@@ -692,7 +692,7 @@ class PersonData extends React.Component {
                     <span  className={css.text_certification}>
                         {formatMessage({id: 'persondata.certification'})}
                     </span>
-                    <Button type="primary" className={css.button_certification} onClick={this.handleCertification}>
+                    <Button type="primary" className={appcss.button_blue} style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
                     <CusModal width="800" scroll={{y: 700}}
@@ -700,7 +700,7 @@ class PersonData extends React.Component {
                         visible={visible}
                         closeModal={this.handleCancel}
                     >
-                        <Form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit}  style={{ marginTop: 20}}>
                             <FormItem
                                 {...formItemLayout}
                                 label={this.formatMessage({id:'post.company_name'})}
@@ -843,7 +843,7 @@ class PersonData extends React.Component {
                             <FormItem
                                 wrapperCol={{ span: 12, offset: 7 }}
                             >
-                                <Button type="primary" className={css.submit}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
+                                <Button type="primary" className={appcss.button_black}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>  
                             </FormItem>
 
                         </Form>

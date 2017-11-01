@@ -4,10 +4,12 @@
    background: $theme-color;
    font-weight: bold;
    padding: 10px 20px;
-   color: white;
+   color: $color-grey;
+   
 }
 .basic_body{
-  display: flex;
+  display: flex; 
+  background-color: $item-color;
   .basic_left{
     padding: 45px;
   }
@@ -59,6 +61,7 @@
 }
 .auth_body{
   padding: 30px 20px;
+  background-color: $item-color;
 }
 .button_certification{
     background-color:$color-green;
