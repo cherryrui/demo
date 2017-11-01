@@ -468,6 +468,7 @@ const zh_CN = {
     "authen.authen.Everificationcode": "邮箱验证码",
     "authen.authen.nextstep": "下一步",
     "authen.authen.resetpassword": "重置密码",
+    "authen.authen.retrieve": "重置密码",
     "authen.authen.complete": "完成",
     "regcomplt.regcomplt.GoCertification": "去认证",
     "regcomplt.regcomplt.Registeredsuccessfully": "注册成功！",

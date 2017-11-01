@@ -62,10 +62,10 @@ class RePassword extends React.Component {
         return (
             <div className={css.body}>
                 <div className={css.title}>
-                    <Link to="/" className={css.logo}> LOGO </Link>
-                    <p className={css.title_text}>
-                        <FormattedMessage id="authen.authen.resetpassword" defaultMessage="用户注册"/>
-                    </p>
+                    {/*<Link to="/" className={css.logo}> LOGO </Link>*/}
+                    {this.state.step==2?"":<p className={css.title_text}>
+                        <FormattedMessage id="authen.authen.retrieve" defaultMessage="用户注册"/>
+                    </p>}
                 </div>
                 <div className={css.content}>
                     <Steps className={css.steps} steps={operator.steps} current={this.state.step}/>
@@ -140,8 +140,8 @@ class Authentication extends React.Component {
                 <FormItem {...formItemLayout}
                     label={this.formatMessage({id: 'authen.authen.tel/email'})}
                 >
-                    <Row gutter={10}>
-                        <Col span={16}>
+                    <Row gutter={24}>
+                        <Col span={18}>
                         {getFieldDecorator('account',{
                             rules:[
                                 {
@@ -154,8 +154,8 @@ class Authentication extends React.Component {
                         )}
 
                         </Col>
-                        <Col span={8}>
-                            <Button className={css.code_Button} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                        <Col span={4}>
+                            <Button className={css.password_Button} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
                                 <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                 {this.state.time?("("+this.state.time+")"):""}
                             </Button>
@@ -176,7 +176,7 @@ class Authentication extends React.Component {
 
                 </FormItem>
                 <FormItem className={css.Button_center}>
-                    <Button type="primary" htmlType="submit" className={css.password_Button} >
+                    <Button type="primary" htmlType="submit" className={css.code_Button} >
                         <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/>
                     </Button>
                 </FormItem>
@@ -193,14 +193,15 @@ class SetPwd extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.handleSteps ? this.props.handleSteps(1) : '';
+        /*this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values)
                 axios.get(`/user/reset-pwd.json?pwd=${values.password}`).then(res => {
                     this.props.handleSteps ? this.props.handleSteps(1) : '';
                 })
             }
-        });
+        });*/
     }
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -211,6 +212,9 @@ class SetPwd extends React.Component {
         } else {
             callback();
         }
+    }
+    handleBefore = () =>{
+        this.props.handleSteps(-1);
     }
 
 
@@ -262,8 +266,12 @@ class SetPwd extends React.Component {
 
                 </FormItem>
                 <FormItem className={css.Button_center}>
-                    <Button type="primary" htmlType="submit" className={css.password_Button}>
-                        <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/></Button>
+                    <Button type="primary" onClick={this.handleBefore} htmlType="submit" className={css.code_Button}>
+                        <FormattedMessage id="app.before" defaultMessage="上一步"/>
+                    </Button>
+                    <Button type="primary" htmlType="submit" className={css.resave_Button}>
+                        <FormattedMessage id="app.save" defaultMessage="保存"/>
+                    </Button>
                 </FormItem>
             </Form>
         </div>
@@ -280,12 +288,15 @@ class SetSuccess extends React.Component {
         this.props.history.pushState(null, "/login");
     }
     render() {
-        return <div className={css.ship_from}>
+        return <div className={css.reset_success}>
             <div className={css.suc_content}>
                 <Icon type="smile-o" />&nbsp;&nbsp;&nbsp;&nbsp;
                 <FormattedMessage id="reset.success.info" defaultMessage="密码重置成功！"/>
             </div>
-            <Button type="primary" onClick={this.handleClick} className={css.password_Button}>
+            <div style={{textAlign:"center"}}>
+                <FormattedMessage id="regiater.success.info" defaultMessage="密码重置成功提示！"/>
+            </div>
+            <Button type="primary" style={{marginTop: "15px"}} onClick={this.handleClick} className={css.code_Button}>
                 <FormattedMessage id="register.go.login" defaultMessage="去登录"/>
             </Button>
         </div>
@@ -295,4 +306,5 @@ SetPwd = Form.create()(SetPwd);
 Authentication = Form.create()(Authentication);
 Authentication = injectIntl(Authentication);
 SetPwd = injectIntl(SetPwd);
+SetSuccess = injectIntl(SetSuccess);
 export default RePassword;

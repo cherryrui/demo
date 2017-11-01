@@ -26,6 +26,7 @@
 .form{
   border: 1px solid $border-color;
   padding: 40px 0;
+  background: white;
 }
 .footer{
       margin: 0 33.3%;
@@ -62,7 +63,7 @@
   color:white;
 }
 .vercode:hover{
-  background-color:#3c3636;
+  background-color:$button-grey-active;
   color:white;
 }
 .mecolor{
