@@ -441,7 +441,14 @@ class PersonData extends React.Component {
                         </span>
                         <span className={css.text}>{this.state.user.userName}</span>
                     </p>
-                
+                 <p  className={css.info}>
+                    <span className={css.title}>
+                        <FormattedMessage  id="quotation.contact.email" defaultMessage="邮箱"/>：
+                    </span>
+                    {this.state.user.email?<span className={css.text}>{this.state.user.email}</span>
+                        :<Button type="primary" onClick={this.handleTobind.bind(this,2)}  className={appcss.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
+                    } 
+                </p>
                 <p  className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="quotation.contact.tel" defaultMessage="电话"/>：
@@ -476,20 +483,13 @@ class PersonData extends React.Component {
             }
          
                
-                <p  className={css.info}>
-                    <span className={css.title}>
-                        <FormattedMessage  id="quotation.contact.email" defaultMessage="邮箱"/>：
-                    </span>
-                    {this.state.user.email?<span className={css.text}>{this.state.user.email}</span>
-                        :<Button type="primary" onClick={this.handleTobind.bind(this,2)}  className={appcss.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
-                    } 
-                </p>
+               
                 {this.state.edit?<p className={css.info}>
                     <span className={css.title}>
                         <FormattedMessage  id="certif.company.region" defaultMessage="城市"/>：
                     </span>
                     <span className={css.text}>
-                        <Cascader defaultValue={this.state.user.region} style={{ width: '100%'}} options={this.state.options} onChange={this.handleRegion}/>
+                        <Cascader defaultValue={this.state.user.region} style={{ width: '100%'}} className={appcss.form_input} options={this.state.options} onChange={this.handleRegion}/>
                     </span>
                 </p>:""}
                 <p className={css.info}>
@@ -497,7 +497,7 @@ class PersonData extends React.Component {
                         <FormattedMessage  id="persondata.contact.address" defaultMessage="联系地址"/>：
                     </span>
                     {this.state.edit?<span className={css.text}>
-                        <Input
+                        <Input className={appcss.form_input}
                             style={{ width: '100%' }}
                             defaultValue={this.state.user.address}
                             onChange={this.handleChange.bind(this,"address")}
@@ -514,7 +514,7 @@ class PersonData extends React.Component {
                       <FormattedMessage  id="persondata.real.name" defaultMessage="真实姓名"/>：
                     </span>
                     {this.state.edit?<span className={css.text}>
-                        <Input
+                        <Input className={appcss.form_input}
                             style={{ width: '100%' }}
                             defaultValue={this.state.user.realName}
                             onChange={this.handleChange.bind(this,"realName")}
@@ -545,7 +545,7 @@ class PersonData extends React.Component {
                     </p>
                 </div>:""
             }
-                <Button type="primary" className={appcss.button_black} style={{ marginLeft: 180}}onClick={this.handleClick}>
+                <Button type="primary" className={appcss.button_black} style={{ marginLeft: 153,marginTop: 10}}onClick={this.handleClick}>
                     <FormattedMessage id={this.state.button_name} defaultMessage=""/>
                 </Button>
                 </div>

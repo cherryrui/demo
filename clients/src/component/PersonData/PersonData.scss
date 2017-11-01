@@ -5,11 +5,14 @@
    font-weight: bold;
    padding: 10px 20px;
    color: $color-grey;
-   
+
 }
 .basic_body{
   display: flex; 
   background-color: $item-color;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      padding-bottom: 20px;
   .basic_left{
     padding: 45px;
   }
@@ -43,7 +46,7 @@
     font-weight:400;
     .title{
       display: block;
-      width: 30%;
+      width: 25%;
       text-align: right;
     }
     .text{
@@ -56,11 +59,11 @@
   }
 }
 .button_modifye{
-  margin-left: 30%;
+ 
   margin-top: 10px;
 }
 .auth_body{
-  padding: 30px 20px;
+  padding: 20px 20px;
   background-color: $item-color;
 }
 .button_certification{
