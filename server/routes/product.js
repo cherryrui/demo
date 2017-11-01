@@ -287,7 +287,39 @@ router.get('/get-category.json', async(ctx, next) => {
 			result;
 		if (ctx.cookie.get('token')) {
 			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-			await axios.get(url + "/auth/supplier/getProductSpecs?productId" + param.pid).then(res => {
+			await axios.get(url + "/auth/supplier/getUpdateProductSpecs?productId=" + param.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/get-product-introduct.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getIntroduct?productId=" + param.pid).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
+	.post('/get-product-transport.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.get(url + "/auth/supplier/getTransportation?productId=" + param.pid).then(res => {
 				result = res.data;
 			})
 		} else {

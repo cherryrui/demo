@@ -35,9 +35,8 @@ class Product extends React.Component {
 
     render() {
         return <Card className={`${css.product} ${this.props.className}`} bodyStyle={{ padding: 0 }}>
-        {this.props.addCart ? <div className={css.footer}>
+        {this.props.collect ? <div className={css.footer}>
                 <p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>
-               
             </div>:""}
             {this.props.check?<Checkbox checked={this.props.product.checked?true:false}onChange={this.onChange}></Checkbox>:""}
             <Link to={"page/product-detail/"+this.props.product.productId}>

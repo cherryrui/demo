@@ -18,6 +18,10 @@
       margin: auto;
     }
   }
+  button{
+    min-width: 30px;
+    border: none;
+  }
   .middle{
     flex-grow: 1;
     display: flex;

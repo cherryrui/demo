@@ -12,12 +12,18 @@ div[class="ant-row ant-form-item"]{
   height: 100%;
   font-size: 14px;
 }
+.logo{
+    width: 67px;
+    height: 40px;
+    cursor: pointer;
+}
 .app_head{
     display: flex;
-     width: 1100px;
+    width: 1100px;
     margin: 0 auto;
     height: 54px;
     justify-content: space-between;
+    align-items: center;
   .head{
     display: flex;
     justify-content: flex-end;
@@ -105,19 +111,12 @@ div[class="ant-row ant-form-item"]{
     background: white;
     line-height: 36px;
     margin-bottom: 20px;
+    margin-top: 10px;
   span{
     color: $font-color;
     font-size: 16px;
     font-weight: normal;
   }
-}
-.logo{
-      cursor: pointer;
-  color: $theme-color;
-  font-weight: 400;
-  
-    font-size: 30px;
-    font-weight: bold;
 }
 .fixed_title{
     position: fixed;

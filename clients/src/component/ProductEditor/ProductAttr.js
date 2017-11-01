@@ -44,7 +44,7 @@ class ProductAttr extends React.Component {
 			if (res.data.isSucc) {
 				let category = res.data.result.category;
 				let select = res.data.result.selectProperty;
-				let customProperty = JSON.parse(res.data.result.customProperty);
+				let customProperty = res.data.result.customProperty ? JSON.parse(res.data.result.customProperty) : [];
 				customProperty.length == 0 ? customProperty.push({}) : "";
 				category.map(item => {
 					item.property.map(property => {
@@ -101,7 +101,6 @@ class ProductAttr extends React.Component {
 			customAttrNames: [],
 			customAttrVals: [],
 		}
-		console.log(this.state.customProperty);
 		this.state.category.map(item => {
 			item.property.map(property => {
 				if (property.select) {
@@ -220,7 +219,7 @@ class ProductAttr extends React.Component {
 				</div>
 			})}
 			<div className={css.product_footer}>
-				<Button type="primary">
+				<Button type="primary" onClick={this.backStep}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
 				</Button>
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
