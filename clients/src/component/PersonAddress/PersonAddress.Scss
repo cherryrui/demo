@@ -1,4 +1,18 @@
 @import '../../themes.scss';
+.address_table{
+  border: 1px solid $border-color;
+  table{
+    border-collapse: collapse;
+    background-color: $item-color;
+  }
+  td{
+    border:none !important;
+    border-collapse: collapse!important;
+  }
+
+ 
+
+}
 .table_col{
   text-align: center !important;
   font-size: 16px;
@@ -8,7 +22,7 @@
       text-align: start;
     }
     .delivery{
-      background:$color-green;
+      background:button_blue;
       height: 20px !important;
       border: none;
       margin-left: 10px;

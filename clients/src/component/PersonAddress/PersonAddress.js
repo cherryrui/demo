@@ -332,16 +332,16 @@ class PersonAddress extends React.Component {
                 <FormattedMessage id="mine.person.address" defaultMessage="分类"/>
 
             </div>
-            <div>
+            <div className={css.address_table}>
                 <Table
                     pagination={false}
                     rowKey="addressId"
-                    bordered
+                   
                     columns={this.colums_show}
                     dataSource={this.state.address_list} />
             </div>
             <div className={css.delivery_new}>
-                <Button className={appcss.button_theme}type="primary" onClick={this.handleEditAddress}>
+                <Button className={appcss.button_blue}type="primary" onClick={this.handleEditAddress}>
                     <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址 "/>
                 </Button>
             </div>
