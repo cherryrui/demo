@@ -11,7 +11,7 @@
   font-weight: bold;
 }
 .form{
-	background-color: #e1f1ff !important;
+	background-color: $color-light !important;
   padding: 40px 0;
 	display: flex;
 }
@@ -52,18 +52,25 @@
   }
   .forgot {
     float: right;
-    color: $theme-color;
+    color: $color-red;
     font-weight: bold;
     font-size: 12px;
     line-height: 14px;
   }
   .button {
+    color: white;
+    background:$color-red;
     width: 100%;
+    color:white;
     margin-top:20px;
     border-radius: 2px;
     border:none;
   }
+  .button:hover{
+    background-color:#fb8b11;
+  }
   .button_registor{
+    color: white;
     background:$color-blue;
     border:none;
     width: 100%;

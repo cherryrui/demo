@@ -32,6 +32,12 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
+const CheckboxGroup = Checkbox.Group;
+
+const options = [
+    {label:'个人用户',value:1},
+    {label:'企业用户',value:2}
+];
 
 
 class Register extends React.Component {
@@ -47,6 +53,7 @@ class Register extends React.Component {
             verification_mode: 1, //1手机验证.2邮箱验证
             disabled: false,
             usertype:1, //1个人用户 2.企业用户
+            check:true,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
@@ -170,8 +177,7 @@ class Register extends React.Component {
             usertype : e.target.value
         })
     }
-
-
+   
 
     render() {
         const {
@@ -202,7 +208,7 @@ class Register extends React.Component {
         return (
             <div className={css.body}>
                 <div className={css.title}>
-                    <Link to="/" className={css.logo}> LOGO </Link>
+                    {/*<Link to="/" className={css.logo}> LOGO </Link>*/}
                     <p className={css.title_text}>
                         <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
                     </p>
@@ -210,7 +216,22 @@ class Register extends React.Component {
                 <div className={css.form}>
                     <Form onSubmit={this.handleSubmit}>
 
-                        <FormItem {...formItemLayout}
+                        <FormItem {...tailFormItemLayout} >
+                    
+                           {(
+                            <Radio.Group defaultValue={this.state.usertype} onChange={this.onChangtype}>
+                                <Radio value={1}className={css.reqister_radio_one}>
+                                    <Icon style={{paddingRight:"3px"}} type="user" /><FormattedMessage id="persondata.indivdual.user" defaultMessage="个人用户"/>
+                                </Radio>
+                                <Radio value={2} className={css.reqister_radio_two}>
+                                    <Icon style={{paddingRight:"3px"}}  type="usergroup-add" /><FormattedMessage id="persondata.enterprise.user" defaultMessage="企业用户"/>
+                                </Radio>
+                            </Radio.Group>
+                            )}
+                        
+                        </FormItem>
+
+                        {/*<FormItem {...formItemLayout}
                             label={formatMessage({id: 'persondata.user.style'})}
                         >
                         {(
@@ -223,7 +244,7 @@ class Register extends React.Component {
                                 </Radio.Button>
                             </Radio.Group>
                         )}
-                        </FormItem>
+                        </FormItem>*/}
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.name'})}
@@ -238,7 +259,21 @@ class Register extends React.Component {
                             <Input  className={css.reqister_input}/>
                         )}
                         </FormItem>
-                         <FormItem {...formItemLayout}
+                        <FormItem {...formItemLayout}
+                        label={formatMessage({id: 'verification.mode'})}
+                        >
+                        {(
+                            <Radio.Group defaultValue={this.state.verification_mode} onChange={this.onChangeverifi}>
+                                <Radio value={1}className={css.reqister_radio_one}>
+                                    <Icon style={{paddingRight:"3px"}} type="phone" /><FormattedMessage id="moblie.phone" defaultMessage="手机"/>
+                                </Radio>
+                                <Radio value={2} className={css.reqister_radio_two}>
+                                    <Icon style={{paddingRight:"3px"}} type="message" /><FormattedMessage id="post.email" defaultMessage="邮箱"/>
+                                </Radio>
+                            </Radio.Group>
+                        )}
+                        </FormItem>
+                         {/*<FormItem {...formItemLayout}
                             label={formatMessage({id: 'verification.mode'})}
                         >
                         {(
@@ -251,7 +286,7 @@ class Register extends React.Component {
                                 </Radio.Button>
                             </Radio.Group>
                         )}
-                        </FormItem>
+                        </FormItem>*/}
                     {this.state.verification_mode==2?
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'post.email'})}
@@ -283,7 +318,7 @@ class Register extends React.Component {
                             label={formatMessage({id: 'register.register.verification'})}
                         >
                             <Row gutter={10}>
-                                <Col span={12}>
+                                <Col span={14}>
                                 {getFieldDecorator('verificationCode',{
                                     rules:[{
                                         required:true,
@@ -293,8 +328,8 @@ class Register extends React.Component {
                                     <Input size="large" />
                                 )}
                                 </Col>
-                                <Col span={12}>
-                                    <Button type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                                <Col span={8}>
+                                    <Button type="primary" className={css.vercode} disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
                                         <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                         {this.state.time?("("+this.state.time+")"):""}
                                     </Button>
@@ -334,8 +369,15 @@ class Register extends React.Component {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(
-                                <Checkbox>
-                                    <FormattedMessage id="register.notes" defaultMessage="记住密码"/>
+                                <Checkbox style={{fontSize:"10px"}}>
+                                    <FormattedMessage id="register.message" defaultMessage="message"/>
+                                    <Link style={{color:"#ffc70d"}}>
+                                        <FormattedMessage  id="register.condition" defaultMessage="message"/>
+                                    </Link>
+                                    <FormattedMessage id="register.and" defaultMessage="message"/>
+                                    <Link style={{color:"#ffc70d"}}>
+                                        <FormattedMessage   id="register.privacy.notice" defaultMessage="message"/>
+                                    </Link>
                                 </Checkbox>
                             )}
                         </FormItem>

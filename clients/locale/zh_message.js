@@ -450,6 +450,10 @@ const zh_CN = {
     "regiater.go_shopping": "去购物",
     "register.style_warn": "请选择用户类型",
     "regiater.success.info": "为了提高您的个人信息，帮助我们更好地个性化您的服务，川川将保持您的个人信息保密。",
+    "register.condition":"使用条件",
+    "register.privacy.notice":"隐私通知",
+    "register.message":"By creating an account, you agree to ",
+    "register.and":" 和 ",
 
     "authen.authen.tel/email": "电话/邮箱",
     "authen.authen.account_warn": "请输入电话/邮箱",

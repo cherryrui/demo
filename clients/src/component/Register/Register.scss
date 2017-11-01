@@ -18,8 +18,9 @@
   .title_text{
     font-size: 20px;
     border: bold;
-    color: $theme-color;
-    margin-left: 20px;
+    color: $color-grey;
+    margin-left: 0px;
+    padding-top:20px;
   }
 }
 .form{
@@ -39,13 +40,12 @@
   border-radius: 2px;
 }
 .reqister_Button{
-  background: $button-blue;
-  width: 120px;
+  background: $color-red;
+  width: 400px;
   border-radius: 2px;
 }
 .reqister_Button:hover{
-  background: $button-blue-active;
-  width: 120px;
+  background: #fb8b11;
   border-radius: 2px;
 
 }
@@ -54,4 +54,17 @@
  }
 .reqister_radio_two{
   border-radius: 2px 0 0 2px  !important;
+  padding-left: 55px;
+}
+.vercode{
+  background-color:$color-grey;
+  border:0px;
+  color:white;
+}
+.vercode:hover{
+  background-color:#3c3636;
+  color:white;
+}
+.mecolor{
+  color: $theme-color;
 }
