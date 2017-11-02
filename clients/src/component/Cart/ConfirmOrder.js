@@ -441,11 +441,9 @@ class ConfirmOrder extends React.Component {
         return <div>
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.delivery.info" defaultMessage="收货信息"/>
-                <p onClick={this.handleEditAddress}>
-                    <Icon type="plus-circle-o" />
-                &nbsp;
-                    <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址"/>
-                </p>
+                <Link to={"/page/mine/person-address"}>
+                    <FormattedMessage id="cart.delivery.manage" defaultMessage="新增地址"/>
+                </Link>
             </div>
             <div className={css.confirm_address}>
                 {this.state.address_list.map(item=>{
@@ -471,12 +469,13 @@ class ConfirmOrder extends React.Component {
                         {item.addressId==this.state.select?<Icon className={css.pointer}type="edit" onClick={this.handleEditAddress.bind(this,item)} />:""}
                     </div>
                 })}
+                <div className={css.address_new} onClick={this.handleEditAddress}>+ <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址"/>
+                </div>
             </div>
             <div className={css.confirm_title}><FormattedMessage id="cart.product.list" defaultMessage="产品列表"/></div>
             <Table
                 pagination={false}
                 rowKey="id"
-                bordered
                 columns={this.colums_show}
                 scroll={{y: 600 }}
                 dataSource={this.props.products} />

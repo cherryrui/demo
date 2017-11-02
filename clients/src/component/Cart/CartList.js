@@ -387,7 +387,6 @@ class CartList extends React.Component {
                 loading={this.state.loading}
                 pagination={false}
                 rowKey="id"
-                bordered
                 loading={this.state.loading}
                 columns={this.columns}
                 scroll={{y: 700}}

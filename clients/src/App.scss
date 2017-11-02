@@ -8,6 +8,10 @@ button{
 div[class="ant-row ant-form-item"]{
       margin-bottom: 20px;
 }
+th{
+  border-right: none !important;
+  border-bottom: none !important;
+}
 .index{
   height: 100%;
   font-size: 14px;
@@ -112,7 +116,7 @@ div[class="ant-row ant-form-item"]{
     color: #2e2b2e;
     background: white;
     line-height: 36px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-top: 10px;
   span{
     color: $font-color;

@@ -51,7 +51,7 @@
     flex-shrink: 0;
     width: 70px;
     height: 70px;
-    border: 1px solid $color-grey;
+    border: 1px solid $background-color;
     cursor: pointer;
   }
   .active_img{
@@ -64,5 +64,6 @@
   .right{
     margin: auto 20px;
     border-radius: 2px;
+    flex-shrink: 0;
   }
 }

@@ -46,11 +46,12 @@ class ProductList extends React.Component {
             bid: 0, //选择的供应商id，0：全部
             total: 0,
             current: 1,
-            pageSize: 12,
+            pageSize: 15,
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
             visible: false,
         }
+        this.pageSizeOptions = ["15", "20", "25"];
         this.categoryName = "分类名称";
         this.info = this.props.params.info;
         this.formatMessage = this.props.intl.formatMessage;
@@ -316,7 +317,7 @@ class ProductList extends React.Component {
                     return <Product className={(index+1)%5==0?css.product_right:css.product}  product={item} handleStar={this.handleStar.bind(this,index)} collect/>
                 })}
                 </div>
-                <CusPagination onChange={this.handleChange} total={this.state.sum} onShowSizeChange={this.onShowSizeChange} />
+                <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.sum} onShowSizeChange={this.onShowSizeChange} />
             </div>
             :<div className={css.product_no}>
                 <FormattedMessage id='product.no_product' defaultMessage="暂无搜索到商品"/>

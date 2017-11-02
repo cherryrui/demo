@@ -140,6 +140,7 @@ const zh_CN = {
     "cart.delivery.city": "收货城市",
     "cart.delivery.address": "收货地址",
     "cart.delivery.new": "新增地址",
+    "cart.delivery.manage": "地址管理",
     "cart.delivery.default": "默认地址",
     "cart.product.list": "产品列表",
     "cart.pay.mode.info": "支付信息",

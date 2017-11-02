@@ -2,7 +2,6 @@
 
 .qutation{
   .qutation_title{
-    border-bottom: 1px solid $border-color;
     margin-bottom: 20px;
   }
   tbody[class="ant-table-tbody"]{
@@ -12,12 +11,12 @@
   thead[class="ant-table-thead"]{
   }
   th{
-  
     color: $font-color !important;
     border-right: none !important;
   }
   td{
     padding: 20px 20px !important;
+    border-right: 1px solid $border-color;
   }
   .table_product{
     width: 430px;
@@ -25,6 +24,11 @@
   .table_col{
     text-align: center !important;
     font-size: 12px;
+  }
+  .table_col_last{
+    text-align: center !important;
+    font-size: 12px;
+    border-right: none!important;
   }
   .table_num{
 

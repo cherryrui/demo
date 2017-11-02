@@ -1,12 +1,8 @@
 @import "../../themes";
 .title{
 	color: $theme-color;
-	border-bottom: 1px solid $border-color;
 	font-size: 20px;
 	padding-bottom: 10px;
-}
-.cart_title{
-	border-bottom: 1px solid $border-color;
 }
 .steps{
 	padding: 30px 10%;
@@ -44,6 +40,7 @@
 .table_col{
 	text-align: center !important;
 	font-size: 14px;
+  border-right: 1px solid $border-color;
 	a:hover{
 		color: $font-color;
 	}
@@ -166,6 +163,9 @@
     p{
     	cursor: pointer;
     }
+    a{
+      color: $theme-color;
+    }
 }
 %confirm_body{
 	border: 1px solid #eee;
@@ -187,10 +187,15 @@
 	}
 	.item_default{
 		padding: 4px 10px;
-		background: $color-green;
-		color: white;
+		background: $theme-color;
 		border-radius: 4px;
 	}
+  .address_new{
+    border-top: 1px solid $border-color;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
+  }
 }
 .confirm_pay{
 	@extend %confirm_body;
@@ -302,7 +307,7 @@
 		text-align: center;
 		font-size: 14px;
 		padding: 15px 15px;
-
+    margin: 0px 100px
 	}
 	.pay_last{
 		text-align: center;
@@ -312,10 +317,9 @@
 
 	}
 	.payments{
-		border: 1px solid $border-color;
 		padding: 15px 16px 0px 16px;
 		display: flex;
-      width:740px;
+      width:900px;
       margin: auto;
       justify-content: space-between;
       background-color: $item-color;
@@ -431,7 +435,13 @@ background:  $button-green;
 .pointer{
   cursor: pointer;
 }
+.pointer:hover{
+  color: $theme-color;
+}
 .remark_test{
   height: 6px;
   border-radius: 2px;
+}
+.product_table{
+
 }

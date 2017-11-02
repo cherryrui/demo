@@ -21,7 +21,8 @@ class CusPagination extends React.Component {
     render() {
         return <div className={this.props.className?`${this.props.className} ${css.footer}`:css.footer}>
                     <Pagination 
-                        showSizeChanger 
+                        showSizeChanger
+                        showQuickJumper  
                         defaultCurrent={1} 
                         total={this.props.total}
                         onShowSizeChange={this.onShowSizeChange}

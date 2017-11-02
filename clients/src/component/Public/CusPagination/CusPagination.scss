@@ -1,4 +1,13 @@
 .footer{
-  text-align: right;
-  margin-top: 20px;
+  	text-align: right;
+  	input{
+		height: 28px;
+  	}
+  	div[class="ant-select-selection
+            ant-select-selection--single"]{
+		height: 30px;
+    }
+    div[class="ant-select-selection__rendered"]{
+    	line-height: 28px;
+    }
 }

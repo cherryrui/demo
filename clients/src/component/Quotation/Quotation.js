@@ -108,7 +108,7 @@ class Quotation extends React.Component {
 		}, {
 			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
 			width: "110px",
-			className: css.table_col,
+			className: css.table_col_last,
 			dataIndex: 'agentPrice',
 			key: 'agentPrice',
 			render: (text) => <span className={css.table_price}>${text}</span>
@@ -378,7 +378,6 @@ class Quotation extends React.Component {
             <Table
                 pagination={false}
                 rowKey={record => record.id||record.quotationProductId}
-                bordered
                 columns={this.columns}
                 dataSource={this.state.quotation.products} />
             <div className={css.order_sum}>

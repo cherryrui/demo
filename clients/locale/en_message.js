@@ -139,6 +139,7 @@ const en_US = {
     "cart.delivery.address": "Address",
     "cart.delivery.new": "New Address",
     "cart.delivery.default": "Default address",
+    "cart.delivery.manage": "Address Manage",
     "cart.product.list": "Product list",
     "cart.pay.mode.info": "Payment method",
     "cart.pay.full": "Full payment",

@@ -36,7 +36,7 @@ class BrandList extends React.Component {
             category: [], //一级分类列表
             brand: [], //供应商列表
             cid: 0, //分类id
-            pageSize: 18, //每页商品数
+            pageSize: 15, //每页商品数
             current: 1, //当前页码
             total: 0, //供应商总数
             sortType: 0, //排序名称
