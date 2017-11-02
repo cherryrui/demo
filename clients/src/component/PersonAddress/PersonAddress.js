@@ -41,8 +41,8 @@ const {
 
 class PersonAddress extends React.Component {
     static propTypes = {
-        intl: intlShape.isRequired,
-    }
+        intl: intlShape.isRequired
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -61,22 +61,23 @@ class PersonAddress extends React.Component {
             }
         } = this.props;
         this.colums_show = [{
+            className: css.table_col,
+            width: "8%",
+            render: (record) => <Checkbox></Checkbox>
+        }, {
             title: <FormattedMessage id="cart.delivery.name" defaultMessage=" 收货人"/>,
-            className: css.table_col,
-            width: "20%",
-            className: css.table_col,
+            className: css.table_col_name,
+            width: "15%",
             render: (record) => <span className={css.table_namne}>{record.name}</span>
         }, {
             title: <FormattedMessage id="cart.delivery.tel" defaultMessage="联系电话 "/>,
             className: css.table_col,
-            width: "18%",
-            className: css.table_col,
+            width: "23%",
             render: (record) => <span className={css.table_tel}>{record.phoneDc+' '+record.phone}</span>
         }, {
             title: <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址 "/>,
             className: css.table_col,
-            width: "50%",
-            className: css.table_col,
+            width: "40%",
             render: (record) => <span className={css.table_address}>
                     <p className={css.address_detail}>{locale=="en"?record.address+","+record.district+","+record.city+","+record.province+","+record.country
                     :record.country+' '+record.province+" "+record.city+" "+record.district+" "+ record.address}</p>
@@ -87,8 +88,7 @@ class PersonAddress extends React.Component {
         }, {
             title: <FormattedMessage id="cart.operation" defaultMessage="操作"/>,
             className: css.table_col,
-            width: "12%",
-            className: css.table_col,
+            width: "14%",
             render: (record) => <span className={css.table_operation}>
                   <a><Icon
                       onClick={this.handleEditAddress.bind(this,record)}
@@ -341,8 +341,16 @@ class PersonAddress extends React.Component {
                     dataSource={this.state.address_list} />
             </div>
             <div className={css.delivery_new}>
-                <Button className={appcss.button_blue}type="primary" onClick={this.handleEditAddress}>
-                    <FormattedMessage id="cart.delivery.new" defaultMessage="新增地址 "/>
+                <p className={css.left}>
+                    <Checkbox >
+                         {this.formatMessage({id: 'order.status.all'})}
+                    </Checkbox>
+                    <Tooltip title={this.formatMessage({id: 'cart.delete.all'})}>
+                        <Icon type="delete" onClick={this.handleDelete} />
+                    </Tooltip> 
+                </p> 
+                <Button className={appcss.button_blue} type="primary" onClick={this.handleEditAddress}>
+                    {this.formatMessage({id: 'cart.delivery.new'})}
                 </Button>
             </div>
             <CusModal width="650"

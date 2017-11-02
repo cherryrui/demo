@@ -584,6 +584,8 @@ const en_US = {
     "app.example.Photo": "example of Photo",
     "app.example.info": "The photograph needs to be a clear color of the original electronic version. Supports JPG and BMP formats. The picture size is no more than 5M",
     "app.figure": "Figure",
-    "app.passport.photos": "Please upload your passport photos"
+    "app.passport.photos": "Please upload your passport photos",
+    "app.requirement.subject": "Requirement subject",
+    "enter.requirement.subject": "Please enter the requirements theme"
 }
 export default en_US;

@@ -13,6 +13,10 @@
  
 
 }
+.table_col_name{
+  text-align: left !important;
+  font-size: 16px;
+}
 .table_col{
   text-align: center !important;
   font-size: 16px;
@@ -60,8 +64,16 @@
 
 }
 .delivery_new{
-  padding-top: 20px;
+
   text-align: right;
+      display: flex;
+    justify-content: space-between;
+    padding-left: 36px;
+    justify-content: space-between;
+    padding-left: 29px;
+    background: $item-color;
+    margin-top: 21px;
+    align-items: center;
   .button_theme{
 
     height: 50px;

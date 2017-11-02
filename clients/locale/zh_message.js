@@ -589,6 +589,8 @@ const zh_CN = {
     "app.example.Photo": "照片例子",
     "app.example.info": "照片需是清晰色彩原件电子版。支持jpg和bmp格式。图片大小不超过5M",
     "app.figure": "图形",
-    "app.passport.photos": "请上传你的证件照片"
+    "app.passport.photos": "请上传你的证件照片",
+    "app.requirement.subject": "需求主题",
+    "enter.requirement.subject": "请输入需求主题"
 }
 export default zh_CN;

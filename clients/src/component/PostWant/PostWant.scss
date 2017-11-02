@@ -16,7 +16,12 @@
     font-size: 14px;
 }
 .form{
-	margin-top: 65px;
+	    margin-top: 30px;
+    background: $item-color;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    margin-bottom: 100px;
+  
   .clink_here{
     color: $color-blue;
     text-decoration:underline;

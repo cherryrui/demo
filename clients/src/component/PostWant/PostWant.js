@@ -101,7 +101,7 @@ class PostWant extends React.Component {
 		} = this.props.form;
 		let formItemLayout = {
 			labelCol: {
-				span: 3,
+				span: 4,
 				offset: 5,
 			},
 			wrapperCol: {
@@ -206,6 +206,19 @@ class PostWant extends React.Component {
 			          {getFieldDecorator('phone', {
 			            rules: [ {
 			              required: true, message:this.formatMessage({ id:'register.tel.warn'}),
+			            }],
+			          })(
+			            <Input className={css.want_input}/>
+			          )}
+			        </FormItem>
+			         <FormItem
+			          {...formItemLayout}
+			          label={formatMessage({id: 'app.requirement.subject'})}
+
+			        >
+			          {getFieldDecorator('subject', {
+			            rules: [ {
+			              required: true, message:this.formatMessage({ id:'enter.requirement.subject'}),
 			            }],
 			          })(
 			            <Input className={css.want_input}/>
