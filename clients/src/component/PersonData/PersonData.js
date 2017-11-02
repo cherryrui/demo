@@ -454,7 +454,7 @@ class PersonData extends React.Component {
                         <FormattedMessage  id="quotation.contact.tel" defaultMessage="电话"/>：
                     </span>
                     {this.state.user.tel?<span className={css.text}>{this.state.user.tel}</span>
-                        : <Button type="primary" onClick={this.handleTobind.bind(this,1)} className={css.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
+                        : <Button type="primary" style={{ marginLeft: 10 }} onClick={this.handleTobind.bind(this,1)} className={css.button_modifye}><FormattedMessage id="app.binding" defaultMessage="绑定"/></Button>
                     }
                     
                 </p>       
@@ -530,20 +530,22 @@ class PersonData extends React.Component {
                 </div>:""}
                    {this.state.user.supplier?
                 <div className={css.category_div}>
-                     <p  >
+                     <p className={css.category_info} >
                         <p className={css.category_titile}>
                               <FormattedMessage  id="app.product_category" defaultMessage="产品分类"/>：
                         </p>
+                        <p className={css.category_text} >
                         {this.state.user.supplier.productCategory?
                             this.state.user.supplier.productCategory.map(item=>{
-                                return <p className={css.category_text}><span style={{width:"40%",float:"left"}}>{item.levelonename}</span><span style={{width:"60%",float:"left"}}>{item.leveltwoname}</span></p>
+                                return <p className={css.category_text}><span>{item.levelonename}</span>/<span>{item.leveltwoname}</span></p>
                             })
                             :''
                         }
                     </p>
-                     <p className={css.info}>
+                    </p>
+                     <p className={css.info_profile}>
                          <span className={css.title}>
-                               <FormattedMessage  id="supplier.main.products" defaultMessage="公司简介"/>：
+                               <FormattedMessage  id="app.profile" defaultMessage="公司简介"/>：
                         </span>
                         <span className={css.text}><div dangerouslySetInnerHTML={{__html: this.state.user.supplier.introduction}} /></span>                    
                     </p>
@@ -571,7 +573,7 @@ class PersonData extends React.Component {
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
                     <CusModal width="800" scroll={{y: 700}}
-                        title= { this.formatMessage({id:"repwd.authen"})}
+                        title= { this.formatMessage({id:"persondata.personal.certification"})}
                         visible={visible}
                         closeModal={this.handleCancel}
                     >
@@ -700,7 +702,7 @@ class PersonData extends React.Component {
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
                     <CusModal width="800" scroll={{y: 700}}
-                        title= { this.formatMessage({id:"app.processing"})}
+                        title= { this.formatMessage({id:"persondata.enterprise.certification"})}
                         visible={visible}
                         closeModal={this.handleCancel}
                     >

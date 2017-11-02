@@ -17,7 +17,7 @@
     padding: 45px;
   }
   .basic_right{
-    padding: 10px 45px;
+    padding: 20px 45px 20px 45px;
     flex-grow: 1;
     border-left: 1px solid $border-color;
   }
@@ -39,11 +39,12 @@
 .info{
     width: 100%;
     display: flex;
-    height:50px;
-    line-height: 50px;
+
     font-size: 14px;
     color: $color-deep-grey;
     font-weight:400;
+    align-items: center;
+    padding-bottom: 20px;
     .title{
       display: block;
       width: 25%;
@@ -53,14 +54,34 @@
       display: block;
       text-align: left;
       padding-left: 10px;
-      height:50px;
-      line-height: 50px;
-      width: 60%; 
+
+      width: 73%; 
+  }
+}
+.info_profile{
+    width: 100%;
+    display: flex;
+
+    font-size: 14px;
+    color: $color-deep-grey;
+    font-weight:400;
+
+    .title{
+      display: block;
+      width: 25%;
+      text-align: right;
+    }
+    .text{
+      display: block;
+      text-align: left;
+      padding-left: 10px;
+
+      width: 73%; 
   }
 }
 .button_modifye{
  
-  margin-top: 10px;
+
 }
 .auth_body{
   padding: 20px 20px;
@@ -91,13 +112,21 @@
 .category_div{
   width:100%;
 }
-.category_titile{
-    margin-left: 100px;
-    float: left;
+.category_info{
+  display: flex;
+  margin-bottom: 20px;
+
+  .category_titile{
+   display: block;
+    width: 25%;
+    text-align: right;
 }
 .category_text{
-    margin-left: 180px;
+    margin-left: 7px;
+  
 }
+}
+
 .form_cascader{
   width: 400px !important;
 }
