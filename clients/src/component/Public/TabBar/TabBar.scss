@@ -30,6 +30,7 @@
     }
     .left_active{
         @extend .item;
+        color: $font-color;
         background: white;
         border-bottom: none;
         border-left: none;
@@ -39,6 +40,7 @@
     .right_active{
         @extend .item;
         background: white;
+        color: $font-color;
         border-bottom: none;
         border-left: 1px solid $border-color;
         border-right: none;

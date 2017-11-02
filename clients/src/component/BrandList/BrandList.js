@@ -42,7 +42,7 @@ class BrandList extends React.Component {
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
         }
-        this.pageSizeOptions = ["18", "24", "30"];
+        this.pageSizeOptions = ["15", "20", "25"];
         this.orderBy = {
 
         }
