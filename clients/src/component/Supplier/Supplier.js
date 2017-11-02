@@ -245,7 +245,7 @@ class Supplier extends React.Component {
                                     message.error(res.data.message)
                                 }
                             })
-                            
+
                         } else {
                             message.error({
                                 reason: res.data.message
@@ -538,7 +538,7 @@ class Supplier extends React.Component {
                                 <Button icon="plus" onClick={this.handleCategory.bind(this,-1)} className={css.jiahao}/>
                             </Tooltip>
                             :<Tooltip title={this.formatMessage({id:'mine.product.del_category'})}>
-                                <Button icon="minus" onClick={this.handleCategory.bind(this,index)} className={css.jiahao}/>
+                                <Button icon="minus" style={{ width:36}} onClick={this.handleCategory.bind(this,index)} className={css.jiahao}/>
                             </Tooltip>}
                     </FormItem>
                 })}
@@ -600,6 +600,21 @@ class Supplier extends React.Component {
                         </div>
                     </div>
                 </FormItem>
+                 <FormItem  style={{display:"flex"}}
+                    {...formItemLayout}
+                    label={this.formatMessage({id: 'app.example.Photo'})}
+                >      
+                    <div className={css.photo_info}>
+                        <p className={css.photo_text}>
+                        <FormattedMessage id="app.figure" defaultMessage="app.img.size"/></p>
+                        <p className={css.example_photo}>
+                         <img  className={css.example_img} src="../img/about_content.jpg" ></img> 
+                         </p>
+                       <p className={css.photo_text}>
+                            <FormattedMessage id="app.example.info" defaultMessage="app.img.format"/>
+                       </p>
+                    </div>
+                </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label={this.formatMessage({id: 'agent.legal'})}
@@ -635,7 +650,7 @@ class Supplier extends React.Component {
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" className={appcss.button_theme}>{this.formatMessage({id: 'app.cancel'})}</Button>
-                    <Button type="primary"  style={{ marginLeft: 20}} className={appcss.button_blac}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
+                    <Button type="primary"  style={{ marginLeft: 20}} className={appcss.button_black}  htmlType="submit">{this.formatMessage({id: 'app.ok'})}</Button>
                 </FormItem>
             </Form>
         </div>
