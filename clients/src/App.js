@@ -455,10 +455,10 @@ class App extends React.Component {
                             <FormattedMessage id="app.pull.message" defaultMessage="是否退出系统"/>
                         </p>
                         <p className={css.quit_button}>
-                            <Button className={css.button_green} type="primary" onClick={this.handleCancel} >
+                            <Button className={css.button_theme} type="primary" onClick={this.handleCancel} >
                                 <FormattedMessage id="app.cancel" defaultMessage="取消"/>
                             </Button>
-                            <Button className={css.button_theme} type="primary" onClick={this.handleOk} >
+                            <Button className={css.button_black} type="primary" onClick={this.handleOk} >
                                 <FormattedMessage id="app.pull.out" defaultMessage="退出"/>
                             </Button>
                         </p>

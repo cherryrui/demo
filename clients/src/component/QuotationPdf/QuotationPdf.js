@@ -4,7 +4,8 @@ import appcss from '../../App.scss';
 import moment from 'moment';
 import axios from 'axios';
 import operator from '../Quotation/operator.js';
-import ProductItem from '../Public/ProductItem/ProductItem.js'
+import ProductItem from '../Public/ProductItem/ProductItem.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 import {
     Link
 } from 'react-router';
@@ -15,7 +16,8 @@ import {
 import {
     Table,
     Icon,
-    Button
+    Button,
+    message
 } from 'antd';
 class QuotationPdf extends React.Component {
 
@@ -27,6 +29,8 @@ class QuotationPdf extends React.Component {
                 quotationOrder: {},
                 productList: []
             },
+            visible: false,
+            reload: false,
             select: {}
         }
 
@@ -75,46 +79,55 @@ class QuotationPdf extends React.Component {
     componentWillMount() {
         if (sessionStorage.user) {
             axios.get('/quotation/get-quotation-byid.json?id=' + this.props.params.id).then(res => {
-                let select = {};
-                if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
-                    select = JSON.parse(res.data.result.quotationOrder.exportOption);
-                }
-                if (select.plat_price) {
-                    this.columns.push({
-                        title: <FormattedMessage id="quotation.platform.price" defaultMessage="我的购物车"/>,
-                        className: css.table_col,
-                        dataIndex: 'productPrice',
-                        key: 'productPrice',
-                        render: (text) => <span className={css.table_price}>${text}</span>
+                if (res.data.isSucc) {
+                    let select = {};
+                    if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
+                        select = JSON.parse(res.data.result.quotationOrder.exportOption);
+                    }
+                    if (select.plat_price) {
+                        this.columns.push({
+                            title: <FormattedMessage id="quotation.platform.price" defaultMessage="我的购物车"/>,
+                            className: css.table_col,
+                            dataIndex: 'productPrice',
+                            key: 'productPrice',
+                            render: (text) => <span className={css.table_price}>${text}</span>
+                        })
+                        this.columns.push({
+                            title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+                            className: css.table_col,
+                            dataIndex: 'totalMoney',
+                            key: 'totalMoney',
+                            render: (text) => <span className={css.table_price}>${text}</span>
+
+                        }, );
+                    } else {
+                        this.columns.push({
+                            title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
+                            className: css.table_col,
+                            dataIndex: 'totalMoney',
+                            key: 'totalMoney',
+                            render: (text) => <span className={css.table_price}>${text}</span>
+
+                        }, );
+                    }
+                    let quotation = res.data.result;
+                    quotation.productList.map(item => {
+                        item.coverUrl = item.productUrl;
+                        item.productBrand = JSON.parse(item.productBrand);
+                        item.productSpecification = JSON.parse(item.productSpecification);
                     })
-                    this.columns.push({
-                        title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-                        className: css.table_col,
-                        dataIndex: 'totalMoney',
-                        key: 'totalMoney',
-                        render: (text) => <span className={css.table_price}>${text}</span>
-
-                    }, );
+                    this.setState({
+                        quotation: quotation,
+                        select: select
+                    })
+                } else if (res.data.code == 104) {
+                    this.setState({
+                        visible: true,
+                        reload: true,
+                    })
                 } else {
-                    this.columns.push({
-                        title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
-                        className: css.table_col,
-                        dataIndex: 'totalMoney',
-                        key: 'totalMoney',
-                        render: (text) => <span className={css.table_price}>${text}</span>
-
-                    }, );
+                    message.error(res.data.message);
                 }
-                let quotation = res.data.result;
-                quotation.productList.map(item => {
-                    item.coverUrl = item.productUrl;
-                    item.productBrand = JSON.parse(item.productBrand);
-                    item.productSpecification = JSON.parse(item.productSpecification);
-                })
-                this.setState({
-                    quotation: quotation,
-                    select: select
-                })
             })
         } else {
             this.props.history.pushState(null, "login");
@@ -143,6 +156,11 @@ class QuotationPdf extends React.Component {
                 orientation: 'portrait'
             }
         });
+    }
+    handleCancel = () => {
+        this.setState({
+            visible: false
+        })
     }
 
     render() {
@@ -332,6 +350,7 @@ class QuotationPdf extends React.Component {
                     </div>
                 </div>
             </div>
+            <LoginModal visible={this.state.visible} reload={this.state.reload} closeModal={this.handleCancel}/>
 		</div>
     }
 }

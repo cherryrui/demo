@@ -19,28 +19,43 @@ router.post('/get-quotation.json', async(ctx, next) => {
 	.get('/get-quotation-byid.json', async(ctx, next) => {
 		let id = ctx.query.id;
 		let result;
-		await axios.post(url + "/quotation/queryQuotationById", querystring.stringify({
-			quotationId: id,
-			userId: ctx.cookie.get('uid')
-		})).then(res => {
-			console.log(502, res.data)
-			result = res.data;
-		})
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/quotation/queryQuotationById", querystring.stringify({
+				quotationId: id,
+			})).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
 		ctx.body = result
 
 	})
 	.post('/create-quotation.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
-		try {
-			await axios.post(url + "/quotation/insertQuotationOrder", querystring.stringify(param)).then(res => {
-				console.log(600, res.data);
-				result = res.data;
-			})
-		} catch (e) {
-			console.log(e);
+		if (ctx.cookie.get('token')) {
+			try {
+				axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+				await axios.post(url + "/auth/quotation/insertQuotationOrder", querystring.stringify(param)).then(res => {
+					console.log(600, res.data);
+					result = res.data;
+				})
+			} catch (e) {
+				console.log(e);
+				result = {
+					isSucc: false,
+					message: e
+				}
+			}
+		} else {
 			result = {
-				isSucc: false
+				isSucc: false,
+				code: 104,
 			}
 		}
 		ctx.body = result;

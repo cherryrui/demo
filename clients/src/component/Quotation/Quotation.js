@@ -8,6 +8,7 @@ import QuotationPdf from '../QuotationPdf/QuotationPdf.js';
 import ModalHeader from '../Public/ModalHeader/ModalHeader.js';
 import CusModal from '../Public/CusModal/CusModal.js';
 import ProductItem from '../Public/ProductItem/ProductItem.js'
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -48,6 +49,8 @@ class Quotation extends React.Component {
 		super(props);
 		this.state = {
 			visible: false,
+			loading: false,
+			reload: false,
 			quotation: {
 				products: [],
 				num: 0,
@@ -120,20 +123,29 @@ class Quotation extends React.Component {
 		} else if (this.props.params.id) {
 			axios.get(`/quotation/get-quotation-byid.json?id=${this.props.params.id}`).then(res => {
 				console.log(res.data.result);
-				let quotation = res.data.result.quotationOrder;
-				res.data.result.productList.map(item => {
-					item.moq = item.minBuyQuantity;
-					item.price = item.productPrice;
-					item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
-					item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
-					item.selectSpecs = JSON.parse(item.productSpecification)
-				})
-				quotation.exportOption = JSON.parse(quotation.exportOption);
-				quotation.products = res.data.result.productList;
-				quotation.participant = res.data.result.participant;
-				this.setState({
-					quotation: quotation
-				})
+				if (res.data.isSucc) {
+					let quotation = res.data.result.quotationOrder;
+					res.data.result.productList.map(item => {
+						item.moq = item.minBuyQuantity;
+						item.price = item.productPrice;
+						item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+						item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
+						item.selectSpecs = JSON.parse(item.productSpecification)
+					})
+					quotation.exportOption = JSON.parse(quotation.exportOption);
+					quotation.products = res.data.result.productList;
+					quotation.participant = res.data.result.participant;
+					this.setState({
+						quotation: quotation
+					})
+				} else if (res.data.code == 104) {
+					this.setState({
+						visible: true,
+						reload: true,
+					})
+				} else {
+					message.error(res.data.message)
+				}
 			})
 
 		} else if (sessionStorage.quotation) {
@@ -292,8 +304,11 @@ class Quotation extends React.Component {
 	saveQuotation = () => {
 		console.log(this.state.quotation);
 		if (sessionStorage.user) {
+			this.setState({
+				loading: true
+			})
 			if (this.state.quotation.quotationSubject) {
-				let param = this.state.quotation;
+				let param = JSON.parse(JSON.stringify(this.state.quotation));
 				console.log(param);
 				/*param.profits = (param.profits).toFixed(2);*/
 				param.participant = JSON.stringify(param.participant);
@@ -323,15 +338,27 @@ class Quotation extends React.Component {
 				delete param.num;
 				param.userId = JSON.parse(sessionStorage.user).uid;
 				axios.post('/quotation/create-quotation.json', param).then(res => {
+					this.setState({
+						loading: false
+					})
+					console.log(res.data);
 					if (res.data.isSucc) {
 						sessionStorage.removeItem("quotation");
 						this.props.history.pushState(null, "page/quotation-pdf/" + res.data.result);
+					} else if (res.data.code == 104) {
+						this.setState({
+							visible: true,
+							reload: false
+						})
 					} else {
 						message.error(res.data.message);
 					}
 				})
 
 			} else {
+				this.setState({
+					loading: false
+				})
 				message.error(this.formatMessage({
 					id: "quotation.param"
 				}))
@@ -527,12 +554,13 @@ class Quotation extends React.Component {
                 </p>
             </div>
 	        <div className={css.footer}>
-                <p className={appcss.button_theme} onClick={this.saveQuotation}>
+                <Button loading={this.state.loading} type="primary" onClick={this.saveQuotation}>
                 	{this.state.quotation.id?<FormattedMessage id="quotation.save" defaultMessage="保存报价单"/>
                 	:<FormattedMessage id="quotation.generate" defaultMessage="生成报价单"/>}
-                </p>
+                </Button>
 	        </div>
 		</div>
+		<LoginModal visible={this.state.visible} reload={this.state.reload} closeModal={this.handleCancel}/>
 	</div>
 	}
 }
