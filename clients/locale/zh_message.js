@@ -59,6 +59,8 @@ const zh_CN = {
     "sort.new": "新品",
     "sort.price": "价格",
     "sort.sale": "销量",
+    "sort.region":"区域",
+    "sort.rating":"评分",
     "home.recent.add": "最近新增产品",
     "home.recent.go": "去购物车",
     "collect.success": "收藏成功",

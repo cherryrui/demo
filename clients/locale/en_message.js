@@ -60,6 +60,8 @@ const en_US = {
     "sort.new": "New Arrival",
     "sort.price": "Price",
     "sort.sale": "Sales Volume",
+    "sort.region":"Region",
+    "sort.rating":"Rating",
     "collect.success": "Successful collection",
     "collect.successed": "Already collected",
     "home.input_warn": "please input product name or brand name",
