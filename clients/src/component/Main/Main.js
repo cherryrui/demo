@@ -204,10 +204,10 @@ class Category extends React.Component {
                 <div className={css.category_item} >
                     <div className={css.left}>
                         <div className={css.cate_title} >
-                            <img src={item.iconUrl+"@18w_18h_1e_1c.png"}/>
+                            <img src={item.levleOneProductCategory.iconUrl+"@50w_50h_1e_1c.png"}/>
                         </div>
                         <div className={css.left_content}>
-                            <div>
+                            <div className={css.left_category}>
                                 {item.levleTwoProductCategory.map(cate=>{
                                     return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
                                         <p className={css.cate}>{cate.categoryName}</p>

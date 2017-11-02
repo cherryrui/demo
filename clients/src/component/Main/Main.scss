@@ -1,6 +1,6 @@
 @import "../../themes";
 .slip{
-  margin: 0px 40px;
+  margin: 0px 40px 40px 40px;
   .slider_item{
     text-align: center;
     padding: 1px;
@@ -84,13 +84,10 @@
       border-top-right-radius: 100px;
       border-bottom-right-radius: 100px;
       background-color: $theme-color;
-
-      div{
+      img{
+        width: 50px;
+        height: 50px;
         margin: auto;
-        width: 100%;
-        i{
-          font-size: 50px;
-        }
       }
       .cate_name{
         font-size: 30px;
@@ -98,8 +95,7 @@
 
     }
     .cate{
-      padding: 10px;
-      margin-left:20px;
+      text-align: center;
       color: $font-color;
       overflow: hidden;
       line-height: 30px;
@@ -135,7 +131,7 @@
   .right_img{
     width: 120px;
     height: 120px;
-    margin: 10px 25px;
+    margin: 10px 20px;
   }
   .right_title{
     font-size: 18px;
@@ -154,6 +150,7 @@
   }
   .right_content{
     padding: 10px;
+    font-size: 12px;
     div{
         height: 117px;
         overflow: hidden;
@@ -170,7 +167,7 @@
     }
   }
    .right_brand{
-      padding: 0px 10px;
+      padding: 10px 10px 0px 10px;
     }
     .right_img_item{
       width: 68px;
@@ -196,6 +193,7 @@
   font-size: 30px;
   color: $color-grey;
   padding: 10px 0;
+  margin-top: 30px;
   i{
     font-size: 40px;
   }
@@ -277,7 +275,6 @@
     }
 }
 .brand_button{
-  margin: 20px 0 40px;
   text-align: center;
   a{
     color: $font-color;
@@ -308,6 +305,10 @@
 }
 .left_content{
     height: 280px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .cate_bottom{
   height: 170px;

@@ -23,8 +23,13 @@ class Product extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            visible: false
         }
+    }
+    handleVisible = (visible) => {
+        this.setState({
+            visible
+        })
     }
     handleStar = () => {
         this.props.handleStar ? this.props.handleStar() : "";
@@ -34,9 +39,9 @@ class Product extends React.Component {
     }
 
     render() {
-        return <Card className={`${css.product} ${this.props.className}`} bodyStyle={{ padding: 0 }}>
+        return <Card onMouseEnter={this.handleVisible.bind(this,true)} onMouseLeave={this.handleVisible.bind(this,false)} className={`${css.product} ${this.props.className}`} bodyStyle={{ padding: 0 }}>
         {this.props.collect ? <div className={css.footer}>
-                <p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>
+                {this.state.visible?<p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>:""}
             </div>:""}
             {this.props.check?<Checkbox checked={this.props.product.checked?true:false}onChange={this.onChange}></Checkbox>:""}
             <Link to={"page/product-detail/"+this.props.product.productId}>
