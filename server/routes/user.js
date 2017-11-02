@@ -175,7 +175,7 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		const email = ctx.request.query.account;
 		const type = ctx.request.query.type;//1手机验证  2邮箱验证
 		if(type==1){
-			result = {isSucc:false};
+			result = {isSucc:true};
 		}else{
 			await axios.post(url+'/email',querystring.stringify({email:email})).then(res=>{
 				result = res.data;

@@ -301,10 +301,21 @@ class SetPwd extends React.Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
+			let param;
 			if(this.state.verifi_modl==1){
-
+				param = {
+					email:values.verifi_phone,
+					emailCode:values.verifi_code
+				};
+				axios.post('user/verifi_phone.json',param).then(res=>{
+					if(res.data.isSucc){
+						this.props.handleSteps ? this.props.handleSteps(1) : '';
+					}else{
+						message.error(res.data.message);
+					}
+				})
 			}else{
-				let param = {
+				param = {
 					email:values.verifi_email,
 					emailCode:values.verifi_code
 				};
@@ -345,7 +356,15 @@ class SetPwd extends React.Component {
                     }
                 }, 1000)
 			if(this.state.verifi_modl == 1){
-
+				let phone = this.verifi_phone.props.value;
+				let type = this.state.verifi_modl;
+				axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
+					if(res.data.isSucc){
+						console.log(res.data);
+					}else{
+						message.error(res.data.message);
+					}
+				})
 			}else{
 				let email = this.verifi_email.props.value;
 				let type = this.state.verifi_modl;
