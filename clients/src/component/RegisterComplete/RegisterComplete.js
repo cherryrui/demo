@@ -49,10 +49,10 @@ class RegisterComplete extends React.Component {
                         <FormattedMessage id="regiater.success.info" defaultMessage="提示"/>
                     </div>
                     <div className={css.footer}>
-                        <Button type="primary" onClick={this.handleClick} style={{background:" #20B2AA ",border:"0px"}} className={css.reqister_Button}>
+                        <Button type="primary" onClick={this.handleClick}  className={appcss.button_black}>
                             <FormattedMessage id="regiater.go_shopping" defaultMessage="去购物"/>
                         </Button>
-                        <Button type="primary" onClick={this.handleCertification} className={css.reqister_Button}>
+                        <Button type="primary" onClick={this.handleCertification}>
                             <FormattedMessage id="persondata.go.certification" defaultMessage="去认证"/>
                         </Button>
                     </div>

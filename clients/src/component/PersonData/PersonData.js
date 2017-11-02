@@ -504,7 +504,11 @@ class PersonData extends React.Component {
                         />
                     </span>
                     :<span className={css.text}>
-                        {this.state.user.address}
+                        {this.state.user.countryName+'-'+
+                        this.state.user.provinceName+'-'+
+                        this.state.user.cityName+'-'+
+                        this.state.user.districtName+'-'+
+                        this.state.user.address}
                     </span>
                     }
                 </p>

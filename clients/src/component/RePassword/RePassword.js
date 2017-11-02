@@ -55,6 +55,9 @@ class RePassword extends React.Component {
             step: this.state.step + step
         })
     }
+    handleJump = (url) =>{
+        this.props.history.pushState(null, `/${url}`);
+    }
 
     render() {
 
@@ -71,7 +74,7 @@ class RePassword extends React.Component {
                     <Steps className={css.steps} steps={operator.steps} current={this.state.step}/>
                     {this.state.step==0?<Authentication handleSteps={this.handleSteps}/>
                     :this.state.step==1?<SetPwd handleSteps={this.handleSteps}/>
-                    :this.state.step==2?<SetSuccess/>
+                    :this.state.step==2?<SetSuccess handleJump={this.handleJump}/>
                     :""}
                 </div>
             </div>
@@ -155,7 +158,7 @@ class Authentication extends React.Component {
 
                         </Col>
                         <Col span={4}>
-                            <Button className={css.password_Button} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                            <Button className={appcss.button_blue} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
                                 <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                 {this.state.time?("("+this.state.time+")"):""}
                             </Button>
@@ -266,10 +269,10 @@ class SetPwd extends React.Component {
 
                 </FormItem>
                 <FormItem className={css.Button_center}>
-                    <Button type="primary" onClick={this.handleBefore} htmlType="submit" className={css.code_Button}>
+                    <Button type="primary" onClick={this.handleBefore} htmlType="submit">
                         <FormattedMessage id="app.before" defaultMessage="上一步"/>
                     </Button>
-                    <Button type="primary" htmlType="submit" className={css.resave_Button}>
+                    <Button type="primary" htmlType="submit" className={appcss.button_black} style={{marginLeft:"30px"}}>
                         <FormattedMessage id="app.save" defaultMessage="保存"/>
                     </Button>
                 </FormItem>
@@ -285,7 +288,7 @@ class SetSuccess extends React.Component {
     }
 
     handleClick = () => {
-        this.props.history.pushState(null, "/login");
+        this.props.handleJump("login")
     }
     render() {
         return <div className={css.reset_success}>

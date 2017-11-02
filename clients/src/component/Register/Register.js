@@ -224,17 +224,17 @@ class Register extends React.Component {
                            {(
                             <Radio.Group defaultValue={this.state.usertype} onChange={this.onChangtype}>
                                 <Radio value={1}className={css.reqister_radio_one}>
-                                    <Icon style={{paddingRight:"3px"}} type="user" /><FormattedMessage id="persondata.indivdual.user" defaultMessage="个人用户"/>
+                                    <Icon className={css.icon} type="user" /><FormattedMessage id="persondata.indivdual.user" defaultMessage="个人用户"/>
                                 </Radio>
                                 <Radio value={2} className={css.reqister_radio_two}>
-                                    <Icon style={{paddingRight:"3px"}}  type="usergroup-add" /><FormattedMessage id="persondata.enterprise.user" defaultMessage="企业用户"/>
+                                    <Icon className={css.icon} type="usergroup-add" /><FormattedMessage id="persondata.enterprise.user" defaultMessage="企业用户"/>
                                 </Radio>
                             </Radio.Group>
                             )}
                         
                         </FormItem>
 
-                        <FormItem {...formItemLayout}
+                        {/*<FormItem {...formItemLayout}
                             label={formatMessage({id: 'persondata.user.style'})}
                         >
                         {(
@@ -247,7 +247,7 @@ class Register extends React.Component {
                                 </Radio.Button>
                             </Radio.Group>
                         )}
-                        </FormItem>
+                        </FormItem>*/}
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.name'})}
@@ -267,6 +267,20 @@ class Register extends React.Component {
                         >
                         {(
                             <Radio.Group defaultValue={this.state.verification_mode} onChange={this.onChangeverifi}>
+                                <Radio value={1}className={css.reqister_radio_one}>
+                                    <Icon className={css.icon} type="phone" /><FormattedMessage id="moblie.phone" defaultMessage="手机"/>
+                                </Radio>
+                                <Radio value={2} className={css.reqister_radio_two}>
+                                    <Icon className={css.icon} type="message" /><FormattedMessage id="post.email" defaultMessage="邮箱"/>
+                                </Radio>
+                            </Radio.Group>
+                        )}
+                        </FormItem>
+                        {/*<FormItem {...formItemLayout}
+                            label={formatMessage({id: 'verification.mode'})}
+                        >
+                        {(
+                            <Radio.Group defaultValue={this.state.verification_mode} onChange={this.onChangeverifi}>
                                 <Radio.Button value={1}className={css.reqister_radio_one}>
                                     <FormattedMessage id="moblie.phone" defaultMessage="手机"/>
                                 </Radio.Button>
@@ -275,7 +289,7 @@ class Register extends React.Component {
                                 </Radio.Button>
                             </Radio.Group>
                         )}
-                        </FormItem>
+                        </FormItem>*/}
                     {this.state.verification_mode==2?
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'post.email'})}
