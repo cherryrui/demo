@@ -1,0 +1,36 @@
+export default {
+	nature:[
+		{
+			"key":1,
+			"value":"app.soes",
+			"default":"国企"
+		},
+		{
+			"key":2,
+			"value":"app.private",
+			"default":"民营"
+		},
+		{
+			"key":3,
+			"value":"app.state",
+			"default":"央企"
+		}
+	],
+	industry:[
+		{
+			"key":1,
+			"value":"app.building.materials",
+			"default":"建材"
+		},
+		{
+			"key":2,
+			"value":"app.finance",
+			"default":"金融"
+		},
+		{
+			"key":3,
+			"value":"app.internet",
+			"default":"互联网"
+		}
+	]
+}

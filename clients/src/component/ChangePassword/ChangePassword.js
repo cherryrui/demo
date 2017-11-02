@@ -141,7 +141,15 @@ class ChangePassword extends React.Component {
             }
           })
       }else{
-
+          let phone = phoneOremail;
+          let type = 1;
+          axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
+            if(res.data.isSucc){
+              console.log(res.data);
+            }else{
+              message.error(res.data.message);
+            }
+          })
       }
     }else{
       message.error(this.formatMessage({id:'authen.authen.account_warn'}));

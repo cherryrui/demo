@@ -7,6 +7,7 @@ import css from './PersonData.scss';
 import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
 import Util from '../../Util.js';
+import operator from './operator.js';
 import CusModal from '../Public/CusModal/CusModal.js';
 import {
     Link
@@ -48,10 +49,12 @@ class PersonData extends React.Component {
         visible: false,
     }
     handleSelectNature = (value) => {
-        console.log(`selected ${value}`);
+        console.log(`selected ${JSON.stringify(value)}`);
         this.setState({
             natureid: parseInt(value.key),
             companyNatureName: value.label
+        },()=>{
+            console.log(this.state.natureid,this.state.companyNatureName)
         })
     }
     handleSelectIndu = (value) => {
@@ -100,7 +103,8 @@ class PersonData extends React.Component {
             user: JSON.parse(sessionStorage.user),
             options: [],
             check: 0,
-            naturelist: natureList,
+            naturelist: operator.nature,
+            industry:operator.industry,
             becoming: 4, //1代理商,2供应理商
             user: JSON.parse(sessionStorage.getItem("user")),
         };
@@ -593,9 +597,7 @@ class PersonData extends React.Component {
                                 {...formItemLayout}
                                 label={this.formatMessage({id:'certif.certif.type'})}
                             >
-                                {getFieldDecorator('certifications', {
-                                    rules:[{required:true, message:this.formatMessage({id:'app.input.certification'})}]
-                                })(
+                                {(
                                     <RadioGroup onChange={this.onRadioChange} defaultValue="1">
                                         <RadioButton value="1">{this.formatMessage({id:"certif.certif.card"})}</RadioButton>
                                         <RadioButton value="2">{this.formatMessage({id:"certif.certif.green_card"})}</RadioButton>
@@ -752,10 +754,9 @@ class PersonData extends React.Component {
                                 })(
                                     
                                     <Select labelInValue onChange={this.handleSelectNature} className={appcss.form_input}>
-                                        <Option value="1">Jack</Option>
-                                        <Option value="2">Lucy</Option>
-                                        <Option value="3">Disabled</Option>
-                                        <Option value="4">yiminghe</Option>
+                                    {this.state.naturelist.map(item=>{
+                                       return  <Option value={item.key}>{this.formatMessage({id: item.value})}</Option>
+                                    })}
                                     </Select>
                                 )}   
                             </FormItem>
@@ -768,10 +769,9 @@ class PersonData extends React.Component {
                                     rules:[{required:true, message:this.formatMessage({id:'certif.company.industry_warn'})}]
                                 })(
                                     <Select labelInValue onChange={this.handleSelectIndu} className={appcss.form_input}>
-                                        <Option value="1">Jack</Option>
-                                        <Option value="2">Lucy</Option>
-                                        <Option value="3">Disabled</Option>
-                                        <Option value="4">yiminghe</Option>
+                                    {this.state.industry.map(item=>{
+                                       return  <Option value={item.key}>{this.formatMessage({id: item.value})}</Option>
+                                    })}
                                     </Select>
                                 )}   
                             </FormItem>
