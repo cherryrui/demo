@@ -60,8 +60,8 @@ const en_US = {
     "sort.new": "New Arrival",
     "sort.price": "Price",
     "sort.sale": "Sales Volume",
-    "sort.region":"Region",
-    "sort.rating":"Rating",
+    "sort.region": "Region",
+    "sort.rating": "Rating",
     "collect.success": "Successful collection",
     "collect.successed": "Already collected",
     "home.input_warn": "please input product name or brand name",
@@ -440,10 +440,10 @@ const en_US = {
     "regiater.go_shopping": "Go to shopping",
     "register.style_warn": "Select the user type",
     "regiater.success.info": "In order to improve your personal information and help us to better personalize your service, chuan chuan will keep your personal information confidential.",
-    "register.condition":"Conditions of Use",
-    "register.privacy.notice":"Privacy Notice",
-    "register.message":"By creating an account, you agree to ",
-    "register.and":" and ",
+    "register.condition": "Conditions of Use",
+    "register.privacy.notice": "Privacy Notice",
+    "register.message": "By creating an account, you agree to ",
+    "register.and": " and ",
 
     "authen.authen.tel/email": "tel/email",
     "authen.authen.account_warn": "Please enter the telephone/mailbox",
@@ -579,6 +579,10 @@ const en_US = {
     "app.unsold": "unsold",
     "app.working_time": "working time",
     "app.monday.sunday": "Monday To Sunday",
-    "app.service.hotline": "Service hotline"
+    "app.service.hotline": "Service hotline",
+    "app.example.Photo": "example of Photo",
+    "app.example.info": "The photograph needs to be a clear color of the original electronic version. Supports JPG and BMP formats. The picture size is no more than 5M",
+    "app.figure": "Figure",
+    "app.passport.photos": "Please upload your passport photos"
 }
 export default en_US;

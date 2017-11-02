@@ -618,7 +618,7 @@ class PersonData extends React.Component {
                                 wrapperCol={{ span: 12, offset: 7 }}
                             >
                                 <p className={css.credentials} >
-                                    {this.formatMessage({id:'agent.upload.credentials'})}
+                                    {this.formatMessage({id:'app.passport.photos'})}
                                 </p>
                                 <div className={appcss.upload}>
                                     <div className={appcss.uploader_div}>
@@ -661,7 +661,21 @@ class PersonData extends React.Component {
                                     </div>
                                 </div>
                             </FormItem>
-
+                            <FormItem  style={{display:"flex"}}
+                                {...formItemLayout}
+                                label={this.formatMessage({id: 'app.example.Photo'})}
+                            >      
+                                <div className={css.photo_info}>
+                                    <p className={css.photo_text}>
+                                    <FormattedMessage id="app.figure" defaultMessage="app.img.size"/></p>
+                                    <p className={css.example_photo}>
+                                     <img  className={css.example_img} src="../img/about_content.jpg" ></img> 
+                                     </p>
+                                   <p className={css.photo_text}>
+                                        <FormattedMessage id="app.example.info" defaultMessage="app.img.format"/>
+                                   </p>
+                                </div>
+                            </FormItem>
                             <FormItem
                                 {...formItemLayout}
                                 label={this.formatMessage({id:'app.idaddress'})}
@@ -790,7 +804,7 @@ class PersonData extends React.Component {
                                 wrapperCol={{ span: 12, offset: 7 }}
                             >
                                 <p className={css.credentials} >
-                                    {this.formatMessage({id:'agent.upload.credentials'})}
+                                    {this.formatMessage({id:'app.passport.photos'})}
                                 </p>
                                 <div className={appcss.upload}>
                                     <div className={appcss.uploader_div}>
@@ -833,7 +847,21 @@ class PersonData extends React.Component {
                                     </div>
                                 </div>
                             </FormItem>
-
+                                <FormItem  style={{display:"flex"}}
+                                {...formItemLayout}
+                                label={this.formatMessage({id: 'app.example.Photo'})}
+                            >      
+                                <div className={css.photo_info}>
+                                    <p className={css.photo_text}>
+                                    <FormattedMessage id="app.figure" defaultMessage="app.img.size"/></p>
+                                    <p className={css.example_photo}>
+                                     <img  className={css.example_img} src="../img/about_content.jpg" ></img> 
+                                     </p>
+                                   <p className={css.photo_text}>
+                                        <FormattedMessage id="app.example.info" defaultMessage="app.img.format"/>
+                                   </p>
+                                </div>
+                            </FormItem>   
                             <FormItem
                                 wrapperCol={{ span: 12, offset: 7 }}
                             >

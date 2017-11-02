@@ -358,6 +358,21 @@ class Agent extends React.Component {
                         </div>
                     </div>
                 </FormItem>
+                <FormItem  style={{display:"flex"}}
+                    {...formItemLayout}
+                    label={this.formatMessage({id: 'app.example.Photo'})}
+                >      
+                    <div className={css.photo_info}>
+                        <p className={css.photo_text}>
+                        <FormattedMessage id="app.figure" defaultMessage="app.img.size"/></p>
+                        <p className={css.example_photo}>
+                         <img  className={css.example_img} src="../img/about_content.jpg" ></img> 
+                         </p>
+                       <p className={css.photo_text}>
+                            <FormattedMessage id="app.example.info" defaultMessage="app.img.format"/>
+                       </p>
+                    </div>
+                </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label={this.formatMessage({id: 'agent.legal'})}

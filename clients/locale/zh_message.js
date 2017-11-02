@@ -59,8 +59,8 @@ const zh_CN = {
     "sort.new": "新品",
     "sort.price": "价格",
     "sort.sale": "销量",
-    "sort.region":"区域",
-    "sort.rating":"评分",
+    "sort.region": "区域",
+    "sort.rating": "评分",
     "home.recent.add": "最近新增产品",
     "home.recent.go": "去购物车",
     "collect.success": "收藏成功",
@@ -452,10 +452,10 @@ const zh_CN = {
     "regiater.go_shopping": "去购物",
     "register.style_warn": "请选择用户类型",
     "regiater.success.info": "为了提高您的个人信息，帮助我们更好地个性化您的服务，川川将保持您的个人信息保密。",
-    "register.condition":"使用条件",
-    "register.privacy.notice":"隐私通知",
-    "register.message":"By creating an account, you agree to ",
-    "register.and":" 和 ",
+    "register.condition": "使用条件",
+    "register.privacy.notice": "隐私通知",
+    "register.message": "By creating an account, you agree to ",
+    "register.and": " 和 ",
 
     "authen.authen.tel/email": "电话/邮箱",
     "authen.authen.account_warn": "请输入电话/邮箱",
@@ -584,6 +584,10 @@ const zh_CN = {
     "app.selling": "销售中",
     "app.working_time": "工作时间",
     "app.monday.sunday": "星期一到星期天",
-    "app.service.hotline": "服务热线"
+    "app.service.hotline": "服务热线",
+    "app.example.Photo": "照片例子",
+    "app.example.info": "照片需是清晰色彩原件电子版。支持jpg和bmp格式。图片大小不超过5M",
+    "app.figure": "图形",
+    "app.passport.photos": "请上传你的证件照片"
 }
 export default zh_CN;

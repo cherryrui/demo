@@ -57,6 +57,27 @@
     height: 24px;
   }
 }
+.photo_info{
+  width:290px;
+  height: 280px;
+  padding: 10px;
+  border: 1px solid $border-color;
+  .photo_text{
+    line-height: 20px;
+    height: 20px;}
+  .example_photo{
+    width:270px;
+  height: 140px;
+  margin-top: 10px;
+   margin-bottom: 10px;
+   background-color: $back-ground-shallow-grey;
+   .example_img{ 
+    width:270px !important;
+  height: 140px !important;
+
+   }
+  }
+}
 .supplier_form{
   padding-top:20px ;
   padding-bottom: 10px;
