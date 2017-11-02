@@ -692,7 +692,7 @@ class PersonData extends React.Component {
                     <span  className={css.text_certification}>
                         {formatMessage({id: 'persondata.certification'})}
                     </span>
-                    <Button type="primary" className={appcss.button_blue} style={{ marginLeft: 20}} onClick={this.handleCertification}>
+                    <Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                     </Button>
                     <CusModal width="800" scroll={{y: 700}}
