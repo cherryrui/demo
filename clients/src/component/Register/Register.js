@@ -216,7 +216,7 @@ class Register extends React.Component {
                 <div className={css.form}>
                     <Form onSubmit={this.handleSubmit}>
 
-                        <FormItem {...tailFormItemLayout} >
+                        {/*<FormItem {...tailFormItemLayout} >
                     
                            {(
                             <Radio.Group defaultValue={this.state.usertype} onChange={this.onChangtype}>
@@ -229,9 +229,9 @@ class Register extends React.Component {
                             </Radio.Group>
                             )}
                         
-                        </FormItem>
+                        </FormItem>*/}
 
-                        {/*<FormItem {...formItemLayout}
+                        <FormItem {...formItemLayout}
                             label={formatMessage({id: 'persondata.user.style'})}
                         >
                         {(
@@ -244,7 +244,7 @@ class Register extends React.Component {
                                 </Radio.Button>
                             </Radio.Group>
                         )}
-                        </FormItem>*/}
+                        </FormItem>
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'register.register.name'})}
@@ -259,7 +259,7 @@ class Register extends React.Component {
                             <Input  className={css.reqister_input}/>
                         )}
                         </FormItem>
-                        <FormItem {...formItemLayout}
+                        {/*<FormItem {...formItemLayout}
                         label={formatMessage({id: 'verification.mode'})}
                         >
                         {(
@@ -272,8 +272,8 @@ class Register extends React.Component {
                                 </Radio>
                             </Radio.Group>
                         )}
-                        </FormItem>
-                         {/*<FormItem {...formItemLayout}
+                        </FormItem>*/}
+                        <FormItem {...formItemLayout}
                             label={formatMessage({id: 'verification.mode'})}
                         >
                         {(
@@ -286,7 +286,7 @@ class Register extends React.Component {
                                 </Radio.Button>
                             </Radio.Group>
                         )}
-                        </FormItem>*/}
+                        </FormItem>
                     {this.state.verification_mode==2?
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'post.email'})}
