@@ -34,10 +34,13 @@ const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const CheckboxGroup = Checkbox.Group;
 
-const options = [
-    {label:'个人用户',value:1},
-    {label:'企业用户',value:2}
-];
+const options = [{
+    label: '个人用户',
+    value: 1
+}, {
+    label: '企业用户',
+    value: 2
+}];
 
 
 class Register extends React.Component {
@@ -52,8 +55,8 @@ class Register extends React.Component {
             time: 0,
             verification_mode: 1, //1手机验证.2邮箱验证
             disabled: false,
-            usertype:1, //1个人用户 2.企业用户
-            check:true,
+            usertype: 1, //1个人用户 2.企业用户
+            check: true,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
@@ -69,13 +72,13 @@ class Register extends React.Component {
             if (!err) {
                 console.log(values)
                 let phoneoremail = values.email ? values.email : values.tel;
-                let params ={
-                    userName:values.name,
-                    password:values.password,
-                    eamilphone:this.state.verification_mode,
-                    emailOrphone:phoneoremail,
-                    userType:this.state.usertype,
-                    checkCode:values.verificationCode
+                let params = {
+                    userName: values.name,
+                    password: values.password,
+                    eamilphone: this.state.verification_mode,
+                    emailOrphone: phoneoremail,
+                    userType: this.state.usertype,
+                    checkCode: values.verificationCode
                 }
                 axios.post('/user/register.json', params).then(res => {
                     console.log('2222', JSON.stringify(res));
@@ -122,31 +125,31 @@ class Register extends React.Component {
             })
             axios.get(`/user/sendcode.json?account=${account}&type=${verification_mode}`).then(res => {
                 console.log(res.data)
-                if(res.data.isSucc){
+                if (res.data.isSucc) {
                     this.setState({
-                    loading: false,
-                    time: 60,
-                    disabled: true
-                })
-                this.timer = window.setInterval(() => {
-                    /*console.log(this.state.time);*/
-                    if (this.state.time - 1 >= 0) {
-                        this.setState({
-                            time: this.state.time - 1,
-                            disabled: true
-                        })
-                    } else {
-                        this.setState({
-                            time: 0,
-                            disabled: false
-                        })
-                        window.clearInterval(this.timer)
-                    }
-                }, 1000)
-                }else{
+                        loading: false,
+                        time: 60,
+                        disabled: true
+                    })
+                    this.timer = window.setInterval(() => {
+                        /*console.log(this.state.time);*/
+                        if (this.state.time - 1 >= 0) {
+                            this.setState({
+                                time: this.state.time - 1,
+                                disabled: true
+                            })
+                        } else {
+                            this.setState({
+                                time: 0,
+                                disabled: false
+                            })
+                            window.clearInterval(this.timer)
+                        }
+                    }, 1000)
+                } else {
                     message.error(res.data.message);
                 }
-                
+
             })
         } else {
             message.warn(this.formatMessage({
@@ -165,19 +168,19 @@ class Register extends React.Component {
             callback();
         }
     }
-    onChangeverifi = (e) =>{
+    onChangeverifi = (e) => {
         console.log(`radio checked:${e.target.value}`);
         this.setState({
-            verification_mode : e.target.value
+            verification_mode: e.target.value
         })
     }
-    onChangtype = (e) =>{
+    onChangtype = (e) => {
         console.log(`radio checked:${e.target.value}`);
         this.setState({
-            usertype : e.target.value
+            usertype: e.target.value
         })
     }
-   
+
 
     render() {
         const {
@@ -216,7 +219,7 @@ class Register extends React.Component {
                 <div className={css.form}>
                     <Form onSubmit={this.handleSubmit}>
 
-                        {/*<FormItem {...tailFormItemLayout} >
+                        <FormItem {...tailFormItemLayout} >
                     
                            {(
                             <Radio.Group defaultValue={this.state.usertype} onChange={this.onChangtype}>
@@ -229,7 +232,7 @@ class Register extends React.Component {
                             </Radio.Group>
                             )}
                         
-                        </FormItem>*/}
+                        </FormItem>
 
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'persondata.user.style'})}
@@ -259,20 +262,6 @@ class Register extends React.Component {
                             <Input  className={css.reqister_input}/>
                         )}
                         </FormItem>
-                        {/*<FormItem {...formItemLayout}
-                        label={formatMessage({id: 'verification.mode'})}
-                        >
-                        {(
-                            <Radio.Group defaultValue={this.state.verification_mode} onChange={this.onChangeverifi}>
-                                <Radio value={1}className={css.reqister_radio_one}>
-                                    <Icon style={{paddingRight:"3px"}} type="phone" /><FormattedMessage id="moblie.phone" defaultMessage="手机"/>
-                                </Radio>
-                                <Radio value={2} className={css.reqister_radio_two}>
-                                    <Icon style={{paddingRight:"3px"}} type="message" /><FormattedMessage id="post.email" defaultMessage="邮箱"/>
-                                </Radio>
-                            </Radio.Group>
-                        )}
-                        </FormItem>*/}
                         <FormItem {...formItemLayout}
                             label={formatMessage({id: 'verification.mode'})}
                         >
@@ -329,7 +318,7 @@ class Register extends React.Component {
                                 )}
                                 </Col>
                                 <Col span={8}>
-                                    <Button type="primary" className={css.vercode} disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                                    <Button type="primary" className={appcss.button_black} disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
                                         <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                         {this.state.time?("("+this.state.time+")"):""}
                                     </Button>
@@ -382,7 +371,7 @@ class Register extends React.Component {
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
-                            <Button type="primary" htmlType="submit" className={css.reqister_Button}>
+                            <Button type="primary" htmlType="submit" style={{width: 400}}>
                                 <FormattedMessage id="login.registor" defaultMessage="注册"/>
                             </Button>
                         </FormItem>
