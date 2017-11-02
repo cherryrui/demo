@@ -121,12 +121,26 @@ class Authentication extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			console.log(values)
 			if (!err) {
+				let param;
 				if(this.state.verifi_modl==1){
-
+					let tel = user.tel,
+						check = values.phoneoremailcheck;
+					param = {
+						tel:tel,
+						telCode:check
+					};
+					axios.post('/user/phonecheck.json',param).then(res=>{
+						if(res.data.isSucc){
+							console.log(res.data)
+							this.props.handleSteps ? this.props.handleSteps(1) : '';
+						}else{
+							message.error(res.data.message);
+						}
+					})
 				}else{
 					let email = user.email,
 						check = values.phoneoremailcheck;
-						let param = {
+						param = {
 							email:email,
 							emailCode:check
 						};
@@ -135,7 +149,7 @@ class Authentication extends React.Component {
 							console.log(res.data)
 							this.props.handleSteps ? this.props.handleSteps(1) : '';
 						}else{
-							message.error(res.data);
+							message.error(res.data.message);
 						}
 					})
 				}
@@ -166,7 +180,15 @@ class Authentication extends React.Component {
                     }
                 }, 1000)
 			if(this.state.verifi_modl == 1){
-
+				let tel = user.tel;
+				let type = this.state.verifi_modl;
+				axios.get(`/user/sendcode.json?account=${tel}&type=${type}`).then(res=>{
+					if(res.data.isSucc){
+						console.log(res.data);
+					}else{
+						message.error(res.data.message);
+					}
+				})
 			}else{
 				let email = user.email;
 				let type = this.state.verifi_modl;
@@ -304,8 +326,8 @@ class SetPwd extends React.Component {
 			let param;
 			if(this.state.verifi_modl==1){
 				param = {
-					email:values.verifi_phone,
-					emailCode:values.verifi_code
+					tel:values.verifi_phone,
+					telCode:values.verifi_code
 				};
 				axios.post('user/verifi_phone.json',param).then(res=>{
 					if(res.data.isSucc){
@@ -332,9 +354,11 @@ class SetPwd extends React.Component {
 	}
 
 	getVerifiCode = () =>{
-		/*console.log(this.verifi_email.props.value)
-		console.log(this.props.form.getFieldsValue())*/
-		if(this.verifi_email.props.value || this.verifi_phone.props.value){
+		/*console.log(this.verifi_email.props.value)*/
+		console.log(this.props.form.getFieldsValue())
+		console.log(this.verifi_email)
+		let values = this.props.form.getFieldsValue();
+		if(values.verifi_phone || values.verifi_email){
 			this.setState({
                     loading: false,
                     time: 60,
@@ -356,7 +380,7 @@ class SetPwd extends React.Component {
                     }
                 }, 1000)
 			if(this.state.verifi_modl == 1){
-				let phone = this.verifi_phone.props.value;
+				let phone = values.verifi_phone;
 				let type = this.state.verifi_modl;
 				axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
 					if(res.data.isSucc){
@@ -366,7 +390,7 @@ class SetPwd extends React.Component {
 					}
 				})
 			}else{
-				let email = this.verifi_email.props.value;
+				let email = values.verifi_email;
 				let type = this.state.verifi_modl;
 				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
 					if(res.data.isSucc){

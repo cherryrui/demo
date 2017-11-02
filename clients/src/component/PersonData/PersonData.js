@@ -464,7 +464,7 @@ class PersonData extends React.Component {
                                 <span className={css.title}>
                                     <FormattedMessage  id="post.company_name" defaultMessage="公司名字"/>：
                                 </span>
-                                <span className={css.text}>{this.state.user.agent?this.state.user.agent.agentName:this.state.user.supplier.supplierName}</span>
+                                <span className={css.text}>{this.state.user.agent?this.state.user.agent.AgentName:this.state.user.supplier.supplierName}</span>
                          </p> 
 
                         <p  className={css.info}>

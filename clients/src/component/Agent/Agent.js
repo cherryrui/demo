@@ -110,7 +110,7 @@ class Agent extends React.Component {
                             this.props.handleVisible ? this.props.handleVisible() : "";
                         } else if (res.data.isSucc) {
                             let user = JSON.parse(sessionStorage.user);
-                            user.agent = {};
+                            user.agent = values;
                             sessionStorage.setItem('user', JSON.stringify(user));
                             this.props.history.pushState(null, "page/mine/successful-application/1");
                         } else {

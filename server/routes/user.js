@@ -175,7 +175,9 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		const email = ctx.request.query.account;
 		const type = ctx.request.query.type;//1手机验证  2邮箱验证
 		if(type==1){
-			result = {isSucc:true};
+			await axios.post(url+'/telCode',querystring.stringify({tel:email})).then(res=>{
+				result = res.data;
+			})
 		}else{
 			await axios.post(url+'/email',querystring.stringify({email:email})).then(res=>{
 				result = res.data;
@@ -194,11 +196,30 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		/*console.log(result)*/
 		ctx.body = result;
 	})
+	.post('/phonecheck.json',async ctx=>{
+		let result = null,
+		param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/testTel',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 	.post('/verifi_email.json',async ctx=>{
 		let result = null,
 			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
 		await axios.post(url+'/auth/user/identificationEmail',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		});
+		ctx.body = result;
+	})
+	.post('/verifi_phone.json',async ctx=>{
+		let result = null,
+			param = ctx.request.body;
+			console.log(param)
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url+'/auth/user/identificationTel',querystring.stringify(param)).then(res=>{
 			result = res.data;
 		});
 		ctx.body = result;
