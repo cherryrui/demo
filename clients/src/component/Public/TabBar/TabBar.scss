@@ -5,6 +5,7 @@
     border-left: 1px solid $border-color;
     border-right: 1px solid $border-color;
     .item{
+        color: white;
     	flex-grow: 1;
     	background: $bar-color;
     	text-align: center;
@@ -21,6 +22,7 @@
     .active{
     	@extend .item;
     	background: white;
+        color: $font-color;
     	border-bottom: none;
     	border-left: 1px solid $border-color;
     	border-right: 1px solid $border-color;

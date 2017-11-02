@@ -22,6 +22,8 @@
     align-items: center;
     img{
       width: 100%;
+      height: 100%;
+      padding: 2px;
     }
 }
 .name{
@@ -31,15 +33,15 @@
     color: $font-color;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     word-break: break-all;
     line-height: 22px;
     margin-top: 15px;
     
-    height: 38px;
+    height: 44px;
     margin-left: 15px;
-    margin-right: 20px
+    margin-right: 15px
 }
 .foot{
   text-align: center;
