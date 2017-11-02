@@ -764,10 +764,8 @@ class PersonData extends React.Component {
                                     initialValue: this.state.user.region?this.state.user.region:[],
                                     rules:[{type: 'array',required:true, message:this.formatMessage({id:'agent.select.region'})}]
                                 })(
-                                    <span className={appcss.form_input}>
-                                        <Cascader style={{ width: '100%'}} options={this.state.options} onChange={this.handleRegion}/>
-                                    </span>
-                                )}   
+                                    <Cascader className={css.form_cascader} style={{ width: '100%'}} options={this.state.options} onChange={this.handleRegion}/>
+                                )}
                             </FormItem>
 
                             <FormItem

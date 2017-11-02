@@ -82,12 +82,45 @@ router.get('/get-category.json', async(ctx, next) => {
 	})
 	.post('/get-product-info-byid.json', async(ctx, next) => {
 		let param = ctx.request.body,
-			result;
+			result, product = {};
 		if (ctx.cookie.get('token')) {
 			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			//获取产品基本信息
 			await axios.get(url + "/auth/supplier/getProduct?productId=" + param.pid).then(res => {
-				result = res.data;
+				product.basic = res.data.result.product;
+				result = res.data
 			})
+
+			//获取产品的引导图
+			await axios.get(url + "/auth/supplier/getProductImgs?productId=" + param.pid).then(res => {
+				product.imgs = res.data.result;
+			})
+
+			//获取产品规格
+			await axios.get(url + "/auth/supplier/getUpdateProductSpecs?productId=" + param.pid).then(res => {
+				product.spec = res.data.result;
+			})
+
+			//获取产品属性
+			await axios.get(url + '/product/queryProductPropertyByCategory/' + param.pid).then(res => {
+				product.attr = res.data.result;
+			})
+
+			//获取产品详情
+			await axios.get(url + "/auth/supplier/getIntroduct?productId=" + param.pid).then(res => {
+				product.info = res.data.result;
+			})
+
+			//获取产品包装参数
+			await axios.get(url + "/auth/supplier/getProductPack?productId=" + param.pid).then(res => {
+				product.pack = res.data.result;
+			})
+
+			//获取产品运输要求
+			await axios.get(url + "/auth/supplier/getTransportation?productId=" + param.pid).then(res => {
+				product.transport = res.data.result;
+			})
+			result.product = product;
 		} else {
 			result = {
 				isSucc: false,
@@ -364,7 +397,6 @@ router.get('/get-category.json', async(ctx, next) => {
 	})
 
 //或者产品属性
-//
 .post('/get-product-attr.json', async(ctx, next) => {
 		let productId = ctx.request.body.productId,
 			result;

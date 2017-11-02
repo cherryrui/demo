@@ -9,9 +9,12 @@ import {
 import {
 	Link
 } from 'react-router';
+import operator from '../ProductEditor/operator.js';
 import {
-	Breadcrumb
+	Breadcrumb,
+	message
 } from 'antd';
+import ProductPicture from '../ProductEditor/ProductPicture.js';
 
 class ProductEditeDetail extends React.Component {
 	static propTypes = {
@@ -21,22 +24,50 @@ class ProductEditeDetail extends React.Component {
 		super(props);
 		this.state = {
 			status: 5, //状态：1.审核中 2.售卖中 3下架 4审核不通过 5没有提交审核
-			product: {
-				imgs: [],
-				productName: "xxxxxxxxxxxxxxxxx",
-			},
+			product: {},
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {
-
+		this.getProduct();
 	}
 	getProduct() {
 		let param = {
 			pid: this.props.params.id
 		}
 		axios.post('/product/get-product-info-byid.json', param).then(res => {
-			console.log(res.data);
+			if (res.data.isSucc) {
+				let product = res.data.product;
+				product.imgs.imgUrl.splice(0, 0, {
+					imgUrl: product.imgs.defaultImgUrl
+				});
+				let category = [];
+				res.data.result.category.map(item => {
+					if (item.parent && item.parent.parent) {
+						let cate = new Array(3);
+						cate[0] = item.parent.parent.categoryName;
+						cate[1] = item.parent.categoryName;
+						cate[2] = item.categoryName;
+						category.push(cate);
+					}
+				})
+				if (product.transport.transportationExplain) {
+					let transportationExplain = JSON.parse(product.transport.transportationExplain);
+					product.transport.explain = "";
+					for (let key in transportationExplain) {
+						product.transport.explain += transportationExplain[key] + " ";
+					}
+
+				}
+				product.basic.categoryName = category;
+				this.setState({
+					product: product
+				})
+			} else if (res.data.code == 104) {
+				this.props.handleVisible ? this.props.handleVisible(true) : "";
+			} else {
+				message.error(res.data.message);
+			}
 		})
 	}
 
@@ -45,7 +76,7 @@ class ProductEditeDetail extends React.Component {
 		console.log("ProductEditeDetail");
 		return <div>
 			<p className={css.product_name}>
-			{this.state.product.productName}</p>
+			{this.state.product.basic?this.state.product.basic.productName:""}</p>
 			{this.state.status==1?
 				<p className={css.process}>
 	 			{this.formatMessage({id: 'app.processing'})}
@@ -64,63 +95,24 @@ class ProductEditeDetail extends React.Component {
 				</p>
 			:""		
 			}
-			<div>
-				{this.state.product.imgs.map(item=>{
-					return <div>
-						<img src={item.url}/>
+			{operator.steps.map(item=>{
+				return <div>
+					<div  className={css.title_bg}>
+						 {this.formatMessage({id: item.title})}
+						<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
+							{this.formatMessage({id: 'mine.product.edit'})}					
+						</p>
 					</div>
-				})}
-			</div>
-			<div></div>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'mine.person.data'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>
-			<Mainfigure/>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'mine.person.data'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>
-			<Basic/>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'cart.specifucation'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>
-			<Specifucation/>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'mine.product.param'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>
-			<Param/>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'product.detail.package'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>	
-			<Package/>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'mine.product.transport'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>	
-			<Transport/>
-			<div  className={css.title_bg}>
-				 {this.formatMessage({id: 'product.edite.descrip'})}
-				<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
-					{this.formatMessage({id: 'mine.product.edit'})}					
-				</p>
-			</div>
-			<Descrip/>	
+					{item.key==1?<Basic data={this.state.product.basic?this.state.product.basic:{}}/>
+					:item.key==2?<Mainfigure data={this.state.product.imgs?this.state.product.imgs.imgUrl:[]}/>
+					:item.key==3?<Specifucation data={this.state.product.attr?this.state.product.attr:{}}/>
+					:item.key==4?<Param data={this.state.product.spec?this.state.product.spec:{}}/>
+					:item.key==5?<Descrip data={this.state.product.info?this.state.product.info:{}}/>
+					:item.key==6?<Package data={this.state.product.pack?this.state.product.pack:{}}/>
+					:item.key==7?<Transport data={this.state.product.transport?this.state.product.transport:{}}/>:""
+					}
+				</div>
+			})}
 		</div>
 	}
 }
@@ -134,16 +126,10 @@ class Mainfigure extends React.Component {
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	render() {
-		return <div>
-			
-		<div className={css.mainfigure}>
-				<p className={css.main_img}></p>
-				<p className={css.main_img}></p>
-				<p className={css.main_img}></p>
-				<p className={css.main_img}></p>
-				<p className={css.main_img}></p>
-
-			</div>
+		return <div className={css.product_imgs}>
+			{this.props.data?this.props.data.map(item=>{
+				return <img src={item.imgUrl+ "@160w_160h_1e_1c.png"}/>
+			}):""}
 		</div>
 	}
 }
@@ -153,31 +139,19 @@ class Basic extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		this.state = {
-			name: "xxxxxxx",
-			art_no: 1342343,
-			brand: "agegnt",
-			category: "建材",
-			unit: "m",
-			price: 200,
-			moq: 100,
-			inventory: 200,
-		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
 	render() {
 		return <div>
-
 			<div className={css.detail_table}>
-			<div className={css.table_top}></div>
-
+				<div className={css.table_top}></div>
 				<div className={css.table_row}>
 					<p className={css.table_left_2}>
 					  {this.formatMessage({id: 'mine.product.name'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.name}
+					{this.props.data.productName}
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -185,7 +159,7 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'orderdetails.art.no'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.art_no}
+					{this.props.data.productNumber}
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -193,7 +167,7 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'app.brand'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.brand}
+					{locale=="en"?this.props.data.brandNameEn:this.props.data.brandNameCn}
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -201,7 +175,9 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'supplier.category'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.category}
+					{this.props.data.categoryName?this.props.data.categoryName.map(item=>{
+						return <p>{item.join("/")}</p>
+					}):""}
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -209,7 +185,7 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'mine.product.unit'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.unit}	
+					{this.props.data.unitName}	
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -217,7 +193,7 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'cart.price'})}:
 					</p>
 					<p className={css.table_right_2}>
-					${this.state.price}	
+					${this.props.data.priceSupplier}	
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -225,7 +201,7 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'product.detail.MOQ'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.moq}	
+					{this.props.data.minBuyQuantity}	
 					</p>
 				</div>
 				<div className={css.table_row}>
@@ -233,7 +209,7 @@ class Basic extends React.Component {
 					  {this.formatMessage({id: 'product.detail.inventory'})}:
 					</p>
 					<p className={css.table_right_2}>
-					{this.state.inventory}
+					{this.props.data.inventory}
 					</p>
 				</div>
 			</div>
@@ -246,36 +222,24 @@ class Specifucation extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		this.state = {
-
-			style_v: "欧美",
-
-		}
-
-		this.formatMessage = this.props.intl.formatMessage;
 	}
 
 
 	render() {
-		return <div>
-			
-			<div className={css.detail_table}>
+		return <div  className={css.detail_table}>
 			<div className={css.table_top}></div>
-				<div className={css.table_row}>
-					<p className={css.table_left_5}>
-						<p className={css.specifucation_name}>
-						{this.formatMessage({id:'cart.specifucation'})}：</p>
-						{this.state.style_v}
-					</p>
-					<p className={css.table_right_5}>
-						<p className={css.specifucation_name}>
-						{this.formatMessage({id:'cart.specifucation'})}：</p>
-						{this.state.style_v}
-					</p>
+				{this.props.data.selectProperty?this.props.data.selectProperty.map(item=>{
+					return <div className={css.table_row}>
+					<p className={css.table_left_2}>{item.propertyName}：</p>
+					<p className={css.table_right_2}>{item.propertyValue}</p>
 				</div>
-		
-				
-			</div>
+				}):""}
+				{this.props.data.customProperty?JSON.parse(this.props.data.customProperty).map(item=>{
+					return <div className={css.table_row}>
+					<p className={css.table_left_2}>{item.attrName}：</p>
+					<p className={css.table_right_2}>{item.attrVal}</p>
+				</div>
+				}):""}
 		</div>
 	}
 }
@@ -285,32 +249,30 @@ class Param extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		this.state = {
-			price: 100,
-			inventory: 1,
-			param: [0],
-		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	render() {
 		return <div>
-			
 			<div className={css.detail_table}>
-			<div className={css.table_top}></div>
-				<div className={css.table_row}>
+				<div className={css.table_top}>
+				</div>
+				{this.props.data.itemInfo?this.props.data.itemInfo.map(item=>{
+					return <div className={css.table_row}>
 					<p className={css.table_left_5}>
-						{this.formatMessage({id:'mine.product.name'})}
-						{this.state.param}
+						{item.specInfo.map((spec,index)=>{
+							return <span>{spec.specVal+(index<item.specInfo.length-1?"/":"")}</span>
+						})}
 					</p>
 					<p className={css.table_middle}>
 						{this.formatMessage({id:'sort.price'})}:
-						${this.state.price}
+						${item.priceSupplier}
 					</p>
 					<p className={css.table_m_right}>
 						{this.formatMessage({id:'product.detail.inventory'})}:
-						{this.state.inventory}
+						{item.inventory}
 					</p>					
-				</div>								
+				</div>		
+				}):""}	
 			</div>
 		</div>
 	}
@@ -321,78 +283,45 @@ class Package extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		this.state = {
-			length: "100m",
-			width: "100m",
-			height: "100m",
-			weight: "500g",
-			pack: "500g/箱",
-			special: "液体",
-			other: "xxxxxxx",
-		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	render() {
+		console.log(this.props.data, operator.product_ins);
 		return <div>
 			<div className={css.detail_table}>
 			<div className={css.table_top}></div>
-
-				<div className={css.table_row}>
+			{operator.product_ins.map(item=>{
+				return item.type<3?<div className={css.table_row}>
 					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_length'})}:
+					  {this.formatMessage({id: item.name})}：
 					</p>
 					<p className={css.table_right}>
-					{this.state.length}
+					{item.type==0?this.props.data[item.key]+this.props.data[item.unit_name]
+						:item.type==1?this.props.data[item.key]+this.props.data[item.unit_name[0]]+"/"+this.props.data[item.unit_name[1]]
+						:item.type==2&&this.props.data.type?JSON.parse(this.props.data.type).map(type=>{
+							return <span>{type.name} &nbsp;</span>
+						}):""}
 					</p>
-				</div>
-				<div className={css.table_row}>
+				</div>:""
+			})}
+			{this.props.data.customProperty?JSON.parse(this.props.data.customProperty).map(item=>{
+				return <div className={css.table_row}>
 					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_width'})}:
+					  {item.name}：
 					</p>
 					<p className={css.table_right}>
-					{this.state.length}
+						{item.content}{item.unit}
 					</p>
 				</div>
-				<div className={css.table_row}>
-					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_height'})}:
-					</p>
-					<p className={css.table_right}>
-					{this.state.height}
-					</p>
-				</div>
-				<div className={css.table_row}>
-					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_weight'})}:
-					</p>
-					<p className={css.table_right}>
-					{this.state.weight}
-					</p>
-				</div>
-				<div className={css.table_row}>
-					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_pack'})}:
-					</p>
-					<p className={css.table_right}>
-					{this.state.pack}
-					</p>
-				</div>
-				<div className={css.table_row}>
-					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_special'})}:
-					</p>
-					<p className={css.table_right}>
-					{this.state.special}
-					</p>
-				</div>
-				<div className={css.table_row}>
-					<p className={css.table_left}>
-					  {this.formatMessage({id: 'mine.product.instruct_other'})}：
-					</p>
-					<p className={css.table_right}>
-					{this.state.other}
-					</p>
-				</div>
+			}):""}
+			<div className={css.table_bottom}>
+				<p className={css.table_left}>
+				  {this.formatMessage({id: 'mine.product.instruct_other'})}：
+				</p>
+				<p className={css.table_right}>
+					{this.props.data.remark}
+				</p>
+			</div>
 			</div>
 		</div>
 	}
@@ -403,10 +332,6 @@ class Transport extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		this.state = {
-			other: "XXXXXXXXXXXXX",
-		}
-
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
@@ -416,12 +341,11 @@ class Transport extends React.Component {
 					<div className={css.detail_table}>
 						<div className={css.table_top}></div>
 						<p className={css.table_only_row}>
-							{this.formatMessage({id:'product.edite.transport.length'})}/
-							{this.formatMessage({id:'product.edite.transport.length'})}									
-					    </p>
+							{this.props.data.explain}
+						</p>
 						<p className={css.table_only_row}>
-							{this.formatMessage({id:'mine.product.instruct_other'})}:
-							{this.state.other}								
+							{this.formatMessage({id:'mine.product.instruct_other'})}：
+							{this.props.data.transportationOther}								
 					    </p>
 					</div>
 			   </div>
@@ -439,15 +363,17 @@ class Descrip extends React.Component {
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	render() {
-		return <div>			
-					<div className={css.detail_descrip}>
-						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
-						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
-						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
-						<img src="http://dycchenling.img-ap-southeast-1.aliyuncs.com/08BED8B37A78207345C3E5058B017D0C@800w_1e_1c.png"/>
-						
-					</div>
-			   </div>
+		return <div className={css.detail_descrip}>			
+			{this.props.data.length>0?this.props.data.map(item=> {
+                return <div>
+                    <p className={css.info_title}>{item.introduceName}</p>
+                    {item.contentType==1?<img src={item.content+"@800w_1e_1c.png"}/>
+                    :<div style={{padding: "20px"}} dangerouslySetInnerHTML={{__html: item.content}}/>}
+                </div>
+            }):<div className={css.no_data}> 
+                <FormattedMessage id="product.no_information" defaultMessage="暂无介绍信息"/>
+            </div>}
+		</div>
 	}
 }
 Basic = injectIntl(Basic);

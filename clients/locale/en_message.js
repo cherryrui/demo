@@ -520,7 +520,6 @@ const en_US = {
     "systemmessage.empty.message": "Empty message",
     "product.detail.model": "model",
     "product.detail.material": "material",
-    "mine.product.instruct_weight": "weight",
     "app.view.order": "view the order",
     "app.bank.imformation": "Bank imformation",
     "product.no_information": "No information is available",

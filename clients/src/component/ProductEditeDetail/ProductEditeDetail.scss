@@ -4,6 +4,15 @@
 	font-weight: bold;
     margin-bottom: 20px;
 }
+.product_imgs{
+    img{
+        width: 160px;
+        height: 160px;
+        border: 1px solid $border-color;
+        margin: 10px 5px;
+    }
+}
+
 .process{
 	width:100px;
 	height: 18px;
@@ -86,8 +95,7 @@
     background-color: $item-color;
     padding:10px;
     margin-bottom: 20px;
-    text-align: center;
-        overflow: auto;
+    overflow: auto;
     height: 500px;
 }
 .detail_table{
@@ -96,32 +104,30 @@
 	margin-bottom: 20px;
 
 	.table_top{
-	border: none;
-    height: 1px;   
-    display: block;
-    border-bottom: 1px solid #c4c4c4;
+    	border: none;
+        height: 1px;   
+        display: block;
+        border-bottom: 1px solid $border-color;
 	}
 	.table_only_row{
 		 padding-left: 30px;
-		 border-bottom: 1px solid #c4c4c4;
-    	 border-left: 1px solid #c4c4c4;
-    	 border-right: 1px solid #c4c4c4;
+		 border-bottom: 1px solid $border-color;
+    	 border-left: 1px solid $border-color;
+    	 border-right: 1px solid $border-color;
     	 height: 27px;
     	line-height: 27px;
 	}
 	.table_row{
 		display: flex;
-    border-bottom: 1px solid #c4c4c4;
-    border-left: 1px solid #c4c4c4;
-    border-right: 1px solid #c4c4c4;
-    height: 27px;
-    line-height: 27px;
+        border-bottom: 1px solid $border-color;
+        border-left: 1px solid $border-color;
+        border-right: 1px solid $border-color;
     .table_left{
     	width: 420px;
-    	
-    	border-right: 1px solid #c4c4c4;
-    	 padding-right: 250px; 
-     text-align: right;
+    	line-height: 27px;
+    	border-right: 1px solid $border-color;
+    	padding-right: 250px; 
+        text-align: right;
     }
      .table_right{
      	width: 420px;
@@ -130,10 +136,10 @@
 	.table_left_5{
     	width: 420px;
     	padding-left: 30px;
-    	border-right: 1px solid #c4c4c4;	   
+    	border-right: 1px solid $border-color;	   
  	    display: flex;
+        line-height: 27px;
  	    .specifucation_name{
-
  	    	padding-right: 20px;
  	    }
     }
@@ -149,7 +155,7 @@
 	.table_middle{
 		width: 210px;
     	padding-left: 30px;
-    	border-right: 1px solid #c4c4c4;
+    	border-right: 1px solid $border-color;
 	}
 	.table_m_right{
 		width: 210px;
@@ -158,14 +164,46 @@
     .table_left_2{
     	width: 200px;
     	padding-left: 30px;
-    	border-right: 1px solid #c4c4c4;
+    	border-right: 1px solid $border-color;
     	text-align: right;
-    padding-right: 60px;
+        padding-right: 60px;
+        line-height: 27px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
      .table_right_2{
      	width: 640px;
      	padding-left: 30px;
- 	}
+        margin: auto;
 
+ 	  }
 	}
+    .table_bottom{
+        display: flex;
+        border-bottom: 1px solid $border-color;
+        border-left: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+        align-items: center;
+        .table_left{
+            flex-grow: 1;
+            text-align: right;
+            line-height: 27px;
+        }
+        .table_right{
+            width: 670px;
+        }
+    }
+}
+.no_data{
+    text-align: center;
+    padding: 40px 0;
+}
+.info_title{
+    background: #00bcdb;
+    color: white;
+    padding-left: 47px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 38px;
 }
