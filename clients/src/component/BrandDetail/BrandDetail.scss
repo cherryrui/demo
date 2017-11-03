@@ -63,7 +63,7 @@
     	}
     	.active{
     		@extend .icon;
-    		color: $color-orange;
+    		color: $theme-color;
     	}
 	}
 }
