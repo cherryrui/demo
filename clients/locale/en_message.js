@@ -571,6 +571,8 @@ const en_US = {
     "app.login.password_info": "Network exception, please change login password again",
     "app.phone.verified_info": "You've already checked your phone number",
     "app.email.verifi_info": "Email authentication can be used for login",
+    "app.email.verifi_infoed": "Email is not authenticated, please verify timely",
+    "app.phone.verified_infoed": "The phone is not verified, please check it in time",
     "original.password": "original password",
     "enter.original.password": "Please enter your initial password",
     "phone.verification.code": "Moblile phone verification code",

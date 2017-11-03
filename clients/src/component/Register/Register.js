@@ -57,6 +57,7 @@ class Register extends React.Component {
             disabled: false,
             usertype: 1, //1个人用户 2.企业用户
             check: true,
+            confirmDirty: false,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
@@ -121,8 +122,9 @@ class Register extends React.Component {
         })
     };
     handleCode = (e) => {
-        if (this.tel.props.value || this.email.props.value) {
-            let account = this.tel.props.value ? this.tel.props.value : this.email.props.value;
+        let values = this.props.form.getFieldsValue();
+        if (values.email || values.tel) {
+            let account = values.email ? values.email : values.tel;
             let verification_mode = this.state.verification_mode;
             console.log(account)
             this.setState({
@@ -163,7 +165,7 @@ class Register extends React.Component {
 
         }
     }
-    checkPassword = (rule, value, callback) => {
+    /*checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
             callback(this.formatMessage({
@@ -172,7 +174,26 @@ class Register extends React.Component {
         } else {
             callback();
         }
+    }*/
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+          callback('Two passwords that you enter is inconsistent!');
+        } else {
+          callback();
+        }
+     }
+    checkConfirm = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && this.state.confirmDirty) {
+          form.validateFields(['repassword'], { force: true });
+        }
+        callback();
+     }
     onChangeverifi = (e) => {
         console.log(`radio checked:${e.target.value}`);
         this.setState({
@@ -351,7 +372,7 @@ class Register extends React.Component {
                             rules:[{
                                 required:true,
                                 message:formatMessage({id:'register.password.warn'})
-                            }]
+                            },{validator:this.checkConfirm}]
                         })(
                             <Input type='password' className={css.reqister_input}/>
                         )}
@@ -368,7 +389,7 @@ class Register extends React.Component {
                                 validator: this.checkPassword,
                             }]
                         })(
-                            <Input type='password' className={css.reqister_input}/>
+                            <Input type='password' onBlur={this.handleConfirmBlur} className={css.reqister_input}/>
                         )}
                         </FormItem>
 

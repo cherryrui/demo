@@ -15,9 +15,14 @@ import {
     Button,
     message
 } from 'antd';
+
+const user = JSON.parse(sessionStorage.getItem("user"));
 class AccountSecurity extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            user:user,
+        };
         this.formatMessage = this.props.intl.formatMessage;
     }
 
@@ -43,11 +48,12 @@ class AccountSecurity extends React.Component {
                 <div  className={css.account_title}>
                     <Icon type="smile-o"  className={css.account_icon} />
                     <p  className={css.account_text}> { this.formatMessage({id:"app.phone.verification"})}</p>
-                    <p className={css.account_grey}> { this.formatMessage({id:"app.phone.verified_info"})}</p>
+                    <p className={css.account_grey}> {this.state.user.tel? this.formatMessage({id:"app.phone.verified_info"}):this.formatMessage({id:"app.phone.verified_infoed"}) }</p>
+                    &nbsp;{this.state.user.tel?this.state.user.tel:this.formatMessage({id:'repwd.authen'})}
                 </div>
                 <div className={css.modify}>
                     <Link to={"page/mine/phone-verifi/1"}>
-                                       { this.formatMessage({id:"persondata.modify"})}
+                         {this.state.user.tel?this.formatMessage({id:"persondata.modify"}): this.formatMessage({id:"repwd.authen"})}
                     </Link>
                 </div>
             </div>
@@ -55,11 +61,12 @@ class AccountSecurity extends React.Component {
                 <div  className={css.account_title}>
                     <Icon type="frown-o" className={css.frown_icon} />
                     <p  className={css.account_text}> { this.formatMessage({id:"app.email.verification"})}</p>
-                    <p className={css.account_grey}> { this.formatMessage({id:"app.email.verifi_info"})}</p>
+                    <p className={css.account_grey}> { this.state.user.email?this.formatMessage({id:"app.email.verifi_info"}):this.formatMessage({id:"app.email.verifi_infoed"})}</p>
+                    &nbsp;{this.state.user.email?this.state.user.email:this.formatMessage({id:'repwd.authen'})}
                 </div>
                 <div>
                     <Link to={"page/mine/phone-verifi/2"} className={css.validation}>
-                                       { this.formatMessage({id:"repwd.authen"})}
+                       {this.state.user.email? this.formatMessage({id:"persondata.modify"}): this.formatMessage({id:"repwd.authen"})} 
                     </Link>
                 </div>
             </div>
