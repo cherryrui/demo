@@ -573,17 +573,15 @@ class PersonData extends React.Component {
                 </span>
                 {this.state.user.userType==1?<span className={css.text}>
                     <span  className={css.text_certification}>
-                        {this.state.cerstatus?this.formatMessage({id: 'persondata.certificationing'})
-                            :this.state.user.certificatePerson?
+                        {this.state.user.certificatePerson?
                                 this.state.user.certificatePerson.status==0?this.formatMessage({id: 'persondata.certificationing'})
                                 :this.state.user.certificatePerson.status==1?this.formatMessage({id: 'persondata.certificationed'})
-                                :this.state.user.certificatePerson.status==-1?this.formatMessage({id: 'app.refused'})
-                            :this.formatMessage({id: 'persondata.certification'})
-                            
+                                :this.state.user.certificatePerson.status==-1?this.formatMessage({id: 'app.refused'})                          
+                                :this.formatMessage({id: 'persondata.certification'})
                         :this.formatMessage({id: 'persondata.certification'})
                         }
                     </span>
-                    {this.state.cerstatus?"":this.state.user.certificatePerson?this.state.user.certificatePerson.status==0 || this.state.user.certificatePerson.status==1 ? "" :
+                    {this.state.user.certificatePerson?this.state.user.certificatePerson.status==0 || this.state.user.certificatePerson.status==1 ? "" :
                         <Button type="primary"  style={{ marginLeft: 20}}className={appcss.button_blue} onClick={this.handleCertification}>
                                 <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                         </Button>
@@ -727,15 +725,15 @@ class PersonData extends React.Component {
                 </span>:
                 <span className={css.text}>
                     <span  className={css.text_certification}>
-                        {this.state.cerstatus?this.formatMessage({id: 'persondata.certificationing'})
-                            :this.state.user.certificateCompany?this.state.user.certificateCompany.status==0?this.formatMessage({id: 'persondata.certificationing'})
+                        {this.state.user.certificateCompany?
+                            this.state.user.certificateCompany.status==0?this.formatMessage({id: 'persondata.certificationing'})
                             :this.state.user.certificateCompany.status==1?this.formatMessage({id: 'persondata.certificationed'})
                             :this.state.user.certificateCompany.status==-1?this.formatMessage({id: 'app.refused'})
-                            :this.formatMessage({id: 'persondata.certification'})
+                        :this.formatMessage({id: 'persondata.certification'})
                         :this.formatMessage({id: 'persondata.certification'})
                         }
                     </span>
-                     {this.state.cerstatus?"":this.state.user.certificateCompany?this.state.user.certificateCompany.status==0 || this.state.user.certificateCompany.status==1 ? "" :
+                     {this.state.user.certificateCompany?this.state.user.certificateCompany.status==0 || this.state.user.certificateCompany.status==1 ? "" :
                         <Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                         </Button>

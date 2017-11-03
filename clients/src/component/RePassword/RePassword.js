@@ -90,7 +90,8 @@ class Authentication extends React.Component {
         this.state = {
             loading: false,
             time: 0,
-            disabled: false
+            disabled: false,
+            veri_modl:1,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
@@ -116,7 +117,65 @@ class Authentication extends React.Component {
                 })
             }
         })
-    };
+    }
+
+    regEmail = (email) =>{
+        let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
+        return(reg.test(email));
+    } 
+
+    getVericode = () =>{
+        console.log(this.props.form.getFieldsValue());
+        let values = this.props.form.getFieldsValue();
+        let phoneOremail = values.account;
+        if(phoneOremail){
+          /*console.log(this.regEmail(phoneOremail));*/
+          this.setState({
+                        loading: false,
+                        time: 60,
+                        disabled: true
+                    })
+          this.timer = window.setInterval(() => {
+                        /*console.log(this.state.time);*/
+              if (this.state.time - 1 >= 0) {
+                this.setState({
+                     time: this.state.time - 1,
+                     disabled: true
+                })
+              } else {
+                this.setState({
+                    time: 0,
+                    disabled: false
+                  })
+                  window.clearInterval(this.timer)
+              }          
+          }, 1000)
+          if(this.regEmail(phoneOremail)){
+              let email = phoneOremail;
+              let type = 2;
+             /* console.log(222222222);*/
+              axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
+                if(res.data.isSucc){
+                  console.log(res.data);
+                }else{
+                  message.error(res.data.message);
+                }
+              })
+          }else{
+              let phone = phoneOremail;
+              let type = 1;
+              axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
+                if(res.data.isSucc){
+                  console.log(res.data);
+                }else{
+                  message.error(res.data.message);
+                }
+              })
+          }
+        }else{
+          message.error(this.formatMessage({id:'authen.authen.account_warn'}));
+        }
+  }
 
 
     render() {
@@ -158,7 +217,7 @@ class Authentication extends React.Component {
 
                         </Col>
                         <Col span={4}>
-                            <Button className={appcss.button_blue} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                            <Button className={appcss.button_blue} type="primary" disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.getVericode}>
                                 <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                 {this.state.time?("("+this.state.time+")"):""}
                             </Button>
