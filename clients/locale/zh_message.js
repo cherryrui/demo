@@ -409,6 +409,7 @@ const zh_CN = {
     "persondata.department.position": "职位",
     "persondata.certification": "未认证",
     "persondata.certificationed": "已认证",
+     "persondata.certificationing": "认证中",
     "persondata.enterprise.certification": "企业认证",
     "persondata.personal.certification": "个人认证",
     "persondata.go.certification": "去认证",

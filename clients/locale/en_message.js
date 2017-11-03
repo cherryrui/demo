@@ -397,6 +397,7 @@ const en_US = {
     "persondata.department.position": "Department position",
     "persondata.certification": "No certification",
     "persondata.certificationed": "certificationed",
+    "persondata.certificationing": "certificationing",
     "persondata.go.certification": "Go certification",
     "persondata.enterprise.certification": "Enterprise certification",
     "persondata.personal.certification": "Personal certification",

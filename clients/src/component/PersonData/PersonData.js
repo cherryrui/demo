@@ -47,6 +47,7 @@ class PersonData extends React.Component {
     state = {
         loading: false,
         visible: false,
+        cerstatus:false,
     }
     handleSelectNature = (value) => {
         console.log(`selected ${JSON.stringify(value)}`);
@@ -67,6 +68,7 @@ class PersonData extends React.Component {
     handleCertification = () => {
         this.setState({
             visible: true,
+            cerstatus: true,
         });
     }
     handleCancel = () => {
@@ -569,13 +571,26 @@ class PersonData extends React.Component {
                     :<FormattedMessage  id="persondata.enterprise.certification" defaultMessage="认证"/>
                     }：
                 </span>
-                {this.state.user.status==0?(this.state.user.userType==1?<span className={css.text}>
+                {this.state.user.userType==1?<span className={css.text}>
                     <span  className={css.text_certification}>
-                        {formatMessage({id: 'persondata.certification'})}
+                        {this.state.cerstatus?this.formatMessage({id: 'persondata.certificationing'})
+                            :this.state.user.certificatePerson?
+                                this.state.user.certificatePerson.status==0?this.formatMessage({id: 'persondata.certificationing'})
+                                :this.state.user.certificatePerson.status==1?this.formatMessage({id: 'persondata.certificationed'})
+                                :this.state.user.certificatePerson.status==-1?this.formatMessage({id: 'app.refused'})
+                            :this.formatMessage({id: 'persondata.certification'})
+                            
+                        :this.formatMessage({id: 'persondata.certification'})
+                        }
                     </span>
-                    <Button type="primary"  style={{ marginLeft: 20}}className={appcss.button_blue} onClick={this.handleCertification}>
+                    {this.state.cerstatus?"":this.state.user.certificatePerson?this.state.user.certificatePerson.status==0 || this.state.user.certificatePerson.status==1 ? "" :
+                        <Button type="primary"  style={{ marginLeft: 20}}className={appcss.button_blue} onClick={this.handleCertification}>
+                                <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
+                        </Button>
+                        :<Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
-                    </Button>
+                        </Button>
+                    }
                     <CusModal width="800" scroll={{y: 700}}
                         title= { this.formatMessage({id:"persondata.personal.certification"})}
                         visible={visible}
@@ -712,11 +727,23 @@ class PersonData extends React.Component {
                 </span>:
                 <span className={css.text}>
                     <span  className={css.text_certification}>
-                        {formatMessage({id: 'persondata.certification'})}
+                        {this.state.cerstatus?this.formatMessage({id: 'persondata.certificationing'})
+                            :this.state.user.certificateCompany?this.state.user.certificateCompany.status==0?this.formatMessage({id: 'persondata.certificationing'})
+                            :this.state.user.certificateCompany.status==1?this.formatMessage({id: 'persondata.certificationed'})
+                            :this.state.user.certificateCompany.status==-1?this.formatMessage({id: 'app.refused'})
+                            :this.formatMessage({id: 'persondata.certification'})
+                        :this.formatMessage({id: 'persondata.certification'})
+                        }
                     </span>
-                    <Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
+                     {this.state.cerstatus?"":this.state.user.certificateCompany?this.state.user.certificateCompany.status==0 || this.state.user.certificateCompany.status==1 ? "" :
+                        <Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
-                    </Button>
+                        </Button>
+                        :<Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
+                            <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
+                        </Button>
+                     }
+                    
                     <CusModal width="800" scroll={{y: 700}}
                         title= { this.formatMessage({id:"persondata.enterprise.certification"})}
                         visible={visible}
@@ -882,15 +909,7 @@ class PersonData extends React.Component {
 
 
                     </CusModal>
-                </span>)
-                :this.state.user.status==-1?<span
-                     className={css.text} style={{ color: '#ffa300' }}>
-                    {formatMessage({id: 'persondata.under.review'})}
                 </span>
-                :this.state.user.status==1?<span
-                     className={css.text}>
-                     {formatMessage({id: 'persondata.certificationed'})}
-                </span>:""
                 }
             </p>
         </div>
