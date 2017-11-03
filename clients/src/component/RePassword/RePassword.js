@@ -48,6 +48,7 @@ class RePassword extends React.Component {
         super(props);
         this.state = {
             step: 0,
+            phoneOremail:"",
         }
     }
     handleSteps = (step) => {
@@ -57,6 +58,12 @@ class RePassword extends React.Component {
     }
     handleJump = (url) => {
         this.props.history.pushState(null, `/${url}`);
+    }
+
+    handlePhoneorEmail = (value) =>{
+        this.setState({
+            phoneOremail:value
+        })
     }
 
     render() {
@@ -72,8 +79,8 @@ class RePassword extends React.Component {
                 </div>
                 <div className={css.content}>
                     <Steps className={css.steps} steps={operator.steps} current={this.state.step}/>
-                    {this.state.step==0?<Authentication handleSteps={this.handleSteps}/>
-                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps}/>
+                    {this.state.step==0?<Authentication handleSteps={this.handleSteps} handlePhoneorEmail={this.handlePhoneorEmail}/>
+                    :this.state.step==1?<SetPwd handleSteps={this.handleSteps} phoneOremail={this.state.phoneOremail}/>
                     :this.state.step==2?<SetSuccess handleJump={this.handleJump}/>
                     :""}
                 </div>
@@ -101,18 +108,16 @@ class Authentication extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                if (this.timer) {
-                    window.clearInterval(this.timer)
-                }
-                axios.post('/user/authentication.json', values).then(res => {
-                    if (res.data.status) {
+                let param = {
+                    TelEmail:values.account,
+                    code:values.code
+                };
+                axios.post('/user/forget-verifi-code.json',param).then(rees=>{
+                    if(res.data.isSucc){
+                        this.props.handlePhoneorEmail(values.account);
                         this.props.handleSteps ? this.props.handleSteps(1) : '';
-                    } else {
-                        message.error(this.formatMessage({
-                            id: 'repassword.fail'
-                        }, {
-                            reason: res.data.result
-                        }))
+                    }else{
+                        message.error(res.data.message);
                     }
                 })
             }
@@ -150,28 +155,16 @@ class Authentication extends React.Component {
                   window.clearInterval(this.timer)
               }          
           }, 1000)
-          if(this.regEmail(phoneOremail)){
-              let email = phoneOremail;
-              let type = 2;
-             /* console.log(222222222);*/
-              axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
-                if(res.data.isSucc){
-                  console.log(res.data);
-                }else{
-                  message.error(res.data.message);
-                }
-              })
-          }else{
-              let phone = phoneOremail;
-              let type = 1;
-              axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
-                if(res.data.isSucc){
-                  console.log(res.data);
-                }else{
-                  message.error(res.data.message);
-                }
-              })
-          }
+          let param = {
+            TelEmail:phoneOremail
+          };
+          axios.post('/user/forget-getvericode.json',param).then(res=>{
+            if(res.data.isSucc){
+                message.success(this.formatMessage({id:'app.forget.sendcode'}));
+            }else{
+                message.error(res.data.message);
+            }
+          })
         }else{
           message.error(this.formatMessage({id:'authen.authen.account_warn'}));
         }
@@ -250,31 +243,52 @@ class Authentication extends React.Component {
 class SetPwd extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            phoneOremail:this.props.phoneOremail,
+        };
         this.formatMessage = this.props.intl.formatMessage;
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.handleSteps ? this.props.handleSteps(1) : '';
-        /*this.props.form.validateFields((err, values) => {
+        /*this.props.handleSteps ? this.props.handleSteps(1) : '';*/
+        this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values)
-                axios.get(`/user/reset-pwd.json?pwd=${values.password}`).then(res => {
-                    this.props.handleSteps ? this.props.handleSteps(1) : '';
+                console.log(values,this.state.phoneOremail)
+                let param ={
+                    TelEmail:this.state.phoneOremail,
+                    newpwd:values.password
+                };
+                axios.get('/user/forget-reset-pwd.json',param).then(res => {
+                    if(res.data.isSucc){
+                        this.props.handleSteps ? this.props.handleSteps(1) : '';
+                    }else{
+                        message.error(res.data.message);
+                    }
+                    
                 })
             }
-        });*/
+        });
+    }
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-            callback(this.formatMessage({
-                id: "repwd.check.pwd_warn"
-            }));
+          callback('Two passwords that you enter is inconsistent!');
         } else {
-            callback();
+          callback();
         }
-    }
+     }
+    checkConfirm = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && this.state.confirmDirty) {
+          form.validateFields(['confipwd'], { force: true });
+        }
+        callback();
+     }
     handleBefore = () => {
         this.props.handleSteps(-1);
     }
@@ -308,7 +322,7 @@ class SetPwd extends React.Component {
                     rules: [{
                         required:true,
                         message:this.formatMessage({id:'repwd.new.pwd_warn'})
-                    }]
+                    },{validator:this.checkConfirm}]
                 })(<Input type="password" placeholder={this.formatMessage({id:'repwd.new.pwd_warn'})} className={css.password_input}/>
                 )}
 
@@ -323,7 +337,7 @@ class SetPwd extends React.Component {
                     },{
                         validator: this.checkPassword,
                     }]
-                })(<Input type="password" placeholder={this.formatMessage({id:'repwd.config.pwd_warn'})} className={css.password_input}/>
+                })(<Input type="password" onBlur={this.handleConfirmBlur} placeholder={this.formatMessage({id:'repwd.config.pwd_warn'})} className={css.password_input}/>
                 )}
 
                 </FormItem>

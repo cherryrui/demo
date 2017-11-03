@@ -502,7 +502,7 @@ class SetPwd extends React.Component {
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue} style={{width:155,height:36,marginLeft: 15}}>
+		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue} >
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
 		                                        {this.state.time?("("+this.state.time+")"):""}
 		                                  </Button>

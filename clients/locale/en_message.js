@@ -63,6 +63,7 @@ const en_US = {
     "app.finance": "Finance",
     "app.internet": "Internet",
     "app.email.reg":"The input is not valid E-mail!",
+    "app.forget.sendcode":"Send verified code success",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
     "sort.price": "Price",

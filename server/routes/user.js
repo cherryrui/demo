@@ -224,6 +224,30 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		});
 		ctx.body = result;
 	})
+	.post('/forget-getvericode.json',async ctx=>{
+		let result = null,
+		param = ctx.request.body;
+		await axios.post(url+'/receiveCode',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.post('/forget-verifi-code.json',async ctx=>{
+		let result = null,
+		param = ctx.request.body;
+		await axios.post(url+'/referCode',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		ctx.body = result;
+	})
+	.post('/forget-reset-pwd.json',async ctx=>{
+		let result = null,
+		param = ctx.request.body;
+		await axios.post(url+'/pwdBack',querystring.stringify(param)).then(res=>{
+			result = res.data;
+		})
+		ctx.body = result;
+	})
 	.post('/become-agent.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
