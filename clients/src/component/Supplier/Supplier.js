@@ -535,10 +535,10 @@ class Supplier extends React.Component {
                             />
                         )}
                         {index==0?<Tooltip title={this.formatMessage({id:'mine.product.add_category'})}>
-                                <Button icon="plus" onClick={this.handleCategory.bind(this,-1)} className={css.jiahao}/>
+                                <Button style={{ minWidth:36}} icon="plus" onClick={this.handleCategory.bind(this,-1)} className={css.jiahao}/>
                             </Tooltip>
                             :<Tooltip title={this.formatMessage({id:'mine.product.del_category'})}>
-                                <Button icon="minus" style={{ width:36}} onClick={this.handleCategory.bind(this,index)} className={css.jiahao}/>
+                                <Button icon="minus" style={{ minWidth:36}} onClick={this.handleCategory.bind(this,index)} className={css.jiahao}/>
                             </Tooltip>}
                     </FormItem>
                 })}
