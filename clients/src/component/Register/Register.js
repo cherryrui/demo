@@ -71,7 +71,8 @@ class Register extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values)
-                let phoneoremail = values.email ? values.email : values.tel;
+                if(values.password == values.repassword){
+                    let phoneoremail = values.email ? values.email : values.tel;
                 let params = {
                     userName: values.name,
                     password: values.password,
@@ -112,6 +113,10 @@ class Register extends React.Component {
                         }))
                     }
                 });
+                }else{
+                    message.error(this.formatMessage({id:'repwd.check.pwd_warn'}))
+                }
+                
             }
         })
     };

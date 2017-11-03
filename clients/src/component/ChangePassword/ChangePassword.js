@@ -35,6 +35,7 @@ class ChangePassword extends React.Component {
       loading:false,
       disabled:false,
       time:0,
+      confirmDirty: false,
     };
     this.formatMessage = this.props.intl.formatMessage;
   }
@@ -156,6 +157,26 @@ class ChangePassword extends React.Component {
     }
   }
 
+  handleConfirmBlur = (e) => {
+    const value = e.target.value;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  }
+  checkPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
+    }
+  }
+  checkConfirm = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['re_password'], { force: true });
+    }
+    callback();
+  }
+
   
 
   render() {
@@ -226,7 +247,7 @@ class ChangePassword extends React.Component {
 			                   {getFieldDecorator('password', {
                           rules: [{
                               required: true, message:this.formatMessage({ id:'register.password.warn'}),
-                          }],
+                          },{validator:this.checkConfirm}],
                         })(
                           <Input  type='password' className={appcss.form_input}/>
                         )}
@@ -238,9 +259,9 @@ class ChangePassword extends React.Component {
 			                 {getFieldDecorator('re_password', {
                           rules: [{
                               required: true, message:this.formatMessage( {id:'register.re_password.warn'}),
-                          }],
+                          },{validator: this.checkPassword}],
                         })(
-                          <Input type='password' className={appcss.form_input}/>
+                          <Input type='password' onBlur={this.handleConfirmBlur} className={appcss.form_input}/>
                         )}
                     </FormItem>
                     <FormItem
