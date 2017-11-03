@@ -62,6 +62,7 @@ const en_US = {
     "app.building.materials": "Building materials",
     "app.finance": "Finance",
     "app.internet": "Internet",
+    "app.email.reg":"The input is not valid E-mail!",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
     "sort.price": "Price",

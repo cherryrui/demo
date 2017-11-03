@@ -49,7 +49,7 @@ class AccountSecurity extends React.Component {
                     <Icon type="smile-o"  className={css.account_icon} />
                     <p  className={css.account_text}> { this.formatMessage({id:"app.phone.verification"})}</p>
                     <p className={css.account_grey}> {this.state.user.tel? this.formatMessage({id:"app.phone.verified_info"}):this.formatMessage({id:"app.phone.verified_infoed"}) }</p>
-                    &nbsp;{this.state.user.tel?this.state.user.tel:this.formatMessage({id:'repwd.authen'})}
+                    &nbsp;{this.state.user.tel?this.state.user.tel:""}
                 </div>
                 <div className={css.modify}>
                     <Link to={"page/mine/phone-verifi/1"}>

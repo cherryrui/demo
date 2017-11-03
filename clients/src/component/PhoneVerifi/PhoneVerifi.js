@@ -478,7 +478,7 @@ class SetPwd extends React.Component {
 									getFieldDecorator('verifi_email', {
 				                          rules: [{
 				                              required: true, message:this.formatMessage( {id:'register.email.warn'}),
-				                          }],
+				                          },{ type: 'email',  message:this.formatMessage( {id:'app.email.reg'}),}],
 				                      })(
 
 				                      	 <Input ref={(verifi_email)=>{this.verifi_email=verifi_email}} className={appcss.form_input}/>

@@ -324,7 +324,7 @@ class Register extends React.Component {
                             rules:[{
                                 required:true,
                                 message:formatMessage({id:"register.email.warn"})
-                            }]
+                            },{ type: 'email',  message:this.formatMessage( {id:'app.email.reg'}),}]
                         })(
                             <Input ref={(email)=>{this.email=email}} className={css.reqister_input}/>
                         )}

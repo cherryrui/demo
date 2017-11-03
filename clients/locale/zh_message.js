@@ -61,6 +61,7 @@ const zh_CN = {
     "app.building.materials": "建材",
     "app.finance": "金融",
     "app.internet": "互联网",
+    "app.email.reg":"请输入正确的邮箱格式",
     "sort.comp": "综合",
     "sort.new": "新品",
     "sort.price": "价格",
