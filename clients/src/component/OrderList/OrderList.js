@@ -74,7 +74,7 @@ class OrderList extends React.Component {
                 dataIndex: 'createTime',
                 key: 'createTime',
                 className: css.table_col,
-                render: (text) => <div>
+                render: (text) => <div className={css.table_time}>
                     <p>{moment(text).format('YYYY-MM-DD ')}</p>
                     <p>{moment(text).format(' HH:mm:ss')}</p>
                 </div>
@@ -103,7 +103,7 @@ class OrderList extends React.Component {
                         <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                     </Link>
                     <p>
-                        <Button onClick={this.handleClick.bind(this,record)} size="small" style={{width:70,fontSize:14,border:"none"}} type="primary">
+            <Button className={appcss.button_blue} onClick={this.handleClick.bind(this,record)} size="small" style={{minWidth:70,height:20,lingHeighgt:20,fontSize:14,border:"none"}} type="primary">
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
                         </Button>
                     </p>
