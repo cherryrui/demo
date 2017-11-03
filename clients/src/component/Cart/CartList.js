@@ -101,7 +101,7 @@ class CartList extends React.Component {
         }, {
             title: <FormattedMessage id="cart.operation" defaultMessage="我的购物车"/>,
             width: "110px",
-            className: css.table_col,
+            className: css.table_col_last,
             render: (record) => <div className={css.table_operator}>
                 <Tooltip title={<FormattedMessage id="cart.delete" defaultMessage="我的购物车"/>}>
                     <Icon type="delete" onClick={this.handleDelete.bind(this,record.id)} />

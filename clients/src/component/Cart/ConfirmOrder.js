@@ -107,7 +107,7 @@ class ConfirmOrder extends React.Component {
         }, {
             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
             width: "170px",
-            className: css.table_col,
+            className: css.table_col_last,
             render: (record) => <span className={css.table_price}>${(record.price*record.productNum).toFixed(2)}</span>
         }, ];
         this.telSelect = null;

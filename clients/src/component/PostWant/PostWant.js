@@ -3,6 +3,7 @@ import React from 'react';
 import css from './PostWant.scss';
 import appcss from '../../App.scss';
 import Util from '../../Util.js';
+import LoginModal from '../Public/LoginModal/LoginModal.js';
 import {
 	FormattedMessage,
 	injectIntl,
@@ -57,6 +58,10 @@ class PostWant extends React.Component {
 				axios.post('api/demand-controller.json', param).then(res => {
 					if (res.data.isSucc) {
 						this.props.history.pushState(null, "/");
+					} else if (res.data.code == 104) {
+						this.setState({
+							visible: true
+						})
 					} else {
 						message.error({
 							reason: res.data.message
@@ -216,7 +221,7 @@ class PostWant extends React.Component {
 			          label={formatMessage({id: 'app.requirement.subject'})}
 
 			        >
-			          {getFieldDecorator('subject', {
+			          {getFieldDecorator('demandSubject', {
 			            rules: [ {
 			              required: true, message:this.formatMessage({ id:'enter.requirement.subject'}),
 			            }],
@@ -272,6 +277,7 @@ class PostWant extends React.Component {
         		</Form>
 
             </div>
+            <LoginModal visible={this.state.visible} reload closeModal={this.handleCancel}/>
 		</div>
 	}
 }

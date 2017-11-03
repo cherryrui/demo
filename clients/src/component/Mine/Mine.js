@@ -33,6 +33,7 @@ class Mine extends React.Component {
             reload: false,
             path: ""
         }
+        this.path = "";
     }
     componentWillMount() {
         console.log("componentWillMount");
@@ -86,13 +87,16 @@ class Mine extends React.Component {
                 path: ""
             })
         }
+        this.path = path;
     }
     componentDidUpdate(prevProps, prevState) {
         if (!sessionStorage.user) {
             this.props.history.pushState(null, '/login');
         } else {
             this.state.user = JSON.parse(sessionStorage.user);
-            this.getPremiss();
+            if (this.path !== this.props.location.pathname) {
+                this.getPremiss();
+            }
         }
     }
 

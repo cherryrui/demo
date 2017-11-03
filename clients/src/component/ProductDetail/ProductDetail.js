@@ -573,7 +573,7 @@ class Specification extends React.Component {
     }
 
     render() {
-        return this.props.data && this.props.data.length > 0 ? <div >
+        return this.props.data && this.props.data.length > 0 ? <div className={css.product_spec}>
             <div className={css.info_title}>
                 <FormattedMessage id="mine.product.param" defaultMessage=""/>
             </div>

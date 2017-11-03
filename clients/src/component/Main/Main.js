@@ -77,37 +77,38 @@ class Main extends React.Component {
                 <div><img className={css.slider_img} src='../img/banner1.jpg'/></div>
                 <div><img className={css.slider_img} src='../img/banner2.jpg'/></div>
             </Slider>
-            
-            <div className={css.icon}>
+           <div className={css.icon}>
                 <i class="iconfont icon-icon"></i>
             </div>
-            <div className={css.title}><FormattedMessage id="main.welcome" defaultMessage="欢迎来到DBUY"/></div>
-            <div className={css.content}>
-                <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
+            <div className={css.background_map} style={{backgroundImage:`url("../img/map.png")`}}>
+                
+                <div className={css.title}><FormattedMessage id="main.welcome" defaultMessage="欢迎来到DBUY"/></div>
+                <div className={css.content}>
+                    <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
+                </div>
+                <div className={css.brand_button}>
+                    <Link  to="page/about">
+                        <FormattedMessage id="app.more" defaultMessage="更多"/>
+                    </Link>
+                </div>
+                <div id="dingzhi" className={css.img_right}><img src='../img/post.png'/> </div>
             </div>
-            <div className={css.brand_button}>
-                <Link  to="page/about">
-                    <FormattedMessage id="app.more" defaultMessage="更多"/>
-                </Link>
-            </div>
-            <div id="dingzhi">
-                <div className={css.img_right}><img src='../img/post.png'/> </div>
-                <div className={css.text_left}>
-                    <div className={css.info_left}>
-                        <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}>
-                            <i class="iconfont icon-dingzhi"></i>
-                            <FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
-                        <p className={css.descrip}>
-                            <FormattedMessage id="main.post.descrip" defaultMessage="提交采购需求说明"/>
-                        </p>
-                    </div>
-                    <div className={`${css.right} ${css.brand_button}`}>
-                        <Link  to="page/post-want">
-                            <FormattedMessage id="main.post" defaultMessage="更多"/>
-                        </Link>
-                    </div>
+            <div className={css.text_left}>
+                <div className={css.info_left}>
+                    <p className={css.title} style={{textAlign: "left",paddingBottom: 0}}>
+                        <i class="iconfont icon-dingzhi"></i>
+                        <FormattedMessage id="main.post" defaultMessage="提交采购需求"/></p>
+                    <p className={css.descrip}>
+                        <FormattedMessage id="main.post.descrip" defaultMessage="提交采购需求说明"/>
+                    </p>
+                </div>
+                <div className={`${css.right} ${css.brand_button}`}>
+                    <Link  to="page/post-want">
+                        <FormattedMessage id="main.post" defaultMessage="更多"/>
+                    </Link>
                 </div>
             </div>
+           
             <div id="suppliers" className={css.icon}>
                 <i class="iconfont icon-DYC-14"></i>
             </div>

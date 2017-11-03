@@ -45,6 +45,10 @@
 		color: $font-color;
 	}
 }
+.table_col_last{
+  @extend .table_col;
+  border-right: none!important;
+}
 .table_operator{
 	font-size: 18px;
 }
