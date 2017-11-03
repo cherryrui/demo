@@ -333,6 +333,8 @@ class SetPwd extends React.Component {
 				};
 				axios.post('user/verifi_phone.json', param).then(res => {
 					if (res.data.isSucc) {
+						user.tel = param.tel;
+						sessionStorage.setItem("user",JSON.stringify(user));
 						this.props.handleSteps ? this.props.handleSteps(1) : '';
 					} else {
 						message.error(res.data.message);
@@ -345,6 +347,8 @@ class SetPwd extends React.Component {
 				};
 				axios.post('user/verifi_email.json', param).then(res => {
 					if (res.data.isSucc) {
+						user.email = param.email;
+						sessionStorage.setItem("user",JSON.stringify(user));
 						this.props.handleSteps ? this.props.handleSteps(1) : '';
 					} else {
 						message.error(res.data.message);

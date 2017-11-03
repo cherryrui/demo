@@ -36,7 +36,6 @@ class RegisterComplete extends React.Component {
         return (
             <div className={css.body}>
                 <div className={css.title}>
-                    <Link to="/" className={css.logo}> LOGO </Link>
                     <p className={css.title_text}>
                         <FormattedMessage id="register.register.title" defaultMessage="用户注册"/>
                     </p>
