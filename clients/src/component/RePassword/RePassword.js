@@ -125,7 +125,7 @@ class Authentication extends React.Component {
         } = this.props.form;
         const formItemLayout = {
             labelCol: {
-                span: 8
+                span: 9
             },
             wrapperCol: {
                 span: 12
@@ -143,8 +143,8 @@ class Authentication extends React.Component {
                 <FormItem {...formItemLayout}
                     label={this.formatMessage({id: 'authen.authen.tel/email'})}
                 >
-                    <Row gutter={24}>
-                        <Col span={15}>
+                    <Row gutter={24}  style={{display: "flex"}} >
+                        <Col style={{width: 410}} >
                         {getFieldDecorator('account',{
                             rules:[
                                 {
@@ -224,7 +224,7 @@ class SetPwd extends React.Component {
     render() {
         const formItemLayout = {
             labelCol: {
-                span: 8
+                span: 9
             },
             wrapperCol: {
                 span: 8
