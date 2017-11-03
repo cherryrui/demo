@@ -42,28 +42,29 @@ class Mine extends React.Component {
         }
         this.getPremiss();
     }
-    goTop = () => {
-        //设置定时器
-        let timer = setInterval(() => {
-            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
-            var speed = Math.floor(-osTop / 6); //速度随距离动态变化，越来越小
-            document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
-            let isTop = true;
-            if (osTop == 0) {
-                clearInterval(timer); //回到顶部时关闭定时器
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!sessionStorage.user) {
+            this.props.history.pushState(null, '/login');
+        } else {
+            this.state.user = JSON.parse(sessionStorage.user);
+            if (this.path !== this.props.location.pathname) {
+                this.getPremiss();
             }
-        }, 30)
+        }
     }
     getPremiss = () => {
         let path = this.props.location.pathname;
         if (path == "/page/mine/agent" || path == "/page/mine/supplier") {
             if (path == "/page/mine/agent") {
                 this.setState({
-                    path: "mine.agent"
+                    path: "mine.agent",
+                    select: 7000,
                 })
             } else {
                 this.setState({
-                    path: "mine.supplier"
+                    path: "mine.supplier",
+                    select: 8000,
                 })
             }
             if (this.state.user.userIdentity > 0 || this.state.user.agent || this.state.supplier) {
@@ -74,7 +75,8 @@ class Mine extends React.Component {
             item.list.map(sub => {
                 if (sub.url === path) {
                     this.setState({
-                        path: sub.title
+                        path: sub.title,
+                        select: sub.key,
                     })
                     if (item.code.indexOf(this.state.user.userIdentity) == -1) {
                         this.props.history.pushState(null, 'page/mine');
@@ -89,17 +91,20 @@ class Mine extends React.Component {
         }
         this.path = path;
     }
-    componentDidUpdate(prevProps, prevState) {
-        if (!sessionStorage.user) {
-            this.props.history.pushState(null, '/login');
-        } else {
-            this.state.user = JSON.parse(sessionStorage.user);
-            if (this.path !== this.props.location.pathname) {
-                this.getPremiss();
-            }
-        }
-    }
 
+    //回到顶部
+    goTop = () => {
+        //设置定时器
+        let timer = setInterval(() => {
+            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var speed = Math.floor(-osTop / 6); //速度随距离动态变化，越来越小
+            document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
+            let isTop = true;
+            if (osTop == 0) {
+                clearInterval(timer); //回到顶部时关闭定时器
+            }
+        }, 30)
+    }
     handleClick = (e) => {}
     handleMenu = (key, url) => {
         console.log(key, url);
@@ -148,7 +153,7 @@ class Mine extends React.Component {
                             return <p className={this.state.select == item.key ? css.active : css.item}
                                 onClick={this.handleMenu.bind(this,item.key,item.url)}
                             >
-                                <i>●</i>&nbsp;&nbsp;
+                                <i class="iconfont icon-iconfonticonfontdian1"></i>&nbsp;&nbsp;
                                 <FormattedMessage id={item.title} defaultMessage="分类"/>
 
                             </p>

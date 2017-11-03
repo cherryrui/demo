@@ -55,7 +55,7 @@ class RePassword extends React.Component {
             step: this.state.step + step
         })
     }
-    handleJump = (url) =>{
+    handleJump = (url) => {
         this.props.history.pushState(null, `/${url}`);
     }
 
@@ -144,7 +144,7 @@ class Authentication extends React.Component {
                     label={this.formatMessage({id: 'authen.authen.tel/email'})}
                 >
                     <Row gutter={24}>
-                        <Col span={18}>
+                        <Col span={15}>
                         {getFieldDecorator('account',{
                             rules:[
                                 {
@@ -216,7 +216,7 @@ class SetPwd extends React.Component {
             callback();
         }
     }
-    handleBefore = () =>{
+    handleBefore = () => {
         this.props.handleSteps(-1);
     }
 

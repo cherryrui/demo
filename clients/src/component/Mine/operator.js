@@ -15,10 +15,6 @@ export default {
             title: "mine.person.address",
             url: "/page/mine/person-address"
         }, {
-            key: 1003,
-            title: "mine.person.requirement",
-            url: "/page/mine/requirement"
-        }, {
             key: 1004,
             title: "mine.person.account",
             url: "/page/mine/account"
@@ -44,6 +40,10 @@ export default {
             key: 3001,
             title: "mine.order.all",
             url: "/page/mine/order-list"
+        }, {
+            key: 3002,
+            title: "mine.person.requirement",
+            url: "/page/mine/requirement"
         }, ]
     }, {
         name: "mine.message",

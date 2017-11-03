@@ -42,9 +42,9 @@ class PhoneVerifi extends React.Component {
 		super(props);
 		console.log(this.props.params)
 		this.state = {
-			step: parseInt(this.props.params.type) == 1?(user.tel?0:1):(user.email?0:1), 
+			step: parseInt(this.props.params.type) == 1 ? (user.tel ? 0 : 1) : (user.email ? 0 : 1),
 			verifi_modl: this.props.params.type, //1手机验证，2邮箱验证
-			user:user,
+			user: user,
 			phone: 12432434,
 			email: 224,
 
@@ -52,7 +52,7 @@ class PhoneVerifi extends React.Component {
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
-	handleJump = (url) =>{
+	handleJump = (url) => {
 		this.props.history.pushState(null, url);
 	}
 
@@ -122,33 +122,33 @@ class Authentication extends React.Component {
 			console.log(values)
 			if (!err) {
 				let param;
-				if(this.state.verifi_modl==1){
+				if (this.state.verifi_modl == 1) {
 					let tel = user.tel,
 						check = values.phoneoremailcheck;
 					param = {
-						tel:tel,
-						telCode:check
+						tel: tel,
+						telCode: check
 					};
-					axios.post('/user/phonecheck.json',param).then(res=>{
-						if(res.data.isSucc){
+					axios.post('/user/phonecheck.json', param).then(res => {
+						if (res.data.isSucc) {
 							console.log(res.data)
 							this.props.handleSteps ? this.props.handleSteps(1) : '';
-						}else{
+						} else {
 							message.error(res.data.message);
 						}
 					})
-				}else{
+				} else {
 					let email = user.email,
 						check = values.phoneoremailcheck;
-						param = {
-							email:email,
-							emailCode:check
-						};
-					axios.post('/user/emailcheck.json',param).then(res=>{
-						if(res.data.isSucc){
+					param = {
+						email: email,
+						emailCode: check
+					};
+					axios.post('/user/emailcheck.json', param).then(res => {
+						if (res.data.isSucc) {
 							console.log(res.data)
 							this.props.handleSteps ? this.props.handleSteps(1) : '';
-						}else{
+						} else {
 							message.error(res.data.message);
 						}
 					})
@@ -157,53 +157,55 @@ class Authentication extends React.Component {
 		})
 	}
 
-	getVerifiCode = () =>{
-		if(user.tel || user.email){
+	getVerifiCode = () => {
+		if (user.tel || user.email) {
 			this.setState({
-                    loading: false,
-                    time: 60,
-                    disabled: true
-                })
+				loading: false,
+				time: 60,
+				disabled: true
+			})
 			this.timer = window.setInterval(() => {
-                    /*console.log(this.state.time);*/
-                    if (this.state.time - 1 >= 0) {
-                        this.setState({
-                            time: this.state.time - 1,
-                            disabled: true
-                        })
-                    } else {
-                        this.setState({
-                            time: 0,
-                            disabled: false
-                        })
-                        window.clearInterval(this.timer)
-                    }
-                }, 1000)
-			if(this.state.verifi_modl == 1){
+				/*console.log(this.state.time);*/
+				if (this.state.time - 1 >= 0) {
+					this.setState({
+						time: this.state.time - 1,
+						disabled: true
+					})
+				} else {
+					this.setState({
+						time: 0,
+						disabled: false
+					})
+					window.clearInterval(this.timer)
+				}
+			}, 1000)
+			if (this.state.verifi_modl == 1) {
 				let tel = user.tel;
 				let type = this.state.verifi_modl;
-				axios.get(`/user/sendcode.json?account=${tel}&type=${type}`).then(res=>{
-					if(res.data.isSucc){
+				axios.get(`/user/sendcode.json?account=${tel}&type=${type}`).then(res => {
+					if (res.data.isSucc) {
 						console.log(res.data);
-					}else{
+					} else {
 						message.error(res.data.message);
 					}
 				})
-			}else{
+			} else {
 				let email = user.email;
 				let type = this.state.verifi_modl;
-				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
-					if(res.data.isSucc){
+				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res => {
+					if (res.data.isSucc) {
 						console.log(res.data);
-					}else{
+					} else {
 						message.error(res.data.message);
 					}
 				})
 			}
-		}else{
-			message.error(this.formatMessage({id:'authen.authen.account_warn'}))
+		} else {
+			message.error(this.formatMessage({
+				id: 'authen.authen.account_warn'
+			}))
 		}
-		
+
 	}
 
 
@@ -283,7 +285,7 @@ class Authentication extends React.Component {
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue}  style={{width:155,height:36,marginLeft: 15}}>
+		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue}  style={{minWidth:155,height:36,marginLeft: 15}}>
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
 		                                        {this.state.time?("("+this.state.time+")"):""}
 		                                  </Button>
@@ -314,8 +316,8 @@ class SetPwd extends React.Component {
 			verifi_modl: this.props.type, //1手机验证，2邮箱验证
 			phone: 12432434,
 			email: 224,
-			loading:false,
-			disabled:false,
+			loading: false,
+			disabled: false,
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
@@ -324,86 +326,88 @@ class SetPwd extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			let param;
-			if(this.state.verifi_modl==1){
+			if (this.state.verifi_modl == 1) {
 				param = {
-					tel:values.verifi_phone,
-					telCode:values.verifi_code
+					tel: values.verifi_phone,
+					telCode: values.verifi_code
 				};
-				axios.post('user/verifi_phone.json',param).then(res=>{
-					if(res.data.isSucc){
+				axios.post('user/verifi_phone.json', param).then(res => {
+					if (res.data.isSucc) {
 						this.props.handleSteps ? this.props.handleSteps(1) : '';
-					}else{
+					} else {
 						message.error(res.data.message);
 					}
 				})
-			}else{
+			} else {
 				param = {
-					email:values.verifi_email,
-					emailCode:values.verifi_code
+					email: values.verifi_email,
+					emailCode: values.verifi_code
 				};
-				axios.post('user/verifi_email.json',param).then(res=>{
-					if(res.data.isSucc){
+				axios.post('user/verifi_email.json', param).then(res => {
+					if (res.data.isSucc) {
 						this.props.handleSteps ? this.props.handleSteps(1) : '';
-					}else{
+					} else {
 						message.error(res.data.message);
 					}
 				})
 			}
-			
+
 		})
 	}
 
-	getVerifiCode = () =>{
+	getVerifiCode = () => {
 		/*console.log(this.verifi_email.props.value)*/
 		console.log(this.props.form.getFieldsValue())
 		console.log(this.verifi_email)
 		let values = this.props.form.getFieldsValue();
-		if(values.verifi_phone || values.verifi_email){
+		if (values.verifi_phone || values.verifi_email) {
 			this.setState({
-                    loading: false,
-                    time: 60,
-                    disabled: true
-                })
+				loading: false,
+				time: 60,
+				disabled: true
+			})
 			this.timer = window.setInterval(() => {
-                    /*console.log(this.state.time);*/
-                    if (this.state.time - 1 >= 0) {
-                        this.setState({
-                            time: this.state.time - 1,
-                            disabled: true
-                        })
-                    } else {
-                        this.setState({
-                            time: 0,
-                            disabled: false
-                        })
-                        window.clearInterval(this.timer)
-                    }
-                }, 1000)
-			if(this.state.verifi_modl == 1){
+				/*console.log(this.state.time);*/
+				if (this.state.time - 1 >= 0) {
+					this.setState({
+						time: this.state.time - 1,
+						disabled: true
+					})
+				} else {
+					this.setState({
+						time: 0,
+						disabled: false
+					})
+					window.clearInterval(this.timer)
+				}
+			}, 1000)
+			if (this.state.verifi_modl == 1) {
 				let phone = values.verifi_phone;
 				let type = this.state.verifi_modl;
-				axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
-					if(res.data.isSucc){
+				axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res => {
+					if (res.data.isSucc) {
 						console.log(res.data);
-					}else{
+					} else {
 						message.error(res.data.message);
 					}
 				})
-			}else{
+			} else {
 				let email = values.verifi_email;
 				let type = this.state.verifi_modl;
-				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
-					if(res.data.isSucc){
+				axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res => {
+					if (res.data.isSucc) {
 						console.log(res.data);
-					}else{
+					} else {
 						message.error(res.data.message);
 					}
 				})
 			}
-		}else{
-			message.error(this.formatMessage({id:'authen.authen.account_warn'}))
+		} else {
+			message.error(this.formatMessage({
+				id: 'authen.authen.account_warn'
+			}))
 		}
-		
+
 	}
 
 
@@ -523,8 +527,8 @@ class SetPwd extends React.Component {
 
 class SetSuccess extends React.Component {
 	static propTypes = {
-        intl: intlShape.isRequired
-    };
+		intl: intlShape.isRequired
+	};
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -538,19 +542,19 @@ class SetSuccess extends React.Component {
 	}
 
 	handleClick = () => {
-		axios.get('user/get-userinfo-byuid.json').then(res=>{
+		axios.get('user/get-userinfo-byuid.json').then(res => {
 			console.log(res.data)
-			if(res.data.isSucc){
+			if (res.data.isSucc) {
 				localStorage.clear();
-        		sessionStorage.clear();
-        		sessionStorage.setItem('user', JSON.stringify(res.data.result));
-        		this.props.handleJump("/page/mine/account");
-        		/*this.props.history.pushState(null, "/page/mine/account");*/
-			}else{
+				sessionStorage.clear();
+				sessionStorage.setItem('user', JSON.stringify(res.data.result));
+				this.props.handleJump("/page/mine/account");
+				/*this.props.history.pushState(null, "/page/mine/account");*/
+			} else {
 				message.error(res.data.message)
 			}
 		})
-		
+
 	}
 
 	render() {

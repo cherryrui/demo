@@ -10,12 +10,12 @@ import moment from 'moment';
 
 import {
     Link
-    } from 'react-router';
+} from 'react-router';
 import {
     FormattedMessage,
     injectIntl,
     intlShape
-    } from 'react-intl';
+} from 'react-intl';
 import {
     Table,
     Steps,
@@ -29,29 +29,29 @@ import {
     Dropdown,
     Form,
     Pagination
-    } from 'antd';
+} from 'antd';
 const Step = Steps.Step;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const {
     TextArea
-    } = Input;
+} = Input;
 
 
 
 class Requirement extends React.Component {
-    handleChange = (value) =>{
+    handleChange = (value) => {
         console.log(value);
     }
     static propTypes = {
         intl: intlShape.isRequired,
     }
-    handleMenuClick = (item) =>{
+    handleMenuClick = (item) => {
         console.log(item.key);
         this.setState({
-            status:parseInt(item.key),
-        },()=>{
+            status: parseInt(item.key),
+        }, () => {
             this.getRequmentList();
         })
     }
@@ -64,17 +64,17 @@ class Requirement extends React.Component {
         super(props);
 
         this.state = {
-            requirement:[],
-            status:"",
-            total:0,
-            pageSize:1,
-            current:1,
+            requirement: [],
+            status: "",
+            total: 0,
+            pageSize: 1,
+            current: 1,
         };
         let {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
         this.formatMessage = this.props.intl.formatMessage;
 
         const menu = (
@@ -97,11 +97,11 @@ class Requirement extends React.Component {
             </Menu>
         );
         this.colums_show = [{
-            title: <FormattedMessage id="post.demandNo" defaultMessage=" 需求编号"/>,
+            title: <FormattedMessage id="post.demand.subject" defaultMessage=" 需求编号"/>,
             className: css.table_col,
             width: "40%",
             className: css.table_col,
-            render: (record) =><span className={css.table_namne}>{record.demandNo}</span>
+            render: (record) => <span className={css.table_namne}>{record.demandSubject}</span>
         }, {
             title: <FormattedMessage id="orderlist.order.time" defaultMessage="联系电话 "/>,
             className: css.table_col,
@@ -143,36 +143,36 @@ class Requirement extends React.Component {
     componentWillMount() {
         this.getRequmentList();
     }
-    getRequmentList = () =>{
+    getRequmentList = () => {
         console.log(this.state.status)
         let param = {
-            pageNo:this.state.current,
-            pageSize:this.state.pageSize,
+            pageNo: this.state.current,
+            pageSize: this.state.pageSize,
             demandStatus: this.state.status ? this.state.status : ""
         };
         console.log(param)
-        axios.post('/user/get-requirement-list.json',param).then(res=>{
+        axios.post('/user/get-requirement-list.json', param).then(res => {
             /*console.log(res.data)*/
-            if(res.data.isSucc){
+            if (res.data.isSucc) {
                 console.log(res.data.result)
                 this.setState({
-                    requirement:res.data.result.list,
-                    total:res.data.result.allRow,
+                    requirement: res.data.result.list,
+                    total: res.data.result.allRow,
                 })
-            }else{
+            } else {
                 message.error(res.data.message)
             }
         })
     }
-    getRequirementbystatus = () =>{
-        axios.post('/user/get-requirement-byststus.json').then(res=>{
+    getRequirementbystatus = () => {
+        axios.post('/user/get-requirement-byststus.json').then(res => {
             /*console.log(res.data)*/
-            if(res.data.isSucc){
+            if (res.data.isSucc) {
                 console.log(res.data.result)
                 this.setState({
-                    requirement:res.data.result,
+                    requirement: res.data.result,
                 })
-            }else{
+            } else {
                 message.error(res.data.message)
             }
         })
@@ -182,8 +182,8 @@ class Requirement extends React.Component {
         const {
             intl: {
                 formatMessage
-                }
-            } = this.props;
+            }
+        } = this.props;
 
         return <div>
             <div className={basecss.child_title}>
