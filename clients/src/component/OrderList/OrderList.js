@@ -103,7 +103,7 @@ class OrderList extends React.Component {
                         <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                     </Link>
                     <p>
-            <Button className={appcss.button_blue} onClick={this.handleClick.bind(this,record)} size="small" style={{minWidth:70,height:20,lingHeighgt:20,fontSize:14,border:"none"}} type="primary">
+                    <Button className={appcss.button_blue} onClick={this.handleClick.bind(this,record)} size="small" style={{minWidth:50,lineHeight: "20px",height: "20px"}} size="small" type="primary">
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
                         </Button>
                     </p>
