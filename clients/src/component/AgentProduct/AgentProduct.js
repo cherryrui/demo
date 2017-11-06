@@ -51,8 +51,8 @@ class AgentProduct extends React.Component {
                     <div className={css.info}>
                         <p className={css.name}>{record.productName}</p>
                         <p>
-                            <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>
-                            {record.productMap.brand}
+                            <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>：
+                            {record.productMap.brand?(locale=="en"?record.productMap.brand.brandNameEn:record.productMap.brand.brandNameCn):""}
                         </p> 
                     	{record.status==0?<p className={css.product_review}><FormattedMessage id="mine.product.status.reviewimg" defaultMessage=""/></p>
                     	:record.status==2?<p className={css.product_refused}><FormattedMessage id="mine.product.status.unaudited" defaultMessage=""/></p>

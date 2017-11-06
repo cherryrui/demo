@@ -39,7 +39,7 @@ class ProductAttr extends React.Component {
 	}
 	componentWillMount() {
 		let param = {
-			productId: this.props.product.productId
+			pid: this.props.product.productId
 		}
 		axios.post('/product/get-product-attr.json', param).then(res => {
 			if (res.data.isSucc) {
@@ -110,11 +110,13 @@ class ProductAttr extends React.Component {
 			customAttrVals: [],
 		}
 		this.state.category.map(item => {
-			item.property.map(property => {
-				if (property.select) {
-					param.propertyValIds.push(property.select);
-				}
-			})
+			if (item.property) {
+				item.property.map(property => {
+					if (property.select) {
+						param.propertyValIds.push(property.select);
+					}
+				})
+			}
 		})
 		this.state.customProperty.map(item => {
 			if (item.attrName && item.attrVal) {

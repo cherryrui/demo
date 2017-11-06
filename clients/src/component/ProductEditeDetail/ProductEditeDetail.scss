@@ -2,7 +2,6 @@
 .product_name{
 	font-size: 18px;
 	font-weight: bold;
-    margin-bottom: 20px;
 }
 .product_imgs{
     img{
@@ -37,7 +36,7 @@
     background-color: $color-orange;
 }
 .title_bg{
-
+    margin-top: 20px;
 	height: 36px;
     background-color: #ffc70d;
     display: flex;
@@ -49,7 +48,6 @@
         height: 36px;
         background-color: $border-color;
         color: #ffffff;
-      
         line-height: 36px;
         text-align: center;
    }
@@ -66,16 +64,15 @@
 .mainfigure{	
 	padding:10px;
 	display: flex;
-
 	.main_img{
-	width: 160px;
-	height: 160px;
-	margin-right: 10px;	
- 	border:1px solid $border-color;
-	img{
-	width: 160px;
-	height: 160px;
-	}
+    	width: 160px;
+    	height: 160px;
+    	margin-right: 10px;	
+     	border:1px solid $border-color;
+    	img{
+        	width: 160px;
+        	height: 160px;
+    	}
 	}
 }
 .detail_descrip{
@@ -88,7 +85,6 @@
 .detail_table{
 	background-color: $item-color;
 	padding:10px;
-	margin-bottom: 20px;
 
 	.table_top{
     	border: none;

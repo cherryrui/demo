@@ -261,7 +261,7 @@ class ProductInfo extends React.Component {
 							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
 							<FormattedMessage id="product.edite.content.type" defaultMessage="内容模式"/>：
 						</p>
-						<RadioGroup onChange={this.handleContentType.bind(this,index)} defaultValue={item.contentType?item.contentType:1}>
+						<RadioGroup onChange={this.handleContentType.bind(this,index)} value={item.contentType?item.contentType:1}>
 		        			{operator.contentType.map((item)=>{
 								return <Radio value={item.key}>
 								{this.formatMessage({id:item.value})}</Radio>

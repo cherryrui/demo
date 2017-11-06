@@ -50,15 +50,17 @@ class ProductPicture extends React.Component {
 				}
 				if (res.data.result.imgUrl) {
 					res.data.result.imgUrl.map((item, index) => {
-						imgs[index + 1].img = item.imgUrl;
-						fileList.push({
-							uid: '-1', // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
-							status: 'done', // 状态有：uploading done error removed
-							url: item.imgUrl + "@150w_150h_1e_1c.png",
-							response: {
-								url: item.imgUrl
-							}, // 服务端响应内容
-						})
+						if (item.imgUrl) {
+							imgs[index + 1].img = item.imgUrl;
+							fileList.push({
+								uid: '-1', // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+								status: 'done', // 状态有：uploading done error removed
+								url: item.imgUrl + "@150w_150h_1e_1c.png",
+								response: {
+									url: item.imgUrl
+								}, // 服务端响应内容
+							})
+						}
 					})
 				}
 				this.setState({

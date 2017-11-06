@@ -77,7 +77,7 @@ export default {
 		unit_key: "长度",
 		type: 0,
 		select_unit: 0,
-		unit_name: "lengthUnit",
+		unit_name: "lenUnit",
 		unit_name_id: "lengthUnitId",
 		unit: [],
 	}, {

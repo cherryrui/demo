@@ -205,7 +205,7 @@ class Category extends React.Component {
                 <div className={css.category_item} >
                     <div className={css.left}>
                         <div className={css.cate_title} >
-                            <img src={item.levleOneProductCategory.iconUrl+"@50w_50h_1e_1c.png"}/>
+                            <img src={item.levleOneProductCategory.iconUrl?item.levleOneProductCategory.iconUrl+"@50w_50h_1e_1c.png":"../img/no_icon.png"}/>
                         </div>
                         <div className={css.left_content}>
                             <div className={css.left_category}>

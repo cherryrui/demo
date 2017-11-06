@@ -133,13 +133,8 @@ class ProductBasic extends React.Component {
 				})
 				productCategorys = productCategorys.substr(0, productCategorys.length - 2);
 				values.productCategorys = productCategorys;
-				let url = "";
-				if (this.props.product && this.props.product.productId) {
-					url = "";
-				} else {
-					url = '/product/add-product-basic.json';
-				}
-				axios.post(url, values).then(res => {
+				values.productId = this.props.product.productId ? this.props.product.productId : null;
+				axios.post('/product/add-product-basic.json', values).then(res => {
 					this.setState({
 						loading: false
 					})

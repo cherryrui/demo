@@ -98,7 +98,7 @@ router.get('/get-category.json', async(ctx, next) => {
 
 				//获取产品规格
 				await axios.get(url + "/auth/supplier/getUpdateProductSpecs?productId=" + param.pid).then(res => {
-					product.spec = res.data.result;
+					product.spec = res.data.result.itemInfo;
 				})
 
 				//获取产品属性
@@ -113,12 +113,12 @@ router.get('/get-category.json', async(ctx, next) => {
 
 				//获取产品包装参数
 				await axios.get(url + "/auth/supplier/getProductPack?productId=" + param.pid).then(res => {
-					product.pack = res.data.result;
+					product.pack = res.data.result ? res.data.result : {};
 				})
 
 				//获取产品运输要求
 				await axios.get(url + "/auth/supplier/getTransportation?productId=" + param.pid).then(res => {
-					product.transport = res.data.result;
+					product.transport = res.data.result ? res.data.result : {};
 				})
 			} else {
 
@@ -408,7 +408,7 @@ router.get('/get-category.json', async(ctx, next) => {
 
 //或者产品属性
 .post('/get-product-attr.json', async(ctx, next) => {
-		let productId = ctx.request.body.productId,
+		let productId = ctx.request.body.pid,
 			result;
 		await axios.get(url + '/product/queryProductPropertyByCategory/' + productId).then(res => {
 			result = res.data;
@@ -434,17 +434,6 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.post('/save-product-spec.json', async(ctx, next) => {
-		let param = ctx.request.body;
-		ctx.body = true
-	})
-	.get('/get-product-info-modal.json', async(ctx, next) => {
-		let modal = [];
-
-		ctx.body = {
-			modal: modal
-		}
-	})
 	.post('/save-product-instrct.json', async(ctx, next) => {
 		let param = ctx.request.body,
 			result;
@@ -461,6 +450,12 @@ router.get('/get-category.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
+	/**
+	 * [description]
+	 * @param  {[type]} '/get-product-unit.json' [description]
+	 * @param  {[type]} async(ctx,               next          [description]
+	 * @return {[type]}                          [description]
+	 */
 	.get('/get-product-unit.json', async(ctx, next) => {
 		let result;
 		await axios.post(url + '/unit/queryUnitByStatus', querystring.stringify({
