@@ -48,7 +48,7 @@ class RePassword extends React.Component {
         super(props);
         this.state = {
             step: 0,
-            phoneOremail:"",
+            phoneOremail: "",
         }
     }
     handleSteps = (step) => {
@@ -60,9 +60,9 @@ class RePassword extends React.Component {
         this.props.history.pushState(null, `/${url}`);
     }
 
-    handlePhoneorEmail = (value) =>{
+    handlePhoneorEmail = (value) => {
         this.setState({
-            phoneOremail:value
+            phoneOremail: value
         })
     }
 
@@ -98,7 +98,7 @@ class Authentication extends React.Component {
             loading: false,
             time: 0,
             disabled: false,
-            veri_modl:1,
+            veri_modl: 1,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
@@ -109,14 +109,14 @@ class Authentication extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let param = {
-                    TelEmail:values.account,
-                    code:values.code
+                    TelEmail: values.account,
+                    code: values.code
                 };
-                axios.post('/user/forget-verifi-code.json',param).then(res=>{
-                    if(res.data.isSucc){
+                axios.post('/user/forget-verifi-code.json', param).then(res => {
+                    if (res.data.isSucc) {
                         this.props.handlePhoneorEmail(values.account);
                         this.props.handleSteps ? this.props.handleSteps(1) : '';
-                    }else{
+                    } else {
                         message.error(res.data.message);
                     }
                 })
@@ -124,51 +124,55 @@ class Authentication extends React.Component {
         })
     }
 
-    regEmail = (email) =>{
-        let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
-        return(reg.test(email));
-    } 
+    regEmail = (email) => {
+        let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        return (reg.test(email));
+    }
 
-    getVericode = () =>{
+    getVericode = () => {
         console.log(this.props.form.getFieldsValue());
         let values = this.props.form.getFieldsValue();
         let phoneOremail = values.account;
-        if(phoneOremail){
-          /*console.log(this.regEmail(phoneOremail));*/
-          this.setState({
-                        loading: false,
-                        time: 60,
+        if (phoneOremail) {
+            /*console.log(this.regEmail(phoneOremail));*/
+            this.setState({
+                loading: false,
+                time: 60,
+                disabled: true
+            })
+            this.timer = window.setInterval(() => {
+                /*console.log(this.state.time);*/
+                if (this.state.time - 1 >= 0) {
+                    this.setState({
+                        time: this.state.time - 1,
                         disabled: true
                     })
-          this.timer = window.setInterval(() => {
-                        /*console.log(this.state.time);*/
-              if (this.state.time - 1 >= 0) {
-                this.setState({
-                     time: this.state.time - 1,
-                     disabled: true
-                })
-              } else {
-                this.setState({
-                    time: 0,
-                    disabled: false
-                  })
-                  window.clearInterval(this.timer)
-              }          
-          }, 1000)
-          let param = {
-            TelEmail:phoneOremail
-          };
-          axios.post('/user/forget-getvericode.json',param).then(res=>{
-            if(res.data.isSucc){
-                message.success(this.formatMessage({id:'app.forget.sendcode'}));
-            }else{
-                message.error(res.data.message);
-            }
-          })
-        }else{
-          message.error(this.formatMessage({id:'authen.authen.account_warn'}));
+                } else {
+                    this.setState({
+                        time: 0,
+                        disabled: false
+                    })
+                    window.clearInterval(this.timer)
+                }
+            }, 1000)
+            let param = {
+                TelEmail: phoneOremail
+            };
+            axios.post('/user/forget-getvericode.json', param).then(res => {
+                if (res.data.isSucc) {
+                    message.success(this.formatMessage({
+                        id: 'app.forget.sendcode'
+                    }));
+                } else {
+                    message.error(res.data.message);
+                }
+            })
+        } else {
+            message.error(this.formatMessage({
+                id: 'authen.authen.account_warn'
+            }));
         }
-  }
+    }
 
 
     render() {
@@ -186,7 +190,7 @@ class Authentication extends React.Component {
         const tailFormItemLayout = {
             wrapperCol: {
                 span: 12,
-                offset: 10
+                offset: 9
             }
         };
 
@@ -230,7 +234,8 @@ class Authentication extends React.Component {
                 )}
 
                 </FormItem>
-                <FormItem className={css.Button_center}>
+                <FormItem className={css.Button_center}
+              {...tailFormItemLayout}  >
                     <Button type="primary" htmlType="submit" className={css.code_Button} >
                         <FormattedMessage id="authen.authen.nextstep" defaultMessage="下一步"/>
                     </Button>
@@ -244,7 +249,7 @@ class SetPwd extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            phoneOremail:this.props.phoneOremail,
+            phoneOremail: this.props.phoneOremail,
         };
         this.formatMessage = this.props.intl.formatMessage;
     }
@@ -254,41 +259,45 @@ class SetPwd extends React.Component {
         /*this.props.handleSteps ? this.props.handleSteps(1) : '';*/
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values,this.state.phoneOremail)
-                let param ={
-                    TelEmail:this.state.phoneOremail,
-                    newpwd:values.password
+                console.log(values, this.state.phoneOremail)
+                let param = {
+                    TelEmail: this.state.phoneOremail,
+                    newpwd: values.password
                 };
-                axios.post('/user/forget-reset-pwd.json',param).then(res => {
-                    if(res.data.isSucc){
+                axios.post('/user/forget-reset-pwd.json', param).then(res => {
+                    if (res.data.isSucc) {
                         this.props.handleSteps ? this.props.handleSteps(1) : '';
-                    }else{
+                    } else {
                         message.error(res.data.message);
                     }
-                    
+
                 })
             }
         });
     }
     handleConfirmBlur = (e) => {
         const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+        this.setState({
+            confirmDirty: this.state.confirmDirty || !!value
+        });
     }
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you enter is inconsistent!');
+            callback('Two passwords that you enter is inconsistent!');
         } else {
-          callback();
+            callback();
         }
-     }
+    }
     checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
-          form.validateFields(['confipwd'], { force: true });
+            form.validateFields(['confipwd'], {
+                force: true
+            });
         }
         callback();
-     }
+    }
     handleBefore = () => {
         this.props.handleSteps(-1);
     }
@@ -305,8 +314,8 @@ class SetPwd extends React.Component {
         };
         const tailFormItemLayout = {
             wrapperCol: {
-                span: 12,
-                offset: 12
+                span: 10,
+                offset: 9
             }
         };
         const {
@@ -341,7 +350,7 @@ class SetPwd extends React.Component {
                 )}
 
                 </FormItem>
-                <FormItem className={css.Button_center}>
+                <FormItem className={css.Button_center}   {...tailFormItemLayout} >
                     <Button type="primary" onClick={this.handleBefore} htmlType="submit">
                         <FormattedMessage id="app.before" defaultMessage="上一步"/>
                     </Button>
