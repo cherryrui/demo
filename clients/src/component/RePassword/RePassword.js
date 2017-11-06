@@ -112,7 +112,7 @@ class Authentication extends React.Component {
                     TelEmail:values.account,
                     code:values.code
                 };
-                axios.post('/user/forget-verifi-code.json',param).then(rees=>{
+                axios.post('/user/forget-verifi-code.json',param).then(res=>{
                     if(res.data.isSucc){
                         this.props.handlePhoneorEmail(values.account);
                         this.props.handleSteps ? this.props.handleSteps(1) : '';
