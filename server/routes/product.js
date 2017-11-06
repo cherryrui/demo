@@ -380,20 +380,27 @@ router.get('/get-category.json', async(ctx, next) => {
 		ctx.body = result;
 	})
 	/**
-	 * 获取代理商产品
+	 * 获取供应商产品
 	 * @param  {[type]} '/get-agent-products.json' [description]
 	 * @param  {[type]} async(ctx,                 next          [description]
 	 * @return {[type]}                            [description]
 	 */
-	.get('/get-agent-products.json', async(ctx, next) => {
-
-		let products = [],
-			total = 300;
-		ctx.body = {
-			products: products,
-			total: total,
+	.post('/get-supply-products.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/getSupplierAllProductList", querystring.stringify(param)).then(res => {
+				/*console.log(69, res.data)*/
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
 		}
-
+		ctx.body = result;
 	})
 
 //或者产品属性

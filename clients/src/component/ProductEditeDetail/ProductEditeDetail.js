@@ -51,7 +51,7 @@ class ProductEditeDetail extends React.Component {
 						category.push(cate);
 					}
 				})
-				if (product.transport.transportationExplain) {
+				if (product.transport && product.transport.transportationExplain) {
 					let transportationExplain = JSON.parse(product.transport.transportationExplain);
 					product.transport.explain = "";
 					for (let key in transportationExplain) {

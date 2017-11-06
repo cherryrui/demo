@@ -67,7 +67,7 @@ class Requirement extends React.Component {
             requirement: [],
             status: "",
             total: 0,
-            pageSize: 1,
+            pageSize: 10,
             current: 1,
         };
         let {
@@ -80,19 +80,13 @@ class Requirement extends React.Component {
         const menu = (
             <Menu onClick={this.handleMenuClick}>
                 <Menu.Item key="0">
-                    <a target="_blank" rel="noopener noreferrer" >
-            { this.formatMessage({id:"app.processing"})}
-                    </a>
+                    <FormattedMessage id="app.processing" defaultMessage=""/>
                 </Menu.Item>
                 <Menu.Item key="1">
-                    <a target="_blank" rel="noopener noreferrer" >
-            { this.formatMessage({id:"app.processed"})}
-                        </a>
+                    <FormattedMessage id="app.processed" defaultMessage=""/>
                 </Menu.Item>
                 <Menu.Item key="-1">
-                    <a target="_blank" rel="noopener noreferrer" >
-            { this.formatMessage({id:"app.refused"})}
-                        </a>
+                    <FormattedMessage id="app.refused" defaultMessage=""/>
                 </Menu.Item>
             </Menu>
         );
@@ -190,11 +184,10 @@ class Requirement extends React.Component {
                 <FormattedMessage id="mine.person.requirement" defaultMessage="分类"/>
 
             </div>
-            <div>
+            <div className={css.requirement_table}>
                 <Table
                     pagination={false}
-                    rowKey="addressId"
-                    bordered
+                    rowKey="demandId"
                     columns={this.colums_show}
                     dataSource={this.state.requirement}/>
             </div>

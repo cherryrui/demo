@@ -9,9 +9,9 @@
     border:none !important;
     border-collapse: collapse!important;
   }
-
- 
-
+  span[class="ant-checkbox"]{
+    vertical-align: sub!important;
+  }
 }
 .table_col_name{
   text-align: left !important;
@@ -79,6 +79,9 @@
     height: 50px;
     padding-left: 30px;
     padding-right: 30px;
+  }
+  span[class="ant-checkbox"]{
+    vertical-align: sub!important;
   }
 }
 .cancel{

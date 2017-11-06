@@ -1,34 +1,42 @@
 @import "../../themes.scss";
 .table_col{
-  text-align: center !important;
-  font-size: 14px;
-
+    text-align: center !important;
+    font-size: 14px;
 }
 .ant-dropdown-link{
-color: $font-color !important;
-  font-size: 14px;;
+    color: $font-color !important;
+    font-size: 14px;;
 }
 .time_text{
-
-font-size: $border-color;
+    font-size: $border-color;
 }
 .table_operation {
-  font-size: 18px;
-
-.operation_text{
-  display: block;
-  font-weight: 500;
-  color: $color-blue;
-  i {
-    font-size: 20px;
-    color: #2e2b2e; }
-}
-}
+    font-size: 18px;
+    .operation_text{
+        display: block;
+        font-weight: 500;
+        color: $color-blue;
+        i{
+            font-size: 20px;
+            color: #2e2b2e;
+        }
+    }
+} 
 .footer {
     text-align: right;
-    margin-top: 20px;
+    padding-top: 20px;
     p {
       margin-left: 10px;
     }
 
   }
+.requirement_table{
+    background: white;
+    td{
+      border-bottom: 1px dashed $border-color !important;
+    }
+    tbody+tr{
+      background: red;
+    }
+
+}

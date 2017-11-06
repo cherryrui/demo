@@ -32,9 +32,10 @@ class PersonCenter extends React.Component {
             message_list: [],
             products: [],
             brands: [],
-            orderList: [],
-            demandList: [],
-            collectList: [],
+            orderList: JSON.parse(JSON.stringify(operator_order.order_status)),
+            demandList: JSON.parse(JSON.stringify(operator.demand_menu)),
+            collectList: JSON.parse(JSON.stringify(operator.favorite_menu)),
+            productManageList: JSON.parse(JSON.stringify(operator.management_menu)),
             visible: false,
             product_page: 1,
             brand_page: 2,
@@ -51,14 +52,17 @@ class PersonCenter extends React.Component {
             this.props.history.pushState(null, 'login');
         }
     }
+    componentDidMount() {
+        this.props.goTop ? this.props.goTop() : "";
+    }
 
     jump = (e) => {
         this.props.history.pushState(null, "page/mine/system-message")
     }
     getData = () => {
-        let orderList = JSON.parse(JSON.stringify(operator_order.order_status)),
-            demandList = JSON.parse(JSON.stringify(operator.demand_menu)),
-            collectList = JSON.parse(JSON.stringify(operator.favorite_menu));
+        let orderList = this.state.orderList,
+            demandList = this.state.demandList,
+            collectList = this.state.collectList;
         axios.post('/user/get-center-num.json', {}).then(res => {
             if (res.data.code == 104) {
                 this.props.handleVisible ? this.props.handleVisible(true) : "";
@@ -93,6 +97,7 @@ class PersonCenter extends React.Component {
                     })
                 })
                 collectList[0].count = sum;
+                console.log(orderList, demandList, collectList);
                 this.setState({
                     orderList: orderList,
                     demandList: demandList,
@@ -118,7 +123,21 @@ class PersonCenter extends React.Component {
                 }
             })
         } else if (this.state.user.userIdentity == 2) { //供应商，获取产品总数
-
+            axios.post('/user/get-supply-product-status.json', {}).then(res => {
+                if (res.data.code == 104) {
+                    this.props.handleVisible ? this.props.handleVisible(true) : "";
+                } else if (res.data.isSucc) {
+                    let productManageList = this.state.productManageList;
+                    productManageList.map(item => {
+                        item.count = res.data.result[item.key]
+                    })
+                    this.setState({
+                        productManageList
+                    })
+                } else {
+                    message.error(res.data.message);
+                }
+            })
         }
     }
     handleMenu = (key, url) => {
@@ -166,7 +185,7 @@ class PersonCenter extends React.Component {
                     </div>
                     {this.state.message_list.map(item=>{
                         return <div className={css.user_message_item}>
-                            <i>●</i>【
+                            <i class="iconfont icon-yuandian-copy"></i>【
                             {item.type==0?<FormattedMessage id="mine.message.system" defaultMessage="分类"/>
                             :<FormattedMessage id="mine.message.consult" defaultMessage="分类"/>}】
                             {item.info}
@@ -181,7 +200,7 @@ class PersonCenter extends React.Component {
                 <div className={css.order_content}>
                     {this.state.orderList.map(item=>{
                         return <div className={css.order_item}
-                        onClick={this.handleMenu.bind(this,item.key,item.url)}
+                        onClick={this.handleMenu.bind(this,item.url)}
                         >
                             <img src={item.icon}/>
                             <Tooltip placement="top"
@@ -275,7 +294,7 @@ class PersonCenter extends React.Component {
                     <FormattedMessage id="mine.product.management" defaultMessage="分类"/>
                 </p>
                 <div className={css.management_content}>
-                    {operator.management_menu.map(item=>{
+                    {this.state.productManageList.map(item=>{
                         return <div className={css.order_item}
                             onClick={this.handleMenu.bind(this,item.key,item.url)}
                         >
@@ -288,7 +307,7 @@ class PersonCenter extends React.Component {
                                         <FormattedMessage id={item.value_id} defaultMessage="分类"/>
                                     </p>
                             </Tooltip>
-                            <p className={css.order_num}>30</p>
+                            <p className={css.order_num}>{item.count}</p>
                         </div>
                     })}
                 </div>

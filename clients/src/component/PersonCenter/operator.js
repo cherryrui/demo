@@ -3,17 +3,20 @@ export default {
         key: -2,
         value_id: "app.requirements",
         icon: "../img/DM-1.png",
-        count: 0
+        count: 0,
+        url: "page/mine/requirement"
     }, {
         key: "0",
         value_id: "app.processing",
         icon: "../img/DM-2.png",
-        count: 0
+        count: 0,
+        url: "page/mine/requirement"
     }, {
         key: "1",
         value_id: "app.processed",
         icon: "../img/DM-3.png",
-        count: 0
+        count: 0,
+        url: "page/mine/requirement"
     }, ],
     favorite_menu: [{
         key: 1,
@@ -35,29 +38,38 @@ export default {
         url: "/page/mine/quotation-list"
     }, ],
     management_menu: [{
-        key: "all",
-        value_id: "order.status.all",
+        value: 0,
+        value_id: "mine.product.status.all",
+        key: "total",
         icon: "../img/PM-1.png",
-        url: "/page/mine/agent-product"
+        url: "page/mine/agent-product"
     }, {
-        key: "pay",
-        value_id: "app.proval",
+        value: 1,
+        value_id: "mine.product.status.selling",
+        key: "productUpCount",
         icon: "../img/PM-2.png",
-        url: "/page/mine/agent-product"
+        url: "page/mine/agent-product/1",
+        count: 0,
     }, {
-        key: "send",
-        value_id: "app.provaling",
+        value: 2,
+        value_id: "mine.product.status.reviewimg",
+        key: "productNoCount",
         icon: "../img/PM-3.png",
-        url: "/page/mine/agent-product"
+        url: "page/mine/agent-product/2",
+        count: 0,
     }, {
-        key: "receive",
-        value_id: "app.not.provaled",
+        value: 3,
+        value_id: "mine.product.status.unaudited",
+        key: "productRefuseCount",
         icon: "../img/PM-4.png",
-        url: "/page/mine/agent-product"
+        url: "page/mine/agent-product/3",
+        count: 0,
     }, {
-        key: "all",
-        value_id: "app.not.review",
+        value: 4,
+        value_id: "mine.product.status.unsold",
+        key: "productDownCount",
         icon: "../img/PM-5.png",
-        url: "/page/mine/agent-product"
+        url: "page/mine/agent-product/4",
+        count: 0,
     }, ]
 }

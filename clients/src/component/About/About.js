@@ -68,7 +68,7 @@ class About extends React.Component {
                     {menu.list.map(item=>{
                         return  <p className={this.state.select == item.key ? css.active : css.item}
                             onClick={this.handleMenu.bind(this,item.key)}
-                        ><i className={css.spot}>●</i>
+                        ><i class="iconfont icon-yuandian-copy"/>&nbsp;&nbsp;
                              <FormattedMessage id={item.title} defaultMessage="分类"/>
 
                         </p>

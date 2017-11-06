@@ -50,6 +50,7 @@ class Mine extends React.Component {
             this.state.user = JSON.parse(sessionStorage.user);
             if (this.path !== this.props.location.pathname) {
                 this.getPremiss();
+                this.goTop();
             }
         }
     }
@@ -153,7 +154,7 @@ class Mine extends React.Component {
                             return <p className={this.state.select == item.key ? css.active : css.item}
                                 onClick={this.handleMenu.bind(this,item.key,item.url)}
                             >
-                                <i class="iconfont icon-iconfonticonfontdian1"></i>&nbsp;&nbsp;
+                                <i class="iconfont icon-yuandian-copy"></i>&nbsp;&nbsp;
                                 <FormattedMessage id={item.title} defaultMessage="分类"/>
 
                             </p>

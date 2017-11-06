@@ -267,6 +267,13 @@ const en_US = {
     "mine.product.price_warn": "please input product price",
     "mine.product.inventory_warn": "please input product inventory",
     "mine.product.picture_warn": "please upload picture",
+    "mine.product.status.all": "All",
+    "mine.product.status.selling": "Sellimg",
+    "mine.product.status.reviewimg": "Reviewimg",
+    "mine.product.status.unaudited": "Unaudited",
+    "mine.product.status.unsold": "Unsold",
+
+
     "product.edite.descrip": "Prodoct description",
     "product.edite.feature": "Prodoct feature",
     "product.edite.paramter": "Prodoct parameters",
