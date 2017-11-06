@@ -31,6 +31,9 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
     }
+    componentDidMount() {
+        document.body.scrollTop = 0;
+    }
 
     handleSubmit = (e) => {
         let {

@@ -3,9 +3,18 @@
   text-align: center !important;
   font-size: 14px;
 }
+.tabber_bottom{
+    height: 10px;
+    border-right: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+    background: white;
+}
+.table{
+  background: white;
+  margin-bottom: 20px;
+}
 .table_product{
   display: flex;
-  padding: 10px 0;
   img{
     border: 1px solid $border-color;
     width: 100px;
@@ -14,13 +23,47 @@
     margin: auto 0;
   }
   .info{
-    padding: 10px;
+    padding: 0 10px;
     text-align: left;
     flex-grow: 1;
+    .name{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        height: 42px;
+    }
   }
 
 }
-.footer{
-  padding: 20px 0;
-  text-align: right;
+%product_status{
+  width: 75px;
+  line-height: 18px;
+  height: 18px;
+  padding: 0 5px;
+  color: white;
+  border-radius: 2px;
+  margin-top: 10px;
+}
+.product_review{
+  @extend %product_status;
+  background: $color-orange;
+}
+.product_refused{
+  @extend %product_status;
+  background: $color-red;
+}
+.product_selling{
+  @extend %product_status;
+  background: $color-blue;
+}
+.product_unsold{
+  @extend %product_status;
+  background: $color-red;
+}
+.table_operator{
+  display: flex;
+  flex-direction: column;
 }

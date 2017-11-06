@@ -29,12 +29,12 @@ class TabBar extends React.Component {
 	render() {
 		return <div className={`${css.body} ${this.props.className}`} style={this.props.style}>
 			{this.props.tabs.map((item,index)=>{
-				return <div className={index!=this.state.current?css.item:index==0?css.left_active:index==this.props.tabs.length-1?css.right_active:css.active}
+				return <div style={index==this.state.current&&this.props.activeColor?{borderTopColor:this.props.activeColor,color:"#2e2b2e",fontWeight: "bold"}:this.props.activeColor?{color:"#2e2b2e",fontWeight: "bold"}:{}} className={index!=this.state.current?css.item:index==0?css.left_active:index==this.props.tabs.length-1?css.right_active:css.active}
 					onClick={this.handleBar.bind(this,item,index)}
 				>	
 					<Badge count={item.count&&index!=this.state.current?item.count:0} overflowCount={99}>
 						{item.icon?<img src={item.icon}/>:""}
-						{this.props.hiddenTest&&index!=this.state.current?"":<FormattedMessage id={item.key} defaultMessage="tabbar"/>}
+						{this.props.hiddenTest&&(index!=this.state.current)?"":<FormattedMessage id={item.key} defaultMessage="tabbar"/>}
 					</Badge>
 				</div>
 			})}

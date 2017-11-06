@@ -48,14 +48,16 @@ class ProductAttr extends React.Component {
 				let customProperty = res.data.result.customProperty ? JSON.parse(res.data.result.customProperty) : [];
 				customProperty.length == 0 ? customProperty.push({}) : "";
 				category.map(item => {
-					item.property.map(property => {
-						select.map(select_p => {
-							if (property.propertyId == select_p.propertyId) {
-								property.select = select_p.propertyValId;
-							}
-						})
+					if (item.property) {
+						item.property.map(property => {
+							select.map(select_p => {
+								if (property.propertyId == select_p.propertyId) {
+									property.select = select_p.propertyValId;
+								}
+							})
 
-					})
+						})
+					}
 				})
 				this.setState({
 					category,

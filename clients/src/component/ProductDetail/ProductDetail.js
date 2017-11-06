@@ -63,7 +63,7 @@ class ProductDetail extends React.Component {
             curImg: '', //當前选中的图片
             index_img: 0, //選中的圖片index
             visible: false,
-            current: 1,
+            current: 0,
             productInfo: [],
             properties: [],
             specs: [],
@@ -462,15 +462,14 @@ class ProductDetail extends React.Component {
                 </div>
                 <div className={css.info}>
                     <div className={css.card_container}>
-                        <TabBar tabs={operator.tabs} current={this.state.current} 
+                        <TabBar tabs={operator.tabs} className={css.product_tab_bar} current={this.state.current} 
                             handleBar={this.handleChange}
                         />
                         <div className={css.container_body}>
-                        {this.state.current==1?<Information data={this.state.productInfo} properties={this.state.properties}/>
-                            :this.state.current==2?<Specification data={this.state.properties}/>
-                            :this.state.current==3?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
-                            :this.state.current==4?<Review data={this.state.reviews}/>
-                            :this.state.current==5?<Price data={this.state.prices} />
+                        {this.state.current==0?<Information data={this.state.productInfo} properties={this.state.properties}/>
+                            :this.state.current==1?<PackageDetail data={this.state.packInfo?this.state.packInfo:{}}/>
+                            :this.state.current==2?<Review data={this.state.reviews}/>
+                            :this.state.current==3?<Price data={this.state.prices} />
                             :""}
                         </div>
                     </div>

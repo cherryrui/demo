@@ -213,10 +213,11 @@ class OrderList extends React.Component {
                     onSearch={this.search.bind(this)}
                  />
             </div>
+            <TabBar activeColor="#2e2b2e" className={css.tabtar} hiddenTest tabs={this.state.order_status} current={this.state.current}
+                handleBar={this.handleBar.bind(this)}
+            />
             <div className={css.card_container}>
-                <TabBar style={{  backgroundColor:"#f7f7f7"}} className={css.tabtar} hiddenTest tabs={this.state.order_status} current={this.state.current} 
-                            handleBar={this.handleBar.bind(this)}
-                        />
+
                 <Table
                     pagination={false}
                     rowKey="orderId"

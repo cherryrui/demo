@@ -17,11 +17,14 @@
     padding: 10px 0;
     padding-top:20px;
   }
+  i{
+    color: $color-red;
+    }
   .item{
     color: $font-color;
     height:30px;
     line-height: 30px;
-        cursor: pointer;
+    cursor: pointer;
 
     .spot{
       color:$color-red;

@@ -404,4 +404,20 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		console.log(result);
 		ctx.body = result;
 	})
+    .post('/get-supply-product-status.json', async(ctx, next) => {
+        let param = ctx.request.body,
+            result;
+        if (ctx.cookie.get('token')) {
+            axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+        await axios.post(url + "/auth/supplier/getSupplierProductStatusCount", {}).then(res => {
+            result = res.data;
+        })
+        } else {
+            result = {
+                isSucc: false,
+                code: 104
+            }
+        }
+        ctx.body = result;
+    })
 module.exports = router;

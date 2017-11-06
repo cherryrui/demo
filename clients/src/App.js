@@ -498,7 +498,7 @@ ReactDOM.render(
                                 <Route path="order-list(/:type)" getComponent={OrderList}/>
                                 <Route path="favorite/:type" getComponent={Favorite}/>
                                 <Route path="quotation-list" getComponent={QuotationList}/>
-                                <Route path="agent-product" getComponent={AgentProduct}/>
+                                <Route path="agent-product(/:type)" getComponent={AgentProduct}/>
                                 <Route path="person-address" getComponent={PersonAddress}/>
                                 <Route path="person-data" getComponent={PersonData}/>
                                 <Route path="agent" getComponent={Agent}/>
