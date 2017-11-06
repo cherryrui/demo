@@ -275,7 +275,7 @@ class Authentication extends React.Component {
 
 		                    >
 		                    <Row gutter={8}>
-		                         <Col span={11}>   
+		                         <Col span={11} style={{ width: 203}}>   
 		      			                 {getFieldDecorator('phoneoremailcheck', {
 		                                rules: [ {
 		                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
@@ -285,7 +285,7 @@ class Authentication extends React.Component {
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue}  style={{minWidth:155,height:36,marginLeft: 15}}>
+		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue}  style={{minWidth:185,height:36,marginLeft: 12}}>
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
 		                                        {this.state.time?("("+this.state.time+")"):""}
 		                                  </Button>
@@ -297,7 +297,7 @@ class Authentication extends React.Component {
 		                    <FormItem  {...tailFormItemLayout}>
 		                        <Button  type="primary" 
 		                       			 htmlType="submit" 
-		                       		   	 className={appcss.button_theme} style={{width:240}}>
+		                       		   	 className={appcss.button_theme}>
 		                             	 {this.formatMessage({id: 'authen.authen.nextstep'})}
 		                        </Button>
 		                                       
@@ -334,7 +334,7 @@ class SetPwd extends React.Component {
 				axios.post('user/verifi_phone.json', param).then(res => {
 					if (res.data.isSucc) {
 						user.tel = param.tel;
-						sessionStorage.setItem("user",JSON.stringify(user));
+						sessionStorage.setItem("user", JSON.stringify(user));
 						this.props.handleSteps ? this.props.handleSteps(1) : '';
 					} else {
 						message.error(res.data.message);
@@ -348,7 +348,7 @@ class SetPwd extends React.Component {
 				axios.post('user/verifi_email.json', param).then(res => {
 					if (res.data.isSucc) {
 						user.email = param.email;
-						sessionStorage.setItem("user",JSON.stringify(user));
+						sessionStorage.setItem("user", JSON.stringify(user));
 						this.props.handleSteps ? this.props.handleSteps(1) : '';
 					} else {
 						message.error(res.data.message);
@@ -492,7 +492,7 @@ class SetPwd extends React.Component {
 		                        label={this.formatMessage({id: 'register.register.verification'})}
 		                    >
 		                    	<Row gutter={8}>
-		                         	<Col span={11}>   
+		                         	<Col span={11} style={{ width: 203}}>   
 		      			                 {getFieldDecorator('verifi_code', {
 		                                rules: [ {
 		                                    required: true, message:this.formatMessage({ id:'register.verifivation.warn'}),
@@ -502,7 +502,7 @@ class SetPwd extends React.Component {
 		                            )}
 		                            </Col>
 		                            <Col span={12}>
-		                                 <Button onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue} >
+		                                 <Button  style={{ width: 185,marginLeft:12}} onClick={this.getVerifiCode} disabled={this.state.disabled} loading={this.state.loading} className={appcss.button_blue} >
 		                                        {this.formatMessage({id: 'repwd.get_code'})}
 		                                        {this.state.time?("("+this.state.time+")"):""}
 		                                  </Button>
@@ -514,8 +514,7 @@ class SetPwd extends React.Component {
 		                    <FormItem  {...tailFormItemLayout}>
 		                        <Button  type="primary" 
 		                       			 htmlType="submit" 
-		                       		   	 className={this.state.verifi_modl==1?appcss.button_black:appcss.button_theme}
-		                       		   	 style={{width:240}}>		                		   	 
+		                       		   	 className={this.state.verifi_modl==1?appcss.button_black:appcss.button_theme}>		                		   	 
 		                             	 {this.state.verifi_modl==1?this.formatMessage({id: 'perau.perau.save'})
 		                             	 :this.formatMessage({id: 'authen.authen.nextstep'})
 		                             	}
