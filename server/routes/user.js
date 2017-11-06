@@ -193,7 +193,7 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		await axios.post(url+'/auth/user/testEmail',querystring.stringify(param)).then(res=>{
 			result = res.data;
 		})
-		/*console.log(result)*/
+		console.log(result)
 		ctx.body = result;
 	})
 	.post('/phonecheck.json',async ctx=>{
