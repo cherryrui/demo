@@ -15,11 +15,11 @@
 }
 .table_col_name{
   text-align: left !important;
-  font-size: 16px;
+  font-size: 14px;
 }
 .table_col{
   text-align: center !important;
-  font-size: 16px;
+  font-size: 14px;
   .table_address{
     display: flex;
     .address_detail{
@@ -41,10 +41,10 @@
   .table_operation{
     display: flex;
     justify-content: center;
-    line-height: 24px;
-    height: 24px;
+    line-height:16px;
+    height: 16px;
     .modify{
-      font-size: 24px;
+      font-size: 16px;
       display: block;
       padding-right:20px;
 
@@ -52,9 +52,9 @@
     }
     .delete{
       display: block;
-      font-size: 18px;
-      line-height: 24px;
-      height: 24px;
+      font-size: 16px;
+      line-height: 16px;
+      height: 16px;
     }
     .modify:hover{
       color: $theme-color;

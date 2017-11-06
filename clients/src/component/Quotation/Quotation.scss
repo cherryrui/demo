@@ -5,7 +5,7 @@
     margin-bottom: 20px;
   }
   tbody[class="ant-table-tbody"]{
-    font-size: 12px !important;
+  
     background-color: $item-color;
   }
   thead[class="ant-table-thead"]{
@@ -23,11 +23,11 @@
   }
   .table_col{
     text-align: center !important;
-    font-size: 12px;
+   
   }
   .table_col_last{
     text-align: center !important;
-    font-size: 12px;
+   
     border-right: none!important;
   }
   .table_num{
@@ -98,7 +98,8 @@
     }
     label[class="ant-checkbox-wrapper"]{
       margin-right: 32px;
-      font-size: 12px !important;
+     
+     
     }
     .title{
       width: 103px;

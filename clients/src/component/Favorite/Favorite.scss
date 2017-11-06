@@ -1,4 +1,8 @@
 @import '../../themes.scss';
+.link_title{
+  font-size: 12px;
+  font-weight: none !important;
+}
 .data_list{
 	display: flex;
 	flex-wrap: wrap;
@@ -59,7 +63,7 @@
     }
 }
 .list_product_item{
-    height: 280px;
+    height: 300px;
     margin-bottom: 20px;
 }
 .list_brand_item{
@@ -71,7 +75,7 @@
   .select_title{
     width: 100px;
     background: $theme-color;
-    color: white;
+    color: $color-grey;
     font-weight: bold;
     flex-shrink: 0;
     display: flex;
@@ -87,6 +91,8 @@
     flex-grow: 1;
     max-height: 85px;
     overflow: auto;
+    background-color: $item-color;
+
   }
   .select_item{
     padding: 10px;

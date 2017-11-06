@@ -104,7 +104,9 @@ class OrderList extends React.Component {
                     </Link>
                     <p>
                     <Button className={appcss.button_blue} onClick={this.handleClick.bind(this,record)} size="small" style={{minWidth:50,lineHeight: "20px",height: "20px"}} size="small" type="primary">
+                           <p className={css.button_pay}>
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
+                            </p>
                         </Button>
                     </p>
                 </span>
@@ -209,7 +211,7 @@ class OrderList extends React.Component {
                     placeholder={this.formatMessage({
                             id: 'orderlist.search.warn'
                         })}
-                    style={{ width: 200 }}
+                    style={{ width: 300 }}
                     onSearch={this.search.bind(this)}
                  />
             </div>

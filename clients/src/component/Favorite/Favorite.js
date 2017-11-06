@@ -197,7 +197,7 @@ class Favorite extends React.Component {
                 	<FormattedMessage id={this.type==1?"mine.favorite.product":"mine.favorite.brand"} 
                 	defaultMessage="分类"/>
                 </p>
-                <p onClick={this.handleType}>
+                <p  className={css.link_title} onClick={this.handleType}>
                 	<FormattedMessage id={this.type==2?"mine.favorite.product":"mine.favorite.brand"} 
                 	defaultMessage="分类"/>
                 </p>

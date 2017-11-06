@@ -45,7 +45,7 @@
     }
     .info{
         .product_title{
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
             overflow: hidden;
             display: -webkit-box;
@@ -100,7 +100,11 @@
       color: $font-color;
     }
   }
-
+.button_pay{
+  height: 20px !important;
+  line-height: 16px;
+  font-size: 12px;
+}
 
 }
 .table_status{
