@@ -259,7 +259,7 @@ class SetPwd extends React.Component {
                     TelEmail:this.state.phoneOremail,
                     newpwd:values.password
                 };
-                axios.get('/user/forget-reset-pwd.json',param).then(res => {
+                axios.post('/user/forget-reset-pwd.json',param).then(res => {
                     if(res.data.isSucc){
                         this.props.handleSteps ? this.props.handleSteps(1) : '';
                     }else{

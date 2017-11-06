@@ -16,12 +16,12 @@ import {
     message
 } from 'antd';
 
-const user = JSON.parse(sessionStorage.getItem("user"));
+/*const user = JSON.parse(sessionStorage.getItem("user"));*/
 class AccountSecurity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:user,
+            user:JSON.parse(sessionStorage.getItem("user")),
         };
         this.formatMessage = this.props.intl.formatMessage;
     }
