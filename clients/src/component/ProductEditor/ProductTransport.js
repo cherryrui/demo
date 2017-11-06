@@ -96,7 +96,7 @@ class ProductTransport extends React.Component {
 
 	render() {
 		console.log(this.state.transport);
-		return <div className={css.product_transport}>
+		return <div className={`${css.product_transport} ${this.props.className}`}>
 			<div className={css.product_transport_item}>
 				<p className={css.product_transport_item_left}>
 					<FormattedMessage id="mine.product.transport" defaultMessage="运输要求"/>：
@@ -115,9 +115,9 @@ class ProductTransport extends React.Component {
 				<TextArea  value={this.state.transport.transportationOther} style={{width:"465px"}} onChange={this.handleText.bind(this)}  rows={4} />
 			</div>
 			<div className={css.product_footer}>
-				<Button type="primary" onClick={this.goBack}>
+				{this.props.before?<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
-				</Button>
+				</Button>:""}
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>

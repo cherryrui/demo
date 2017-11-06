@@ -189,11 +189,11 @@ class ProductPicture extends React.Component {
 	}
 
 	render() {
-		return <div className={css.product_picture}>
+		return <div className={`${css.product_picture} ${this.props.className}`}>
 			<div className={css.picture_title}>
 				<p className={css.picture_title_left}>
 					<span className={css.title_warn}>*</span>
-					<FormattedMessage id="mine.product.picture" defaultMessage=""/>：
+					<FormattedMessage id="mine.product.picture" defaultMessage=""/>:
 				</p>
 				<Upload 
 					name="file"
@@ -230,9 +230,9 @@ class ProductPicture extends React.Component {
 				</RadioGroup>
 			</div>
 			<div className={css.product_footer}>
-				<Button type="primary" onClick={this.goBack}>
+				{this.props.before?<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
-				</Button>
+				</Button>:""}
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>

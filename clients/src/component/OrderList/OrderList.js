@@ -154,7 +154,7 @@ class OrderList extends React.Component {
         }
         axios.post('/order/get-user-order.json', param).then(res => {
             if (res.data.code == 104) {
-                this.props.handleVisible ? this.props.handleVisible(true) : "";
+                this.props.login ? this.props.login(true) : "";
             } else if (res.data.isSucc) {
                 this.props.goTop();
                 this.setState({

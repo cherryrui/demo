@@ -107,7 +107,7 @@ class Agent extends React.Component {
                     param.businessLicenseB = this.img_back;
                     axios.post('/user/become-agent.json', param).then(res => {
                         if (res.data.code == 104) {
-                            this.props.handleVisible ? this.props.handleVisible() : "";
+                            this.props.login ? this.props.login() : "";
                         } else if (res.data.isSucc) {
                             let user = JSON.parse(sessionStorage.user);
                             user.agent = values;

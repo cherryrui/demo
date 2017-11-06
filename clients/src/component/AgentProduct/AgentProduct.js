@@ -102,7 +102,7 @@ class AgentProduct extends React.Component {
 		this.getProducts();
 		axios.post('/user/get-supply-product-status.json', {}).then(res => {
 			if (res.data.code == 104) {
-				this.props.handleVisible ? this.props.handleVisible(true) : "";
+				this.props.login ? this.props.login(true) : "";
 			} else if (res.data.isSucc) {
 				let product_status = this.state.product_status;
 				product_status.map(item => {
@@ -153,7 +153,7 @@ class AgentProduct extends React.Component {
 				})
 
 			} else if (res.data.code == 104) {
-				this.props.handleVisible ? this.props.handleVisible(true) : ""
+				this.props.login ? this.props.login(true) : ""
 			} else {
 				message.error(res.data.message)
 			}

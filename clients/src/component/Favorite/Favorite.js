@@ -66,8 +66,8 @@ class Favorite extends React.Component {
 					category: res.data.result
 				})
 			} else if (res.data.code == 104) {
-				console.log("code == 10400", this.props.handleVisible);
-				this.props.handleVisible ? this.props.handleVisible(true) : "";
+				console.log("code == 10400", this.props.login);
+				this.props.login ? this.props.login(true) : "";
 			} else {
 				message.error(res.data.message);
 			}
@@ -93,7 +93,7 @@ class Favorite extends React.Component {
 					total: res.data.result.allRow
 				})
 			} else if (res.data.code == 104) {
-				this.props.handleVisible ? this.props.handleVisible(true) : "";
+				this.props.login ? this.props.login(true) : "";
 			} else {
 				message.error(res.data.message);
 			}

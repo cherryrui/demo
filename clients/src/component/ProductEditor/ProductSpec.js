@@ -37,6 +37,7 @@ class ProductSpec extends React.Component {
 			select_spec: [],
 			specs_list: [],
 			select_category: 0,
+			width: this.props.width ? this.props.width : 750,
 		}
 		this.oldCategoryId = null;
 		this.formatMessage = this.props.intl.formatMessage;
@@ -323,8 +324,7 @@ class ProductSpec extends React.Component {
 		this.props.handleSteps ? this.props.handleSteps(-1) : ""
 	}
 	render() {
-		console.log(this.state.select_category, this.state.product_spec, this.state.specs_list)
-		return <div className={css.product_spec}>
+		return <div className={`${css.product_spec} ${this.props.className}`}>
 			<p className={css.spec_item_title}>
 				<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>&nbsp;: 
 			</p>
@@ -345,21 +345,21 @@ class ProductSpec extends React.Component {
 			})}
 			<div className={css.product_spec_select_title}>
 				{this.state.product_spec.map(item=>{
-					return <p style={{width: 750/(this.state.product_spec.length+2)}} className={css.product_spec_select_title_item}>{item.specName}</p>
+					return <p style={{width: this.state.width/(this.state.product_spec.length+2)}} className={css.product_spec_select_title_item}>{item.specName}</p>
 				})}
-				<p style={{width: 750/(this.state.product_spec.length+2)}} className={css.product_spec_select_title_item}><FormattedMessage id="mine.product.factory_price" defaultMessage=""/></p>
-				<p style={{width: 750/(this.state.product_spec.length+2)}} className={css.product_spec_select_title_item}><FormattedMessage id="product.detail.inventory" defaultMessage=""/></p>
+				<p style={{width: this.state.width/(this.state.product_spec.length+2)}} className={css.product_spec_select_title_item}><FormattedMessage id="mine.product.factory_price" defaultMessage=""/></p>
+				<p style={{width: this.state.width/(this.state.product_spec.length+2)}} className={css.product_spec_select_title_item}><FormattedMessage id="product.detail.inventory" defaultMessage=""/></p>
 				<p className={css.product_spec_select_title_no}><FormattedMessage id="mine.product.art.no" defaultMessage=""/></p>
 			</div>
 			{this.state.specs_list.length>0?this.state.specs_list.map((item,index)=>{
 				return <div className={css.product_spec_select_body}>
 					{item.spec.map(spec=>{
-						return <p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>{spec?spec.specName:""}</p>
+						return <p style={{width: this.state.width/(item.spec.length+2)}} className={css.product_spec_select_body_item}>{spec?spec.specName:""}</p>
 					})}
-					<p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
+					<p style={{width: this.state.width/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
 						<Input value={item.priceSupplier} onChange={this.handleProduct.bind(this,index,"priceSupplier")}/>
 					</p>
-					<p style={{width: 750/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
+					<p style={{width: this.state.width/(item.spec.length+2)}} className={css.product_spec_select_body_item}>
 						<Input value={item.inventory} onChange={this.handleProduct.bind(this,index,"inventory")}/>
 					</p>
 					<p className={css.product_spec_select_body_no}>
@@ -371,9 +371,9 @@ class ProductSpec extends React.Component {
 				</div>
 			}):""}
 			<div className={css.product_footer} style={{marginTop: 20}}>
-				<Button type="primary" onClick={this.goBack}>
+				{this.props.before?<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
-				</Button>
+				</Button>:""}
 				<Button loading={this.state.loading} type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>

@@ -154,7 +154,7 @@ class ProductAttr extends React.Component {
 	}
 
 	render() {
-		return <div className={css.product_attr}>
+		return <div className={`${css.product_attr} ${this.props.className}`}>
 			{this.state.category.map((item, index) => {
 				return <div className={css.product_attr_list}>
 					<div className={css.product_category}>
@@ -218,9 +218,9 @@ class ProductAttr extends React.Component {
 				</div>
 			})}
 			<div className={css.product_footer}>
-				<Button type="primary" onClick={this.backStep}>
+				{this.props.before?<Button type="primary" onClick={this.backStep}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
-				</Button>
+				</Button>:""}
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>

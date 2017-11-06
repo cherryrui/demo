@@ -39,13 +39,14 @@
 
 }
 %product_status{
-  width: 75px;
   line-height: 18px;
   height: 18px;
-  padding: 0 5px;
+  padding: 0 10px;
   color: white;
   border-radius: 2px;
   margin-top: 10px;
+  font-size: 12px;
+  display: inline-block;
 }
 .product_review{
   @extend %product_status;

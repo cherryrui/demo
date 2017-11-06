@@ -12,42 +12,29 @@
         margin: 10px 5px;
     }
 }
-
+%status{
+    height: 18px;
+    line-height: 18px;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 12px;
+}
 .process{
-	width:100px;
-	height: 18px;
-	line-height: 18px;
-	display: block;
-	text-align: center;
-	margin-bottom: 20px;
-	
+    @extend %status;
 	background-color: $color-red;
-	border-radius: 2px;
-	color: #ffffff;
 
 }
 .selling{
-    width:100px;
-    height: 18px;
-    line-height: 18px;
-    display: block;
-    text-align: center;
-    margin-bottom: 20px; 
+    @extend %status;
     background-color: $color-blue;
-    border-radius: 2px;
-    color: #ffffff;
 }
 .unsold{
-    width:100px;
-    height: 18px;
-    line-height: 18px;
-    display: block;
-    text-align: center;
-    margin-bottom: 20px; 
+     @extend %status;
     background-color: $color-orange;
-    border-radius: 2px;
-    color: #ffffff;
-
 }
 .title_bg{
 
@@ -206,4 +193,29 @@
     font-size: 16px;
     font-weight: bold;
     line-height: 38px;
+}
+.product_edite{
+    padding: 10px 0px;
+    background: white;
+    .edite_attr{
+        margin-left: -70px;
+        input{
+            width: 250px;
+        }
+    }
+    .edite_picture{
+        margin-left: -18px;
+    }
+    .edite_spec{
+        padding: 0 30px;
+    }
+    .edite_info{
+        margin-left: -165px;
+    }
+    .edite_pack{
+        margin-left: -145px;
+    }
+    .edite_trans{
+        margin-left: -155px;
+    }
 }

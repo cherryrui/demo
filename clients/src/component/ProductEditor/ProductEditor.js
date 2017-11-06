@@ -107,13 +107,14 @@ class ProductEditor extends React.Component {
             </div>
 			<Steps steps={operator.steps} now={this.state.now} changeStep={this.changeStep} current={this.state.current}/>
 			<div className={css.body}>
-				{this.state.now==0?<ProductBasic product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.now==1?<ProductPicture product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.now==2?<ProductAttr product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.now==3?<ProductSpec product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.now==4?<ProductInfo product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.now==5?<ProductInstruct product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
-				:this.state.now==6?<ProductTransport product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+		{
+			this.state.now == 0 ? <ProductBasic product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==1?<ProductPicture before product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==2?<ProductAttr before product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==3?<ProductSpec before product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==4?<ProductInfo before product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==5?<ProductInstruct before product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
+				:this.state.now==6?<ProductTransport before product={this.state.product} handleSteps={this.handleSteps} login={this.handleLogin}/>
 				:""
 			}	
 			</div>

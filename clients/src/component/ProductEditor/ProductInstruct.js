@@ -284,7 +284,7 @@ class ProductInstruct extends React.Component {
 		});
 	}
 	render() {
-		return <div className={css.product_instruct}>
+		return <div className={`${css.product_instruct} ${this.props.className}`}>
 			{this.state.product_ins.map((item,index)=>{
 				return <div className={css.instuct_item}style={{alignItems:item.type==3?"flex-start":"center"}}>
 					<p className={css.instuctitem_left}>
@@ -362,9 +362,9 @@ class ProductInstruct extends React.Component {
 				</div>
 			})}
 			<div className={css.product_footer}>
-				<Button type="primary" onClick={this.goBack}>
+				{this.props.before?<Button type="primary" onClick={this.goBack}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
-				</Button>
+				</Button>:""}
 				<Button type="primary" onClick={this.handleSave} className={appcss.button_black}>
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>

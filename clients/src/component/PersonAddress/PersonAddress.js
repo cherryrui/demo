@@ -107,7 +107,7 @@ class PersonAddress extends React.Component {
                     select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
                 })
             } else if (res.data.code == 104) {
-                this.props.handleVisible ? this.props.handleVisible(true) : "";
+                this.props.login ? this.props.login(true) : "";
             } else {
                 message.error(res.data.message);
             }
@@ -226,7 +226,7 @@ class PersonAddress extends React.Component {
                             })
                             this.getAddressList();
                         } else if (res.data.code == 104) {
-                            this.props.handleVisible ? this.props.handleVisible() : "";
+                            this.props.login ? this.props.login() : "";
                         } else {
                             message.error({
                                 reason: res.data.messgae
@@ -245,7 +245,7 @@ class PersonAddress extends React.Component {
                             });
                             this.getAddressList();
                         } else if (res.data.code == 104) {
-                            this.props.handleVisible ? this.props.handleVisible() : "";
+                            this.props.login ? this.props.login() : "";
                         } else {
                             message.error({
                                 reason: res.data.messgae
@@ -266,7 +266,7 @@ class PersonAddress extends React.Component {
             if (res.data.isSucc) {
                 this.getAddressList();
             } else if (res.data.code == 104) {
-                this.props.handleVisible ? this.props.handleVisible() : "";
+                this.props.login ? this.props.login() : "";
             } else {
                 message.error({
                     reason: res.data.message

@@ -14,7 +14,13 @@ import {
 	Breadcrumb,
 	message
 } from 'antd';
+import ProductBasic from '../ProductEditor/ProductBasic.js';
 import ProductPicture from '../ProductEditor/ProductPicture.js';
+import ProductAttr from '../ProductEditor/ProductAttr.js';
+import ProductInfo from '../ProductEditor/ProductInfo.js';
+import ProductInstruct from '../ProductEditor/ProductInstruct.js';
+import ProductSpec from '../ProductEditor/ProductSpec.js';
+import ProductTransport from '../ProductEditor/ProductTransport.js';
 
 class ProductEditeDetail extends React.Component {
 	static propTypes = {
@@ -25,6 +31,7 @@ class ProductEditeDetail extends React.Component {
 		this.state = {
 			status: 5, //状态：1.审核中 2.售卖中 3下架 4审核不通过 5没有提交审核
 			product: {},
+			steps: JSON.parse(JSON.stringify(operator.steps)),
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
@@ -70,46 +77,58 @@ class ProductEditeDetail extends React.Component {
 			}
 		})
 	}
-
+	handleEdite = (index) => {
+		let steps = this.state.steps;
+		if (steps[index].is_edite) {
+			steps[index].is_edite = false;
+		} else {
+			steps[index].is_edite = true;
+		}
+		this.setState({
+			steps
+		});
+	}
 
 	render() {
 		console.log("ProductEditeDetail");
+		let product = {
+			productId: this.props.params.id
+		}
 		return <div>
 			<p className={css.product_name}>
 			{this.state.product.basic?this.state.product.basic.productName:""}</p>
-			{this.state.status==1?
+			{this.state.product.basic&&this.state.product.basic.status==0?
 				<p className={css.process}>
 	 			{this.formatMessage({id: 'app.processing'})}
 				</p>
-			:this.state.status==2?
+			:this.state.product.basic&&this.state.product.basic.isBuy==1?
 				<p className={css.selling}>
 	 			{this.formatMessage({id: 'app.selling'})}
 				</p>
-			:this.state.status==3?
+			:this.state.product.basic&&this.state.product.basic.isBuy==0?
 				<p className={css.unsold}>
 	 			{this.formatMessage({id: 'app.unsold'})}
 				</p>
-			:this.state.status==4?
+			:this.state.product.basic&&this.state.product.basic.status==2?
 				<p className={css.unsold}>
 	 			{this.formatMessage({id: 'app.not.provaled'})}
 				</p>
-			:""		
-			}
-			{operator.steps.map(item=>{
+			:""}
+			{this.state.steps.map((item,index)=>{
 				return <div>
 					<div  className={css.title_bg}>
 						 {this.formatMessage({id: item.title})}
-						<p className={this.state==4||this.state==5?css.edit_bg:css.edit_greybg}>
+						<p className={this.state.product.basic&&this.state.product.basic.status!=1?css.edit_bg:css.edit_greybg} onClick={this.handleEdite.bind(this,index)}>
 							{this.formatMessage({id: 'mine.product.edit'})}					
 						</p>
 					</div>
-					{item.key==1?<Basic data={this.state.product.basic?this.state.product.basic:{}}/>
-					:item.key==2?<Mainfigure data={this.state.product.imgs?this.state.product.imgs.imgUrl:[]}/>
-					:item.key==3?<Specifucation data={this.state.product.attr?this.state.product.attr:{}}/>
-					:item.key==4?<Param data={this.state.product.spec?this.state.product.spec:{}}/>
-					:item.key==5?<Descrip data={this.state.product.info?this.state.product.info:{}}/>
-					:item.key==6?<Package data={this.state.product.pack?this.state.product.pack:{}}/>
-					:item.key==7?<Transport data={this.state.product.transport?this.state.product.transport:{}}/>:""
+					{item.key==1?(item.is_edite?<div className={css.product_edite}><ProductBasic product={product}/></div>:<Basic data={this.state.product.basic?this.state.product.basic:{}}/>)
+					:item.key==2?(item.is_edite?<div className={css.product_edite}><ProductPicture className={css.edite_picture} product={product}/></div>:<Mainfigure data={this.state.product.imgs?this.state.product.imgs.imgUrl:[]}/>)
+					:item.key==3?(item.is_edite?<div className={css.product_edite}><ProductAttr className={css.edite_attr} product={product}/></div>:<Specifucation data={this.state.product.attr?this.state.product.attr:{}}/>)
+					:item.key==4?(item.is_edite?<div className={css.product_edite}><ProductSpec className={css.edite_spec} width={600} product={product}/></div>:<Param data={this.state.product.spec?this.state.product.spec:{}}/>)
+					:item.key==5?(item.is_edite?<div className={css.product_edite}><ProductInfo className={css.edite_info} product={product}/></div>:<Descrip data={this.state.product.info?this.state.product.info:{}}/>)
+					:item.key==6?(item.is_edite?<div className={css.product_edite}><ProductInstruct className={css.edite_pack} product={product}/></div>:<Package data={this.state.product.pack?this.state.product.pack:{}}/>)
+					:item.key==7?(item.is_edite?<div className={css.product_edite}><ProductTransport className={css.edite_trans} product={product}/></div>:<Transport data={this.state.product.transport?this.state.product.transport:{}}/>):""
 					}
 				</div>
 			})}
@@ -128,7 +147,7 @@ class Mainfigure extends React.Component {
 	render() {
 		return <div className={css.product_imgs}>
 			{this.props.data&&this.props.data.length>0?this.props.data.map(item=>{
-				return <img src={item.imgUrl+ "@160w_160h_1e_1c.png"}/>
+				return item.imgUrl?<img src={item.imgUrl+ "@160w_160h_1e_1c.png"}/>:""
 			}):<img src="../img/no_picture.jpg"/>}
 		</div>
 	}
@@ -303,7 +322,6 @@ class Package extends React.Component {
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	render() {
-		console.log(this.props.data, operator.product_ins);
 		return <div>
 			<div className={css.detail_table}>
 			<div className={css.table_top}></div>
@@ -313,7 +331,7 @@ class Package extends React.Component {
 					  {this.formatMessage({id: item.name})}：
 					</p>
 					<p className={css.table_right}>
-					{item.type==0?((this.props.data[item.key]?this.props.data[item.key]:"-")+(this.props.data[item.unit_name]?his.props.data[item.unit_name]:"-"))
+					{item.type==0?((this.props.data[item.key]?this.props.data[item.key]:"-")+(this.props.data[item.unit_name]?this.props.data[item.unit_name]:"-"))
 						:item.type==1?((this.props.data[item.key]?this.props.data[item.key]:"-")+(this.props.data[item.unit_name[0]]?this.props.data[item.unit_name[0]]:"-")+"/"+(this.props.data[item.unit_name[1]]?this.props.data[item.unit_name[1]]:"-"))
 						:item.type==2&&this.props.data.type?JSON.parse(this.props.data.type).map(type=>{
 							return <span>{type.name?type.name:"-"} &nbsp;</span>

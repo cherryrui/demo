@@ -65,7 +65,7 @@ class PersonCenter extends React.Component {
             collectList = this.state.collectList;
         axios.post('/user/get-center-num.json', {}).then(res => {
             if (res.data.code == 104) {
-                this.props.handleVisible ? this.props.handleVisible(true) : "";
+                this.props.login ? this.props.login(true) : "";
             } else if (res.data.isSucc) {
                 let sum = 0;
                 orderList.map(item => {
@@ -113,7 +113,7 @@ class PersonCenter extends React.Component {
         if (this.state.user.userIdentity == 1) {
             axios.post('/user/get-quotation-sum.json', {}).then(res => {
                 if (res.data.code == 104) {
-                    this.props.handleVisible ? this.props.handleVisible(true) : "";
+                    this.props.login ? this.props.login(true) : "";
                 } else if (res.data.isSucc) {
                     this.setState({
                         quotation_total: res.data.result,
@@ -125,7 +125,7 @@ class PersonCenter extends React.Component {
         } else if (this.state.user.userIdentity == 2) { //供应商，获取产品总数
             axios.post('/user/get-supply-product-status.json', {}).then(res => {
                 if (res.data.code == 104) {
-                    this.props.handleVisible ? this.props.handleVisible(true) : "";
+                    this.props.login ? this.props.login(true) : "";
                 } else if (res.data.isSucc) {
                     let productManageList = this.state.productManageList;
                     productManageList.map(item => {

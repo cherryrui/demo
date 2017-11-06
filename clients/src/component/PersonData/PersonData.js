@@ -47,15 +47,15 @@ class PersonData extends React.Component {
     state = {
         loading: false,
         visible: false,
-        cerstatus:false,
+        cerstatus: false,
     }
     handleSelectNature = (value) => {
         console.log(`selected ${JSON.stringify(value)}`);
         this.setState({
             natureid: parseInt(value.key),
             companyNatureName: value.label
-        },()=>{
-            console.log(this.state.natureid,this.state.companyNatureName)
+        }, () => {
+            console.log(this.state.natureid, this.state.companyNatureName)
         })
     }
     handleSelectIndu = (value) => {
@@ -106,7 +106,7 @@ class PersonData extends React.Component {
             options: [],
             check: 0,
             naturelist: operator.nature,
-            industry:operator.industry,
+            industry: operator.industry,
             becoming: 4, //1代理商,2供应理商
             user: JSON.parse(sessionStorage.getItem("user")),
         };
@@ -167,7 +167,7 @@ class PersonData extends React.Component {
                         button_name: "persondata.modify"
                     })
                 } else if (res.data.code == 104) {
-                    this.props.handleVisible ? this.props.handleVisible() : "";
+                    this.props.login ? this.props.login() : "";
                 } else {
                     message.error(
                         reason: res.data.message
@@ -212,7 +212,7 @@ class PersonData extends React.Component {
                     this.setState({
                         user: JSON.parse(sessionStorage.user),
                     })
-                    this.props.handleVisible ? this.props.handleVisible() : "";
+                    this.props.login ? this.props.login() : "";
                 } else {
                     message.error(res.data.message);
                 }
@@ -284,7 +284,7 @@ class PersonData extends React.Component {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
                             })
-                            this.props.handleVisible ? this.props.handleVisible() : "";
+                            this.props.login ? this.props.login() : "";
                         } else {
                             message.error(res.data.message);
                         }
@@ -332,7 +332,7 @@ class PersonData extends React.Component {
                             this.setState({
                                 user: JSON.parse(sessionStorage.user),
                             })
-                            this.props.handleVisible ? this.props.handleVisible() : "";
+                            this.props.login ? this.props.login() : "";
                         } else {
                             message.error(res.data.message);
                         }

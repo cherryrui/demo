@@ -163,7 +163,7 @@ class Mine extends React.Component {
                 })}
                 </div>
                 <div className={css.content}>
-                    {this.state.user ? this.props.children && React.cloneElement(this.props.children, {handleVisible: this.handleVisible.bind(this),
+                    {this.state.user ? this.props.children && React.cloneElement(this.props.children, {login: this.handleVisible.bind(this),
                         goTop:this.goTop.bind(this), 
                         user: this.state.user}) : ''}
                 </div>

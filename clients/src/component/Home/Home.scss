@@ -5,12 +5,12 @@
   position: fixed;
   width: 100%;
   z-index: 80;
+  background: $background-color;
   .header_content{
     display: flex;
     padding-top: 70px;
     width: 1100px;
     margin: 0 auto;
-    background: $background-color;
   }
   .left {
     display: flex;

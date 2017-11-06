@@ -236,7 +236,7 @@ class ProductInfo extends React.Component {
 	}
 
 	render() {
-		return <div className={css.product_attr}>
+		return <div className={`${css.product_attr} ${this.props.className}`}>
 			{this.state.product_info.map((item,index)=>{
 				return <div className={css.product_info}>
 					<div className={css.product_info_item}>
@@ -306,9 +306,9 @@ class ProductInfo extends React.Component {
 				</div>}
 			</div>})}
             <div className={css.product_footer}>
-				<Button type="primary" onClick={this.backStep}>
+				{this.props.before?<Button type="primary" onClick={this.backStep}>
 					<FormattedMessage id="app.before" defaultMessage=""/>
-				</Button>
+				</Button>:""}
 				<Button type="primary" className={appcss.button_blue} onClick={this.handleInfo.bind(this,-1)}>
 					<FormattedMessage id="mine.product.add" defaultMessage=""/>
 				</Button>

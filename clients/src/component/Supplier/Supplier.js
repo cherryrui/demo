@@ -227,7 +227,7 @@ class Supplier extends React.Component {
                     values.businessLicenseB = this.img_back;
                     axios.post('/user/become-supplier.json', values).then(res => {
                         if (res.data.code == 104) {
-                            this.props.handleVisible ? this.props.handleVisible() : "";
+                            this.props.login ? this.props.login() : "";
                         } else if (res.data.isSucc) {
                             /*let user = JSON.parse(sessionStorage.user);
                             user.supplier = {};
