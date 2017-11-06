@@ -127,9 +127,9 @@ class Mainfigure extends React.Component {
 	}
 	render() {
 		return <div className={css.product_imgs}>
-			{this.props.data?this.props.data.map(item=>{
+			{this.props.data&&this.props.data.length>0?this.props.data.map(item=>{
 				return <img src={item.imgUrl+ "@160w_160h_1e_1c.png"}/>
-			}):""}
+			}):<img src="../img/no_picture.jpg"/>}
 		</div>
 	}
 }
@@ -240,6 +240,10 @@ class Specifucation extends React.Component {
 					<p className={css.table_right_2}>{item.attrVal}</p>
 				</div>
 				}):""}
+				{this.props.data.selectProperty&&this.props.data.customProperty&&this.props.data.selectProperty.length>0&&this.props.data.customProperty.length>0?"":<div className={css.table_row}>
+					<p className={css.table_left_2}>-：</p>
+					<p className={css.table_right_2}>-</p>
+				</div>}
 		</div>
 	}
 }
@@ -273,6 +277,19 @@ class Param extends React.Component {
 					</p>					
 				</div>		
 				}):""}	
+				{this.props.data.itemInfo&&this.props.data.itemInfo.length>0?"":<div className={css.table_row}>
+					<p className={css.table_left_5}>
+						-
+					</p>
+					<p className={css.table_middle}>
+						{this.formatMessage({id:'sort.price'})}:
+						$-
+					</p>
+					<p className={css.table_m_right}>
+						{this.formatMessage({id:'product.detail.inventory'})}:
+						-
+					</p>					
+				</div>}
 			</div>
 		</div>
 	}
@@ -296,10 +313,10 @@ class Package extends React.Component {
 					  {this.formatMessage({id: item.name})}：
 					</p>
 					<p className={css.table_right}>
-					{item.type==0?this.props.data[item.key]+this.props.data[item.unit_name]
-						:item.type==1?this.props.data[item.key]+this.props.data[item.unit_name[0]]+"/"+this.props.data[item.unit_name[1]]
+					{item.type==0?((this.props.data[item.key]?this.props.data[item.key]:"-")+(this.props.data[item.unit_name]?his.props.data[item.unit_name]:"-"))
+						:item.type==1?((this.props.data[item.key]?this.props.data[item.key]:"-")+(this.props.data[item.unit_name[0]]?this.props.data[item.unit_name[0]]:"-")+"/"+(this.props.data[item.unit_name[1]]?this.props.data[item.unit_name[1]]:"-"))
 						:item.type==2&&this.props.data.type?JSON.parse(this.props.data.type).map(type=>{
-							return <span>{type.name} &nbsp;</span>
+							return <span>{type.name?type.name:"-"} &nbsp;</span>
 						}):""}
 					</p>
 				</div>:""
@@ -335,13 +352,12 @@ class Transport extends React.Component {
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 
-
 	render() {
 		return <div>			
 					<div className={css.detail_table}>
 						<div className={css.table_top}></div>
 						<p className={css.table_only_row}>
-							{this.props.data.explain}
+							{this.props.data.explain?this.props.data.explain:"-"}
 						</p>
 						<p className={css.table_only_row}>
 							{this.formatMessage({id:'mine.product.instruct_other'})}：
@@ -357,9 +373,6 @@ class Descrip extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		this.state = {
-			other: "xxxxxxxxxxx",
-		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	render() {

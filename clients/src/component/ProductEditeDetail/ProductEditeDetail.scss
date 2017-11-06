@@ -96,7 +96,7 @@
     padding:10px;
     margin-bottom: 20px;
     overflow: auto;
-    height: 500px;
+    max-height: 500px;
 }
 .detail_table{
 	background-color: $item-color;
