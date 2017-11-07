@@ -155,7 +155,10 @@ class Mine extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     {this.state.path?<Breadcrumb.Item>
-                        <FormattedMessage id={this.state.path} defaultMessage="产品列表"/>
+                        {this.state.search?<Link to="page/mine/agent-product">
+                            <FormattedMessage id={this.state.path} defaultMessage="产品列表"/>
+                        </Link>:<FormattedMessage id={this.state.path} defaultMessage="产品列表"/>
+                        }
                     </Breadcrumb.Item>:""}
                     {this.state.search?<Breadcrumb.Item>{this.state.search}</Breadcrumb.Item>:""}
                 </Breadcrumb>

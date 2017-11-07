@@ -11,6 +11,8 @@ import {
 } from 'react-router';
 import {
     FormattedMessage,
+    injectIntl,
+    intlShape
 } from 'react-intl';
 
 import {
@@ -33,10 +35,12 @@ class QuotationPdf extends React.Component {
             reload: false,
             select: {}
         }
+        this.formatMessage = this.props.intl.formatMessage;
 
         this.columns = [{
             title: <FormattedMessage id="cart.product.info" defaultMessage="我的购物车"/>,
-            width: "38%",
+            width: 390,
+            className: css.table_col_product,
             render: (record) => <p className={css.table_product}>
                 <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
                 <div className={css.info}>
@@ -56,6 +60,7 @@ class QuotationPdf extends React.Component {
             </p>
         }, {
             title: <FormattedMessage id="cart.specifucation" defaultMessage="我的购物车"/>,
+            width: 163,
             className: css.table_col,
             render: (record) => <div>
                 {record.productSpecification?record.productSpecification.map((item,index)=>{
@@ -64,12 +69,14 @@ class QuotationPdf extends React.Component {
             </div>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
+            width: 105,
             className: css.table_col,
             dataIndex: 'productNum',
             key: 'productNum',
         }, {
             title: <FormattedMessage id="quotation.sale.price" defaultMessage="我的购物车"/>,
             className: css.table_col,
+            width: 184,
             dataIndex: 'salePrice',
             key: 'salePrice',
             render: (text) => <span className={css.table_price}>${text}</span>
@@ -89,6 +96,7 @@ class QuotationPdf extends React.Component {
                             title: <FormattedMessage id="quotation.platform.price" defaultMessage="我的购物车"/>,
                             className: css.table_col,
                             dataIndex: 'productPrice',
+                            width: 184,
                             key: 'productPrice',
                             render: (text) => <span className={css.table_price}>${text}</span>
                         })
@@ -96,6 +104,7 @@ class QuotationPdf extends React.Component {
                             title: <FormattedMessage id="cart.sum" defaultMessage="我的购物车"/>,
                             className: css.table_col,
                             dataIndex: 'totalMoney',
+                            width: 184,
                             key: 'totalMoney',
                             render: (text) => <span className={css.table_price}>${text}</span>
 
@@ -142,8 +151,8 @@ class QuotationPdf extends React.Component {
         html2pdf(element, {
             filename: this.state.quotation.quotationOrder.quotationSubject + '.pdf',
             image: {
-                type: 'png',
-                quality: 0.5
+                type: 'jpeg',
+                quality: 1
             },
             html2canvas: {
                 dpi: 192,
@@ -302,12 +311,78 @@ class QuotationPdf extends React.Component {
                         </p>
                     </div>
                 </div>
-                <Table
-                    pagination={false}
-                    rowKey={record => ""+record.productId+record.productSpecification}
-                    bordered
-                    columns={this.columns}
-                    dataSource={this.state.quotation.productList} />
+                <div className={css.product_list}>
+                    <div className={css.table_header}>
+                        <p className={css.table_col_info}>{this.formatMessage({id: "cart.product.info"})}</p>
+                        <p className={css.table_col_spec}>{this.formatMessage({id: "cart.specifucation"})}</p>
+                        <p className={css.table_col_num}>{this.formatMessage({id: "cart.num"})}</p>
+                        <p className={css.table_col_price}>{this.formatMessage({id: "quotation.sale.price"})}</p>
+                        <p className={css.table_col_sum}>{this.formatMessage({id: "cart.sum"})}</p>
+                    </div>
+                    
+                    <div>
+                        {this.state.quotation.productList.map((record,index)=>{
+                            return index==4||((index-4)%8==0)?<div>
+                            <div className="html2pdf__page-break"></div>
+                            <div className={css.pdf_sperator}></div>
+                            <div className={css.table_body_item}>
+                                <p className={`${css.table_product} ${css.table_col_info}`}>
+                                    <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
+                                    <div className={css.info}>
+                                        <p className={css.name}>{record.productName}</p>
+                                        {this.state.select.brand?<p>
+                                            <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>：
+                                            {locale=="en"?record.productBrand.brandNameEn:record.productBrand.brandNameCn}
+                                        </p>:""}
+                                        <p>
+                                            <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+                                            ：{record.minBuyQuantity}
+                                        </p>
+                                        <p>
+                                            <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+                                            ：{record.productNo}</p>
+                                    </div>
+                                </p>
+                                <div className={`${css.table_col_spec} ${css.table_spec}`}>
+                                    {record.productSpecification?record.productSpecification.map((item,index)=>{
+                                        return <p>{item.specVal[0].specValue}</p>
+                                    }):""}
+                                </div>
+                                <p className={`${css.table_col_num} ${css.table_spec}`}>{record.productNum}</p>
+                                <p className={`${css.table_col_price} ${css.table_price}`}>${record.salePrice}</p>
+                                <p className={`${css.table_col_sum} ${css.table_sum}`}>${record.totalMoney}</p>
+                            </div></div>:<div className={css.table_body_item}>
+                                <p className={`${css.table_product} ${css.table_col_info}`}>
+                                    <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
+                                    <div className={css.info}>
+                                        <p className={css.name}>{record.productName}</p>
+                                        {this.state.select.brand?<p>
+                                            <FormattedMessage id="app.brand" defaultMessage="我的购物车"/>：
+                                            {locale=="en"?record.productBrand.brandNameEn:record.productBrand.brandNameCn}
+                                        </p>:""}
+                                        <p>
+                                            <FormattedMessage id="product.detail.MOQ" defaultMessage="我的购物车"/>
+                                            ：{record.minBuyQuantity}
+                                        </p>
+                                        <p>
+                                            <FormattedMessage id="mine.product.No" defaultMessage="我的购物车"/>
+                                            ：{record.productNo}</p>
+                                    </div>
+                                </p>
+                                <div className={`${css.table_col_spec} ${css.table_spec}`}>
+                                    {record.productSpecification?record.productSpecification.map((item,index)=>{
+                                        return <p>{item.specVal[0].specValue}</p>
+                                    }):""}
+                                </div>
+                                <p className={`${css.table_col_num} ${css.table_spec}`}>{record.productNum}</p>
+                                <p className={`${css.table_col_price} ${css.table_price}`}>${record.salePrice}</p>
+                                <p className={`${css.table_col_sum} ${css.table_sum}`}>${record.totalMoney}</p>
+                            </div>
+                        })}
+                    </div>
+                </div>
+                {this.state.quotation.productList.length==4||((this.state.quotation.productList.length-4)%8==0)?<div><div className="html2pdf__page-break"></div>
+                    <div className={css.pdf_sperator}></div></div>:""}
                 <div className={css.order_sum}>
                     <p className={css.sum_item}>
                         <FormattedMessage id="cart.num" defaultMessage="总数量"/>：
@@ -326,6 +401,7 @@ class QuotationPdf extends React.Component {
                         <p className={css.sum_right}>${this.state.quotation.quotationOrder.shoppingCharges}</p>
                     </p>
                 </div>
+                {this.state.quotation.productList.length==3||((this.state.quotation.productList.length-4)%7==0)?<div className="html2pdf__page-break"></div>:""}
                 <div className={css.quo_footer}>
                     <div className={css.quo_left}>
                         <p className={css.quotation_info}>
@@ -354,4 +430,5 @@ class QuotationPdf extends React.Component {
 		</div>
     }
 }
+QuotationPdf = injectIntl(QuotationPdf);
 export default QuotationPdf;

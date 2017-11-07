@@ -130,6 +130,7 @@ router
 		if (ctx.cookie.get('token')) {
 			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 			await axios.post(url + "/auth/order/queryUserOrderEveryStatusTotal", {}).then(res => {
+				console.log(133, res.data);
 				result = res.data;
 				result.order_status = result.result;
 				delete result.result;

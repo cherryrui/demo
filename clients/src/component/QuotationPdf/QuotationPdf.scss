@@ -5,6 +5,7 @@
 }
 .quotation_title{
   text-align: center;
+  margin-bottom: 30px;
   .quotation_info{
     color:$theme-color;
     font-size: 20px;
@@ -17,76 +18,116 @@
   }
 
 }
-.quotation_pdf{
-  background: white;
-  padding: 36px;
-  font-size: 14px;
-  thead[class="ant-table-thead"]{
-    font-weight: bold !important;
-  }
-  td{
-    padding: 20px 20px !important;
-  }
-.table_product{
-  width: 350px;
-  display: flex;
-  img{
-    border: 1px solid $border-color;
-    flex-shrink: 0;
-    width: 100px;
-    height: 100px;
-  }
-  .info{
-      padding-left: 10px;
-      height: 100px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: left;
-      width: 100%;
-      .name{
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      word-break: break-all;
-      text-overflow: ellipsis;
-      height: 20px;
-      }
-  }
-}
-.table_col{
-  text-align: center !important;
-  font-size: 14px;
-}
- .table_price{
-   color:$color-red ;
-   font-weight: bold;
- }
-.table_num{
-  margin: 10px;
-}
-.title{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: 1px solid $theme-color;
-
-  .logo{
-    padding-bottom: 10px;
-    height: 115px;
-    width: 150px;
-    font-size: 69px;
-    font-size: 56px;
-    line-height: 146px;
+.product_list{
+  .table_header{
+    background: $theme-color;
+    display: flex;
+    height: 40px;
+    line-height: 40px;
     font-weight: bold;
-    color: $theme-color;
+  }
+  .table_col_info{
+    width: 460px;
+    padding-left: 10px;
+  }
+  .table_col_spec{
+    width: 160px;
+    text-align: center;
+  }
+  .table_col_num{
+    width: 120px;
+    text-align: center;
+  }
+  .table_col_price{
+    width: 120px;
+    text-align: center;
+  }
+  .table_col_sum{
+    width: 130px;
+    text-align: center;
+  }
+  .table_body_item{
+    display: flex;
+    border-bottom: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+  }
+  %table_body_td{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .table_product{
+    display: flex;
+    padding: 10px;
+    border-right: 1px solid $border-color;
     img{
-      height: 115px;
-      width: 150px;
+      border: 1px solid $border-color;
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+    }
+    .info{
+        padding-left: 10px;
+        height: 100px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: left;
+        width: 100%;
+        .name{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        height: 20px;
+        }
     }
   }
+  .table_spec{
+    @extend %table_body_td;
+    border-right: 1px solid $border-color;
+    flex-direction: column;
+  }
+  .table_price{  
+    @extend %table_body_td;       
+    color: $color-red;
+    font-weight: bold;
+    border-right: 1px solid $border-color;
+  }
+  .table_sum{
+    @extend %table_body_td;
+    color:$color-red ;
+    font-weight: bold;
+  }
+}
+.quotation_pdf{
+  background: white;
+  padding: 0 36px;
+  font-size: 14px;
+  .title{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid $theme-color;
+
+    .logo{
+      padding-bottom: 10px;
+      height: 115px;
+      width: 150px;
+      font-size: 69px;
+      font-size: 56px;
+      line-height: 146px;
+      font-weight: bold;
+      color: $theme-color;
+      img{
+        height: 115px;
+        width: 150px;
+      }
+    }
   .title_item{
     padding-bottom: 10px;
     text-align: right;
@@ -145,12 +186,14 @@
 }
 .order_sum{
   padding-top:10px;
-  border: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
   .sum_item{
     text-align: right;
     display: flex;
     justify-content: flex-end;
-    padding:0px 10px 10px 0px;
+    padding:0px 10px 9px 0px;
   }
   .sum_right{
     width: 80px;
@@ -180,4 +223,7 @@
     .quo_left{
       margin: auto 0;
     }
+}
+.pdf_sperator{
+  border-bottom: 1px solid $border-color;
 }

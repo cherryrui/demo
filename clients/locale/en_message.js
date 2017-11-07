@@ -228,7 +228,7 @@ const en_US = {
     "mine.agent": "Becoming Agent",
     "mine.supplier": "Becoming Supplier",
     "mine.agent.center": "Agency Center",
-    "mine.quotation.list": "Quantity List",
+    "mine.quotation.list": "Quotation List",
     "mine.my.message": "My message",
     "mine.quotation.placeholder": "Enter quotation No. or subject",
     "mine.quotation.information": "quotation information",
