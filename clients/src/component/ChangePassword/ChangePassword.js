@@ -106,6 +106,24 @@ class ChangePassword extends React.Component {
     return(reg.test(email));
   } 
 
+  RegPhone = (value) =>{
+        const reg = /^1[3|5][0-9]\d{8}$/;
+        if(reg.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    checkPhone = (rule,value,callback) =>{
+        const form = this.props.form;
+        if(value && (this.RegPhone(value)==true || this.regEmail(value)==true)){
+            callback();
+        }else{
+            callback('不是完整的11位手机号或者正确的手机号前七位或不是正确的邮箱格式');
+        }
+    }
+
   getVericode = () =>{
     let phoneOremail = this.phoneOremail.props.value;
     if(phoneOremail){
@@ -271,6 +289,8 @@ class ChangePassword extends React.Component {
                        {getFieldDecorator('phoneOremail', {
                           rules: [{
                               required: true, message:this.formatMessage( {id:'authen.authen.account_warn'}),
+                          },{
+                            validator:this.checkPhone
                           }],
                         })(
                           <Input ref={(phoneOremail)=>{this.phoneOremail=phoneOremail}} className={appcss.form_input}/>
