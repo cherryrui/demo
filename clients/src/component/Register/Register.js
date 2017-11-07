@@ -58,6 +58,7 @@ class Register extends React.Component {
             usertype: 1, //1个人用户 2.企业用户
             check: true,
             confirmDirty: false,
+            registerloading:false,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
@@ -72,53 +73,64 @@ class Register extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values)
-                if (values.password == values.repassword) {
-                    let phoneoremail = values.email ? values.email : values.tel;
-                    let params = {
-                        userName: values.name,
-                        password: values.password,
-                        eamilphone: this.state.verification_mode,
-                        emailOrphone: phoneoremail,
-                        userType: this.state.usertype,
-                        checkCode: values.verificationCode
-                    }
-                    axios.post('/user/register.json', params).then(res => {
-                        console.log('2222', JSON.stringify(res));
-                        if (res.data.isSucc) {
-                            message.success(formatMessage({
-                                id: 'regcomplt.regcomplt.Registeredsuccessfully'
-                            }));
-                            let param = {
-                                userName: values.name,
-                                password: values.password
-                            };
-                            axios.post('/user/login.json', param).then(res => {
-                                if (res.data.isSucc) {
-                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                                    /*this.props.history.pushState(null, "/");*/
-                                    this.props.history.pushState(null, "/register-complete");
-                                } else {
-                                    message.error(formatMessage({
-                                        id: 'login.login.fail'
-                                    }, {
-                                        reason: res.data.message
-                                    }))
-                                }
-                            })
-
-                        } else {
-                            message.error(formatMessage({
-                                id: 'register.failed'
-                            }, {
-                                reason: res.data.message
-                            }))
+                if(values.remember){
+                    if (values.password == values.repassword) {
+                        this.setState({
+                            registerloading:true,
+                        });
+                        let phoneoremail = values.email ? values.email : values.tel;
+                        let params = {
+                            userName: values.name,
+                            password: values.password,
+                            eamilphone: this.state.verification_mode,
+                            emailOrphone: phoneoremail,
+                            userType: this.state.usertype,
+                            checkCode: values.verificationCode
                         }
-                    });
-                } else {
-                    message.error(this.formatMessage({
-                        id: 'repwd.check.pwd_warn'
-                    }))
+                        axios.post('/user/register.json', params).then(res => {
+                            console.log('2222', JSON.stringify(res));
+                            if (res.data.isSucc) {
+                                message.success(formatMessage({
+                                    id: 'regcomplt.regcomplt.Registeredsuccessfully'
+                                }));
+                                let param = {
+                                    userName: values.name,
+                                    password: values.password
+                                };
+                                axios.post('/user/login.json', param).then(res => {
+                                    if (res.data.isSucc) {
+                                        this.setState({
+                                            registerloading:false
+                                        });
+                                        sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                        /*this.props.history.pushState(null, "/");*/
+                                        this.props.history.pushState(null, "/register-complete");
+                                    } else {
+                                        message.error(formatMessage({
+                                            id: 'login.login.fail'
+                                        }, {
+                                            reason: res.data.message
+                                        }))
+                                    }
+                                })
+
+                            } else {
+                                message.error(formatMessage({
+                                    id: 'register.failed'
+                                }, {
+                                    reason: res.data.message
+                                }))
+                            }
+                        });
+                    } else {
+                        message.error(this.formatMessage({
+                            id: 'repwd.check.pwd_warn'
+                        }))
+                    }
+                }else{
+                    message.error(formatMessage({id:'app.input.agreenotes'}))
                 }
+                
 
             }
         })
@@ -417,7 +429,7 @@ class Register extends React.Component {
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
-                            <Button type="primary" htmlType="submit" style={{width: 400}}>
+                            <Button type="primary" loading={this.state.registerloading} htmlType="submit" style={{width: 400}}>
                                 <FormattedMessage id="login.registor" defaultMessage="注册"/>
                             </Button>
                         </FormItem>

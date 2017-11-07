@@ -38,8 +38,8 @@ class AccountSecurity extends React.Component {
                                     <p  className={css.account_text}> { this.formatMessage({id:"app.login.password"})}</p>
                                     <p className={css.account_red}> { this.formatMessage({id:"app.login.password_info"})}</p>
                             </div>
-                            <div className={css.modify}>
-                                    <Link to={"page/mine/change-password"}>
+                            <div>
+                                    <Link className={css.modify} to={"page/mine/change-password"}>
                                        { this.formatMessage({id:"persondata.modify"})}
                                     </Link>
                             </div>
@@ -47,26 +47,26 @@ class AccountSecurity extends React.Component {
             <div className={css.account}>
                 <div  className={css.account_title}>
                     <Icon type="smile-o"  className={css.account_icon} />
-                    <p  className={css.account_text}> { this.formatMessage({id:"app.phone.verification"})}</p>
+                    <p  className={css.account_text}> {this.state.user.tel?this.formatMessage({id:"app.modify.phone"}): this.formatMessage({id:"app.bind.phone"})}</p>
                     <p className={css.account_grey}> {this.state.user.tel? this.formatMessage({id:"app.phone.verified_info"}):this.formatMessage({id:"app.phone.verified_infoed"}) }</p>
                     &nbsp;{this.state.user.tel?this.state.user.tel:""}
                 </div>
                 <div className={css.modify}>
-                    <Link to={"page/mine/phone-verifi/1"}>
-                         {this.state.user.tel?this.formatMessage({id:"persondata.modify"}): this.formatMessage({id:"repwd.authen"})}
+                    <Link className={this.state.user.tel?css.modify:css.validation} to={"page/mine/phone-verifi/1"}>
+                         {this.state.user.tel?this.formatMessage({id:"persondata.modify"}): this.formatMessage({id:"app.bindings"})}
                     </Link>
                 </div>
             </div>
             <div className={css.account}>
                 <div  className={css.account_title}>
                     <Icon type="frown-o" className={css.frown_icon} />
-                    <p  className={css.account_text}> { this.formatMessage({id:"app.email.verification"})}</p>
+                    <p  className={css.account_text}> {this.state.user.email? this.formatMessage({id:"app.modify.email"}):this.formatMessage({id:"app.bind.email"})}</p>
                     <p className={css.account_grey}> { this.state.user.email?this.formatMessage({id:"app.email.verifi_info"}):this.formatMessage({id:"app.email.verifi_infoed"})}</p>
-                    &nbsp;{this.state.user.email?this.state.user.email:this.formatMessage({id:'repwd.authen'})}
+                    &nbsp;{this.state.user.email?this.state.user.email:""}
                 </div>
-                <div>
-                    <Link to={"page/mine/phone-verifi/2"} className={css.validation}>
-                       {this.state.user.email? this.formatMessage({id:"persondata.modify"}): this.formatMessage({id:"repwd.authen"})} 
+                <div className={css.modify}>
+                    <Link to={"page/mine/phone-verifi/2"} className={this.state.user.email?css.modify:css.validation}>
+                       {this.state.user.email? this.formatMessage({id:"persondata.modify"}): this.formatMessage({id:"app.bindings"})} 
                     </Link>
                 </div>
             </div>

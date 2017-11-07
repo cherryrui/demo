@@ -47,7 +47,7 @@ class PersonData extends React.Component {
     state = {
         loading: false,
         visible: false,
-        cerstatus: false,
+        
     }
     handleSelectNature = (value) => {
         console.log(`selected ${JSON.stringify(value)}`);
@@ -109,6 +109,7 @@ class PersonData extends React.Component {
             industry: operator.industry,
             becoming: 4, //1代理商,2供应理商
             user: JSON.parse(sessionStorage.getItem("user")),
+            cerstatus: false,
         };
         let {
             intl: {
@@ -252,7 +253,8 @@ class PersonData extends React.Component {
                 url: this.state.img_back
             }]);
             if (!err) {
-                if (this.state.user.userType == 1) {
+                if(values.agreenotes){
+                    if (this.state.user.userType == 1) {
                     param = {
                         realName: values.relnames,
                         certificateTypeId: this.state.certificateTypeId,
@@ -270,11 +272,17 @@ class PersonData extends React.Component {
                             axios.get('user/get-userinfo-byuid.json').then(res => {
                                     console.log(res.data)
                                     if (res.data.isSucc) {
-                                        localStorage.clear();
-                                        sessionStorage.clear();
+                                        this.setState({
+                                            cerstatus:true,
+                                        });
+                                        /*localStorage.clear();
+                                        sessionStorage.clear();*/
                                         sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                                        location.reload();
-                                        /*this.props.history.pushState(null, "/page/mine/account");*/
+                                        /*location.reload();*/
+                                        /*this.props.history.pushState(null, "/page/mine/person-data");*/
+                                        this.setState({
+                                            visible:false,
+                                        })
                                     } else {
                                         message.error(res.data.message)
                                     }
@@ -318,11 +326,17 @@ class PersonData extends React.Component {
                             axios.get('user/get-userinfo-byuid.json').then(res => {
                                 console.log(res.data)
                                 if (res.data.isSucc) {
-                                    localStorage.clear();
-                                    sessionStorage.clear();
+                                    this.setState({
+                                            cerstatus:true,
+                                    });
+                                    /*localStorage.clear();
+                                    sessionStorage.clear();*/
                                     sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                                    location.reload();
-                                    /*this.props.history.pushState(null, "/page/mine/account");*/
+                                    /*location.reload();*/
+                                    /*this.props.history.pushState(null, "/page/mine/person-data");*/
+                                    this.setState({
+                                            visible:false,
+                                    })
                                 } else {
                                     message.error(res.data.message)
                                 }
@@ -338,6 +352,10 @@ class PersonData extends React.Component {
                         }
                     })
                 }
+                }else{
+                    message.error(this.formatMessage({id:'app.input.agreenotes'}))
+                }
+                
             }
         });
     }
@@ -573,21 +591,21 @@ class PersonData extends React.Component {
                 </span>
                 {this.state.user.userType==1?<span className={css.text}>
                     <span  className={css.text_certification}>
-                        {this.state.user.certificatePerson?
+                        {this.state.cerstatus? this.formatMessage({id: 'persondata.certificationing'}):(this.state.user.certificatePerson?
                                 this.state.user.certificatePerson.status==0?this.formatMessage({id: 'persondata.certificationing'})
                                 :this.state.user.certificatePerson.status==1?this.formatMessage({id: 'persondata.certificationed'})
                                 :this.state.user.certificatePerson.status==-1?this.formatMessage({id: 'app.refused'})                          
                                 :this.formatMessage({id: 'persondata.certification'})
-                        :this.formatMessage({id: 'persondata.certification'})
+                        :this.formatMessage({id: 'persondata.certification'}) )
                         }
                     </span>
-                    {this.state.user.certificatePerson?this.state.user.certificatePerson.status==0 || this.state.user.certificatePerson.status==1 ? "" :
+                    {this.state.cerstatus?"":(this.state.user.certificatePerson?this.state.user.certificatePerson.status==0 || this.state.user.certificatePerson.status==1 ? "" :
                         <Button type="primary"  style={{ marginLeft: 20}}className={appcss.button_blue} onClick={this.handleCertification}>
                                 <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                         </Button>
                         :<Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
-                        </Button>
+                        </Button>)
                     }
                     <CusModal width="800" scroll={{y: 700}}
                         title= { this.formatMessage({id:"persondata.personal.certification"})}
@@ -725,21 +743,21 @@ class PersonData extends React.Component {
                 </span>:
                 <span className={css.text}>
                     <span  className={css.text_certification}>
-                        {this.state.user.certificateCompany?
+                        {this.state.cerstatus? this.formatMessage({id: 'persondata.certificationing'}):( this.state.user.certificateCompany?
                             this.state.user.certificateCompany.status==0?this.formatMessage({id: 'persondata.certificationing'})
                             :this.state.user.certificateCompany.status==1?this.formatMessage({id: 'persondata.certificationed'})
                             :this.state.user.certificateCompany.status==-1?this.formatMessage({id: 'app.refused'})
                         :this.formatMessage({id: 'persondata.certification'})
-                        :this.formatMessage({id: 'persondata.certification'})
+                        :this.formatMessage({id: 'persondata.certification'}) )
                         }
                     </span>
-                     {this.state.user.certificateCompany?this.state.user.certificateCompany.status==0 || this.state.user.certificateCompany.status==1 ? "" :
+                     {this.state.cerstatus?"":(this.state.user.certificateCompany?this.state.user.certificateCompany.status==0 || this.state.user.certificateCompany.status==1 ? "" :
                         <Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
                         </Button>
                         :<Button type="primary" className={appcss.button_blue}  style={{ marginLeft: 20}} onClick={this.handleCertification}>
                             <FormattedMessage  id="persondata.go.certification" defaultMessage="认证"/>
-                        </Button>
+                        </Button>)
                      }
                     
                     <CusModal width="800" scroll={{y: 700}}

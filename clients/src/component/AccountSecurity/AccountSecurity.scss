@@ -37,7 +37,24 @@
   .modify{
     color: $color-red;
   }
+  .modify:visited{
+    color: $color-red;
+    text-decoration:none;
+  }
+  .modify:hover{
+    color: $color-red;
+    text-decoration:underline;
+  }
   .validation{
     color: $color-blue !important;
+    text-decoration:none;
+  }
+  .validation:visited{
+    color: $color-blue !important;
+    text-decoration:none;
+  }
+  .validation:visited{
+    color: $color-blue !important;
+    text-decoration:underline;
   }
 }
