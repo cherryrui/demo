@@ -24,6 +24,15 @@
     display: flex;
     .address_detail{
       text-align: start;
+      line-height: 18px;
+    color: #2e2b2e;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    text-align: left;
+    width: 260px;
     }
     .delivery{
       background:$theme-color;

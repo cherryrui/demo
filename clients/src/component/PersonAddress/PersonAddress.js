@@ -67,7 +67,7 @@ class PersonAddress extends React.Component {
         }, {
             title: <FormattedMessage id="cart.delivery.name" defaultMessage=" 收货人"/>,
             className: css.table_col_name,
-            width: "15%",
+            width: "10%",
             render: (record) => <span className={css.table_namne}>{record.name}</span>
         }, {
             title: <FormattedMessage id="cart.delivery.tel" defaultMessage="联系电话 "/>,
@@ -77,7 +77,7 @@ class PersonAddress extends React.Component {
         }, {
             title: <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址 "/>,
             className: css.table_col,
-            width: "40%",
+            width: "45%",
             render: (record) => <span className={css.table_address}>
                     <p className={css.address_detail}>{locale=="en"?record.address+","+record.district+","+record.city+","+record.province+","+record.country
                     :record.country+' '+record.province+" "+record.city+" "+record.district+" "+ record.address}</p>
