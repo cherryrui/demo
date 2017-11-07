@@ -225,6 +225,24 @@ class Register extends React.Component {
         })
     }
 
+    RegPhone = (value) =>{
+        const reg = /^1[3|5][0-9]\d{8}$/;
+        if(reg.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    checkPhone = (rule,value,callback) =>{
+        const form = this.props.form;
+        if(value && !this.RegPhone(value)){
+            callback('不是完整的11位手机号或者正确的手机号前七位');
+        }else{
+            callback();
+        }
+    }
+
 
     render() {
         const {
@@ -355,6 +373,8 @@ class Register extends React.Component {
                             rules:[{
                                 required:true,
                                 message:formatMessage({id:"register.tel.warn"})
+                            },{
+                                validator:this.checkPhone
                             }]
                         })(
                             <Input ref={(tel)=>{this.tel=tel}} className={css.reqister_input}/>
