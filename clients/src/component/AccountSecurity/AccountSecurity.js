@@ -46,7 +46,7 @@ class AccountSecurity extends React.Component {
                     </div>
             <div className={css.account}>
                 <div  className={css.account_title}>
-                    <Icon type="smile-o"  className={css.account_icon} />
+                    <Icon type={this.state.user.tel?"smile-o":"frown-o"}  className={this.state.user.tel?css.account_icon:css.frown_icon} />
                     <p  className={css.account_text}> {this.state.user.tel?this.formatMessage({id:"app.modify.phone"}): this.formatMessage({id:"app.bind.phone"})}</p>
                     <p className={css.account_grey}> {this.state.user.tel? this.formatMessage({id:"app.phone.verified_info"}):this.formatMessage({id:"app.phone.verified_infoed"}) }</p>
                     &nbsp;{this.state.user.tel?this.state.user.tel:""}
@@ -59,7 +59,7 @@ class AccountSecurity extends React.Component {
             </div>
             <div className={css.account}>
                 <div  className={css.account_title}>
-                    <Icon type="frown-o" className={css.frown_icon} />
+                    <Icon type={this.state.user.email?"smile-o":"frown-o"} className={this.state.user.email?css.account_icon:css.frown_icon} />
                     <p  className={css.account_text}> {this.state.user.email? this.formatMessage({id:"app.modify.email"}):this.formatMessage({id:"app.bind.email"})}</p>
                     <p className={css.account_grey}> { this.state.user.email?this.formatMessage({id:"app.email.verifi_info"}):this.formatMessage({id:"app.email.verifi_infoed"})}</p>
                     &nbsp;{this.state.user.email?this.state.user.email:""}
