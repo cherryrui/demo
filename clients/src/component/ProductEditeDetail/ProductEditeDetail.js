@@ -538,7 +538,9 @@ class Descrip extends React.Component {
 			{this.props.data.length>0?this.props.data.map(item=> {
                 return <div>
                     <p className={css.info_title}>{item.introduceName}</p>
-                    {item.contentType==1?<img src={item.content+"@800w_1e_1c.png"}/>
+                    {item.contentType==1?item.content.split(",").map(img=>{
+                    	return <img src={img+"@800w_1e_1c.png"}/>
+                    })
                     :<div style={{padding: "20px"}} dangerouslySetInnerHTML={{__html: item.content}}/>}
                 </div>
             }):<div className={css.no_data}> 
