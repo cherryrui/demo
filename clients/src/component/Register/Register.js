@@ -72,128 +72,134 @@ class Register extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values)
-                if(values.password == values.repassword){
+                if (values.password == values.repassword) {
                     let phoneoremail = values.email ? values.email : values.tel;
-                let params = {
-                    userName: values.name,
-                    password: values.password,
-                    eamilphone: this.state.verification_mode,
-                    emailOrphone: phoneoremail,
-                    userType: this.state.usertype,
-                    checkCode: values.verificationCode
-                }
-                axios.post('/user/register.json', params).then(res => {
-                    console.log('2222', JSON.stringify(res));
-                    if (res.data.isSucc) {
-                        message.success(formatMessage({
-                            id: 'regcomplt.regcomplt.Registeredsuccessfully'
-                        }));
-                        let param = {
-                            userName: values.name,
-                            password: values.password
-                        };
-                        axios.post('/user/login.json', param).then(res => {
-                            if (res.data.isSucc) {
-                                sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                                /*this.props.history.pushState(null, "/");*/
-                                this.props.history.pushState(null, "/register-complete");
-                            } else {
-                                message.error(formatMessage({
-                                    id: 'login.login.fail'
-                                }, {
-                                    reason: res.data.message
-                                }))
-                            }
-                        })
-
-                    } else {
-                        message.error(formatMessage({
-                            id: 'register.failed'
-                        }, {
-                            reason: res.data.message
-                        }))
+                    let params = {
+                        userName: values.name,
+                        password: values.password,
+                        eamilphone: this.state.verification_mode,
+                        emailOrphone: phoneoremail,
+                        userType: this.state.usertype,
+                        checkCode: values.verificationCode
                     }
-                });
-                }else{
-                    message.error(this.formatMessage({id:'repwd.check.pwd_warn'}))
+                    axios.post('/user/register.json', params).then(res => {
+                        console.log('2222', JSON.stringify(res));
+                        if (res.data.isSucc) {
+                            message.success(formatMessage({
+                                id: 'regcomplt.regcomplt.Registeredsuccessfully'
+                            }));
+                            let param = {
+                                userName: values.name,
+                                password: values.password
+                            };
+                            axios.post('/user/login.json', param).then(res => {
+                                if (res.data.isSucc) {
+                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                    /*this.props.history.pushState(null, "/");*/
+                                    this.props.history.pushState(null, "/register-complete");
+                                } else {
+                                    message.error(formatMessage({
+                                        id: 'login.login.fail'
+                                    }, {
+                                        reason: res.data.message
+                                    }))
+                                }
+                            })
+
+                        } else {
+                            message.error(formatMessage({
+                                id: 'register.failed'
+                            }, {
+                                reason: res.data.message
+                            }))
+                        }
+                    });
+                } else {
+                    message.error(this.formatMessage({
+                        id: 'repwd.check.pwd_warn'
+                    }))
                 }
-                
+
             }
         })
     };
     handleCode = (e) => {
-        let values = this.props.form.getFieldsValue();
-        if (values.email || values.tel) {
-            let account = values.email ? values.email : values.tel;
-            let verification_mode = this.state.verification_mode;
-            console.log(account)
-            this.setState({
-                loading: false
-            })
-            axios.get(`/user/sendcode.json?account=${account}&type=${verification_mode}`).then(res => {
-                console.log(res.data)
-                if (res.data.isSucc) {
-                    this.setState({
-                        loading: false,
-                        time: 60,
-                        disabled: true
-                    })
-                    this.timer = window.setInterval(() => {
-                        /*console.log(this.state.time);*/
-                        if (this.state.time - 1 >= 0) {
-                            this.setState({
-                                time: this.state.time - 1,
-                                disabled: true
-                            })
-                        } else {
-                            this.setState({
-                                time: 0,
-                                disabled: false
-                            })
-                            window.clearInterval(this.timer)
-                        }
-                    }, 1000)
-                } else {
-                    message.error(res.data.message);
-                }
+            let values = this.props.form.getFieldsValue();
+            if (values.email || values.tel) {
+                let account = values.email ? values.email : values.tel;
+                let verification_mode = this.state.verification_mode;
+                console.log(account)
+                this.setState({
+                    loading: false
+                })
+                axios.get(`/user/sendcode.json?account=${account}&type=${verification_mode}`).then(res => {
+                    console.log(res.data)
+                    if (res.data.isSucc) {
+                        this.setState({
+                            loading: false,
+                            time: 60,
+                            disabled: true
+                        })
+                        this.timer = window.setInterval(() => {
+                            /*console.log(this.state.time);*/
+                            if (this.state.time - 1 >= 0) {
+                                this.setState({
+                                    time: this.state.time - 1,
+                                    disabled: true
+                                })
+                            } else {
+                                this.setState({
+                                    time: 0,
+                                    disabled: false
+                                })
+                                window.clearInterval(this.timer)
+                            }
+                        }, 1000)
+                    } else {
+                        message.error(res.data.message);
+                    }
 
-            })
-        } else {
-            message.warn(this.formatMessage({
-                id: "authen.authen.account_warn"
-            }))
+                })
+            } else {
+                message.warn(this.formatMessage({
+                    id: "authen.authen.account_warn"
+                }))
 
+            }
         }
-    }
-    /*checkPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback(this.formatMessage({
-                id: "repwd.check.pwd_warn"
-            }));
-        } else {
-            callback();
-        }
-    }*/
+        /*checkPassword = (rule, value, callback) => {
+            const form = this.props.form;
+            if (value && value !== form.getFieldValue('password')) {
+                callback(this.formatMessage({
+                    id: "repwd.check.pwd_warn"
+                }));
+            } else {
+                callback();
+            }
+        }*/
     handleConfirmBlur = (e) => {
         const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+        this.setState({
+            confirmDirty: this.state.confirmDirty || !!value
+        });
     }
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you enter is inconsistent!');
+            callback('Two passwords that you enter is inconsistent!');
         } else {
-          callback();
+            callback();
         }
-     }
+    }
     checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
-          form.validateFields(['repassword'], { force: true });
+            form.validateFields(['repassword'], {
+                force: true
+            });
         }
         callback();
-     }
+    }
     onChangeverifi = (e) => {
         console.log(`radio checked:${e.target.value}`);
         this.setState({
@@ -347,7 +353,7 @@ class Register extends React.Component {
                             label={formatMessage({id: 'register.register.verification'})}
                         >
                             <Row gutter={10}>
-                                <Col span={14}>
+                                <Col span={14} style={{width: 188}} >
                                 {getFieldDecorator('verificationCode',{
                                     rules:[{
                                         required:true,
@@ -358,7 +364,7 @@ class Register extends React.Component {
                                 )}
                                 </Col>
                                 <Col span={8}>
-                                    <Button type="primary" className={appcss.button_black} disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
+                                    <Button type="primary" style={{width: 211}} className={appcss.button_black} disabled={this.state.disabled} size="large" loading={this.state.loading} onClick={this.handleCode}>
                                         <FormattedMessage id="repwd.get_code" defaultMessage="获取验证"/>
                                         {this.state.time?("("+this.state.time+")"):""}
                                     </Button>
