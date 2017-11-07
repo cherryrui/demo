@@ -55,9 +55,9 @@ class ProductInfo extends React.Component {
 					introduceType[item.introduceType - 1].is_select = true;
 					if (item.contentType === 1) {
 						item.fileList = [];
-						item.content.split(",").map(img => {
+						item.content.split(",").map((img,index) => {
 							let file = {
-								uid: '-1', // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+								uid: '-'+(index+1), // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
 								status: 'done', // 状态有：uploading done error removed
 								url: img + "@150w_150h_1e_1c.png",
 								response: {
@@ -66,6 +66,7 @@ class ProductInfo extends React.Component {
 							};
 							item.fileList.push(file);
 						})
+                        console.log(item.fileList);
 					} else {
 						item.contentText = item.content;
 					}
