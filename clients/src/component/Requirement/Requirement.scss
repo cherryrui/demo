@@ -32,11 +32,12 @@
   }
 .requirement_table{
     background: white;
+    table{
+        border-collapse: collapse;
+        background-color: $item-color;
+    }
     td{
-      border-bottom: 1px dashed $border-color !important;
+        border-bottom: 1px dashed #e9e9e9 !important;
+        border-collapse: collapse!important;
     }
-    tbody+tr{
-      background: red;
-    }
-
 }

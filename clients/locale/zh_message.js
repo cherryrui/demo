@@ -335,6 +335,8 @@ const zh_CN = {
     "mine.product.status.unaudited": "审核失败",
     "mine.product.status.unsold": "未上架",
 
+    "mine.product.all": "所有产品",
+
     "order.status.all": "所有",
     "about.company.profile": "公司简介",
     "about.company.profile.info": " 是经营进出口贸易的专业外贸公司，开展国内外贸易，中外合资、合作生产，转口贸易等方式的经营业务,主要经营各种化工原料、塑料树脂、染料和助剂、颜料及中间体，橡胶制品、化学试剂、稀土产品、化工机械、农药、农膜原料，五金矿产、农副产品、办公与家居用品、计算机及外围设备、针纺织品、汽车零配件，百货，工艺品，皮革，建筑材料，电子产品，木材，竹木制品，服装等产品的进出口业务。",

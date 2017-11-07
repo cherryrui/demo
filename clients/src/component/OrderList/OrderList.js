@@ -219,7 +219,6 @@ class OrderList extends React.Component {
                 handleBar={this.handleBar.bind(this)}
             />
             <div className={css.card_container}>
-
                 <Table
                     pagination={false}
                     rowKey="orderId"

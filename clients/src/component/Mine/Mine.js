@@ -31,7 +31,8 @@ class Mine extends React.Component {
             select: 0,
             visible: false,
             reload: false,
-            path: ""
+            path: "",
+            search: ""
         }
         this.path = "";
     }
@@ -61,33 +62,50 @@ class Mine extends React.Component {
                 this.setState({
                     path: "mine.agent",
                     select: 7000,
+                    search: "",
                 })
             } else {
                 this.setState({
                     path: "mine.supplier",
                     select: 8000,
+                    search: "",
                 })
             }
             if (this.state.user.userIdentity > 0 || this.state.user.agent || this.state.supplier) {
                 this.props.history.pushState(null, 'page/mine');
             }
         }
-        operator.menu.map(item => {
-            item.list.map(sub => {
-                if (sub.url === path) {
-                    this.setState({
-                        path: sub.title,
-                        select: sub.key,
-                    })
-                    if (item.code.indexOf(this.state.user.userIdentity) == -1) {
-                        this.props.history.pushState(null, 'page/mine');
+        if (path.indexOf("page/mine/product-detail") > -1) {
+            if (this.state.user.userIdentity == 2) {
+                console.log(path.substr(path.lastIndexOf("/")))
+                this.setState({
+                    path: "mine.product.list",
+                    select: 2001,
+                    search: path.substr(path.lastIndexOf("/") + 1),
+                })
+            } else {
+                this.props.history.pushState(null, 'page/mine');
+            }
+        } else {
+            operator.menu.map(item => {
+                item.list.map(sub => {
+                    if (sub.url === path) {
+                        this.setState({
+                            path: sub.title,
+                            select: sub.key,
+                            search: "",
+                        })
+                        if (item.code.indexOf(this.state.user.userIdentity) == -1) {
+                            this.props.history.pushState(null, 'page/mine');
+                        }
                     }
-                }
+                })
             })
-        })
+        }
         if (path == "/page/mine") {
             this.setState({
-                path: ""
+                path: "",
+                search: ""
             })
         }
         this.path = path;
@@ -139,6 +157,7 @@ class Mine extends React.Component {
                     {this.state.path?<Breadcrumb.Item>
                         <FormattedMessage id={this.state.path} defaultMessage="产品列表"/>
                     </Breadcrumb.Item>:""}
+                    {this.state.search?<Breadcrumb.Item>{this.state.search}</Breadcrumb.Item>:""}
                 </Breadcrumb>
             </div>
             <div className={css.body}>

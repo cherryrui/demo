@@ -78,8 +78,8 @@ class AgentProduct extends React.Component {
 			className: css.table_col,
 			render: (record) => <div>
 				{record.productMap.productSpec.map(item=>{
-					return <p>
-						{item.spec.split(",").join("/")}
+					return <p className={css.product_spec}>
+						{item.spec.split(",").join(" / ")}
 					</p>
 				})}
 			</div>
@@ -88,13 +88,10 @@ class AgentProduct extends React.Component {
 			width: "90px",
 			className: css.table_col,
 			render: (record) => <div className={css.table_operator}>
-				<Link to={"page/mine/product-detail/"+record.productId} className={css.operation_text}>
+				<Link to={"page/mine/product-detail/"+record.productId+"/"+record.productName} className={css.operation_text}>
                     <i class="iconfont icon-DYC-23"/>
                     <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                 </Link>
-                <Tooltip title={<FormattedMessage id="cart.delete" defaultMessage="我的购物车"/>}>
-                    <Icon type="delete" onClick={this.handleDelete.bind(this,record.id)} />
-                </Tooltip>      
             </div>
 		}, ]
 	}
@@ -182,15 +179,7 @@ class AgentProduct extends React.Component {
 		} = this.props;
 		return <div>
 			<div className={basecss.child_title}>
-                <FormattedMessage id={this.state.type==1?"mine.favorite.product":"mine.favorite.brand"} 
-                defaultMessage="分类"/>
-                <Search
-                    placeholder={formatMessage({
-                        id: 'mine.product.name_warn'
-                    })}
-                    style={{ width: 300 }}
-                    onSearch={value => console.log(value)}
-                />
+                <FormattedMessage id="mine.product.all" defaultMessage="分类"/>
             </div>
             <TabBar activeColor="#2e2b2e" tabs={this.state.product_status} current={this.state.current} 
                 handleBar={this.handleBar.bind(this)}

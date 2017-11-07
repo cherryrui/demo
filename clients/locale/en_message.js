@@ -324,6 +324,7 @@ const en_US = {
     "mine.product.special_liquid": "Liquid",
     "mine.product.special_corrosion": "Corrosion",
     "mine.product.instr_custom": "Customize the packing attribute",
+    "mine.product.all": "All the products",
 
     "order.status.all": "all",
     "about.company.profile": "company profile",
