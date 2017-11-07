@@ -398,7 +398,7 @@ class Specifucation extends React.Component {
 					<p className={css.table_right_2}>{item.attrVal}</p>
 				</div>
 				}):""}
-				{(this.props.data.selectProperty&&this.props.data.selectProperty.length>0)||this.props.data.customProperty?"":<div className={css.table_row}>
+				{(this.props.data.selectProperty&&this.props.data.selectProperty.length>0)||(this.props.data.customProperty&&JSON.parse(this.props.data.customProperty).length>0)?"":<div className={css.table_row}>
 					<p className={css.table_left_2}>-：</p>
 					<p className={css.table_right_2}>-</p>
 				</div>}
