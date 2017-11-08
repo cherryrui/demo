@@ -68,7 +68,6 @@ class PersonData extends React.Component {
     handleCertification = () => {
         this.setState({
             visible: true,
-            cerstatus: true,
         });
     }
     handleCancel = () => {

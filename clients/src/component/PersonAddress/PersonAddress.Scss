@@ -64,6 +64,10 @@
       font-size: 16px;
       line-height: 16px;
       height: 16px;
+      cursor: pointer;
+    }
+    .delete:hover{
+      color: $theme-color;
     }
     .modify:hover{
       color: $theme-color;

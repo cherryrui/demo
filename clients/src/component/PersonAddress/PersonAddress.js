@@ -93,7 +93,7 @@ class PersonAddress extends React.Component {
                       onmouseover="show('item')"
                       className={css.modify} type="edit" />
                   </a>
-                    <Icon type="delete" className={css.delete} onClick={this.handleDeladdress.bind(this,record.addressId)} />
+                    <Icon type="delete"  className={css.delete} onClick={this.handleDeladdress.bind(this,record.addressId)} />
                 </span>
         }, ]
     }
@@ -396,7 +396,7 @@ class PersonAddress extends React.Component {
                          {this.formatMessage({id: 'order.status.all'})}
                     </Checkbox>
                     <Tooltip title={this.formatMessage({id: 'cart.delete.all'})}>
-                        <Icon type="delete" onClick={this.handleDelete} />
+                        <Icon type="delete" style={{cursor: "pointer"}} onClick={this.handleDelete} />
                     </Tooltip> 
                 </p> 
                 <Button className={appcss.button_blue} type="primary" onClick={this.handleEditAddress}>
