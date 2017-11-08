@@ -38,10 +38,11 @@ class QuotationList extends React.Component {
 			pageSize: 10,
 			info: "",
 			total: 0,
-			quotation: {},
+			quotation: null,
 			visible: false,
 			loading: false,
-			width: "80%"
+			width: "1200px",
+			show_sperator: false,
 		};
 		this.formatMessage = this.props.intl.formatMessage;
 	}
@@ -67,38 +68,74 @@ class QuotationList extends React.Component {
 
 		})
 	}
+	getQuotationDetail(qid, type) {
+		axios.get('/quotation/get-quotation-byid.json?id=' + qid).then(res => {
+			if (res.data.isSucc) {
+				let select = {};
+				if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
+					select = JSON.parse(res.data.result.quotationOrder.exportOption);
+				}
+				let quotation = res.data.result;
+				quotation.productList.map(item => {
+					item.coverUrl = item.productUrl;
+					item.productBrand = JSON.parse(item.productBrand);
+					item.productSpecification = JSON.parse(item.productSpecification);
+				})
+				quotation.select = select;
+				if (type == 1) {
+					this.setState({
+						quotation: quotation,
+						visible: true
+					})
+				} else {
+					this.setState({
+						quotation
+					}, () => {
+						setTimeout(this.exportQuotation(quotation), 3000)
+					})
+				}
+
+			} else if (res.data.code == 104) {
+				this.setState({
+					visible: true,
+					reload: true,
+				})
+			} else {
+				message.error(res.data.message);
+			}
+		})
+	}
 
 	/**
 	 * 在线预览该报价单
 	 * @return {[type]} [description]
 	 */
 	onlineShow = (item) => {
-		this.setState({
-			visible: true,
-			quotation: item
-		})
+		this.getQuotationDetail(item.quotationId, 1)
 	}
 
 	/**
 	 * 导出该报价单
 	 * @return {[type]} [description]
 	 */
-	export = (item) => {
+	export = (index) => {
+		let data = this.state.data;
+		data[index].downloading = true;
 		this.setState({
-			visible: true,
-			quotation: item
-
-		}, this.exportQuotation)
+			data
+		})
+		this.getQuotationDetail(this.state.data[index].quotationId, 2)
 	}
 
 	getProductListById = () => {
 
-		}
-		/**
-		 * 根据当前选择报价单生成订单
-		 * @param  {[type]} item [description]
-		 * @return {[type]}      [description]
-		 */
+	}
+
+	/**
+	 * 根据当前选择报价单生成订单
+	 * @param  {[type]} item [description]
+	 * @return {[type]}      [description]
+	 */
 	create_order = (item) => {
 		axios.get('/quotation/get-quotation-byid.json?id=' + item.quotationId).then(res => {
 			console.log(res.data);
@@ -118,53 +155,41 @@ class QuotationList extends React.Component {
 			} else {
 
 			}
-
 		})
 
 	}
 
-	exportQuotation = () => {
-		html2canvas(document.getElementById("content"), {
-			onrendered: (canvas) => {
-				console.log(canvas);
-				var contentWidth = canvas.width;
-				var contentHeight = canvas.height;
-
-				//一页pdf显示html页面生成的canvas高度;
-				var pageHeight = contentWidth / 592.28 * 841.89;
-				//未生成pdf的html页面高度
-				var leftHeight = contentHeight;
-				//页面偏移
-				var position = 0;
-				//a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-				var imgWidth = 595.28;
-				var imgHeight = 592.28 / contentWidth * contentHeight;
-
-				var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-				var pdf = new jsPDF('', 'pt', 'a4');
-
-				//有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-				//当内容未超过pdf一页显示的范围，无需分页
-				console.log(leftHeight, pageHeight);
-				if (leftHeight < pageHeight) {
-					pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-				} else {
-					while (leftHeight > 0) {
-						pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-						leftHeight -= pageHeight;
-						position -= 841.89;
-						//避免添加空白页
-						if (leftHeight > 0) {
-							pdf.addPage();
-						}
-					}
+	exportQuotation = (quotation) => {
+		this.setState({
+			show_sperator: true,
+		}, () => {
+			var element = document.getElementById('content');
+			html2pdf(element, {
+				filename: this.state.quotation.quotationOrder.quotationSubject + '.pdf',
+				image: {
+					type: 'jpeg',
+					quality: 1
+				},
+				html2canvas: {
+					dpi: 192,
+					letterRendering: true,
+					useCORS: true,
+				},
+				jsPDF: {
+					unit: 'in',
+					format: 'letter',
+					orientation: 'portrait'
 				}
-				pdf.save('content.pdf');
-				this.setState({
-					visible: false,
-				})
-			}
+			});
+			let data = this.state.data;
+			data.map(item => {
+				if (item.quotationId == quotation.quotationOrder.quotationId) {
+					item.downloading = false;
+				}
+			})
+			this.setState({
+				data
+			});
 		});
 	}
 	handleCancel = () => {
@@ -221,7 +246,7 @@ class QuotationList extends React.Component {
             	</p>
             	<p className={css.title_num}>
             		<FormattedMessage id="mine.quotation.total" defaultMessage="分类"/>
-            	</p>	
+            	</p>
             	<p className={css.title_sale}>
             		<FormattedMessage id="cart.order.total" defaultMessage="分类"/>
             	</p>
@@ -232,7 +257,7 @@ class QuotationList extends React.Component {
             		<FormattedMessage id="cart.profits" defaultMessage="分类"/>
             	</p>
             </div>
-            {this.state.data.map(item=>{
+            {this.state.data.map((item,index)=>{
             	return <div className={css.quotation_item}>
             		<div className={css.quotation_item_title}>
             			<p>
@@ -289,7 +314,8 @@ class QuotationList extends React.Component {
 	            		</Button>
 	            		<Button 
 	            			className={appcss.button_black}
-	            			type="primary" onClick={this.export.bind(this,item)}>
+	            			loading={item.downloading}
+	            			type="primary" onClick={this.export.bind(this,index)}>
             				<FormattedMessage id="quotation.export" defaultMessage="导出"/>
 	            		</Button>
             		</div>
@@ -298,21 +324,22 @@ class QuotationList extends React.Component {
             <div className={css.footer}>
             	<Pagination defaultCurrent={1} total={this.state.total} onChange={this.handlePage} />
             </div>
+            {this.state.quotation&&this.state.quotation.quotationOrder.quotationId?<div className={css.quotation_pdf} >
+            	<QuotationPdf show_sperator={this.state.show_sperator} quotation={this.state.quotation}/>
+            </div>:""}
             <Modal
 		          width={this.state.width} 
 		          title={<ModalHeader width={this.state.width}      
 			          setWidth={this.handleState} 
 			          export={this.exportQuotation}
-			          title={formatMessage({
+			          title={this.formatMessage({
 	                            id: 'quotation.online'
 	                        })}/>}
 		          visible={this.state.visible}
 		          footer={null}
 		          onCancel={this.handleCancel}
 	        >
-		        <div id="content">
-		          <QuotationPdf quotation={this.state.quotation}/>
-		        </div>
+		      <QuotationPdf quotation={this.state.quotation}/>
 	        </Modal>
 		</div>
 	}

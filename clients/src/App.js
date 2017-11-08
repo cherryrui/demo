@@ -203,10 +203,10 @@ const News = (location, cb) => {
         cb(null, require('./component/News/News.js').default)
     }, 'news')
 }
-const QuotationPdf = (location, cb) => {
+const QuotationShow = (location, cb) => {
     require.ensure([], require => {
-        cb(null, require('./component/QuotationPdf/QuotationPdf.js').default)
-    }, 'quotationPdf')
+        cb(null, require('./component/QuotationShow/QuotationShow.js').default)
+    }, 'quotationShow')
 }
 const Requirements = (location, cb) => {
     require.ensure([], require => {
@@ -486,7 +486,7 @@ ReactDOM.render(
                             <Route path="post-want" getComponent={PostWant}/>
                             <Route path="cart(/:step)(/:orderId)" getComponent={Cart}/>
                             <Route path="quotation(/:id)" getComponent={Quotation}/>
-                            <Route path="quotation-pdf/:id" getComponent={QuotationPdf}/>
+                            <Route path="quotation-pdf/:id" getComponent={QuotationShow}/>
                             <Route path="about" getComponent={About}>
                             </Route>
                             <Route path="news" getComponent={News}/>

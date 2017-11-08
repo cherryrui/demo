@@ -338,7 +338,7 @@ class CartList extends React.Component {
                         item.salePrice = item.price;
                         quotation.products.push(item);
                         quotation.sale_price += item.productNum * item.price;
-                        quotation.profit += item.productNum * (item.price - item.priceSupplier);
+                        quotation.profit += item.productNum * (item.price - item.agentPrice);
                     }
                 })
             })

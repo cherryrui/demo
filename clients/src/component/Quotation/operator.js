@@ -7,10 +7,6 @@ export default {
 		id: 2,
 		key: "app.brand",
 		value: "brand"
-	}, {
-		id: 4,
-		key: "quotation.platform.price",
-		value: "plat_price"
 	}],
 	pay_mode: [{
 		id: 0,

@@ -1,7 +1,11 @@
 @import "../../themes.scss";
-
+.quotation_list{
+  button{
+    min-width: 0;
+  }
+}
 .quotation_title{
-	display: flex;
+	 display: flex;
     font-size: 14px;
     font-weight: bold;
     background: $bar-color;
@@ -109,12 +113,6 @@
   text-align: right;
   margin-top: 20px;
 }
-.button_blue{
-  background-color: $color-blue;
-}
-.button_black{
-  background-color: $bar-color;
-}
-.button_orange{
-  background-color: $color-red;
+.quotation_pdf{
+  display: table-column;
 }

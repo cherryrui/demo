@@ -182,7 +182,7 @@ class Quotation extends React.Component {
 			sale_price = 0,
 			sum = 0;
 		products.map(item => {
-			profits += item.productNum * (item.sale_price - item.priceSupplier);
+			profits += item.productNum * (item.sale_price - item.agentPrice);
 			sale_price += item.productNum * item.sale_price;
 			sum += item.productNum;
 		})
@@ -215,7 +215,7 @@ class Quotation extends React.Component {
 			item.productNum = item.productNum > item.moq ? item.productNum : item.moq;
 			sum += item.salePrice * item.productNum;
 			num += item.productNum;
-			profit += (item.salePrice - item.priceSupplier) * item.productNum;
+			profit += (item.salePrice - item.agentPrice) * item.productNum;
 		})
 		data.totalSalePrice = sum.toFixed(2);
 		data.profits = profit.toFixed(2);
@@ -327,7 +327,7 @@ class Quotation extends React.Component {
 						productName: item.productName,
 						productPrice: item.price,
 						salePrice: item.salePrice,
-						agentPrice: item.priceSupplier,
+						agentPrice: item.agentPrice,
 						productNum: item.productNum,
 						totalMoney: item.salePrice * item.productNum,
 					});
@@ -344,6 +344,9 @@ class Quotation extends React.Component {
 					console.log(res.data);
 					if (res.data.isSucc) {
 						sessionStorage.removeItem("quotation");
+						message.success(this.formatMessage({
+							id: "quotation.message"
+						}))
 						this.props.history.pushState(null, "page/quotation-pdf/" + res.data.result);
 					} else if (res.data.code == 104) {
 						this.setState({

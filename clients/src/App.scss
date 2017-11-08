@@ -1,10 +1,11 @@
 @import "./themes";
 .main{
   background: $background-color;
+  button{
+    min-width: 120px;
+  }
 }
-button{
-  min-width: 120px;
-}
+
 div[class="ant-row ant-form-item"]{
       margin-bottom: 20px;
 }
