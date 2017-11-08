@@ -68,6 +68,7 @@ const zh_CN = {
     "app.modify.phone": "手机修改",
     "app.bind.email": "邮箱绑定",
     "app.modify.email": "邮箱修改",
+    "app.agent":"代理商",
     "sort.comp": "综合",
     "sort.new": "新品",
     "sort.price": "价格",

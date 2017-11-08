@@ -52,6 +52,8 @@ class PersonAddress extends React.Component {
             address: {},
             telCode: [],
             citys: '',
+            selectedRowKeys: [],
+            select_all: false,
         };
         this.select_address = [];
         this.formatMessage = this.props.intl.formatMessage;
@@ -61,10 +63,6 @@ class PersonAddress extends React.Component {
             }
         } = this.props;
         this.colums_show = [{
-            className: css.table_col,
-            width: "8%",
-            render: (record) => <Checkbox></Checkbox>
-        }, {
             title: <FormattedMessage id="cart.delivery.name" defaultMessage=" 收货人"/>,
             className: css.table_col_name,
             width: "10%",
@@ -102,6 +100,7 @@ class PersonAddress extends React.Component {
     getAddressList = () => {
         axios.get('/user/get-address-list.json').then(res => {
             if (res.data.isSucc) {
+                /*console.log(res.data.result)*/
                 this.setState({
                     address_list: res.data.result,
                     select: this.state.select == 0 && res.data.result.length > 0 ? res.data.result[0].addressId : this.state.select,
@@ -116,7 +115,7 @@ class PersonAddress extends React.Component {
     componentWillMount() {
         this.getAddressList();
         axios.get('/user/get-city-by-parent.json').then(res => {
-            console.log('get-city-parent:', JSON.parse(res.data.address.result));
+            /*console.log('get-city-parent:', JSON.parse(res.data.address.result));*/
             let address = this.convertData(JSON.parse(res.data.address.result));
             this.setState({
                 options: address,
@@ -145,7 +144,7 @@ class PersonAddress extends React.Component {
     }
 
     handleEditAddress = (address) => {
-        console.log(address)
+        /*console.log(address)*/
         let title = '',
             addr;
         if (address.addressId) {
@@ -182,14 +181,14 @@ class PersonAddress extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(err, values);
+            /*console.log(err, values);*/
             if (!err) {
                 this.setState({
                     loading: true
                 })
                 let param = values;
-                console.log(param)
-                console.log(this.select_address, this.state.address)
+                /*console.log(param)*/
+                /*console.log(this.select_address, this.state.address)*/
                 if (this.select_address.length > 0) {
                     param.country = this.select_address[0].label;
                     param.countryId = this.select_address[0].value;
@@ -218,7 +217,7 @@ class PersonAddress extends React.Component {
                 if (this.state.address.addressId) {
                     param.addressId = this.state.address.addressId;
                     axios.post('/user/update-address.json', param).then(res => {
-                        console.log(res.data)
+                        /*console.log(res.data)*/
                         if (res.data.isSucc) {
                             this.setState({
                                 loading: false,
@@ -237,7 +236,7 @@ class PersonAddress extends React.Component {
 
                 } else {
                     axios.post('/user/add-user-address.json', param).then(res => {
-                        console.log('add-useraddress:', res.data);
+                        /*console.log('add-useraddress:', res.data);*/
                         if (res.data.isSucc) {
                             this.setState({
                                 loading: false,
@@ -257,12 +256,12 @@ class PersonAddress extends React.Component {
         });
     }
     handleDeladdress = (id) => {
-        console.log(id);
+        /*console.log(id);*/
         let param = {
             ids: id
         }
         axios.post('/user/del-address-byids', param).then(res => {
-            console.log(res.data)
+            /*console.log(res.data)*/
             if (res.data.isSucc) {
                 this.getAddressList();
             } else if (res.data.code == 104) {
@@ -283,6 +282,53 @@ class PersonAddress extends React.Component {
             address: {},
         })
     }
+
+    handleSelectAll =(e) =>{
+        let key = [];
+        if(e.target.checked) {
+            this.state.address_list.map(item=>{
+                key.push(item.addressId)
+            })
+        }   
+        /*console.log(key)*/
+        this.setState({
+            selectedRowKeys:key,
+            select_all:!this.state.select_all,
+        })
+    }
+    onSelectChange = (selectedRowKeys) => {
+        /*console.log(selectedRowKeys)*/
+        let select_all = false;
+        if(selectedRowKeys.length == this.state.address_list.length){
+            select_all = true;
+        }
+        this.setState({
+            selectedRowKeys,
+            select_all:select_all
+        })
+    }
+
+    handleDelete = () => {
+        let id = this.state.selectedRowKeys;
+        /*console.log(id);*/
+        let param = {
+            ids: id
+        }
+        axios.post('/user/del-address-byids', param).then(res => {
+            /*console.log(res.data)*/
+            if (res.data.isSucc) {
+                this.getAddressList();
+            } else if (res.data.code == 104) {
+                this.props.login ? this.props.login() : "";
+            } else {
+                message.error({
+                    reason: res.data.message
+                })
+            }
+        })
+    }
+
+
     render() {
         const {
             getFieldDecorator
@@ -334,15 +380,19 @@ class PersonAddress extends React.Component {
             </div>
             <div className={css.address_table}>
                 <Table
+                    rowSelection={{
+                        selectedRowKeys: this.state.selectedRowKeys,
+                        onChange: this.onSelectChange,
+                    }}
                     pagination={false}
                     rowKey="addressId"
-                   
+                    scroll={{y: 700}}
                     columns={this.colums_show}
                     dataSource={this.state.address_list} />
             </div>
             <div className={css.delivery_new}>
                 <p className={css.left}>
-                    <Checkbox >
+                    <Checkbox onChange={this.handleSelectAll} checked={this.state.select_all}>
                          {this.formatMessage({id: 'order.status.all'})}
                     </Checkbox>
                     <Tooltip title={this.formatMessage({id: 'cart.delete.all'})}>

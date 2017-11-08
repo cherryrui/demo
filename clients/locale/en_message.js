@@ -69,6 +69,7 @@ const en_US = {
     "app.modify.phone": "Phone Modify",
     "app.bind.email": "Email Bingding",
     "app.modify.email": "Email Modify",
+    "app.agent":"Agent",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
     "sort.price": "Price",
