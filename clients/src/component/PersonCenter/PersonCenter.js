@@ -141,11 +141,13 @@ class PersonCenter extends React.Component {
         }
     }
     handleMenu = (key, url) => {
+        console.log(key, url);
         this.setState({
             select: key
         });
-        if (url)
+        if (url) {
             this.props.history.pushState(null, url);
+        }
     }
     handleChange = (name, page) => {
         let param = {};
@@ -200,7 +202,7 @@ class PersonCenter extends React.Component {
                 <div className={css.order_content}>
                     {this.state.orderList.map(item=>{
                         return <div className={css.order_item}
-                        onClick={this.handleMenu.bind(this,item.url)}
+                        onClick={this.handleMenu.bind(this,item.key,item.url)}
                         >
                             <img src={item.icon}/>
                             <Tooltip placement="top"
