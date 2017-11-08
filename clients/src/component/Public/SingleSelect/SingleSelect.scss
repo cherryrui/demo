@@ -56,10 +56,10 @@
   }
   .active_img{
     @extend .item_img;
-    border: 2px solid $color-orange;
+    border: 2px solid $theme-color;
   }
   .item_img:hover{
-    border: 2px solid $color-orange;
+    border: 2px solid $theme-color;
   }
   .right{
     margin: auto 20px;

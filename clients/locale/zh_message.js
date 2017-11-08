@@ -140,6 +140,8 @@ const zh_CN = {
     "cart.payment": "支付成功",
     "cart.product.info": "产品信息",
     "cart.specifucation": "产品属性",
+    "cart.product.search": "搜索结果",
+    "product.search.result.info": "非常抱歉，没有找到{name}",
     "cart.price": "单价",
     "cart.num": "数量",
     "cart.sum": "总价",

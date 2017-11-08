@@ -137,6 +137,8 @@ const en_US = {
     "cart.calu": "Settle Accounts",
     "cart.payment": "Payment Success",
     "cart.product.info": "Product Information",
+    "product.search.result.info": "I'm sorry! {name} was not found!",
+    "cart.product.search": "Search results",
     "cart.specifucation": "Specifications",
     "cart.price": "Price",
     "cart.num": "Quantity",

@@ -50,6 +50,7 @@ class ProductList extends React.Component {
             sortType: 0, //排序名称
             orderType: "", //排序方式，倒序，
             visible: false,
+            like: [],
         }
         this.pageSizeOptions = ["15", "20", "25"];
         this.categoryName = "分类名称";
@@ -140,11 +141,20 @@ class ProductList extends React.Component {
                     sum: res.data.result.allRow,
                 })
             } else {
-                message.error(this.formatMessage({
-                    id: "request.fail"
-                }, {
-                    reason: res.data.message
-                }));
+                message.error(res.data.message);
+            }
+        })
+    }
+
+    getLikeProduct = () => {
+        axios.get('/product/get-like-product.json').then(res => {
+            console.log(res.data);
+            if (res.data.isSucc) {
+                this.setState({
+                    like: res.date.result
+                })
+            } else {
+                message.error(res.data.message);
             }
         })
     }
@@ -259,16 +269,11 @@ class ProductList extends React.Component {
         return <div ref={(product_list)=>this.product_list=product_list} className={appcss.body}>
             <div className={appcss.navigate}>
                 <Breadcrumb separator=">>">
-                    <Breadcrumb.Item >
-                        <Link to="page/">
-                            <FormattedMessage id="app.category" defaultMessage="分类"/>
-                        </Link>
+                    <Breadcrumb.Item>
+                        <FormattedMessage id="cart.product.search" defaultMessage="产品列表"/>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <FormattedMessage id="cart.product.list" defaultMessage="产品列表"/>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        {Number(this.info)?this.props.params.name:this.info}
+                        "{Number(this.info)?this.props.params.name:this.info}"
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
@@ -315,12 +320,22 @@ class ProductList extends React.Component {
                 <div className={css.product_list}>
                     {this.state.products.map((item,index)=>{
                     return <Product className={(index+1)%5==0?css.product_right:css.product}  product={item} handleStar={this.handleStar.bind(this,index)} collect/>
-                })}
+                    })}
                 </div>
                 <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.sum} onShowSizeChange={this.onShowSizeChange} />
             </div>
-            :<div className={css.product_no}>
-                <FormattedMessage id='product.no_product' defaultMessage="暂无搜索到商品"/>
+            :<div >
+                <p className={css.product_no}>
+                    <FormattedMessage id='product.search.result.info' values={{name:<b>{Number(this.info)?this.props.params.name:this.info}</b>}} defaultMessage="暂无搜索到商品"/>
+                </p>
+                <p>
+                    <FormattedMessage id="app.like" defaultMessage=""/>
+                </p>
+                <div className={css.product_list}>
+                    {this.state.like.map((item,index)=>{
+                    return <Product className={(index+1)%5==0?css.product_right:css.product}  product={item} handleStar={this.handleStar.bind(this,index)} collect/>
+                    })}
+                </div>
             </div>}
              <LoginModal visible={this.state.visible} reload closeModal={this.handleCancel}/>
         </div>
