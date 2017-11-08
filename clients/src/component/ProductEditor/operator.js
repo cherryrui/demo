@@ -100,7 +100,7 @@ export default {
 		unit: []
 	}, {
 		key: "weight",
-		name: "mine.product.instruct_Weight",
+		name: "mine.product.instruct_weight",
 		type: 0,
 		select_unit: 0,
 		unit_key: "重量",

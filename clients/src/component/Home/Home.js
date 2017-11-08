@@ -265,10 +265,9 @@ class Home extends React.Component {
             {this.state.showCategory?<div className={css.categorys_drop}>
                 <div className={css.categorys_body}>
                     <div className={css.categorys_content} onMouseEnter={this.onMouse.bind(this,"cate_enter")} onMouseLeave={this.onMouse.bind(this,"cate_leave")}>
-                     
                         {this.state.categorys.map(item=>{
                             return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
-                            <img src={item.iconUrl+"@18w_18h_1e_1c.png"}/>{item.categoryName}
+                            <img src={item.iconUrl?item.iconUrl+"@18w_18h_1e_1c.png":"../img/no_icon.png"}/>{item.categoryName}
                             </p>
                         })}
                     </div>

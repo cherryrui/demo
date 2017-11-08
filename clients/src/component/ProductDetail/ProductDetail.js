@@ -315,7 +315,7 @@ class ProductDetail extends React.Component {
     }
 
     render() {
-        console.log(this.state.specs);
+        console.log(this.state.current);
         const {
             intl: {
                 formatMessage
@@ -529,7 +529,7 @@ class Review extends React.Component {
 class Price extends React.Component {
 
     render() {
-
+        console.log(this.props.data);
         return <div>
             {this.props.data.length>0?<div className={css.price_body}>
                 <VictoryChart
@@ -540,7 +540,6 @@ class Price extends React.Component {
                     <VictoryArea
                         style={{ 
                             data: { fill: "#c43a31" },
-                            
                          }}
                         data={data}
                         x="create_time"  

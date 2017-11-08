@@ -1,15 +1,15 @@
 export default {
 	tabs: [{
 		key: "product.detail.information",
-		value: 1,
+		value: 0,
 	}, {
 		key: "product.detail.package",
-		value: 3,
+		value: 1,
 	}, {
 		key: "product.detail.review",
-		value: 4,
+		value: 2,
 	}, {
 		key: "product.detail.price.move",
-		value: 5,
+		value: 3,
 	}]
 }
