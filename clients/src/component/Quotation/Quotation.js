@@ -199,13 +199,16 @@ class Quotation extends React.Component {
 		this.quotation.scrollIntoView();
 	}
 	handleNum = (record, name, value) => {
+		console.log(record, name, value);
 		let data = this.state.quotation;
 		let sum = 0,
 			num = 0,
 			profit = 0;
 		data.products.map(item => {
 			if (item.id == record.id) {
-				if (isNaN(value)) {
+				if (name === "productNum") {
+					item[name] = isNaN(value) ? Number(value.target.value) : item.productNum + value;
+				} else if (isNaN(value)) {
 					console.log(value, value.target.value);
 					let price = value.target.value.substr(1);
 					price = price.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');

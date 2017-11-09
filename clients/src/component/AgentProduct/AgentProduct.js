@@ -191,10 +191,10 @@ class AgentProduct extends React.Component {
                 pagination={false}
                 loading={this.state.loading}
                 rowKey="productId"
-                bordered  
+                bordered
                 columns={this.columns}
                 dataSource={this.state.products} />
-            <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handlePage} total={this.state.total} onShowSizeChange={this.handlePage} />
+            <CusPagination current={this.state.pageNo} pageSizeOptions={this.pageSizeOptions} onChange={this.handlePage} total={this.state.total} onShowSizeChange={this.handlePage} />
 		</div>
 	}
 

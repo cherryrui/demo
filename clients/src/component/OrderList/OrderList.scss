@@ -5,6 +5,7 @@
 .card_container{
   border: 1px solid $border-color;
   background-color: $item-color;
+  margin-bottom: 10px;
   table{
     border-collapse: collapse;
     background-color: $item-color;
@@ -13,7 +14,6 @@
     border-bottom: 1px dashed #e9e9e9 !important;
     border-collapse: collapse!important;
   }
- 
 }
 .tabtar{
     background-color:$background-color;
@@ -85,7 +85,6 @@
   color:$border-color;
 }
 .table_operation{
-  font-size: 18px;
   .operation_text{
     display: block;
     color: $color-blue;

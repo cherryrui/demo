@@ -8,6 +8,7 @@ import basecss from '../Mine/Mine.scss';
 import css from './OrderList.scss';
 import operator from './operator.js';
 import moment from 'moment';
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 import {
     Input,
     Icon,
@@ -184,7 +185,8 @@ class OrderList extends React.Component {
     }
     handleBar = (key) => {
         this.setState({
-            current: key
+            current: key,
+            pageNo: 1,
         }, () => {
             this.searchOrder()
         })
@@ -226,14 +228,7 @@ class OrderList extends React.Component {
                     dataSource={this.state.orders}
                 />
             </div>
-            <div className={css.Pagination}> 
-                <Pagination showSizeChanger 
-                    onShowSizeChange={this.onShowSizeChange} 
-                    onChange={this.onShowSizeChange}
-                    defaultCurrent={1} 
-                    current={this.state.pageNo}
-                    total={this.state.total} />
-            </div>
+            <CusPagination current={this.state.pageNo} onChange={this.onShowSizeChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
         </div>
     }
 }

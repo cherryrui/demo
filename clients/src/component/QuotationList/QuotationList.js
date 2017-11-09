@@ -5,6 +5,7 @@ import appcss from '../../App.scss';
 import axios from 'axios';
 import moment from 'moment';
 import QuotationPdf from '../QuotationPdf/QuotationPdf.js';
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 import ModalHeader from '../Public/ModalHeader/ModalHeader.js';
 import {
 	FormattedMessage,
@@ -67,6 +68,7 @@ class QuotationList extends React.Component {
 			}
 
 		})
+		this.props.goTop ? this.props.goTop() : "";
 	}
 	getQuotationDetail(qid, type) {
 		axios.get('/quotation/get-quotation-byid.json?id=' + qid).then(res => {
@@ -319,9 +321,7 @@ class QuotationList extends React.Component {
             		</div>
             	</div>
             })}
-            <div className={css.footer}>
-            	<Pagination defaultCurrent={1} total={this.state.total} onChange={this.handlePage} />
-            </div>
+            <CusPagination current={this.state.current} onChange={this.handlePage} total={this.state.total} onShowSizeChange={this.handlePage} />
             {this.state.quotation&&this.state.quotation.quotationOrder.quotationId?<div className={css.quotation_pdf} >
             	<QuotationPdf show_sperator={this.state.show_sperator} quotation={this.state.quotation}/>
             </div>:""}

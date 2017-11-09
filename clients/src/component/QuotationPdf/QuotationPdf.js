@@ -230,10 +230,10 @@ class QuotationPdf extends React.Component {
                     <FormattedMessage id="cart.sum" defaultMessage="总售价"/>：
                     <p className={css.sum_right}>${this.props.quotation.quotationOrder.totalSalePrice}</p>
                 </p>
-                <p className={css.sum_item}>
+                {false?<p className={css.sum_item}>
                     <FormattedMessage id="cart.profits" defaultMessage="利润"/>：
                     <p className={css.sum_right}>${this.props.quotation.quotationOrder.profits}</p>
-                </p>
+                </p>:""}
                 <p className={css.sum_item}>
                     <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>：
                     <p className={css.sum_right}>${this.props.quotation.quotationOrder.shoppingCharges}</p>

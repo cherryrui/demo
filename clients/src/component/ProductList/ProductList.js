@@ -322,7 +322,7 @@ class ProductList extends React.Component {
                     return <Product className={(index+1)%5==0?css.product_right:css.product}  product={item} handleStar={this.handleStar.bind(this,index)} collect/>
                     })}
                 </div>
-                <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.sum} onShowSizeChange={this.onShowSizeChange} />
+                <CusPagination current={this.state.current} pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.sum} onShowSizeChange={this.onShowSizeChange} />
             </div>
             :<div >
                 <p className={css.product_no}>

@@ -189,7 +189,7 @@ class BrandList extends React.Component {
                 return <Brand brand={item} showStar className={(index+1)%5==0?css.right_item:css.item}/>
             })}
             </div>
-            <CusPagination pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
+            <CusPagination current={this.state.current} pageSizeOptions={this.pageSizeOptions} onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
         </div>
     }
 }

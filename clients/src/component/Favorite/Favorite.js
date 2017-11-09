@@ -15,7 +15,6 @@ import {
 	intlShape
 } from 'react-intl';
 import {
-	Pagination,
 	Tooltip,
 	Checkbox,
 	Icon,
@@ -243,12 +242,10 @@ class Favorite extends React.Component {
                     </Checkbox>
 					<Tooltip title={formatMessage({id: 'cart.delete.all'})}>
                         <Icon type="delete" onClick={this.handleDelete} />
-                    </Tooltip> 
-                </p> 
-                <Pagination onChange={this.handleChangePage} 
-                	pageSize={this.state.pageSize} 
-                	total={this.state.total} />
-			</div> 
+                    </Tooltip>
+                </p>
+                <CusPagination current={this.state.current} onChange={this.handleChangePage} total={this.state.total} onShowSizeChange={this.handleChangePage} />
+			</div>
 		</div>
 	}
 }

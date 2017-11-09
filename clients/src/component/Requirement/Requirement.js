@@ -7,7 +7,7 @@ import css from './Requirement.scss';
 import appcss from '../../App.scss';
 import basecss from '../Mine/Mine.scss';
 import moment from 'moment';
-
+import CusPagination from '../Public/CusPagination/CusPagination.js';
 import {
     Link
 } from 'react-router';
@@ -27,8 +27,7 @@ import {
     Input,
     Menu,
     Dropdown,
-    Form,
-    Pagination
+    Form
 } from 'antd';
 const Step = Steps.Step;
 const Option = Select.Option;
@@ -37,8 +36,6 @@ const FormItem = Form.Item;
 const {
     TextArea
 } = Input;
-
-
 
 class Requirement extends React.Component {
     handleChange = (value) => {
@@ -62,7 +59,6 @@ class Requirement extends React.Component {
     }
     constructor(props) {
         super(props);
-
         this.state = {
             requirement: [],
             status: "",
@@ -191,9 +187,7 @@ class Requirement extends React.Component {
                     columns={this.colums_show}
                     dataSource={this.state.requirement}/>
             </div>
-            <div className={css.footer}>
-                <Pagination pageSize={this.state.pageSize} total={this.state.total} onChange={this.handlePage} />
-            </div>
+            <CusPagination current={this.state.current} onChange={this.handlePage} total={this.state.total} onShowSizeChange={this.handlePage} />
         </div>
     }
 }

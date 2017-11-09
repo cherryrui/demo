@@ -251,7 +251,7 @@ class ConfirmOrder extends React.Component {
                 })
                 if (res.value.data.isSucc) {
                     this.props.handleStep ? this.props.handleStep(1, res.value.data.order) : '';
-                } else if (res.data.code == 104) {
+                } else if (res.value.data.code == 104) {
                     this.props.handleVisible ? this.props.handleVisible() : "";
                 } else {
                     message.error(res.value.data.message);

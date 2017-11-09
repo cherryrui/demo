@@ -231,7 +231,7 @@ class BrandDetail extends React.Component {
                     return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,1,index)} addCart/>
                 })}
             </div>
-            <CusPagination onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
+            <CusPagination current={this.state.current} onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
 			<LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
 		</div>
 	}
