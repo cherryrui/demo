@@ -5,7 +5,7 @@
 .menu{
   flex-shrink: 0;
   background: white;
-  padding: 10px 10px 0px 20px;
+  padding: 10px 10px 10px 20px;
   z-index: 1;
   font-size: 14px;
   width: 220px;
@@ -58,7 +58,7 @@
 .child_title{
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
       align-items: flex-end;

@@ -326,6 +326,7 @@ class ProductList extends React.Component {
             </div>
             :<div >
                 <p className={css.product_no}>
+                    <img src='../img/cry.png' />
                     <FormattedMessage id='product.search.result.info' values={{name:<b>{Number(this.info)?this.props.params.name:this.info}</b>}} defaultMessage="暂无搜索到商品"/>
                 </p>
                 <p>

@@ -276,7 +276,6 @@ class QuotationList extends React.Component {
 	            				<FormattedMessage id="quotation.subject" defaultMessage="报价单名称"/>
 	            				:{item.quotationSubject}
             				</div>
-            				
             			</p>
 		            	<p className={css.item_num}>
 		            		{item.totalQuantity}
@@ -295,7 +294,6 @@ class QuotationList extends React.Component {
             			<p className={css.item_icon} onClick={this.handleDelete.bind(this,item.quotationId)}>
             				<Icon type="delete" />&nbsp;&nbsp;
             				<FormattedMessage id="cart.delete" defaultMessage="删除"/>
-	            	
             			</p>
             			<Link className={css.item_icon} to={'page/quotation/'+item.quotationId}>
             				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;

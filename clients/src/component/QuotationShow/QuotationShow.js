@@ -47,7 +47,7 @@ class QuotationShow extends React.Component {
 			if (res.data.isSucc) {
 				let select = {};
 				if (res.data.result.quotationOrder && res.data.result.quotationOrder.exportOption) {
-					select = JSON.parse(res.data.result.quotationOrder.exportOption);
+					select = res.data.result.quotationOrder.exportOption ? JSON.parse(res.data.result.quotationOrder.exportOption) : {};
 				}
 				let quotation = res.data.result;
 				quotation.productList.map(item => {

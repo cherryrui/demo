@@ -49,10 +49,10 @@ class ProductInfo extends React.Component {
 		}
 		axios.post('/product/get-product-introduct.json', param).then(res => {
 			if (res.data.isSucc) {
-				let product_info = res.data.result.length > 0 ? res.data.result : this.state.product_info;
+				let product_info = res.data.result.length > 0 ? res.data.result : [];
 				let introduceType = this.state.introduceType;
 				product_info.map(item => {
-					introduceType[item.introduceType - 1].is_select = true;
+					item.introduceType ? introduceType[item.introduceType - 1].is_select = true : "";
 					if (item.contentType === 1) {
 						item.fileList = [];
 						item.content.split(",").map((img, index) => {
@@ -71,7 +71,7 @@ class ProductInfo extends React.Component {
 						item.contentText = item.content;
 					}
 				})
-
+				product_info = product_info.length > 0 ? product_info : this.state.product_info;
 				this.setState({
 					product_info
 				})

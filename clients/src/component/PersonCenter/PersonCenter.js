@@ -91,12 +91,11 @@ class PersonCenter extends React.Component {
                 collectList.map(item => {
                     res.data.collect.map(demand => {
                         if (item.key == demand.type) {
-                            sum += demand.total;
+                            sum = demand.total;
                             item.count = demand.total;
                         }
                     })
                 })
-                collectList[0].count = sum;
                 console.log(orderList, demandList, collectList);
                 this.setState({
                     orderList: orderList,

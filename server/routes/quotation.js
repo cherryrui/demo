@@ -41,7 +41,14 @@ router.post('/get-quotation.json', async(ctx, next) => {
 		if (ctx.cookie.get('token')) {
 			try {
 				axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-				await axios.post(url + "/auth/quotation/insertQuotationOrder", querystring.stringify(param)).then(res => {
+				let uri = url;
+				if (param.quotationId) {
+					uri += "/auth/quotation/updateQuotationOrder";
+				} else {
+					uri += "/auth/quotation/insertQuotationOrder";
+				}
+				console.log(50, uri);
+				await axios.post(uri, querystring.stringify(param)).then(res => {
 					console.log(600, res.data);
 					result = res.data;
 				})

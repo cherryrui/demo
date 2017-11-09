@@ -128,11 +128,13 @@ class Quotation extends React.Component {
 					res.data.result.productList.map(item => {
 						item.moq = item.minBuyQuantity;
 						item.price = item.productPrice;
+						item.coverUrl = item.productUrl;
+						item.id = item.itemId ? item.itemId : item.productId;
 						item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
 						item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
 						item.selectSpecs = JSON.parse(item.productSpecification)
 					})
-					quotation.exportOption = JSON.parse(quotation.exportOption);
+					quotation.exportOption = quotation.exportOption ? JSON.parse(quotation.exportOption) : "";
 					quotation.products = res.data.result.productList;
 					quotation.participant = res.data.result.participant;
 					this.setState({
@@ -255,35 +257,17 @@ class Quotation extends React.Component {
 			[field]: value,
 		});
 	}
+	handleCancel = () => {
+		this.setState({
+			visible: false,
+		})
+	}
 	handlePrint = (key, e) => {
 		let quotation = this.state.quotation;
 		quotation.exportOption = quotation.exportOption ? quotation.exportOption : {};
 		quotation.exportOption[key] = e.target.checked;
 		this.setState({
 			quotation
-		})
-	}
-	onlineShow = () => {
-		this.setState({
-			visible: true,
-		})
-	}
-	exportPDF = () => {
-		this.exportQuotation();
-	}
-	exportQuotation = () => {
-
-	}
-	handleCancel = () => {
-		this.setState({
-			visible: false,
-		})
-	}
-
-	handleState = (width) => {
-		console.log(width);
-		this.setState({
-			width: width,
 		})
 	}
 
@@ -330,18 +314,20 @@ class Quotation extends React.Component {
 						agentPrice: item.agentPrice,
 						productNum: item.productNum,
 						totalMoney: item.salePrice * item.productNum,
+						quotationProductId: item.quotationProductId,
+						quotationId: this.state.quotation.quotationId,
 					});
 				})
 				param.productList = JSON.stringify(productList);
-				param.exportOption = JSON.stringify(this.state.quotation.exportOption);
+				param.exportOption = this.state.quotation.exportOption ? JSON.stringify(this.state.quotation.exportOption) : {};
 				delete param.products;
 				delete param.num;
-				param.userId = JSON.parse(sessionStorage.user).uid;
+				param.quotationId = this.state.quotation.quotationId ? this.state.quotation.quotationId : null;
+				console.log(param);
 				axios.post('/quotation/create-quotation.json', param).then(res => {
 					this.setState({
 						loading: false
 					})
-					console.log(res.data);
 					if (res.data.isSucc) {
 						sessionStorage.removeItem("quotation");
 						message.success(this.formatMessage({
@@ -357,6 +343,7 @@ class Quotation extends React.Component {
 						message.error(res.data.message);
 					}
 				})
+
 
 			} else {
 				this.setState({
@@ -558,7 +545,7 @@ class Quotation extends React.Component {
             </div>
 	        <div className={css.footer}>
                 <Button loading={this.state.loading} type="primary" onClick={this.saveQuotation}>
-                	{this.state.quotation.id?<FormattedMessage id="quotation.save" defaultMessage="保存报价单"/>
+                	{this.state.quotation.quotationId?<FormattedMessage id="quotation.save" defaultMessage="保存报价单"/>
                 	:<FormattedMessage id="quotation.generate" defaultMessage="生成报价单"/>}
                 </Button>
 	        </div>

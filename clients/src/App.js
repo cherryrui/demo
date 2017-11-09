@@ -467,6 +467,7 @@ class App extends React.Component {
 App = injectIntl(App);
 let div = document.createElement('div');
 div.className = css.index;
+div.id = "index";
 ReactDOM.render(
     (<LocaleProvider locale={appLocale.antd_locale}>
         <IntlProvider locale={appLocale.locale} messages={appLocale.message}>

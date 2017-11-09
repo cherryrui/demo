@@ -63,7 +63,7 @@ class ProductSpec extends React.Component {
 							}
 						})
 					} else {
-						product_spec = category[0].spec;
+						product_spec = category[0].spec ? category[0].spec : [];
 					}
 					res.data.result.selectSpecs.map(item => {
 						let specs = JSON.parse(item.productSpecs);
@@ -216,7 +216,7 @@ class ProductSpec extends React.Component {
 			loading: true
 		})
 		if (this.state.specs_list.length == 0 && this.state.category[this.state.select_category].categoryId == this.oldCategoryId) {
-			this.props.handleSteps ? this.props.handleSteps(1) : "";
+			this.props.handleSteps ? this.props.handleSteps(1, this.props.product) : "";
 			this.setState({
 				loading: false
 			})
@@ -324,9 +324,10 @@ class ProductSpec extends React.Component {
 		this.props.handleSteps ? this.props.handleSteps(-1) : ""
 	}
 	render() {
+		console.log(this.state.product_spec);
 		return <div className={`${css.product_spec} ${this.props.className}`}>
 			<p className={css.spec_item_title}>
-				<FormattedMessage id="mine.product.custom_attr" defaultMessage="自定义属性"/>&nbsp;: 
+				<FormattedMessage id="app.product_category" defaultMessage="自定义属性"/>&nbsp;: 
 			</p>
 			<RadioGroup value={this.state.select_category} className={css.spec_item_body} onChange={this.handleChange}>
 				{this.state.category.map((item,index)=>{

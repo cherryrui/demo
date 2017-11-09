@@ -76,7 +76,7 @@ class Favorite extends React.Component {
 	}
 	getData() {
 		let param = {
-			categoryId: this.state.cid ? this.state.cid : 0,
+			categoryId: this.state.cid ? this.state.cid : null,
 			pageSize: this.state.pageSize,
 			pageNo: this.state.pageNo,
 		}
