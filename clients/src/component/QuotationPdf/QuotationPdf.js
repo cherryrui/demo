@@ -239,7 +239,7 @@ class QuotationPdf extends React.Component {
                     <p className={css.sum_right}>${this.props.quotation.quotationOrder.shoppingCharges}</p>
                 </p>
             </div>
-            {this.props.quotation.productList.length==3||((this.props.quotation.productList.length-4)%7==0)?<div className="html2pdf__page-break"></div>:""}
+            {this.props.quotation.productList.length==3||(this.props.quotation.productList.length>4&&(this.props.quotation.productList.length-4)%7==0)?<div className="html2pdf__page-break"></div>:""}
             <div className={css.quo_footer}>
                 <div className={css.quo_left}>
                     <p className={css.quotation_info}>

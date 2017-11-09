@@ -341,7 +341,7 @@ class ProductDetail extends React.Component {
             <div className={css.header}>
                 <div className={css.main_img}>
                     <div className={css.cus_img}>
-                        <img className={css.img_main} src={this.state.curImg?this.state.curImg+"@320w_320h_1e_1c.png":"../img/no_picture.jpg"}/>
+                        <img className={css.img_main} src={this.state.curImg?this.state.curImg+"@350w_350h_1e_1c.png":"../img/no_picture.jpg"}/>
                     </div>
                     <div className={css.product_img}>
                          {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
@@ -380,7 +380,6 @@ class ProductDetail extends React.Component {
                              <span> 
                               &nbsp;&nbsp;
                                <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
-                               
                             </span>
                         </p>
                     </div>

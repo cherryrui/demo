@@ -30,7 +30,6 @@ class QuotationShow extends React.Component {
 
 	}
 	componentWillMount() {
-		console.log("componentWillMount");
 		if (sessionStorage.user) {
 			let qid = this.props.params ? this.props.params.id : this.props.qid;
 			if (qid) {
@@ -81,7 +80,7 @@ class QuotationShow extends React.Component {
 				filename: this.state.quotation.quotationOrder.quotationSubject + '.pdf',
 				image: {
 					type: 'jpeg',
-					quality: 1
+					quality: 0.95
 				},
 				html2canvas: {
 					dpi: 192,
