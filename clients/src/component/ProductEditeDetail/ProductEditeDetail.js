@@ -135,7 +135,7 @@ class ProductEditeDetail extends React.Component {
 							let param = {};
 							switch (index) {
 								case 0:
-									param.basic = result.result.product;
+									param.basic = res.data.result.product;
 									let category = [];
 									res.data.result.category.map(item => {
 										if (item.parent && item.parent.parent) {
