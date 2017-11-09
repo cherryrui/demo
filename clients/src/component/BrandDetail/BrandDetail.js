@@ -42,6 +42,7 @@ class BrandDetail extends React.Component {
 			cid: 0,
 			visible: false,
 		}
+		this.pageSizeOptions = ["12", "16", "20"];
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {
@@ -231,7 +232,7 @@ class BrandDetail extends React.Component {
                     return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,1,index)} addCart/>
                 })}
             </div>
-            <CusPagination current={this.state.current} onChange={this.handleChange} total={this.state.total} onShowSizeChange={this.onShowSizeChange} />
+            <CusPagination current={this.state.current} onChange={this.handleChange} total={this.state.total} pageSizeOptions={this.pageSizeOptions} onShowSizeChange={this.onShowSizeChange} />
 			<LoginModal visible={this.state.visible} closeModal={this.handleCancel}/>
 		</div>
 	}

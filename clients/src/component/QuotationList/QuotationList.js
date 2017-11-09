@@ -45,6 +45,7 @@ class QuotationList extends React.Component {
 			width: "1200px",
 			show_sperator: false,
 		};
+		this.search = "";
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {
@@ -54,15 +55,17 @@ class QuotationList extends React.Component {
 	getQuotation() {
 		let param = {
 			pageNo: this.state.current,
-			pageSize: this.state.pageSize
+			pageSize: this.state.pageSize,
+			quotationSubject: this.search,
 		};
 		axios.post(`/quotation/get-quotation.json`, param).then(res => {
-			console.log(res.data)
 			if (res.data.isSucc) {
 				this.setState({
 					data: res.data.result.list,
 					total: res.data.result.allRow
 				})
+			} else if (res.data.code == 104) {
+				this.props.login(true);
 			} else {
 				message.error(res.data.message);
 			}
@@ -224,6 +227,11 @@ class QuotationList extends React.Component {
 			}
 		})
 	}
+	handleSearch = (value) => {
+		this.search = value;
+		this.state.current = 1;
+		this.getQuotation();
+	}
 
 	render() {
 		let {
@@ -239,7 +247,7 @@ class QuotationList extends React.Component {
                             id: 'mine.quotation.placeholder'
                         })}
 				    style={{ width: 300 }}
-				    onSearch={value => console.log(value)}
+				    onSearch={this.handleSearch}
 				 />
             </div>
             <div className={css.quotation_title}>
@@ -259,68 +267,70 @@ class QuotationList extends React.Component {
             		<FormattedMessage id="cart.profits" defaultMessage="分类"/>
             	</p>
             </div>
-            {this.state.data.map((item,index)=>{
-            	return <div className={css.quotation_item}>
-            		<div className={css.quotation_item_title}>
-            			<p>
-            				<FormattedMessage id="quotation.no" defaultMessage="报价单编号"/>
-                			:{item.quotationNo}
-            			</p>
-            			<p>
-            				<FormattedMessage id="quotation.create_time" defaultMessage="创建时间"/>
-                			:{moment(item.createTime).format('YYYY-MM-DD hh:mm:ss')}
-            			</p>
-            		</div>
-            		<div className={css.quotation_item_body}>
-            			<p className={css.item_info}>
-            					<img src={item.quotationUrl+"@70w_70h_1e_1c.png"}/>
-            				<div>
-	            				<FormattedMessage id="quotation.subject" defaultMessage="报价单名称"/>
-	            				:{item.quotationSubject}
-            				</div>
-            			</p>
-		            	<p className={css.item_num}>
-		            		{item.totalQuantity}
-		            	</p>
-		            	<p className={css.item_sale}>
-		            		${item.totalSalePrice}
-		            	</p>
-		            	<p className={css.item_agent}>
-		            		${item.totalSalePrice-item.profits}
-		            	</p>
-		            	<p className={css.item_profit}>
-		            		${item.profits}
-		            	</p>
-            		</div>
-            		<div className={css.quotation_item_footer}>
-            			<p className={css.item_icon} onClick={this.handleDelete.bind(this,item.quotationId)}>
-            				<Icon type="delete" />&nbsp;&nbsp;
-            				<FormattedMessage id="cart.delete" defaultMessage="删除"/>
-            			</p>
-            			<Link className={css.item_icon} to={'page/quotation/'+item.quotationId}>
-            				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;
-            				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
-            			</Link>
-            			<Button type="primary" 
-            				className={appcss.button_blue}
-            				onClick={this.onlineShow.bind(this,item)}>
-            				<FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
-	            		</Button>
-	            		<Button type="primary"  
-	            			loading={this.state.loading} 
-	            			className={appcss.button_orange} 
-	            			onClick={this.create_order.bind(this,item)}>
-            				<FormattedMessage id="mine.quotation.create_order" defaultMessage="生成订单"/>
-	            		</Button>
-	            		<Button 
-	            			className={appcss.button_black}
-	            			loading={item.downloading}
-	            			type="primary" onClick={this.export.bind(this,index)}>
-            				<FormattedMessage id="quotation.export" defaultMessage="导出"/>
-	            		</Button>
-            		</div>
-            	</div>
-            })}
+            <div className={css.quotation_body}>
+	            {this.state.data.map((item,index)=>{
+	            	return <div className={css.quotation_item}>
+	            		<div className={css.quotation_item_title}>
+	            			<p>
+	            				<FormattedMessage id="quotation.no" defaultMessage="报价单编号"/>
+	                			:{item.quotationNo}
+	            			</p>
+	            			<p>
+	            				<FormattedMessage id="quotation.create_time" defaultMessage="创建时间"/>
+	                			:{moment(item.createTime).format('YYYY-MM-DD hh:mm:ss')}
+	            			</p>
+	            		</div>
+	            		<div className={css.quotation_item_body}>
+	            			<p className={css.item_info}>
+	            					<img src={item.quotationUrl+"@70w_70h_1e_1c.png"}/>
+	            				<div>
+		            				<FormattedMessage id="quotation.subject" defaultMessage="报价单名称"/>
+		            				:{item.quotationSubject}
+	            				</div>
+	            			</p>
+			            	<p className={css.item_num}>
+			            		{item.totalQuantity}
+			            	</p>
+			            	<p className={css.item_sale}>
+			            		${item.totalSalePrice}
+			            	</p>
+			            	<p className={css.item_agent}>
+			            		${item.totalSalePrice-item.profits}
+			            	</p>
+			            	<p className={css.item_profit}>
+			            		${item.profits}
+			            	</p>
+	            		</div>
+	            		<div className={css.quotation_item_footer}>
+	            			<p className={css.item_icon} onClick={this.handleDelete.bind(this,item.quotationId)}>
+	            				<Icon type="delete" />&nbsp;&nbsp;
+	            				<FormattedMessage id="cart.delete" defaultMessage="删除"/>
+	            			</p>
+	            			<Link className={css.item_icon} to={'page/quotation/'+item.quotationId}>
+	            				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;
+	            				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
+	            			</Link>
+	            			<Button type="primary" 
+	            				className={appcss.button_blue}
+	            				onClick={this.onlineShow.bind(this,item)}>
+	            				<FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
+		            		</Button>
+		            		<Button type="primary"  
+		            			loading={this.state.loading} 
+		            			className={appcss.button_orange} 
+		            			onClick={this.create_order.bind(this,item)}>
+	            				<FormattedMessage id="mine.quotation.create_order" defaultMessage="生成订单"/>
+		            		</Button>
+		            		<Button 
+		            			className={appcss.button_black}
+		            			loading={item.downloading}
+		            			type="primary" onClick={this.export.bind(this,index)}>
+	            				<FormattedMessage id="quotation.export" defaultMessage="导出"/>
+		            		</Button>
+	            		</div>
+	            	</div>
+	            })}
+	        </div>
             <CusPagination current={this.state.current} onChange={this.handlePage} total={this.state.total} onShowSizeChange={this.handlePage} />
             {this.state.quotation&&this.state.quotation.quotationOrder.quotationId?<div className={css.quotation_pdf} >
             	<QuotationPdf show_sperator={this.state.show_sperator} quotation={this.state.quotation}/>

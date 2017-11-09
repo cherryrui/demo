@@ -252,7 +252,7 @@ class Home extends React.Component {
                     />
                     {this.props.cart.result?<Dropdown overlay={cart_menu} placement="bottomRight">
                         <Badge count={this.props.cart.result.allRow} overflowCount={99}>
-                            <Button  type="primary" size="large"   style={{width: "100px"}} onClick={this.handleCart}>
+                            <Button  type="primary" size="large" onClick={this.handleCart}>
                                 <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<FormattedMessage id="cart.cart" defaultMessage="购物车"/>
                             </Button>
                         </Badge>

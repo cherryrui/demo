@@ -37,7 +37,7 @@ class Favorite extends React.Component {
 			pageSize: Number(this.props.params.type) == 1 ? 12 : 15,
 			indeterminate: false,
 			select_id: -1,
-			pageSizeOptions: ["15", "20", "25"]
+			pageSizeOptions: Number(this.props.params.type) == 1 ? ["12", "16", "20"] : ["15", "20", "25"]
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 		this.type = Number(this.props.params.type); //1：收藏商品，2：收藏供应商
@@ -49,11 +49,15 @@ class Favorite extends React.Component {
 		if (Number(nextProps.params.type) !== this.type) {
 			this.type = Number(nextProps.params.type);
 			this.state.pageSize = this.type == 1 ? 12 : 15;
+			this.state.pageSizeOptions = this.type == 1 ? ["12", "16", "20"] : ["15", "20", "25"];
 			this.initPage();
 		}
 	}
 	handleType = () => {
 		this.type = this.type == 1 ? 2 : 1;
+		this.state.pageSize = this.type == 1 ? 12 : 15;
+		this.state.cid = 0;
+		this.state.pageSizeOptions = this.type == 1 ? ["12", "16", "20"] : ["15", "20", "25"];
 		this.initPage();
 	}
 	initPage = () => {
@@ -244,7 +248,7 @@ class Favorite extends React.Component {
                         <Icon type="delete" onClick={this.handleDelete} />
                     </Tooltip>
                 </p>
-                <CusPagination current={this.state.current} onChange={this.handleChangePage} total={this.state.total} onShowSizeChange={this.handleChangePage} />
+                <CusPagination current={this.state.current} pageSizeOptions={this.state.pageSizeOptions} onChange={this.handleChangePage} total={this.state.total} onShowSizeChange={this.handleChangePage} />
 			</div>
 		</div>
 	}
