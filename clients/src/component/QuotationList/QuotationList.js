@@ -165,12 +165,13 @@ class QuotationList extends React.Component {
 	}
 
 	exportQuotation = (quotation) => {
+		console.log(quotation);
 		this.setState({
 			show_sperator: true,
 		}, () => {
 			var element = document.getElementById('content');
 			html2pdf(element, {
-				filename: this.state.quotation.quotationOrder.quotationSubject + '.pdf',
+				filename: quotation.quotationOrder.quotationSubject + '.pdf',
 				image: {
 					type: 'jpeg',
 					quality: 1
@@ -339,7 +340,7 @@ class QuotationList extends React.Component {
 		          width={this.state.width} 
 		          title={<ModalHeader width={this.state.width}      
 			          setWidth={this.handleState} 
-			          export={this.exportQuotation}
+			          export={this.exportQuotation.bind(this,this.state.quotation)}
 			          title={this.formatMessage({
 	                            id: 'quotation.online'
 	                        })}/>}
