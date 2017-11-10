@@ -383,7 +383,7 @@ class ProductDetail extends React.Component {
                             onMouseLeave={this.handleImgShow.bind(this,false)}
                             onMouseMove={this.handleImgBig}
                             className={css.leftView}>
-                            <div ref="mask" className={css.img_mask}></div>
+                            <div ref="mask" className={css.img_mask} style={{backgroundImage:`url("../img/mask.png")`}}></div>
                             <img className={css.smallImg} src={this.state.curImg?this.state.curImg+"@350w_350h_1e_1c.png":"../img/no_picture.jpg"}/>
                         </div>
                         <div ref="rightView" className={css.rightView} >

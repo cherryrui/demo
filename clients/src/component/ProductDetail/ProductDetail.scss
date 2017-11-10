@@ -20,7 +20,6 @@
 			}
 			.img_mask{
 			    display: none;
-			    background: rgba(255,199,13,0.2);
 			    position: absolute;
 			    cursor: move;
 			    width: 175px;
@@ -32,7 +31,8 @@
 			    top:0;
 			    width:350px;
 			    height:350px;
-			    overflow:hidden; 
+			    overflow:hidden;
+			    display: none;
 			    z-index: 3;
 			}
 			.bigImg{
