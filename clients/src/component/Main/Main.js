@@ -163,9 +163,9 @@ class Main extends React.Component {
                 <p className={css.fixed_item} onClick={this.handleClick.bind(this,"suppliers")}>
                     <i class="iconfont icon-DYC-14"></i>
                 </p>
-                {this.state.category.map(item=>{
-                    return<p className={css.fixed_item} onClick={this.handleClick.bind(this,"category_0")}>
-                        <img src={item.levleOneProductCategory.iconUrl?item.levleOneProductCategory.iconUrl+"@50w_50h_1e_1c.png":"../img/no_icon.png"}/>
+                {this.state.category.map((item,index)=>{
+                    return<p className={css.fixed_item} onClick={this.handleClick.bind(this,"category_"+index)}>
+                        <img src={item.levleOneProductCategory.iconUrl?item.levleOneProductCategory.iconUrl+"@40w_40h_1e_1c.png":"../img/no_icon.png"}/>
                     </p>
                 })}
             </div>
