@@ -313,7 +313,45 @@ class ProductDetail extends React.Component {
             })
         }
     }
+    handleImgShow = (status) => {
+        if (status) {
+            console.log(this.refs);
+            this.refs.mask.style.display = "block";
+            this.refs.rightView.style.display = "block";
+        } else {
+            this.refs.mask.style.display = "none";
+            this.refs.rightView.style.display = "none";
+        }
+    }
+    handleImgBig = (event) => {
+        console.log(event.pageX, this.refs.container.offsetLeft, this.refs.leftView.offsetLeft, this.refs.leftView.style);
+        var left = event.pageX - this.refs.container.offsetLeft - this.refs.mask.clientHeight / 2;
+        var top = event.pageY - this.refs.container.offsetTop - this.refs.mask.clientHeight / 2;
+        console.log(330, left, top)
+            //判断放大镜左右是否出界
+        if (left < 0) {
+            left = 0
+        } else if (left > this.refs.leftView.clientWidth - this.refs.mask.clientHeight) {
+            left = this.refs.leftView.clientWidth - this.refs.mask.clientWidth;
+        }
+        //判断放大镜上下是否出现
+        if (top < 0) {
+            top = 0;
+        } else if (top > this.refs.leftView.clientHeight - this.refs.mask.clientHeight) {
+            top = this.refs.leftView.clientHeight - this.refs.mask.clientHeight;
+        }
+        console.log(341, left, top);
+        this.refs.mask.style.left = left + 'px';
+        this.refs.mask.style.top = top + 'px';
+        //计算比例
+        var rate = this.refs.largePic.clientWidth / this.refs.leftView.clientWidth;
+        console.log(rate);
+        this.refs.largePic.style.left = -rate * left + 'px';
+        this.refs.largePic.style.top = -rate * top + 'px';
 
+        /*   this.refs.mask.style.left = "100px";
+           this.refs.mask.style.left = "100px";*/
+    }
     render() {
         console.log(this.state.current);
         const {
@@ -340,8 +378,17 @@ class ProductDetail extends React.Component {
             </div>
             <div className={css.header}>
                 <div className={css.main_img}>
-                    <div className={css.cus_img}>
-                        <img className={css.img_main} src={this.state.curImg?this.state.curImg+"@350w_350h_1e_1c.png":"../img/no_picture.jpg"}/>
+                    <div ref="container" className={css.show_img}>
+                        <div ref="leftView" onMouseEnter={this.handleImgShow.bind(this,true)}
+                            onMouseLeave={this.handleImgShow.bind(this,false)}
+                            onMouseMove={this.handleImgBig}
+                            className={css.leftView}>
+                            <div ref="mask" className={css.img_mask}></div>
+                            <img className={css.smallImg} src={this.state.curImg?this.state.curImg+"@350w_350h_1e_1c.png":"../img/no_picture.jpg"}/>
+                        </div>
+                        <div ref="rightView" className={css.rightView} >
+                            <img className={css.bigImg} ref="largePic" src={this.state.curImg?this.state.curImg+"@700w_700h_1e_1c.png":"../img/no_picture.jpg"} alt="放大版"/>
+                        </div>
                     </div>
                     <div className={css.product_img}>
                          {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {

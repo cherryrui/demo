@@ -6,15 +6,42 @@
 	.main_img{
       	width: 350px;
       	flex-shrink: 0;
-    	.cus_img{
-    		height: 350px;
-    		border: 1px solid $border-color;
-    	}
-      	.img_main{
-			width: 100%;
-		}
+      	.show_img{
+      		position: relative;
+      		margin-bottom: 10px;
+      		.leftView{
+			    position: relative;
+			    width: 350px;
+			    height: 350px;
+			}
+			.smallImg{
+			    max-height: 100%;
+			    max-width: 100%;
+			}
+			.img_mask{
+			    display: none;
+			    background: rgba(255,199,13,0.2);
+			    position: absolute;
+			    cursor: move;
+			    width: 175px;
+			    height: 175px;
+			}
+			.rightView{
+			    position: absolute;
+			    left:360px;
+			    top:0;
+			    width:350px;
+			    height:350px;
+			    overflow:hidden; 
+			    z-index: 3;
+			}
+			.bigImg{
+			    position: absolute;
+			    top:0;
+			    left:0;
+			}
+      	}
 	}
-	
 	.middle{
 		flex-grow: 1;
 		padding-left: 40px;
