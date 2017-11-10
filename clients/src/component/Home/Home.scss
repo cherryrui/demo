@@ -145,8 +145,7 @@
         font-size: 26px;
     }
     .drop_item{
-      background: rgba(46,43,56,0.6);
-      color: white;
+      background: rgba(255,255,255,0.8);
       padding: 0px 20px;
       cursor: pointer;
       height: 40px;
@@ -160,7 +159,6 @@
     }
     .drop_item:hover{
       background: $theme-color;
-      color: $font-color;
     }
 }
 .foot_first {

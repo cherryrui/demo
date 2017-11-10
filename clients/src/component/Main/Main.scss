@@ -263,15 +263,18 @@
       text-align: center;
       color:$color-grey;
       line-height: 50px;
+      height: 50px;
       cursor: pointer;
       i{
-        font-size: 25px;
+        font-size: 30px;
+        margin-top: 10px;
+        display: inline-block;
       }
-    }
-    .fixed_item_grey{
-      @extend .fixed_item;
-      background: $color-grey;
-      color: $theme-color;
+      img{
+        width: 40px;
+        height: 40px;
+        margin:5px;
+      }
     }
 }
 .brand_button{

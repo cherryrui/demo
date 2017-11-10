@@ -81,7 +81,6 @@ class Main extends React.Component {
                 <i class="iconfont icon-icon"></i>
             </div>
             <div className={css.background_map} style={{backgroundImage:`url("../img/map.png")`}}>
-                
                 <div className={css.title}><FormattedMessage id="main.welcome" defaultMessage="欢迎来到DBUY"/></div>
                 <div className={css.content}>
                     <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
@@ -108,7 +107,6 @@ class Main extends React.Component {
                     </Link>
                 </div>
             </div>
-           
             <div id="suppliers" className={css.icon}>
                 <i class="iconfont icon-DYC-14"></i>
             </div>
@@ -165,15 +163,11 @@ class Main extends React.Component {
                 <p className={css.fixed_item} onClick={this.handleClick.bind(this,"suppliers")}>
                     <i class="iconfont icon-DYC-14"></i>
                 </p>
-                <p className={css.fixed_item_grey} onClick={this.handleClick.bind(this,"category_0")}>
-                    <i class="iconfont icon-DYC-13"></i>
-                </p>
-                <p className={css.fixed_item_grey} onClick={this.handleClick.bind(this,"category_1")}>
-                    <i class="iconfont icon-DYC-15"></i>
-                </p>
-                <p className={css.fixed_item_grey} onClick={this.handleClick.bind(this,"category_2")}>
-                    <i class="iconfont icon-DYC-11"></i>
-                </p>
+                {this.state.category.map(item=>{
+                    return<p className={css.fixed_item} onClick={this.handleClick.bind(this,"category_0")}>
+                        <img src={item.levleOneProductCategory.iconUrl?item.levleOneProductCategory.iconUrl+"@50w_50h_1e_1c.png":"../img/no_icon.png"}/>
+                    </p>
+                })}
             </div>
         </div>
     }

@@ -199,7 +199,7 @@
 	.img{
 		width: 60px;
 		height: 60px;
-		margin: 5px 10px 5px 0px;
+		margin-right: 10px;
 		cursor: pointer;
 	}
 	.img:hover{
@@ -211,7 +211,6 @@
 		@extend .img;
 		border: 1px solid $border-color;
 		border-radius: 2px;
-		padding: 5px;
 	}
 }
 .body{
