@@ -534,7 +534,7 @@ class Information extends React.Component {
                 return <div>
                     <p className={css.info_title}>{item.introduceName}</p>
                     {item.contentType==1?item.content.split(",").map(img=>{
-                        return <img src={img+"@800w_1e_1c.png"}/>})
+                        return <img src={img+"@878w_1e_1c.png"}/>})
                     :<div style={{padding: "20px"}} dangerouslySetInnerHTML={{__html: item.content}}/>}
                 </div>
             }):<div className={css.no_data}> 
@@ -699,11 +699,11 @@ class PackageDetail extends React.Component {
                     </p>
                 </div>
             }):""}
-            <div className={css.row}>
-                <p className={css.row_title}>
+            <div className={css.remark_row}>
+                <p className={css.remark_title}>
                     <FormattedMessage id="cart.remark" defaultMessage=""/>
                 </p>
-                <p className={css.row_body}>{this.props.data.remark}</p>
+                <p className={css.remark_body}>{this.props.data.remark}</p>
             </div>
         </div>
     }
