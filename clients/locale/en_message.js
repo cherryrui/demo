@@ -371,7 +371,7 @@ const en_US = {
     "quotation.url": "Website",
     "quotation.quotation": "Quotation",
     "quotation.no": "No.",
-    "quotation.create_time": "Create time",
+    "quotation.create_time": "Finish time",
     "quotation.ps": "please visit our website below to find more information：www.chuanchuan.com",
     "orderlist.order.no_method": "Order No payment method",
     "orderlist.order.payable": "Total amount payable",

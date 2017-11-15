@@ -151,6 +151,19 @@ class PostWant extends React.Component {
             <div></div>
             <div className={css.form}>
             	<Form onSubmit={this.handleSubmit}>
+            	<FormItem
+			          {...formItemLayout}
+			          label={formatMessage({id: 'app.requirement.subject'})}
+
+			        >
+			          {getFieldDecorator('demandSubject', {
+			            rules: [ {
+			              required: true, message:this.formatMessage({ id:'enter.requirement.subject'}),
+			            }],
+			          })(
+			            <Input className={css.want_input}/>
+			          )}
+			        </FormItem>
 			        <FormItem
 			          {...formItemLayout}
 			          label={formatMessage({id: 'quotation.company.name'})}
@@ -162,19 +175,6 @@ class PostWant extends React.Component {
 			            }],
 			          })(
 			            <Input className={css.want_input}/>
-			          )}
-			        </FormItem>
-			        <FormItem
-			          {...formItemLayout}
-			          label={formatMessage({id: 'quotation.create_time'})}
-			          hasFeedback
-			        >
-			          {getFieldDecorator('time', {
-			            rules: [{
-			              type: 'object', required: true, message:this.formatMessage({ id:'app.select.time'}),
-			            }],
-			          })(
-			             <DatePicker onChange={this.onChanges} className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem
@@ -218,15 +218,15 @@ class PostWant extends React.Component {
 			        </FormItem>
 			         <FormItem
 			          {...formItemLayout}
-			          label={formatMessage({id: 'app.requirement.subject'})}
-
+			          label={formatMessage({id: 'quotation.create_time'})}
+			          hasFeedback
 			        >
-			          {getFieldDecorator('demandSubject', {
-			            rules: [ {
-			              required: true, message:this.formatMessage({ id:'enter.requirement.subject'}),
+			          {getFieldDecorator('time', {
+			            rules: [{
+			              type: 'object', required: true, message:this.formatMessage({ id:'app.select.time'}),
 			            }],
 			          })(
-			            <Input className={css.want_input}/>
+			             <DatePicker onChange={this.onChanges} className={css.want_input}/>
 			          )}
 			        </FormItem>
 			        <FormItem

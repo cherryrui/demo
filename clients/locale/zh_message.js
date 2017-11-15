@@ -382,7 +382,7 @@ const zh_CN = {
     "quotation.url": "网站地址",
     "quotation.quotation": "报价单",
     "quotation.no": "报价单编号",
-    "quotation.create_time": "创建时间",
+    "quotation.create_time": "完成时间",
     "quotation.ps": "若想了解更多信息请访问我们的网站：www.chuanchuan.com",
     "orderlist.order.no_method": "订单号和付款方式",
     "orderlist.order.payable": "应付总金额",

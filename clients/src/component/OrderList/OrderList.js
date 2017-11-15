@@ -49,7 +49,7 @@ class OrderList extends React.Component {
                 title: <FormattedMessage id="orderlist.order.info" defaultMessage="订单号和付款方式"/>,
                 width: "320px",
                 render: (record) => <div className={css.table_product}>
-                <img src={record.productImgUrl}/>
+                <img src={record.productImgUrl+"@70w_70h_1e_1c.png"}/>
                 <div className={css.info}>
                     <p className={css.product_title}>
                         <FormattedMessage  id="orderdetails.order.no" defaultMessage="订单号"/> :{record.orderId}
