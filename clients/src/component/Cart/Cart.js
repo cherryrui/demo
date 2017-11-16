@@ -79,7 +79,7 @@ class Cart extends React.Component {
                 this.props.history.pushState(null, "/");
             }
         }
-        document.body.scrollTop = 0
+        document.documentElement.scrollTop = document.body.scrollTop = 0
     }
     handleStep = (step, data) => {
         if (this.state.step == 0) {
@@ -90,7 +90,7 @@ class Cart extends React.Component {
         this.setState({
             step: this.state.step + step,
         }, () => {
-            document.body.scrollTop = 0
+            document.documentElement.scrollTop = document.body.scrollTop = 0
         })
     }
     goLink = (url) => {

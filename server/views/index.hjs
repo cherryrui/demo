@@ -6,9 +6,7 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-    <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
     <link rel='stylesheet' href='/css/store.css' />
-    <link rel="stylesheet" href="/lib/style.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_426610_94wg8phmu4rc0udi.css">
     <script type="text/javascript">
       var locale="en"
@@ -19,6 +17,9 @@
   <script src="/lib/jspdf.min.js"></script>
   <script src="/lib/html2canvas.min.js"></script>
   <script src="/lib/html2pdf.js"></script>
+  <script src="/ueditor/ueditor.config.js"></script>
+  <script src="/ueditor/ueditor.all.min.js"></script>
+  <script src="/ueditor/lang/en/en.js"></script>
   <script src="http://cdn.bootcss.com/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/store.js"></script>

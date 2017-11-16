@@ -3,6 +3,7 @@ import appcss from '../../App.scss';
 import axios from 'axios';
 import moment from 'moment';
 import operator from './operator.js';
+import product_operator from '../ProductEditor/operator.js';
 import {
     VictoryChart,
     VictoryArea,
@@ -94,7 +95,12 @@ class ProductDetail extends React.Component {
             if (res.data.isSucc) {
                 this.product_detail.scrollIntoView(true);
                 let product = res.data.result.productAndSupplier;
-                product.imgs = res.data.result.imgs;
+                product.imgs = res.data.result.imgs ? res.data.result.imgs : [];
+                let picture = {
+                    imgUrl: product.productImg,
+                    imgId: 0,
+                }
+                product.imgs.splice(0, 0, picture)
                 product.productNum = product.moq;
                 let specs = res.data.result.specs;
                 let properties = res.data.result.properties;
@@ -315,20 +321,21 @@ class ProductDetail extends React.Component {
     }
     handleImgShow = (status) => {
         if (status) {
-            console.log(this.refs);
-            this.refs.mask.style.display = "block";
-            this.refs.rightView.style.display = "block";
+            axios.get(this.state.curImg + "?x-oss-process=image/info").then(res => {
+                if (Number(res.data.ImageHeight.value) > 700 && Number(res.data.ImageWidth.value) > 700) {
+                    this.refs.mask.style.display = "block";
+                    this.refs.rightView.style.display = "block";
+                }
+            })
         } else {
             this.refs.mask.style.display = "none";
             this.refs.rightView.style.display = "none";
         }
     }
     handleImgBig = (event) => {
-        console.log(event.pageX, this.refs.container.offsetLeft, this.refs.leftView.offsetLeft, this.refs.leftView.style);
         var left = event.pageX - this.refs.container.offsetLeft - this.refs.mask.clientHeight / 2;
         var top = event.pageY - this.refs.container.offsetTop - this.refs.mask.clientHeight / 2;
-        console.log(330, left, top)
-            //判断放大镜左右是否出界
+        //判断放大镜左右是否出界
         if (left < 0) {
             left = 0
         } else if (left > this.refs.leftView.clientWidth - this.refs.mask.clientHeight) {
@@ -340,12 +347,10 @@ class ProductDetail extends React.Component {
         } else if (top > this.refs.leftView.clientHeight - this.refs.mask.clientHeight) {
             top = this.refs.leftView.clientHeight - this.refs.mask.clientHeight;
         }
-        console.log(341, left, top);
         this.refs.mask.style.left = left + 'px';
         this.refs.mask.style.top = top + 'px';
         //计算比例
         var rate = this.refs.largePic.clientWidth / this.refs.leftView.clientWidth;
-        console.log(rate);
         this.refs.largePic.style.left = -rate * left + 'px';
         this.refs.largePic.style.top = -rate * top + 'px';
 
@@ -452,7 +457,6 @@ class ProductDetail extends React.Component {
                                 {item.productSpecs.specValue.map(attr=>{
                                     return <p className={item.select_value==attr.valId?css.content_active:css.content_item} onClick={this.handleAttr.bind(this,index,attr.valId)}>{attr.specValue}</p>
                                 })}
-                                
                             </div>
                         </div>
                         }):""}
@@ -532,9 +536,18 @@ class Information extends React.Component {
             <Specification data={this.props.properties}/>
             {this.props.data.length>0?this.props.data.map(item=> {
                 return <div>
-                    <p className={css.info_title}>{item.introduceName}</p>
+                    <p >
+                        {product_operator.introduceType.map(spec=>{
+                            return spec.key==item.introduceType?<div className={css.info_title}>
+                                <p className={css.info_left} style={{backgroundImage:`url("../img/back.png")`}}>
+                                    <FormattedMessage id={spec.value} defaultMessage="ces"/>
+                                </p>
+                                <p className={css.info_right}></p>
+                            </div>:""
+                        })}
+                    </p>
                     {item.contentType==1?item.content.split(",").map(img=>{
-                        return <img src={img+"@878w_1e_1c.png"}/>})
+                        return <img src={img+"@878w_1e.png"}/>})
                     :<div style={{padding: "20px"}} dangerouslySetInnerHTML={{__html: item.content}}/>}
                 </div>
             }):<div className={css.no_data}> 
@@ -620,7 +633,10 @@ class Specification extends React.Component {
     render() {
         return this.props.data && this.props.data.length > 0 ? <div className={css.product_spec}>
             <div className={css.info_title}>
-                <FormattedMessage id="mine.product.param" defaultMessage=""/>
+                <p className={css.info_left} style={{backgroundImage:`url("../img/back.png")`}}>
+                    <FormattedMessage id="mine.product.param" defaultMessage="ces"/>
+                </p>
+                <p className={css.info_right}></p>
             </div>
             <div className={css.info_body}>
                 {this.props.data.map(item=>{
@@ -690,14 +706,14 @@ class PackageDetail extends React.Component {
                 </p>
             </div>
             {this.props.data.customProperty?JSON.parse(this.props.data.customProperty).map(item=>{
-                return <div className={css.row}>
+                return item.name?<div className={css.row}>
                     <p className={css.row_title}>
                         {item.name}    
                     </p>
                     <p className={css.row_body}>
                         {item.content}&nbsp;{item.unit}
                     </p>
-                </div>
+                </div>:""
             }):""}
             <div className={css.remark_row}>
                 <p className={css.remark_title}>

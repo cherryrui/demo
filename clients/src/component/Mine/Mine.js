@@ -75,13 +75,13 @@ class Mine extends React.Component {
                 this.props.history.pushState(null, 'page/mine');
             }
         }
-        if (path.indexOf("page/mine/product-detail") > -1) {
+        if (path.indexOf("page/mine/product-detail/") > -1) {
             if (this.state.user.userIdentity == 2) {
-                console.log(path.substr(path.lastIndexOf("/")))
+                console.log(this.props.location.query)
                 this.setState({
                     path: "mine.product.list",
                     select: 2001,
-                    search: path.substr(path.lastIndexOf("/") + 1),
+                    search: this.props.location.query.name,
                 })
             } else {
                 this.props.history.pushState(null, 'page/mine');
@@ -124,14 +124,16 @@ class Mine extends React.Component {
             }
         }, 30)
     }
-    handleClick = (e) => {}
     handleMenu = (key, url) => {
         console.log(key, url);
-        this.setState({
-            select: key
-        });
-        if (url)
+        if (key != 2002) {
+            this.setState({
+                select: key
+            });
+        }
+        if (url && key != 2002) {
             this.props.history.pushState(null, url);
+        }
     }
     handleVisible = (status) => {
         this.setState({
@@ -168,18 +170,19 @@ class Mine extends React.Component {
                 {operator.menu.map(menu=> {
                     return menu.code.indexOf(this.state.user.userIdentity)>-1&&((menu.key!==7000&&menu.key!==8000)||(this.state.user.userIdentity == 0 && !this.state.user.agent && !this.state.user.supplier))?<div>
                         {menu.list.length>0?<p className={css.menu_title_show}>
-                            <FormattedMessage id={menu.name} defaultMessage="分类"/>       
+                            <FormattedMessage id={menu.name} defaultMessage="分类"/>
                         </p>:<p className={this.state.select == menu.key?css.menu_active:css.menu_title} onClick={this.handleMenu.bind(this,menu.key,menu.url)} >
                             <FormattedMessage id={menu.name} defaultMessage="分类"/>
                         </p>}
                         {menu.list.map(item=> {
-                            return <p className={this.state.select == item.key ? css.active : css.item}
+                            return <Link target={item.key==2002?"_blank":"self"} to={item.url}>
+                            <p target="_blank" className={this.state.select == item.key ? css.active : css.item}
                                 onClick={this.handleMenu.bind(this,item.key,item.url)}
                             >
                                 <i class="iconfont icon-yuandian-copy"></i>&nbsp;&nbsp;
                                 <FormattedMessage id={item.title} defaultMessage="分类"/>
-
                             </p>
+                            </Link>
                         })}
                     </div>:""
                 })}

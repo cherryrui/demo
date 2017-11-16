@@ -38,6 +38,8 @@ class ProductInfo extends React.Component {
 			product_info: [{
 				contentType: 1,
 			}],
+			previewImg: "",
+			previewVisble: false,
 			introduceType: JSON.parse(JSON.stringify(operator.introduceType)),
 		}
 		this.formatMessage = this.props.intl.formatMessage;
@@ -66,7 +68,6 @@ class ProductInfo extends React.Component {
 							};
 							item.fileList.push(file);
 						})
-						console.log(item.fileList);
 					} else {
 						item.contentText = item.content;
 					}
@@ -89,6 +90,7 @@ class ProductInfo extends React.Component {
 			if (file.response) {
 				// Component will show file.url as link
 				file.url = file.response.url + "@150w_150h_1e_1c.png";
+				file.thumbUrl = file.response.url + "@150w_150h_1e_1c.png";
 			}
 			return file;
 		});
@@ -115,15 +117,15 @@ class ProductInfo extends React.Component {
 
 
 	previewImg = (file) => {
-		// console.log(file);
+		console.log(120, file);
 		this.setState({
-			previewImage: file.url,
-			previewVisible: true,
+			previewImg: file.response.url,
+			previewVisble: true,
 		});
 	}
 	handleCancel = () => {
 		this.setState({
-			previewVisible: false,
+			previewVisble: false,
 		});
 	}
 	handleIntroduceType = (index, e) => {
@@ -235,6 +237,15 @@ class ProductInfo extends React.Component {
 			product_info
 		});
 	}
+	beforeUpload = (file) => {
+		const isLt2M = file.size / 1024 / 1024 < 2;
+		if (!isLt2M) {
+			message.error(this.formatMessage({
+				id: "mine.product.size.warn"
+			}));
+		}
+		return isLt2M;
+	}
 
 	render() {
 		return <div className={`${css.product_attr} ${this.props.className}`}>
@@ -275,7 +286,7 @@ class ProductInfo extends React.Component {
 							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
 							<FormattedMessage id="mine.product.upload_img" defaultMessage="分类"/>：
 						</p>
-						<Upload 
+						<Upload
 			            	name="file"
 							multiple
 		                    action={Util.url+"/tool/upload"}
@@ -286,6 +297,7 @@ class ProductInfo extends React.Component {
 			            	onRemove={this.removePic}
 			            	className={css.info_upload}
 			            	fileList={item.fileList}
+			            	beforeUpload={this.beforeUpload}
 			            >
 				            <span className={css.upload_icon}>
 		                        <i class="iconfont icon-jiahao"></i>
@@ -296,14 +308,7 @@ class ProductInfo extends React.Component {
 						<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
 						<FormattedMessage id="mine.product.info_descript" defaultMessage="分类"/>：
 					</p>
-					<TextEditor 
-						className={css.text_editor}
-				  		value={item.contentText}
-				  		index={index}
-	                	onChange={this.handleText.bind(this)} />
-	                <p className={css.text_editor}>
-	                	<FormattedMessage id="product.edite.recommend" defaultMessage=""/>
-	                </p>
+					<TextEditor  id={"content"+index} content={item.contentText} className={css.product_editor}/>
 				</div>}
 			</div>})}
             <div className={css.product_footer}>
@@ -317,8 +322,8 @@ class ProductInfo extends React.Component {
 					<FormattedMessage id="app.save" defaultMessage=""/>
 				</Button>
 			</div>
-			<CusModal visible={this.state.previewVisble} closeModal={this.handleCancel.bind(this,"previewVisble")}>
-            	<img alt="example" style={{ width: '100%' }} src={this.state.previewImg+ "@380w_380h_1e_1c.png"}/>
+			<CusModal visible={this.state.previewVisble} width="800px" closeModal={this.handleCancel}>
+            	{this.state.previewImg?<img alt="example" style={{ width: '100%' }} src={this.state.previewImg+ "@800w_1e.png"}/>:""}
         	</CusModal>
 		</div>
 	}

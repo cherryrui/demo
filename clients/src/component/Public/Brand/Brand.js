@@ -33,9 +33,9 @@ class Brand extends React.Component {
                 {this.props.check ? <Checkbox checked={this.props.brand.checked ? true : false} onChange={this.onChange}>
                 </Checkbox> : ""}
             </div>
-            <Link to={"page/brand-detail/" + this.props.brand.sid}>
+            <Link target="_blank" to={"page/brand-detail/" + this.props.brand.sid}>
                 <div className={css.custom_image}>
-                    <img alt="example" src={this.props.brand.imgUrl?this.props.brand.imgUrl+"@150w_150h_1e_1c.png":"../img/no_picture.jpg"} />
+                    <img alt="example" src={this.props.brand.imgUrl?this.props.brand.imgUrl+"@220w_220h_1e_1c.png":"../img/no_picture.jpg"} />
                 </div>
 
                 <p className={css.name}>{this.props.brand.supplierName}</p>

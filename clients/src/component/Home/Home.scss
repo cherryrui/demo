@@ -33,17 +33,17 @@
     }
   }
    .title_category{
-     width: 220px !important;
-    text-align: center !important;
-    background: #2e2b2e !important;
-    color: #ffc70d !important;
-    height: 50px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-     border-top-left-radius: 5px !important;
-     border-top-right-radius: 5px !important;
-
+       width: 220px !important;
+      text-align: center !important;
+      background: #2e2b2e !important;
+      color: #ffc70d !important;
+      height: 50px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top-left-radius: 5px !important;
+      border-top-right-radius: 5px !important;
+      font-size: 16px;
     }
   .active {
     @extend .title;

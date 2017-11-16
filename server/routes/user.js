@@ -17,8 +17,8 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		let result = null;
 		axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
 		console.log(ctx.cookie.get('token'));
-		await axios.post(url+'/auth/user/getUser').then(res=>{
-			if(res.data.isSucc){
+		await axios.post(url + '/auth/user/getUser').then(res => {
+			if (res.data.isSucc) {
 				console.log(res.data);
 				/*ctx.cookie.set('uid', res.data.result.uid);
 				ctx.cookie.set('token', res.data.result.token);*/
@@ -27,7 +27,7 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 
-		
+
 	})
 	.post('/login.json', async(ctx, next) => {
 		let result = null;
@@ -127,7 +127,7 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		let result = null,
 			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/modifyPwd',querystring.stringify(param)).then(res =>{
+		await axios.post(url + '/auth/user/modifyPwd', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
@@ -173,77 +173,81 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 	.get('/sendcode.json', async(ctx) => {
 		let result = null;
 		const email = ctx.request.query.account;
-		const type = ctx.request.query.type;//1手机验证  2邮箱验证
-		if(type==1){
-			await axios.post(url+'/telCode',querystring.stringify({tel:email})).then(res=>{
+		const type = ctx.request.query.type; //1手机验证  2邮箱验证
+		if (type == 1) {
+			await axios.post(url + '/telCode', querystring.stringify({
+				tel: email
+			})).then(res => {
 				result = res.data;
 			})
-		}else{
-			await axios.post(url+'/email',querystring.stringify({email:email})).then(res=>{
+		} else {
+			await axios.post(url + '/email', querystring.stringify({
+				email: email
+			})).then(res => {
 				result = res.data;
 			})
 		}
-		
+
 		ctx.body = result;
 	})
-	.post('/emailcheck.json',async ctx=>{
+	.post('/emailcheck.json', async ctx => {
 		let result = null,
 			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/testEmail',querystring.stringify(param)).then(res=>{
+		await axios.post(url + '/auth/user/testEmail', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		console.log(result)
 		ctx.body = result;
 	})
-	.post('/phonecheck.json',async ctx=>{
+	.post('/phonecheck.json', async ctx => {
 		let result = null,
-		param = ctx.request.body;
+			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/testTel',querystring.stringify(param)).then(res=>{
+		await axios.post(url + '/auth/user/testTel', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
 	})
-	.post('/verifi_email.json',async ctx=>{
+	.post('/verifi_email.json', async ctx => {
 		let result = null,
 			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/identificationEmail',querystring.stringify(param)).then(res=>{
+		await axios.post(url + '/auth/user/identificationEmail', querystring.stringify(param)).then(res => {
 			result = res.data;
 		});
 		ctx.body = result;
 	})
-	.post('/verifi_phone.json',async ctx=>{
+	.post('/verifi_phone.json', async ctx => {
 		let result = null,
 			param = ctx.request.body;
-			console.log(param)
+		console.log(param)
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/identificationTel',querystring.stringify(param)).then(res=>{
+		await axios.post(url + '/auth/user/identificationTel', querystring.stringify(param)).then(res => {
 			result = res.data;
 		});
 		ctx.body = result;
 	})
-	.post('/forget-getvericode.json',async ctx=>{
+	.post('/forget-getvericode.json', async ctx => {
 		let result = null,
-		param = ctx.request.body;
-		await axios.post(url+'/receiveCode',querystring.stringify(param)).then(res=>{
+			param = ctx.request.body;
+		await axios.post(url + '/receiveCode', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
 	})
-	.post('/forget-verifi-code.json',async ctx=>{
+	.post('/forget-verifi-code.json', async ctx => {
 		let result = null,
-		param = ctx.request.body;
-		await axios.post(url+'/referCode',querystring.stringify(param)).then(res=>{
+			param = ctx.request.body;
+		await axios.post(url + '/referCode', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
 	})
-	.post('/forget-reset-pwd.json',async ctx=>{
+	.post('/forget-reset-pwd.json', async ctx => {
 		let result = null,
-		param = ctx.request.body;
-		await axios.post(url+'/pwdBack',querystring.stringify(param)).then(res=>{
+			param = ctx.request.body;
+		await axios.post(url + '/pwdBack', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;
@@ -367,57 +371,57 @@ router.get('/get-userinfo-byuid.json', async(ctx, next) => {
 		}
 		ctx.body = result;
 	})
-	.post('/get-requirement-list.json',async (ctx) =>{
+	.post('/get-requirement-list.json', async(ctx) => {
 		let result = null,
 			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/demand/queryDemandListById',querystring.stringify(param)).then(res =>{
-			
+		await axios.post(url + '/auth/demand/queryDemandListById', querystring.stringify(param)).then(res => {
+
 			result = res.data;
 		})
 		ctx.body = result;
 	})
 	/**
-	*企业认证接口
-	*
-	**/
-	.post('/enterpriser.json',async ctx =>{
-		let result,
-			param=ctx.request.body;
-		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/certificateCompany',querystring.stringify(param)).then(res=>{
-			result = res.data;
-		})
-		console.log(result);
-		ctx.body = result;
-	})
-	/**
-	*个人认证
-	**/
-	.post('/person-cerification.json',async ctx=>{
+	 *企业认证接口
+	 *
+	 **/
+	.post('/enterpriser.json', async ctx => {
 		let result,
 			param = ctx.request.body;
 		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
-		await axios.post(url+'/auth/user/certificatePerson',querystring.stringify(param)).then(res=>{
+		await axios.post(url + '/auth/user/certificateCompany', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		console.log(result);
 		ctx.body = result;
 	})
-    .post('/get-supply-product-status.json', async(ctx, next) => {
-        let param = ctx.request.body,
-            result;
-        if (ctx.cookie.get('token')) {
-            axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
-        await axios.post(url + "/auth/supplier/getSupplierProductStatusCount", {}).then(res => {
-            result = res.data;
-        })
-        } else {
-            result = {
-                isSucc: false,
-                code: 104
-            }
-        }
-        ctx.body = result;
-    })
+	/**
+	 *个人认证
+	 **/
+	.post('/person-cerification.json', async ctx => {
+		let result,
+			param = ctx.request.body;
+		axios.defaults.headers.common["authorization"] = ctx.cookie.get("token");
+		await axios.post(url + '/auth/user/certificatePerson', querystring.stringify(param)).then(res => {
+			result = res.data;
+		})
+		console.log(result);
+		ctx.body = result;
+	})
+	.post('/get-supply-product-status.json', async(ctx, next) => {
+		let param = ctx.request.body,
+			result;
+		if (ctx.cookie.get('token')) {
+			axios.defaults.headers.common['authorization'] = ctx.cookie.get('token');
+			await axios.post(url + "/auth/supplier/getSupplierProductStatusCount", querystring.stringify(param)).then(res => {
+				result = res.data;
+			})
+		} else {
+			result = {
+				isSucc: false,
+				code: 104
+			}
+		}
+		ctx.body = result;
+	})
 module.exports = router;

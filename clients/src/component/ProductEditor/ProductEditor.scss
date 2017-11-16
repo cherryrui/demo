@@ -38,9 +38,13 @@
 .product_attr{
 	margin-top: -20px;
 }
-.categoty_attr_list{
-	width: 680px;
+.product_propery_list{
 	border: 1px solid $border-color;
+	margin-right: 20px;
+    flex-grow: 1;
+    max-width: 680px;
+}
+.categoty_attr_list{
 	.category_attr_title{
 		padding: 0 10px;
 		line-height: 30px;
@@ -78,6 +82,7 @@
 }
 .category_left{
 	@extend %left;
+	width: 200px;
 }
 .category_right{
 	display: flex;
@@ -228,7 +233,7 @@
 		text-align: right;
 		margin-bottom: 10px;
     }
-    .text_editor{
+    .product_editor{
     	margin-left: 255px;
     	margin-bottom: 20px;
     	width: 600px;

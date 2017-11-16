@@ -134,6 +134,8 @@ class ProductBasic extends React.Component {
 				productCategorys = productCategorys.substr(0, productCategorys.length - 2);
 				values.productCategorys = productCategorys;
 				values.productId = this.props.product ? this.props.product.productId : null;
+				console.log(this.props.user)
+				values.supplierId = JSON.parse(sessionStorage.user).supplier.sid;
 				axios.post('/product/add-product-basic.json', values).then(res => {
 					this.setState({
 						loading: false
@@ -152,6 +154,7 @@ class ProductBasic extends React.Component {
 
 	submitProduct = (product) => {
 		product.category = this.state.product.category;
+		product.supplierId = this.props.user.supplier.sid;
 		axios.post('/product/save-product-basic.json', product).then(res => {
 			this.setState({
 				loading: false

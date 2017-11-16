@@ -50,21 +50,22 @@ class ProductSpec extends React.Component {
 		axios.post("/product/get-product-spec.json", param).then(res => {
 				console.log(res.data)
 				if (res.data.isSucc) {
-					let category = res.data.result.category;
+					let category = [];
 					let select_category = 0;
 					let product_spec = [];
 					let specs_list = [];
-					if (res.data.result.selectCategory) {
-						this.oldCategoryId = res.data.result.selectCategory.categoryId;
-						category.map((item, index) => {
-							if (item.categoryId == res.data.result.selectCategory.categoryId) {
-								product_spec = item.spec;
-								select_category = index;
+					res.data.result.category.map(item => {
+						res.data.result.lastCategory.map(cate => {
+							if (cate.categoryId == item.categoryId) {
+								if (res.data.result.selectCategory && item.categoryId == res.data.result.selectCategory.categoryId) {
+									select_category = category.length;
+								}
+								category.push(item);
 							}
 						})
-					} else {
-						product_spec = category[0].spec ? category[0].spec : [];
-					}
+					})
+					product_spec = category[select_category].spec;
+					this.oldCategoryId = res.data.result.selectCategory ? res.data.result.selectCategory.categoryId : null;
 					res.data.result.selectSpecs.map(item => {
 						let specs = JSON.parse(item.productSpecs);
 						product_spec.map(spec => {

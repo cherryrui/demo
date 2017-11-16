@@ -197,7 +197,7 @@ class ProductPicture extends React.Component {
 					<span className={css.title_warn}>*</span>
 					<FormattedMessage id="mine.product.picture" defaultMessage=""/>:
 				</p>
-				<Upload 
+				<Upload
 					name="file"
 					multiple
                     action={Util.url+"/tool/upload"}

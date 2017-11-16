@@ -86,7 +86,7 @@ class Main extends React.Component {
                     <FormattedMessage id="main.welcome.info" defaultMessage="欢迎信息"/>
                 </div>
                 <div className={css.brand_button}>
-                    <Link  to="page/about">
+                    <Link target="_blank" to="page/about">
                         <FormattedMessage id="app.more" defaultMessage="更多"/>
                     </Link>
                 </div>
@@ -102,7 +102,7 @@ class Main extends React.Component {
                     </p>
                 </div>
                 <div className={`${css.right} ${css.brand_button}`}>
-                    <Link  to="page/post-want">
+                    <Link target="_blank" to="page/post-want">
                         <FormattedMessage id="main.post" defaultMessage="更多"/>
                     </Link>
                 </div>
@@ -125,7 +125,7 @@ class Main extends React.Component {
 
                 >
                    {this.state.brand.map(item => {
-                       return <Link className={css.slider_item} to={"page/brand-detail/"+item.sid}>
+                       return <Link className={css.slider_item} target="_blank" to={"page/brand-detail/"+item.sid}>
                        <Card className={css.slider_card} >
                            <div className={css.custom_image}>
                                <img alt="example" width="30%" src={item.imgUrl+"@100w_100h_1e_1c.png"} />
@@ -142,7 +142,7 @@ class Main extends React.Component {
                 </Slider>:""}
             </div>
             <div className={css.brand_button} >
-                <Link  to="page/brand-list">
+                <Link target="_blank" to="page/brand-list">
                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                 </Link>
             </div>
@@ -204,13 +204,13 @@ class Category extends React.Component {
                         <div className={css.left_content}>
                             <div className={css.left_category}>
                                 {item.levleTwoProductCategory.map(cate=>{
-                                    return <Link to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
+                                    return <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>
                                         <p className={css.cate}>{cate.categoryName}</p>
                                     </Link>
                                 })}
                             </div>
                             <div className={css.brand_button}>
-                                <Link  to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
+                                <Link target="_blank" to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
                                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                                 </Link>
                             </div>
@@ -235,7 +235,7 @@ class Category extends React.Component {
                         </Link>
                         <div className={css.right_brand}>
                             {item.suppliers.map((brand,index)=>{
-                                return (index>0&&index<7?<Link to={"page/brand-detail/"+brand.sid}>
+                                return (index>0&&index<7?<Link target="_blank" to={"page/brand-detail/"+brand.sid}>
                                     <img className={css.right_img_item} src={brand.imgUrl+"@70w_70h_1e_1c.png"}/>
                                 </Link>:"")
                             })}

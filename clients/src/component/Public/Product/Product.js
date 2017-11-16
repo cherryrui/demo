@@ -44,9 +44,9 @@ class Product extends React.Component {
                 {this.state.visible?<p className={this.props.product.star?css.icon_active:css.icon} onClick={this.handleStar}><Icon type="star" /></p>:""}
             </div>:""}
             {this.props.check?<Checkbox checked={this.props.product.checked?true:false}onChange={this.onChange}></Checkbox>:""}
-            <Link to={"page/product-detail/"+this.props.product.productId}>
+            <Link target="_blank" to={"page/product-detail/"+this.props.product.productId}>
                 <div className={css.custom_image}>
-                    <img alt="example" width="100%" src={this.props.product.coverUrl?this.props.product.coverUrl+"@160w_160h_1e_1c.png":"../img/no_picture.jpg"}/>
+                    <img alt="example" width="100%" src={this.props.product.coverUrl?this.props.product.coverUrl+"@220w_220h_1e_1c.png":"../img/no_picture.jpg"}/>
                 </div>
                 <p className={css.name}>{this.props.product.productName}</p>
                 {this.props.no_price?"":<p className={css.item}>

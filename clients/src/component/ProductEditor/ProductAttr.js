@@ -43,22 +43,28 @@ class ProductAttr extends React.Component {
 		}
 		axios.post('/product/get-product-attr.json', param).then(res => {
 			if (res.data.isSucc) {
-				let category = res.data.result.category;
+				let category = [];
 				let select = res.data.result.selectProperty;
 				let customProperty = res.data.result.customProperty ? JSON.parse(res.data.result.customProperty) : [];
 				customProperty.length == 0 ? customProperty.push({}) : "";
-				category.map(item => {
-					if (item.property) {
-						item.property.map(property => {
-							select.map(select_p => {
-								if (property.propertyId == select_p.propertyId) {
-									property.select = select_p.propertyValId;
-								}
-							})
+				res.data.result.category.map(item => {
+					res.data.result.lastCategory.map(cate => {
+						if (cate.categoryId == item.categoryId) {
+							if (item.property) {
+								item.property.map(property => {
+									select.map(select_p => {
+										if (property.propertyId == select_p.propertyId) {
+											property.select = select_p.propertyValId;
+										}
+									})
 
-						})
-					}
+								})
+							}
+							category.push(item);
+						}
+					})
 				})
+				category[0].is_show = true;
 				this.setState({
 					category,
 					customProperty
@@ -167,22 +173,24 @@ class ProductAttr extends React.Component {
 							{item.categoryName}
 						</p>
 					</div>
-					{item.is_show?<div className={css.category_attr}>
+					{item.is_show&&item.property&&item.property.length>0?<div className={css.category_attr}>
 						<div className={css.category_left}>
 							<FormattedMessage id="mine.product.choose.attr" defaultMessage=""/>:
 						</div>
-						{item.property.map((attr,attr_index)=>{
-							return <div className={css.categoty_attr_list}>
-								<p className={css.category_attr_title}>
-									{attr.propertyName}:
-								</p>
-								<RadioGroup className={css.category_attr_body} onChange={this.handleChange.bind(this,1,index,attr_index)} value={attr.select}>
-									{attr.propertyVals.map(pVal=>{
-										return <Radio value={pVal.valId}>{pVal.propertyValue}</Radio>
-									})}
-							    </RadioGroup>
-							</div>
-						})}
+						<div className={css.product_propery_list}>
+							{item.property.map((attr,attr_index)=>{
+								return <div className={css.categoty_attr_list}>
+									<p className={css.category_attr_title}>
+										{attr.propertyName}:
+									</p>
+									<RadioGroup className={css.category_attr_body} onChange={this.handleChange.bind(this,1,index,attr_index)} value={attr.select}>
+										{attr.propertyVals.map(pVal=>{
+											return <Radio value={pVal.valId}>{pVal.propertyValue}</Radio>
+										})}
+								    </RadioGroup>
+								</div>
+							})}
+						</div>
 					</div>:""}
 					{item.property&&item.property.length>0?<p className={css.category_icon} onClick={this.handleShow.bind(this,index)}>
 						{item.is_show?<Icon type="up" />:<Icon type="down" />}

@@ -16,7 +16,8 @@ import {
 	Icon,
 	Checkbox,
 	Tooltip,
-	Button
+	Button,
+	message
 } from 'antd';
 const {
 	TextArea
@@ -71,7 +72,7 @@ class ProductInstruct extends React.Component {
 							id: 2,
 							value: second_unit
 						});
-						item.select_unit = item.select_unit ? item.select_unit : [first_unit[0].unitId, second_unit[0].unitId];
+						item.select_unit = item.select_unit && item.select_unit.length > 0 ? item.select_unit : [first_unit[0].unitId, second_unit[0].unitId];
 					}
 
 				})
@@ -116,7 +117,6 @@ class ProductInstruct extends React.Component {
 					customProperty = JSON.parse(res.data.result.customProperty)
 					this.setState({
 						instrct,
-
 						customProperty
 					})
 				}
@@ -284,6 +284,7 @@ class ProductInstruct extends React.Component {
 		});
 	}
 	render() {
+		console.log(this.state.product_ins);
 		return <div className={`${css.product_instruct} ${this.props.className}`}>
 			{this.state.product_ins.map((item,index)=>{
 				return <div className={css.instuct_item}style={{alignItems:item.type==3?"flex-start":"center"}}>
@@ -303,7 +304,7 @@ class ProductInstruct extends React.Component {
 						<InputNumber value={this.state.instrct[item.key]} className={css.instuctitem_right_input} onChange={this.handleChange.bind(this,item.key)}/>
 						{item.unit.map((unit,unit_index)=>{
 							return <div className={css.left_item}>
-								<Select value={item.select_unit&&item.select_unit.length>1?item.select_unit[unit_index]:0} 
+								<Select value={item.select_unit&&item.select_unit.length>unit_index?item.select_unit[unit_index]:item.unit.length>0?item.unit[0].unitId:null}
 									style={{ width: 80 }} 
 									onChange={this.handleSpec.bind(this,2,index,unit_index)}>
 									{unit.value.map(un=>{

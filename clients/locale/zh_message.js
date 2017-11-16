@@ -248,6 +248,7 @@ const zh_CN = {
     "mine.product.upload": "上传产品",
     "mine.product.list": "产品列表",
     "mine.product.management": "产品管理",
+    "mine.product.size.warn": "图片不能超过1M",
 
     "mine.product.basic": "基础信息",
     "mine.product.picture": "产品引导图",
@@ -293,7 +294,8 @@ const zh_CN = {
     "product.edite.text": "文本",
     "product.edite.picture": "图片",
     "product.edite.complete.info": "请完善相关信息",
-    "product.edite.recommend": "建议上传宽度750px，大小不超过2M的图片",
+    "product.edite.show.recommend": "产品主图大小不能超过1M;700*700以上图片上传后产品详情页自动提供放大镜功能",
+    "product.edite.info.recommend": "上传图片大小不能超过1M,长图的最小长度为800，建议上传800*1200",
     "product.basic.category.ps": "产品分类一旦保存将不可修改!",
 
     "mine.product.unit_tai": "台",

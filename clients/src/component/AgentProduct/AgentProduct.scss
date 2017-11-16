@@ -67,6 +67,9 @@
 .table_operator{
   display: flex;
   flex-direction: column;
+  a{
+    text-decoration: none;
+  }
   i{
     color: $font-color;
   }

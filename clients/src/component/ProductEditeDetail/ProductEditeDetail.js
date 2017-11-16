@@ -87,11 +87,13 @@ class ProductEditeDetail extends React.Component {
 		})
 	}
 	handleEditeStatus = (index) => {
-		let steps = this.state.steps;
-		steps[index].is_edite = steps[index].is_edite ? false : true;
-		this.setState({
-			steps
-		});
+		if (this.state.basic.status != 1) {
+			let steps = this.state.steps;
+			steps[index].is_edite = steps[index].is_edite ? false : true;
+			this.setState({
+				steps
+			});
+		}
 	}
 
 	handleEdite = (index, status) => {
@@ -537,7 +539,12 @@ class Descrip extends React.Component {
 		return <div className={css.detail_descrip}>			
 			{this.props.data.length>0?this.props.data.map(item=> {
                 return <div>
-                    <p className={css.info_title}>{item.introduceName}</p>
+                    <div className={css.info_title}>
+                        <p className={css.info_left} style={{backgroundImage:`url("../img/back.png")`}}>
+                            {item.introduceName}
+                        </p>
+                        <p className={css.info_right}></p>
+                    </div>
                     {item.contentType==1?item.content.split(",").map(img=>{
                     	return <img src={img+"@800w_1e_1c.png"}/>
                     })

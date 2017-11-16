@@ -229,7 +229,7 @@ class BrandDetail extends React.Component {
             </div>
             <div className={css.product_list}>
                 {this.state.products.map((item,index)=>{
-                    return <Product className={css.product} product={item} handleStar={this.handleStar.bind(this,1,index)} addCart/>
+				return <Product className={(index+1)%5==0?css.product_right:css.product} product={item} handleStar={this.handleStar.bind(this,1,index)} addCart/>
                 })}
             </div>
             <CusPagination current={this.state.current} onChange={this.handleChange} total={this.state.total} pageSizeOptions={this.pageSizeOptions} onShowSizeChange={this.onShowSizeChange} />

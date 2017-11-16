@@ -88,7 +88,7 @@ class AgentProduct extends React.Component {
 			width: "90px",
 			className: css.table_col,
 			render: (record) => <div className={css.table_operator}>
-				<Link to={"page/mine/product-detail/"+record.productId+"/"+record.productName} className={css.operation_text}>
+				<Link target="_blank" to={{pathname:"page/mine/product-detail/"+record.productId,query:{name:record.productName}}} className={css.operation_text}>
                     <i class="iconfont icon-DYC-23"/>
                     <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                 </Link>
@@ -97,7 +97,10 @@ class AgentProduct extends React.Component {
 	}
 	componentWillMount() {
 		this.getProducts();
-		axios.post('/user/get-supply-product-status.json', {}).then(res => {
+		let param = {
+			supplierId: JSON.parse(sessionStorage.user).supplier.sid,
+		}
+		axios.post('/user/get-supply-product-status.json', param).then(res => {
 			if (res.data.code == 104) {
 				this.props.login ? this.props.login(true) : "";
 			} else if (res.data.isSucc) {
@@ -121,6 +124,7 @@ class AgentProduct extends React.Component {
 		let param = {
 			pageNo: this.state.pageNo,
 			pageSize: this.state.pageSize,
+			supplierId: JSON.parse(sessionStorage.user).supplier.sid,
 		}
 		console.log(this.state.current);
 		switch (this.state.current) {
@@ -186,7 +190,7 @@ class AgentProduct extends React.Component {
              />
             <div className={css.tabber_bottom}>
             </div>
-	        <Table 
+	        <Table
 	        	className={css.table}
                 pagination={false}
                 loading={this.state.loading}

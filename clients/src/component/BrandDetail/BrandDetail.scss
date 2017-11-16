@@ -92,10 +92,15 @@
 .product_list{
   display: flex;
   flex-wrap: wrap;
+  margin: 10px 0;
 }
 .product{
-   width: 22%;
-   margin: 10px 3% 10px 0;  
+   width: 204px;
+   margin: 10px 20px 10px 0;
+}
+.product_right{
+  width: 204px;
+  margin: 10px 0;
 }
 .footer{
   text-align: right;
