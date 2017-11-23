@@ -11,7 +11,11 @@ import {
 import {
     Breadcrumb,
     message
-} from 'antd'
+} from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 import {
     FormattedMessage
 } from 'react-intl';
@@ -75,7 +79,7 @@ class CategoryList extends React.Component {
             <div className={css.category}>
             {this.state.category.map((item,index)=>{
                 return <div className={(index+1)%3==0?css.category_item:css.category_item_right}>
-                    <div className={css.title} style={{background:`url(${item.imgUrl})`}}>{item.categoryName}</div>
+                    <div className={css.title} style={{background:`url(${item.imgUrl+"@300w_140h_1e_1c.png"})`}}>{item.categoryName}</div>
                     {item.childProductCategoryList.map(cate=>{
                         return <p className={css.item}>
                         <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>

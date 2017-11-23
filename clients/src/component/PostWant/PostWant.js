@@ -26,6 +26,11 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+message.config({
+	top: '40%',
+	duration: 2,
+});
+
 class PostWant extends React.Component {
 
 	static propTypes = {
@@ -93,6 +98,28 @@ class PostWant extends React.Component {
 			return e;
 		}
 		return e && e.fileList;
+	}
+	beforeUpload = (file) => {
+		console.log(file.type);
+		var typeCheck = false;
+		if (this.state.demandWay == 1) {
+			typeCheck = file.type === 'image/jpeg' || file.type === 'image/png';
+		} else {
+			typeCheck = file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+				file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+		}
+		if (!typeCheck) {
+			message.error(this.formatMessage({
+				id: 'file.type.error'
+			}))
+		}
+		const isLt2M = file.size / 1024 / 1024 < 10;
+		if (!isLt2M) {
+			message.error(this.formatMessage({
+				id: 'mine.product.size.warn'
+			}));
+		}
+		return typeCheck && isLt2M;
 	}
 
 	render() {
@@ -256,11 +283,13 @@ class PostWant extends React.Component {
                                 name="file"
                                 action={Util.url+"/tool/upload"}
                                 onRemove={this.removeFile}
+                                beforeUpload={this.beforeUpload}
                                 multiple
                               >
                                 <Button  className={appcss.button_black}  style={{ width:120}}>
-                                 {this.formatMessage({id: 'post.select.file'})}
-                              </Button>
+                                 	{this.formatMessage({id: 'post.select.file'})}
+                              	</Button>
+                              	<span style={{paddingLeft:20}}>{this.formatMessage({id:this.state.demandWay==1?"app.picture.format":"app.file.format"})}</span>
                             </Upload>
                     	)}
                 	</FormItem>
@@ -272,7 +301,6 @@ class PostWant extends React.Component {
                         <Button style={{ width:200}}type="primary" htmlType="submit" className={appcss.button_radius}>
                               {this.formatMessage({id: 'app.save'})}
                         </Button>
-
                     </FormItem>
         		</Form>
 

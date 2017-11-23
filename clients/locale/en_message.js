@@ -2,7 +2,6 @@
  * Created by WF on 2017/8/16.
  */
 const en_US = {
-
     "app.pull.message": "Do you want to quit the system?",
     "app.pull.modal.title": "Quit System",
     "app.pull.out": "Quit",
@@ -69,7 +68,13 @@ const en_US = {
     "app.modify.phone": "Phone Modify",
     "app.bind.email": "Email Bingding",
     "app.modify.email": "Email Modify",
-    "app.agent":"Agent",
+    "app.agent": "Agent",
+    "app.file.format": "File types：pdf,xlsx,docx",
+    "app.picture.format": "Picture types ：JPG,png",
+    "main.time.before": "The rest",
+    "main.time.after": "End run",
+    "main.activity.title": "Time buying",
+    "main.sale.out": "SALE OUT",
     "sort.comp": "Comprehensive",
     "sort.new": "New Arrival",
     "sort.price": "Price",
@@ -294,12 +299,13 @@ const en_US = {
     "product.edite.text": "text",
     "product.edite.picture": "picture",
     "product.edite.complete.info": "please complete information",
-    "product.edite.show.recommend": "The main drawing size of the product can not exceed 1M; the product detail page automatically provides the magnifier function after the above 700*700 pictures are uploaded",
-    "product.edite.info.recommend": "上传图片大小不能超过1M,长图的最小长度为800，建议上传800*1200",
+    "product.edite.show.recommend": "The main drawing size of the product can not exceed 10M; the product detail page automatically provides the magnifier function after the above 700*700 pictures are uploaded",
+    "product.edite.info.recommend": "The picture can not exceed 10M,min width is 800，suggest size 800*1200",
     "mine.product.unit_tai": "台",
     "mine.product.unit_jian": "件",
     "mine.product.unit_xiang": "箱",
-    "mine.product.size.warn": "Image must smaller than 1MB!",
+    "mine.product.size.warn": "File must smaller than 10MB!",
+    "file.type.error": "File type is error",
 
     "mine.product.art.no": "Art.No.",
     "product.edite.transport.width": "Ultra wide",

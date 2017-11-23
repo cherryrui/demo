@@ -85,6 +85,9 @@
   color:$border-color;
 }
 .table_operation{
+  a{
+    text-decoration: none;
+  }
   .operation_text{
     display: block;
     color: $color-blue;

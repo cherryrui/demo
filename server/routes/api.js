@@ -16,13 +16,12 @@ router.get('/get-title-data.json', async(ctx, next) => {
 		});
 		ctx.body = {
 			categorys: categorys,
-			carts: carts,
-			cart_num: 11
 		};
 	})
 	.get('/get-main-data.json', async(ctx, next) => {
 		let brand = [],
-			category = [];
+			category = [],
+			categoryList = [];
 		try {
 			await axios.get(url + '/index/queryProductCategoryList').then(res => {
 				category = res.data;
@@ -31,10 +30,14 @@ router.get('/get-title-data.json', async(ctx, next) => {
 				console.log(res.data);
 				brand = res.data;
 			});
+			await axios.get(url + '/index/queryLevelOneProductCategoryList').then(res => {
+				categoryList = res.data;
+			});
 		} catch (e) {}
 		ctx.body = {
 			category: category,
-			brand: brand
+			brand: brand,
+			categoryList: categoryList
 		};
 	})
 	/**

@@ -15,13 +15,16 @@ import {
     Button,
     message
 } from 'antd';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 /*const user = JSON.parse(sessionStorage.getItem("user"));*/
 class AccountSecurity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:JSON.parse(sessionStorage.getItem("user")),
+            user: JSON.parse(sessionStorage.getItem("user")),
         };
         this.formatMessage = this.props.intl.formatMessage;
     }

@@ -33,7 +33,10 @@ import {
     Button,
     Checkbox,
 } from 'antd';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const TabPane = Tabs.TabPane;
@@ -234,7 +237,7 @@ class ProductDetail extends React.Component {
                 }
             } else {
                 console.log("dada", this.specify.style)
-                this.specify.style.border = "2px solid #2f5ea2";
+                this.specify.style.border = "2px solid #ffc70d";
                 this.specify.style.padding = "10px";
 
             }
@@ -397,7 +400,7 @@ class ProductDetail extends React.Component {
                     </div>
                     <div className={css.product_img}>
                          {this.state.product.imgs?this.state.product.imgs.map((item, index)=> {
-                             return <img onMouseEnter={this.changeImg.bind(this, index)} key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@160w_160h_1e_1c.png"} 
+                             return <img onMouseEnter={this.changeImg.bind(this, index)} key={"img" + index} className={index == this.state.index_img ? css.active : css.img} src={item.imgUrl+"@60w_60h_1e_1c.png"} 
                              onClick={this.changeImg.bind(this, index)}/>
                          }):""}
                     </div>
@@ -479,7 +482,6 @@ class ProductDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-               
             </div>
 
             <div className={css.body}>
@@ -489,7 +491,7 @@ class ProductDetail extends React.Component {
                     <div className={css.right_content}>
                         <Link to={"/page/brand-detail/"+this.state.product.supplierId}>
                             <p className={css.custom_img}>
-                                <img src={this.state.product.supplierImg+"@350w_350h_1e_1c.png"}/>
+                                <img src={this.state.product.supplierImg+"@180w_180h_1e_1c.png"}/>
                             </p>
                             <p className={css.name}>{this.state.product.supplierName}</p>
                         </Link>
@@ -498,7 +500,6 @@ class ProductDetail extends React.Component {
                             <Rate className={css.rating} allowHalf defaultValue={this.state.product.supplierLevel} disabled />
                             <span>{this.state.product.supplierLevel}</span>
                         </p>
-                       
                     </div>
                 </div>:""}
                     <div className={css.list_content}>
@@ -535,7 +536,7 @@ class Information extends React.Component {
         return <div>
             <Specification data={this.props.properties}/>
             {this.props.data.length>0?this.props.data.map(item=> {
-                return <div>
+                return <div style={{background: "white"}}>
                     <p >
                         {product_operator.introduceType.map(spec=>{
                             return spec.key==item.introduceType?<div className={css.info_title}>

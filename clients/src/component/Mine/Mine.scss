@@ -41,7 +41,7 @@
   }
   .item{
     color: $font-color;
-    padding: 10px 0;
+    padding: 5px 0;
     cursor: pointer;
     span:hover{
       color: $theme-color;
@@ -49,7 +49,7 @@
     }
   }
   .active{
-    padding: 10px 0;
+    padding: 5px 0;
     color: $theme-color;
     cursor: pointer;
   }

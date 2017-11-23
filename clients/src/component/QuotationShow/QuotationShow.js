@@ -9,8 +9,13 @@ import {
 } from 'react-intl';
 
 import {
-	Button
+	Button,
+	message
 } from 'antd';
+message.config({
+	top: '40%',
+	duration: 2,
+});
 
 class QuotationShow extends React.Component {
 

@@ -25,6 +25,10 @@ import {
     Col,
     message
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 import SingleSelect from '../Public/SingleSelect/SingleSelect.js';
 import Sort from '../Public/Sort/Sort.js';
 import Product from '../Public/Product/Product.js';

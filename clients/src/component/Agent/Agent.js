@@ -37,6 +37,10 @@ const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const AutoCompleteOption = AutoComplete.Option;
 import Util from '../../Util.js';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const {
     TextArea
 } = Input;

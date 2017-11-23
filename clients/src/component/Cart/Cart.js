@@ -24,7 +24,10 @@ import {
     Breadcrumb,
     message,
 } from 'antd';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 class Cart extends React.Component {
 
     static propTypes = {
@@ -45,8 +48,30 @@ class Cart extends React.Component {
         if (!sessionStorage.user) {
             this.props.history.pushState(null, "login");
         }
+        console.log(this.props.params.step, this.props.params.orderId)
         if (this.props.params.step) {
-            if (this.props.params.step == 1 && sessionStorage.products) {
+            if (this.props.params.step == 1 && Number(this.props.params.orderId) == 0 && this.props.params.quotationId) {
+                axios.get('/quotation/get-quotation-byid.json?id=' + this.props.params.quotationId).then(res => {
+                    if (res.data.isSucc) {
+                        let productlist = res.data.result.productList;
+                        productlist.map(item => {
+                            item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
+                            item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
+                            item.coverUrl = item.productUrl;
+                            item.moq = item.minBuyQuantity;
+                            item.id = item.quotationProductId;
+                            item.price = item.agentPrice;
+                            item.selectSpecs = JSON.parse(item.productSpecification);
+                        })
+                        this.setState({
+                            step: 1,
+                            products: productlist
+                        })
+                    } else {
+                        message.error(res.data.message)
+                    }
+                })
+            } else if (this.props.params.step == 1 && sessionStorage.products) {
                 let products = [];
                 products = JSON.parse(sessionStorage.products);
                 this.setState({
@@ -55,6 +80,7 @@ class Cart extends React.Component {
                 }, () => {
                     sessionStorage.removeItem("products");
                 })
+
             } else if (this.props.params.step == 2 && this.props.params.orderId) {
                 axios.post('/order/get-order-money.json', {
                     orderId: this.props.params.orderId

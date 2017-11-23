@@ -205,7 +205,6 @@
 	.img:hover{
 		border: 1px solid $border-color;
 		border-radius: 2px;
-		padding: 5px;
 	}
 	.active{
 		@extend .img;

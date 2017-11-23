@@ -29,6 +29,10 @@ import {
     message,
     Tabs
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 import Steps from '../Public/Steps/Steps.js';
 import operator from './operator.js';
 import {
@@ -103,7 +107,11 @@ class Authentication extends React.Component {
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
     }
-
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -129,20 +137,20 @@ class Authentication extends React.Component {
         return (reg.test(email));
     }
 
-    RegPhone = (value) =>{
+    RegPhone = (value) => {
         const reg = /^1[3|5][0-9]\d{8}$/;
-        if(reg.test(value)){
+        if (reg.test(value)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    checkPhone = (rule,value,callback) =>{
+    checkPhone = (rule, value, callback) => {
         const form = this.props.form;
-        if(value && (this.RegPhone(value)==true || this.regEmail(value)==true)){
+        if (value && (this.RegPhone(value) == true || this.regEmail(value) == true)) {
             callback();
-        }else{
+        } else {
             callback('不是完整的11位手机号或者正确的手机号前七位或不是正确的邮箱格式');
         }
     }

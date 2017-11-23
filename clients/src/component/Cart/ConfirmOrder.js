@@ -42,7 +42,10 @@ const {
 import {
     connect
 } from 'react-redux';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 @connect(state => ({
     carts: state.carts
 }), cartAction)
@@ -441,7 +444,7 @@ class ConfirmOrder extends React.Component {
         return <div>
             <div className={css.confirm_title}>
                 <FormattedMessage id="cart.delivery.info" defaultMessage="收货信息"/>
-                <Link to={"/page/mine/person-address"}>
+                <Link target="_blank" to={"/page/mine/person-address"}>
                     <FormattedMessage id="cart.delivery.manage" defaultMessage="新增地址"/>
                 </Link>
             </div>
@@ -460,7 +463,7 @@ class ConfirmOrder extends React.Component {
                             </span>
                             <span className={css.item}>
                                 <FormattedMessage id="cart.delivery.address" defaultMessage="收货地址"/>
-                            &nbsp;:{item.country},{item.province},{item.city},{item.district},{item.address}
+                            &nbsp;:{locale=="en"?item.address+","+item.district+","+item.city+","+item.province+","+item.country:item.country+","+item.province+","+item.city+","+item.district+","+item.address}
                             </span>
                             {item.isDefault==1?<span className={css.item_default}>
                                 <FormattedMessage id="cart.delivery.default" defaultMessage="默认地址"/>

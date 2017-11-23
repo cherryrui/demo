@@ -30,6 +30,10 @@ import {
     Cascader,
     Form
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const Step = Steps.Step;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -283,28 +287,28 @@ class PersonAddress extends React.Component {
         })
     }
 
-    handleSelectAll =(e) =>{
+    handleSelectAll = (e) => {
         let key = [];
-        if(e.target.checked) {
-            this.state.address_list.map(item=>{
+        if (e.target.checked) {
+            this.state.address_list.map(item => {
                 key.push(item.addressId)
             })
-        }   
+        }
         /*console.log(key)*/
         this.setState({
-            selectedRowKeys:key,
-            select_all:!this.state.select_all,
+            selectedRowKeys: key,
+            select_all: !this.state.select_all,
         })
     }
     onSelectChange = (selectedRowKeys) => {
         /*console.log(selectedRowKeys)*/
         let select_all = false;
-        if(selectedRowKeys.length == this.state.address_list.length){
+        if (selectedRowKeys.length == this.state.address_list.length) {
             select_all = true;
         }
         this.setState({
             selectedRowKeys,
-            select_all:select_all
+            select_all: select_all
         })
     }
 

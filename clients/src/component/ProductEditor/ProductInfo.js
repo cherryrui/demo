@@ -21,6 +21,10 @@ import {
 	Radio,
 	Tooltip
 } from 'antd';
+message.config({
+	top: '40%',
+	duration: 2,
+});
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 
@@ -238,7 +242,7 @@ class ProductInfo extends React.Component {
 		});
 	}
 	beforeUpload = (file) => {
-		const isLt2M = file.size / 1024 / 1024 < 2;
+		const isLt2M = file.size / 1024 / 1024 < 5;
 		if (!isLt2M) {
 			message.error(this.formatMessage({
 				id: "mine.product.size.warn"
@@ -280,7 +284,7 @@ class ProductInfo extends React.Component {
 							})}
 		      			</RadioGroup>
 					</div>
-					{item.contentType==1?
+					{item.contentType==1?<div>
 					<div className={css.product_info_upload}>
 						<p className={css.info_item_left}>
 							<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
@@ -303,6 +307,10 @@ class ProductInfo extends React.Component {
 		                        <i class="iconfont icon-jiahao"></i>
 		                    </span>
 				        </Upload>
+				        </div>
+				        <p style={{fontSize: "12px",marginLeft: "390px",marginBottom: "20px"}}>
+				        	<FormattedMessage id="product.edite.info.recommend" defaultMessage=""/>
+				        </p>
 					</div>:<div className={css.product_descrip}>
 					<p className={css.info_item_left}>
 						<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>

@@ -15,6 +15,10 @@ import {
     Button,
     message
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 class QuotationPdf extends React.Component {
 
     constructor(props) {

@@ -17,7 +17,10 @@ import {
     injectIntl,
     intlShape
 } from 'react-intl';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 class PayOrder extends React.Component {
 
     constructor(props) {

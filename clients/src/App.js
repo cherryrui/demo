@@ -483,7 +483,7 @@ ReactDOM.render(
                             <Route path="product-detail/:id(/:name)" getComponent={ProductDetail}/>
                             <Route path="brand-detail/:id" getComponent={BrandDetail}/>
                             <Route path="post-want" getComponent={PostWant}/>
-                            <Route path="cart(/:step)(/:orderId)" getComponent={Cart}/>
+                            <Route path="cart(/:step)(/:orderId)(/:quotationId)" getComponent={Cart}/>
                             <Route path="quotation(/:id)" getComponent={Quotation}/>
                             <Route path="quotation-pdf/:id" getComponent={QuotationShow}/>
                             <Route path="about" getComponent={About}>
@@ -510,7 +510,7 @@ ReactDOM.render(
                                 <Route path="phone-verifi/:type" getComponent={PhoneVerifi}/>
                                 <Route path="product-detail/:id" getComponent={ProductEditeDetail}/>
                             </Route>
-                            <Route path="product-editor(/:id)" getComponent={ProductEditor}/>
+                            <Route path="product-editor" getComponent={ProductEditor}/>
                         </Route>
                         <Route path="login" getComponent={Login}/>
                         <Route path="register" getComponent={Register}/>

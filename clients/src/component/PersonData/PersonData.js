@@ -29,6 +29,10 @@ import {
     message,
     Radio
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
@@ -47,7 +51,7 @@ class PersonData extends React.Component {
     state = {
         loading: false,
         visible: false,
-        
+
     }
     handleSelectNature = (value) => {
         console.log(`selected ${JSON.stringify(value)}`);
@@ -252,27 +256,81 @@ class PersonData extends React.Component {
                 url: this.state.img_back
             }]);
             if (!err) {
-                if(values.agreenotes){
+                if (values.agreenotes) {
                     if (this.state.user.userType == 1) {
-                    param = {
-                        realName: values.relnames,
-                        certificateTypeId: this.state.certificateTypeId,
-                        certificateTypeName: this.state.certificateTypeName,
-                        certificateNo: values.cardnumber,
-                        certificateAddress: values.idaddress,
-                        imgUrl: imgurls
-                    };
-                    axios.post('/user/person-cerification.json', param).then(res => {
-                        if (res.data.isSucc) {
-                            console.log(res.data)
-                            message.success(this.formatMessage({
-                                id: 'app.success'
-                            }));
-                            axios.get('user/get-userinfo-byuid.json').then(res => {
+                        param = {
+                            realName: values.relnames,
+                            certificateTypeId: this.state.certificateTypeId,
+                            certificateTypeName: this.state.certificateTypeName,
+                            certificateNo: values.cardnumber,
+                            certificateAddress: values.idaddress,
+                            imgUrl: imgurls
+                        };
+                        axios.post('/user/person-cerification.json', param).then(res => {
+                            if (res.data.isSucc) {
+                                console.log(res.data)
+                                message.success(this.formatMessage({
+                                    id: 'app.success'
+                                }));
+                                axios.get('user/get-userinfo-byuid.json').then(res => {
+                                        console.log(res.data)
+                                        if (res.data.isSucc) {
+                                            this.setState({
+                                                cerstatus: true,
+                                            });
+                                            /*localStorage.clear();
+                                            sessionStorage.clear();*/
+                                            sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                            /*location.reload();*/
+                                            /*this.props.history.pushState(null, "/page/mine/person-data");*/
+                                            this.setState({
+                                                visible: false,
+                                            })
+                                        } else {
+                                            message.error(res.data.message)
+                                        }
+                                    })
+                                    /* location.reload();*/
+                            } else if (res.data.code == 104) {
+                                this.setState({
+                                    user: JSON.parse(sessionStorage.user),
+                                })
+                                this.props.login ? this.props.login() : "";
+                            } else {
+                                message.error(res.data.message);
+                            }
+                        })
+                    } else if (this.state.user.userType == 2) {
+                        param = {
+                            companyName: values.companynames,
+                            companyWebsite: values.company_websites,
+                            companyNatureName: this.state.companyNatureName,
+                            industryName: this.state.industryName,
+                            country: this.state.user.country,
+                            countryName: this.state.user.countryName,
+                            province: this.state.user.province,
+                            provinceName: this.state.user.provinceName,
+                            city: this.state.user.city,
+                            cityName: this.state.user.cityName,
+                            district: this.state.user.district,
+                            districtName: this.state.user.districtName,
+                            address: values.contact_addresses,
+                            imgUrl: imgurls,
+                            companyNatureId: this.state.natureid,
+                            industryId: this.state.industryid
+                        }
+                        console.log(param)
+                        axios.post('/user/enterpriser.json', param).then(res => {
+                            if (res.data.isSucc) {
+                                console.log(res.data)
+                                message.success(this.formatMessage({
+                                    id: 'app.success'
+                                }));
+                                axios.get('user/get-userinfo-byuid.json').then(res => {
                                     console.log(res.data)
                                     if (res.data.isSucc) {
                                         this.setState({
-                                            cerstatus:true,
+                                            cerstatus: true,
                                         });
                                         /*localStorage.clear();
                                         sessionStorage.clear();*/
@@ -280,81 +338,29 @@ class PersonData extends React.Component {
                                         /*location.reload();*/
                                         /*this.props.history.pushState(null, "/page/mine/person-data");*/
                                         this.setState({
-                                            visible:false,
+                                            visible: false,
                                         })
                                     } else {
                                         message.error(res.data.message)
                                     }
                                 })
-                                /* location.reload();*/
-                        } else if (res.data.code == 104) {
-                            this.setState({
-                                user: JSON.parse(sessionStorage.user),
-                            })
-                            this.props.login ? this.props.login() : "";
-                        } else {
-                            message.error(res.data.message);
-                        }
-                    })
-                } else if (this.state.user.userType == 2) {
-                    param = {
-                        companyName: values.companynames,
-                        companyWebsite: values.company_websites,
-                        companyNatureName: this.state.companyNatureName,
-                        industryName: this.state.industryName,
-                        country: this.state.user.country,
-                        countryName: this.state.user.countryName,
-                        province: this.state.user.province,
-                        provinceName: this.state.user.provinceName,
-                        city: this.state.user.city,
-                        cityName: this.state.user.cityName,
-                        district: this.state.user.district,
-                        districtName: this.state.user.districtName,
-                        address: values.contact_addresses,
-                        imgUrl: imgurls,
-                        companyNatureId: this.state.natureid,
-                        industryId: this.state.industryid
-                    }
-                    console.log(param)
-                    axios.post('/user/enterpriser.json', param).then(res => {
-                        if (res.data.isSucc) {
-                            console.log(res.data)
-                            message.success(this.formatMessage({
-                                id: 'app.success'
-                            }));
-                            axios.get('user/get-userinfo-byuid.json').then(res => {
-                                console.log(res.data)
-                                if (res.data.isSucc) {
-                                    this.setState({
-                                            cerstatus:true,
-                                    });
-                                    /*localStorage.clear();
-                                    sessionStorage.clear();*/
-                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
-                                    /*location.reload();*/
-                                    /*this.props.history.pushState(null, "/page/mine/person-data");*/
-                                    this.setState({
-                                            visible:false,
-                                    })
-                                } else {
-                                    message.error(res.data.message)
-                                }
-                            })
 
-                        } else if (res.data.code == 104) {
-                            this.setState({
-                                user: JSON.parse(sessionStorage.user),
-                            })
-                            this.props.login ? this.props.login() : "";
-                        } else {
-                            message.error(res.data.message);
-                        }
-                    })
+                            } else if (res.data.code == 104) {
+                                this.setState({
+                                    user: JSON.parse(sessionStorage.user),
+                                })
+                                this.props.login ? this.props.login() : "";
+                            } else {
+                                message.error(res.data.message);
+                            }
+                        })
+                    }
+                } else {
+                    message.error(this.formatMessage({
+                        id: 'app.input.agreenotes'
+                    }))
                 }
-                }else{
-                    message.error(this.formatMessage({id:'app.input.agreenotes'}))
-                }
-                
+
             }
         });
     }

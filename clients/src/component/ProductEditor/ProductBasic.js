@@ -25,6 +25,10 @@ import {
 	Tooltip,
 	Spin
 } from 'antd';
+message.config({
+	top: '40%',
+	duration: 2,
+});
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;

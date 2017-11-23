@@ -31,7 +31,10 @@ const Option = Select.Option;
 import {
     connect
 } from 'react-redux';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 @connect(state => ({
     carts: state.carts
 }), cartAction)

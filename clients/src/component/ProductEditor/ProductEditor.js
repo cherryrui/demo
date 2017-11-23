@@ -69,7 +69,7 @@ class ProductEditor extends React.Component {
 				current: next,
 				now: next,
 			}, () => {
-				document.body.scrollTop = 0
+				document.documentElement.scrollTop = document.body.scrollTop = 0
 			})
 		}
 

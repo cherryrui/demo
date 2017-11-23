@@ -23,6 +23,10 @@ import {
 	message,
 	Pagination
 } from 'antd';
+message.config({
+	top: '40%',
+	duration: 2,
+});
 const Search = Input.Search;
 
 
@@ -135,35 +139,6 @@ class QuotationList extends React.Component {
 	getProductListById = () => {
 
 	}
-
-	/**
-	 * 根据当前选择报价单生成订单
-	 * @param  {[type]} item [description]
-	 * @return {[type]}      [description]
-	 */
-	create_order = (item) => {
-		axios.get('/quotation/get-quotation-byid.json?id=' + item.quotationId).then(res => {
-			console.log(res.data);
-			if (res.data.isSucc) {
-				let productlist = res.data.result.productList;
-				productlist.map(item => {
-					item.brandNameCn = JSON.parse(item.productBrand).brandNameCn;
-					item.brandNameEn = JSON.parse(item.productBrand).brandNameEn;
-					item.coverUrl = item.productUrl;
-					item.moq = item.minBuyQuantity;
-					item.id = item.quotationProductId;
-					item.price = item.agentPrice;
-					item.selectSpecs = JSON.parse(item.productSpecification);
-				})
-				sessionStorage.setItem("products", JSON.stringify(productlist));
-				this.props.history.pushState(null, "/page/cart/1");
-			} else {
-
-			}
-		})
-
-	}
-
 	exportQuotation = (quotation) => {
 		console.log(quotation);
 		this.setState({
@@ -307,22 +282,24 @@ class QuotationList extends React.Component {
 	            				<Icon type="delete" />&nbsp;&nbsp;
 	            				<FormattedMessage id="cart.delete" defaultMessage="删除"/>
 	            			</p>
-	            			<Link className={css.item_icon} to={'page/quotation/'+item.quotationId}>
+	            			<Link target="_blank" className={css.item_icon} to={'page/quotation/'+item.quotationId}>
 	            				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;
 	            				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
 	            			</Link>
-	            			<Button type="primary" 
+	            			<Button type="primary"
 	            				className={appcss.button_blue}
 	            				onClick={this.onlineShow.bind(this,item)}>
 	            				<FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
 		            		</Button>
-		            		<Button type="primary"  
-		            			loading={this.state.loading} 
-		            			className={appcss.button_orange} 
-		            			onClick={this.create_order.bind(this,item)}>
-	            				<FormattedMessage id="mine.quotation.create_order" defaultMessage="生成订单"/>
-		            		</Button>
-		            		<Button 
+		            		<Link
+		            			target="_blank"
+		            			to={"/page/cart/1/0/"+item.quotationId}
+		            		>
+		            			<p className={`${appcss.button_orange} ${css.button}`}>
+	            					<FormattedMessage id="mine.quotation.create_order" defaultMessage="生成订单"/>
+		            			</p>
+		            		</Link>
+		            		<Button
 		            			className={appcss.button_black}
 		            			loading={item.downloading}
 		            			type="primary" onClick={this.export.bind(this,index)}>

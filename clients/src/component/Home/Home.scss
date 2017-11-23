@@ -56,6 +56,9 @@
         height: 30px;
         border-color: $font-color;
     }
+    input:focus{
+      border-color: $theme-color;
+    }
     button {
       margin-left: 10px;
       height: 30px;
@@ -145,11 +148,14 @@
         font-size: 26px;
     }
     .drop_item{
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,1);
       padding: 0px 20px;
       cursor: pointer;
       height: 40px;
       display: flex;
+      align-items: center;
+      text-overflow:ellipsis;
+      white-space:nowrap;
       align-items: center;
       img{
         width: 18px;

@@ -31,6 +31,10 @@ import {
 	message,
 	DatePicker
 } from 'antd';
+message.config({
+	top: '40%',
+	duration: 2,
+});
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const user = JSON.parse(sessionStorage.getItem("user"));
@@ -164,7 +168,7 @@ class Authentication extends React.Component {
 				time: 60,
 				disabled: true
 			})
-			this.timer = window.setInterval(() => {
+			this.timer = setInterval(() => {
 				/*console.log(this.state.time);*/
 				if (this.state.time - 1 >= 0) {
 					this.setState({
@@ -176,7 +180,7 @@ class Authentication extends React.Component {
 						time: 0,
 						disabled: false
 					})
-					window.clearInterval(this.timer)
+					clearInterval(this.timer)
 				}
 			}, 1000)
 			if (this.state.verifi_modl == 1) {
@@ -207,7 +211,11 @@ class Authentication extends React.Component {
 		}
 
 	}
-
+	componentWillUnmount() {
+		if (this.timer) {
+			clearInterval(this.timer);
+		}
+	}
 
 	render() {
 

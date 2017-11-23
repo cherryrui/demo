@@ -27,7 +27,10 @@ import {
     message,
     Modal
 } from 'antd';
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const Search = Input.Search;
 const Option = Select.Option;
 import cartAction from '../../action/cartAction.js';
@@ -50,7 +53,8 @@ class Home extends React.Component {
             carts: [],
             visible: false,
             confirmloading: false,
-            showCategory: false
+            showCategory: false,
+            canHiden: false,
 
         };
         this.timer = false;
@@ -80,7 +84,7 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
-        //console.log("componentWillMount");
+        console.log("componentWillMount");
         if (sessionStorage.user) {
             this.props.getShoppingCart();
         }
@@ -92,15 +96,21 @@ class Home extends React.Component {
             //console.log('home.js:',res.data);
             this.setState({
                 categorys: res.data.categorys.result,
-                carts: res.data.carts,
-                cart_num: res.data.cart_num,
                 index: index,
             });
         });
     }
 
-    componentDidMount() {}
-
+    componentDidMount() {
+        console.log("componentWillMount", this.props.location.pathname);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location.pathname.indexOf('/page/') > -1) {
+            this.state.canHiden = true;
+        } else {
+            this.state.canHiden = false;
+        }
+    }
     getIndex() {
         let index = 1;
         this.tabs.map(item => {
@@ -262,7 +272,7 @@ class Home extends React.Component {
                 </div>
             </div>
             </div>
-            {this.state.showCategory?<div className={css.categorys_drop}>
+            {this.state.showCategory&&this.state.canHiden?<div className={css.categorys_drop}>
                 <div className={css.categorys_body}>
                     <div className={css.categorys_content} onMouseEnter={this.onMouse.bind(this,"cate_enter")} onMouseLeave={this.onMouse.bind(this,"cate_leave")}>
                         {this.state.categorys.map(item=>{

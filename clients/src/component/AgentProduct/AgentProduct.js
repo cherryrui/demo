@@ -23,6 +23,10 @@ import {
 	message
 } from 'antd';
 const Search = Input.Search;
+message.config({
+	top: '40%',
+	duration: 2,
+});
 
 class AgentProduct extends React.Component {
 

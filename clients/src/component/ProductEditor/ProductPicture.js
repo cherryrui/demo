@@ -16,7 +16,10 @@ import {
 	message
 } from 'antd';
 const RadioGroup = Radio.Group;
-
+message.config({
+	top: '40%',
+	duration: 2,
+});
 class ProductPicture extends React.Component {
 
 	constructor(props) {
@@ -189,6 +192,15 @@ class ProductPicture extends React.Component {
 	goBack = () => {
 		this.props.handleSteps ? this.props.handleSteps(-1) : ""
 	}
+	beforeUpload = (file) => {
+		const isLt2M = file.size / 1024 / 1024 < 5;
+		if (!isLt2M) {
+			message.error(this.formatMessage({
+				id: "mine.product.size.warn"
+			}));
+		}
+		return isLt2M;
+	}
 
 	render() {
 		return <div className={`${css.product_picture} ${this.props.className}`}>
@@ -204,11 +216,15 @@ class ProductPicture extends React.Component {
                     accept="image/*"
                     onChange={this.handleChange}
                     fileList={this.state.fileList}
+                    beforeUpload={this.beforeUpload}
                     showUploadList={false}>
 					<Button type="primary">
 						<FormattedMessage id="mine.product.picture" defaultMessage=""/>
 					</Button>
 				</Upload>
+				<span style={{paddingLeft: "10px",fontSize: "12px"}}>
+					{this.formatMessage({id:"product.edite.show.recommend"})}
+				</span>
 			</div>
 			<div className={css.picture_body}>
 				{this.state.imgs.map((item,index)=>{

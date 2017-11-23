@@ -33,7 +33,10 @@ import {
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const CheckboxGroup = Checkbox.Group;
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const options = [{
     label: '个人用户',
     value: 1
@@ -58,10 +61,16 @@ class Register extends React.Component {
             usertype: 1, //1个人用户 2.企业用户
             check: true,
             confirmDirty: false,
-            registerloading:false,
+            registerloading: false,
         }
         this.formatMessage = this.props.intl.formatMessage;
         this.timer = null;
+    }
+
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
     handleSubmit = (e) => {
         let {
@@ -73,10 +82,10 @@ class Register extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values)
-                if(values.remember){
+                if (values.remember) {
                     if (values.password == values.repassword) {
                         this.setState({
-                            registerloading:true,
+                            registerloading: true,
                         });
                         let phoneoremail = values.email ? values.email : values.tel;
                         let params = {
@@ -100,7 +109,7 @@ class Register extends React.Component {
                                 axios.post('/user/login.json', param).then(res => {
                                     if (res.data.isSucc) {
                                         this.setState({
-                                            registerloading:false
+                                            registerloading: false
                                         });
                                         sessionStorage.setItem('user', JSON.stringify(res.data.result));
                                         /*this.props.history.pushState(null, "/");*/
@@ -127,68 +136,71 @@ class Register extends React.Component {
                             id: 'repwd.check.pwd_warn'
                         }))
                     }
-                }else{
-                    message.error(formatMessage({id:'app.input.agreenotes'}))
+                } else {
+                    message.error(formatMessage({
+                        id: 'app.input.agreenotes'
+                    }))
                 }
-                
+
 
             }
         })
     };
     handleCode = (e) => {
-            let values = this.props.form.getFieldsValue();
-            if (values.email || values.tel) {
-                let account = values.email ? values.email : values.tel;
-                let verification_mode = this.state.verification_mode;
-                console.log(account)
-                this.setState({
-                    loading: false
-                })
-                axios.get(`/user/sendcode.json?account=${account}&type=${verification_mode}`).then(res => {
-                    console.log(res.data)
-                    if (res.data.isSucc) {
-                        this.setState({
-                            loading: false,
-                            time: 60,
-                            disabled: true
-                        })
-                        this.timer = window.setInterval(() => {
-                            /*console.log(this.state.time);*/
-                            if (this.state.time - 1 >= 0) {
-                                this.setState({
-                                    time: this.state.time - 1,
-                                    disabled: true
-                                })
-                            } else {
-                                this.setState({
-                                    time: 0,
-                                    disabled: false
-                                })
-                                window.clearInterval(this.timer)
-                            }
-                        }, 1000)
-                    } else {
-                        message.error(res.data.message);
-                    }
+        let values = this.props.form.getFieldsValue();
+        if (values.email || values.tel) {
+            let account = values.email ? values.email : values.tel;
+            let verification_mode = this.state.verification_mode;
+            console.log(account)
+            this.setState({
+                loading: false
+            })
+            axios.get(`/user/sendcode.json?account=${account}&type=${verification_mode}`).then(res => {
+                console.log(res.data)
+                if (res.data.isSucc) {
+                    this.setState({
+                        loading: false,
+                        time: 60,
+                        disabled: true
+                    })
+                    this.timer = window.setInterval(() => {
+                        /*console.log(this.state.time);*/
+                        if (this.state.time - 1 >= 0) {
+                            this.setState({
+                                time: this.state.time - 1,
+                                disabled: true
+                            })
+                        } else {
+                            this.setState({
+                                time: 0,
+                                disabled: false
+                            })
+                            window.clearInterval(this.timer)
+                        }
+                    }, 1000)
+                } else {
+                    message.error(res.data.message);
+                }
 
-                })
-            } else {
-                message.warn(this.formatMessage({
-                    id: "authen.authen.account_warn"
-                }))
+            })
+        } else {
+            message.warn(this.formatMessage({
+                id: "authen.authen.account_warn"
+            }))
 
-            }
         }
-        /*checkPassword = (rule, value, callback) => {
-            const form = this.props.form;
-            if (value && value !== form.getFieldValue('password')) {
-                callback(this.formatMessage({
-                    id: "repwd.check.pwd_warn"
-                }));
-            } else {
-                callback();
-            }
-        }*/
+    }
+
+    /*checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback(this.formatMessage({
+                id: "repwd.check.pwd_warn"
+            }));
+        } else {
+            callback();
+        }
+    }*/
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({
@@ -225,20 +237,20 @@ class Register extends React.Component {
         })
     }
 
-    RegPhone = (value) =>{
+    RegPhone = (value) => {
         const reg = /^1[3|5][0-9]\d{8}$/;
-        if(reg.test(value)){
+        if (reg.test(value)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    checkPhone = (rule,value,callback) =>{
+    checkPhone = (rule, value, callback) => {
         const form = this.props.form;
-        if(value && !this.RegPhone(value)){
+        if (value && !this.RegPhone(value)) {
             callback('不是完整的11位手机号或者正确的手机号前七位');
-        }else{
+        } else {
             callback();
         }
     }

@@ -101,7 +101,7 @@ class SingleSelect extends React.Component {
                     return (!this.state.showMore||this.state.showIndex>index||this.state.showIndex==0)?<div className={css.single} ref={ref}
                         onClick={this.handleSelect.bind(this,item[this.props.key_id])}
                     >
-                    {this.props.showImg?<img src={item[this.props.key_name]} className={current==item[this.props.key_id]?css.active_img:css.item_img}/>
+                    {this.props.showImg?<img src={item[this.props.key_name]+"@70w_70h_1e_1c.png"} className={current==item[this.props.key_id]?css.active_img:css.item_img}/>
                         :<p className={current==item[this.props.key_id]?css.active:css.item}>
                         {item[this.props.key_name]}</p>}
                     </div>:""

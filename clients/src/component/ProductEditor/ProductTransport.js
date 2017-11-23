@@ -17,7 +17,10 @@ import {
 const {
 	TextArea
 } = Input;
-
+message.config({
+	top: '40%',
+	duration: 2,
+});
 class ProductTransport extends React.Component {
 	constructor(props) {
 		super(props);

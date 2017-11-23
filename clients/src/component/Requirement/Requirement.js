@@ -29,6 +29,10 @@ import {
     Dropdown,
     Form
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 const Step = Steps.Step;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;

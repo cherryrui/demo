@@ -22,7 +22,10 @@ import {
     message
 } from 'antd';
 const FormItem = Form.Item;
-
+message.config({
+    top: '40%',
+    duration: 2,
+});
 class Login extends React.Component {
 
     static propTypes = {

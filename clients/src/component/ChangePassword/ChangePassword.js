@@ -28,13 +28,17 @@ import {
   DatePicker
 } from 'antd';
 const FormItem = Form.Item;
+message.config({
+  top: '40%',
+  duration: 2,
+});
 class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading:false,
-      disabled:false,
-      time:0,
+      loading: false,
+      disabled: false,
+      time: 0,
       confirmDirty: false,
     };
     this.formatMessage = this.props.intl.formatMessage;
@@ -65,119 +69,123 @@ class ChangePassword extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         /*console.log('Received values of form: ', values);*/
-        if(values.password == values.re_password){
-            let param = {
-              originalPwd:values.original_password,
-              password:values.password,
-              emailOrphone:values.phoneOremail,
-              checkCode:values.veri_code
-            };
-            axios.post('/user/repassword.json',param).then(res=>{
-              /*console.log(res.data);*/
-              if(res.data.isSucc){
-                message.success(this.formatMessage({
-                  id:"reset.success.info"
-                }));
-                this.setState({
-                  visible:true
+        if (values.password == values.re_password) {
+          let param = {
+            originalPwd: values.original_password,
+            password: values.password,
+            emailOrphone: values.phoneOremail,
+            checkCode: values.veri_code
+          };
+          axios.post('/user/repassword.json', param).then(res => {
+            /*console.log(res.data);*/
+            if (res.data.isSucc) {
+              message.success(this.formatMessage({
+                id: "reset.success.info"
+              }));
+              this.setState({
+                  visible: true
                 })
                 /*this.props.history.pushState(null, "/page/mine/account");*/
-              }else if(res.data.code == 104){
-                this.setState({
-                    user: JSON.parse(sessionStorage.user),
-                }) 
-                this.props.handleVisible ? this.props.handleVisible() : "";              
-              }else{
-                message.error(res.data.message);
-              }
-            })
-        }else{
+            } else if (res.data.code == 104) {
+              this.setState({
+                user: JSON.parse(sessionStorage.user),
+              })
+              this.props.handleVisible ? this.props.handleVisible() : "";
+            } else {
+              message.error(res.data.message);
+            }
+          })
+        } else {
           message.error(this.formatMessage({
-            id:"repwd.check.pwd_warn"
+            id: "repwd.check.pwd_warn"
           }))
         }
-        
+
       }
     });
   }
 
-  regEmail = (email) =>{
-    let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
-    return(reg.test(email));
-  } 
+  regEmail = (email) => {
+    let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+    return (reg.test(email));
+  }
 
-  RegPhone = (value) =>{
-        const reg = /^1[3|5][0-9]\d{8}$/;
-        if(reg.test(value)){
-            return true;
-        }else{
-            return false;
-        }
+  RegPhone = (value) => {
+    const reg = /^1[3|5][0-9]\d{8}$/;
+    if (reg.test(value)) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    checkPhone = (rule,value,callback) =>{
-        const form = this.props.form;
-        if(value && (this.RegPhone(value)==true || this.regEmail(value)==true)){
-            callback();
-        }else{
-            callback('不是完整的11位手机号或者正确的手机号前七位或不是正确的邮箱格式');
-        }
+  checkPhone = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && (this.RegPhone(value) == true || this.regEmail(value) == true)) {
+      callback();
+    } else {
+      callback('不是完整的11位手机号或者正确的手机号前七位或不是正确的邮箱格式');
     }
+  }
 
-  getVericode = () =>{
+  getVericode = () => {
     let phoneOremail = this.phoneOremail.props.value;
-    if(phoneOremail){
+    if (phoneOremail) {
       /*console.log(this.regEmail(phoneOremail));*/
       this.setState({
-                    loading: false,
-                    time: 60,
-                    disabled: true
-                })
-      this.timer = window.setInterval(() => {
-                    /*console.log(this.state.time);*/
-          if (this.state.time - 1 >= 0) {
-            this.setState({
-                 time: this.state.time - 1,
-                 disabled: true
-            })
-          } else {
-            this.setState({
-                time: 0,
-                disabled: false
-              })
-              window.clearInterval(this.timer)
-          }          
+        loading: false,
+        time: 60,
+        disabled: true
+      })
+      this.timer = setInterval(() => {
+        /*console.log(this.state.time);*/
+        if (this.state.time - 1 >= 0) {
+          this.setState({
+            time: this.state.time - 1,
+            disabled: true
+          })
+        } else {
+          this.setState({
+            time: 0,
+            disabled: false
+          })
+          clearInterval(this.timer)
+        }
       }, 1000)
-      if(this.regEmail(phoneOremail)){
-          let email = phoneOremail;
-          let type = 2;
-         /* console.log(222222222);*/
-          axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res=>{
-            if(res.data.isSucc){
-              console.log(res.data);
-            }else{
-              message.error(res.data.message);
-            }
-          })
-      }else{
-          let phone = phoneOremail;
-          let type = 1;
-          axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res=>{
-            if(res.data.isSucc){
-              console.log(res.data);
-            }else{
-              message.error(res.data.message);
-            }
-          })
+      if (this.regEmail(phoneOremail)) {
+        let email = phoneOremail;
+        let type = 2;
+        /* console.log(222222222);*/
+        axios.get(`/user/sendcode.json?account=${email}&type=${type}`).then(res => {
+          if (res.data.isSucc) {
+            console.log(res.data);
+          } else {
+            message.error(res.data.message);
+          }
+        })
+      } else {
+        let phone = phoneOremail;
+        let type = 1;
+        axios.get(`/user/sendcode.json?account=${phone}&type=${type}`).then(res => {
+          if (res.data.isSucc) {
+            console.log(res.data);
+          } else {
+            message.error(res.data.message);
+          }
+        })
       }
-    }else{
-      message.error(this.formatMessage({id:'authen.authen.account_warn'}));
+    } else {
+      message.error(this.formatMessage({
+        id: 'authen.authen.account_warn'
+      }));
     }
   }
 
   handleConfirmBlur = (e) => {
     const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    this.setState({
+      confirmDirty: this.state.confirmDirty || !!value
+    });
   }
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
@@ -190,12 +198,18 @@ class ChangePassword extends React.Component {
   checkConfirm = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['re_password'], { force: true });
+      form.validateFields(['re_password'], {
+        force: true
+      });
     }
     callback();
   }
 
-  
+  componentWillUnmount() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
 
   render() {
     const {

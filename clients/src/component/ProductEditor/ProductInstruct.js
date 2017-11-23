@@ -23,7 +23,10 @@ const {
 	TextArea
 } = Input;
 const Option = Select.Option;
-
+message.config({
+	top: '40%',
+	duration: 2,
+});
 class ProductInstruct extends React.Component {
 	constructor(props) {
 		super(props);

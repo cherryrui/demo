@@ -24,6 +24,10 @@ import {
     Avatar,
     message
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 class PersonCenter extends React.Component {
     constructor(props) {
         super(props);

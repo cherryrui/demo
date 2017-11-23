@@ -20,7 +20,10 @@ import {
 	Icon,
 	message
 } from 'antd'
-
+message.config({
+	top: '40%',
+	duration: 2,
+});
 class Favorite extends React.Component {
 	static propTypes = {
 		intl: intlShape.isRequired,

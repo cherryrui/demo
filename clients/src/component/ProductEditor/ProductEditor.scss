@@ -195,7 +195,7 @@
 .product_info_upload{
 	@extend .product_info_item;
 	align-items: flex-start;
-	margin:20px 0;
+	margin:20px 0px 5px 0px;
 	.info_upload{
 		div[class="ant-upload-list-item ant-upload-list-item-done"]{
 	        width: 150px;
@@ -263,7 +263,6 @@
 	    		display: flex;
 	    		align-items: center;
 	    	}
-	    	
 	    }
 	}
 }
@@ -277,6 +276,7 @@
 	    	width: 225px;
 	    	text-align: right;
 	    	margin-right: 10px;
+	    	flex-shrink: 0;
 	    }
 	    .title_warn{
 	    	color: $theme-color;

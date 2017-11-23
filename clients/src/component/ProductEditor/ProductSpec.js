@@ -26,7 +26,10 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
-
+message.config({
+	top: '40%',
+	duration: 2,
+});
 class ProductSpec extends React.Component {
 	constructor(props) {
 		super(props);

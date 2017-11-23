@@ -15,6 +15,10 @@ import {
 	message,
 	Spin
 } from 'antd';
+message.config({
+	top: '40%',
+	duration: 2,
+});
 import ProductBasic from '../ProductEditor/ProductBasic.js';
 import ProductPicture from '../ProductEditor/ProductPicture.js';
 import ProductAttr from '../ProductEditor/ProductAttr.js';

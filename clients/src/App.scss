@@ -101,7 +101,6 @@ th{
     color: #e6e6e6;
     padding: 5px 0px;
   }
-  
 }
 .bottom{
   text-align: center;
@@ -190,6 +189,18 @@ th{
 .button_black:active{
     background-color: $button-black-active !important;
     border-color: $button-black-active !important;
+}
+.button_orange{
+    @extend %button;
+    background-color: $color-orange !important;
+    border-color: $color-orange !important;
+}
+.button_orange:hover{
+    box-shadow: 0 1px 5px $color-orange;
+}
+.button_orange:active{
+    background-color: $button-orange-active !important;
+    border-color: $button-orange-active !important;
 }
 .button_blue{
     @extend %button;

@@ -18,6 +18,10 @@ import {
     message,
     Tooltip
 } from 'antd';
+message.config({
+    top: '40%',
+    duration: 2,
+});
 import {
     Link
 } from 'react-router';
@@ -99,24 +103,19 @@ class OrderList extends React.Component {
                 width: "140px",
                 className: css.table_col,
                 render: (record) => <span className={css.table_operation}>
-                    <Link to={"page/order-details/"+record.orderId} className={css.operation_text}>
+                    <Link target="_blank" to={"page/order-details/"+record.orderId} className={css.operation_text}>
                         <i class="iconfont icon-DYC-23"/>
                         <FormattedMessage id="orderlist.order.view" defaultMessage="查看"/>
                     </Link>
-                    <p>
-                    <Button className={appcss.button_blue} onClick={this.handleClick.bind(this,record)} size="small" style={{minWidth:50,lineHeight: "20px",height: "20px"}} size="small" type="primary">
-                           <p className={css.button_pay}>
+                    <Link target="_blank" to={"page/cart/2/"+record.orderId}>
+                        <p className={appcss.button_blue} size="small" style={{minWidth:50,lineHeight: "20px",height: "20px"}} size="small" type="primary">
                             <FormattedMessage  id="cart.pay" defaultMessage="支付"/>
-                            </p>
-                        </Button>
-                    </p>
+                        </p>
+                    </Link>
                 </span>
             }
 
         ];
-    }
-    handleClick = (record) => {
-        this.props.history.pushState(null, "page/cart/2/" + record.orderId)
     }
     componentWillMount() {
         this.searchOrder();
