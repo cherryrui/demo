@@ -63,12 +63,14 @@ class BrandList extends React.Component {
      */
     getBrand = () => {
         let param = {
-            productCategoryId: this.state.cid,
             orderType: this.state.orderType,
             pageNo: this.state.current,
             pageSize: this.state.pageSize,
             sortType: this.state.sortType
         };
+        if (this.state.cid) {
+            param.productCategoryId = this.state.cid;
+        }
         axios.post('/brand/get-brand.json', param).then(res => {
             /*console.log(res.data)*/
             if (res.data.isSucc) {

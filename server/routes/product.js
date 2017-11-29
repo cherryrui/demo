@@ -154,7 +154,6 @@ router.get('/get-category.json', async(ctx, next) => {
 		let id = ctx.query.id,
 			result;
 		try {
-
 			await axios.get(url + '/product/querySimilarProduct/' + id).then(res => {
 				result = res.data
 			})
@@ -163,8 +162,13 @@ router.get('/get-category.json', async(ctx, next) => {
 				isSucc: false
 			}
 		}
-
 		ctx.body = result
+	})
+	//产品列表，未搜索到产品，获取随机推荐
+	.get('/get-auto-like-product.json', async(ctx, next) => {
+		await axios.get(url + '/product/queryRandomProductByNum?num=' + 5).then(res => {
+			ctx.body = res.data;
+		})
 	})
 	.post('/get-favorite-product.json', async(ctx, next) => {
 		let param = ctx.request.body,

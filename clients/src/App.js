@@ -477,7 +477,7 @@ ReactDOM.render(
                         <IndexRedirect to="/page" />
                         <Route path="page" getComponent={Home}>
                             <IndexRoute getComponent={Main}/>
-                            <Route path="category-list/:id/:name" getComponent={CategoryList}/>
+                            <Route path="category-list" getComponent={CategoryList}/>
                             <Route path="brand-list" getComponent={BrandList}/>
                             <Route path="product-list/:info(/:name)" getComponent={ProductList}/>
                             <Route path="product-detail/:id(/:name)" getComponent={ProductDetail}/>

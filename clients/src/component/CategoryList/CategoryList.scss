@@ -5,6 +5,36 @@
     font-size: 18px;
   }
 }
+.category_list_title{
+   height: 40px;
+   font-size: 16px;
+   font-weight: bold;
+   text-align: center;
+   background-color: $theme-color;
+   margin-top: 10px;
+   line-height: 40px;
+}
+.category_first{
+   padding: 0px 10px;
+   display: flex;
+   flex-wrap: wrap;
+   background: white;
+   .category_first_item{
+      padding: 10px;
+      color: $font-color;
+      cursor: pointer;
+   }
+   .category_first_item:hover{
+      color: $theme-color;
+      text-decoration: underline;
+   }
+   .category_first_item_active{
+      padding: 10px;
+      color: $theme-color;
+      text-decoration: underline;
+      cursor: pointer;
+   }
+}
 .category{
   display: flex;
   margin-top: 20px;
@@ -52,5 +82,3 @@
     }
   }
 }
-    
- 

@@ -104,22 +104,6 @@ class ProductInfo extends React.Component {
 			product_info
 		});
 	}
-
-	/**
-	 * 保存富文本信息
-	 * @param  {[type]} value [description]
-	 * @return {[type]}       [description]
-	 */
-	handleText = (index, value) => {
-		console.log(index, value);
-		let product_info = this.state.product_info;
-		product_info[index].contentText = value;
-		this.setState({
-			product_info
-		})
-	}
-
-
 	previewImg = (file) => {
 		console.log(120, file);
 		this.setState({
@@ -175,7 +159,7 @@ class ProductInfo extends React.Component {
 		});
 		let productIntroductArray = [],
 			flag = true;
-		this.state.product_info.map(item => {
+		this.state.product_info.map((item, index) => {
 			let param = {}
 			if (item.introduceType) {
 				if (item.contentType == 1) {
@@ -189,10 +173,12 @@ class ProductInfo extends React.Component {
 						})
 						param.content = param.content.join(",");
 					}
-				} else if (!item.contentText) {
-					flag = false;
 				} else {
-					param.content = item.contentText;
+					if (UE.getEditor("content" + index).getContent()) {
+						param.content = UE.getEditor("content" + index).getContent();
+					} else {
+						flag = false;
+					}
 				}
 				if (flag) {
 					param.productId = this.props.product.productId;
@@ -311,13 +297,14 @@ class ProductInfo extends React.Component {
 				        <p style={{fontSize: "12px",marginLeft: "390px",marginBottom: "20px"}}>
 				        	<FormattedMessage id="product.edite.info.recommend" defaultMessage=""/>
 				        </p>
-					</div>:<div className={css.product_descrip}>
+					</div>:""}
+				<div style={{display:item.contentType==1?"none":"block"}} className={css.product_descrip}>
 					<p className={css.info_item_left}>
 						<span style={{color:"#ff9a2c",paddingRight:"10px"}}>*</span>
 						<FormattedMessage id="mine.product.info_descript" defaultMessage="分类"/>：
 					</p>
 					<TextEditor  id={"content"+index} content={item.contentText} className={css.product_editor}/>
-				</div>}
+				</div>
 			</div>})}
             <div className={css.product_footer}>
 				{this.props.before?<Button type="primary" onClick={this.backStep}>

@@ -33,7 +33,7 @@
     }
   }
    .title_category{
-       width: 220px !important;
+       width: 225px !important;
       text-align: center !important;
       background: #2e2b2e !important;
       color: #ffc70d !important;
@@ -44,6 +44,7 @@
       border-top-left-radius: 5px !important;
       border-top-right-radius: 5px !important;
       font-size: 16px;
+      cursor: pointer;
     }
   .active {
     @extend .title;
@@ -127,7 +128,52 @@
 .cart_product_footer:hover{
   background: $theme-color;
 }
-
+.category_detail{
+    position: absolute;
+    clear: both;
+    width: 875px;
+    height: 400px;
+    background: white;
+    margin-left: 225px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    padding: 0px 20px;
+    overflow: auto;
+    .category_detail_item_first{
+        display: flex;
+        padding-bottom: 10px;
+        font-size: 12px;
+    }
+    .category_detail_item{
+        @extend .category_detail_item_first;
+        border-top: 1px dashed $border-color;
+    }
+    .category_detail_item_title{
+        width: 140px;
+        text-align: right;
+        flex-shrink: 0;
+        font-weight: bold;
+        margin-top: 10px;
+        padding-right: 2px;
+    }
+    .category_detail_item_sperator{
+        font-weight: bold;
+        margin-top: 10px;
+        padding-right: 2px;
+    }
+    .category_detail_item_body{
+        display: flex;
+        flex-wrap: wrap;
+        .category_detail_item_body_item{
+            padding: 0 10px;
+            margin-top: 10px;
+            border-left: 1px solid $border-color;
+        }
+        .category_detail_item_body_item_last{
+            @extend .category_detail_item_body_item;
+            border-right: 1px solid $border-color;
+        }
+    }
+}
 .categorys_drop{
     position: fixed;
     z-index: 80;
@@ -136,9 +182,10 @@
     .categorys_body{
         width: 1100px;
         margin: 0 auto;
+        display: flex;
     }
     .categorys_content{
-        width: 220px;
+        width: 225px;
     }
     .drop_icon{
         text-align: right;

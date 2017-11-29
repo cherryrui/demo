@@ -23,34 +23,42 @@ class CategoryList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: "Tools",
             category: [],
-
+            categoryList: [],
+            select: 0,
         }
-        this.cid = this.props.params.id;
     }
     componentWillMount() {
-        this.getCategory();
+        axios.get('/category/get-first-category.json').then(res => {
+            if (res.data.isSucc) {
+                this.setState({
+                    categoryList: res.data.result,
+                }, () => {
+                    res.data.result.length > 0 ? this.getCategory() : ""
+                })
+            } else {
+                message.error(res.data.message);
+            }
+        })
     }
     componentDidMount() {
         this.category_list.scrollIntoView(true);
     }
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps.params.id);
-        if (this.cid != nextProps.params.id) {
-            this.cid = nextProps.params.id
+    handleCategory = (index) => {
+        this.setState({
+            select: index
+        }, () => {
             this.getCategory();
-            this.category_list.scrollIntoView(true);
-        }
+        })
     }
-
 
     /**
      * 根据一级分类id，查找其所有的子分类
      * @return {[type]} [description]
      */
     getCategory = () => {
-        axios.get(`/category/get-child-category.json?cid=${this.cid}`).then(res => {
+        let cid = this.state.categoryList[this.state.select].categoryId;
+        axios.get(`/category/get-child-category.json?cid=${cid}`).then(res => {
             if (res.data.isSucc) {
                 this.setState({
                     category: res.data.result
@@ -72,9 +80,17 @@ class CategoryList extends React.Component {
                         </Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        {this.props.params.name}
+                        <FormattedMessage id="app.product.all" defaultMessage=""/>
                     </Breadcrumb.Item>
                 </Breadcrumb>
+            </div>
+            <div className={css.category_list_title}>
+                <FormattedMessage id="app.product.all" defaultMessage=""/>
+            </div>
+            <div className={css.category_first}>
+                {this.state.categoryList.map((item,index)=>{
+                    return <p className={index==this.state.select?css.category_first_item_active:css.category_first_item} onClick={this.handleCategory.bind(this,index)}>{item.categoryName}</p>
+                })}
             </div>
             <div className={css.category}>
             {this.state.category.map((item,index)=>{

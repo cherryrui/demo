@@ -38,33 +38,47 @@ class Main extends React.Component {
             brand: [],
             category: [],
             categoryList: [],
-            time: moment("2017/11/22 19:00:00").diff(moment("2017/11/22 17:00:00")),
+            time: null,
+            categoryChild: [], //选中的一级分类的所有子分类集合
+            showCategoryDetail: false,
+            activity: null,
+            ads: []
         }
         this.interval = null;
     }
     componentWillMount() {
         axios.get('/api/get-main-data.json').then(res => {
-            let time = moment(this.state.time).toISOString();
-            time = time.replace("T", ' ');
-            time = time.replace(".000Z", '');
-            console.log(time);
             this.setState({
                 brand: res.data.brand.result,
                 category: res.data.category.result,
                 categoryList: res.data.categoryList.result,
-                time: moment(time)
+                activity: res.data.activity,
+                ads: res.data.ads,
+            }, () => {
+                console.log("goto top");
+                document.documentElement.scrollTop = document.body.scrollTop = 0;
             })
-            this.interval = setInterval(this.plusTime, 1000);
         })
     }
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-    plusTime = () => {
-        let time = this.state.time - 1000;
-        this.setState({
-            time: time
-        });
+    handleCategory = (index) => {
+        let categoryList = this.state.categoryList;
+        if (categoryList[index].children) {
+            this.setState({
+                categoryChild: categoryList[index].children,
+            })
+        } else {
+            axios.get(`/category/get-child-category.json?cid=${categoryList[index].categoryId}`).then(res => {
+                if (res.data.isSucc) {
+                    categoryList[index].children = res.data.result
+                    this.setState({
+                        categoryChild: res.data.result,
+                        categoryList: categoryList,
+                    })
+                } else {
+                    message.error(res.data.message);
+                }
+            })
+        }
     }
     handleClick = (name) => {
         //设置定时器
@@ -78,28 +92,60 @@ class Main extends React.Component {
         }
         document.documentElement.scrollTop = document.body.scrollTop = top;
     }
-    handleCategory = () => {
-
+    handleShow = (status) => {
+        this.setState({
+            showCategoryDetail: status
+        })
     }
+    onMouse = (e, index) => {
+        if (e === 'enter') {
+            this.handleShow(true)
+            this.handleCategory(index);
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+        }
+        if (e == 'leave') {
+            this.timer = setTimeout(() => {
+                if (this.state.showCategoryDetail && !this.cate_enter) {
+                    this.handleShow(false);
+                }
+            }, 1000);
+        }
 
+        if (e == "cate_enter") {
+            this.cate_enter = true;
+        }
+        if (e == "cate_leave" && this.state.showCategoryDetail) {
+            this.cate_enter = false;
+            this.handleShow(false)
+        }
+    }
+    handleBlue = () => {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.handleShow(false);
+    }
     render() {
         return <div className={appcss.body} id="home">
-            <div className={css.main_top}>
-                <div className={css.categorys_content} >
-                    {this.state.categoryList.map(item=>{
-                        return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
+            <div className={css.main_top} onMouseLeave={this.handleBlue}>
+                <div className={css.categorys_content} onMouseLeave={this.onMouse.bind(this,"leave")}>
+                    {this.state.categoryList.map((item,index)=>{
+                        return index<10?<p className={css.drop_item} onMouseEnter={this.onMouse.bind(this,'enter',index)} onClick={this.onMouse.bind(this,'enter',index)}>
                         <img src={item.iconUrl?item.iconUrl+"@18w_18h_1e_1c.png":"../img/no_icon.png"}/>{item.categoryName}
-                        </p>
+                        </p>:""
                     })}
                 </div>
                 <Slider
                     dots={true}
-                    autoplay
+                    autoplay={true}
                     arrows={false}
                     infinite={true}
                     slidesToShow={1}
                     slidesToScroll={1}
-                    autoplaySpeed={4000}
+                    autoplaySpeed={3000}
+                    speed={1000}
                     rtl={false}
                     className={css.slider_play}
                 >
@@ -108,59 +154,61 @@ class Main extends React.Component {
                     <div><img className={css.slider_img} src='../img/banner2.jpg'/></div>
                 </Slider>
                 <div className={css.main_right}>
-                    <img src='../img/no_picture.jpg'></img>
-                    <img src='../img/no_picture.jpg'></img>
+                    {this.state.ads.map(item=>{
+                        return<Link target="_blank" to={item.adsOutsideLink.slice(item.adsOutsideLink.indexOf("#")+1)}>
+                        <img src={item.imgUrl+"@200w_200h_1e_1c.png"}/>
+                        </Link>
+                    })}
                 </div>
+                {this.state.showCategoryDetail?<div onMouseEnter={this.onMouse.bind(this,"cate_enter")} onMouseLeave={this.onMouse.bind(this,"cate_leave")} className={css.category_detail}>
+                    {this.state.categoryChild.map((item,index)=>{
+                        return <div className={index==0?css.category_detail_item_first:css.category_detail_item}>
+                            <div className={css.category_detail_item_title}>{item.categoryName}</div>
+                            <div className={css.category_detail_item_sperator}>></div>
+                            <div className={css.category_detail_item_body}>
+                                {item.childProductCategoryList.map((cate,cate_index)=>{
+                                    return <p className={cate_index==item.childProductCategoryList.length-1?css.category_detail_item_body_item_last:css.category_detail_item_body_item}>
+                                    <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>
+                                })}
+                            </div>
+                        </div>
+                    })}
+                </div>:""}
             </div>
-            <div className={css.main_activity_title}>
-                <i class="iconfont icon-DYC-shijian"></i>
-                <p className={css.activity_middle}>
-                    <FormattedMessage id="main.activity.title" defaultMessage=""/>
-                </p>
-                <p className={css.activity_right}>
-                    <FormattedMessage id="main.time.before" defaultMessage=""/>
-                    <p className={css.main_activity_time}>{moment(this.state.time).format('HH:mm:ss').split(":").map((item,index)=>{
-                        return <p className={css.main_activity_time_item}>
-                        <span className={css.main_activity_time_data}>{item}</span>
-                        {index==2?"":<span className={css.main_activity_time_sperator}>:</span>}</p>
-                    })}</p>
-                     <FormattedMessage id="main.time.after" defaultMessage=""/>
-                </p>
-            </div>
+            {this.state.activity?<LimitSale activity={this.state.activity} />:""}
             <div className={css.activity_slider}>
-                {this.state.brand.length>0?<Slider
+                {this.state.activity&&this.state.activity.product.length>0?<Slider
                     dots={true}
                     infinite={true}
                     autoplaySpeed={3000}
-                    speed={500}
+                    speed={1000}
                     slidesToShow={6}
                     slidesToScroll={6}
                     arrows={false}
                     autoplay={true}
-                    centerPadding={10}
                 >
-                   {this.state.brand.map((item,index) => {
-                       return <Link className={css.activity_slider_item}  target="_blank" to={"page/brand-detail/"+item.sid}>
+                   {this.state.activity.product.map((item,index) => {
+                       return <Link className={css.activity_slider_item}  target="_blank" to={"page/product-detail/"+item.productId}>
                        <Card bordered={false} bodyStyle={{ padding: 0 }}>
                             <div className={css.activity_body_item_header}>
-                                <p>70%off</p>
+                                <p>{item.discount*10}%off</p>
                             </div>
                            <div className={css.custom_image}>
-                               <img alt="example" width="100%" src={item.imgUrl+"@175w_175h_1e_1c.png"} />
+                               <img alt="example" width="100%" src={item.coverUrl+"@175w_175h_1e_1c.png"} />
                            </div>
-                           <div className={css.activity_body_item_name}>{item.supplierName}</div>
+                           <div className={css.activity_body_item_name}>{item.productName}</div>
                            <div className={css.activity_body_item_price}>
-                               <span>$90</span>
-                               <del>$165</del>
+                               <span>${item.newPricr}</span>
+                               <del>${item.price}</del>
                            </div>
                        </Card>
-                        <div className={css.activity_body_item_show}>
+                        {item.inventory==0?<div className={css.activity_body_item_show}>
                             <p className={css.activity_body_item_show_large}>
                                 <p className={css.activity_body_item_show_small}>
                                     <FormattedMessage id="main.sale.out" defaultMessage=""/>
                                 </p>
                             </p>
-                        </div>
+                        </div>:""}
                     </Link>
                    })}
                 </Slider>:""}
@@ -246,21 +294,88 @@ class Main extends React.Component {
         </div>
     }
 }
+class LimitSale extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            time: 0,
+            activity: {},
+            status: 0,
+        }
+    }
+    componentWillMount() {
+        let activity = this.props.activity;
+        let time = 0;
+        if (moment(activity.time) - moment(activity.startTime) >= 0 && moment(activity.time) - moment(activity.endTime) < 0) {
+            activity.status = 1; //进行中
+            time = moment(activity.endTime).diff(moment(activity.time));
+        } else if (moment(activity.time) - moment(activity.startTime) < 0) {
+            activity.status = 0; //未开始
+            /*time = moment(moment(activity.startTime) - moment(activity.time));*/
+            time = moment(activity.startTime).diff(moment(activity.time));
+        } else if (moment(activity.time) - moment(activity.endTime) > 0) {
+            activity.status = 2; //已结束
+            time = 0;
+        }
+        time = time;
+        console.log(moment(time).utc().format('DD HH:mm:ss'));
+        console.log(moment(time).dayOfYear());
+        this.setState({
+            time: time,
+            status: activity.status,
+        })
+    }
+    componentDidMount() {
+        this.interval = setInterval(this.plusTime, 1000);
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    plusTime = () => {
+        let activity = this.state.activity;
+        if (this.state.time - 1000 > 0) {
+            let time = this.state.time - 1000;
+            this.setState({
+                time: time
+            });
+        } else if (this.state.status == 0) { //即将开始
+            let time = moment(activity.endTime).diff(moment(activity.startTime));
+            this.setState({
+                status: 1,
+                time: time,
+            })
+        } else if (this.state.activity.status == 1) {
+            this.setState({
+                status: 2,
+                time: 0
+            })
+        }
+    }
+    render() {
+        return <div className={css.main_activity_title}>
+            <i class="iconfont icon-DYC-shijian"></i>
+            <p className={css.activity_middle}>
+                <FormattedMessage id="main.activity.title" defaultMessage=""/>
+            </p>
+            <p className={css.activity_right}>
+                <FormattedMessage id="main.time.before" defaultMessage=""/>
+                <p className={css.main_activity_time}>
+                    {moment(this.state.time).utc().format('HH:mm:ss').split(":").map((item,index)=>{
+                        return <p className={css.main_activity_time_item}>
+                        <span className={css.main_activity_time_data}>{index==0&&moment(this.state.time).dayOfYear()>1?((moment(this.state.time).dayOfYear()-1)*24+parseInt(item)):item}</span>
+                        {index==2?"":<span className={css.main_activity_time_sperator}>:</span>}</p>
+                    })}</p>
+                 <FormattedMessage id={this.state.status==0?"main.time.start.after":"main.time.end.after"} defaultMessage=""/>
+            </p>
+        </div>
+    }
+}
 class Category extends React.Component {
 
 
     constructor(props) {
         super(props)
         this.state = {}
-    }
-
-    /**
-     * 查看更多2级分类
-     * @param  {[type]} id 1级分类id
-     * @return {[type]}    [description]
-     */
-    handleCategory = (id) => {
-
     }
 
     render() {

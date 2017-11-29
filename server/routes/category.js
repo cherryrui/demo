@@ -20,6 +20,12 @@ router.get('/get-category.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
+	.get('/get-first-category.json', async(ctx, next) => {
+		console.log("sdasdsadsads");
+		await axios.get(url + '/index/queryLevelOneProductCategoryList').then(res => {
+			ctx.body = res.data;
+		})
+	})
 	/**
 	 *  获取一级分类的所有子分类
 	 */

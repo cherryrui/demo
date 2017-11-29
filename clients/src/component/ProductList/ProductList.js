@@ -144,19 +144,18 @@ class ProductList extends React.Component {
                     products: res.data.result.list,
                     sum: res.data.result.allRow,
                 })
-            } else {
-                message.error(res.data.message);
-            }
-        })
-    }
-
-    getLikeProduct = () => {
-        axios.get('/product/get-like-product.json').then(res => {
-            console.log(res.data);
-            if (res.data.isSucc) {
-                this.setState({
-                    like: res.date.result
-                })
+                if (res.data.result.allRow == 0) {
+                    //未搜索到产品，获取随机推荐
+                    axios.get('/product/get-auto-like-product.json').then(res => {
+                        if (res.data.isSucc) {
+                            this.setState({
+                                like: res.data.result
+                            })
+                        } else {
+                            message.error(res.data.message);
+                        }
+                    })
+                }
             } else {
                 message.error(res.data.message);
             }

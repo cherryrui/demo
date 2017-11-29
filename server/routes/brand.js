@@ -11,14 +11,17 @@ router.get('/get-recommend-brand.json', async(ctx, next) => {
 		let result = null;
 		let brand = [];
 		const param = ctx.request.body;
+		console.log(param);
 		var arrs = {};
 		for (var k in param) {
 			if (param.hasOwnProperty(k) && param[k] != '' && param[k] != undefined) {
 				arrs[k] = param[k];
 			}
 		}
-		arrs = querystring.stringify(arrs);
-		await axios.get(url + `/supplier/querySupplierList?${arrs}`).then(res => {
+		arrs = querystring.stringify(param);
+		console.log(arrs);
+		console.log(url + `/supplier/querySupplierList?${querystring.stringify(param)}`);
+		await axios.post(url + '/supplier/querySupplierList', querystring.stringify(param)).then(res => {
 			result = res.data;
 		})
 		ctx.body = result;

@@ -16,12 +16,15 @@ class TextEditor extends React.Component {
 		this.initEditor()
 	}
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps);
-		UE.getEditor('content').setContent(nextProps.content);
+		if (nextProps.content) {
+			UE.getEditor(this.props.id).setContent(nextProps.content);
+		}
 	}
 	componentWillUnmount() {
+		console.log("componentWillUnmount");
 		// 组件卸载后，清除放入库的id
 		UE.delEditor(this.props.id);
+
 	}
 	initEditor() {
 		const id = this.props.id;

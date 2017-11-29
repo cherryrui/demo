@@ -55,7 +55,8 @@ class Home extends React.Component {
             confirmloading: false,
             showCategory: false,
             canHiden: false,
-
+            showCategoryDetail: false,
+            categoryChild: [],
         };
         this.timer = false;
         this.cate_enter = false;
@@ -85,6 +86,12 @@ class Home extends React.Component {
 
     componentWillMount() {
         console.log("componentWillMount");
+        let canHiden = false;
+        if (this.props.location.pathname.indexOf('/page/') > -1) {
+            canHiden = true;
+        } else {
+            canHiden = false;
+        }
         if (sessionStorage.user) {
             this.props.getShoppingCart();
         }
@@ -97,6 +104,7 @@ class Home extends React.Component {
             this.setState({
                 categorys: res.data.categorys.result,
                 index: index,
+                canHiden: canHiden
             });
         });
     }
@@ -142,45 +150,87 @@ class Home extends React.Component {
             })
         }
     }
-    handleCategory = (index, name) => {
-        this.setState({
-            showCategory: false
-        })
-        if (typeof(index) == 'number') {
-            /*window.location.href = "/#/main/category-list/" + index;*/
-            this.props.history.pushState(null, "page/category-list/" + index + "/" + name);
-
-        }
-    }
     handleShow = (status) => {
         this.setState({
             showCategory: status
         })
     }
-    onMouse = (e) => {
+    onMouse = (e, index) => {
+        console.log(e, index);
         if (e == "enter") {
             /*console.log(this.timer);*/
             if (this.timer) {
                 clearTimeout(this.timer);
             }
             this.handleShow(true)
-        }
-        if (e == 'leave') {
+        } else if (e == 'leave') {
             this.timer = setTimeout(() => {
                 if (this.state.showCategory && !this.cate_enter) {
                     this.handleShow(false);
 
                 }
             }, 1000);
-        }
-
-        if (e == "cate_enter") {
+        } else if (e == "cate_enter") {
             this.cate_enter = true;
-        }
-        if (e == "cate_leave" && this.state.showCategory) {
+            this.handleCategory(index);
+            this.handleShowDetail(true);
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+        } else if (e == "cate_leave" && this.state.showCategory) {
             this.cate_enter = false;
-            this.handleShow(false)
+            this.timer = setTimeout(() => {
+                if (this.state.showCategoryDetail && !this.cate_enter) {
+                    this.handleShow(false);
+
+                }
+            }, 1000);
+        } else if (e == 'detail_enter') {
+            this.detail_enter = true;
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+        } else if (e == 'detail_leave' && this.state.showCategoryDetail) {
+            this.detail_enter = false;
+            this.timer = setTimeout(() => {
+                if (this.state.showCategoryDetail && !this.cate_enter) {
+                    this.handleShow(false);
+                    this.handleShowDetail(false);
+                }
+            }, 1000);
         }
+    }
+    handleCategory = (index) => {
+        let categoryList = this.state.categorys;
+        if (categoryList[index].children) {
+            this.setState({
+                categoryChild: categoryList[index].children,
+            })
+        } else {
+            axios.get(`/category/get-child-category.json?cid=${categoryList[index].categoryId}`).then(res => {
+                if (res.data.isSucc) {
+                    categoryList[index].children = res.data.result
+                    this.setState({
+                        categoryChild: res.data.result,
+                        categorys: categoryList,
+                    })
+                } else {
+                    message.error(res.data.message);
+                }
+            })
+        }
+    }
+    handleLeave = () {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.handleShow(false);
+        this.handleShowDetail(false);
+    }
+    handleShowDetail = (status) => {
+        this.setState({
+            showCategoryDetail: status
+        })
     }
     goHome = () => {
         this.props.history.pushState(null, "/");
@@ -206,7 +256,7 @@ class Home extends React.Component {
                 {this.props.cart.result?this.props.cart.result.list.map(item => {
                     return <Menu.Item>
                         <div className={css.cart_product}>
-                            <Link  to={"page/product-detail/" + item.productId}>
+                            <Link target="_blank" to={"page/product-detail/" + item.productId}>
                                 <img src={item.coverUrl+"@50w_50h_1e_1c.png"}/>
                             </Link>
                             <div className={css.product_info}>
@@ -240,13 +290,14 @@ class Home extends React.Component {
         <div className={css.header}>
             <div className={css.header_content}>
                 <div className={css.left}>       
-                    <p className={css.left_category}                 
+                    <Link target="_blank" to="page/category-list"><p className={css.left_category}                 
                     onMouseEnter={this.onMouse.bind(this,"enter")} onMouseLeave={this.onMouse.bind(this,"leave")} className={this.state.index == 0 ? css.active : css.title_category}>  
                        <Icon type="appstore" className={css.icon_category}/>
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
                         &nbsp;&nbsp;
                         <Icon type="caret-down" />
                     </p>
+                    </Link>
                 {this.tabs.map(item=> {
                     return <p className={this.state.index == item.key ? css.active : css.title} onClick={this.handleTabs.bind(this, item.key, item.url)}>
                         <FormattedMessage id={item.message_id} defaultMessage={item.default_message}/>
@@ -272,15 +323,29 @@ class Home extends React.Component {
                 </div>
             </div>
             </div>
-            {this.state.showCategory&&this.state.canHiden?<div className={css.categorys_drop}>
+            {this.state.showCategory&&this.state.canHiden?<div className={css.categorys_drop} onMouseLeave={this.handleLeave}>
                 <div className={css.categorys_body}>
-                    <div className={css.categorys_content} onMouseEnter={this.onMouse.bind(this,"cate_enter")} onMouseLeave={this.onMouse.bind(this,"cate_leave")}>
-                        {this.state.categorys.map(item=>{
-                            return <p className={css.drop_item} onClick={this.handleCategory.bind(this,item.categoryId,item.categoryName)}>
+                    <div className={css.categorys_content} onMouseLeave={this.onMouse.bind(this,"cate_leave")}>
+                        {this.state.categorys.map((item,index)=>{
+                            return index<10?<p className={css.drop_item} onMouseEnter={this.onMouse.bind(this,'cate_enter',index)} onClick={this.onMouse.bind(this,'cate_enter',index)}>
                             <img src={item.iconUrl?item.iconUrl+"@18w_18h_1e_1c.png":"../img/no_icon.png"}/>{item.categoryName}
-                            </p>
+                            </p>:""
                         })}
                     </div>
+                    {this.state.showCategoryDetail?<div onMouseEnter={this.onMouse.bind(this,"detail_enter")} onMouseLeave={this.onMouse.bind(this,"detail_leave")} className={css.category_detail}>
+                        {this.state.categoryChild.map((item,index)=>{
+                            return <div className={index==0?css.category_detail_item_first:css.category_detail_item}>
+                                <div className={css.category_detail_item_title}>{item.categoryName}</div>
+                                <div className={css.category_detail_item_sperator}>></div>
+                                <div className={css.category_detail_item_body}>
+                                    {item.childProductCategoryList.map((cate,cate_index)=>{
+                                        return <p className={cate_index==item.childProductCategoryList.length-1?css.category_detail_item_body_item_last:css.category_detail_item_body_item}>
+                                        <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>
+                                    })}
+                                </div>
+                            </div>
+                        })}
+                    </div>:""}
                 </div>
             </div>:""}
             {this.props.children}

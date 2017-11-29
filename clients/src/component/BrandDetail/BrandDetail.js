@@ -37,7 +37,7 @@ class BrandDetail extends React.Component {
 			brand: {},
 			category: [],
 			products: [],
-			pageSize: 12,
+			pageSize: 15,
 			current: 1,
 			total: 0,
 			sortType: 0, //排序名称
@@ -45,7 +45,7 @@ class BrandDetail extends React.Component {
 			cid: 0,
 			visible: false,
 		}
-		this.pageSizeOptions = ["12", "16", "20"];
+		this.pageSizeOptions = ["15", "20", "25"];
 		this.formatMessage = this.props.intl.formatMessage;
 	}
 	componentWillMount() {

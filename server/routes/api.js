@@ -21,7 +21,12 @@ router.get('/get-title-data.json', async(ctx, next) => {
 	.get('/get-main-data.json', async(ctx, next) => {
 		let brand = [],
 			category = [],
-			categoryList = [];
+			categoryList = [],
+			activity = null,
+			ads = [];
+		let param = {
+			activeId: 1
+		}
 		try {
 			await axios.get(url + '/index/queryProductCategoryList').then(res => {
 				category = res.data;
@@ -33,11 +38,24 @@ router.get('/get-title-data.json', async(ctx, next) => {
 			await axios.get(url + '/index/queryLevelOneProductCategoryList').then(res => {
 				categoryList = res.data;
 			});
-		} catch (e) {}
+			await axios.post(url + '/activity/queryNextActivity').then(res => {
+				activity = res.data.result;
+				console.log(42, activity);
+			})
+			await axios.post(url + '/ads/queryAdsByTime', querystring.stringify({
+				positionId: 1
+			})).then(res => {
+				ads = res.data.result;
+			})
+		} catch (e) {
+
+		}
 		ctx.body = {
 			category: category,
 			brand: brand,
-			categoryList: categoryList
+			categoryList: categoryList,
+			activity: activity,
+			ads: ads,
 		};
 	})
 	/**

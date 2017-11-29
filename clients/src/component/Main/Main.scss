@@ -4,7 +4,7 @@
     margin-bottom: 20px;
 }
 .categorys_content{
-    width: 220px;
+    width: 225px;
     flex-shrink: 0;
     .drop_icon{
         text-align: right;
@@ -31,6 +31,52 @@
     }
     .drop_item:hover{
       background: $theme-color;
+    }
+}
+.category_detail{
+    position: absolute;
+    clear: both;
+    width: 875px;
+    height: 400px;
+    background: white;
+    margin-left: 225px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    padding: 0px 20px;
+    overflow: auto;
+    .category_detail_item_first{
+        display: flex;
+        padding-bottom: 10px;
+        font-size: 12px;
+    }
+    .category_detail_item{
+        @extend .category_detail_item_first;
+        border-top: 1px dashed $border-color;
+    }
+    .category_detail_item_title{
+        width: 140px;
+        text-align: right;
+        flex-shrink: 0;
+        font-weight: bold;
+        margin-top: 10px;
+        padding-right: 2px;
+    }
+    .category_detail_item_sperator{
+        font-weight: bold;
+        margin-top: 10px;
+        padding-right: 2px;
+    }
+    .category_detail_item_body{
+        display: flex;
+        flex-wrap: wrap;
+        .category_detail_item_body_item{
+            padding: 0 10px;
+            margin-top: 10px;
+            border-left: 1px solid $border-color;
+        }
+        .category_detail_item_body_item_last{
+            @extend .category_detail_item_body_item;
+            border-right: 1px solid $border-color;
+        }
     }
 }
 .slip{
@@ -73,6 +119,10 @@
 .main_right{
     display: flex;
     flex-direction: column;
+    a{
+      width: 200px;
+      height: 200px;
+    }
     img{
         width: 200px;
         height: 200px;
@@ -135,6 +185,9 @@
     margin-top: 10px;
     width: 1110px;
     margin-left: -5px;
+    a{
+      text-decoration: none;
+    }
     .activity_slider_item_right{
         border: none;
         width: 175px!important;
@@ -163,11 +216,13 @@
             text-overflow: ellipsis;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            height: 42px;
         }
         .activity_body_item_price{
             padding: 0px 10px 10px;
             display: flex;
             justify-content: space-between;
+            align-items: baseline;
             span{
                 font-size: 20px;
                 font-weight: bold;
@@ -180,7 +235,7 @@
         .activity_body_item_show{
             position: absolute;
             width: 175px;
-            height: 252px;
+            height: 258px;
             background: rgba(0,0,0,0.6);
             top: 0px;
             text-align: center;
@@ -349,10 +404,11 @@
     flex-grow: 1;
     flex-wrap: wrap;
     align-content: space-between;
-    justify-content: space-evenly;
+    padding-left: 10px;
     .product{
       width: 180px;
       height: 260px;
+      margin-right: 10px;
     }
   }
 }
