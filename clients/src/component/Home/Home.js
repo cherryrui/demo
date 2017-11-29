@@ -221,6 +221,7 @@ class Home extends React.Component {
         }
     }
     handleLeave = ()=>{
+        console.log("handle leave");
         if (this.timer) {
             clearTimeout(this.timer);
         }
@@ -323,8 +324,8 @@ class Home extends React.Component {
                 </div>
             </div>
             </div>
-            {this.state.showCategory&&this.state.canHiden?<div className={css.categorys_drop} onMouseLeave={this.handleLeave}>
-                <div className={css.categorys_body}>
+            {this.state.showCategory&&this.state.canHiden?<div className={css.categorys_drop}>
+                <div className={css.categorys_body} onMouseLeave={this.handleLeave}>
                     <div className={css.categorys_content} onMouseLeave={this.onMouse.bind(this,"cate_leave")}>
                         {this.state.categorys.map((item,index)=>{
                             return index<10?<p className={css.drop_item} onMouseEnter={this.onMouse.bind(this,'cate_enter',index)} onClick={this.onMouse.bind(this,'cate_enter',index)}>
