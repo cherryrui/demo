@@ -220,7 +220,7 @@ class Home extends React.Component {
             })
         }
     }
-    handleLeave = () {
+    handleLeave = ()=>{
         if (this.timer) {
             clearTimeout(this.timer);
         }
