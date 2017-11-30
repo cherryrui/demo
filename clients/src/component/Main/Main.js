@@ -357,7 +357,7 @@ class LimitSale extends React.Component {
             <p className={css.activity_middle}>
                 <FormattedMessage id="main.activity.title" defaultMessage=""/>
             </p>
-            <p className={css.activity_right}>
+            <p className={css.activity_right} style={{fontSize:"16px",fontWeight:"bold"}}>
                 <FormattedMessage id="main.time.before" defaultMessage=""/>
                 <p className={css.main_activity_time}>
                     {moment(this.state.time).utc().format('HH:mm:ss').split(":").map((item,index)=>{
