@@ -594,7 +594,7 @@ class ProductDetail extends React.Component {
                             {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} max={this.state.product.inventory} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
                         <div className={css.bottom_right}>
-                            <Button disabled={this.state.disabled} style={{color:"white"}} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,1)}>
+                            <Button disabled={this.state.disabled} style={{color:"white !important"}} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,1)}>
                                 <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
                             </Button>
                             {/*<Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
