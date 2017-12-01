@@ -107,7 +107,7 @@ const en_US = {
     "shopping.cart": "CART",
     "product.detail.add": "Add To Cart",
     "product.detail.add.success": "Add cart successfully",
-    "product.detail.buy": "Buy Now",
+    "product.detail.buy": "Immediate buying",
     "product.detail.see": "Check Detail",
     "product.detail.information": "Product Information",
     "product.detail.specification": "Specifications",

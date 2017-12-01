@@ -74,12 +74,54 @@ class ProductDetail extends React.Component {
             prices: [],
             packInfo: {},
             disabled: false,
+            time: 0,
+            activity: {},
+            status: 0,
         };
         this.formatMessage = this.props.intl.formatMessage;
     }
 
     componentWillMount() {
         this.getData(this.props.params.id);
+        
+        
+    }
+    activeChange = () =>{
+        console.log(22222,this.state.status)
+        if(this.state.status==-1){
+
+        }else{
+            let activity = {
+            time:new Date(),
+            startTime:'2017-12-01 15:29:00',
+            endTime:'2017-12-01 15:30:00'
+            }/*this.props.activity;*/
+            let time = 0;
+            if (moment(activity.time) - moment(activity.startTime) >= 0 && moment(activity.time) - moment(activity.endTime) < 0) {
+                activity.status = 1; //进行中
+                time = moment(activity.endTime).diff(moment(activity.time));
+                console.log(1111)
+            } else if (moment(activity.time) - moment(activity.startTime) < 0) {
+                activity.status = 0; //未开始
+                console.log(2222)
+                /*time = moment(moment(activity.startTime) - moment(activity.time));*/
+                time = moment(activity.startTime).diff(moment(activity.time));
+            } else if (moment(activity.time) - moment(activity.endTime) >= 0) {
+                console.log(3333)
+                activity.status = 2; //已结束
+                time = 0;
+            }
+            time = time;
+            console.log(moment(time).utc().format('DD HH:mm:ss'));
+            console.log(moment(time).dayOfYear());
+            this.setState({
+                time: time,
+                status: activity.status,
+                activity:activity
+            })
+        }
+        
+        console.log(222211,this.state.status)
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.params.id != this.props.params.id) {
@@ -91,6 +133,7 @@ class ProductDetail extends React.Component {
     componentDidMount() {
         //this.refs.product_detail.scrollIntoView();
         this.product_detail.scrollIntoView();
+        this.interval = setInterval(this.plusTime, 1000);
     }
 
     getData(id) {
@@ -129,6 +172,9 @@ class ProductDetail extends React.Component {
                     properties: properties,
                     specs: specs,
                     packInfo: res.data.result.packInfo,
+                    status:0
+                },()=>{
+                    this.activeChange();
                 })
             } else {
                 message.error(res.dada.message);
@@ -360,6 +406,66 @@ class ProductDetail extends React.Component {
         /*   this.refs.mask.style.left = "100px";
            this.refs.mask.style.left = "100px";*/
     }
+    /*componentWillMount() {
+        let activity = {
+            time:new Date(),
+            startTime:'2017-11-30 14:24:00',
+            endTime:'2017-11-30 15:50:00'
+        }//this.props.activity;
+        let time = 0;
+        if (moment(activity.time) - moment(activity.startTime) >= 0 && moment(activity.time) - moment(activity.endTime) < 0) {
+            activity.status = 1; //进行中
+            time = moment(activity.endTime).diff(moment(activity.time));
+        } else if (moment(activity.time) - moment(activity.startTime) < 0) {
+            activity.status = 0; //未开始
+            //time = moment(moment(activity.startTime) - moment(activity.time));
+            time = moment(activity.startTime).diff(moment(activity.time));
+        } else if (moment(activity.time) - moment(activity.endTime) > 0) {
+            activity.status = 2; //已结束
+            time = 0;
+        }
+        time = time;
+        console.log(moment(time).utc().format('DD HH:mm:ss'));
+        console.log(moment(time).dayOfYear());
+        this.setState({
+            time: time,
+            status: activity.status,
+        })
+    }*/
+    /*componentDidMount() {
+        this.interval = setInterval(this.plusTime, 1000);
+    }*/
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    plusTime = () => {
+        if(this.state.status!=-1 && this.state.status!=2){
+            let activity = this.state.activity;
+            activity.status=this.state.status;
+            console.log('212112w',activity)
+            console.log(444444444,this.state.status)
+            if (this.state.time - 1000 > 0) {
+                let time = this.state.time - 1000;
+                this.setState({
+                    time: time
+                });
+            } else if (this.state.status == 0) { //即将开始
+                let time = moment(activity.endTime).diff(moment(activity.startTime));
+                console.log(888888,time,activity)
+                this.setState({
+                    status: 1,
+                    time: time,
+                })
+            } else if (this.state.activity.status == 1) {
+                console.log('xxxxxx')
+                this.setState({
+                    status: 2,
+                    time: 0
+                })
+            }
+        }
+        
+    }
     render() {
         console.log(this.state.current);
         const {
@@ -408,9 +514,23 @@ class ProductDetail extends React.Component {
                 <div className={css.middle}>
                     <div className={css.product_name}>
 	           			{this.state.product.productName}
+                    </div>{console.log(333333,this.state.status)}
+                    <div className={this.state.status==2||this.state.status==-1?css.promotionss:css.promotions}>
+                        <p className={css.activity_right}>
+                        <FormattedMessage id="main.time.before" defaultMessage=""/>
+                        <p className={css.main_activity_time}>
+                            {moment(this.state.time).utc().format('HH:mm:ss').split(":").map((item,index)=>{
+                                return <p className={css.main_activity_time_item}>
+                                <span className={css.main_activity_time_data}>{index==0&&moment(this.state.time).dayOfYear()>1?((moment(this.state.time).dayOfYear()-1)*24+parseInt(item)):item}</span>
+                                {index==2?"":<span className={css.main_activity_time_sperator}>:</span>}</p>
+                            })}</p>
+                         <FormattedMessage id={this.state.status==0?"main.time.start.after":"main.time.end.after"} defaultMessage=""/>
+                        </p>
                     </div>
                     <div className={css.product_price}>
-                        <p className={css.price_info}>
+                    <div className={this.state.status==0?css.unitprices_s:this.state.status==1?css.unitprice:this.status==2?css.unitprices:css.unitprices}><span style={{fontSize:"18px"}}><FormattedMessage id="product.detail.price" defaultMessage="单价"/></span> : &nbsp;<span style={{fontSize:"34px"}}>$90</span></div>
+                        <div style={{justifyContent: "space-between",display:"flex",width:"100%"}}>
+                        <p className={this.state.status==1?css.price_infos:css.price_info}>
                             <FormattedMessage id="product.detail.price" defaultMessage="单价"/>
                             &nbsp;:
                             <span className={css.price}>
@@ -437,6 +557,7 @@ class ProductDetail extends React.Component {
                                <FormattedMessage id="product.detail.contact" defaultMessage="联系客服"/>
                             </span>
                         </p>
+                        </div>
                     </div>
                     <div className={css.item}>
                         <p className={css.title}>
@@ -473,12 +594,16 @@ class ProductDetail extends React.Component {
                             {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} max={this.state.product.inventory} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
                         <div className={css.bottom_right}>
-                            <Button disabled={this.state.disabled} className={appcss.button_green} onClick={this.handleAddCart.bind(this,1)}>
+                            <Button disabled={this.state.disabled} style={{color:"white"}} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,1)}>
                                 <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
                             </Button>
-                            <Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
+                            {/*<Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
                                 <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
-                            </Button>
+                            </Button>*/}
+                            <div className={css.shopcar} disabled={this.state.disabled} onClick={this.handleAddCart.bind(this,2)}>
+                                <i class="iconfont icon-DYC-7" style={{color:"#ffc70d",paddingRight:"5px"}}></i>
+                                <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
+                            </div>
                         </div>
                     </div>
                 </div>

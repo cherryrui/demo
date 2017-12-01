@@ -212,6 +212,7 @@ class Supplier extends React.Component {
                     values.district = values.residence[3];
                     values.LevelOneProductCategorys = [];
                     values.LevelTwoProductCategorys = [];
+                    values.contactPhone = values.tel;
                     this.state.category.map(item => {
                         values.LevelOneProductCategorys.push(item.category_id[0]);
                         values.LevelTwoProductCategorys.push(item.category_id[1]);
@@ -465,6 +466,18 @@ class Supplier extends React.Component {
                     {getFieldDecorator('contactPerson', {
                         rules: [{
                             required: true, message: this.formatMessage({id: 'post.linkman.info'}),
+                        }],
+                    })(
+                        <Input className={css.supplier_input}/>
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label={this.formatMessage({id: 'post.tel'})}
+                >
+                    {getFieldDecorator('tel', {
+                        rules: [{
+                            required: true, message: this.formatMessage({id: 'register.tel.warn'}),
                         }],
                     })(
                         <Input className={css.supplier_input}/>

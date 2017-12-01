@@ -61,7 +61,7 @@
 	.product_price{
 		background: $item-color;
 		display: flex;
-		justify-content: space-between;
+		/*justify-content: space-between;*/
 		margin-bottom: 10px;
 		.price_info{
 			font-size: 18px;
@@ -69,6 +69,14 @@
 			display: flex;
     		align-items: center;
     		padding: 30px 0px 30px 20px;
+		}
+		.price_infos{
+			font-size: 18px;
+			line-height: 18px;
+			display: flex;
+    		align-items: center;
+    		padding: 30px 0px 30px 20px;
+    		text-decoration: line-through;
 		}
 		.price{
 			font-size: 34px;
@@ -463,4 +471,80 @@
 .product_spec{
 	background: white;
 	padding-bottom: 20px;
+}
+.unitprice{
+	background: red;
+    line-height: 90px;
+    font-size: 18px;
+    width: 200px;
+    color:white;
+    display:flex;
+    justify-content: center;
+    /* display: none; */
+}
+.unitprices{
+	background: red;
+    line-height: 90px;
+    font-size: 18px;
+    width: 200px;
+    color:white;
+    /*display:flex;*/
+    justify-content: center;
+    display: none;
+}
+.unitprices_s{
+	background: red;
+    line-height: 90px;
+    font-size: 18px;
+    width: 200px;
+    color:white;
+    display:flex;
+    justify-content: center;
+    text-decoration: line-through;
+}
+.promotions{
+	display: block;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+.promotionss{
+	display: none;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+.times{
+	background:black;
+	color:white;
+}
+.activity_right{
+  padding-right: 30px;
+  display: flex;
+  align-items: baseline;
+  .main_activity_time{
+    display: flex;
+    margin: 0px 5px;
+  }
+  .main_activity_time_item{
+
+  }
+  .main_activity_time_data{
+    background: black;
+    color: white;
+    font-size: 20px;
+    padding: 2px 14px;
+    border-radius: 2px;
+    width: 56px;
+  }
+  .main_activity_time_sperator{
+    font-size: 20px;
+    padding: 2px;
+    font-weight: bold;
+  }
+}
+.shopcar{
+	display:flex;
+	padding-left: 20px;
+    line-height: 40px;
+    font-size: 15px;
+    cursor: pointer;
 }

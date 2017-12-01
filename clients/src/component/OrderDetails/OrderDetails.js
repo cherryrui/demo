@@ -278,7 +278,7 @@ class OrderDetails extends React.Component {
                 </div>
                 }):""}
             <div className={css.pay_footer}>
-                <a className={css.preview}><FormattedMessage id="orderdetails.preview" defaultMessage="预览贸易合同"/></a>
+                {/*<a className={css.preview}><FormattedMessage id="orderdetails.preview" defaultMessage="预览贸易合同"/></a>*/}
                 <Button size="large"  style={{ marginRight:10}} onClick={this.handleClick.bind(this,1)} type="primary" className={appcss.button_theme}>
                     <FormattedMessage  id="orderdetails.return" defaultMessage="返回"/>
                 </Button>
