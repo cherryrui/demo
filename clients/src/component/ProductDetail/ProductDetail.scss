@@ -149,6 +149,7 @@
     		flex-grow: 1;
     		button{
     			margin-left: 20px;
+    			color:white !important;
     		}
 		}
 	}
@@ -547,4 +548,7 @@
     line-height: 40px;
     font-size: 15px;
     cursor: pointer;
+}
+.button_color{
+	color:white !important;
 }
