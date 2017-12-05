@@ -72,6 +72,7 @@ const en_US = {
     "app.agent": "Agent",
     "app.file.format": "File types：pdf,xlsx,docx",
     "app.picture.format": "Picture types ：JPG,png",
+    "app.level.warm":"Insufficient permissions !",
     "main.time.before": "The rest",
     "main.time.end.after": "End run",
     "main.time.start.after": "Start run",

@@ -469,4 +469,16 @@ router.get('/get-category.json', async(ctx, next) => {
 		})
 		ctx.body = result;
 	})
+	.get('/get-activeproductbyId.json',async(ctx)=>{
+		let result = null;
+		var id = ctx.query.id;
+		const param = {
+			productId:id
+		};
+		await axios.post(url+'/activity/queryActiveProductById',querystring.stringify(param)).then(res=>{
+			result = res.data;
+			console.log(res.data)
+		})
+		ctx.body = result;
+	})
 module.exports = router;

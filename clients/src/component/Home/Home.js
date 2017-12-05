@@ -305,7 +305,7 @@ class Home extends React.Component {
                     </p>
                 })}
                 </div>
-                <div className={css.right}>
+                <div className={css.right}>{console.log(this.props.cart)}
                     <Search
                         placeholder={formatMessage({id:"home.input_warn"})}
                         style={{width: 300, height: "30px",borderRadius:"30PX"}}

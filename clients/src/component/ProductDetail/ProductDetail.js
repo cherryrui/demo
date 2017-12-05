@@ -77,6 +77,9 @@ class ProductDetail extends React.Component {
             time: 0,
             activity: {},
             status: 0,
+            discount:0,
+            user:JSON.parse(sessionStorage.getItem("user")),
+            agentprice:0,
         };
         this.formatMessage = this.props.intl.formatMessage;
     }
@@ -87,33 +90,31 @@ class ProductDetail extends React.Component {
         
     }
     activeChange = () =>{
-        console.log(22222,this.state.status)
+        /*console.log(22222,this.state.status)*/
         if(this.state.status==-1){
 
         }else{
-            let activity = {
+            /*let activity = {
             time:new Date(),
             startTime:'2017-12-01 15:29:00',
             endTime:'2017-12-01 15:30:00'
             }/*this.props.activity;*/
+            let activity = this.state.activity;
             let time = 0;
             if (moment(activity.time) - moment(activity.startTime) >= 0 && moment(activity.time) - moment(activity.endTime) < 0) {
                 activity.status = 1; //进行中
                 time = moment(activity.endTime).diff(moment(activity.time));
-                console.log(1111)
             } else if (moment(activity.time) - moment(activity.startTime) < 0) {
                 activity.status = 0; //未开始
-                console.log(2222)
                 /*time = moment(moment(activity.startTime) - moment(activity.time));*/
                 time = moment(activity.startTime).diff(moment(activity.time));
             } else if (moment(activity.time) - moment(activity.endTime) >= 0) {
-                console.log(3333)
                 activity.status = 2; //已结束
                 time = 0;
             }
             time = time;
-            console.log(moment(time).utc().format('DD HH:mm:ss'));
-            console.log(moment(time).dayOfYear());
+            /*console.log(moment(time).utc().format('DD HH:mm:ss'));
+            console.log(moment(time).dayOfYear());*/
             this.setState({
                 time: time,
                 status: activity.status,
@@ -121,7 +122,7 @@ class ProductDetail extends React.Component {
             })
         }
         
-        console.log(222211,this.state.status)
+        /*console.log(222211,this.state.status)*/
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.params.id != this.props.params.id) {
@@ -138,47 +139,66 @@ class ProductDetail extends React.Component {
 
     getData(id) {
         axios.get(`/product/get-product-byId.json?id=${id}`).then(res => {
-            if (res.data.isSucc) {
-                this.product_detail.scrollIntoView(true);
-                let product = res.data.result.productAndSupplier;
-                product.imgs = res.data.result.imgs ? res.data.result.imgs : [];
-                let picture = {
-                    imgUrl: product.productImg,
-                    imgId: 0,
-                }
-                product.imgs.splice(0, 0, picture)
-                product.productNum = product.moq;
-                let specs = res.data.result.specs;
-                let properties = res.data.result.properties;
-                specs.map(item => {
-                    item.productSpecs = JSON.parse(item.productSpecs);
-                })
-                if (product.propertyCustom) {
-                    let custom = JSON.parse(product.propertyCustom);
-                    for (let key in custom) {
-                        console.log(key, custom[key])
-                        properties.push({
-                            propertyName: key,
-                            propertyVal: [{
-                                propertyValue: custom[key]
-                            }]
-                        })
+            axios.get(`/product/get-activeproductbyId.json?id=${id}`).then(ares=>{
+                if (res.data.isSucc) {
+                    this.product_detail.scrollIntoView(true);
+                    let product = res.data.result.productAndSupplier;
+                    product.imgs = res.data.result.imgs ? res.data.result.imgs : [];
+                    let picture = {
+                        imgUrl: product.productImg,
+                        imgId: 0,
                     }
+                    product.imgs.splice(0, 0, picture)
+                    product.productNum = product.moq;
+                    let specs = res.data.result.specs;
+                    let properties = res.data.result.properties;
+                    specs.map(item => {
+                        item.productSpecs = JSON.parse(item.productSpecs);
+                    })
+                    if (product.propertyCustom) {
+                        let custom = JSON.parse(product.propertyCustom);
+                        for (let key in custom) {
+                            console.log(key, custom[key])
+                            properties.push({
+                                propertyName: key,
+                                propertyVal: [{
+                                    propertyValue: custom[key]
+                                }]
+                            })
+                        }
+                    }
+                    var statusss;
+                    var activity = {};
+                    var discount;
+                    if(ares.data.code==138){
+                        statusss = 0;
+                        activity.time = new Date();
+                        activity.startTime = ares.data.result[0].start_time;
+                        activity.endTime = ares.data.result[0].end_time;
+                        discount = ares.data.result[0].discount;
+                        console.log(234,ares.data.result,activity)
+                    }else{
+                        statusss = -1;
+                    }
+                    this.setState({
+                        product: product,
+                        curImg: res.data.result.imgs.length > 0 ? res.data.result.imgs[0].imgUrl : "",
+                        productInfo: res.data.result.productInfo,
+                        properties: properties,
+                        specs: specs,
+                        packInfo: res.data.result.packInfo,
+                        status:statusss,
+                        activity:activity,
+                        discount:discount,
+                        agentprice:ares.data.code==137?0:ares.data.result[0].price_agent,
+                    },()=>{
+                        this.activeChange();
+                    })
+                } else {
+                    message.error(res.dada.message);
                 }
-                this.setState({
-                    product: product,
-                    curImg: res.data.result.imgs.length > 0 ? res.data.result.imgs[0].imgUrl : "",
-                    productInfo: res.data.result.productInfo,
-                    properties: properties,
-                    specs: specs,
-                    packInfo: res.data.result.packInfo,
-                    status:0
-                },()=>{
-                    this.activeChange();
-                })
-            } else {
-                message.error(res.dada.message);
-            }
+            })
+            
 
         })
         axios.get(`/product/get-like-product.json?id=${id}`).then(res => {
@@ -237,6 +257,13 @@ class ProductDetail extends React.Component {
                         let product = this.state.product;
                         product.id = -1;
                         product.coverUrl = product.productImg;
+                        if(this.state.user){
+                            if(this.state.user.userIdentity==1){
+                                product.price = this.state.agentprice;
+                            }else if(this.state.status==1){
+                                product.price = (this.state.product.price*this.state.discount*0.1).toFixed(2);
+                            }
+                        }
                         let selectSpecs = [];
                         console.log(this.state.specs);
                         this.state.specs.map(item => {
@@ -282,7 +309,7 @@ class ProductDetail extends React.Component {
                     });
                 }
             } else {
-                console.log("dada", this.specify.style)
+                /*console.log("dada", this.specify.style)*/
                 this.specify.style.border = "2px solid #ffc70d";
                 this.specify.style.padding = "10px";
 
@@ -442,8 +469,8 @@ class ProductDetail extends React.Component {
         if(this.state.status!=-1 && this.state.status!=2){
             let activity = this.state.activity;
             activity.status=this.state.status;
-            console.log('212112w',activity)
-            console.log(444444444,this.state.status)
+            /*console.log('212112w',activity)
+            console.log(444444444,this.state.status)*/
             if (this.state.time - 1000 > 0) {
                 let time = this.state.time - 1000;
                 this.setState({
@@ -451,13 +478,13 @@ class ProductDetail extends React.Component {
                 });
             } else if (this.state.status == 0) { //即将开始
                 let time = moment(activity.endTime).diff(moment(activity.startTime));
-                console.log(888888,time,activity)
+                /*console.log(888888,time,activity)*/
                 this.setState({
                     status: 1,
                     time: time,
                 })
             } else if (this.state.activity.status == 1) {
-                console.log('xxxxxx')
+                /*console.log('xxxxxx')*/
                 this.setState({
                     status: 2,
                     time: 0
@@ -467,7 +494,7 @@ class ProductDetail extends React.Component {
         
     }
     render() {
-        console.log(this.state.current);
+        /*console.log(this.state.current);*/
         const {
             intl: {
                 formatMessage
@@ -514,8 +541,8 @@ class ProductDetail extends React.Component {
                 <div className={css.middle}>
                     <div className={css.product_name}>
 	           			{this.state.product.productName}
-                    </div>{console.log(333333,this.state.status)}
-                    <div className={this.state.status==2||this.state.status==-1?css.promotionss:css.promotions}>
+                    </div>
+                    <div className={this.state.status==2||this.state.status==-1 || (this.state.user && this.state.user.userIdentity==1)?css.promotionss:css.promotions}>
                         <p className={css.activity_right}>
                         <FormattedMessage id="main.time.before" defaultMessage=""/>
                         <p className={css.main_activity_time}>
@@ -528,13 +555,13 @@ class ProductDetail extends React.Component {
                         </p>
                     </div>
                     <div className={css.product_price}>
-                    <div className={this.state.status==0?css.unitprices_s:this.state.status==1?css.unitprice:this.status==2?css.unitprices:css.unitprices}><span style={{fontSize:"18px"}}><FormattedMessage id="product.detail.price" defaultMessage="单价"/></span> : &nbsp;<span style={{fontSize:"34px"}}>$90</span></div>
+                    <div className={this.state.user&&this.state.user.userIdentity==1?css.unitprices:this.state.status==0?css.unitprices_s:this.state.status==1?css.unitprice:this.status==2?css.unitprices:css.unitprices}><span style={{fontSize:"18px"}}><FormattedMessage id="product.detail.price" defaultMessage="单价"/></span> : &nbsp;<span style={{fontSize:"34px"}}>${(this.state.product.price*this.state.discount*0.1).toFixed(2)}</span></div>
                         <div style={{justifyContent: "space-between",display:"flex",width:"100%"}}>
-                        <p className={this.state.status==1?css.price_infos:css.price_info}>
+                        <p className={this.state.user&&this.state.user.userIdentity==1?css.price_info:this.state.status==1?css.price_infos:css.price_info}>
                             <FormattedMessage id="product.detail.price" defaultMessage="单价"/>
                             &nbsp;:
                             <span className={css.price}>
-                                ${this.state.product.price}
+                                ${this.state.user?this.state.user.userIdentity==1?this.state.agentprice:this.state.product.price:this.state.product.price}
                             </span>
                             {this.state.product.priceDiscounts?<span className={css.off}>{(this.state.product.price/this.state.product.priceDiscounts).toFixed(2)}% off
                             </span>:""}
@@ -657,7 +684,7 @@ class ProductDetail extends React.Component {
 }
 class Information extends React.Component {
     render() {
-        console.log(this.props.data)
+       /* console.log(this.props.data)*/
         return <div>
             <Specification data={this.props.properties}/>
             {this.props.data.length>0?this.props.data.map(item=> {
@@ -714,7 +741,7 @@ class Review extends React.Component {
 class Price extends React.Component {
 
     render() {
-        console.log(this.props.data);
+        /*console.log(this.props.data);*/
         return <div>
             {this.props.data.length>0?<div className={css.price_body}>
                 <VictoryChart

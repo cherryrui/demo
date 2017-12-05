@@ -70,6 +70,7 @@ const zh_CN = {
     "app.bind.email": "邮箱绑定",
     "app.modify.email": "邮箱修改",
     "app.agent": "代理商",
+    "app.level.warm":"权限不足!",
     "main.time.before": "剩余",
     "main.time.end.after": "结束",
     "main.time.start.after": "开始",
