@@ -53,6 +53,7 @@ class CartList extends React.Component {
             selectedRowKeys: [],
             select_all: false,
             sum: 0,
+            user:JSON.parse(sessionStorage.getItem("user")),
         }
         this.user = JSON.parse(sessionStorage.user)
         this.formatMessage = this.props.intl.formatMessage;
@@ -82,7 +83,7 @@ class CartList extends React.Component {
             width: "110px",
             className: css.table_col,
             render: (record) => <span className={css.table_price}>
-            ${record.itemPrice?record.itemPrice:record.price}</span>
+            ${this.state.user&&this.state.user.userIdentity==1?record.agentPrice:record.itemPrice?record.itemPrice:record.price}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "140px",
@@ -122,7 +123,7 @@ class CartList extends React.Component {
         axios.get('/cart/get-carts.json').then(res => {
             if (res.data.isSucc) {
                 res.data.result.list.map(item => {
-                    item.price = item.itemPrice ? item.itemPrice : item.price;
+                    item.price = this.state.user&&this.state.user.userIdentity==1?item.agentPrice:item.itemPrice ? item.itemPrice : item.price;
                     item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
                 })
                 this.setState({
