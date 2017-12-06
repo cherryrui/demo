@@ -107,6 +107,7 @@ class Agent extends React.Component {
                     param.province = values.residence[1];
                     param.city = values.residence[2];
                     param.district = values.residence[3];
+                    param.contactPhone = values.tel;
                     param.businessLicense = this.img_front;
                     param.businessLicenseB = this.img_back;
                     axios.post('/user/become-agent.json', param).then(res => {
@@ -270,6 +271,18 @@ class Agent extends React.Component {
                         {getFieldDecorator('contactPerson',{
                             rules: [{
                               required: true, message: this.formatMessage({id: 'quotation.contact.name'}),
+                            }],
+                        })(
+                            <Input className={css.agent_input}/>
+                        )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                        label={this.formatMessage({id: 'post.tel'})}
+                    >
+                        {getFieldDecorator('tel',{
+                            rules: [{
+                              required: true, message: this.formatMessage({id: 'register.tel.warn'}),
                             }],
                         })(
                             <Input className={css.agent_input}/>

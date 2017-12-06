@@ -41,40 +41,46 @@ class PostWant extends React.Component {
 		this.state = {
 			create_time: '',
 			demandWay: 1,
+			user:JSON.parse(sessionStorage.getItem("user")),
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
-	componentDidMount() {
+	/*componentDidMount() {
 		this.postwant.scrollIntoView();
-	}
+	}*/
 	handleSubmit = (e) => {
-		e.preventDefault();
-		this.props.form.validateFieldsAndScroll((err, values) => {
-			if (!err) {
-				let param = values;
-				param.time = this.state.create_time;
-				param.demandWay = this.state.demandWay;
-				param.uploadFileUrl = [];
-				values.file.map(item => {
-					param.uploadFileUrl.push(item.response.url);
-				})
-				param.uploadFileUrl = JSON.stringify(param.uploadFileUrl);
-				delete param.file;
-				axios.post('api/demand-controller.json', param).then(res => {
-					if (res.data.isSucc) {
-						this.props.history.pushState(null, "/");
-					} else if (res.data.code == 104) {
-						this.setState({
-							visible: true
-						})
-					} else {
-						message.error({
-							reason: res.data.message
-						})
-					}
-				})
-			}
-		})
+		if(this.state.user && this.state.user.vip==5){
+			e.preventDefault();
+			this.props.form.validateFieldsAndScroll((err, values) => {
+				if (!err) {
+					let param = values;
+					param.time = this.state.create_time;
+					param.demandWay = this.state.demandWay;
+					param.uploadFileUrl = [];
+					values.file.map(item => {
+						param.uploadFileUrl.push(item.response.url);
+					})
+					param.uploadFileUrl = JSON.stringify(param.uploadFileUrl);
+					delete param.file;
+					axios.post('api/demand-controller.json', param).then(res => {
+						if (res.data.isSucc) {
+							/*this.props.history.pushState(null, "/");*/
+						} else if (res.data.code == 104) {
+							this.setState({
+								visible: true
+							})
+						} else {
+							message.error({
+								reason: res.data.message
+							})
+						}
+					})
+				}
+			})
+		}else{
+			message.error(this.formatMessage({ id:'app.level.warm'}))
+		}
+		
 	}
 	onChanges = (date, dateString) => {
 		console.log(date, dateString)
