@@ -399,7 +399,7 @@ class Category extends React.Component {
                                 })}
                             </div>
                             <div className={css.brand_button}>
-                                <Link target="_blank" to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+item.levleOneProductCategory.categoryName}>
+                                <Link target="_blank" to={"page/category-list/"+item.levleOneProductCategory.categoryId+"/"+index}>
                                     <FormattedMessage id="app.more" defaultMessage="更多"/>
                                 </Link>
                             </div>

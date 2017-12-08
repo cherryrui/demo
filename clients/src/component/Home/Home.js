@@ -342,7 +342,7 @@ class Home extends React.Component {
                                 <div className={css.category_detail_item_body}>
                                     {item.childProductCategoryList.map((cate,cate_index)=>{
                                         return <p className={cate_index==item.childProductCategoryList.length-1?css.category_detail_item_body_item_last:css.category_detail_item_body_item}>
-                                        <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>
+                                        <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+(cate.categoryName).replace(/\//g,'_')}>{cate.categoryName}</Link></p>
                                     })}
                                 </div>
                             </div>

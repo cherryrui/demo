@@ -25,10 +25,11 @@ class CategoryList extends React.Component {
         this.state = {
             category: [],
             categoryList: [],
-            select: 0,
+            select: this.props.params.index?parseInt(this.props.params.index):0,
         }
     }
     componentWillMount() {
+        /*console.log(this.props.params)*/
         axios.get('/category/get-first-category.json').then(res => {
             if (res.data.isSucc) {
                 this.setState({
@@ -58,6 +59,7 @@ class CategoryList extends React.Component {
      */
     getCategory = () => {
         let cid = this.state.categoryList[this.state.select].categoryId;
+        /*console.log(cid)*/
         axios.get(`/category/get-child-category.json?cid=${cid}`).then(res => {
             if (res.data.isSucc) {
                 this.setState({

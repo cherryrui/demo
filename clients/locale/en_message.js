@@ -102,7 +102,7 @@ const en_US = {
     "main.post.descrip": "If there is no product you need in the website,please submit the demand form directly here.We will purchase according to your requirements",
     "main.post": "POST YOUR WANT",
     "category.list.search": "{search}",
-    "brand.product.sum": "Total {total} product",
+    "brand.product.sum": "Total {total} products",
     "brand.product.rate": "Rating",
     "login.login.title": "USER LOGIN",
     "shopping.cart": "CART",

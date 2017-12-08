@@ -183,7 +183,14 @@ class BrandDetail extends React.Component {
             </div>
             <div className={css.brand_info}>
                 <div className={css.img}>
-            		<img src={this.state.brand.imgUrl}/>
+            		{/*<img src={this.state.brand.imgUrl}/>*/}
+            		<div className={css.supplierimg} style={{background:"url("+this.state.brand.imgUrl+"@120w_120h_1e_1c.png)"}}>
+            			<p className={css.left_icon}>
+	                    <i class="iconfont icon-DYC-1" style={{paddingRight: "5px"}}></i>
+	                    <i class="iconfont icon-DYC-"></i>
+                	</p>
+            		</div>
+            		
             		<p className={css.star}>
                 		<FormattedMessage id="brand.product.rate" defaultMessage="评分"/>:
                 		<Rate className={css.rating} allowHalf value={this.state.brand.level} disabled />

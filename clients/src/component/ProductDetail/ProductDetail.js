@@ -642,9 +642,15 @@ class ProductDetail extends React.Component {
             this.state.product.supplierId ? <div className={css.supplier}>
                     <div className={css.right_content}>
                         <Link to={"/page/brand-detail/"+this.state.product.supplierId}>
-                            <p className={css.custom_img}>
+                            {/*<p className={css.custom_img}>
                                 <img src={this.state.product.supplierImg+"@180w_180h_1e_1c.png"}/>
-                            </p>
+                            </p>*/}
+                            <div className={css.supplierimg} style={{background:"url("+this.state.product.supplierImg+"@160w_160h_1e_1c.png)"}}>
+                                <p className={css.left_icon}>
+                                    <i class="iconfont icon-DYC-1" style={{paddingRight: "5px"}}></i>
+                                    <i class="iconfont icon-DYC-"></i>
+                                </p>
+                            </div>
                             <p className={css.name}>{this.state.product.supplierName}</p>
                         </Link>
                         <p className={css.foot}>

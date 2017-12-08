@@ -286,7 +286,7 @@ class QuotationList extends React.Component {
 	            				<i class="iconfont icon-DYC-23"/>&nbsp;&nbsp;
 	            				<FormattedMessage id="cart.see.order" defaultMessage="在线预览"/>
 	            			</Link>
-	            			<Button type="primary"
+	            			<Button type="primary" style={{width:"123px"}}
 	            				className={appcss.button_blue}
 	            				onClick={this.onlineShow.bind(this,item)}>
 	            				<FormattedMessage id="quotation.online" defaultMessage="在线预览"/>
@@ -300,7 +300,7 @@ class QuotationList extends React.Component {
 		            			</p>
 		            		</Link>
 		            		<Button
-		            			className={appcss.button_black}
+		            			className={appcss.button_black} style={{width:"123px"}}
 		            			loading={item.downloading}
 		            			type="primary" onClick={this.export.bind(this,index)}>
 	            				<FormattedMessage id="quotation.export" defaultMessage="导出"/>

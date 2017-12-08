@@ -49,8 +49,8 @@ class PostWant extends React.Component {
 		this.postwant.scrollIntoView();
 	}*/
 	handleSubmit = (e) => {
+		e.preventDefault();
 		if(this.state.user && this.state.user.vip==5){
-			e.preventDefault();
 			this.props.form.validateFieldsAndScroll((err, values) => {
 				if (!err) {
 					let param = values;
@@ -80,7 +80,6 @@ class PostWant extends React.Component {
 		}else{
 			message.error(this.formatMessage({ id:'app.level.warm'}))
 		}
-		
 	}
 	onChanges = (date, dateString) => {
 		console.log(date, dateString)
