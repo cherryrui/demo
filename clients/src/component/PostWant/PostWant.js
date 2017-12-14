@@ -45,9 +45,9 @@ class PostWant extends React.Component {
 		}
 		this.formatMessage = this.props.intl.formatMessage;
 	}
-	/*componentDidMount() {
+	componentDidMount() {
 		this.postwant.scrollIntoView();
-	}*/
+	}
 	handleSubmit = (e) => {
 		e.preventDefault();
 		if(this.state.user && this.state.user.vip==5){
@@ -62,9 +62,12 @@ class PostWant extends React.Component {
 					})
 					param.uploadFileUrl = JSON.stringify(param.uploadFileUrl);
 					delete param.file;
+					/*console.log(param)*/
 					axios.post('api/demand-controller.json', param).then(res => {
 						if (res.data.isSucc) {
-							/*this.props.history.pushState(null, "/");*/
+							message.success(this.formatMessage({ id:'app.success'}));
+							/*this.props.history.pushState(null, "/page/post-want");*/
+							window.location.reload(); 
 						} else if (res.data.code == 104) {
 							this.setState({
 								visible: true
@@ -201,7 +204,7 @@ class PostWant extends React.Component {
 			          label={formatMessage({id: 'quotation.company.name'})}
 
 			        >
-			          {getFieldDecorator('company_name', {
+			          {getFieldDecorator('companyName', {
 			            rules: [ {
 			              required: true, message: this.formatMessage({id:'agent.enter.company'}),
 			            }],
@@ -214,7 +217,7 @@ class PostWant extends React.Component {
 			          label={formatMessage({id: 'post.linkman'})}
 
 			        >
-			          {getFieldDecorator('linkman', {
+			          {getFieldDecorator('contactPerson', {
 			            rules: [{
 			              required: true, message:this.formatMessage({ id:'post.linkman.info'}),
 			            }],
@@ -240,7 +243,7 @@ class PostWant extends React.Component {
 			          label={formatMessage({id: 'quotation.contact.tel'})}
 
 			        >
-			          {getFieldDecorator('phone', {
+			          {getFieldDecorator('telephone', {
 			            rules: [ {
 			              required: true, message:this.formatMessage({ id:'register.tel.warn'}),
 			            }],

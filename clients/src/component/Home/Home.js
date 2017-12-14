@@ -264,7 +264,7 @@ class Home extends React.Component {
                             <div className={css.product_info}>
                                 <p className={css.product_name}>{item.productName}</p>
                                 <p className={css.product_price}>
-                                    <span className={css.price}>{(this.state.user&&this.state.user.userIdentity==1)?item.agentPrice:item.itemPrice?item.itemPrice:item.price}$</span>
+                                    <span className={css.price}>{this.state.user&&this.state.user.userIdentity==1?(item.itemPriceAgent?item.itemPriceAgent:item.agentPrice?item.agentPrice:item.itemPrice ? item.itemPrice : item.price):item.itemPrice?item.itemPrice: item.price}$</span>
                                     <span >
                                         x{item.productNum}
                                         <Icon onClick={this.deleteCart.bind(this,item.id)} type="delete" style={{paddingLeft: "20px"}}/>

@@ -117,6 +117,7 @@ class ConfirmOrder extends React.Component {
     }
     componentWillMount() {
         this.getAddressList();
+        console.log(this.props)
         let sum = 0,
             order = this.state.order;
         this.props.products.map(item => {
@@ -230,6 +231,7 @@ class ConfirmOrder extends React.Component {
                 payModelId: this.state.order.pay_mode,
                 deliveryId: this.state.order.delivery_mode,
                 remark: this.state.order.note,
+                /*specs:[],*/
             }
             if (this.state.order.stageId > 0) {
                 param.payModelStageId = this.state.order.stageId;
@@ -242,11 +244,16 @@ class ConfirmOrder extends React.Component {
                     param.productIds.push(item.productId);
                     param.productNumbers.push(item.productNum);
                 }
+                /*if(item.specs){
+                    param.specs.push(item.specs);
+                }*/
+                
             })
             param.itemIds = param.itemIds.join(",");
             param.itemNumbers = param.itemNumbers.join(",");
             param.productIds = param.productIds.join(",");
             param.productNumbers = param.productNumbers.join(",");
+            console.log(param)
             this.props.commitOrder(param).then(res => {
                 console.log(res);
                 this.setState({

@@ -83,7 +83,7 @@ class CartList extends React.Component {
             width: "110px",
             className: css.table_col,
             render: (record) => <span className={css.table_price}>
-            ${this.state.user&&this.state.user.userIdentity==1?record.agentPrice:record.itemPrice?record.itemPrice:record.price}</span>
+            ${record.price}</span>
         }, {
             title: <FormattedMessage id="cart.num" defaultMessage="我的购物车"/>,
             width: "140px",
@@ -123,12 +123,22 @@ class CartList extends React.Component {
         axios.get('/cart/get-carts.json').then(res => {
             if (res.data.isSucc) {
                 res.data.result.list.map(item => {
-                    item.price = this.state.user&&this.state.user.userIdentity==1?item.agentPrice:item.itemPrice ? item.itemPrice : item.price;
+                    /*let off_prices;
+                    const p_price = this.state.user&&this.state.user.userIdentity==1?(item.itemPriceAgent?item.itemPriceAgent:item.agentPrice?item.agentPrice:item.itemPrice ? item.itemPrice : item.price):item.itemPrice?item.itemPrice: item.price;
+                    if(item.itemoff_price || item.off_price){
+                        off_prices = item.itemoff_price?item.itemoff_price:item.off_price;
+                        item.price = off_prices<p_price?off_prices:p_price;
+                    }*/
+                    
+                    
+                    item.price = this.state.user&&this.state.user.userIdentity==1?(item.itemPriceAgent?item.itemPriceAgent:item.agentPrice?item.agentPrice:item.itemPrice ? item.itemPrice : item.price):item.itemPrice?item.itemPrice: item.price;
                     item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
                 })
                 this.setState({
                     data: res.data.result.list,
                     loading: false
+                },()=>{
+                    console.log(this.state.data)
                 })
             } else if (res.data.code == 104) {
                 this.props.handleVisible ? this.props.handleVisible(true) : "";
@@ -183,6 +193,9 @@ class CartList extends React.Component {
             }
             if (item.productNum <= item.moq) {
                 item.productNum = item.moq;
+            }else if(item.productNum > item.inventory){
+                item.productNum = item.inventory;
+                message.error(this.formatMessage({id:"product.detail.inventory.no"}));
             }
             if (this.state.selectedRowKeys.indexOf(item.id) > -1) {
                 sum += item.productNum * item.price;

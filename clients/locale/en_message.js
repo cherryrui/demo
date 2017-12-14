@@ -73,6 +73,7 @@ const en_US = {
     "app.file.format": "File types：pdf,xlsx,docx",
     "app.picture.format": "Picture types ：JPG,png",
     "app.level.warm":"Insufficient permissions !",
+    "app.err.num":"The products number must be number",
     "main.time.before": "The rest",
     "main.time.end.after": "End run",
     "main.time.start.after": "Start run",

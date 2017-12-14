@@ -1,6 +1,7 @@
 @import "./themes";
 .main{
   background: $background-color;
+  min-width:1100px;
   button{
     min-width: 120px;
   }

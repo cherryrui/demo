@@ -217,11 +217,15 @@ class ProductDetail extends React.Component {
 
     };
     handleNum = (value) => {
-        if (value < this.state.product.moq) {
+        /*if (value < this.state.product.moq) {
             value = this.state.product.moq;
         } else if (value > this.state.product.inventory) {
             value = this.state.product.inventory;
         }
+        this.state.product.productNum = value;*/
+        if (value < this.state.product.moq) {
+            value = this.state.product.moq;
+        } 
         this.state.product.productNum = value;
     };
 
@@ -239,86 +243,115 @@ class ProductDetail extends React.Component {
         console.log(key);
     };
     handleAddCart = (type) => {
-        if (sessionStorage.user) {
-            let flag = true;
-            this.state.specs.map(item => {
-                if (!item.select_value) {
-                    flag = false;
-                    return;
-                }
-            })
-            if (flag) {
-                if (type == 1) {
-                    if (this.state.product.inventory < this.state.product.productNum || this.state.product.productNum < this.state.product.moq) {
-                        message.error(this.formatMessage({
-                            id: "product.detail.inventory.no"
-                        }))
-                    } else {
-                        let product = this.state.product;
-                        product.id = -1;
-                        product.coverUrl = product.productImg;
-                        if(this.state.user){
-                            if(this.state.user.userIdentity==1){
-                                product.price = this.state.agentprice;
-                            }else if(this.state.status==1){
-                                product.price = (this.state.product.price*this.state.discount*0.1).toFixed(2);
-                            }
-                        }
-                        let selectSpecs = [];
-                        console.log(this.state.specs);
-                        this.state.specs.map(item => {
-                            let spec = {
-                                specId: item.specId,
-                                specName: item.specName,
-                                type: item.type,
-                                specVal: [],
-                            };
-                            item.productSpecs.specValue.map(attr => {
-                                if (item.select_value == attr.valId) {
-                                    spec.specVal.push(attr);
-                                }
+        let re = /^[1-9]+[0-9]*]*$/;
+        if(re.test(this.state.product.productNum)){
+            console.log(this.state.product.inventory,this.state.product.productNum,this.state.product.moq)
+            if(this.state.product.inventory < this.state.product.productNum || this.state.product.productNum < this.state.product.moq){
+                message.error(this.formatMessage({
+                                id: "product.detail.inventory.no"
+                            }))
+            }else{
+                if (sessionStorage.user) {
+                let flag = true;
+                this.state.specs.map(item => {
+                    if (!item.select_value) {
+                        flag = false;
+                        return;
+                    }
+                })
+                if (flag) {
+                    /*let specs = this.state.specs;
+                        let arrys = [];
+                        if(specs.length>=0){
+                            specs.map(item=>{
+                                arrys.push(item.select_value);
                             })
-                            selectSpecs.push(spec);
-                        })
-                        product.selectSpecs = selectSpecs;
-                        let products = [];
-                        products.push(product);
-                        sessionStorage.setItem("products", JSON.stringify(products));
-                        this.props.history.pushState(null, "page/cart/1");
+                            
+                        }
+                        arrys = arrys.join(',');
+                        console.log(arrys);*/
+                    if (type == 1) {
+                        if (this.state.product.inventory < this.state.product.productNum || this.state.product.productNum < this.state.product.moq) {
+                            message.error(this.formatMessage({
+                                id: "product.detail.inventory.no"
+                            }))
+                        } else {
+                            let product = this.state.product;
+                            product.id = -1;
+                            product.coverUrl = product.productImg;
+                            if(this.state.user){
+                                if(this.state.user.userIdentity==1){
+                                    product.price = this.state.product.priceAgent;
+                                }else if(this.state.status==1){
+                                    product.price = (this.state.product.price*this.state.discount*0.1).toFixed(2);
+                                }
+                            }
+                            let selectSpecs = [];
+                            console.log(this.state.specs);
+                            this.state.specs.map(item => {
+                                let spec = {
+                                    specId: item.specId,
+                                    specName: item.specName,
+                                    type: item.type,
+                                    specVal: [],
+                                };
+                                item.productSpecs.specValue.map(attr => {
+                                    if (item.select_value == attr.valId) {
+                                        spec.specVal.push(attr);
+                                    }
+                                })
+                                selectSpecs.push(spec);
+                            })
+                            product.selectSpecs = selectSpecs;
+                            /*product.specs = arrys;*/
+                            let products = [];
+                            products.push(product);
+                            sessionStorage.setItem("products", JSON.stringify(products));
+                            this.props.history.pushState(null, "page/cart/1");
+                        }
+                    } else {
+                        
+                        /*console.log(arrys);*/
+                        let param = {
+                            itemId: this.state.product.itemId,
+                            productId: this.state.product.productId,
+                            productNum: this.state.product.productNum ? this.state.product.productNum : 1,
+                            /*specs:arrys,*/
+                        }
+                        console.log(param)
+                        this.specify.style.border = "none";
+                        this.specify.style.padding = "0";
+                        this.props.addCart(param).then(res => {
+                            if (res.value.data.isSucc) {
+                                message.success(this.formatMessage({
+                                    id: "add.cart.success"
+                                }))
+                            } else if (res.value.data.code == 104) {
+                                this.setState({
+                                    visible: true,
+                                })
+                            } else {
+                                message.error(res.data.message);
+                            }
+                        });
                     }
                 } else {
-                    let param = {
-                        itemId: this.state.product.itemId,
-                        productId: this.state.product.productId,
-                        productNum: this.state.product.productNum ? this.state.product.productNum : 1,
-                    }
-                    this.specify.style.border = "none";
-                    this.specify.style.padding = "0";
-                    this.props.addCart(param).then(res => {
-                        if (res.value.data.isSucc) {
-                            message.success(this.formatMessage({
-                                id: "add.cart.success"
-                            }))
-                        } else if (res.value.data.code == 104) {
-                            this.setState({
-                                visible: true,
-                            })
-                        } else {
-                            message.error(res.data.message);
-                        }
-                    });
+                    /*console.log("dada", this.specify.style)*/
+                    this.specify.style.border = "2px solid #ffc70d";
+                    this.specify.style.padding = "10px";
+
                 }
             } else {
-                /*console.log("dada", this.specify.style)*/
-                this.specify.style.border = "2px solid #ffc70d";
-                this.specify.style.padding = "10px";
-
+                this.setState({
+                    visible: true
+                })
             }
-        } else {
-            this.setState({
-                visible: true
-            })
+            }
+            
+        }else{
+            message.error(this.formatMessage({id:'app.err.num'}));
         }
+        
     }
     handleAttr = (index, value) => {
         let specs = this.state.specs;
@@ -335,10 +368,12 @@ class ProductDetail extends React.Component {
                 id: this.state.product.productId,
                 specs: this.state.specs,
             }
+            console.log(param)
             axios.post('/product/get-attr-price.json', param).then(res => {
                 if (res.data.isSucc) {
                     let product = this.state.product;
                     product.price = res.data.result.price;
+                    product.priceAgent = res.data.result.priceAgent;
                     product.itemPrice = res.data.result.price;
                     product.inventory = res.data.result.inventory;
                     product.priceDiscounts = res.data.result.priceDiscounts;
@@ -561,7 +596,7 @@ class ProductDetail extends React.Component {
                             <FormattedMessage id="product.detail.price" defaultMessage="单价"/>
                             &nbsp;:
                             <span className={css.price}>
-                                ${this.state.user?this.state.user.userIdentity==1?this.state.agentprice:this.state.product.price:this.state.product.price}
+                                ${this.state.user?this.state.user.userIdentity==1?this.state.product.priceAgent:this.state.product.price:this.state.product.price}
                             </span>
                             {this.state.product.priceDiscounts?<span className={css.off}>{(this.state.product.price/this.state.product.priceDiscounts).toFixed(2)}% off
                             </span>:""}
@@ -618,7 +653,7 @@ class ProductDetail extends React.Component {
                             :
                         </p>
                         <p>
-                            {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq} max={this.state.product.inventory} defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
+                            {this.state.product.moq?<InputNumber size="large" min={this.state.product.moq}  defaultValue={this.state.product.moq} onChange={this.handleNum} />:""}
                         </p>
                         <div className={css.bottom_right}>
                             <Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,1)}>

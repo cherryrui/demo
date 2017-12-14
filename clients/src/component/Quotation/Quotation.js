@@ -116,9 +116,9 @@ class Quotation extends React.Component {
 			title: <FormattedMessage id="quotation.agency.price" defaultMessage="代理商销售价"/>,
 			width: "110px",
 			className: css.table_col_last,
-			dataIndex: 'agentPrice',
-			key: 'agentPrice',
-			render: (text) => <span className={css.table_price}>${text}</span>
+			/*dataIndex: 'agentPrice',
+			key: 'agentPrice',*/
+			render: (text) => <span className={css.table_price}>${text.itemPriceAgent?text.itemPriceAgent:text.agentPrice}{console.log(text)}</span>
 		}, ]
 	}
 	componentWillMount() {

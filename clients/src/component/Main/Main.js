@@ -191,10 +191,10 @@ class Main extends React.Component {
                        return <Link className={css.activity_slider_item}  target="_blank" to={"page/product-detail/"+item.productId}>
                        <Card bordered={false} bodyStyle={{ padding: 0 }}>
                             <div className={css.activity_body_item_header}>
-                                <p>{item.discount*10}%off</p>
+                                <p>{100-item.discount*10}%off</p>
                             </div>
                            <div className={css.custom_image}>
-                               <img alt="example" width="100%" src={item.coverUrl+"@175w_175h_1e_1c.png"} />
+                               <img alt="example" style={{width:"175px",height:"175px"}}  src={item.coverUrl+"@175w_175h_1e_1c.png"} />
                            </div>
                            <div className={css.activity_body_item_name}>{item.productName}</div>
                            <div className={css.activity_body_item_price}>

@@ -143,6 +143,7 @@ router.get('/get-category.json', async(ctx, next) => {
 		})
 		specId = specId.substr(0, specId.length - 1);
 		specVaild = specVaild.substr(0, specVaild.length - 1);
+		console.log(param.id,specId,specVaild)
 		let uri = url + "/product/queryProductItemByIds?productId=" + param.id + "&specId=" + specId + "&specValId=" + specVaild;
 		console.log(134, uri)
 		await axios.get(uri).then(res => {
