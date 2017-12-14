@@ -74,6 +74,7 @@ const en_US = {
     "app.picture.format": "Picture types ：JPG,png",
     "app.level.warm":"Insufficient permissions !",
     "app.err.num":"The products number must be number",
+    "app.user.nomal":"Domestic consumer ",
     "main.time.before": "The rest",
     "main.time.end.after": "End run",
     "main.time.start.after": "Start run",
