@@ -659,13 +659,14 @@ class ProductDetail extends React.Component {
                             <Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,1)}>
                                 <FormattedMessage id="product.detail.buy" defaultMessage="立即购买"/>
                             </Button>
-                            {/*<Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
+                            <Button disabled={this.state.disabled} className={appcss.button_theme} onClick={this.handleAddCart.bind(this,2)}>
+                                <i class="iconfont icon-DYC-7" style={{color:"white",paddingRight:"5px"}}></i>
+                                <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
+                            </Button>
+                            {/*<Button className={`${appcss.button_theme}`,`${css.shopcar}`} disabled={this.state.disabled} onClick={this.handleAddCart.bind(this,2)}>
+                                <i class="iconfont icon-DYC-7" style={{color:"white",paddingRight:"5px"}}></i>
                                 <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
                             </Button>*/}
-                            <div className={css.shopcar} disabled={this.state.disabled} onClick={this.handleAddCart.bind(this,2)}>
-                                <i class="iconfont icon-DYC-7" style={{color:"#ffc70d",paddingRight:"5px"}}></i>
-                                <FormattedMessage id="product.detail.add" defaultMessage="加入购物车"/>
-                            </div>
                         </div>
                     </div>
                 </div>
