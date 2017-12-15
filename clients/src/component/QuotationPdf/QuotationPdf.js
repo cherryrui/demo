@@ -29,7 +29,8 @@ class QuotationPdf extends React.Component {
         return <div className={css.quotation_pdf} id="content">
             <div className={css.title}>
                 <p className={css.logo}>
-                    {this.props.quotation.select.logo?"LOGO":""}
+                    {this.props.quotation.select.logo?<img src="../img/logo.png" className={css.logo}></img>
+                        :""}
                 </p>
                 <div>
                     <p className={css.title_item}>

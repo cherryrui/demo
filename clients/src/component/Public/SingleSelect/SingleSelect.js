@@ -90,7 +90,8 @@ class SingleSelect extends React.Component {
                 {this.props.all?<div className={css.single} ref="item"
                         onClick={this.handleSelect.bind(this,0)}>
                         {this.props.showImg?<p className={current==0?css.active_img:css.item_img}>
-                            <img style={{width:"32px",height:"32px",margin: "17px"}} src="../img/DYC-22.png"/>
+                            <i class="iconfont icon-leimupinleifenleileibie"></i>
+                            <FormattedMessage id="app.all" defaultMessage="所有"/>
                         </p>
                         :<p className={current==0?css.active:css.item}>
                             <FormattedMessage id="app.all" defaultMessage="所有"/>

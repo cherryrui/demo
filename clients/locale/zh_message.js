@@ -10,7 +10,7 @@ const zh_CN = {
     "app.order": "我的订单",
     "app.language.en": "en",
     "app.language.zh": "zh",
-    "app.all": "所有",
+    "app.all": "全部",
     "app.pay": "待付款",
     "app.send": "待发货",
     "app.receiver": "待收货",

@@ -10,7 +10,7 @@ const en_US = {
     "app.order": "My Order",
     "app.language.en": "Chinese",
     "app.language.zh": "English",
-    "app.all": "all",
+    "app.all": "All",
     "app.pay": "UNPAY",
     "app.send": "SEND",
     "app.receiver": "RECEIVE",
