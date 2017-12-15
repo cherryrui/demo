@@ -595,7 +595,7 @@ const en_US = {
     "app.select.time": "Please select time",
     "post.want.img": "picture",
     "post.want.file": "file",
-    "post.company.logo": "Please enter the company logo",
+    "post.company.logo": "Please upload the company logo",
     "app.login.password": "login password",
     "app.phone.verification": "Phone verification",
     "app.email.verification": "Email verification",

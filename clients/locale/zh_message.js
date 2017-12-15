@@ -599,7 +599,7 @@ const zh_CN = {
     "app.select.time": "请选择时间 ",
     "post.want.img": "图片",
     "post.want.file": "文件",
-    "post.company.logo": "请输入公司logo",
+    "post.company.logo": "请上传公司logo",
     "product.detail.inventory.no": "缺货，不能买",
     "app.login.password": "登陆密码",
     "app.phone.verification": "手机验证",
