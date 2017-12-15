@@ -771,8 +771,9 @@ class Review extends React.Component {
                         <p className={css.time}>{moment(item.create_time).format('YYYY-MM-DD HH:DD')}</p>
                     </div>
                 </div>
-            }) : <div className={css.no_data}> 
-                <FormattedMessage id="product.no_review" defaultMessage="暂无提问"/>
+            }) : <div > 
+                {/*<FormattedMessage id="product.no_review" defaultMessage="暂无提问"/>*/}
+                <img  src='../img/question.png'/>
             </div>
         }
             
@@ -812,8 +813,9 @@ class Price extends React.Component {
                     </p>
                  </div>
              </div>
-             :<div className={css.no_data}>
+             :<div >
                 {/*<FormattedMessage id='product.no_price' defaultMessage='暂无价格波动'/>*/}
+                <img className={css.imgprice} src='../img/price.png'/>
             </div>}
         </div>
     }
