@@ -153,6 +153,12 @@
     			background-color: #ffc70d !important;
     			border: none;
     		}
+          .purchase_immediately{
+            background-color: $item-color !important;
+            color:$color-grey !important;
+            border: 1px solid $theme-color;
+
+          }
 		}
 	}
 	.num{
