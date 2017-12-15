@@ -139,14 +139,15 @@
 	}
 }
 %button{
-	padding: 20px 0;
-	width: 150px;
+	padding: 20px 10px;
+	min-width: 150px;
 	text-align: center;
     color: white;
     cursor: pointer;
 }
 .quotation{
 	@extend %button;
+    color: $font-color;
     background: $theme-color;
 }
 .quotation:hover{
