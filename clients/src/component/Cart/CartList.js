@@ -130,7 +130,7 @@ class CartList extends React.Component {
                         item.price = off_prices<p_price?off_prices:p_price;
                     }*/
 
-
+                    item.platPrice = item.itemPrice ? item.itemPrice : item.price;
                     item.price = this.state.user && this.state.user.userIdentity == 1 ? (item.itemPriceAgent ? item.itemPriceAgent : item.agentPrice ? item.agentPrice : item.itemPrice ? item.itemPrice : item.price) : item.itemPrice ? item.itemPrice : item.price;
                     item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
                 })
@@ -350,10 +350,11 @@ class CartList extends React.Component {
                 profit: 0,
                 sum_num: 0,
             }
+            console.log(353, this.state.data);
             this.state.data.map(item => {
                 this.state.selectedRowKeys.map(key => {
                     if (item.id === key) {
-                        item.price = item.itemPrice ? item.itemPrice : item.price;
+                        item.price = item.platPrice;
                         quotation.sum_num += item.productNum;
                         item.salePrice = item.price;
                         item.agentPrice = item.itemPriceAgent ? item.itemPriceAgent : item.agentPrice;
@@ -363,6 +364,7 @@ class CartList extends React.Component {
                     }
                 })
             })
+            console.log(366, quotation);
             sessionStorage.setItem('quotation', JSON.stringify(quotation));
             this.props.goLink("/page/quotation")
         } else {
