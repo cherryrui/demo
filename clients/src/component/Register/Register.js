@@ -125,7 +125,7 @@ class Register extends React.Component {
 
                             } else {
                                 this.setState({
-                                    disabled:true,
+                                    registerloading:false,
                                 })
                                 message.error(formatMessage({
                                     id: 'register.failed'
