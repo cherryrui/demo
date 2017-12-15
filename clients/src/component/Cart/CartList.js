@@ -53,7 +53,7 @@ class CartList extends React.Component {
             selectedRowKeys: [],
             select_all: false,
             sum: 0,
-            user:JSON.parse(sessionStorage.getItem("user")),
+            user: JSON.parse(sessionStorage.getItem("user")),
         }
         this.user = JSON.parse(sessionStorage.user)
         this.formatMessage = this.props.intl.formatMessage;
@@ -129,15 +129,15 @@ class CartList extends React.Component {
                         off_prices = item.itemoff_price?item.itemoff_price:item.off_price;
                         item.price = off_prices<p_price?off_prices:p_price;
                     }*/
-                    
-                    
-                    item.price = this.state.user&&this.state.user.userIdentity==1?(item.itemPriceAgent?item.itemPriceAgent:item.agentPrice?item.agentPrice:item.itemPrice ? item.itemPrice : item.price):item.itemPrice?item.itemPrice: item.price;
+
+
+                    item.price = this.state.user && this.state.user.userIdentity == 1 ? (item.itemPriceAgent ? item.itemPriceAgent : item.agentPrice ? item.agentPrice : item.itemPrice ? item.itemPrice : item.price) : item.itemPrice ? item.itemPrice : item.price;
                     item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
                 })
                 this.setState({
                     data: res.data.result.list,
                     loading: false
-                },()=>{
+                }, () => {
                     console.log(this.state.data)
                 })
             } else if (res.data.code == 104) {
@@ -193,9 +193,11 @@ class CartList extends React.Component {
             }
             if (item.productNum <= item.moq) {
                 item.productNum = item.moq;
-            }else if(item.productNum > item.inventory){
+            } else if (item.productNum > item.inventory) {
                 item.productNum = item.inventory;
-                message.error(this.formatMessage({id:"product.detail.inventory.no"}));
+                message.error(this.formatMessage({
+                    id: "product.detail.inventory.no"
+                }));
             }
             if (this.state.selectedRowKeys.indexOf(item.id) > -1) {
                 sum += item.productNum * item.price;
@@ -351,11 +353,13 @@ class CartList extends React.Component {
             this.state.data.map(item => {
                 this.state.selectedRowKeys.map(key => {
                     if (item.id === key) {
+                        item.price = item.itemPrice ? item.itemPrice : item.price;
                         quotation.sum_num += item.productNum;
                         item.salePrice = item.price;
+                        item.agentPrice = item.itemPriceAgent ? item.itemPriceAgent : item.agentPrice;
                         quotation.products.push(item);
                         quotation.sale_price += item.productNum * item.price;
-                        quotation.profit += item.productNum * (item.price - item.agentPrice);
+                        quotation.profit += item.productNum * (item.salePrice - item.agentPrice);
                     }
                 })
             })
