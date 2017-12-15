@@ -632,6 +632,7 @@ const zh_CN = {
     "app.figure": "图形",
     "app.passport.photos": "请上传你的证件照片",
     "app.requirement.subject": "需求主题",
-    "enter.requirement.subject": "请输入需求主题"
+    "enter.requirement.subject": "请输入需求主题",
+    "app.choose.delivery": "请选择送货方式"
 }
 export default zh_CN;

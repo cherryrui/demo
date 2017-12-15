@@ -659,7 +659,7 @@ class Supplier extends React.Component {
                     {getFieldDecorator('transportWay', {
                         valuePropName: 'checkedValues',
                         getValueFromEvent: this.handleTransport,
-                        rules: [{ type:"array", required: true, message: this.formatMessage({id: 'agent.enter.detailed_address'}),
+                        rules: [{ type:"array", required: true, message: this.formatMessage({id: 'app.choose.delivery'}),
                             }],
                     })(
                          <CheckboxGroup options={this.state.transportWay}/>

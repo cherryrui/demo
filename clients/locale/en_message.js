@@ -626,6 +626,7 @@ const en_US = {
     "app.figure": "Figure",
     "app.passport.photos": "Please upload your passport photos",
     "app.requirement.subject": "Requirement subject",
-    "enter.requirement.subject": "Please enter the requirements theme"
+    "enter.requirement.subject": "Please enter the requirements theme",
+    "app.choose.delivery": "Please choose the way of delivery"
 }
 export default en_US;
