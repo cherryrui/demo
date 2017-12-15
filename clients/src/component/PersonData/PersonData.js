@@ -128,6 +128,24 @@ class PersonData extends React.Component {
                 options: address,
             })
         })
+        axios.get('user/get-userinfo-byuid.json').then(res => {
+            console.log(res.data)
+            if (res.data.isSucc) {
+                 /*this.setState({
+                        cerstatus: true,
+                  });*/
+                /*localStorage.clear();
+                sessionStorage.clear();*/
+                sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                /*location.reload();*/
+                /*this.props.history.pushState(null, "/page/mine/person-data");*/
+                /*this.setState({
+                    visible: false,
+                 })*/
+            } else {
+                 message.error(res.data.message)
+            }
+         })
     }
     convertData(data) {
         data.map(item => {
@@ -448,7 +466,7 @@ class PersonData extends React.Component {
                         multiple
                         onChange={this.handlePicture}
                     >
-                        <img src={this.state.user.authImgs?(this.state.user.authImgs+"@110w_110h_1e_1c.png"):"../img/user_header.png"} />
+                        <img src={this.state.user.authImgs?(this.state.user.authImgs+"@110w_110h_1e_1c.png"):"../img/user_header.jpg"} />
                     </Upload>
                 </div>
                 <div className={css.basic_right}>
@@ -865,7 +883,7 @@ class PersonData extends React.Component {
                                             listType="picture-card"
                                             onRemove={this.removePic.bind(this,"img_front")}
                                             accept="image/*"
-                                            multiple
+                                            multiple="false"
                                         >
                                             {this.state.img_front ? null : <span className={appcss.upload_icon}>
                                                 <i class="iconfont icon-jiahao"></i>

@@ -60,7 +60,7 @@ class Cart extends React.Component {
                             item.coverUrl = item.productUrl;
                             item.moq = item.minBuyQuantity;
                             item.id = item.quotationProductId;
-                            item.price = item.agentPrice;
+                            item.price = item.productPrice;
                             item.selectSpecs = JSON.parse(item.productSpecification);
                         })
                         this.setState({

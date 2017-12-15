@@ -149,9 +149,9 @@ class Main extends React.Component {
                     rtl={false}
                     className={css.slider_play}
                 >
-                    <div><img className={css.slider_img} src='../img/autoSlide.jpg'/></div>
-                    <div><img className={css.slider_img} src='../img/banner1.jpg'/></div>
-                    <div><img className={css.slider_img} src='../img/banner2.jpg'/></div>
+                    <div><img className={css.slider_img} src='../img/banner-1.jpg'/></div>
+                    <div><img className={css.slider_img} src='../img/banner-2.jpg'/></div>
+                    <div><img className={css.slider_img} src='../img/banner-3.jpg'/></div>
                 </Slider>
                 <div className={css.main_right}>
                     {this.state.ads.map(item=>{

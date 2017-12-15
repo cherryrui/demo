@@ -71,12 +71,12 @@ class Home extends React.Component {
             message_id: "quotation.brand",
             default_message: "供应商",
             url: "/page/brand-list"
-        }, {
+        }, /*{
             key: 3,
             message_id: "app.news",
             default_message: "公司近况",
             url: "/page/news"
-        }, {
+        },*/ {
             key: 4,
             message_id: "app.about",
             default_message: "关于我们",
@@ -316,11 +316,11 @@ class Home extends React.Component {
                     {this.props.cart.result&&this.props.cart.result.allRow>0?<Dropdown overlay={cart_menu} placement="bottomRight" >
                         <Badge  count={this.props.cart.result.allRow} overflowCount={99}>
                             <Button  type="primary" size="large" onClick={this.handleCart}>
-                                <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<FormattedMessage id="cart.cart" defaultMessage="购物车"/>
+                                <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<span style={{fontSize:"14px"}}><FormattedMessage id="cart.cart" defaultMessage="购物车"/></span>
                             </Button>
                         </Badge>
                     </Dropdown>:<Button type="primary" size="large" onClick={this.handleCart}>
-                                <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<FormattedMessage id="cart.cart" defaultMessage="购物车"/>
+                                <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<span style={{fontSize:"14px"}}><FormattedMessage id="cart.cart" defaultMessage="购物车"/></span>
                             </Button>}
                 </div>
             </div>
