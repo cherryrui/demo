@@ -175,8 +175,8 @@ class Mine extends React.Component {
                             <FormattedMessage id={menu.name} defaultMessage="分类"/>
                         </p>}
                         {menu.list.map(item=> {
-                            return <Link target={item.key==2002?"_blank":"self"} to={item.url}>
-                            <p target="_blank" className={this.state.select == item.key ? css.active : css.item}
+                            return <Link /*target={item.key==2002?"_blank":"self"}*/ to={item.url}>
+                            <p  className={this.state.select == item.key ? css.active : css.item}
                                 onClick={this.handleMenu.bind(this,item.key,item.url)}
                             >
                                 <i class="iconfont icon-yuandian-copy"></i>&nbsp;&nbsp;

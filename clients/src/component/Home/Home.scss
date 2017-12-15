@@ -167,6 +167,7 @@
             padding: 0 10px;
             margin-top: 10px;
             border-left: 1px solid $border-color;
+            cursor: pointer;
         }
         .category_detail_item_body_item_last{
             @extend .category_detail_item_body_item;

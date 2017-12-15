@@ -169,7 +169,7 @@ class QuotationPdf extends React.Component {
                         {this.props.show_sperator ? <div className={css.pdf_sperator}></div> : ""}
                         <div className={css.table_body_item}>
                             <p className={`${css.table_product} ${css.table_col_info}`}>
-                                <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
+                                <img crossOrigin="Anonymous" src={record.coverUrl+"@111w_111h_1e_1c.png"}/>
                                 <div className={css.info}>
                                     <p className={css.name}>{record.productName}</p>
                                     {this.props.quotation.select.brand?<p>
@@ -195,7 +195,7 @@ class QuotationPdf extends React.Component {
                             <p className={`${css.table_col_sum} ${css.table_sum}`}>${record.totalMoney}</p>
                         </div></div>:<div className={css.table_body_item}>
                             <p className={`${css.table_product} ${css.table_col_info}`}>
-                                <img crossOrigin="Anonymous" src={record.coverUrl+"@100w_100h_1e_1c.png"}/>
+                                <img crossOrigin="Anonymous" src={record.coverUrl+"@111w_111h_1e_1c.png"}/>
                                 <div className={css.info}>
                                     <p className={css.name}>{record.productName}</p>
                                     {this.props.quotation.select.brand?<p>

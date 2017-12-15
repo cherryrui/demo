@@ -100,7 +100,7 @@ class CategoryList extends React.Component {
                     <div className={css.title} style={{background:`url(${item.imgUrl+"@300w_140h_1e_1c.png"})`}}>{item.categoryName}</div>
                     {item.childProductCategoryList.map(cate=>{
                         return <p className={css.item}>
-                        <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>
+                        <Link  to={"page/product-list/"+cate.categoryId+"/"+cate.categoryName}>{cate.categoryName}</Link></p>
                     })}
                 </div>
             })}

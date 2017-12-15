@@ -247,6 +247,11 @@ class Home extends React.Component {
             }
         })
     }
+    jumptodetail = (id,name) =>{
+        console.log("jumptodetail");
+        this.handleLeave();
+        this.props.history.pushState(null, "page/product-list/"+id+"/"+(name).replace(/\//g,'_'));
+    }
 
     render() {
         /*console.log(this.props.cart);*/
@@ -258,7 +263,7 @@ class Home extends React.Component {
                 {this.props.cart.result?this.props.cart.result.list.map(item => {
                     return <Menu.Item>
                         <div className={css.cart_product}>
-                            <Link target="_blank" to={"page/product-detail/" + item.productId}>
+                            <Link  to={"page/product-detail/" + item.productId}>
                                 <img src={item.coverUrl+"@50w_50h_1e_1c.png"}/>
                             </Link>
                             <div className={css.product_info}>
@@ -292,7 +297,7 @@ class Home extends React.Component {
         <div className={css.header}>
             <div className={css.header_content}>
                 <div className={css.left}>       
-                    <Link target="_blank" to="page/category-list"><p className={css.left_category}                 
+                    <Link  to="page/category-list"><p className={css.left_category}                 
                     onMouseEnter={this.onMouse.bind(this,"enter")} onMouseLeave={this.onMouse.bind(this,"leave")} className={this.state.index == 0 ? css.active : css.title_category}>  
                        <Icon type="appstore" className={css.icon_category}/>
                         <FormattedMessage id="app.category" defaultMessage="分类"/>
@@ -341,8 +346,8 @@ class Home extends React.Component {
                                 <div className={css.category_detail_item_sperator}>></div>
                                 <div className={css.category_detail_item_body}>
                                     {item.childProductCategoryList.map((cate,cate_index)=>{
-                                        return <p className={cate_index==item.childProductCategoryList.length-1?css.category_detail_item_body_item_last:css.category_detail_item_body_item}>
-                                        <Link target="_blank" to={"page/product-list/"+cate.categoryId+"/"+(cate.categoryName).replace(/\//g,'_')}>{cate.categoryName}</Link></p>
+                                        return <p className={cate_index==item.childProductCategoryList.length-1?css.category_detail_item_body_item_last:css.category_detail_item_body_item} onClick={this.jumptodetail.bind(this,cate.categoryId,cate.categoryName)}>
+                                        {cate.categoryName}</p>
                                     })}
                                 </div>
                             </div>

@@ -277,7 +277,7 @@ class ProductList extends React.Component {
                         <FormattedMessage id="cart.product.search" defaultMessage="产品列表"/>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        "{Number(this.info)?(this.props.params.name).replace(/_/g,'/'):this.info}"
+                        {Number(this.info)?(this.props.params.name).replace(/_/g,'/'):this.info}
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>

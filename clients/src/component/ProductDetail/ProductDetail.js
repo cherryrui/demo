@@ -813,7 +813,7 @@ class Price extends React.Component {
                  </div>
              </div>
              :<div className={css.no_data}>
-                <FormattedMessage id='product.no_price' defaultMessage='暂无价格波动'/>
+                {/*<FormattedMessage id='product.no_price' defaultMessage='暂无价格波动'/>*/}
             </div>}
         </div>
     }

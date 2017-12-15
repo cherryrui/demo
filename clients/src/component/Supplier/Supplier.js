@@ -240,9 +240,12 @@ class Supplier extends React.Component {
                             axios.get('user/get-userinfo-byuid.json').then(res => {
                                 console.log(res.data)
                                 if (res.data.isSucc) {
-                                    localStorage.clear();
-                                    sessionStorage.clear();
-                                    sessionStorage.setItem('user', JSON.stringify(res.data.result));
+                                    let user = JSON.parse(sessionStorage.user);
+                                    user.supplier = values;
+                                    sessionStorage.setItem('user', JSON.stringify(user));
+                                    /*localStorage.clear();
+                                    sessionStorage.clear();*/
+                                    /*sessionStorage.setItem('user', JSON.stringify(res.data.result));*/
                                     this.props.history.pushState(null, "page/mine/successful-application/2");
                                     /*location.reload();*/
                                     /*this.props.history.pushState(null, "/page/mine/account");*/

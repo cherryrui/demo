@@ -475,7 +475,7 @@ class PersonData extends React.Component {
                             <FormattedMessage  className={css.title} id="persondata.user.style" defaultMessage="类型"/>：
                         </span>
                         {/*<span className={css.text}>{this.state.user.userIdentity==0?this.state.user.userType==1?formatMessage({id: 'persondata.indivdual.user'}):formatMessage({id: 'persondata.enterprise.user'}):this.state.user.userIdentity==1?formatMessage({id: 'app.agent'}):formatMessage({id: 'app.supplier'})}</span>*/}
-                        <span className={css.text}>{!this.state.user.certificateCompany&&!this.state.user.certificatePerson?formatMessage({id: 'app.user.nomal'}):this.state.user.userIdentity==1?formatMessage({id: 'app.agent'}):this.state.user.userIdentity==2?formatMessage({id: 'app.supplier'}):this.state.user.userType==1?formatMessage({id: 'persondata.indivdual.user'}):formatMessage({id: 'persondata.enterprise.user'})}</span>
+                        <span className={css.text}>{!this.state.user.certificateCompany&&!this.state.user.certificatePerson&&this.state.user.userIdentity==0?formatMessage({id: 'app.user.nomal'}):this.state.user.userIdentity==1?formatMessage({id: 'app.agent'}):this.state.user.userIdentity==2?formatMessage({id: 'app.supplier'}):this.state.user.userType==1?formatMessage({id: 'persondata.indivdual.user'}):formatMessage({id: 'persondata.enterprise.user'})}</span>
                     </p>
                     <p className={css.info}>
                         <span className={css.title}>
