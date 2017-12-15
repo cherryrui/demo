@@ -271,11 +271,10 @@ class QuotationList extends React.Component {
 			            		${item.totalSalePrice}
 			            	</p>
 			            	<p className={css.item_agent}>
-			            		${item.totalSalePrice}
+			            		${item.totalSalePrice-item.profits}
 			            	</p>
 			            	<p className={css.item_profit}>
-			            		{/*${item.profits}*/}
-			            		${item.totalSalePrice-item.totalSalePrice}
+			            		${item.profits}
 			            	</p>
 	            		</div>
 	            		<div className={css.quotation_item_footer}>

@@ -63,11 +63,12 @@ class ProductList extends React.Component {
 
     }
     componentWillMount() {
+        console.log(this.props.params)
         this.getData();
     }
     getData() {
         //根据分类获取产品列表
-        if (Number(this.info)&&this.props.params.name) {
+        if (Number(this.info)) {
             //根据二级分类id或者供应商列表和三级分类列表
             axios.get(`/product/get-category.json?cid=${this.props.params.info}`).then(res => {
                 if (res.data.isSucc) {
@@ -276,7 +277,7 @@ class ProductList extends React.Component {
                         <FormattedMessage id="cart.product.search" defaultMessage="产品列表"/>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        {this.props.params.name?(this.props.params.name).replace(/_/g,'/'):this.info}
+                        {(this.props.params.info).lastIndexOf('_')>1?(this.props.params.info).replace(/_/g,''):this.props.params.name?(this.props.params.name).replace(/_/g,'/'):this.info}
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
@@ -330,7 +331,7 @@ class ProductList extends React.Component {
             :<div >
                 <p className={css.product_no}>
                     <img src='../img/cry.png' />
-                    <FormattedMessage id='product.search.result.info' values={{name:<b>{this.props.params.name?(this.props.params.name).replace(/_/g,'/'):this.info}</b>}} defaultMessage="暂无搜索到商品"/>
+                    <FormattedMessage id='product.search.result.info' values={{name:<b>{Number(this.info)?(this.props.params.name).replace(/_/g,'/'):this.info}</b>}} defaultMessage="暂无搜索到商品"/>
                 </p>
                 <p>
                     <FormattedMessage id="app.like" defaultMessage=""/>
