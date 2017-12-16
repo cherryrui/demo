@@ -119,15 +119,18 @@ class ConfirmOrder extends React.Component {
         this.getAddressList();
         console.log(this.props)
         let sum = 0,
+            sum_interest = 0,
             order = this.state.order;
         this.props.products.map(item => {
             sum += item.price * item.productNum;
+            sum_interest += (item.price-item.platPrice)*item.productNum;
         })
         console.log(this.props.products, sum);
         order.sum = sum;
         order.postage = 0;
         order.total = order.sum + order.postage;
         order.sum = order.sum.toFixed(2);
+        order.sum_interest = sum_interest.toFixed(2);
         order.total = order.total.toFixed(2);
         axios.get('/user/get-city-by-parent.json').then(res => {
             let address = this.convertData(JSON.parse(res.data.address.result));
@@ -559,14 +562,13 @@ class ConfirmOrder extends React.Component {
                     <FormattedMessage id="cart.order.total" defaultMessage="订单总金额"/>:
                     <p >$&nbsp;{this.state.order.sum}</p>
                 </div>
-
+                <div>
+                    <FormattedMessage id="cart.discount" defaultMessage="邮费"/>:
+                    <p >$&nbsp;{this.state.order.sum_interest}</p>
+                </div>
                 <div>
                     <FormattedMessage id="cart.shipping.cost" defaultMessage="邮费"/>:
                     <p >$&nbsp;{this.state.delivery_mode == 1 ? "0.00" : this.state.order.postage.toFixed(2)}</p>
-                </div>
-                <div>
-                    <FormattedMessage id="orderdetails.interest" defaultMessage="邮费"/>:
-                    <p >$&nbsp;{this.state.order.sum_interest}</p>
                 </div>
                 <div>
                     <FormattedMessage id="cart.grand" defaultMessage="总金额"/>:

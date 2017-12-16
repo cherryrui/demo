@@ -288,6 +288,7 @@ class ProductDetail extends React.Component {
                                     product.price = (this.state.product.price*this.state.discount*0.1).toFixed(2);
                                 }
                             }
+                            product.platPrice = product.price;
                             let selectSpecs = [];
                             console.log(this.state.specs);
                             this.state.specs.map(item => {
