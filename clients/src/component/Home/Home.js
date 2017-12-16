@@ -318,7 +318,7 @@ class Home extends React.Component {
                         onSearch={value => value ? this.props.history.pushState(null, '/page/product-list/' + (Number(value)?value+'_':value))
                             : message.warning(formatMessage({id: 'app.search'}))}
                     />
-                    {this.props.cart.result&&this.props.cart.result.allRow>0?<Dropdown overlay={cart_menu} placement="bottomRight" >
+                    {sessionStorage.user&&this.props.cart.result&&this.props.cart.result.allRow>0?<Dropdown overlay={cart_menu} placement="bottomRight" >
                         <Badge  count={this.props.cart.result.allRow} overflowCount={99}>
                             <Button  type="primary" size="large" onClick={this.handleCart}>
                                 <i class="iconfont icon-DYC-7"></i>&nbsp;&nbsp;<span style={{fontSize:"14px"}}><FormattedMessage id="cart.cart" defaultMessage="购物车"/></span>
