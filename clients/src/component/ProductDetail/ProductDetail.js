@@ -63,7 +63,9 @@ class ProductDetail extends React.Component {
         this.state = {
             products: [], //推荐商品列表
             reviews: [], //评价列表
-            product: {}, //当前商品
+            product: {
+                price:0
+            }, //当前商品
             curImg: '', //當前选中的图片
             index_img: 0, //選中的圖片index
             visible: false,
