@@ -28,7 +28,6 @@ router
                 isSucc: false,
             }
         }
-        console.log(result);
         ctx.body = result;
     })
     .post('/add-cart.json', async(ctx, next) => {
@@ -50,7 +49,6 @@ router
                 result = res.data;
             })
         }
-        console.log(result)
         ctx.body = result;
     })
     .get('/get-carts.json', async(ctx, next) => {
@@ -64,7 +62,6 @@ router
             };
             try {
                 await axios.post(url + "/auth/shopCar/queryShopCarList", querystring.stringify(param)).then(res => {
-                    console.log(res.data);
                     result = res.data;
                 })
             } catch (e) {

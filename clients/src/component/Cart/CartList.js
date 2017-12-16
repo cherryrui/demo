@@ -36,13 +36,14 @@ message.config({
     duration: 2,
 });
 @connect(state => ({
-    carts: state.carts
+    cart: state.cart
 }), cartAction)
 class CartList extends React.Component {
 
     static propTypes = {
         intl: intlShape.isRequired,
-        deleteCart: React.PropTypes.func.isRequired
+        deleteCart: React.PropTypes.func.isRequired,
+        getCarts: React.PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -120,36 +121,46 @@ class CartList extends React.Component {
         this.setState({
             loading: true,
         })
-        axios.get('/cart/get-carts.json').then(res => {
-            if (res.data.isSucc) {
-                res.data.result.list.map(item => {
-                    /*let off_prices;
-                    const p_price = this.state.user&&this.state.user.userIdentity==1?(item.itemPriceAgent?item.itemPriceAgent:item.agentPrice?item.agentPrice:item.itemPrice ? item.itemPrice : item.price):item.itemPrice?item.itemPrice: item.price;
-                    if(item.itemoff_price || item.off_price){
-                        off_prices = item.itemoff_price?item.itemoff_price:item.off_price;
-                        item.price = off_prices<p_price?off_prices:p_price;
-                    }*/
-
-                    item.platPrice = item.itemPrice ? item.itemPrice : item.price;
-                    item.price = this.state.user && this.state.user.userIdentity == 1 ? (item.itemPriceAgent ? item.itemPriceAgent : item.agentPrice ? item.agentPrice : item.itemPrice ? item.itemPrice : item.price) : item.itemPrice ? item.itemPrice : item.price;
-                    item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
-                })
-                this.setState({
-                    data: res.data.result.list,
-                    loading: false
-                }, () => {
-                    console.log(this.state.data)
-                })
-            } else if (res.data.code == 104) {
-                this.props.handleVisible ? this.props.handleVisible(true) : "";
-            } else {
-                message.error(this.formatMessage({
-                    id: "request.fail"
-                }, {
-                    reason: res.data.message
-                }))
-            }
+        this.props.getCarts().then(res => {
+            //axios.get('/cart/get-carts.json').then(res => {
+            console.log(125, res);
+            this.formatDate(res.value.data);
         })
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log("componentWillReceiveProps", 158, nextProps);
+        this.formatDate(nextProps.cart);
+    }
+    formatDate = (data) => {
+        if (data.isSucc) {
+            data.result.list.map(item => {
+                /*let off_prices;
+                const p_price = this.state.user&&this.state.user.userIdentity==1?(item.itemPriceAgent?item.itemPriceAgent:item.agentPrice?item.agentPrice:item.itemPrice ? item.itemPrice : item.price):item.itemPrice?item.itemPrice: item.price;
+                if(item.itemoff_price || item.off_price){
+                    off_prices = item.itemoff_price?item.itemoff_price:item.off_price;
+                    item.price = off_prices<p_price?off_prices:p_price;
+                }*/
+
+                item.platPrice = item.itemPrice ? item.itemPrice : item.price;
+                item.price = this.state.user && this.state.user.userIdentity == 1 ? (item.itemPriceAgent ? item.itemPriceAgent : item.agentPrice ? item.agentPrice : item.itemPrice ? item.itemPrice : item.price) : item.itemPrice ? item.itemPrice : item.price;
+                item.priceSupplier = item.itemPriceSupplier ? item.itemPriceSupplier : item.priceSupplier;
+            })
+            this.setState({
+                data: data.result.list,
+                loading: false
+            }, () => {
+                console.log(this.state.data)
+            })
+        } else if (data.code == 104) {
+            this.props.handleVisible ? this.props.handleVisible(true) : "";
+        } else {
+            message.error(this.formatMessage({
+                id: "request.fail"
+            }, {
+                reason: data.message
+            }))
+        }
+
     }
     onSelectChange = (selectedRowKeys) => {
         let select_all = false;
@@ -396,6 +407,7 @@ class CartList extends React.Component {
     };
 
     render() {
+        console.log(405, this.props);
         const {
             intl: {
                 formatMessage

@@ -31,9 +31,16 @@ const commitOrder = param => dispatch => {
         payload: axios.post('/order/commit-order.json', param)
     })
 }
+const getCarts = param => dispatch=>{
+    return dispatch({
+        type: "GET_CARTS",
+        payload: axios.get('/cart/get-carts.json')
+    })
+}
 export default {
     getShoppingCart,
     addCart,
+    getCarts,
     deleteCart,
     commitOrder
 }

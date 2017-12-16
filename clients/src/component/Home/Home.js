@@ -43,7 +43,8 @@ import LoginModal from '../Public/LoginModal/LoginModal.js';
 class Home extends React.Component {
     static propTypes = {
         intl: intlShape.isRequired,
-        getShoppingCart: React.PropTypes.func.isRequired
+        getShoppingCart: React.PropTypes.func.isRequired,
+        getCarts: React.PropTypes.func.isRequired
     }
     constructor(props) {
         super(props);
@@ -57,31 +58,34 @@ class Home extends React.Component {
             canHiden: false,
             showCategoryDetail: false,
             categoryChild: [],
-            user:JSON.parse(sessionStorage.getItem("user")),
+            user: JSON.parse(sessionStorage.getItem("user")),
         };
         this.timer = false;
         this.cate_enter = false;
         this.tabs = [{
-            key: 1,
-            message_id: "app.home",
-            default_message: "首页",
-            url: "/"
-        }, {
-            key: 2,
-            message_id: "quotation.brand",
-            default_message: "供应商",
-            url: "/page/brand-list"
-        }, /*{
-            key: 3,
-            message_id: "app.news",
-            default_message: "公司近况",
-            url: "/page/news"
-        },*/ {
-            key: 4,
-            message_id: "app.about",
-            default_message: "关于我们",
-            url: "/page/about"
-        }, ];
+                key: 1,
+                message_id: "app.home",
+                default_message: "首页",
+                url: "/"
+            }, {
+                key: 2,
+                message_id: "quotation.brand",
+                default_message: "供应商",
+                url: "/page/brand-list"
+            },
+            /*{
+                       key: 3,
+                       message_id: "app.news",
+                       default_message: "公司近况",
+                       url: "/page/news"
+                   },*/
+            {
+                key: 4,
+                message_id: "app.about",
+                default_message: "关于我们",
+                url: "/page/about"
+            },
+        ];
         //this.language = 'zh_CN';
     }
 
@@ -221,7 +225,7 @@ class Home extends React.Component {
             })
         }
     }
-    handleLeave = ()=>{
+    handleLeave = () => {
         console.log("handle leave");
         if (this.timer) {
             clearTimeout(this.timer);
@@ -244,17 +248,17 @@ class Home extends React.Component {
             /*console.log(res.data);*/
             if (res.data.isSucc) {
                 this.props.getShoppingCart();
+                this.props.getCarts();
             }
         })
     }
-    jumptodetail = (id,name) =>{
+    jumptodetail = (id, name) => {
         console.log("jumptodetail");
         this.handleLeave();
-        this.props.history.pushState(null, "page/product-list/"+id+"/"+(name).replace(/\//g,'_'));
+        this.props.history.pushState(null, "page/product-list/" + id + "/" + (name).replace(/\//g, '_'));
     }
 
     render() {
-        /*console.log(this.props.cart);*/
         let cart_menu = (
             <Menu>
                 <Menu.Item className={css.cart_product_title}>
