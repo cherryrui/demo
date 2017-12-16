@@ -169,9 +169,15 @@
             border-left: 1px solid $border-color;
             cursor: pointer;
         }
+        .category_detail_item_body_item:hover{
+            color:$theme-color;
+        }
         .category_detail_item_body_item_last{
             @extend .category_detail_item_body_item;
             border-right: 1px solid $border-color;
+        }
+        .category_detail_item_body_item_last:hover{
+          color:$theme-color;
         }
     }
 }
