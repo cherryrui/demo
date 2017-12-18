@@ -70,9 +70,9 @@ const zh_CN = {
     "app.bind.email": "邮箱绑定",
     "app.modify.email": "邮箱修改",
     "app.agent": "代理商",
-    "app.level.warm":"权限不足!",
-    "app.err.num":"产品数量必须为数字",
-    "app.user.nomal":"普通用户",
+    "app.level.warm": "权限不足!",
+    "app.err.num": "产品数量必须为数字",
+    "app.user.nomal": "普通用户",
     "main.time.before": "剩余",
     "main.time.end.after": "结束",
     "main.time.start.after": "开始",
@@ -633,6 +633,7 @@ const zh_CN = {
     "app.passport.photos": "请上传你的证件照片",
     "app.requirement.subject": "需求主题",
     "enter.requirement.subject": "请输入需求主题",
-    "app.choose.delivery": "请选择送货方式"
+    "app.choose.delivery": "请选择送货方式",
+    "app.not.phone": "不是完整的11位手机号或者正确的手机号前七位"
 }
 export default zh_CN;

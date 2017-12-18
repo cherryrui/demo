@@ -125,7 +125,7 @@ class Register extends React.Component {
 
                             } else {
                                 this.setState({
-                                    registerloading:false,
+                                    registerloading: false,
                                 })
                                 message.error(formatMessage({
                                     id: 'register.failed'
@@ -213,7 +213,9 @@ class Register extends React.Component {
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
+            callback(this.formatMessage({
+                id: "repwd.check.pwd_warn"
+            }));
         } else {
             callback();
         }
@@ -252,7 +254,9 @@ class Register extends React.Component {
     checkPhone = (rule, value, callback) => {
         const form = this.props.form;
         if (value && !this.RegPhone(value)) {
-            callback('不是完整的11位手机号或者正确的手机号前七位');
+            callback(this.formatMessage({
+                id: "app.not.phone"
+            }));
         } else {
             callback();
         }

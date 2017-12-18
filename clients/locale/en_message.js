@@ -72,9 +72,9 @@ const en_US = {
     "app.agent": "Agent",
     "app.file.format": "File types：pdf,xlsx,docx",
     "app.picture.format": "Picture types ：JPG,png",
-    "app.level.warm":"Insufficient permissions !",
-    "app.err.num":"The products number must be number",
-    "app.user.nomal":"Domestic consumer ",
+    "app.level.warm": "Insufficient permissions !",
+    "app.err.num": "The products number must be number",
+    "app.user.nomal": "Domestic consumer ",
     "main.time.before": "The rest",
     "main.time.end.after": "End run",
     "main.time.start.after": "Start run",
@@ -627,6 +627,8 @@ const en_US = {
     "app.passport.photos": "Please upload your passport photos",
     "app.requirement.subject": "Requirement subject",
     "enter.requirement.subject": "Please enter the requirements theme",
-    "app.choose.delivery": "Please choose the way of delivery"
+    "app.choose.delivery": "Please choose the way of delivery",
+    "app.not.phone": "Not a complete 11 - bit cell phone number or the top seven of the correct cell phone number"
 }
+
 export default en_US;
