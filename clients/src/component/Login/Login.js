@@ -33,6 +33,10 @@ class Login extends React.Component {
     }
     constructor(props) {
         super(props);
+        this.state = {
+            checks1:true,
+            checks2:true,
+        }
     }
     componentDidMount() {
         document.body.scrollTop = 0;
@@ -47,8 +51,27 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                if(!this.state.checks1){
+                    this.setState({
+                        checks1:true
+                    })
+                }
+                if(!this.state.checks2){
+                    this.setState({
+                        checks2:true
+                    })
+                }
                 console.log('Received values of form: ', values);
-                axios.post('/user/login.json', values).then(res => {
+                if(values.userName && !values.password){
+                    this.setState({
+                        checks2:false,
+                    })
+                }else if(!values.userName && values.password){
+                    this.setState({
+                        checks1:false,
+                    })
+                }else if(values.userName && values.password){
+                    axios.post('/user/login.json', values).then(res => {
                     if (res.data.isSucc) {
                         sessionStorage.setItem('user', JSON.stringify(res.data.result));
                         this.props.history.pushState(null, "/");
@@ -60,6 +83,13 @@ class Login extends React.Component {
                         }))
                     }
                 })
+                }else{
+                    this.setState({
+                        checks1:false,
+                        checks2:false,
+                    })
+                }
+                
             }
         });
     };
@@ -88,19 +118,21 @@ class Login extends React.Component {
                     </FormItem>
                     <FormItem>
                     {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],
+                        /*rules: [{ required: true, message: formatMessage({id: 'login.input.name'}) }],*/
                     })(
                         <Input  className={css.input_row}size="large" prefix={<Icon type="user" style={{ fontSize: 24 }} />}
                             placeholder= {formatMessage({id: 'login.input.name'})} />
                     )}
                     </FormItem>
+                    {this.state.checks1?'':<div style={{color:"red",marginTop:"-16px"}}><FormattedMessage id="login.input.name" defaultMessage="用户名检验"/></div>}
                     <FormItem  style={{ marginBottom: 10,orderRadius: 2 }}>
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],
+                        /*rules: [{ required: true, message: formatMessage({id: 'login.input.password'}) }],*/
                     })(
                         <Input className={css.input_row}size="large" prefix={<Icon type="lock" style={{ fontSize: 24,paddingRight:20 }} />}
                             type="password" placeholder= {formatMessage({id: 'login.input.password'})} />
                     )}
+                    {this.state.checks2?'':<div style={{color:"red",margin:"-6px 0px -12px 0px"}}><FormattedMessage style={css.checkss} id="login.input.password" defaultMessage="密码检验"/></div>}
                     </FormItem>
                     <FormItem>
                     {getFieldDecorator('remember', {

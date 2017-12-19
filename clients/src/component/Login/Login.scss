@@ -37,6 +37,14 @@
 
     }
   }
+  .input_rows{
+
+    input{
+      border-radius: 2PX;
+      padding-left: 33px !important;
+      border:red !important;
+    }
+  }
   .title{
   	text-align: center;
     border-bottom: 1px solid $border-color;
@@ -80,4 +88,9 @@
     background-color: $button-black-active !important;
     border-color: $button-black-active !important;
 }
+}
+.checkss{
+  color: red;
+    margin-top: -6px;
+    margin-bottom: -10px;
 }
